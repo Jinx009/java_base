@@ -67,6 +67,13 @@
 			       			<beans:value>application/json;charset=UTF-8</beans:value>
 			      		</beans:list>
 		     		</beans:property>
+		     		 <beans:property name="objectMapper">
+		                <beans:bean class="com.fasterxml.jackson.databind.ObjectMapper">
+		                    <beans:property name="serializationInclusion">
+		                        <beans:value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</beans:value>
+		                    </beans:property>
+		                </beans:bean>
+		            </beans:property>
 		    	</beans:bean>
 	   		</beans:list>
   		</beans:property>
