@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import common.helper.HttpWebIOHelper;
+import database.models.User;
 import lombok.Setter;
 
 @Controller
@@ -24,10 +25,15 @@ public class UserController {
 	 * 根据用户id获取用户信息
 	 */
 	@RequestMapping(value = "/data/test")
-	public void userList(HttpServletResponse response,HttpServletRequest request) throws IOException{
+	@ResponseBody
+	public Map<String,Object> userList(HttpServletResponse response,HttpServletRequest request) throws IOException{
 		data = new HashMap<String,Object>();
-		data.put("data","test");
-		HttpWebIOHelper._printWebJson(data, response);
+		User user = new User();
+		user.setId(1);
+		user.setNickName("345");
+		data.put("data",user);
+//		HttpWebIOHelper._printWebJson(data, response);
+		return data;
 	}
 	
 	
