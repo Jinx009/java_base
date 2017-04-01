@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:beans="http://www.springframework.org/schema/beans"  
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:mvc="http://www.springframework.org/schema/mvc" 
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+    					http://www.springframework.org/schema/aop 
+    					http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+    					http://www.springframework.org/schema/beans 
+    					http://www.springframework.org/schema/beans/spring-beans.xsd  
+    					http://www.springframework.org/schema/context 
+    					http://www.springframework.org/schema/context/spring-context.xsd
+    					http://www.springframework.org/schema/tx 
+    					http://www.springframework.org/schema/tx/spring-tx.xsd">  
+    <!-- 加载Spring的全局配置文件 -->  
+    <beans:import resource="applicationContext.xml" />  
+      
+    <!-- SpringMVC配置 -->  
+    <mvc:resources location="/themes/" mapping="/themes/**"></mvc:resources>
+      
+    <!-- 通过component-scan 让Spring扫描org.swinglife.controller下的所有的类，让Spring的代码注解生效 -->  
+    <context:component-scan base-package="main.*; database.*; service.*; test.*"></context:component-scan>  
+    <mvc:annotation-driven >
+    	<mvc:message-converters register-defaults="false">
+        <beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+    	</mvc:message-converters>
+    </mvc:annotation-driven>
+    <context:annotation-config />
+      
+    <!-- 配置SpringMVC的视图渲染器， 让其前缀为:/ 后缀为.html  将视图渲染到/page/<method返回值>.jsp中 -->  
+<!--     <beans:bean  
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver"  
+        p:prefix="/WEB-INF/page/" p:suffix=".jsp">  
+    </beans:bean>  -->
+    
+    <beans:bean id="freemarkerConfiguration" class="org.springframework.beans.factory.config.PropertiesFactoryBean"></beans:bean>
+    <beans:bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <beans:property name="exposeRequestAttributes" value="true" />
+        <beans:property name="exposeSessionAttributes" value="true" />
+        <beans:property name="viewClass">
+            <beans:value>org.springframework.web.servlet.view.freemarker.FreeMarkerView</beans:value>
+        </beans:property>
+        <beans:property name="cache">
+        	<beans:value>true</beans:value>
+        </beans:property>
+        <beans:property name="suffix">
+        	<beans:value>.html</beans:value>
+        </beans:property>
+        <beans:property name="contentType">
+            <beans:value>text/html; charset=UTF-8</beans:value>
+        </beans:property>
+    </beans:bean>
+ 
+
+	<beans:bean
+  		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	  	<beans:property name="messageConverters">
+	   		<beans:list>
+		    	<beans:bean
+		     		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		     		<beans:property name="supportedMediaTypes">
+			      		<beans:list>
+			       			<!--返回字符串格式json-->
+			       			<beans:value>application/json;charset=UTF-8</beans:value>
+			      		</beans:list>
+		     		</beans:property>
+		    	</beans:bean>
+	   		</beans:list>
+  		</beans:property>
+ 	</beans:bean> 
+     
+    <beans:bean  
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver"  
+        id="multipartResolver" >  
+        <beans:property name="maxUploadSize" value="10485760"  />
+    </beans:bean>      
+  
+</beans:beans>  
