@@ -12,22 +12,28 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 用户
+ * 管理token
  * @author Jinx
  *
  */
 @Entity
-@Table(name="web_user")
+@Table(name="web_token_factory")
 @Setter
 @Getter
-public class User {
+public class WebTokenFactory {
 
 	@Id
 	@Column(unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(name = "nick_name")
-	private String nickName;
-	
+	@Column(name = "token_type")//类型1表示jsApi,2accessToken
+	private Integer tokenType;
+	@Column(name = "base_type")
+	private Integer baseType;//1表示微信
+	@Column(name = "token_value")
+	private String tokenValue;
+	@Column(name = "last_time")
+	private String lastTime;
+	@Column(name = "base_id")
+	private String baseId;
 }

@@ -45,7 +45,7 @@
 	</bean>  
 	
 	<bean id="nbTransactionInterceptor" class="common.helper.nbTransactionInterceptor"/>
-	
+	<!-- freemarker html视图渲染器 -->
 	<bean id="freemarkerConfig"
           class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
         <property name="templateLoaderPath" value="/WEB-INF/views/" />

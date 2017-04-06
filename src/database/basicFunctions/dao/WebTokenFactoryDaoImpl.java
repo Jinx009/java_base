@@ -7,15 +7,15 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDaoImpl;
-import database.models.User;
+import database.models.WebTokenFactory;
 
-@Repository("userDao")
-public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
+@Repository("webTokenFactoryDao")
+public class WebTokenFactoryDaoImpl extends BaseDaoImpl<WebTokenFactory> implements WebTokenFactoryDao{
 
 	@SuppressWarnings("unchecked")
-	public List<User> getByHql(String hql) {
+	public List<WebTokenFactory> getByHql(String hql) {
 		Query query = em.createQuery(hql);
-		List<User> list = query.getResultList();
+		List<WebTokenFactory> list = query.getResultList();
 		if(null!=list&&!list.isEmpty()){
 			return list;
 		}
