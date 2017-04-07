@@ -22,12 +22,9 @@
     <mvc:resources location="/themes/" mapping="/themes/**"></mvc:resources>
       
     <!-- 通过component-scan 让Spring扫描org.swinglife.controller下的所有的类，让Spring的代码注解生效 -->  
-    <context:component-scan base-package="main.*; database.*; service.*; test.*"></context:component-scan>  
-    <mvc:annotation-driven >
-    	<mvc:message-converters register-defaults="false">
-        <beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
-    	</mvc:message-converters>
-    </mvc:annotation-driven>
+    
+    <context:component-scan base-package="main.*; database.*; service.*;"></context:component-scan>  
+    <mvc:annotation-driven/>
     <context:annotation-config />
       
     <!-- 配置SpringMVC的视图渲染器， 让其前缀为:/ 后缀为.html  将视图渲染到/page/<method返回值>.jsp中 -->  
