@@ -27,15 +27,15 @@ public class WechatJSTokenTask {
        if(webTokenFactory!=null){
     	   checkWechatCache(WechatData.APP_ID,WechatData.APP_SECRET,webTokenFactory);
        }else{
-    	   long currentTimestamp = (long) (System.currentTimeMillis() / 1000);
-    	   String jsapi_ticket = WechatUtil.getJSApiTicket(WechatData.APP_ID, WechatData.APP_SECRET);
-    	   webTokenFactory = new WebTokenFactory();
-    	   webTokenFactory.setBaseId(WechatData.APP_ID);
-    	   webTokenFactory.setBaseType(1);
-    	   webTokenFactory.setLastTime(String.valueOf(currentTimestamp));
-    	   webTokenFactory.setTokenType(1);
-    	   webTokenFactory.setTokenValue(jsapi_ticket);
-    	   webTokenFactoryService.save(webTokenFactory);
+//    	   long currentTimestamp = (long) (System.currentTimeMillis() / 1000);
+//    	   String jsapi_ticket = WechatUtil.getJSApiTicket(WechatData.APP_ID, WechatData.APP_SECRET);
+//    	   webTokenFactory = new WebTokenFactory();
+//    	   webTokenFactory.setBaseId(WechatData.APP_ID);
+//    	   webTokenFactory.setBaseType(1);
+//    	   webTokenFactory.setLastTime(String.valueOf(currentTimestamp));
+//    	   webTokenFactory.setTokenType(1);
+//    	   webTokenFactory.setTokenValue(jsapi_ticket);
+//    	   webTokenFactoryService.save(webTokenFactory);
        }
     }
     
