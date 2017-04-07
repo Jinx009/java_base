@@ -23,5 +23,14 @@ public class PageController {
 		return "/index";
 	}
 	
+	/**
+	 * 跳转至首页
+	 * @return
+	 */
+	@RequestMapping(value = "/test")
+	public String test(){
+		return "/test";
+	}
+	
 
 }
