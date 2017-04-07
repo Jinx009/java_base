@@ -26,14 +26,14 @@ public class WebTokenFactory {
 	@Column(unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "token_type")//类型1表示jsApi,2accessToken
+	@Column(name = "TOKEN_TYPE")//类型1表示jsApi,2accessToken
 	private Integer tokenType;
-	@Column(name = "base_type")
+	@Column(name = "BASE_TYPE")
 	private Integer baseType;//1表示微信
-	@Column(name = "token_value")
+	@Column(name = "TOKEN_VALUE")
 	private String tokenValue;
-	@Column(name = "last_time")
+	@Column(name = "LAST_TIME")
 	private String lastTime;
-	@Column(name = "base_id")
+	@Column(name = "BASE_ID")
 	private String baseId;
 }
