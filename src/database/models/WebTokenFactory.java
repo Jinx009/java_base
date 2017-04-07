@@ -17,7 +17,7 @@ import lombok.Setter;
  *
  */
 @Entity
-@Table(name="web_token_factory")
+@Table(name="WEB_TOKEN_FACTORY")
 @Setter
 @Getter
 public class WebTokenFactory {
