@@ -1,12 +1,13 @@
 package database.basicFunctions.dao;
 
-import java.util.List;
 
-import database.common.BaseDao;
+
+import org.springframework.stereotype.Repository;
+
+import database.common.BaseDaoImpl;
 import database.models.WebTokenFactory;
 
-public interface WebTokenFactoryDao extends BaseDao<WebTokenFactory>{
+@Repository
+public class WebTokenFactoryDao extends BaseDaoImpl<WebTokenFactory>{
 
-	public List<WebTokenFactory> getByHql(String hql);
-	
 }
