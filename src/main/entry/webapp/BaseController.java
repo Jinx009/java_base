@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import database.models.WebTokenFactory;
 import service.basicFunctions.WebTokenFactoryService;
+import utils.ip.IPUtil;
 import utils.wechat.WechatData;
 import utils.wechat.WechatJSSign;
 
@@ -43,6 +44,15 @@ public class BaseController {
 		} catch (Exception e) {
 			logger.error("[BaseController.getJsApi.error:{}]",e);
 		} 
+	}
+	
+	/**
+	 * 获取客户端ip
+	 * @param request
+	 * @return
+	 */
+	public String getClientIp(HttpServletRequest request){
+		return IPUtil.getRemortIP(request);
 	}
 	
 }

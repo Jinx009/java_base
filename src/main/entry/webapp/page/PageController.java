@@ -1,14 +1,7 @@
 package main.entry.webapp.page;
 
-
-
-
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
-
 
 @Controller
 public class PageController {
@@ -24,7 +17,7 @@ public class PageController {
 	}
 	
 	/**
-	 * 跳转至首页
+	 * 跳转至测试页
 	 * @return
 	 */
 	@RequestMapping(value = "/test")
