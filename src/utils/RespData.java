@@ -10,4 +10,7 @@ public class RespData {
 	public static final String ERROR_MSG = "系统异常";
 	public static final String LOGIN_FAILE_MSG = "用户名或密码不正确";
 	
+	public static final String CANT_IN_CODE = "8001";
+	public static final String CANT_IN_MSG = "权限未得到认可";
+	
 }

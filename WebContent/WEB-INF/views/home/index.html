@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理系统</title>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<link rel="stylesheet" type="text/css" href="/themes/bootstrap2.0/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/themes/bootstrap2.0/css/bootstrap-responsive.min.css">
+	<link rel="stylesheet" type="text/css" href="/themes/css/home/index.css?version=0.01">
+	<!--[if lt IE 9]>
+		<script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<img alt="" src="/themes/img/background.jpg" class="bg-img" >
+	<div class="bg-content" >
+		<table class="bg-table" >
+			<tr>
+				<td colspan="2" ><h4 class="white" >后台管理系统</h4></td>
+			</tr>
+			<tr>
+				<td class="right white" >用 户 名 ：</td>
+				<td class="left white">
+					<input type="text" style="background:none;" id="userName" placeholder="请输入您的账户" class="form-control" >
+				</td>
+			</tr>
+			<tr>
+				<td class="right white" >密    码 ：</td>
+				<td class="left white">
+					<input type="password" style="background:none;" id="pwd" placeholder="请输入您的密码" class="form-control" >
+				</td>
+			</tr>
+			<tr>
+				<td class="right white min-height" ></td>
+				<td class="left white min-height">
+					<span class="badge badge-important" id="errorMsg" ></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" >
+					<a class="btn btn-info login-btn" style="width:180px;" >登 陆</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<script src="/themes/js/jquery.js"></script>
+	<script src="/themes/js/md5.js"></script>
+	<script src="/themes/js/home/index.js"></script>
+</body>
+</html>

@@ -6,7 +6,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import database.models.home.HomeResource;
+
 
 /**
  * 后台账户登录相关
@@ -15,7 +18,7 @@ import database.models.home.HomeResource;
  */
 public class HomeConfigConstant {
 
-	public static List<HomeResource> resourceList;
+	public static Map<String,Object> resourceList = new HashMap<String,Object>();
 	public static Map<String,String> sessionIdMap = new HashMap<String,String>();
 	
 	/**
@@ -42,5 +45,25 @@ public class HomeConfigConstant {
 		sessionIdMap.put(adminName, sessionId);
 	}
 	
+	/**
+	 * 存放菜单
+	 * @param menus
+	 * @param sessionId
+	 */
+	public static void putMenu(List<HomeResource> menus,String sessionId){
+		resourceList.put("_menu"+sessionId,menus);
+	}
+	
+	/**
+	 * 获取菜单
+	 * @param session
+	 * @return
+	 */
+	public static Object getResourceBySession(HttpSession session){
+		if(resourceList.containsKey("_menu"+session.getId())){
+			return resourceList.get("_menu"+session.getId());
+		}
+		return null;
+	}
 	
 }

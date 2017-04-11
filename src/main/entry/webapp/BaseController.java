@@ -1,8 +1,10 @@
 package main.entry.webapp;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import database.models.WebTokenFactory;
+import database.models.home.HomeResource;
+import database.models.home.HomeUser;
 import service.basicFunctions.WebTokenFactoryService;
 import utils.ip.IPUtil;
+import utils.model.HomeConfigConstant;
 import utils.wechat.WechatData;
 import utils.wechat.WechatJSSign;
 
@@ -53,6 +58,17 @@ public class BaseController {
 	 */
 	public String getClientIp(HttpServletRequest request){
 		return IPUtil.getRemortIP(request);
+	}
+	
+	/**
+	 * 设置菜单
+	 * @param request
+	 * @param menus
+	 */
+	public void setSessionMenu(HttpServletRequest request,List<HomeResource> menus,HomeUser homeUser){
+		HttpSession session = request.getSession();
+		HomeConfigConstant.putNewSession(homeUser.getUserName(),session.getId());
+		HomeConfigConstant.putMenu(menus,session.getId());
 	}
 	
 }

@@ -8,38 +8,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * 导航
- * @author jinx
- *
- */
-@Getter
 @Setter
+@Getter
 @Entity
-@Table(name = "HOME_RESOURCE")
-public class HomeResource {
+@Table(name = "HOME_USER_ROLE")
+public class HomeUserRole {
 
 	@Id
 	@Column(name = "ID",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "NAME")
-	private String name;
-	@Column(name = "URI")
-	private String uri;
-	@Column(name = "STATUS")
-	private Integer status;
-	@Column(name = "DESCRIPTION")
-	private String description;
+	@Column(name = "ROLE_ID")
+	private String roleId;
+	@Column(name = "USER_ID")
+	private String userId;
 	@Column(name = "CREATE_TIME")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name = "PARENT_ID")
-	private Integer parentId;
-	@Column(name = "TYPE")
-	private Integer type;
 	
 }
