@@ -39,7 +39,7 @@ function login() {
 				data : params,
 				success : function(res) {
 					if ('200' == res.code && '访问成功' == res.msg) {
-						location.href = '/home/p/index'
+						location.href = '/home/page/index'
 					} else {
 						$('#errorMsg').html(res.msg)
 					}
