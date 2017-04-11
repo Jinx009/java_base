@@ -7,6 +7,14 @@ $(function() {
 		$('#errorMsg').html('')
 	})
 });
+document.onkeydown = function(e) {
+	if (!e) {
+		e = window.event;
+	}
+	if ((e.keyCode || e.which) == 13) {
+		login();
+	}
+}
 window.onresize = function() {
 	changeWidth()
 };
@@ -18,7 +26,7 @@ function login() {
 	var userName = $('#userName').val();
 	var pwd = $('#pwd').val();
 	pwd = CryptoJS.MD5(pwd);
-	var params = 'userName=' + userName + '&pwd='+ pwd;
+	var params = 'userName=' + userName + '&pwd=' + pwd;
 	if (userName == null || '' == userName) {
 		$('#errorMsg').html('用户名不能为空！')
 	} else {
