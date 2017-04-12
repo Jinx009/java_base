@@ -16,6 +16,7 @@ import lombok.Setter;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.home.HomeResourceService;
 import service.basicFunctions.home.HomeUserService;
+import utils.BaseConstant;
 import utils.Resp;
 import utils.RespData;
 
@@ -54,12 +55,27 @@ public class HomeConfigController extends BaseController{
 		if(null!=homeUser){
 			List<HomeResource> menus = homeResourceService.getMenu(homeUser.getId());
 			setSessionMenu(request,menus,homeUser);
+			setSessionAdmin(request,homeUser);
 			resp.setCode(RespData.OK_CODE);
 			resp.setMsg(RespData.OK_MSG);
 		}else{
 			resp.setCode(RespData.OK_CODE);
 			resp.setMsg(RespData.LOGIN_FAILE_MSG);
 		}
+		return resp;
+	}
+	
+	/**
+	 * 登出
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(path = "/loginOut")
+	@ResponseBody
+	public Resp<?> loginOut(HttpServletRequest request){
+		HomeUser homeUser = getSessionHomeUser(request);
+		setSessionOut(request, homeUser);
+		resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,null);
 		return resp;
 	}
 	

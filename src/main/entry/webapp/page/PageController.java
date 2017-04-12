@@ -37,9 +37,9 @@ public class PageController {
 	 * 跳转至测试页
 	 * @return
 	 */
-	@RequestMapping(value = "/test")
+	@RequestMapping(value = "/404")
 	public String test(){
-		return "/test";
+		return "/404";
 	}
 	
 

@@ -1,0 +1,9 @@
+.cursor{
+	cursor: pointer;
+}
+.float-right{
+	float: right;
+}
+.box.box-primary {
+    border-top-color: #f4f4f4;
+}

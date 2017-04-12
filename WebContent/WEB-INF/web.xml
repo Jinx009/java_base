@@ -61,8 +61,17 @@
         <servlet-name>nbBaseServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    <!-- 首页 -->
     <welcome-file-list>
         <welcome-file>/index</welcome-file>
     </welcome-file-list>
-    
+    <!-- 错误页 -->
+    <error-page>
+	    <error-code>404</error-code>
+	    <location>/404</location>
+	</error-page>
+	 <error-page>
+	    <error-code>500</error-code>
+	    <location>/404</location>
+	</error-page>
 </web-app>

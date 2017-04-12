@@ -33,5 +33,7 @@ public class HomeUser {
 	private Date createTime;
 	@Column(name = "STATUS")
 	private Integer status;
+	@Column(name = "REAL_NAME")
+	private String realName;
 	
 }

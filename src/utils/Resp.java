@@ -1,5 +1,7 @@
 package utils;
 
+import com.alibaba.fastjson.JSON;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +33,10 @@ public class Resp<T> {
 			this.code = RespData.ERROR_CODE;
 			this.msg = RespData.ERROR_MSG;
 		}
+	}
+	
+	public String toString(){
+		return JSON.toJSONString(this);
 	}
 	
 }

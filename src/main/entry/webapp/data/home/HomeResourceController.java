@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.Setter;
 import utils.Resp;
@@ -24,6 +25,7 @@ public class HomeResourceController {
 	private Resp<?> resp;
 	
 	@RequestMapping(path = "/menu")
+	@ResponseBody
 	public Resp<?> getMenu(HttpServletRequest request){
 		HttpSession session = request.getSession();
 		resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,HomeConfigConstant.getResourceBySession(session));
