@@ -26,63 +26,56 @@
     <section class="content-header"  style="height: 50px;">
       <h1></h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 账户管理</a></li>
-        <li class="active"><a href="/home/p/changePwd"> 角色管理</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> 菜单管理</a></li>
+        <li class="active"><a href="/home/p/data"> 数据管理</a></li>
       </ol>
     </section>
     <!-- 主内容 -->
     <section class="content" >
-	    <div class="row">
-        <div class="col-xs-12">
-          <div class="box" style="border-top:1px solid #d2d6de;" >
-           <div class="box-header">
-              <h3 class="box-title"></h3>
-              <div class="box-tools">
-              	<div class="input-group input-group-sm" style="width: 150px;">
-                  <div class="input-group-btn">
-                    <button type="button" class="btn bg-orange btn-xs float-right">新增角色</button>
-                  
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover table-bordered">
+	   <div class="box" >
+        <div class="box-header with-border">
+          <h3 class="box-title" >数据管理</h3>
+          <div class="box-tools pull-right"></div>
+        </div>
+        <div class="box-body" style="display: block;">
+           <table class="table table-hover table-bordered">
                 <tbody class="data-tbody" >
                 	<tr>
                 		<th>编号</th>
                 		<th>名称</th>
-                		<th>级别</th>
+                		<th>描述</th>
                 		<th>状态</th>
+                		<th>链接</th>
                 		<th>操作</th>
                 	</tr>
-                	<tr v-for="model in data" >
-                		<td v-text="model.id" ></td>
-                		<td v-text="model.name" ></td>
-                		<td v-text="model.level" ></td>
-                		<td>
-                			<small v-if="model.status===1" class="label bg-green">可用</small>
-                			<small v-if="model.status!=1" class="label bg-red">停用</small>
-                		</td>
-                		<td>
-                			<small v-if="model.status===1" class="label bg-red cursor">禁用</small>
-                			<small v-if="model.status!=1" class="label bg-green cursor">激活</small>
-                		</td>
+                	<tr v-for="item in datas" >
+                		<th v-text="item.id" ></th>
+                		<th v-text ="item.name"></th>
+                		<th v-text ="item.description"></th>
+                		<th>
+                			<small v-if="item.status===1" class="label bg-green">可用</small>
+                			<small v-if="item.status!=1" class="label bg-red">停用</small>
+                		</th>
+                		<th v-text="item.uri" ></th>
+                		<th>
+                			<small v-if="item.status!=1" class="label bg-green cursor">可用</small>
+                			<small v-if="item.status===1" class="label bg-red cursor">禁用</small>
+                			<small class="label bg-blue cursor">编辑</small>
+                		</th>
                 	</tr>
                 </tbody>
-              </table>
-            </div>
-          </div>
+             </table> 	
         </div>
+        <div class="box-footer" style="display: block;"></div>
       </div>
     </section>
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/account/role.js"></script>
+<script src="/themes/js/home/menu/data.js"></script>
 <script type="text/javascript">
 	$(function(){
-		getNav('账户管理');
+		getNav('菜单管理');
 		getData();
 	});
 </script>

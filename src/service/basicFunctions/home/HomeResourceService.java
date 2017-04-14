@@ -17,5 +17,13 @@ public class HomeResourceService {
 	public List<HomeResource> getMenu(Integer homeUserId){
 		return homeResourceDao.getMenu(homeUserId);
 	}
+
+	public List<HomeResource> getPageResource() {
+		return homeResourceDao.getPageResource();
+	}
+
+	public List<HomeResource> getDataResource() {
+		return homeResourceDao.getDataResource();
+	}
 	
 }

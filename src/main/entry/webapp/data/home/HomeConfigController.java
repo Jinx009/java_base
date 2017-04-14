@@ -30,8 +30,6 @@ public class HomeConfigController extends BaseController{
 	@Autowired
 	private HomeResourceService homeResourceService;
 
-	private Resp<?> resp;
-	
 	@RequestMapping(path = "/ip")
 	@ResponseBody
 	public String getIp(HttpServletRequest request){
@@ -50,7 +48,7 @@ public class HomeConfigController extends BaseController{
 	public Resp<?> login(HttpServletRequest request,
 						@RequestParam(name = "userName",required = false)String userName,
 						@RequestParam(name = "pwd",required = false)String pwd){
-		resp = new Resp<>(false);
+		Resp<?> resp = new Resp<>(false);
 		HomeUser homeUser = homeUserService.login(userName, pwd);
 		if(null!=homeUser){
 			List<HomeResource> menus = homeResourceService.getMenu(homeUser.getId());
@@ -73,6 +71,7 @@ public class HomeConfigController extends BaseController{
 	@RequestMapping(path = "/loginOut")
 	@ResponseBody
 	public Resp<?> loginOut(HttpServletRequest request){
+		Resp<?> resp = new Resp<>(false);
 		HomeUser homeUser = getSessionHomeUser(request);
 		setSessionOut(request, homeUser);
 		resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,null);

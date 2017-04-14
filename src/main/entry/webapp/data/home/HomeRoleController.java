@@ -22,11 +22,11 @@ public class HomeRoleController {
 	@Autowired
 	private HomeRoleService homeRoleService;
 	
-	private Resp<?> resp;
 	
 	@RequestMapping(path = "/role")
 	@ResponseBody
 	public Resp<?> getRoles(){
+		Resp<?> resp = new Resp<>(false);
 		resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,homeRoleService.findAll());
 		logger.warn(" [HomeRoleController.getRoles][data:{}] ",resp);
 		return resp;

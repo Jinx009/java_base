@@ -27,7 +27,7 @@
       <h1></h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 账户管理</a></li>
-        <li class="active"><a href="/home/p/changePwd"> 角色管理</a></li>
+        <li class="active"><a href="/home/p/user"> 用户管理</a></li>
       </ol>
     </section>
     <!-- 主内容 -->
@@ -40,8 +40,7 @@
               <div class="box-tools">
               	<div class="input-group input-group-sm" style="width: 150px;">
                   <div class="input-group-btn">
-                    <button type="button" class="btn bg-orange btn-xs float-right">新增角色</button>
-                  
+                    <button type="button" class="btn bg-orange btn-xs float-right">新增用户</button>
                   </div>
                 </div>
               </div>
@@ -51,22 +50,27 @@
                 <tbody class="data-tbody" >
                 	<tr>
                 		<th>编号</th>
-                		<th>名称</th>
+                		<th>用户名</th>
+                		<th>角色名称</th>
                 		<th>级别</th>
                 		<th>状态</th>
+                		<th>创建时间</th>
                 		<th>操作</th>
                 	</tr>
                 	<tr v-for="model in data" >
                 		<td v-text="model.id" ></td>
-                		<td v-text="model.name" ></td>
+                		<td v-text="model.userName" ></td>
+                		<td v-text="model.roleName" ></td>
                 		<td v-text="model.level" ></td>
                 		<td>
                 			<small v-if="model.status===1" class="label bg-green">可用</small>
                 			<small v-if="model.status!=1" class="label bg-red">停用</small>
                 		</td>
+                		<td v-text="model.createTime" ></td>
                 		<td>
                 			<small v-if="model.status===1" class="label bg-red cursor">禁用</small>
                 			<small v-if="model.status!=1" class="label bg-green cursor">激活</small>
+                			<small class="label bg-blue cursor">编辑</small>
                 		</td>
                 	</tr>
                 </tbody>
@@ -79,7 +83,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/account/role.js"></script>
+<script src="/themes/js/home/account/user.js?version=1.01"></script>
 <script type="text/javascript">
 	$(function(){
 		getNav('账户管理');

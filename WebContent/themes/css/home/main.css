@@ -7,3 +7,6 @@
 .box.box-primary {
     border-top-color: #f4f4f4;
 }
+.box-header>.fa, .box-header>.glyphicon, .box-header>.ion, .box-header .box-title{
+	font-size: 15px;
+}
