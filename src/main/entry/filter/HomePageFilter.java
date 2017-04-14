@@ -38,12 +38,8 @@ public class HomePageFilter implements Filter {
 		String servletPath = httpServletRequest.getServletPath();
 		HttpSession session = httpServletRequest.getSession();
 		// 通过检查session中的变量，过虑请求
-		if(!check(session, servletPath)){
-			if(!HomeConfigConstant.checkSession(session.getId())){
-				httpServletResponse.sendRedirect("/home/index");
-			}else{
-				httpServletResponse.sendRedirect("/home/error");
-			}
+		if(!HomeConfigConstant.checkSession(session.getId())||!check(session, servletPath)){
+			httpServletResponse.sendRedirect("/home/index");
 			return;
 		}
 		chain.doFilter(request, response);

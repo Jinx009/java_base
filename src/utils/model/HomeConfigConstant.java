@@ -8,6 +8,9 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import database.models.home.HomeResource;
 
 
@@ -18,6 +21,8 @@ import database.models.home.HomeResource;
  */
 public class HomeConfigConstant {
 
+	private static final Logger logger = LoggerFactory.getLogger(HomeConfigConstant.class);
+	
 	public static Map<String,Object> resourceList = new HashMap<String,Object>();
 	public static Map<String,String> sessionIdMap = new HashMap<String,String>();
 	public static final String HOME_NAME = "homeUserName";
@@ -30,8 +35,10 @@ public class HomeConfigConstant {
 	 */
 	public static boolean checkSession(String sessionId){
 		 Set<Entry<String,String>> entrySet = sessionIdMap.entrySet();
+		 logger.warn("HomeConfigConstant.checkSession sessionId:{}",sessionId);
          for (Entry<String,String> entry : entrySet) {
-            if (sessionId.equals(entry)) {
+        	 logger.warn("HomeConfigConstant.checkSession key:{},value:{}",entry.getKey(),entry.getValue());
+            if (sessionId.equals(entry.getValue())) {
                 return true;
             }
          }

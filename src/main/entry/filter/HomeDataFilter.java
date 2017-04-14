@@ -42,7 +42,7 @@ public class HomeDataFilter implements Filter {
 		String servletPath = httpServletRequest.getServletPath();
 		// 通过检查session中的变量，过虑请求
 		HttpSession session = httpServletRequest.getSession();
-		if(!check(session, servletPath)){
+		if(!HomeConfigConstant.checkSession(session.getId())||!check(session, servletPath)){
 			httpServletResponse.setContentType("application/json;charset=UTF-8");  
 			PrintWriter out = httpServletResponse.getWriter();  
 			out.print(JSON.toJSON(new Resp<>(RespData.CANT_IN_CODE,RespData.CANT_IN_MSG,null))); 
