@@ -69,4 +69,13 @@ public class HomePageController {
 	public String authorData(){
 		return "/home/menu/author_data";
 	}
+	
+	/**
+	 * 前端用户列表
+	 * @return
+	 */
+	@RequestMapping(value = "web_user")
+	public String webUser(){
+		return "/home/user/list";
+	}
 }

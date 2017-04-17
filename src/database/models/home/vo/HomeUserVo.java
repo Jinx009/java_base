@@ -2,6 +2,8 @@ package database.models.home.vo;
 
 
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +15,7 @@ public class HomeUserVo {
 	private Integer level;
 	private String roleName;
 	private Integer id;
-	private String createTime;
+	private Date createTime;
 	private Integer status;
 	
 }

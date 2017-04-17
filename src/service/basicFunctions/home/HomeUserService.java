@@ -1,5 +1,6 @@
 package service.basicFunctions.home;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class HomeUserService {
 		return homeUserDao.findByCriteriaForUnique(queryParam);
 	}
 
-	public List<HomeUserVo> getHomeUser() {
+	public List<HomeUserVo> getHomeUser() throws ParseException {
 		return homeUserDao.getHomeUser();
 	}
 	
