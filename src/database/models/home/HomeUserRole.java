@@ -25,9 +25,9 @@ public class HomeUserRole {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(name = "ROLE_ID")
-	private String roleId;
+	private Integer roleId;
 	@Column(name = "USER_ID")
-	private String userId;
+	private Integer userId;
 	@Column(name = "CREATE_TIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;

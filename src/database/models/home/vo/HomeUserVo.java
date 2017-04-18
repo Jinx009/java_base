@@ -17,5 +17,6 @@ public class HomeUserVo {
 	private Integer id;
 	private Date createTime;
 	private Integer status;
+	private String realName;
 	
 }

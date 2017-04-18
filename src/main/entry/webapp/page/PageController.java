@@ -10,9 +10,9 @@ public class PageController {
 	 * 跳转至首页
 	 * @return
 	 */
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "")
 	public String base(){
-		return "/index";
+		return "/home/index";
 	}
 	
 	/**

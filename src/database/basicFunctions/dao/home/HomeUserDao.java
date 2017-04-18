@@ -18,7 +18,7 @@ public class HomeUserDao extends BaseDao<HomeUser>{
 
 	@SuppressWarnings("unchecked")
 	public List<HomeUserVo> getHomeUser() throws ParseException {
-		String sql = "SELECT a.USER_NAME,a.ID,b.NAME,a.CREATE_TIME,b.LEVEL,a.STATUS FROM HOME_USER a,HOME_ROLE b,HOME_USER_ROLE c WHERE a.ID = c.USER_ID AND c.ROLE_ID = b.ID";
+		String sql = "SELECT a.USER_NAME,a.ID,b.NAME,a.CREATE_TIME,b.LEVEL,a.STATUS,a.REAL_NAME FROM HOME_USER a,HOME_ROLE b,HOME_USER_ROLE c WHERE a.ID = c.USER_ID AND c.ROLE_ID = b.ID";
 		Query query = em.createNativeQuery(sql);
 		List<Object> rows = query.getResultList();
 		List<HomeUserVo> list = new ArrayList<HomeUserVo>();
@@ -33,6 +33,7 @@ public class HomeUserDao extends BaseDao<HomeUser>{
 				homeUserVo.setCreateTime(sdf.parse(cells[3].toString()));
 				homeUserVo.setLevel(Integer.valueOf(cells[4].toString()));
 				homeUserVo.setStatus(Integer.valueOf(cells[5].toString()));
+				homeUserVo.setRealName(cells[6].toString());
 				list.add(homeUserVo);
 			}
 		}
