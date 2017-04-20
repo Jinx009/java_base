@@ -124,6 +124,7 @@ function showEdit(id){
 	}
 	$('._edit_submit').bind('click',function(){edit(id)});
 };
+
 /**
  * 真实编辑
  * @param id
