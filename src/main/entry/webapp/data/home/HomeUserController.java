@@ -58,11 +58,10 @@ public class HomeUserController extends BaseController {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			boolean res = homeUserService.add(homeUser, roleId);
-			if (res) {
+			if (res)
 				resp = new Resp<>(RespData.OK_CODE, RespData.OK_MSG, null);
-			} else {
+			else
 				resp = new Resp<>(RespData.ERROR_CODE, RespData.HOME_USER_EXITS, null);
-			}
 			logger.warn(" [HomeUserController.add][data:{}] ", resp);
 		} catch (Exception e) {
 			resp = new Resp<>(false);
@@ -71,7 +70,7 @@ public class HomeUserController extends BaseController {
 		}
 		return resp;
 	}
-	
+
 	/**
 	 * 修改账户
 	 * 
@@ -82,15 +81,14 @@ public class HomeUserController extends BaseController {
 	 */
 	@RequestMapping(path = "/user_update", method = RequestMethod.POST)
 	@ResponseBody
-	public Resp<?> update(HttpServletRequest request, HomeUser homeUser, Integer roleId,Integer userId) {
+	public Resp<?> update(HttpServletRequest request, HomeUser homeUser, Integer roleId, Integer userId) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String res = homeUserService.update(homeUser, roleId,userId);
-			if (RespData.OK_CODE.equals(res)) {
+			String res = homeUserService.update(homeUser, roleId, userId);
+			if (RespData.OK_CODE.equals(res))
 				resp = new Resp<>(RespData.OK_CODE, RespData.OK_MSG, null);
-			} else {
-				resp = new Resp<>(RespData.ERROR_CODE,res, null);
-			}
+			else
+				resp = new Resp<>(RespData.ERROR_CODE, res, null);
 			logger.warn(" [HomeUserController.add][data:{}] ", resp);
 		} catch (Exception e) {
 			resp = new Resp<>(false);
