@@ -64,8 +64,8 @@
                 		</td>
                 		<td v-text="model.createTime" ></td>
                 		<td>
-                			<small v-if="model.status===1" class="label bg-red cursor">禁用</small>
-                			<small v-if="model.status!=1" class="label bg-green cursor">激活</small>
+                			<small v-if="model.status===1" class="label bg-red cursor" onclick="changeStatus('0','{{model.id}}')" >禁用</small>
+                			<small v-if="model.status!=1" class="label bg-green cursor" onclick="changeStatus('1','{{model.id}}')" >激活</small>
                 			<small class="label bg-blue cursor">编辑</small>
                 		</td>
                 	</tr>

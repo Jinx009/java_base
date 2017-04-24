@@ -18,7 +18,7 @@ import lombok.Setter;
 @Table(name = "WEB_USER")
 @Getter
 @Setter
-public class WebUse {
+public class WebUser {
 
 	@Id
 	@Column(name = "ID",unique=true, nullable=false)
