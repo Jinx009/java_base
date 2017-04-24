@@ -40,7 +40,7 @@ public class HomeResourceController {
 			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,HomeConfigConstant.getResourceBySession(session));
 //			logger.warn(" [HomeResourceController.getMenu][data:{}] ",resp);
 		} catch (Exception e) {
-			logger.error(" [HomeResourceController.getMenu][error:{}] ",e);
+			logger.error("[error:{}] ",e);
 		}
 		return resp;
 	}
@@ -56,9 +56,9 @@ public class HomeResourceController {
 		try {
 			List<HomeResource> list = homeResourceService.getPageResource();
 			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,list);
-			logger.warn(" [HomeResourceController.getResource][data:{}] ",resp);
+			logger.warn("[data:{}] ",resp);
 		} catch (Exception e) {
-			logger.error(" [HomeResourceController.getResource][error:{}] ",e);
+			logger.error("[error:{}] ",e);
 		}
 		return resp;
 	}
@@ -74,9 +74,9 @@ public class HomeResourceController {
 		try {
 			List<HomeResource> list = homeResourceService.getDataResource();
 			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,list);
-			logger.warn(" [HomeResourceController.getDataResource][data:{}] ",resp);
+			logger.warn("[data:{}] ",resp);
 		} catch (Exception e) {
-			logger.error(" [HomeResourceController.getDataResource][error:{}] ",e);
+			logger.error("[error:{}] ",e);
 		}
 		return resp;
 	}

@@ -35,11 +35,11 @@ public class HomeUserController extends BaseController {
 		try {
 			List<HomeUserVo> list = homeUserService.getHomeUser();
 			resp = new Resp<>(RespData.OK_CODE, RespData.OK_MSG, list);
-			logger.warn(" [HomeUserController.user][data:{}] ", resp);
+			logger.warn("[data:{}] ", resp);
 		} catch (Exception e) {
 			resp = new Resp<>(false);
 			resp.setMsg(e.getMessage());
-			logger.warn(" [HomeUserController.user][error:{}] ", e);
+			logger.warn("[error:{}] ", e);
 		}
 		return resp;
 	}

@@ -28,7 +28,7 @@ public class HomeRoleController {
 	public Resp<?> getRoles(){
 		Resp<?> resp = new Resp<>(false);
 		resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,homeRoleService.findAll());
-		logger.warn(" [HomeRoleController.getRoles][data:{}] ",resp);
+		logger.warn("[data:{}] ",resp);
 		return resp;
 	}
 }

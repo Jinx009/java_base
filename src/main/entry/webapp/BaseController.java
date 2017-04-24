@@ -47,7 +47,7 @@ public class BaseController {
 			request.setAttribute("signature", ret.get("signature").toString());
 			request.setAttribute("desc","");
 		} catch (Exception e) {
-			logger.error("[BaseController.getJsApi.error:{}]",e);
+			logger.error("[error:{}]",e);
 		} 
 	}
 	
@@ -92,7 +92,7 @@ public class BaseController {
 	public void setSessionAdmin(HttpServletRequest request,HomeUser homeUser){
 		HttpSession session = request.getSession();
 		session.setAttribute(HomeConfigConstant.HOME_USER, homeUser);
-		logger.warn("[BaseController.setSessionAdmin.data:{}]",homeUser.getRealName());
+		logger.warn("[data:{}]",homeUser.getRealName());
 		session.setAttribute(HomeConfigConstant.HOME_NAME,homeUser.getRealName());
 	}
 	

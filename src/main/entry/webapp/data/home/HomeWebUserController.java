@@ -33,11 +33,11 @@ public class HomeWebUserController {
 		try {
 			List<WebUse> list = webUserService.findAll();
 			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,list);
-			logger.warn(" [HomeWebUserController.user][data:{}] ",resp);
+			logger.warn("[data:{}] ",resp);
 		} catch (Exception e) {
 			resp = new Resp<>(false);
 			resp.setMsg(e.getMessage());
-			logger.warn(" [HomeWebUserController.user][error:{}] ",e);
+			logger.warn("[error:{}] ",e);
 		}
 		return resp;
 	}
