@@ -46,7 +46,7 @@ public class HomeResourceController {
 	}
 	
 	/**
-	 * 后台管理菜单列表
+	 * 后台管理页面菜单列表
 	 * @return
 	 */
 	@RequestMapping(path = "/page")
@@ -64,7 +64,7 @@ public class HomeResourceController {
 	}
 	
 	/**
-	 * 后台管理菜单列表
+	 * 后台管理数据菜单列表
 	 * @return
 	 */
 	@RequestMapping(path = "/data")
@@ -81,4 +81,40 @@ public class HomeResourceController {
 		return resp;
 	}
 	
+	/**
+	 * 新增数据菜单
+	 * @return
+	 */
+	@RequestMapping(path = "/resource_data_add")
+	@ResponseBody
+	public Resp<?> dataAdd(String name,String description,String uri){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			homeResourceService.saveData(name,description,uri);
+			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,null);
+		} catch (Exception e) {
+			logger.error("[error:{}] ",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 更改数据状态
+	 * @param name
+	 * @param description
+	 * @param uri
+	 * @return
+	 */
+	@RequestMapping(path = "/resource_data_status")
+	@ResponseBody
+	public Resp<?> dataStatus(Integer status,Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			homeResourceService.updateStatus(status,id);
+			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,null);
+		} catch (Exception e) {
+			logger.error("[error:{}] ",e);
+		}
+		return resp;
+	}
 }

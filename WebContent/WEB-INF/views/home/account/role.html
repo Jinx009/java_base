@@ -31,7 +31,7 @@
       </ol>
     </section>
     <!-- 主内容 -->
-    <section class="content" >
+    <section class="content _main" >
 	    <div class="row">
         <div class="col-xs-12">
           <div class="box" style="border-top:1px solid #d2d6de;" >
@@ -40,7 +40,7 @@
               <div class="box-tools">
               	<div class="input-group input-group-sm" style="width: 150px;">
                   <div class="input-group-btn">
-                    <button type="button" class="btn bg-orange btn-xs float-right">新增角色</button>
+                    <button type="button" class="btn bg-orange btn-xs float-right _main_">新增角色</button>
                   
                   </div>
                 </div>
@@ -54,6 +54,7 @@
                 		<th>名称</th>
                 		<th>级别</th>
                 		<th>状态</th>
+                		<th>描述</th>
                 		<th>操作</th>
                 	</tr>
                 	<tr v-for="model in data" >
@@ -64,9 +65,57 @@
                 			<small v-if="model.status===1" class="label bg-green">可用</small>
                 			<small v-if="model.status!=1" class="label bg-red">停用</small>
                 		</td>
+                		<td v-text="model.description" ></td>
                 		<td>
                 			<small v-if="model.status===1" class="label bg-red cursor">禁用</small>
                 			<small v-if="model.status!=1" class="label bg-green cursor">激活</small>
+                		</td>
+                	</tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+     <!-- 新增角色 -->
+    <section class="content none _add" >
+	    <div class="row">
+        <div class="col-xs-6">
+          <div class="box" style="border-top:1px solid #d2d6de;" >
+            <div class="box-header">
+              <h3 class="box-title">
+              	<button type="button" class="btn bg-orange btn-xs _add_">返回</button>
+              </h3>
+            </div>
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover table-bordered">
+                <tbody class="data-tbody" >
+                	<tr>
+                		<th>属性名称</th>
+                		<th>属性值</th>
+                	</tr>
+                	<tr>
+                		<td>角色名称</td>
+                		<td>
+                			<input class="form-control" type="text" id="name" />
+                		</td>
+                	</tr>
+                	<tr>
+                		<td>角色级别</td>
+                		<td>
+                			<input class="form-control" type="text" id="level" />
+                		</td>
+                	</tr>
+                	<tr>
+                		<td>角色描述</td>
+                		<td>
+                			<input class="form-control" type="text" id="description" />
+                		</td>
+                	</tr>
+                	<tr>
+                		<td colspan="2" class="center" >
+                			<button type="button"  class="btn btn-block btn-success btn-sm _submit width-10">确认保存</button>
                 		</td>
                 	</tr>
                 </tbody>
@@ -84,6 +133,9 @@
 	$(function(){
 		getNav('账户管理');
 		getData();
+		$('._add_').bind('click',function(){changeDiv('_main')});
+		$('._main_').bind('click',function(){changeDiv('_add')});
+		$('._submit').bind('click',function(){add();});
 	});
 </script>
 </body>

@@ -35,8 +35,6 @@ public class HomeWebUserController {
 			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,list);
 			logger.warn("[data:{}] ",resp);
 		} catch (Exception e) {
-			resp = new Resp<>(false);
-			resp.setMsg(e.getMessage());
 			logger.warn("[error:{}] ",e);
 		}
 		return resp;

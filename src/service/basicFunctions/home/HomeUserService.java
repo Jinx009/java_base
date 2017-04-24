@@ -70,5 +70,17 @@ public class HomeUserService {
 		}
 		return RespData.OK_CODE;
 	}
+
+	public void changeStatus(Integer status, Integer id) {
+		HomeUser homeUser = homeUserDao.find(id);
+		if(null!=homeUser){
+			homeUser.setStatus(status);
+			homeUserDao.update(homeUser);
+		}
+	}
+
+	public void update(HomeUser homeUser) {
+		homeUserDao.update(homeUser);
+	}
 	
 }

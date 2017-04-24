@@ -33,5 +33,7 @@ public class HomeRole {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATE_TIME")
 	private Date createTime;
+	@Column(name = "DESCRIPTION")
+	private String description;
 	
 }

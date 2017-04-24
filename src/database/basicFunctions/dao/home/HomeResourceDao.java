@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
+import database.common.OrderFilter.OrderType;
 import database.common.QueryParam;
 import database.models.home.HomeResource;
 
@@ -23,12 +24,14 @@ public class HomeResourceDao extends BaseDao<HomeResource>{
 	public List<HomeResource> getPageResource() {
 		QueryParam queryParam = QueryParam.getInstance();
 		queryParam.addParam("type",0);
+		queryParam.addOrder(OrderType.DESC,"createTime");
 		return findByCriteria(queryParam);
 	}
 
 	public List<HomeResource> getDataResource() {
 		QueryParam queryParam = QueryParam.getInstance();
 		queryParam.addParam("type",1);
+		queryParam.addOrder(OrderType.DESC,"createTime");
 		return findByCriteria(queryParam);
 	}
 	

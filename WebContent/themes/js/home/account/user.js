@@ -48,6 +48,39 @@ function getData(){
 	});
 }
 /**
+ * 更改账户状态
+ * @param status
+ * @param id
+ */
+function changeStatus(status,id){
+	var _text = '您确定要禁用该账户吗？';
+	if('1'===status){
+		_text = '您确定要激活该账户吗？';
+	}
+	layer.confirm(_text, {
+	  btn: ['确定','取消'] 
+	}, function(){
+	   var params = 'status='+status+'&id='+id;
+	   $.ajax({
+		   url:'/home/d/user_status',
+		   data:params,
+		   type:'post',
+		   dataType:'json',
+		   success:function(res){
+			   if('200'==res.code){
+					layer.alert('操作成功！',function(){
+						location.reload();
+					});
+				}else if('8001'==res.code){
+					layer.alert('您无权限操作此项！');
+				}else{
+					layer.alert(res.msg);
+				}
+		   }
+	   })
+	});
+}
+/**
  * 列表和新增切换
  * @param _class
  */

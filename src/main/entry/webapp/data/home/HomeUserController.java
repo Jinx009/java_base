@@ -62,11 +62,9 @@ public class HomeUserController extends BaseController {
 				resp = new Resp<>(RespData.OK_CODE, RespData.OK_MSG, null);
 			else
 				resp = new Resp<>(RespData.ERROR_CODE, RespData.HOME_USER_EXITS, null);
-			logger.warn(" [HomeUserController.add][data:{}] ", resp);
+			logger.warn("[data:{}] ", resp);
 		} catch (Exception e) {
-			resp = new Resp<>(false);
-			resp.setMsg(e.getMessage());
-			logger.warn(" [HomeUserController.add][error:{}] ", e);
+			logger.error("[error:{}] ", e);
 		}
 		return resp;
 	}
@@ -89,13 +87,56 @@ public class HomeUserController extends BaseController {
 				resp = new Resp<>(RespData.OK_CODE, RespData.OK_MSG, null);
 			else
 				resp = new Resp<>(RespData.ERROR_CODE, res, null);
-			logger.warn(" [HomeUserController.add][data:{}] ", resp);
+			logger.warn("[data:{}] ", resp);
 		} catch (Exception e) {
-			resp = new Resp<>(false);
-			resp.setMsg(e.getMessage());
-			logger.warn(" [HomeUserController.add][error:{}] ", e);
+			logger.error("[error:{}] ", e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 更改账户状态
+	 * @param status
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(path = "/user_status",method = RequestMethod.POST)
+	@ResponseBody
+	public Resp<?> status(Integer status,Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			homeUserService.changeStatus(status,id);
+			resp = new Resp<>(RespData.OK_CODE, RespData.OK_MSG, null);
+		} catch (Exception e) {
+			logger.error("[error:{}]",e);
 		}
 		return resp;
 	}
 
+	/**
+	 * 修改账户密码
+	 * @param status
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(path = "/user_pwd",method = RequestMethod.POST)
+	@ResponseBody
+	public Resp<?> pwd(HttpServletRequest request,String oldPwd,String pwd){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			HomeUser homeUser = getSessionHomeUser(request);
+			if(homeUser!=null&&homeUser.getPwd().equals(oldPwd)){
+				homeUser.setPwd(pwd);
+				homeUserService.update(homeUser);
+				resp = new Resp<>(RespData.OK_CODE, RespData.OK_MSG, null);
+				return resp;
+			}else{
+				resp.setMsg(RespData.PWD_NOT_SAME);
+				return resp;
+			}
+		} catch (Exception e) {
+			logger.error("[error:{}]",e);
+		}
+		return resp;
+	}
 }
