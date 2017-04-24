@@ -35,9 +35,9 @@ public class HomeConfigConstant {
 	 */
 	public static boolean checkSession(String sessionId){
 		 Set<Entry<String,String>> entrySet = sessionIdMap.entrySet();
-		 logger.warn("HomeConfigConstant.checkSession sessionId:{}",sessionId);
+		 logger.warn("sessionId:{}",sessionId);
          for (Entry<String,String> entry : entrySet) {
-        	 logger.warn("HomeConfigConstant.checkSession key:{},value:{}",entry.getKey(),entry.getValue());
+        	 logger.warn("key:{},value:{}",entry.getKey(),entry.getValue());
             if (sessionId.equals(entry.getValue())) {
                 return true;
             }
