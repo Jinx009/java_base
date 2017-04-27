@@ -1,5 +1,6 @@
 package database.models.web;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,8 +19,8 @@ import lombok.Setter;
 @Table(name = "WEB_USER")
 @Getter
 @Setter
-public class WebUser {
-
+public class WebUser implements Serializable{
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "ID",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

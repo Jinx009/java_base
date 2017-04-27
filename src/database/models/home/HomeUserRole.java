@@ -1,5 +1,6 @@
 package database.models.home;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,8 +19,8 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "HOME_USER_ROLE")
-public class HomeUserRole {
-
+public class HomeUserRole implements Serializable{
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "ID",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
