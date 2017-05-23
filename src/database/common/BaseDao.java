@@ -239,7 +239,7 @@ public class BaseDao<T> {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public <G> List<G> findBySql(String sql, QueryParam param, Class<G> clazz) {
-		String dataSql = "select * " + sql + param.bySearchSqlFilter().toString() + param.byOrderSqlFilter().toString();
+		String dataSql = sql + param.bySearchSqlFilter().toString() + param.byOrderSqlFilter().toString();
 		Query query = em.createNativeQuery(dataSql, clazz);
 		List list = query.getResultList();
 		return list;

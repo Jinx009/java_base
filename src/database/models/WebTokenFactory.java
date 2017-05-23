@@ -23,7 +23,7 @@ import lombok.Setter;
 public class WebTokenFactory {
 
 	@Id
-	@Column(unique=true, nullable=false)
+	@Column(name = "ID",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(name = "TOKEN_TYPE")//类型1表示jsApi,2accessToken

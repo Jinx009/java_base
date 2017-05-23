@@ -1,0 +1,21 @@
+.cursor{
+	cursor: pointer;
+}
+.float-right{
+	float: right;
+}
+.box.box-primary {
+    border-top-color: #f4f4f4;
+}
+.box-header>.fa, .box-header>.glyphicon, .box-header>.ion, .box-header .box-title{
+	font-size: 15px;
+}
+.none{
+	display: none;
+}
+.center{
+	text-align: center;
+}
+.width-10{
+	width: 110px;
+}
