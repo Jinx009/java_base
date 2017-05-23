@@ -4,6 +4,7 @@
     <groupId>nbBase</groupId>
     <artifactId>base</artifactId>
     <version>1.0.0</version>
+    <name>base</name>
     <packaging>war</packaging>
     <build>
         <sourceDirectory>src</sourceDirectory>
@@ -247,5 +248,11 @@
 	        <artifactId>jedis</artifactId> 
 	        <version>2.1.0</version> 
 	    </dependency>  
+	    
+	    <dependency>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-util</artifactId>
+		    <version>8.0.0-RC1</version>
+		</dependency>
     </dependencies>
 </project>
