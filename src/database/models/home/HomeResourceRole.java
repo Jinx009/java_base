@@ -1,5 +1,6 @@
 package database.models.home;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,8 +17,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "HOME_RESOURCE_ROLE")
-public class HomeResourceRole {
-
+public class HomeResourceRole implements Serializable{
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "ID",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,5 +12,8 @@ public class RespData {
 	
 	public static final String CANT_IN_CODE = "8001";
 	public static final String CANT_IN_MSG = "权限未得到认可";
-	
+	public static final String HOME_USER_EXITS = "账户名已存在";
+	public static final String HOME_USER_NOT_EXITS = "账户不存在";
+	public static final String HOME_USER_NOT_UNIQUE = "账户名不唯一";
+	public static final String PWD_NOT_SAME = "两次密码不一致";
 }

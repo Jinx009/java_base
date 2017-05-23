@@ -52,4 +52,30 @@ public class HomePageController {
 		return "/home/account/user";
 	}
 	
+	/**
+	 * 页面授权
+	 * @return
+	 */
+	@RequestMapping(path = "author_page")
+	public String authorPage(){
+		return "/home/menu/author_page";
+	}
+	
+	/**
+	 * 数据授权
+	 * @return
+	 */
+	@RequestMapping(path = "author_data")
+	public String authorData(){
+		return "/home/menu/author_data";
+	}
+	
+	/**
+	 * 前端用户列表
+	 * @return
+	 */
+	@RequestMapping(value = "web_user")
+	public String webUser(){
+		return "/home/user/list";
+	}
 }

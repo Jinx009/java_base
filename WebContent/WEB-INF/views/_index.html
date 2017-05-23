@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <style type="text/css">
+    .index{
+    	position: absolute;
+    	top: 0px;
+    	left: 0px;
+    	width: 100%;
+    	height: 300px;
+    	background-color: red;
+    }
+    </style>
+</head>
+<body>
+	<div id="test" >
+		<div class="index" id="index1" style="z-index: 999;" >1</div>
+		<div class="index" id="index2"  style="z-index: 888;">2</div>
+		<div class="index" id="index3"  style="z-index: 777;">3</div>
+	</div>
+	<script type="text/javascript">
+	 var index = 1;
+	    document.getElementById('test').addEventListener('touchstart', touchSatrt,false);
+	    document.getElementById('test').addEventListener('touchmove', touchMove,false);
+	    document.getElementById('test').addEventListener('touchend', touchEnd,false);
+	    var startX,x,aboveX=0,startY,y,aboveY = 0;
+		/**
+		 * 开始滑动
+		 * @param e
+	     */
+		function touchSatrt(e){//触摸
+			e.preventDefault();
+			var touch=e.touches[0];
+			startX = touch.pageX;   //刚触摸时的坐标
+			startY = touch.pageY;
+		}
+
+		/**
+		 * 滑动过程中
+		 * @param e
+	     */
+		function touchMove(e){//滑动
+			var  touch = e.touches[0];
+			x = parseInt(touch.pageX - startX);//滑动的距离
+			console.log(x)
+		}
+
+		/**
+		 * 滑动结束
+		 * @param e
+	     */
+		function touchEnd(e){//手指离开屏幕
+			console.log(x);
+			console.log(index);
+			document.getElementById('index'+index).style.display = 'none';
+			index ++;
+			aboveX = 0;
+			aboveY = 0;
+			x = 0;
+		}
+
+	</script>
+</body>
+</html>

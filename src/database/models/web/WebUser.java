@@ -1,4 +1,4 @@
-package database.models.home;
+package database.models.web;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,26 +15,24 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
 @Entity
-@Table(name = "HOME_ROLE")
-public class HomeRole implements Serializable{
+@Table(name = "WEB_USER")
+@Getter
+@Setter
+public class WebUser implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "ID",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Column(name = "USER_NAME")
+	private String userName;
+	@Column(name = "PWD")
+	private String pwd;
+	@Column(name = "CREATE_TIME")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createTime;
 	@Column(name = "STATUS")
 	private Integer status;
-	@Column(name = "NAME")
-	private String name;
-	@Column(name = "LEVEL")
-	private Integer level;
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATE_TIME")
-	private Date createTime;
-	@Column(name = "DESCRIPTION")
-	private String description;
 	
 }

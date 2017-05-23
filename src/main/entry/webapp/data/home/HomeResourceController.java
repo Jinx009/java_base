@@ -38,15 +38,16 @@ public class HomeResourceController {
 		try {
 			HttpSession session = request.getSession();
 			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,HomeConfigConstant.getResourceBySession(session));
+			logger.warn("123{}{}{}","123","123","123");
 //			logger.warn(" [HomeResourceController.getMenu][data:{}] ",resp);
 		} catch (Exception e) {
-			logger.error(" [HomeResourceController.getMenu][error:{}] ",e);
+			logger.error("[error:{}] ",e);
 		}
 		return resp;
 	}
 	
 	/**
-	 * 后台管理菜单列表
+	 * 后台管理页面菜单列表
 	 * @return
 	 */
 	@RequestMapping(path = "/page")
@@ -56,15 +57,15 @@ public class HomeResourceController {
 		try {
 			List<HomeResource> list = homeResourceService.getPageResource();
 			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,list);
-			logger.warn(" [HomeResourceController.getResource][data:{}] ",resp);
+			logger.warn("[data:{}] ",resp);
 		} catch (Exception e) {
-			logger.error(" [HomeResourceController.getResource][error:{}] ",e);
+			logger.error("[error:{}] ",e);
 		}
 		return resp;
 	}
 	
 	/**
-	 * 后台管理菜单列表
+	 * 后台管理数据菜单列表
 	 * @return
 	 */
 	@RequestMapping(path = "/data")
@@ -74,11 +75,47 @@ public class HomeResourceController {
 		try {
 			List<HomeResource> list = homeResourceService.getDataResource();
 			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,list);
-			logger.warn(" [HomeResourceController.getDataResource][data:{}] ",resp);
+			logger.warn("[data:{}] ",resp);
 		} catch (Exception e) {
-			logger.error(" [HomeResourceController.getDataResource][error:{}] ",e);
+			logger.error("[error:{}] ",e);
 		}
 		return resp;
 	}
 	
+	/**
+	 * 新增数据菜单
+	 * @return
+	 */
+	@RequestMapping(path = "/resource_data_add")
+	@ResponseBody
+	public Resp<?> dataAdd(String name,String description,String uri){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			homeResourceService.saveData(name,description,uri);
+			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,null);
+		} catch (Exception e) {
+			logger.error("[error:{}] ",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 更改数据状态
+	 * @param name
+	 * @param description
+	 * @param uri
+	 * @return
+	 */
+	@RequestMapping(path = "/resource_data_status")
+	@ResponseBody
+	public Resp<?> dataStatus(Integer status,Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			homeResourceService.updateStatus(status,id);
+			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,null);
+		} catch (Exception e) {
+			logger.error("[error:{}] ",e);
+		}
+		return resp;
+	}
 }

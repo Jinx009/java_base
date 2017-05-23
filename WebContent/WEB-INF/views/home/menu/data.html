@@ -31,7 +31,7 @@
       </ol>
     </section>
     <!-- 主内容 -->
-    <section class="content" >
+    <section class="content _main" >
 	   <div class="box" >
         <div class="box-header with-border">
           <h3 class="box-title" >数据管理</h3>
@@ -58,15 +58,64 @@
                 		</th>
                 		<th v-text="item.uri" ></th>
                 		<th>
-                			<small v-if="item.status!=1" class="label bg-green cursor">可用</small>
-                			<small v-if="item.status===1" class="label bg-red cursor">禁用</small>
-                			<small class="label bg-blue cursor">编辑</small>
+                			<small v-if="item.status!=1" class="label bg-green cursor" onclick="changeStatus('1','{{item.id}}')" >可用</small>
+                			<small v-if="item.status===1" class="label bg-red cursor" onclick="changeStatus('0','{{item.id}}')" >禁用</small>
+                		<!-- 	<small class="label bg-blue cursor">编辑</small> -->
                 		</th>
                 	</tr>
                 </tbody>
              </table> 	
         </div>
-        <div class="box-footer" style="display: block;"></div>
+        <div class="box-footer" style="display: block;">
+        	<button type="button" class="btn btn-success btn-xs btn-add"  >新增记录</button>
+        </div>
+      </div>
+    </section>
+     <!-- 新增用户 -->
+    <section class="content none _add" >
+	    <div class="row">
+        <div class="col-xs-6">
+          <div class="box" style="border-top:1px solid #d2d6de;" >
+            <div class="box-header">
+              <h3 class="box-title">
+              	<button type="button" class="btn bg-orange btn-xs btn-back">返回</button>
+              </h3>
+            </div>
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover table-bordered">
+                <tbody class="data-tbody" >
+                	<tr>
+                		<th>属性名称</th>
+                		<th>属性值</th>
+                	</tr>
+                	<tr>
+                		<td>名称</td>
+                		<td>
+                			<input class="form-control" type="text" id="name" />
+                		</td>
+                	</tr>
+                	<tr>
+                		<td>描述</td>
+                		<td>
+                			<input class="form-control" type="text" id="description" />
+                		</td>
+                	</tr>
+                	<tr>
+                		<td>链接</td>
+                		<td>
+                			<input class="form-control" type="text" id="uri" />
+                		</td>
+                	</tr>
+                	<tr>
+                		<td colspan="2" class="center" >
+                			<button type="button"  class="btn btn-block btn-success btn-sm _submit width-10">确认保存</button>
+                		</td>
+                	</tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -77,6 +126,9 @@
 	$(function(){
 		getNav('菜单管理');
 		getData();
+		$('.btn-add').bind('click',function(){changeDiv('_add')});
+		$('.btn-back').bind('click',function(){changeDiv('_main')});
+		$('._submit').bind('click',function(){add();})
 	});
 </script>
 </body>

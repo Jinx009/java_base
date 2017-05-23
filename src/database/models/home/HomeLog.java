@@ -1,6 +1,7 @@
 package database.models.home;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -19,8 +20,9 @@ import lombok.Setter;
 @Table(name = "HOME_LOG")
 @Getter
 @Setter
-public class HomeLog {
+public class HomeLog implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "ID",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

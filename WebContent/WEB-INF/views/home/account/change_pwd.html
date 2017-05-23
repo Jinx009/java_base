@@ -55,7 +55,7 @@
 	                </div>
 	              </div>
 	              <div class="box-footer">
-	                <button type="button" class="btn btn-primary">确认修改</button>
+	                <button type="button" class="btn btn-primary submit-btn">确认修改</button>
 	              </div>
 	            </form>
 	            </div>
@@ -68,14 +68,15 @@
 <script type="text/javascript">
 	$(function(){
 		getNav('账户管理');
-		$('.btn-primary').bind('click',function(){
-			changePwd();
-		})
 		$('.form-control').bind('click',function(){
 			$('#errorMsg').html('');
 		})
+		$('.submit-btn').bind('click',function(){
+			changePwd();
+		})
 	});
 </script>
-<script src="/themes/js/home/account/change_pwd.js"></script>
+<script src="/themes/js/md5.js"></script>
+<script src="/themes/js/home/account/change_pwd.js?version=1.21"></script>
 </body>
 </html>
