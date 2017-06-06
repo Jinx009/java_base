@@ -31,5 +31,9 @@ public class ProUserService {
 	public ProUser findByDomain(String domain) {
 		return proUserDao.findByDomain(domain);
 	}
+
+	public ProUser findById(Integer id) {
+		return proUserDao.find(id);
+	}
 	
 }

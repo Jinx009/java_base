@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import database.models.home.pro.Pro;
 import database.models.home.pro.ProUser;
@@ -29,7 +31,13 @@ public class ProDataController extends BaseController{
 	@Autowired
 	private ProUserService proUserService;
 	
-	@RequestMapping(path = "/pro/home/list") 
+	/**
+	 * 后端使用列表
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(path = "/pro/home/list",method = RequestMethod.POST) 
+	@ResponseBody
 	public Resp<?> findHomePro(HttpServletRequest request){
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -47,7 +55,13 @@ public class ProDataController extends BaseController{
 		}
 	}
 	
-	@RequestMapping(path = "/pro/web/list") 
+	/**
+	 * 前端使用列表
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(path = "/pro/web/list",method = RequestMethod.POST) 
+	@ResponseBody
 	public Resp<?> findWebPro(HttpServletRequest request){
 		Resp<?> resp = new Resp<>(false);
 		try {

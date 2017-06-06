@@ -124,7 +124,7 @@ public class BaseController {
 	 * @param request
 	 * @param menus
 	 */
-	public void setSessionAdmin(HttpServletRequest request,ProUser proUser){
+	public void setSessionProUser(HttpServletRequest request,ProUser proUser){
 		HttpSession session = request.getSession();
 		session.setAttribute(HomeConfigConstant.PRO_USER, proUser);
 		logger.warn("[data:{}]",proUser);

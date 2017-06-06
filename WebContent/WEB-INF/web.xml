@@ -20,11 +20,11 @@
 	<!-- 后台页面拦截 -->
     <filter>
 		<filter-name>HomePageSessionFilter</filter-name>
-		<filter-class>main.entry.filter.HomePageFilter</filter-class>
+		<filter-class>main.entry.filter.ProPageFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>HomePageSessionFilter</filter-name>
-		<url-pattern>/pro_home/p/*</url-pattern>
+		<url-pattern>/p/pro/*</url-pattern>
 	</filter-mapping>
 	<!-- 字符编码过滤器 -->
     <filter>
