@@ -9,6 +9,7 @@ import main.entry.webapp.BaseController;
 @RequestMapping(value = "/p/pro/")
 public class ProHomePageController extends BaseController{
 
+	@RequestMapping(path = "/login")
 	public String login(){
 		return "/pro/home/login";
 	}

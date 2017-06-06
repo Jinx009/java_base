@@ -24,7 +24,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>HomePageSessionFilter</filter-name>
-		<url-pattern>/p/pro/*</url-pattern>
+		<url-pattern>/p/pro/home/*</url-pattern>
 	</filter-mapping>
 	<!-- 字符编码过滤器 -->
     <filter>
