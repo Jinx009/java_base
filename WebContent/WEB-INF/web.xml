@@ -9,14 +9,14 @@
         <param-value>/config/applicationContext.xml</param-value>
     </context-param>
    <!-- 后台数据拦截 -->
-    <filter>
+ <!--    <filter>
 		<filter-name>HomeDataSessionFilter</filter-name>
 		<filter-class>main.entry.filter.HomeDataFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>HomeDataSessionFilter</filter-name>
 		<url-pattern>/home/d/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 	<!-- 后台页面拦截 -->
     <filter>
 		<filter-name>HomePageSessionFilter</filter-name>
@@ -24,7 +24,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>HomePageSessionFilter</filter-name>
-		<url-pattern>/home/p/*</url-pattern>
+		<url-pattern>/pro_home/p/*</url-pattern>
 	</filter-mapping>
 	<!-- 字符编码过滤器 -->
     <filter>

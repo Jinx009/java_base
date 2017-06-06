@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import database.models.WebTokenFactory;
 import database.models.home.HomeResource;
 import database.models.home.HomeUser;
+import database.models.home.pro.ProUser;
 import service.basicFunctions.WebTokenFactoryService;
 import utils.ip.IPUtil;
 import utils.model.HomeConfigConstant;
@@ -107,4 +108,25 @@ public class BaseController {
 		return homeUser;
 	}
 	
+	/**
+	 * 从session中取出项目后台用户
+	 * @param request
+	 * @return
+	 */
+	public ProUser getSessionProUser(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		ProUser proUser = (ProUser) session.getAttribute(HomeConfigConstant.PRO_USER);
+		return proUser;
+	}
+	
+	/**
+	 * 设置session中项目后台用户
+	 * @param request
+	 * @param menus
+	 */
+	public void setSessionAdmin(HttpServletRequest request,ProUser proUser){
+		HttpSession session = request.getSession();
+		session.setAttribute(HomeConfigConstant.PRO_USER, proUser);
+		logger.warn("[data:{}]",proUser);
+	}
 }

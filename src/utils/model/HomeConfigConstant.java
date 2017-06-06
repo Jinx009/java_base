@@ -27,6 +27,7 @@ public class HomeConfigConstant {
 	public static Map<String,String> sessionIdMap = new HashMap<String,String>();
 	public static final String HOME_NAME = "homeUserName";
 	public static final String HOME_USER = "homeUser";
+	public static final String PRO_USER = "proUser";
 	
 	/**
 	 * 判断用户是否有效
