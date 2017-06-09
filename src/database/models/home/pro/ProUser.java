@@ -30,7 +30,7 @@ public class ProUser implements Serializable{
 	private String userName;
 	@Column(name = "PWD")
 	private String pwd;
-	@Column(name = "CREATE TIME")
+	@Column(name = "CREATE_TIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
 	@Column(name = "UPDATE_TIME")
