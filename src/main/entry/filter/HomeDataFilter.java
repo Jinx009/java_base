@@ -2,7 +2,6 @@ package main.entry.filter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSON;
 
-import database.models.home.HomeResource;
 import utils.Resp;
 import utils.RespData;
 import utils.model.HomeConfigConstant;
@@ -39,10 +37,9 @@ public class HomeDataFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-		String servletPath = httpServletRequest.getServletPath();
 		// 通过检查session中的变量，过虑请求
 		HttpSession session = httpServletRequest.getSession();
-		if(!HomeConfigConstant.checkSession(session.getId())||!check(session, servletPath)){
+		if(!HomeConfigConstant.checkSession(session.getId())){
 			httpServletResponse.setContentType("application/json;charset=UTF-8");  
 			PrintWriter out = httpServletResponse.getWriter();  
 			out.print(JSON.toJSON(new Resp<>(RespData.CANT_IN_CODE,RespData.CANT_IN_MSG,null))); 
@@ -68,19 +65,6 @@ public class HomeDataFilter implements Filter {
 
 	protected String selectEncoding(ServletRequest request) {
 		return (this.encoding);
-	}
-
-	@SuppressWarnings("unchecked")
-	private boolean check(HttpSession session,String uri) {
-		List<HomeResource> list = (List<HomeResource>) HomeConfigConstant.getResourceBySession(session);
-		if(null!=list&&!list.isEmpty()){
-			for(HomeResource homeResource:list){
-				if(uri.equals(homeResource.getUri())){
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 }

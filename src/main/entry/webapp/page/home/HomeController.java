@@ -23,16 +23,6 @@ public class HomeController {
 	}
 	
 	/**
-	 * 登录后首页
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(path = "/page/index")
-	public String page(HttpServletRequest request){
-		return "/home/main";
-	}
-
-	/**
 	 * 错误页
 	 * @param request
 	 * @return

@@ -2,56 +2,25 @@ var _menuIconList = ['fa fa-bell-slash-o','fa fa-bicycle','fa fa-binoculars','fa
 var _menuParent = new Array();
 var _sonMenuList = new Array();
 var _menuIconIndex = 0;
+var _locationId = 14;
+$(function(){
+	getNav();
+})
 /**
  * 导航数据
  * @param _activeName
  */
-function getNav(_activeName){
-	$('#warningInput').val(new Date().Format("yyyy年MM月dd日"))
-	if(_activeName!=''){
-		$('.treeview').removeClass('active');
-	}
-	$.ajax({
-		url:'/home/d/menu?t='+getTimestamp(),
-		type:'post',
-		dataType:'json',
-		success:function(res){
-			if(res.data!=null){
-				for(var i in res.data){
-					if(0==res.data[i].type&&0==res.data[i].parentId){
-						var obj = {};
-						obj.icon = _menuIconList[_menuIconIndex];
-						obj.name = res.data[i].name;
-						obj.id = res.data[i].id;
-						obj.son = new Array();
-						_menuParent.push(obj);
-						_menuIconIndex++;
-					}else if(0==res.data[i].type&&0!=res.data[i].parentId){
-						_sonMenuList.push(res.data[i]);
-					}
-				}
-				if(_sonMenuList.length!=0){
-					for(var i in _sonMenuList){
-						for(var j in _menuParent){
-							if(_menuParent[j].id==_sonMenuList[i].parentId){
-								_menuParent[j].son.push(_sonMenuList[i]);
-							}
-						}
-					}
-				}
-				new Vue({
-	   				  el: '.sidebar-menu',
-	   				  data:{navs:_menuParent}
-	    		})
-				$('.treeview').each(function(){
-					if($(this).attr('data-info')==_activeName){
-						$(this).addClass('active');
-					}
-				})
-			}
-		}
-	})
+function getNav(){
+	$('#warningInput').val(new Date().Format("yyyy年MM月dd日"));
 }
+
+function showLoad(){  
+    return layer.msg('努力加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false,offset: '200px', time:100000}) ;  
+}  
+function closeLoad(index){  
+	_i = -1;
+    layer.close(index);  
+} 
 /**
  * 获取时间戳
  * @returns

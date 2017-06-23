@@ -8,74 +8,57 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomePageController {
 
 	/**
-	 * 修改密码
+	 * 数据图表
 	 * @return
 	 */
-	@RequestMapping(path = "/change_pwd")
-	public String changePwd(){
-		return "/home/account/change_pwd";
+	@RequestMapping(path = "/lot")
+	public String lot(){
+		return "/home/pro/lot";
 	}
 	
 	/**
-	 * 角色管理
+	 * 地理位置
 	 * @return
 	 */
-	@RequestMapping(path = "/role")
-	public String role(){
-		return "/home/account/role";
+	@RequestMapping(path = "/location")
+	public String location(){
+		return "/home/pro/location";
 	}
 	
 	/**
-	 * 页面管理
+	 * 设备信息
 	 * @return
 	 */
-	@RequestMapping(path = "/page")
-	public String page(){
-		return "/home/menu/page";
+	@RequestMapping(path = "/device")
+	public String device(){
+		return "/home/pro/device";
 	}
 	
 	/**
-	 * 数据管理
+	 * 停车数统计
 	 * @return
 	 */
-	@RequestMapping(path = "/data")
-	public String data(){
-		return "/home/menu/data";
+	@RequestMapping(path = "/car")
+	public String car(){
+		return "/home/pro/car";
 	}
 	
 	/**
-	 * 用户管理
+	 * 蓝牙设备
 	 * @return
 	 */
-	@RequestMapping(path = "/user")
-	public String user(){
-		return "/home/account/user";
+	@RequestMapping(path = "/blue")
+	public String blue(){
+		return "/home/pro/blue";
 	}
 	
 	/**
-	 * 页面授权
+	 * 蓝牙设备
 	 * @return
 	 */
-	@RequestMapping(path = "author_page")
-	public String authorPage(){
-		return "/home/menu/author_page";
+	@RequestMapping(path = "/bikes")
+	public String bikes(){
+		return "/home/pro/bikes";
 	}
 	
-	/**
-	 * 数据授权
-	 * @return
-	 */
-	@RequestMapping(path = "author_data")
-	public String authorData(){
-		return "/home/menu/author_data";
-	}
-	
-	/**
-	 * 前端用户列表
-	 * @return
-	 */
-	@RequestMapping(value = "web_user")
-	public String webUser(){
-		return "/home/user/list";
-	}
 }

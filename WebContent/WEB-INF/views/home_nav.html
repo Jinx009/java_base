@@ -1,66 +1,73 @@
 <header class="main-header">
-   <a class="logo" >
-      <span class="logo-mini"><b>W</b>elcome</span>
-      <span class="logo-lg"><b>Wel</b>come</span>
-  </a>
-  <nav class="navbar navbar-static-top"  >
-   <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </a>
-    <div class="navbar-custom-menu">
-      <ul class="nav navbar-nav">
-        <li class="dropdown user user-menu">
-           <a href="/home/page/notice" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning" id="warningNum" ></span>
-           </a>
-        </li>    
-        <li class="dropdown user user-menu">
-          <a class="dropdown-toggle" data-toggle="dropdown">
-            <span class="hidden-xs">欢迎您：${homeUserName}</span>
-          </a>
-        </li>
-        <li>
-            <a onclick="loginOut();"><i class="fa fa-sign-out"></i></a>
-          </li>
-      </ul>
-    </div>
-  </nav>
+	<a class="logo"> <span class="logo-mini"><b>W</b>elcome</span> <span
+		class="logo-lg"><b>Wel</b>come</span>
+	</a>
+	<nav class="navbar navbar-static-top">
+		<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
+			role="button"> <span class="sr-only">Toggle navigation</span> <span
+			class="icon-bar"></span> <span class="icon-bar"></span> <span
+			class="icon-bar"></span>
+		</a>
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<li class="dropdown user user-menu"><a href="/home/page/notice"
+					class="dropdown-toggle" data-toggle="dropdown"
+					aria-expanded="false"> <i class="fa fa-bell-o"></i> <span
+						class="label label-warning" id="warningNum"></span>
+				</a></li>
+				<li class="dropdown user user-menu"><a class="dropdown-toggle"
+					data-toggle="dropdown"> <span class="hidden-xs">欢迎您：${homeUserName}</span>
+				</a></li>
+				<li><a onclick="loginOut();"><i class="fa fa-sign-out"></i></a>
+				</li>
+			</ul>
+		</div>
+	</nav>
 </header>
 <!--左侧导航 -->
 <aside class="main-sidebar">
-  <section class="sidebar">
-  	<form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-           <input type="text" id="warningInput" class="form-control" value="" disabled="disabled" >
-             <span class="input-group-btn">
-               <button type="button" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-calendar"></i>
-               </button>
-             </span>
-        </div>
-      </form>
-    <ul class="sidebar-menu">
-      <li class="header">MAIN  MENUS</li>
-      <li class="treeview active">
-        <a href="/home/page/index">
-          <i class="fa fa-bank"></i><span>欢迎页</span>
-        </a>
-      </li>
-      <li class="treeview" v-for="nav in navs" data-info="{{nav.name}}" >
-        <a href="#">
-          <i class="{{nav.icon}}"></i>
-          <span v-text="nav.name" ></span>
-          <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-           </span>
-        </a>
-        <ul class="treeview-menu">
-          <li v-for="son in nav.son" ><a style="padding: 10px 5px 10px 15px" v-bind:href="son.uri"><i class="fa fa-windows"></i>{{son.name}}</a></li>
-        </ul>
-      </li>
-    </ul>
-  </section>
+	<section class="sidebar">
+		<form action="#" method="get" class="sidebar-form">
+			<div class="input-group">
+				<input type="text" id="warningInput" class="form-control" value=""
+					disabled="disabled"> <span class="input-group-btn">
+					<button type="button" name="search" id="search-btn"
+						class="btn btn-flat">
+						<i class="fa fa-calendar"></i>
+					</button>
+				</span>
+			</div>
+		</form>
+		<ul class="sidebar-menu">
+			<li class="header">MAIN MENUS</li>
+			<li class="treeview active"><a href="/home/p/lot">
+					<i class="fa fa-bank"></i><span style="padding-left: 15px;">Lot Statistics</span>
+			</a></li>
+		</ul>
+		<ul class="sidebar-menu">
+			<li class="treeview active"><a href="/home/p/location"> <i
+					class="fa fa-bicycle"></i><span style="padding-left: 15px;">Location</span>
+			</a></li>
+		</ul>
+		<ul class="sidebar-menu">
+			<li class="treeview active"><a href="/home/p/device"> <i
+					class="fa fa-birthday-cake"></i><span style="padding-left: 15px;">Device Info</span>
+			</a></li>
+		</ul>
+		<ul class="sidebar-menu">
+			<li class="treeview active"><a href="/home/p/car"> <i
+					class="fa fa-bolt fa-bomb"></i><span style="padding-left: 15px;">Car number</span>
+			</a></li>
+		</ul>
+		<ul class="sidebar-menu">
+			<li class="treeview active"><a href="/home/p/blue"> <i
+					class="fa fa-briefcase"></i><span style="padding-left: 15px;">Bluetooth Device</span>
+			</a></li>
+		</ul>
+		<ul class="sidebar-menu">
+			<li class="treeview active"><a href="/home/p/bikes"> <i
+					class="fa fa-birthday-cake"></i><span style="padding-left: 15px;">Bikes Info</span>
+			</a></li>
+		</ul>
+	</section>
 </aside>
