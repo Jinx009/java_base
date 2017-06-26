@@ -61,4 +61,12 @@ public class HomePageController {
 		return "/home/pro/bikes";
 	}
 	
+	/**
+	 * 示意图
+	 * @return
+	 */
+	@RequestMapping(path = "/view")
+	public String view(){
+		return "/home/pro/view";
+	}
 }

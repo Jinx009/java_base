@@ -17,6 +17,18 @@ public class HttpData {
 	private static final String DEVICE_URL = "/rest/parking/device";
 	private static final String CAR_URL = "/ge/carInOutLog";
 	private static final String BIKE_URL = "/rest/parking/bikes";
+	public static final String VIEW_URL = "/rest/parking/detail";
+	
+	/**
+	 * 实况图
+	 * @param token
+	 * @param routerMac
+	 * @return
+	 */
+	public static String detail(String token, Integer areaId) {
+		String url = BASE_URL+VIEW_URL+"?token="+token+"&areaId="+areaId;
+		return url;
+	}
 	
 	/**
 	 * 自行车
@@ -29,6 +41,14 @@ public class HttpData {
 		return url;
 	}
 	
+	/**
+	 * 车辆统计
+	 * @param token
+	 * @param areaId
+	 * @param dateStr
+	 * @param type
+	 * @return
+	 */
 	public static String carUrl(String token, Integer areaId, String dateStr,Integer type) {
 		String url = BASE_URL+CAR_URL+"?areaId="+areaId+"&dateStr="+dateStr+"&type="+type;
 		return url;
