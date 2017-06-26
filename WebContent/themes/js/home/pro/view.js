@@ -26,6 +26,10 @@ function buildMap(baseData) {
 
 function run() {
     $.get('/home/d/view?areaId=4', function (response) {
+    	if(response==null||response.data==null){
+    		layer.msg('以下为测试数据');
+    		response = {"code":"200","msg":"请求成功","data":[{"bluetooth":"2222222","available":1,"id":397,"addr":"2006"},{"bluetooth":"","available":0,"id":398,"addr":"2003"},{"bluetooth":"","available":1,"id":399,"addr":"2004"},{"bluetooth":"","available":1,"id":400,"addr":"2002"},{"bluetooth":"","available":1,"id":406,"addr":"2001"},{"bluetooth":"","available":1,"id":408,"addr":"2005"}]};
+    	}
         var params = response.data;
         var totalCnt = params.length;
         $('.block-value').text(totalCnt);

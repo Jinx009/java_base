@@ -12,22 +12,24 @@ function getData() {
 		dataType : 'json',
 		data : 'mac=mac22222',
 		success : function(res) {
-			if('200'==res.code){
-				for(var i in res.data){
-					if(isContains(res.data[i].uuid,'ofo')){
-						_ofo++;
-					}else if(isContains(res.data[i].uuid,'mb')){
-						_mb++;
-					}else{
-						_other++;
-					}
-				}
-				$('#text').html('摩拜单车：<font style="color:red;">'+_mb+' </font>辆；OFO： <font style="color:red;">'+_ofo+' </font>辆；其他：<font style="color:red;"> '+_other+'  </font>辆。');
-				_data_[0].value = _mb;
-				_data_[1].value = _ofo;
-				_data_[2].value = _other;
-				myChart.setOption(option,true);
+			if(res==null||res.data==null){
+				layer.msg('以下为demo数据');
+				res = {"code":"200","msg":"请求成功","data":[{"uuid":"ofo","signalValue":"11","reportTime":"33333"},{"uuid":"mb_001","signalValue":"-99","reportTime":"33333"},{"uuid":"xxxx","signalValue":"11","reportTime":"33333"}]};
 			}
+			for(var i in res.data){
+				if(isContains(res.data[i].uuid,'ofo')){
+					_ofo++;
+				}else if(isContains(res.data[i].uuid,'mb')){
+					_mb++;
+				}else{
+					_other++;
+				}
+			}
+			$('#text').html('摩拜单车：<font style="color:red;">'+_mb+' </font>辆；OFO： <font style="color:red;">'+_ofo+' </font>辆；其他：<font style="color:red;"> '+_other+'  </font>辆。');
+			_data_[0].value = _mb;
+			_data_[1].value = _ofo;
+			_data_[2].value = _other;
+			myChart.setOption(option,true);
 		}
 	})
 }

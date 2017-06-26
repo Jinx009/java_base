@@ -45,7 +45,12 @@ function getData(){
 			}else if('8001'==res.code){
 				layer.alert('您无权限操作此项！');
 			}else{
-				layer.alert(res.msg);
+				layer.msg('以下测试数据');
+				res = {"code":"200","msg":"请求成功","data":[{"period":"06","利用率":"3.0"},{"period":"07","利用率":"5.0"},{"period":"08","利用率":"8.0"},{"period":"09","利用率":"24.0"},{"period":"10","利用率":"62.0"},{"period":"11","利用率":"76.0"},{"period":"12","利用率":"75.0"},{"period":"13","利用率":"77.0"},{"period":"14","利用率":"78.0"},{"period":"15","利用率":"74.0"},{"period":"16","利用率":"71.0"},{"period":"17","利用率":"60.0"},{"period":"18","利用率":"37.0"},{"period":"19","利用率":"21.0"},{"period":"20","利用率":"14.0"},{"period":"21","利用率":"8.0"},{"period":"22","利用率":"5.0"}]};
+				window.app.bufferedData = handle(app.type,date, res.data);
+				draw();
+				$(window).resize(app.debounce(draw,250));
+//				layer.alert(res.msg);
 			}
 		}
 	})
