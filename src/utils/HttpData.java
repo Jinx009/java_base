@@ -157,6 +157,8 @@ public class HttpData {
 		return url;
 	}
 
+	
+	
 	/**
 	 * 获取pos机列表
 	 * @param token
@@ -172,7 +174,7 @@ public class HttpData {
 	 * @return
 	 */
 	public static String accountUrl() {
-		return "";
+		return "http://120.92.101.137:8080/user-operator/organ/query";
 	}
 
 	/**
@@ -180,7 +182,7 @@ public class HttpData {
 	 * @return
 	 */
 	public static String order() {
-		return "";
+		return "http://120.92.101.137:8080/trade-operator/order/all?sEcho=1&iColumns=8&sColumns=&iDisplayStart=0&iDisplayLength=10&mDataProp_0=id&mDataProp_1=id&mDataProp_2=orderId&mDataProp_3=totalAmount&mDataProp_4=requirePaymentAmount&mDataProp_5=&mDataProp_6=&mDataProp_7=";
 	}
 
 }

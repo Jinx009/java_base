@@ -13,19 +13,13 @@ function getData(){
 		dataType:'json',
 		success:function(res){
 			closeLoad(_i);
-			if('200'==res.code){
-				if(res.data!=null){
-					new Vue({
-		   				  el: '#account',
-		   				  data:{accounts:res.data}
-		    		})
-				}else{
-					layer.alert('暂无数据！');
-				}
-			}else if('8001'==res.code){
-				layer.alert('您无权限操作此项！');
+			if(res.data!=null){
+				new Vue({
+	   				  el: '#account',
+	   				  data:{accounts:res.data}
+	    		})
 			}else{
-				layer.alert(res.msg);
+				layer.alert('暂无数据！');
 			}
 		}
 	})

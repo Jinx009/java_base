@@ -43,14 +43,14 @@
 	              <table class="table table-hover table-bordered">
 	              <thead>
 	                <tr>
-	                  <th></th>
-	                  <th></th>
+	                  <th>名称</th>
+	                  <th>组织id</th>
 	                </tr>
 	                </thead>
 	               <tbody id="account" >
 	               		<tr v-for="account in accounts" >
-	               			<td v-text="" ></td>
-	               			<td v-text="" ></td>
+	               			<td v-text="account.name" ></td>
+	               			<td v-text="account.organId" ></td>
 	               		</tr>
 	              </tbody>
 	              </table>
