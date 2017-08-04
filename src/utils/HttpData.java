@@ -157,5 +157,30 @@ public class HttpData {
 		return url;
 	}
 
+	/**
+	 * 获取pos机列表
+	 * @param token
+	 * @param mac
+	 * @return
+	 */
+	public static String posUrl() {
+		return "";
+	}
+
+	/**
+	 * pos机登录账号列表
+	 * @return
+	 */
+	public static String accountUrl() {
+		return "";
+	}
+
+	/**
+	 * pos机账单信息
+	 * @return
+	 */
+	public static String order() {
+		return "";
+	}
 
 }

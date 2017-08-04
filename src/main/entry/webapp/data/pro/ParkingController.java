@@ -56,7 +56,7 @@ public class ParkingController extends BaseController{
 	public Resp<?> device(){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.PARKING_DEMO.getAppId());
+			String token  = getToken(AppInfo.COMPANY_TEST.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.deviceUrl(token));
 				JSONObject jsonObject = JSONObject.parseObject(result);
@@ -80,7 +80,7 @@ public class ParkingController extends BaseController{
 	public Resp<?> car(Integer areaId,String dateStr,Integer type){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.PARKING_DEMO.getAppId());
+			String token  = getToken(AppInfo.COMPANY_TEST.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.carUrl(token,areaId,dateStr,type));
 				if(!BaseConstant.HTTP_ERROR_CODE.equals(result)){
