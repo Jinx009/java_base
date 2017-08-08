@@ -1,6 +1,10 @@
 package utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import utils.enums.AppInfo;
+import utils.pos.KeyUtils;
 
 public class HttpData {
 
@@ -166,7 +170,7 @@ public class HttpData {
 	 * @return
 	 */
 	public static String posUrl() {
-		return "";
+		return "http://120.92.101.137:8080/user-api/device?baseOrganId=200023";
 	}
 
 	/**
@@ -174,7 +178,7 @@ public class HttpData {
 	 * @return
 	 */
 	public static String accountUrl() {
-		return "http://120.92.101.137:8080/user-operator/organ/query";
+		return "http://120.92.101.137:8080/user-api/user?organId=200023&limit=10";
 	}
 
 	/**
@@ -182,7 +186,26 @@ public class HttpData {
 	 * @return
 	 */
 	public static String order() {
-		return "http://120.92.101.137:8080/trade-operator/order/all?sEcho=1&iColumns=8&sColumns=&iDisplayStart=0&iDisplayLength=10&mDataProp_0=id&mDataProp_1=id&mDataProp_2=orderId&mDataProp_3=totalAmount&mDataProp_4=requirePaymentAmount&mDataProp_5=&mDataProp_6=&mDataProp_7=";
+//		{
+//		    "userId":xxx,
+//		    "baseOrganId":xxx,
+//		    "topOrganId":xxx,
+//		    "limit":xxx,
+//		    "start":xxx
+//		}
+		Map<String,String> data = new HashMap<String,String>();
+		data.put("userId", "100092");
+		data.put("baseOrganId", "200023");
+		data.put("topOrganId", "200023");
+		data.put("limit", "100");
+		data.put("start", "1");
+//		return "http://120.92.101.137:8080/trade-api/order?baseOrganId=200023&topOrganId=200023&&limit=10&userId=100092";
+		try {
+			return KeyUtils.sendNotice(data, "http://120.92.101.137:8080/trade-api/order", "/trade-api/order");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
 	}
 
 }

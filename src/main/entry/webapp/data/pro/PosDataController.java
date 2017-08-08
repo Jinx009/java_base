@@ -69,7 +69,7 @@ public class PosDataController extends BaseController{
 	public Resp<?> order(){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String result = httpService.get(HttpData.accountUrl());
+			String result = HttpData.order();
 			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,JSON.parse(result));
 			return resp;
 		} catch (Exception e) {

@@ -17,7 +17,7 @@ function getData(){
 				if(res.data!=null){
 					new Vue({
 		   				  el: '#device',
-		   				  data:{devices:res.data}
+		   				  data:{devices:res.data.resultData.devices}
 		    		})
 				}else{
 					layer.alert('暂无数据！');

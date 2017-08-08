@@ -43,13 +43,17 @@
 	              <table class="table table-hover table-bordered">
 	              <thead>
 	                <tr>
-	                  <th>名称</th>
-	                  <th>Mac</th>
+	                  <th>组织名称</th>
+	                  <th>识别码</th>
+	                  <th>状态</th>
+	                  <th>MAC</th>
 	                </tr>
 	                </thead>
 	               <tbody id="device" >
 	               		<tr v-for="device in devices" >
-	               			<td v-text="device.name" ></td>
+	               			<td v-text="device.baseOrganName" ></td>
+	               			<td v-text="device.identifier" ></td>
+	               			<td v-text="device.status" ></td>
 	               			<td v-text="device.mac" ></td>
 	               		</tr>
 	              </tbody>
@@ -63,7 +67,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/pro/pos.js?version=1.18"></script>
+<script src="/themes/js/home/pro/pos.js?version=1.181"></script>
 
 </body>
 </html>

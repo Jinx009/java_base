@@ -43,14 +43,18 @@
 	              <table class="table table-hover table-bordered">
 	              <thead>
 	                <tr>
-	                  <th>名称</th>
+	                  <th>手机号码</th>
 	                  <th>组织id</th>
+	                  <th>邮箱</th>
+	                  <th>组织名称</th>
 	                </tr>
 	                </thead>
 	               <tbody id="account" >
 	               		<tr v-for="account in accounts" >
-	               			<td v-text="account.name" ></td>
+	               			<td v-text="account.mobilePhoneNo" ></td>
 	               			<td v-text="account.organId" ></td>
+	               			<td v-text="account.email" ></td>
+	               			<td v-text="account.organName" ></td>
 	               		</tr>
 	              </tbody>
 	              </table>
@@ -63,7 +67,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/pro/account.js?version=1.18"></script>
+<script src="/themes/js/home/pro/account.js?version=1.181"></script>
 
 </body>
 </html>
