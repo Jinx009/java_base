@@ -6,25 +6,41 @@
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 	<link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="https://cdn.bootcss.com/layer/3.0.3/skin/default/layer.min.css" rel="stylesheet">
 	<style type="text/css">
 /* 	深色R:16  G:91  B:160
 	浅色 R：72 G：202 B：237 */
 	</style>
 </head>
 <body>
-	<form>
+	<img alt="" src="/themes/img/active_bg.jpg" width="100%;" >
+	<form style="width: 98%;margin-left: 1%;margin-top: 10px;">
 	  <div class="form-group">
-	    <label>观众姓名</label>
-	    <input type="email" class="form-control" id="name" placeholder="请输入您的姓名">
+	    <label>观众姓名:<b style="color:rgb(72,20,237);" >*</b></label>
+	    <input type="text" class="form-control" id="name" placeholder="请输入您的姓名">
 	  </div>
 	  <div class="form-group">
-	    <label>联系方式</label>
-	    <input type="password" class="form-control" id="mobilePhone" placeholder="Password">
+	    <label>联系方式:<b style="color:rgb(72,20,237);" >*</b></label>
+	    <input type="text" class="form-control" id="mobilePhone" placeholder="请输入您的手机号">
 	  </div>
-	  <button type="submit" class="btn btn-default">Submit</button>
+	  <div class="form-group">
+	    <label>联系邮箱:<b style="color:rgb(72,20,237);" >*</b></label>
+	    <input type="text" class="form-control" id="email" placeholder="请输入您的邮箱">
+	  </div>
+	  <div class="form-group">
+	    <label>联系地址:<b style="color:rgb(72,20,237);" >*</b></label>
+	    <input type="text" class="form-control" id="address" placeholder="请输入您的地址">
+	  </div>
+	   <div class="form-group">
+	    <label>同行人数:<b style="color:rgb(72,20,237);" >*</b></label>
+	    <input type="text" class="form-control" id="withNum" placeholder="请输入您的同行人数">
+	  </div>
+	  <button type="button" onclick="save()" class="btn btn-info">保存</button>
 	</form>
 	
 	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/layer/3.0.3/mobile/layer.min.js"></script>
+	<script src="/themes/js/active/index.js"></script>
 </body>
 </html>

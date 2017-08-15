@@ -1,6 +1,6 @@
 function getData(){
 	$.ajax({
-		url:'/back/d/active/user',
+		url:'/back/d/activeUserList',
 		type:'post',
 		dataType:'json',
 		success:function(res){

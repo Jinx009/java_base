@@ -1,5 +1,7 @@
 package main.entry.webapp.page.home;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -91,7 +93,8 @@ public class HomePageController {
 	}
 	
 	@RequestMapping(value = "/active/user")
-	public String activeUser(){
+	public String activeUser(HttpServletRequest req){
+		req.setAttribute("_key", req.getParameter("activeId"));
 		return "/active/user";
 	}
 }
