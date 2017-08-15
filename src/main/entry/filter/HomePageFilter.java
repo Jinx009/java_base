@@ -1,7 +1,6 @@
 package main.entry.filter;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,8 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-import utils.model.HomeConfigConstant;
+import database.models.home.HomeUser;
 
 public class HomePageFilter implements Filter {
 	
@@ -35,8 +33,9 @@ public class HomePageFilter implements Filter {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		HttpSession session = httpServletRequest.getSession();
+		HomeUser homeUser = (HomeUser)session.getAttribute("SESSION_HOME_USER");
 		// 通过检查session中的变量，过虑请求
-		if(!HomeConfigConstant.checkSession(session.getId())){
+		if(homeUser==null){
 			httpServletResponse.sendRedirect("/home/index");
 			return;
 		}

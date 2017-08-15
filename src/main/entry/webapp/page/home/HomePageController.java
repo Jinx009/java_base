@@ -78,4 +78,20 @@ public class HomePageController {
 	public String webUser(){
 		return "/home/user/list";
 	}
+	
+	@RequestMapping(value = "/active/add")
+	public String add(){
+		return "/active/add";
+	}
+	
+	
+	@RequestMapping(value = "/active/list")
+	public String list(){
+		return "/active/list";
+	}
+	
+	@RequestMapping(value = "/active/user")
+	public String activeUser(){
+		return "/active/user";
+	}
 }
