@@ -15,6 +15,7 @@ public class ActiveService {
 	private ActiveDao activeDao;
 	
 	public void save(Active active){
+		System.out.println(active.getName());
 		activeDao.save(active);
 	}
 	

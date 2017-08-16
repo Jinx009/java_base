@@ -1,5 +1,5 @@
 function save(){
-	var params = 'name='+$('#name').val()+'&email='+email+'&mobilePhone='+$('#mobilePhone').val()+'&address='+$('#address').val()+'&withNum='+$('#withNum').val();
+	var params = 'name='+$('#name').val()+'&email='+$('#email').val()+'&mobilePhone='+$('#mobilePhone').val()+'&address='+$('#address').val()+'&withNum='+$('#withNum').val()+'&activeId='+$('#activeId').val();
 	$.ajax({
 		url:'/front/d/saveUser',
 		type:'post',

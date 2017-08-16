@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+
 import database.models.active.Active;
 import database.models.active.ActiveUser;
 import service.basicFunctions.active.ActiveService;
@@ -102,8 +104,9 @@ public class HomeDataController {
 	@RequestMapping(value = "/exportUsers")
 	public void addOrUpdate(HttpServletRequest req, HttpServletResponse res, Integer activeId) throws IOException {
 		List<ActiveUser> peoples = activeUserService.getByActiveId(activeId);
-		String fileName = "用户报名表";
-		String sheetName = "用户报名表";
+		logger.warn(JSON.toJSONString(peoples));
+		String fileName = "users_"+new Date().getTime();
+		String sheetName = "users_"+new Date().getTime();
 		if (peoples != null && peoples.size() > 0) {
 			sheetName = activeId + "_" + sheetName;
 			fileName = activeId + "_" + fileName;
