@@ -34,5 +34,9 @@ function save(){
 }
 
 function reset(){
-	
+	$('#mobilePhone').val('');
+	$('#name').val('');
+	$('#email').val('');
+	$('#address').val('');
+	$('#withNum').val('');
 }
