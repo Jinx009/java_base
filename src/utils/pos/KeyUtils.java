@@ -36,7 +36,7 @@ public class KeyUtils {
             return null;
         }
         String dataString = getDataString(data);
-        String md5Value = MD5Util.toMD5(dataString);
+        String md5Value = MD5Util.md5(dataString).toUpperCase();
         String signVaue = sign(Base64.decodeBase64(md5Value), PRIVARE_KEY);
         return signVaue;
     }
@@ -87,6 +87,7 @@ public class KeyUtils {
     
     public static String sendNotice(Map<String, String> map, String url, String path) throws Exception {
         map.put("path", path);
+        map.put("applicationCode", "MAGNETIC_APPLICATION");
         String sign = KeyUtils.sign(map);
         map.put("sign", sign);
         map.remove("path");

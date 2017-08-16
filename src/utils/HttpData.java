@@ -201,7 +201,7 @@ public class HttpData {
 		data.put("start", "1");
 //		return "http://120.92.101.137:8080/trade-api/order?baseOrganId=200023&topOrganId=200023&&limit=10&userId=100092";
 		try {
-			return KeyUtils.sendNotice(data, "http://120.92.101.137:8080/trade-api/order", "/trade-api/order");
+			return KeyUtils.sendNotice(data, "http://120.92.101.137:8080/trade-api/order", "/order");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "";
