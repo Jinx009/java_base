@@ -39,6 +39,7 @@ public class FrontDataController {
 			activeUser.setCreateTime(new Date());
 			activeUser.setMobilePhone(mobilePhone);
 			activeUser.setName(name);
+			activeUser.setEmail(email);;
 			activeUser.setWithNum(withNum);
 			activeUserService.save(activeUser);
 			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,"");

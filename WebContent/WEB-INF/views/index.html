@@ -17,31 +17,39 @@
 	<img alt="" src="/themes/img/active_bg.jpg" width="100%;" >
 	<form style="width: 98%;margin-left: 1%;margin-top: 10px;">
 	  <div class="form-group">
-	    <label>观众姓名:<b style="color:rgb(72,20,237);" >*</b></label>
+	    <label>观众姓名:&nbsp;&nbsp;<b style="color:rgb(72,20,237);" >*</b></label>
 	    <input type="text" class="form-control" id="name" placeholder="请输入您的姓名">
 	  </div>
 	  <div class="form-group">
-	    <label>联系方式:<b style="color:rgb(72,20,237);" >*</b></label>
+	    <label>联系方式:&nbsp;&nbsp;<b style="color:rgb(72,20,237);" >*</b></label>
 	    <input type="text" class="form-control" id="mobilePhone" placeholder="请输入您的手机号">
 	  </div>
 	  <div class="form-group">
-	    <label>联系邮箱:<b style="color:rgb(72,20,237);" >*</b></label>
+	    <label>联系邮箱:&nbsp;&nbsp;<b style="color:rgb(72,20,237);" >*</b></label>
 	    <input type="text" class="form-control" id="email" placeholder="请输入您的邮箱">
 	  </div>
 	  <div class="form-group">
-	    <label>联系地址:<b style="color:rgb(72,20,237);" >*</b></label>
-	    <input type="text" class="form-control" id="address" placeholder="请输入您的地址">
+	    <label>联系地址:&nbsp;&nbsp;<b style="color:rgb(72,20,237);" >*</b></label>
+	    <input type="text" class="form-control" id="address" placeholder="请输入邀请函及礼品寄送地址 ">
 	  </div>
 	   <div class="form-group">
-	    <label>同行人数:<b style="color:rgb(72,20,237);" >*</b></label>
+	    <label>同行人数:&nbsp;&nbsp;<b style="color:rgb(72,20,237);" >*</b></label>
 	    <input type="text" class="form-control" id="withNum" placeholder="请输入您的同行人数">
 	  </div>
-	  <button type="button" onclick="save()" class="btn btn-info">保存</button>
 	</form>
-	
+	<table style="width: 98%;margin-left: 1%" >
+		<tr>
+			<td style="width: 50%;text-align: left;" >
+				<button type="button" style="width: 35%;" onclick="save()" class="btn btn-info">确认</button>
+			</td>
+			<td style="width: 50%;text-align: right: ;" >
+				<button type="button" style="width: 35%;" onclick="reset()" class="btn btn-info">重置</button>
+			</td>
+		</tr>
+	</table>
 	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="https://cdn.bootcss.com/layer/3.0.3/mobile/layer.min.js"></script>
-	<script src="/themes/js/active/index.js"></script>
+	<script src="/themes/js/active/index.js?v=1.01"></script>
 </body>
 </html>

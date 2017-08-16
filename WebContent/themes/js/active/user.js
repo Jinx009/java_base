@@ -1,6 +1,7 @@
 function getData(){
+	var _activeId = $('#_key').val();
 	$.ajax({
-		url:'/back/d/activeUserList',
+		url:'/back/d/activeUserList?activeId='+_activeId,
 		type:'post',
 		dataType:'json',
 		success:function(res){
