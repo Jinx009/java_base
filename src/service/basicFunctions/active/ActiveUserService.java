@@ -22,5 +22,9 @@ public class ActiveUserService {
 	public void save(ActiveUser activeUser){
 		activeUserDao.save(activeUser);
 	}
+
+	public ActiveUser getByMobilePhone(String mobilePhone) {
+		return activeUserDao.getByMobilePhone(mobilePhone);
+	}
 	
 }

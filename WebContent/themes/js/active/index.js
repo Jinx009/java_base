@@ -24,7 +24,7 @@ function save(){
 			dataType:'json',
 			success:function(res){
 				if('200'==res.code){
-					 layer.open({content: '保存成功！',btn: '我知道了'});
+					 $('#_alert').show();
 				}else{
 					layer.open({content: '该手机号码已经报名过了！',btn: '我知道了'});
 				}

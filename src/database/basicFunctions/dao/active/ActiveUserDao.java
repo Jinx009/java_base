@@ -18,5 +18,12 @@ public class ActiveUserDao extends BaseDao<ActiveUser>{
 		queryParam.addOrder(OrderType.DESC,"createTime");
 		return findByCriteria(queryParam);
 	}
+
+	public ActiveUser getByMobilePhone(String mobilePhone) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("mobilePhone",mobilePhone);
+		queryParam.addOrder(OrderType.DESC,"createTime");
+		return findByCriteriaForUnique(queryParam);
+	}
 	
 }

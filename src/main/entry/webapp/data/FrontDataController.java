@@ -33,17 +33,22 @@ public class FrontDataController {
 						    @RequestParam(value = "activeId",required = false)Integer activeId){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			ActiveUser activeUser = new ActiveUser();
-			activeUser.setActiveId(activeId);
-			activeUser.setAddress(address);
-			activeUser.setCreateTime(new Date());
-			activeUser.setMobilePhone(mobilePhone);
-			activeUser.setName(name);
-			activeUser.setEmail(email);;
-			activeUser.setWithNum(withNum);
-			activeUserService.save(activeUser);
-			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,"");
-			return resp;
+			ActiveUser activeUser = activeUserService.getByMobilePhone(mobilePhone);
+			if(activeUser!=null){
+				resp.setMsg("该手机号码已经报名！");
+			}else{
+				activeUser = new ActiveUser();
+				activeUser.setActiveId(activeId);
+				activeUser.setAddress(address);
+				activeUser.setCreateTime(new Date());
+				activeUser.setMobilePhone(mobilePhone);
+				activeUser.setName(name);
+				activeUser.setEmail(email);;
+				activeUser.setWithNum(withNum);
+				activeUserService.save(activeUser);
+				resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,"");
+				return resp;
+			}
 		} catch (Exception e) {
 			logger.error("save error :{}",e);
 		}
