@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSON;
 
 import common.helper.MD5Util;
 import utils.HttpUtils;
-import utils.sign.CipherUtil;
 
 import java.security.KeyFactory;
 import java.security.PrivateKey;
@@ -122,72 +121,9 @@ public class KeyUtils {
         return HttpUtils.get(url);
     }
     
-//    public static String sendNotice() throws Exception {
-//    	Map<String,String> data = new HashMap<String,String>();
-//		data.put("userId", "100092");
-//		data.put("baseOrganId", "200023");
-//		data.put("topOrganId", "200023");
-//		data.put("limit", "100");
-//		data.put("start", "1");
-//		data.put("path", "/order?applicationCode=MAGNETIC_APPLICATION&baseOrganId=200023&limit=100&sign=&start=1&topOrganId=200023&userId=100092");
-//		data.put("applicationCode", "MAGNETIC_APPLICATION");
-//        String sign = KeyUtils.sign(data);
-//        data.put("sign", sign);
-//        data.remove("path");
-//        String _path = "applicationCode=MAGNETIC_APPLICATION&baseOrganId=200023&limit=100&sign="+sign+"&start=1&topOrganId=200023&userId=100092";
-//        String url = "http://120.92.101.137:8080/trade-api/order?"+_path;
-//        String json = JSON.toJSONString(data);
-//        System.out.println(json);
-////        return HttpUtils.postJson("http://120.92.101.137:8080/trade-api/order", json);
-//        return HttpUtils.get(url);
-//    }
     
     public static void main(String[] args) throws Exception{
     	String e = "ebm=12296&lt=2017-08-16 17:19:58&mc=030000fffe080303&pm=525400c76ecf&sn=fE2CaLs7sUWCXAxQ&tp=3&mac=525400c76ecf";
-    	System.out.println(decrypt(e,"qiO7eqlUrG3yrLiX"));
 	}
     
-    private  static String decrypt(String body, String appSecret){
-        String md5Sign = null;
-
-        try {
-
-            byte[] result = hexStr2ByteArr(body);
-
-            md5Sign = new String(CipherUtil.decrypt(appSecret.getBytes("utf-8"), result), "utf-8");
-
-        } catch (Exception e) {
-
-           e.printStackTrace();
-
-        }
-
-        return md5Sign;
-    }
-    
-	public static String toHexString(byte[] byteArray){
-		StringBuffer sha1StrBuff = new StringBuffer();
-
-		for (int i = 0; i < byteArray.length; i++) {
-			if (Integer.toHexString(0xFF & byteArray[i]).length() == 1)
-				sha1StrBuff.append("0").append(Integer.toHexString(0xFF & byteArray[i]));
-			else
-				sha1StrBuff.append(Integer.toHexString(0xFF & byteArray[i]));
-		}
-
-		return sha1StrBuff.toString();
-	}
-
-    public static byte[] hexStr2ByteArr(String strIn) throws Exception {
-        byte[] arrB = strIn.getBytes();
-        int iLen = arrB.length;
-
-        // 两个字符表示一个字节，所以字节数组长度是字符串长度除以2
-        byte[] arrOut = new byte[iLen / 2];
-        for (int i = 0; i < iLen; i = i + 2) {
-            String strTmp = new String(arrB, i, 2);
-            arrOut[i / 2] = (byte) Integer.parseInt(strTmp, 16);
-        }
-        return arrOut;
-    }
 }
