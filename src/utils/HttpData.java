@@ -184,15 +184,6 @@ public class HttpData {
 	 * @return
 	 */
 	public static String order() {
-//		{
-//		    "userId":xxx,
-//		    "baseOrganId":xxx,
-//		    "topOrganId":xxx,
-//		    "limit":xxx,
-//		    "start":xxx
-//		}
-		
-//		return "http://120.92.101.137:8080/trade-api/order?baseOrganId=200023&topOrganId=200023&&limit=10&userId=100092";
 		try {
 			return KeyUtils.sendNotice();
 		} catch (Exception e) {

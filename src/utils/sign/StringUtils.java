@@ -1,4 +1,4 @@
-package utils;
+package utils.sign;
 
 
 import org.apache.commons.codec.binary.Base64;
@@ -450,7 +450,8 @@ public final class StringUtils extends org.apache.commons.lang.StringUtils {
 		return b.toString();
 	}
 
-    public static String joinMapOjbectValue(Map<String, Object> map, char connector, boolean appendKey4EmptyValue) {
+    @SuppressWarnings("null")
+	public static String joinMapOjbectValue(Map<String, Object> map, char connector, boolean appendKey4EmptyValue) {
         StringBuffer b = new StringBuffer();
         if (map != null && !map.isEmpty()) {
             for (Map.Entry<String, Object> entry : map.entrySet()) {

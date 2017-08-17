@@ -5,8 +5,8 @@ import org.apache.commons.codec.binary.Base64;
 import com.alibaba.fastjson.JSON;
 
 import common.helper.MD5Util;
-import utils.CipherUtil;
 import utils.HttpUtils;
+import utils.sign.CipherUtil;
 
 import java.security.KeyFactory;
 import java.security.PrivateKey;
