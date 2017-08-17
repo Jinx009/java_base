@@ -1,7 +1,5 @@
 package utils;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import utils.enums.AppInfo;
 import utils.pos.KeyUtils;
@@ -193,15 +191,10 @@ public class HttpData {
 //		    "limit":xxx,
 //		    "start":xxx
 //		}
-		Map<String,String> data = new HashMap<String,String>();
-		data.put("userId", "100092");
-		data.put("baseOrganId", "200023");
-		data.put("topOrganId", "200023");
-		data.put("limit", "100");
-		data.put("start", "1");
+		
 //		return "http://120.92.101.137:8080/trade-api/order?baseOrganId=200023&topOrganId=200023&&limit=10&userId=100092";
 		try {
-			return KeyUtils.sendNotice(data, "http://120.92.101.137:8080/trade-api/order", "/order");
+			return KeyUtils.sendNotice();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "";
