@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -77,4 +78,44 @@ public class PosDataController extends BaseController{
 		}
 		return resp;
 	}
+	
+	/**
+	 * 车位对应关系信息
+	 * @return
+	 */
+	@RequestMapping(path = "/place")
+	@ResponseBody
+	public Resp<?> place(){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String result = HttpData.place();
+			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,JSON.parse(result));
+			return resp;
+		} catch (Exception e) {
+			logger.error("error:{}", e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 车位对应关系信息
+	 * @return
+	 */
+	@RequestMapping(path = "/insert")
+	@ResponseBody
+	public Resp<?> insert(@RequestParam(value = "mac",required = false)String mac,
+					      @RequestParam(value = "code",required = false)String code,
+					      @RequestParam(value = "place",required = false)String place,
+					      @RequestParam(value = "remark",required = false)String remark){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String result = HttpData.insert(mac,code,place,remark);
+			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,JSON.parse(result));
+			return resp;
+		} catch (Exception e) {
+			logger.error("error:{}", e);
+		}
+		return resp;
+	}
+	
 }

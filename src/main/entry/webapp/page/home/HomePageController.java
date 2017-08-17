@@ -61,4 +61,14 @@ public class HomePageController {
 		return "/home/pro/data";
 	}
 	
+	@RequestMapping(path = "/place")
+	public String place(){
+		return "/home/pro/place";
+	}
+	
+	@RequestMapping(path = "/insert")
+	public String insert(){
+		return "/home/pro/insert";
+	}
+	
 }

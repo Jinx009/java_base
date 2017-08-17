@@ -17,7 +17,7 @@ function getData(){
 				if(res.data!=null){
 					new Vue({
 		   				  el: '#order',
-		   				  data:{orders:res.data}
+		   				  data:{orders:res.data.resultData.products}
 		    		})
 				}else{
 					layer.alert('暂无数据！');

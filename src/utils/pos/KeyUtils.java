@@ -2,17 +2,14 @@ package utils.pos;
 
 import org.apache.commons.codec.binary.Base64;
 
-import com.alibaba.fastjson.JSON;
 
 import common.helper.MD5Util;
-import utils.HttpUtils;
 
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -37,7 +34,7 @@ public class KeyUtils {
             return null;
         }
         String dataString = getDataString(data);
-        String md5Value = MD5Util.md5(dataString).toUpperCase();
+        String md5Value = MD5Util.md5(dataString);
         String signVaue = sign(Base64.decodeBase64(md5Value), PRIVARE_KEY);
         return signVaue;
     }
@@ -85,45 +82,5 @@ public class KeyUtils {
         signature.update(data);
         return Base64.encodeBase64String(signature.sign());
     }
-    
-    public static String sendNotice() throws Exception {
-    	Map<String,String> data = new HashMap<String,String>();
-		data.put("baseOrganId", "200023");
-		data.put("path", "/order?applicationCode=MAGNETIC_APPLICATION&baseOrganId=200023");
-		data.put("applicationCode", "MAGNETIC_APPLICATION");
-        String sign = KeyUtils.sign(data);
-        data.put("sign", sign);
-        data.remove("path");
-        String _path = "applicationCode=MAGNETIC_APPLICATION&baseOrganId=200023&sign="+sign;
-        String url = "http://120.92.101.137:8080/trade-api/order?"+_path;
-        String json = JSON.toJSONString(data);
-        System.out.println(json);
-//        return HttpUtils.postJson("http://120.92.101.137:8080/trade-api/order", json);
-        return HttpUtils.get(url);
-    }
-    public static String setCode() throws Exception {
-    	Map<String,String> data = new HashMap<String,String>();
-		data.put("userId", "100092");
-		data.put("baseOrganId", "200023");
-		data.put("topOrganId", "200023");
-		data.put("limit", "100");
-		data.put("start", "1");
-		data.put("path", "/order?applicationCode=MAGNETIC_APPLICATION&baseOrganId=200023&&start=1&topOrganId=200023&userId=100092");
-		data.put("applicationCode", "MAGNETIC_APPLICATION");
-        String sign = KeyUtils.sign(data);
-        data.put("sign", sign);
-        data.remove("path");
-        String _path = "applicationCode=MAGNETIC_APPLICATION&baseOrganId=200023&sign="+sign+"&start=1&topOrganId=200023&userId=100092";
-        String url = "http://120.92.101.137:8080/trade-api/order?"+_path;
-        String json = JSON.toJSONString(data);
-        System.out.println(json);
-//        return HttpUtils.postJson("http://120.92.101.137:8080/trade-api/order", json);
-        return HttpUtils.get(url);
-    }
-    
-    
-    public static void main(String[] args) throws Exception{
-    	String e = "ebm=12296&lt=2017-08-16 17:19:58&mc=030000fffe080303&pm=525400c76ecf&sn=fE2CaLs7sUWCXAxQ&tp=3&mac=525400c76ecf";
-	}
     
 }

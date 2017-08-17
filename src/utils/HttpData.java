@@ -2,7 +2,7 @@ package utils;
 
 
 import utils.enums.AppInfo;
-import utils.pos.KeyUtils;
+import utils.pos.CallUtils;
 
 public class HttpData {
 
@@ -185,11 +185,33 @@ public class HttpData {
 	 */
 	public static String order() {
 		try {
-			return KeyUtils.sendNotice();
+			return CallUtils.getOrders3();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "";
 		}
 	}
 
+	/**
+	 * 车位信息
+	 * @return
+	 */
+	public static String place() {
+		try {
+			return CallUtils.getPlace();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+
+	public static String insert(String mac, String code, String place, String remark) {
+		try {
+			return CallUtils.insert(mac,code,place,remark);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+	
 }
