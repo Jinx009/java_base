@@ -20,7 +20,7 @@ import utils.Resp;
 @RequestMapping(value = "/home/d")
 public class PosDataController extends BaseController{
 	
-	private static final Logger logger = LoggerFactory.getLogger(BikeDataController.class);
+	private static final Logger logger = LoggerFactory.getLogger(PosDataController.class);
 
 	@Autowired
 	private HttpService httpService;
@@ -80,7 +80,7 @@ public class PosDataController extends BaseController{
 	}
 	
 	/**
-	 * 车位对应关系信息
+	 * 车位对应关系信息列表
 	 * @return
 	 */
 	@RequestMapping(path = "/place")
@@ -98,7 +98,7 @@ public class PosDataController extends BaseController{
 	}
 	
 	/**
-	 * 车位对应关系信息
+	 * 更新或新增地磁与车位对应关系
 	 * @return
 	 */
 	@RequestMapping(path = "/insert")
