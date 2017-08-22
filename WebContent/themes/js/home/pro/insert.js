@@ -27,23 +27,45 @@ function getData(){
 	})
 }
 function save(){
-	var _params = 'mac='+$('#mac').val()+
-				  '&code='+$('#code').val()+
-				  '&place='+$('#place').val()+
-				  '&remark='+$('#remark').val();
-	$.ajax({
-		url:'/home/d/insert',
-		type:'post',
-		dataType:'json',
-		data:_params,
-		success:function(res){
-			console.log(res);
-		}
-	})
+	var _place = $('#place').val(),_code = $('#code').val(),_mac = $('#mac').val(),_remark = $('#remark').val();
+	var re = /^[0-9]+$/;
+	if(realStatus){
+		_place = $('#realPlace').val();
+	}
+	var _params = 'mac='+_mac+
+				  '&code='+_code+
+				  '&place='+_place+
+				  '&remark='+_remark;
+	if(_place==null||''==_place){
+		layer.alert('placeId不能为空！');
+	}else if(!re.test(_place)){
+		layer.alert('placeId必须为正整数！');
+	}else if(_mac==null||''==_mac){
+		layer.alert('对应地磁mac号码不能为空!');
+	}else if(_code==null||''==_code){
+		layer.alert('车位显示地址不能为空！');
+	}else{
+		$.ajax({
+			url:'/home/d/insert',
+			type:'post',
+			dataType:'json',
+			data:_params,
+			success:function(res){
+				if(res.data&&'200'==res.data.status){
+					layer.alert('操作成功！',function(){
+						location.href = '/home/p/place';
+					});
+				}
+			}
+		})
+	}
 }
+var realStatus = true;
 function changeValue(){
 	var _value = $('#place').val();
 	if(_value!=''&&_value!=null){
+		realStatus = false;
+		$('#realPlace').hide();
 		for(var i in _places){
 			if(_places[i].parkPlaceId==_value){
 				$('#mac').val(_places[i].magneticStripeId);
@@ -53,6 +75,8 @@ function changeValue(){
 			}
 		}
 	}else{
+		$('#realPlace').show();
+		realStatus = true;
 		$('#mac').val('');
 		$('#code').val('');
 		$('#remark').val('');
