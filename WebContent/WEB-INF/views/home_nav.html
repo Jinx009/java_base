@@ -40,44 +40,79 @@
 		</form>
 		<ul class="sidebar-menu">
 			<li class="header">MAIN MENUS</li>
-			<li class="treeview active"><a href="/home/p/pos">
-					<i class="fa fa-bank"></i><span style="padding-left: 15px;">Pos List</span>
-			</a></li>
+			<li class="treeview l1" ><a href="#"> <i
+					class="fa fa-edit"></i> <span>Pos管理</span> <span
+					class="pull-right-container"> <i
+						class="fa fa-angle-left pull-right"></i>
+				</span>
+			</a>
+				<ul class="treeview-menu u1" >
+					<li onclick="_open('1','/home/p/pos')"><a><i
+							class="fa fa-circle-o"></i>设备管理</a></li>
+					<li onclick="_open('1','/home/p/account')"><a><i
+							class="fa fa-circle-o"></i> 账户管理</a></li>
+				</ul></li>
+			<li class="treeview l2" ><a href="#"> <i
+					class="fa fa-briefcase"></i> <span>设备管理</span> <span
+					class="pull-right-container"> <i
+						class="fa fa-angle-left pull-right"></i>
+				</span>
+			</a>
+				<ul class="treeview-menu u2" >
+					<li onclick="_open('2','/home/p/device')"><a><i
+							class="fa fa-circle-o"></i>车检器管理</a></li>
+					<li onclick="_open('2','/home/p/error')"><a><i
+							class="fa fa-circle-o"></i> 故障管理</a></li>
+				</ul></li>
+			<li class="treeview l3" ><a href="/home/p/device"> <i
+					class="fa fa-birthday-cake"></i> <span>区域管理</span> <span
+					class="pull-right-container"> <i
+						class="fa fa-angle-left pull-right"></i>
+				</span>
+			</a>
+				<ul class="treeview-menu u3" >
+					<li onclick="_open('3','/home/p/area')"><a><i
+							class="fa fa-circle-o"></i>地区管理</a></li>
+					<li onclick="_open('3','/home/p/street')"><a><i
+							class="fa fa-circle-o"></i> 街道管理</a></li>
+					<li onclick="_open('3','/home/p/place')"><a><i
+							class="fa fa-circle-o"></i> 车位列表</a></li>
+					<li onclick="_open('3','/home/p/insert')"><a><i
+							class="fa fa-circle-o"></i> 车位编辑</a></li>
+				</ul></li>
+			<li class="treeview l4" ><a href="#"> <i
+					class="fa fa-bolt"></i> <span>财务管理</span> <span
+					class="pull-right-container"> <i
+						class="fa fa-angle-left pull-right"></i>
+				</span>
+			</a>
+				<ul class="treeview-menu u4" >
+					<li onclick="_open('4','/home/p/allOrder')"><a><i
+							class="fa fa-circle-o"></i>全部订单</a></li>
+					<li onclick="_open('4','/home/p/order')"><a><i
+							class="fa fa-circle-o"></i> 实际订单</a></li>
+				</ul></li>
+			<li class="treeview l5" ><a href="#"> <i
+					class="fa fa-briefcase"></i> <span>数据管理</span> <span
+					class="pull-right-container"> <i
+						class="fa fa-angle-left pull-right"></i>
+				</span>
+			</a>
+				<ul class="treeview-menu u5" >
+					<li onclick="_open('5','/home/p/table')"><a><i
+							class="fa fa-circle-o"></i> 仪表盘</a></li>
+				<!-- 	<li onclick="_open('5','/home/p/use')"><a><i
+							class="fa fa-circle-o"></i> 占有率分析</a></li> -->
+					<li onclick="_open('5','/home/p/money')"><a><i
+							class="fa fa-circle-o"></i> 财务分析</a></li>
+					<li onclick="_open('5','/home/p/car')"><a><i
+							class="fa fa-circle-o"></i>停车示意图</a></li>
+					<li onclick="_open('5','/home/p/data')"><a><i
+							class="fa fa-circle-o"></i> 车次数据分析</a></li>
+				</ul></li>
 		</ul>
 		<ul class="sidebar-menu">
-			<li class="treeview active"><a href="/home/p/account"> <i
-					class="fa fa-bicycle"></i><span style="padding-left: 15px;">Account List</span>
-			</a></li>
-		</ul>
-		<ul class="sidebar-menu">
-			<li class="treeview active"><a href="/home/p/order"> <i
-					class="fa fa-birthday-cake"></i><span style="padding-left: 15px;">Order List</span>
-			</a></li>
-		</ul>
-		<ul class="sidebar-menu">
-			<li class="treeview active"><a href="/home/p/device"> <i
-					class="fa fa-bolt fa-bomb"></i><span style="padding-left: 15px;">Device List</span>
-			</a></li>
-		</ul>
-		<ul class="sidebar-menu">
-			<li class="treeview active"><a href="/home/p/car"> <i
-					class="fa fa-briefcase"></i><span style="padding-left: 15px;">Car View</span>
-			</a></li>
-		</ul>
-		<ul class="sidebar-menu">
-			<li class="treeview active"><a href="/home/p/data"> <i
-					class="fa fa-birthday-cake"></i><span style="padding-left: 15px;">Data View</span>
-			</a></li>
-		</ul>
-			<ul class="sidebar-menu">
-			<li class="treeview active"><a href="/home/p/place"> <i
-					class="fa fa-bolt fa-bomb"></i><span style="padding-left: 15px;">Place List</span>
-			</a></li>
-		</ul>
-		<ul class="sidebar-menu">
-			<li class="treeview active"><a href="/home/p/insert"> <i
-					class="fa fa-briefcase"></i><span style="padding-left: 15px;">Insert Place</span>
-			</a></li>
+
 		</ul>
 	</section>
 </aside>

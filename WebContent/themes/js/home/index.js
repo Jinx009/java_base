@@ -1,4 +1,6 @@
 $(function() {
+	setSessionStorage('_index','1');
+	setSessionStorage('_href','/home/p/pos');
 	changeWidth();
 	$('.login-btn').bind('click', function() {
 		login()
@@ -7,6 +9,27 @@ $(function() {
 		$('#errorMsg').html('')
 	})
 });
+/**
+ * 操作sessionStorage
+ * @param _key
+ */
+function getSessionStorage(_key){
+	if(window.sessionStorage){     
+		window.sessionStorage.getItem(_key);
+	}
+}
+function setSessionStorage(_key,_value){ 
+	if(window.sessionStorage){     
+		var _r = window.sessionStorage.setItem(_key,_value);
+		if(_r!=null&&_r!=''&&_r!=undefined){
+			return _r;
+		}else{
+			return '';
+		}
+	}else{ 
+		return '';
+	}
+}
 document.onkeydown = function(e) {
 	if (!e) {
 		e = window.event;
@@ -22,6 +45,9 @@ function changeWidth() {
 	var _width = $(window).width();
 	$('.bg-table').css('margin-left', (_width - 500) / 2)
 }
+/**
+ * 登录
+ */
 function login() {
 	var userName = $('#userName').val();
 	var pwd = $('#pwd').val();

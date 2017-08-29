@@ -43,12 +43,6 @@ function getData(){
             	layer.alert('暂无数据，预演示模拟数据！');
             	resData = _model;
             	changeData();
-//                if($('#_type').val()==2){
-//                    $('#text').html('当月总停车次数:<font style="color: red;" >0</font>,平均时长:<font style="color: red;" >0</font>分钟');
-//                }else{
-//                    $('#text').html('当日总停车次数:<font style="color: red;" >0</font>,平均时长:<font style="color: red;" >0</font>分钟');
-//                }
-//                draw();
             }else{
                 changeData();
             }

@@ -8,12 +8,57 @@ $(function(){
 })
 /**
  * 导航数据
- * @param _activeName
  */
 function getNav(){
+	var _index = getSessionStorage('_index');
+	var _href = getSessionStorage('_href');
+	if(_index!=''){
+		$('.l'+_index).addClass('active');
+		$('.u'+_index).css('display','block');
+		$('.u'+_index+' li').each(function(){
+			var _onclick = $(this).attr('onclick');
+			if(_onclick.indexOf(_href)>-1){
+				$(this).addClass('active');
+			}
+		})
+	}
 	$('#warningInput').val(new Date().Format("yyyy年MM月dd日"));
 }
-
+/**
+ * 打开菜单链接
+ * @param _index
+ * @param _href
+ */
+function _open(_index,_href){
+	setSessionStorage('_index',_index);
+	setSessionStorage('_href',_href);
+	location.href = _href;
+}
+/**
+ * 操作sessionStorage
+ * @param _key
+ */
+function getSessionStorage(_key){
+	if(window.sessionStorage){     
+		return window.sessionStorage.getItem(_key);
+	}
+}
+function setSessionStorage(_key,_value){
+	if(window.sessionStorage){     
+		var _r = window.sessionStorage.setItem(_key,_value);
+		if(_r!=null&&_r!=''&&_r!=undefined){
+			return _r;
+		}else{
+			return '';
+		}
+	}else{ 
+		return '';
+	}
+}
+/**
+ * 数据加载动画
+ * @returns
+ */
 function showLoad(){  
     return layer.msg('努力加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false,offset: '200px', time:100000}) ;  
 }  
