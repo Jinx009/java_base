@@ -141,4 +141,58 @@ public class HomePageController {
 	public String money(){
 		return "/home/pro/money";
 	}
+	
+	/**
+	 *考勤管理
+	 * @return
+	 */
+	@RequestMapping(path = "/job")
+	public String job(){
+		return "/home/pro/job";
+	}
+	
+	/**
+	 * 收费管理
+	 * @return
+	 */
+	@RequestMapping(path = "/charge")
+	public String charge(){
+		return "/home/pro/charge";
+	}
+	
+	/**
+	 * 发票管理
+	 * @return
+	 */
+	@RequestMapping(path = "/paper")
+	public String paper(){
+		return "/home/pro/paper";
+	}
+	
+	/**
+	 * 会员管理
+	 * @return
+	 */
+	@RequestMapping(path = "/user")
+	public String user(){
+		return  "/home/pro/user";
+	}
+	
+	/**
+	 * 包月证管理
+	 * @return
+	 */
+	@RequestMapping(path = "/month")
+	public String month(){
+		return  "/home/pro/month";
+	}
+	
+	/**
+	 * 推送管理
+	 * @return
+	 */
+	@RequestMapping(path = "/send")
+	public String send(){
+		return "/home/pro/send";
+	}
 }

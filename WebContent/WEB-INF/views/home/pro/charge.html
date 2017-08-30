@@ -26,7 +26,7 @@
     <section class="content-header"  style="height: 50px;">
       <h1></h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 账户管理 </a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> 收费管理 </a></li>
       </ol>
     </section>
     <!-- 主内容 -->
@@ -64,25 +64,50 @@
 	        <div class="col-xs-12">
 	          <div class="box">
 	            <div class="box-header">
-	              <h3 class="box-title">账户列表</h3>
+	              <h3 class="box-title">收费策略列表</h3>
 	            </div>
 	            <!-- /.box-header -->
 	            <div class="box-body table-responsive no-padding">
 	              <table class="table table-hover table-bordered">
 	              <thead>
 	                <tr>
-	                  <th>手机号码</th>
-	                  <th>组织id</th>
-	                  <th>邮箱</th>
-	                  <th>组织名称</th>
+	                  <th>编号</th>
+	                  <th>地区</th>
+	                  <th>街道</th>
+	                  <th>星期</th>
+	                  <th>特定日期</th>
+	                  <th>时间段</th>
+	                  <th>价格/分钟</th>
+	                  <th>前置不收费时长</th>
+	                  <th>操作</th>
 	                </tr>
 	                </thead>
-	               <tbody id="account" >
-	               		<tr v-for="account in accounts" >
-	               			<td v-text="account.mobilePhoneNo" ></td>
-	               			<td v-text="account.organId" ></td>
-	               			<td v-text="account.email" ></td>
-	               			<td v-text="account.organName" ></td>
+	               <tbody>
+	               		<tr >
+	               			<td>4</td>
+	               			<td>静安B</td>
+	               			<td>昌平路A段</td>
+	               			<td>一，三</td>
+	               			<td></td>
+	               			<td>0-24</td>
+	               			<td>3元</td>
+	               			<td>60分钟</td>
+	               			<td>
+	               				<span class="badge bg-red">删除</span>
+	               			</td>
+	               		</tr>
+	               		<tr >
+	               			<td>3</td>
+	               			<td>静安B</td>
+	               			<td>昌平路A段</td>
+	               			<td></td>
+	               			<td>2017-08-28</td>
+	               			<td>0-24</td>
+	               			<td>0元</td>
+	               			<td>0分钟</td>
+	               			<td>
+	               				<span class="badge bg-red">删除</span>
+	               			</td>
 	               		</tr>
 	              </tbody>
 	              </table>
@@ -95,7 +120,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/pro/account.js?version=1.181"></script>
+<script src="/themes/js/home/pro/charge.js?version=1.181"></script>
 
 </body>
 </html>
