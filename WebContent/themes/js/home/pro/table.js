@@ -6,18 +6,18 @@ $(function(){
 	      autoclose: true,
 	      format: 'yyyy-mm-dd',
 	      lang: 'ch'
-	    });
-	    $("#datepicker").val(new Date().Format("yyyy-MM-dd"));
-		_i = showLoad();
-		$('._b').bind('click',function(){
-			var _d = $(this).attr('data-ref');
-			$('._b').removeClass('btn-info');
-			$('._b').addClass('btn-default');
-			$(this).addClass('btn-info');
-			app.type = _d;
-			getData();
-		})
+    });
+    $("#datepicker").val(new Date().Format("yyyy-MM-dd"));
+	_i = showLoad();
+	$('._b').bind('click',function(){
+		var _d = $(this).attr('data-ref');
+		$('._b').removeClass('btn-info');
+		$('._b').addClass('btn-default');
+		$(this).addClass('btn-info');
+		app.type = _d;
 		getData();
+	})
+	getData();
 })
 var myChart_1 = echarts.init(document.getElementById('draw_1'));
 var myChart_2 = echarts.init(document.getElementById('draw_2'));

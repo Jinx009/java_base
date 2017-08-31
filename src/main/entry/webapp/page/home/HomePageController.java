@@ -195,4 +195,22 @@ public class HomePageController {
 	public String send(){
 		return "/home/pro/send";
 	}
+	
+	/**
+	 * 支付渠道管理
+	 * @return
+	 */
+	@RequestMapping(path = "/pay")
+	public String pay(){
+		return "/home/pro/pay";
+	}
+	
+	/**
+	 * 用户增长率
+	 * @return
+	 */
+	@RequestMapping(path = "/useradd")
+	public String useradd(){
+		return "/home/pro/useradd";
+	}
 }
