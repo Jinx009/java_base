@@ -25,8 +25,8 @@ function buildMap(baseData) {
 }
 
 function run() {
-    $.get('/home/d/view?areaId=17', function (response) {
-    	if(response==null||response.data==null){
+    $.get('/home/u/view?areaId=18', function (response) {
+    	if(response==null||response.data==null||response.data.length==0){
 //    		layer.msg('以下为测试数据');
     		response = {"code":"200","msg":"请求成功","data":[{"bluetooth":"2222222","available":1,"id":397,"addr":"10001"},{"bluetooth":"","available":0,"id":398,"addr":"10002"},{"bluetooth":"","available":1,"id":399,"addr":"10003"},{"bluetooth":"","available":1,"id":400,"addr":"10004"},{"bluetooth":"","available":1,"id":406,"addr":"10005"},{"bluetooth":"","available":1,"id":408,"addr":"10006"}]};
     	}
