@@ -1,4 +1,5 @@
 function save(){
+	var code = $('#code').val();
 	var mobilePhone = $('#mobilePhone').val();
 	var name = $('#name').val();
 	var email = $('#email').val();
@@ -16,6 +17,8 @@ function save(){
 		layer.open({content: '观众姓名未填写！',btn: '我知道了'});
 	}else if(address==null||address==''){
 		layer.open({content: '联系地址未填写！',btn: '我知道了'});
+	}else if(_code!=code){
+		layer.open({content: '验证码不正确！',btn: '我知道了'});
 	}else{
 		$.ajax({
 			url:'/front/d/saveUser',
@@ -32,7 +35,15 @@ function save(){
 		})
 	}
 }
-
+var _code = 1234;
+$(function(){
+	getCode();
+})
+function getCode(){
+	var code = Math.floor(Math.random()*9000)+1000;
+	_code = code;
+	$('#_code').html(code);
+}
 function reset(){
 	$('#mobilePhone').val('');
 	$('#name').val('');

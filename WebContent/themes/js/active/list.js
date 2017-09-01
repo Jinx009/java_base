@@ -7,7 +7,7 @@ function getData(){
 			if('200'==res.code){
 				if(res.data!=null){
 					for(var i in res.data){
-						res.data[i].url = 'http://cross.zhanway.com/front/p/index?_key='+res.data[i].keyword;
+						res.data[i].url = 'http://ydj.speexpo.com/front/p/index?_key='+res.data[i].keyword;
 					}
 					new Vue({
 		   				  el: '.data-tbody',
