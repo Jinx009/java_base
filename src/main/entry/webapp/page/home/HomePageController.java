@@ -213,4 +213,13 @@ public class HomePageController {
 	public String useradd(){
 		return "/home/pro/useradd";
 	}
+	
+	/**
+	 * 新增收费规则
+	 * @return
+	 */
+	@RequestMapping(value = "/chargeAdd")
+	public String chargeAdd(){
+		return "/home/pro/chargeAdd";
+	}
 }
