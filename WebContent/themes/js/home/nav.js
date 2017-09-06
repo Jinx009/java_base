@@ -34,6 +34,11 @@ function _open(_index,_href){
 	setSessionStorage('_href',_href);
 	location.href = _href;
 }
+function _open_(_index,_href,_href_){
+	setSessionStorage('_index',_index);
+	setSessionStorage('_href',_href);
+	location.href = _href_;
+}
 /**
  * 操作sessionStorage
  * @param _key
