@@ -3,13 +3,13 @@ $(function(){
 
      buildMap(a);
      
-     run();
-     
-     setInterval(function() {
-    	 
-         run();
-         
-     }, 10000);
+//     run();
+//     
+//     setInterval(function() {
+//    	 
+//         run();
+//         
+//     }, 10000);
 })
 function buildMap(baseData) {
     for (var idx in baseData) {
@@ -24,19 +24,18 @@ function buildMap(baseData) {
     }
 }
 
-function run() {
-    $.get('/home/u/view?areaId=18', function (response) {
-    	if(response==null||response.data==null||response.data.length==0){
+function run(_data) {
+//    $.get('/home/u/view?areaId=18', function (response) {
+//    	if(response==null||response.data==null||response.data.length==0){
 //    		layer.msg('以下为测试数据');
-    		response = {"code":"200","msg":"请求成功","data":[{"bluetooth":"2222222","available":1,"id":397,"addr":"10001"},{"bluetooth":"","available":0,"id":398,"addr":"10002"},{"bluetooth":"","available":1,"id":399,"addr":"10003"},{"bluetooth":"","available":1,"id":400,"addr":"10004"},{"bluetooth":"","available":1,"id":406,"addr":"10005"},{"bluetooth":"","available":1,"id":408,"addr":"10006"}]};
-    	}
-        var params = response.data;
+//    		response = {"code":"200","msg":"请求成功","data":[{"bluetooth":"2222222","available":1,"id":397,"addr":"10001"},{"bluetooth":"","available":0,"id":398,"addr":"10002"},{"bluetooth":"","available":1,"id":399,"addr":"10003"},{"bluetooth":"","available":1,"id":400,"addr":"10004"},{"bluetooth":"","available":1,"id":406,"addr":"10005"},{"bluetooth":"","available":1,"id":408,"addr":"10006"}]};
+//    	}
+        var params = _data;
         var totalCnt = params.length;
         $('.block-value').text(totalCnt);
         for (idx in params) {
             var sensorVo = params[idx];
             var target = $('.location').find('[data-ref="'+ sensorVo.addr + '"]');
-            $(target).attr('onmouseover','getData("'+sensorVo.bluetooth+'")');
             var direction = target.attr('data-direction');
             if (sensorVo.available == 1) {
                 target.addClass('occupied-' + direction);
@@ -44,7 +43,7 @@ function run() {
                 target.removeClass('occupied-' + direction);
             }
         }
-    })
+//    })
 }
 
 function getData(_uuid){

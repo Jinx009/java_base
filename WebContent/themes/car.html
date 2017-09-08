@@ -59,7 +59,57 @@
  <!--[if lt IE 9]>
   <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
 <![endif]-->
-<script src="/themes/js/home/pro/car_.js?version=1.68"></script>
+<script src="/themes/md5.js?version=1.2"></script>
+<script src="/themes/js/home/pro/car_.js?version=1.88"></script>
+<script>
+    var _md_str = {appEUI:'000000000000006c',User_Sec:'a7da4728e374343d37021e4be5593311',time_s:'1504774928'};
+    var _md = hex_md5(_md_str.time_s+_md_str.appEUI+_md_str.User_Sec);
+    console.log(_md);
+    var str = 'ws://www.guodongiot.com:92/webs?appEUI='+_md_str.appEUI+'&token='+_md+'&time_s='+_md_str.time_s;
+    var ws = new WebSocket(str);
+    // 打开Socket
+    ws.onopen = function(event) {
 
+        // 发送一个初始化消息
+        ws.send('I am the client and I\'m listening!');
+
+        // 监听消息
+        ws.onmessage = function(event) {
+            console.log('Client received a message',JSON.parse(event.data));
+            var _data = JSON.parse(event.data).data;
+            var _mac = JSON.parse(event.data).devEUI;
+            sendData(_data,_mac);
+        };
+
+        // 监听Socket的关闭
+        ws.onclose = function(event) {
+            console.log('Client notified socket has closed',event);
+        };
+
+        // 关闭Socket....
+        //socket.close()
+    };
+    function hexToString(str){
+        var val="";
+        var arr = str.split(",");
+        for(var i = 0; i < arr.length; i++){
+            val += arr[i].fromCharCode(i);
+        }
+        return val;
+    }
+    function sendData(_data,_mac){
+        var _arr = _data.split('');
+        console.log(_arr+'----'+_arr[_arr.length-1]+'--------');
+        if(_arr[6]=='3'&&_arr[7]=='0'){
+            _addr = '10001';
+            if(_mac=='0000000000004f96'){
+            	_addr = '10002';
+            }
+     		var _data = [{"bluetooth":"2222222","available":_arr[_arr.length-1],"id":397,"addr":_addr}];
+    		run(_data);
+    		console.log(_arr+'</br>'+_data);
+        }
+    }
+</script>
 </body>
 </html>
