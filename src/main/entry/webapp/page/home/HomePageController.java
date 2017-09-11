@@ -222,4 +222,22 @@ public class HomePageController {
 	public String chargeAdd(){
 		return "/home/pro/chargeAdd";
 	}
+	
+	/**
+	 * 昌平车位A
+	 * @return
+	 */
+	@RequestMapping(value = "/changping_a")
+	public String changping_a(){
+		return "/home/pro/changping_a";
+	}
+	
+	/**
+	 * 昌平车位B
+	 * @return
+	 */
+	@RequestMapping(value = "/changping_b")
+	public String changping_b(){
+		return "/home/pro/changping_b";
+	}
 }
