@@ -18,8 +18,9 @@ public class ParkingStreetDao extends BaseDao<ParkingStreet>{
 	}
 
 	public List<ParkingStreet> findUseAll() {
-		// TODO Auto-generated method stub
-		return null;
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("status",1);
+		return findByCriteria(queryParam);
 	}
 	
 }

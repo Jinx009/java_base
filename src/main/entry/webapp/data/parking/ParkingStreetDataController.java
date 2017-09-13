@@ -1,5 +1,7 @@
 package main.entry.webapp.data.parking;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import database.models.parking.ParkingStreet;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.parking.ParkingStreetService;
 import utils.BaseConstant;
@@ -34,11 +37,11 @@ public class ParkingStreetDataController extends BaseController{
 	 */
 	@RequestMapping(path = "/streetList")
 	@ResponseBody
-	public Resp<?> findAll(@RequestParam(name = "areaId",required = false)Integer areaId){
+	public Resp<?> findAll(){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			parkingStreetService.findByAreaId(areaId);
-			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,"");
+			List<ParkingStreet> list =  parkingStreetService.findAll();
+			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,list);
 			logger.warn("data:{}",resp);
 			return resp;
 		} catch (Exception e) {

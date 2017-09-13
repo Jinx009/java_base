@@ -35,7 +35,7 @@ public class ParkingArea {
 	@Column(name = "DESCRIPTION")
 	private String desc;
 	@Column(name = "CREATE_TIME")
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
 	@Column(name = "STATUS")
 	private Integer status;
