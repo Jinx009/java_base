@@ -7,7 +7,7 @@ $(function(){
 var _areaList = {};
 function _getData(){
 	$.ajax({
-		url:'/home/d/areaList',
+		url:'/home/d/area',
 		type:'GET',
 		dataType:'json',
 		success:function(res){
@@ -18,7 +18,7 @@ function _getData(){
 	   				  data:{areas:res.data}
 	    		})
 				$.ajax({
-					url:'/home/d/streetList',
+					url:'/home/d/street',
 					type:'GET',
 					dataType:'json',
 					success:function(res){

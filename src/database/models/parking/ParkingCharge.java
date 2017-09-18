@@ -36,15 +36,19 @@ public class ParkingCharge {
 	@Column(name = "SINGLE_DATE")
 	private Date singleDate;
 	@Column(name = "START_TIME")
-	private Date startTime;
+	private Integer startTime;
 	@Column(name = "END_TIME")
-	private Date endTime;
+	private Integer endTime;
 	@Column(name = "PRICE")
 	private Double price;
 	@Column(name = "FREE_TIME")
 	private Integer freeTime;
 	@Column(name = "SHOW_STATUS")
 	private Integer showStatus;
+	@Column(name = "AREA_NAME")
+	private String areaName;
+	@Column(name = "STREET_NAME")
+	private String streetName;
 	
 	
 }

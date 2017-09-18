@@ -14,6 +14,11 @@ import database.models.parking.ParkingCharge;
 import service.basicFunctions.parking.ParkingChargeService;
 import utils.Resp;
 
+/**
+ * 收费规则管理
+ * @author jinx
+ *
+ */
 @Controller
 @RequestMapping(value = "/home/d")
 public class ParkingChargeDataController {
@@ -47,6 +52,8 @@ public class ParkingChargeDataController {
 	 * @param parkingCharge
 	 * @return
 	 */
+	@RequestMapping(path = "/saveCharge")
+	@ResponseBody
 	public Resp<?> save(ParkingCharge parkingCharge){
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -60,6 +67,13 @@ public class ParkingChargeDataController {
 		return resp;
 	}
 	
+	/**
+	 * 删除一条收费规则
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(path = "/delCharge")
+	@ResponseBody
 	public Resp<?> dele(@RequestParam(value = "id",required = false)Integer id){
 		Resp<?> resp = new Resp<>(false);
 		try {

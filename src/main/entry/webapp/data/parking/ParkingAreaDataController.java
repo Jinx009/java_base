@@ -29,7 +29,7 @@ public class ParkingAreaDataController extends BaseController{
 	 * 返回所以地区列表
 	 * @return
 	 */
-	@RequestMapping(path = "/areaList")
+	@RequestMapping(path = "/area")
 	@ResponseBody
 	public Resp<?> findAll(){
 		Resp<?> resp = new Resp<>(false);

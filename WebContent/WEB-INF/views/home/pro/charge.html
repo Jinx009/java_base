@@ -31,34 +31,6 @@
     </section>
     <!-- 主内容 -->
     <section class="content" >
-      <div class="box box-default">
-        <div class="box-header with-border">
-          <h3 class="box-title">筛选条件</h3>
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-          </div>
-        </div>
-        <div class="box-body">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>选择地区</label>
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                 	 <option selected="selected">静安NB</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>选择街道</label>
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                 	 <option selected="selected">昌平路A段</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 	  <div class="row">
 	     <div class="row">
 	        <div class="col-xs-12">
@@ -88,31 +60,26 @@
 	                  <th>操作</th>
 	                </tr>
 	                </thead>
-	               <tbody>
-	               		<tr >
-	               			<td>4</td>
-	               			<td>静安B</td>
-	               			<td>昌平路A段</td>
-	               			<td>一，三</td>
-	               			<td></td>
-	               			<td>0-24</td>
-	               			<td>3元</td>
-	               			<td>60分钟</td>
+	               <tbody id="charge" >
+	               		<tr v-for="item in charges" >
+	               			<td v-text="item.id" ></td>
+	               			<td v-text="item.areaName" ></td>
+	               			<td v-text="item.streetName" ></td>
 	               			<td>
-	               				<span class="badge bg-red">删除</span>
+	               				<font v-if="1==item.dateType" >周一</font>
+	               				<font v-if="2==item.dateType" >周二</font>
+	               				<font v-if="3==item.dateType" >周三</font>
+	               				<font v-if="4==item.dateType" >周四</font>
+	               				<font v-if="5==item.dateType" >周五</font>
+	               				<font v-if="6==item.dateType" >周六</font>
+	               				<font v-if="7==item.dateType" >周日</font>
 	               			</td>
-	               		</tr>
-	               		<tr >
-	               			<td>3</td>
-	               			<td>静安B</td>
-	               			<td>昌平路A段</td>
-	               			<td></td>
-	               			<td>2017-08-28</td>
-	               			<td>0-24</td>
-	               			<td>0元</td>
-	               			<td>0分钟</td>
+	               			<td v-text="item.singleDate" ></td>
+	               			<td v-text="item.startTime+'-'+item.endTime" ></td>
+	               			<td v-text="item.price+'元'" ></td>
+	               			<td v-text="item.freeTime+'分钟'" ></td>
 	               			<td>
-	               				<span class="badge bg-red">删除</span>
+	               				<span class="badge bg-red" onclick="_del('{{item.id}}')">删除</span>
 	               			</td>
 	               		</tr>
 	              </tbody>
@@ -126,7 +93,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/pro/charge.js?version=1.31"></script>
+<script src="/themes/js/home/pro/charge.js?version=1.51"></script>
 
 </body>
 </html>

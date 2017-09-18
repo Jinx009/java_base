@@ -34,7 +34,7 @@ public class ParkingStreetDataController extends BaseController{
 	 * @param areaId
 	 * @return
 	 */
-	@RequestMapping(path = "/streetList")
+	@RequestMapping(path = "/street")
 	@ResponseBody
 	public Resp<?> findAll(){
 		Resp<?> resp = new Resp<>(false);
@@ -45,8 +45,23 @@ public class ParkingStreetDataController extends BaseController{
 			return resp;
 		} catch (Exception e) {
 			logger.error("error:{}",e);
-			return resp;
 		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "streetByAreaId")
+	@ResponseBody
+	public Resp<?> byAreaId(@RequestParam(value = "areaId",required = false)Integer areaId){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<ParkingStreet> list =  parkingStreetService.findByAreaId(areaId);
+			resp = new Resp<>(list);
+			logger.warn("data:{}",resp);
+			return resp;
+		} catch (Exception e) {
+			logger.error("error:{}",e);
+		}
+		return resp;
 	}
 	
 	/**
@@ -54,7 +69,7 @@ public class ParkingStreetDataController extends BaseController{
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(path = "/deleteStreet")
+	@RequestMapping(path = "/delStreet")
 	@ResponseBody
 	public Resp<?> delete(@RequestParam(name = "id",required = false)Integer id){
 		Resp<?> resp = new Resp<>(false);
