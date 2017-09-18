@@ -1,5 +1,7 @@
 package main.entry.webapp.data.parking;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSON;
 
 import database.models.parking.ParkingCharge;
 import service.basicFunctions.parking.ParkingChargeService;
@@ -54,10 +58,13 @@ public class ParkingChargeDataController {
 	 */
 	@RequestMapping(path = "/saveCharge")
 	@ResponseBody
-	public Resp<?> save(ParkingCharge parkingCharge){
+	public Resp<?> save(ParkingCharge parkingCharge,String _singleDate){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			logger.warn("save data:{}",parkingCharge);
+			logger.warn("save data:{},{}",JSON.toJSONString(parkingCharge),_singleDate);
+		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+		    Date date = sdf.parse(_singleDate);
+		    parkingCharge.setSingleDate(date);
 			parkingChargeService.save(parkingCharge);
 			resp = new Resp<>("");
 			return resp;

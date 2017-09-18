@@ -29,7 +29,7 @@ public class ParkingCharge {
 	@Column(name = "STREET_ID")
 	private Integer streetId;
 	@Column(name = "CREATE_TIME")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date createTime;
 	@Column(name = "DATE_TYPE")
 	private Integer dateType;

@@ -130,3 +130,21 @@ function toDate(unixtime)  {
 	 var date = new Date(unixtime);
 	 return  date.Format("yyyy-MM-dd"); 
 } 
+/**
+ * 校验正整数
+ * @param str
+ * @returns
+ */
+function isPInt(str) {
+    var g = /^[1-9]*[1-9][0-9]*$/;
+    return g.test(str);
+}
+/**
+ * 校验小数
+ * @param val
+ * @returns
+ */
+function validateFloat(val){
+	var patten = /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/;
+	return patten.test(val);
+}
