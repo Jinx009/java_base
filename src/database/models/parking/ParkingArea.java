@@ -39,7 +39,8 @@ public class ParkingArea {
 	private Date createTime;
 	@Column(name = "STATUS")
 	private Integer status;
-	
+	@Column(name = "SHOW_STATUS")
+	private Integer showStatus;
 	
 	
 	

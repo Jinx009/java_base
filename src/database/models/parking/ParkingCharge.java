@@ -14,33 +14,35 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * 停车街道管理
- * @author jinx
- *
- */
-
 @Entity
-@Table(name="PARKING_STREET")
+@Table(name="PARKING_CHARGE")
 @Setter
 @Getter
-public class ParkingStreet {
-	
+public class ParkingCharge {
+
 	@Id
 	@Column(name = "ID",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "NAME")
-	private String name;
-	@Column(name = "DESCRIPTION")
-	private String desc;
+	@Column(name = "AREA_ID")
+	private Integer areaId;
+	@Column(name = "STREET_ID")
+	private Integer streetId;
 	@Column(name = "CREATE_TIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name = "AREA_ID")
-	private Integer areaId;
-	@Column(name = "STATUS")
-	private Integer status;
+	@Column(name = "DATE_TYPE")
+	private Integer dateType;
+	@Column(name = "SINGLE_DATE")
+	private Date singleDate;
+	@Column(name = "START_TIME")
+	private Date startTime;
+	@Column(name = "END_TIME")
+	private Date endTime;
+	@Column(name = "PRICE")
+	private Double price;
+	@Column(name = "FREE_TIME")
+	private Integer freeTime;
 	@Column(name = "SHOW_STATUS")
 	private Integer showStatus;
 	

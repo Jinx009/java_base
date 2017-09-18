@@ -197,6 +197,15 @@ public class HomePageController {
 	}
 	
 	/**
+	 * 新增推送
+	 * @return
+	 */
+	@RequestMapping(value = "/sendAdd")
+	public String sendAdd(){
+		return "/home/pro/sendAdd";
+	}
+	
+	/**
 	 * 支付渠道管理
 	 * @return
 	 */

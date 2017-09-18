@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import database.models.parking.ParkingStreet;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.parking.ParkingStreetService;
-import utils.BaseConstant;
 import utils.Resp;
 
 /**
@@ -41,7 +40,7 @@ public class ParkingStreetDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			List<ParkingStreet> list =  parkingStreetService.findAll();
-			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,list);
+			resp = new Resp<>(list);
 			logger.warn("data:{}",resp);
 			return resp;
 		} catch (Exception e) {
@@ -61,7 +60,7 @@ public class ParkingStreetDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			parkingStreetService.delete(id);
-			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,"");
+			resp = new Resp<>("");
 			return resp;
 		} catch (Exception e) {
 			logger.error("error:{}",e);
@@ -84,7 +83,7 @@ public class ParkingStreetDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			parkingStreetService.save(areaId,name,desc);
-			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,"");
+			resp = new Resp<>("");
 			return resp;
 		} catch (Exception e) {
 			logger.error("error:{}",e);

@@ -35,7 +35,7 @@ public class ParkingAreaDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			List<ParkingArea> list = parkingAreaService.findAll();
-			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,list);
+			resp = new Resp<>(list);
 			logger.warn("data:{}",resp);
 			return resp;
 		} catch (Exception e) {
@@ -57,7 +57,7 @@ public class ParkingAreaDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			parkingAreaService.save(name,desc);
-			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,"");
+			resp = new Resp<>("");
 			logger.warn("data:{}",resp);
 			return resp;
 		} catch (Exception e) {

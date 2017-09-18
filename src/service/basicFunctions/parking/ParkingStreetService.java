@@ -21,6 +21,8 @@ public class ParkingStreetService {
 	
 	public ParkingStreet save(ParkingStreet parkingStreet){
 		parkingStreet.setCreateTime(new Date());
+		parkingStreet.setShowStatus(1);
+		parkingStreet.setStatus(1);
 		return parkingStreetDao.save(parkingStreet);
 	}
 	

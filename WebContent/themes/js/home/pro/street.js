@@ -53,7 +53,7 @@ function _addStreet(){
 }
 /**
  * 显示主屏幕
- */
+ */ 
 function _showMain(){
 	$('#_main').show();
 	$('#_add').hide();

@@ -5,18 +5,18 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
+import database.common.OrderFilter.OrderType;
 import database.common.QueryParam;
-import database.models.parking.ParkingArea;
+import database.models.parking.ParkingCharge;
 
 @Repository
-public class ParkingAreaDao extends BaseDao<ParkingArea>{
+public class ParkingChargeDao extends BaseDao<ParkingCharge>{
 
-	public List<ParkingArea> findUseAll() {
+	public List<ParkingCharge> findAll(){
 		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addParam("showStatus",1);
+		queryParam.addParam("showStatus", 1);
+		queryParam.addOrder(OrderType.DESC,"createTime");
 		return findByCriteria(queryParam);
 	}
-
-	
 	
 }

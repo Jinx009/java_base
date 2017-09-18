@@ -25,6 +25,8 @@ public class ParkingAreaService {
 	
 	public ParkingArea save(ParkingArea parkingArea){
 		parkingArea.setCreateTime(new Date());
+		parkingArea.setShowStatus(1);
+		parkingArea.setStatus(1);
 		return parkingAreaDao.save(parkingArea);
 	}
 	
@@ -34,7 +36,7 @@ public class ParkingAreaService {
 	
 	public void delete(Integer id){
 		ParkingArea parkingArea = parkingAreaDao.find(id);
-		parkingArea.setStatus(0);
+		parkingArea.setShowStatus(0);
 		parkingAreaDao.update(parkingArea);
 	}
 
