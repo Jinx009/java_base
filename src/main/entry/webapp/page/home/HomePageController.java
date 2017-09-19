@@ -215,6 +215,15 @@ public class HomePageController {
 	}
 	
 	/**
+	 * 新增支付渠道
+	 * @return
+	 */
+	@RequestMapping(path = "/payAdd")
+	public String payAdd(){
+		return "/home/pro/payAdd";
+	}
+	
+	/**
 	 * 用户增长率
 	 * @return
 	 */

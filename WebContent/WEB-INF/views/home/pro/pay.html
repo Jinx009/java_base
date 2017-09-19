@@ -37,6 +37,14 @@
 	          <div class="box">
 	            <div class="box-header">
 	              <h3 class="box-title">支持列表</h3>
+	              <div class="box-tools">
+					<div class="input-group input-group-sm" style="width: 150px;">
+						<div class="input-group-btn">
+							<a onclick="_open_('7','/home/p/pay','/home/p/payAdd')" type="button" style="float: right;"
+								class="btn btn-info">新增渠道</a>
+						</div>
+					</div>
+				</div>
 	            </div>
 	            <!-- /.box-header -->
 	            <div class="box-body table-responsive no-padding">
@@ -47,51 +55,28 @@
 	                  <th>支付类型</th>
 	                  <th>标志</th>
 	                  <th>商户号</th>
+	                  <th>appId</th>
+	                  <th>appSecret</th>
 	                  <th>启动状态</th>
 	                  <th>操作</th>
 	                </tr>
 	                </thead>
-	               <tbody>
-	               		<tr>
-	               			<td>4</td>
-	               			<td>支付宝</td>
+	               <tbody id="pay" >
+	               		<tr v-for="item in pays" >
+	               			<td v-text="item.id" ></td>
+	               			<td v-text="item.name" ></td>
 	               			<td style="text-align: center;" >
-	               				<img alt="" src="/themes/img/alipay.jpeg" height="25px;">
+	               				<img alt="" v-bind:src="item.logoPath" height="25px;">
 	               			</td>
-	               			<td>090101001</td>
+	               			<td v-text="item.merchantNum" ></td>
+	               			<td v-text="item.appId" ></td>
+	               			<td v-text="item.appSecret" ></td>
 	               			<td>
-	               				<span class="badge bg-green">启用中</span>
-	               			</td>
-	               			<td>
-	               				<span class="badge bg-red">禁用</span>
-	               			</td>
-	               		</tr>
-	               		<tr>
-	               			<td>3</td>
-	               			<td>微信支付</td>
-	               			<td style="text-align: center;" >
-	               				<img alt="" src="/themes/img/wechatpay.png" height="25px;">
-	               			</td>
-	               			<td>090101002</td>
-	               			<td>
-	               				<span class="badge bg-green">启用中</span>
+	               				<span class="badge bg-green" v-if="0===item.status" onclick="_changeStatus('{{item.id}}','1')"  >点击启用</span>
+	               				<span class="badge bg-red" v-if="1===item.status" onclick="_changeStatus('{{item.id}}','0')" >点击禁用</span>
 	               			</td>
 	               			<td>
-	               				<span class="badge bg-red">禁用</span>
-	               			</td>
-	               		</tr>
-	               		<tr>
-	               			<td>2</td>
-	               			<td>银联支付</td>
-	               			<td style="text-align: center;" >
-	               				<img alt="" src="/themes/img/bankpay.png" height="25px;">
-	               			</td>
-	               			<td>090101003</td>
-	               			<td>
-	               				<span class="badge bg-red">禁用中</span>
-	               			</td>
-	               			<td>
-	               				<span class="badge bg-green">启用</span>
+	               				<span class="badge bg-red" onclick="_del('{{item.id}}')" >删除</span>
 	               			</td>
 	               		</tr>
 	              </tbody>
@@ -105,7 +90,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/pro/pay.js?version=1.181"></script>
+<script src="/themes/js/home/pro/pay.js?version=1.12"></script>
 
 </body>
 </html>

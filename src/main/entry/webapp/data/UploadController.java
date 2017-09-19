@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.UUID;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,8 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import main.entry.webapp.BaseController;
 import utils.Resp;
+import utils.UUIDUtils;
+import utils.encode.Base64;
+import utils.io.FileUtils;
 
 @Controller
 public class UploadController extends BaseController{
@@ -33,22 +39,25 @@ public class UploadController extends BaseController{
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/base/uploadFile")
+	@RequestMapping(value = "/base/uploadImg")
 	@ResponseBody
 	public Resp<?> uploadFileHandler(@RequestParam("file") MultipartFile file, 
 												HttpServletRequest request,
 												HttpServletResponse response)  {
 		Resp<?> resp = new Resp<>(false);
+		resp.setMsg("图片格式不合法");
 		InputStream in = null;
 		OutputStream out = null;
 		try {
-			if (!file.isEmpty()) {
-				String uuid = UUID.randomUUID().toString();
+			
+			if (!file.isEmpty()&&isImage(file)) {
+				String uuid = UUIDUtils.random();
 				String rootPath = request.getSession().getServletContext().getRealPath("");
 				File dir = new File(rootPath + File.separator + "themes/upload_files");
 				if (!dir.exists())
 					dir.mkdirs();
-				String filePath = uuid+ file.getOriginalFilename();
+		        String suffix = file.getOriginalFilename().split("\\.")[1]; 
+				String filePath = new Date().getTime() + uuid+"_."+ suffix;
 				File serverFile = new File(dir.getAbsolutePath() + File.separator +filePath);
 				in = file.getInputStream();
 				out = new FileOutputStream(serverFile);
@@ -79,6 +88,41 @@ public class UploadController extends BaseController{
 			} catch (IOException e) {
 				logger.error("close error:{}",e);
 			}
+		}
+		return resp;
+	}
+	
+	/**
+	 * 校验是否为图片
+	 * @param imageFile
+	 * @return
+	 */
+    private boolean isImage(MultipartFile file) {  
+    	String reg = ".+(.JPEG|.jpeg|.JPG|.jpg|.GIF|.gif|.BMP|.bmp|.PNG|.png)$";
+        String imgp = file.getOriginalFilename();
+        Pattern pattern = Pattern.compile(reg);
+        Matcher matcher = pattern.matcher(imgp.toLowerCase());
+        return matcher.find();
+    }   
+	
+	/**
+	 * 将base64图片保存
+	 * @param picContent
+	 * @return
+	 */
+	public Resp<?> saveFile(String picContent,String picName,HttpServletRequest req){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String rootPath = req.getSession().getServletContext().getRealPath("");
+			File dir = new File(rootPath + File.separator + "themes/upload_files/base64");
+			byte[] decodedPicBytes = Base64.decode(picContent);
+			String uuid = UUIDUtils.random();
+			String savePath = dir + uuid + picName;
+			FileUtils.saveBytesAsFile(savePath, decodedPicBytes);
+			resp = new Resp<>("/themes/upload_files/base64/"+uuid+picName);
+			return resp;
+		} catch (Exception e) {
+			logger.error(" error:{}",e);
 		}
 		return resp;
 	}

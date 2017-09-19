@@ -25,4 +25,5 @@ function _upload() {
  */
 $('input[id=file]').change(function() {
 	$('#fileShow').val($(this).val());
+	_upload();
 });
