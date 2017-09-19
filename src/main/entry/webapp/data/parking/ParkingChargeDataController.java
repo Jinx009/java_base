@@ -1,7 +1,5 @@
 package main.entry.webapp.data.parking;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -58,14 +56,11 @@ public class ParkingChargeDataController {
 	 */
 	@RequestMapping(path = "/saveCharge")
 	@ResponseBody
-	public Resp<?> save(ParkingCharge parkingCharge,String _singleDate){
+	public Resp<?> save(ParkingCharge parkingCharge,String _singleDate,Integer areaId,Integer streetId){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			logger.warn("save data:{},{}",JSON.toJSONString(parkingCharge),_singleDate);
-		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
-		    Date date = sdf.parse(_singleDate);
-		    parkingCharge.setSingleDate(date);
-			parkingChargeService.save(parkingCharge);
+			logger.warn("save data:{},{},{},{}",JSON.toJSONString(parkingCharge),_singleDate,areaId,streetId);
+			parkingChargeService.save(parkingCharge,areaId,streetId,_singleDate);
 			resp = new Resp<>("");
 			return resp;
 		} catch (Exception e) {

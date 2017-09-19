@@ -44,9 +44,9 @@ function _getStreet(){
 		dataType:'json',
 		success:function(res){
 			if('200'==res.code){
-				for(var i in res.data){
-					
-				}
+				res.data.push({id:res.data[0].id,name:res.data[0].name});
+				res.data[0].id = 0;
+				res.data[0].name = '全部街道';
 				if(_street!=null){
 					_street.streets = res.data;
 				}else{

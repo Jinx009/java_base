@@ -43,16 +43,16 @@
             <div class="col-md-3">
               <div class="form-group">
                 <label>选择地区</label>
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                 	 <option selected="selected">静安NB</option>
+                <select class="form-control select2 select2-hidden-accessible" id="area" onchange="_getStreet();" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                 	 <option  v-for="item in areas" v-bind:value="item.id" v-text="item.name" ></option>
                 </select>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label>选择街道</label>
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                 	 <option selected="selected">昌平路A段</option>
+                <select class="form-control select2 select2-hidden-accessible" id="street" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                 	 <option  v-for="item in streets" v-bind:value="item.id" v-text="item.name" ></option>
                 </select>
               </div>
             </div>
@@ -95,7 +95,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/pro/pos.js?version=1.181"></script>
+<script src="/themes/js/home/pro/pos.js?version=1.11"></script>
 
 </body>
 </html>
