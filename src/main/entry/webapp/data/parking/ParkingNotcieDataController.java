@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 
 import database.models.parking.ParkingNotice;
+import main.entry.webapp.BaseController;
 import service.basicFunctions.parking.ParkingNoticeService;
 import utils.Resp;
 
 @Controller
 @RequestMapping(value = "/home/d")
-public class ParkingNotcieDataController {
+public class ParkingNotcieDataController extends BaseController{
 
 	private static final Logger logger = LoggerFactory.getLogger(ParkingNotcieDataController.class);
 	
