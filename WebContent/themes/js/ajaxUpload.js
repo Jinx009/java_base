@@ -10,6 +10,8 @@ function loadForms() {
 		success : function(res) {
 			if ('200' == res.code) {
 				$('#img').attr('src',res.data);
+			}else{
+				layer.alert(res.msg);
 			}
 		},complete : function(t) {}
 	});

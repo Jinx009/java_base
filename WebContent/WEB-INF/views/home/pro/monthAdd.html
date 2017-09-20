@@ -28,7 +28,7 @@
     <section class="content-header"  style="height: 50px;">
       <h1></h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 新增支付渠道 </a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> 新增卡片 </a></li>
       </ol>
     </section>
     <!-- 主内容 -->
@@ -40,44 +40,26 @@
 	            <form role="form">
 	              <div class="box-body">
 	                <div class="form-group">
-	                  <label>渠道名称</label>
-		              <input id="name" class="form-control" />
-	                </div>
-	                <div class="form-group">
-	                  <label>商户号</label>
-		              <input id="merchantNum" class="form-control" />
+	                  <label>卡片类型</label>
+		              <select class="form-control" id="type" >
+		              	 <option  value="1" >月卡</option>
+		              	 <option  value="2" >季卡</option>
+		              	 <option  value="3" >半年卡</option>
+		              	 <option  value="4" >年卡</option>
+		              </select>
 	                </div>
 	                 <div class="form-group">
-	                   <label>appId</label>
-		               <input id="appId" class="form-control" />
-	                </div>
-	                <div class="form-group">
-	                   <label>appSecret</label>
-		               <input id="appSecret" class="form-control" />
-	                </div>
-	                <div class="form-group">
-	                	<label>支付logo</label>
-		                <div class="input-group">
-		                	<input type="text" id="fileShow" readonly="readonly" class="form-control">
-		                    <span class="input-group-btn">
-		                      <button type="button" onclick="_showUpload();" class="btn btn-info btn-flat"> 上 传 </button>
-		                    </span>
-		               </div>
-	               </div>
-	                <div class="form-group">
-	                   <img alt="" id="img"  src="" >
+	                   <label>出售价格</label>
+		               <input type="text" id="price" class="form-control" >
 	                </div>
 	                <div class="form-group">
 	                  <span class="badge bg-red" id="errorMsg" ></span>
 	                </div>
 	              </div>
 	              <div class="box-footer">
-	                <button type="button" onclick="_save();" class="btn btn-primary submit-btn">保存</button>
+	                <button type="button" class="btn btn-primary submit-btn">保存</button>
 	              </div>
 	            </form>
-	             <form id="form" action="/base/uploadImg" enctype="multipart/form-data"  method="post" style="display: none;" >
-                    <input type="file"  id="file" name="file" >
-                  </form>
 	            </div>
             </div>
           </div>
@@ -85,8 +67,6 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
-<script src="/themes/js/ajaxUpload.js?version=1.43"></script>
-<script src="/themes/js/home/pro/payAdd.js?version=1.31"></script>
+<script src="/themes/js/home/pro/monthAdd.js?version=1.21"></script>
 </body>
 </html>

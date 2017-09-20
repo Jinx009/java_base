@@ -164,9 +164,9 @@ public class HomePageController {
 	 * 发票管理
 	 * @return
 	 */
-	@RequestMapping(path = "/paper")
+	@RequestMapping(path = "/invoice")
 	public String paper(){
-		return "/home/pro/paper";
+		return "/home/pro/invoice";
 	}
 	
 	/**
@@ -185,6 +185,15 @@ public class HomePageController {
 	@RequestMapping(path = "/month")
 	public String month(){
 		return  "/home/pro/month";
+	}
+	
+	/**
+	 * 包月证管理
+	 * @return
+	 */
+	@RequestMapping(path = "/monthAdd")
+	public String monthAdd(){
+		return  "/home/pro/monthAdd";
 	}
 	
 	/**

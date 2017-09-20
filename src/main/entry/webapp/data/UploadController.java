@@ -50,7 +50,10 @@ public class UploadController extends BaseController{
 		OutputStream out = null;
 		try {
 			
-			if (!file.isEmpty()&&isImage(file)) {
+			if (!file.isEmpty()) {
+				if(!isImage(file)){
+					return resp;
+				}
 				String uuid = UUIDUtils.random();
 				String rootPath = request.getSession().getServletContext().getRealPath("");
 				File dir = new File(rootPath + File.separator + "themes/upload_files");

@@ -31,36 +31,6 @@
     </section>
     <!-- 主内容 -->
     <section class="content" >
-      <div class="box box-default">
-        <div class="box-header with-border">
-          <h3 class="box-title">筛选条件</h3>
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-          </div>
-        </div>
-        <div class="box-body">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>抬头类型</label>
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                 	 <option selected="selected">个人</option>
-                 	 <option>企业</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>发送状态</label>
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                 	 <option selected="selected">已发送</option>
-                 	 <option>未发送</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 	  <div class="row">
 	     <div class="row">
 	        <div class="col-xs-12">
@@ -78,33 +48,38 @@
 	                  <th>抬头名称</th>
 	                  <th>纳税人识别号</th>
 	                  <th>申请日期</th>
+	                  <th>开户行</th>
+	                  <th>银行账号</th>
+	                  <th>邮箱地址</th>
 	                  <th>邮寄地址</th>
-	                  <th>邮寄状态</th>
+	                  <th>投递状态</th>
 	                  <th>操作</th>
 	                </tr>
 	                </thead>
-	               <tbody>
-	               		<tr>
-	               			<td>4</td>
-	               			<td>个人</td>
-	               			<td>秦江辉</td>
-	               			<td>090101001</td>
-	               			<td>2017-08-22 12:00:00</td>
-	               			<td>jinx@gmail.com</td>
-	               			<td><span class="badge bg-green">已发送</span></td>
-	               			<td></td>
+	               <tbody id="invoice" >
+	               		<tr v-for="item in invoices" >
+	               			<td v-text="item.id" ></td>
+	               			<td>
+	               				<font v-if="0===item.type" >个人</font>
+	               				<font v-if="1===item.type" >企业</font>
+	               			</td>
+	               			<td v-text="item.name" ></td>
+	               			<td v-text="item.idNo" ></td>
+	               			<td v-text="item.createTime" ></td>
+	               			<td v-text="item.bankName"></td>
+	               			<td v-text="item.bankNo"></td>
+	               			<td v-text="item.email"></td>
+	               			<td v-text="item.addrss"></td>
+	               			<td>
+	               				<span v-if="1===item.status" class="badge bg-green">已发送</span>
+	               				<span v-if="0===item.status" class="badge bg-red">未发送</span>
+	               			</td>
+	               			<td>
+	               				<span class="badge bg-red" onclick="_del('{{item.id}}')" >删除</span>
+	               				<span v-if="0===item.status" class="badge bg-success" onclick="_update('{{item.id}}')" >确认发送</span>
+	               			</td>
 	               		</tr>
-	               		<tr>
-	               			<td>3</td>
-	               			<td>企业</td>
-	               			<td>上海展为智能技术股份有限公司</td>
-	               			<td>2017090101001</td>
-	               			<td>2017-08-21 12:00:00</td>
-	               			<td>zhanway@gmail.com</td>
-	               			<td><span class="badge bg-red">未发送</span></td>
-	               			<td><span class="badge bg-green">发送完成</span></td>
-	               		</tr>
-	              </tbody>
+	             	 </tbody>
 	              </table>
 	            </div>
 	          </div>
@@ -115,7 +90,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/pro/paper.js?version=1.181"></script>
+<script src="/themes/js/home/pro/invoice.js?version=1.41"></script>
 
 </body>
 </html>
