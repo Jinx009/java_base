@@ -28,7 +28,7 @@
     <context:annotation-config />
       
     <!-- 配置SpringMVC的视图渲染器， 让其前缀为:/ 后缀为.html  将视图渲染到/page/<method返回值>.jsp中 -->  
-<!--     <beans:bean  
+	<!--     <beans:bean  
         class="org.springframework.web.servlet.view.InternalResourceViewResolver"  
         p:prefix="/WEB-INF/page/" p:suffix=".jsp">  
     </beans:bean>  -->
