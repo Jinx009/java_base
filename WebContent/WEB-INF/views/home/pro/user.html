@@ -99,7 +99,6 @@
 	                  <th>余额</th>
 	                  <th>车牌号</th>
 	                  <th>会员类型</th>
-	                  <th>注册日期</th>
 	                  <th>停车次数</th>
 	                  <th>累计缴费</th>
 	                  <th>包月证</th>
@@ -108,39 +107,35 @@
 	                  <th>操作</th>
 	                </tr>
 	                </thead>
-	               <tbody>
-	               		<tr>
-	               			<td>4</td>
-	               			<td>18217700275</td>
-	               			<td>0</td>
-	               			<td>美B88888</td>
-	               			<td>包月会员</td>
-	               			<td>2017-08-22 12:00:00</td>
-	               			<td>888</td>
-	               			<td>3000.00</td>
-	               			<td>090101001</td>
-	               			<td>99</td>
-	               			<td>白名单</td>
+	               <tbody id="user" >
+	               		<tr v-for="item in users" >
+	               			<td v-text="item.id" ></td>
+	               			<td v-text="item.mobilePhone" ></td>
+	               			<td v-text="item.account" ></td>
+	               			<td v-text="item.plateNo" ></td>
 	               			<td>
-	               				<span class="badge bg-red">撤销包月</span>
-	               				<span class="badge bg-red">拉黑</span>
+	               				<font v-if="0===item.type" >普通会员</font>
+	               				<font v-if="1===item.type" >包月会员</font>
+	               				<font v-if="2===item.type" >季度会员</font>
+	               				<font v-if="3===item.type" >半年会员</font>
+	               				<font v-if="4===item.type" >年度会员</font>
+	               				<font v-if="5===item.type" >特种车</font>
 	               			</td>
-	               		</tr>
-	               		<tr>
-	               			<td>3</td>
-	               			<td>13167262228</td>
-	               			<td>0</td>
-	               			<td>黑B88888</td>
-	               			<td>普通会员</td>
-	               			<td>2017-08-22 12:00:00</td>
-	               			<td>888</td>
-	               			<td>3000.00</td>
-	               			<td></td>
-	               			<td>99</td>
-	               			<td>黑名单</td>
+	               			<td v-text="item.parkingTimes" ></td>
+	               			<td v-text="item.totalCost" ></td>
+	               			<td v-text="item.monthNo" ></td>
+	               			<td v-text="item.credit" ></td>
 	               			<td>
-	               				<span class="badge bg-green">变身包月</span>
-	               				<span class="badge bg-green">撤销拉黑</span>
+	               				<font v-if="0===item.blackList" >白名单</font>
+	               				<font v-if="1===item.blackList" >黑名单</font>
+	               			</td>
+	               			<td>
+	               				<span class="badge bg-red" v-if="0===item.type" onclick="_goMonth('{{item.id}}')" >包月服务</span>
+	               				<span class="badge bg-red" v-if="0!=item.type" onclick="_month('{{item.id}}','0')" >取消包月</span>
+	               				<span class="badge bg-green" v-if="0===item.type" onclick="_month('{{item.id}}','5')" >设置为特种车</span>
+	               				<span class="badge bg-red" v-if="5===item.type" onclick="_month('{{item.id}}','0')" >撤销特种车</span>
+	               				<span class="badge bg-red" v-if="0===item.blackList" onclick="_black('{{item.id}}','1')" >拉黑</span>
+	               				<span class="badge bg-green" v-if="1===item.blackList" onclick="_black('{{item.id}}','0')" >漂白</span>
 	               			</td>
 	               		</tr>
 	              </tbody>
@@ -154,7 +149,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/pro/user.js?version=1.181"></script>
+<script src="/themes/js/home/pro/user.js?version=1.41"></script>
 
 </body>
 </html>

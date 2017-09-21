@@ -1,11 +1,25 @@
 package main.entry.webapp.page.home;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import database.models.parking.ParkingUser;
+import main.entry.webapp.BaseController;
+import service.basicFunctions.parking.ParkingUserService;
+
 @Controller
 @RequestMapping(value = "/home/p")
-public class HomePageController {
+public class HomePageController extends BaseController{
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomePageController.class);
+	
+	@Autowired
+	private ParkingUserService parkingUserService;
 	
 	/**
 	 * pos机列表
@@ -194,6 +208,27 @@ public class HomePageController {
 	@RequestMapping(path = "/monthAdd")
 	public String monthAdd(){
 		return  "/home/pro/monthAdd";
+	}
+	
+	/**
+	 * 设置包月证
+	 * @return
+	 */
+	@RequestMapping(path = "/monthSet")
+	public String monthSet(Integer _id,HttpServletRequest req){
+		try {
+			logger.warn("data:{}",_id);
+			ParkingUser parkingUser = parkingUserService.find(_id);
+			req.setAttribute("_id", _id);
+			if(parkingUser!=null){
+				req.setAttribute("_mobilePhone", parkingUser.getMobilePhone());
+				req.setAttribute("_plateNo", parkingUser.getPlateNo());
+			}
+		} catch (Exception e) {
+			logger.error("error:{}",e);
+		}
+		
+		return  "/home/pro/monthSet";
 	}
 	
 	/**

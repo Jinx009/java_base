@@ -103,6 +103,13 @@ public class ParkingMonthCardService {
 		return result;
 	}
 
+	public boolean checkUse(Integer monthId) {
+		ParkingMonthCard parkingMonthCard = parkingMonthCardDao.find(monthId);
+		if(parkingMonthCard!=null&&0==parkingMonthCard.getStatus())
+			return true;
+		return false;
+	}
+
 	
 	
 }
