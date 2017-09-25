@@ -27,7 +27,7 @@ function _getData(){
 						}
 					})
 				}else{
-					_data.datas = res.data;
+					_data.cards = res.data;
 				}
 			}else{
 				layer.alert(res.msg);
