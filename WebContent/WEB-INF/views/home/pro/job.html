@@ -95,48 +95,26 @@
 	              <table class="table table-hover table-bordered">
 	              <thead>
 	                <tr>
-	                  <th>手机号码</th>
-	                  <th>POS机mac</th>
-	                  <th>组织</th>
+	                  <th>用户</th>
 	                  <th>上班时间</th>
 	                  <th>下班时间</th>
-	                  <th>工作总时长</th>
-	                  <th>操作</th>
+	                  <th>星期</th>
+	                  <th>工作时长</th>
+	                  <th>日期</th>
 	                </tr>
 	                </thead>
-	               <tbody>
-	               		<tr>
-	               			<td>13521621212</td>
-	               			<td>E2:F4:12:32:45:65</td>
-	               			<td>昌平路A段</td>
-	               			<td>2017-08-28 07:58:42</td>
-	               			<td>2017-08-28 21:58:42</td>
-	               			<td>13小时</td>
+	               <tbody id="data" >
+	               		<tr v-for="item in datas" >
+	               			<td v-text="item.workerName" ></td>
 	               			<td>
-	               				<span class="badge bg-green">审核</span>
+	               				<font  v-text="item.toWorkTime" v-if="item.toWorkStatus"  ></font>
 	               			</td>
-	               		</tr>
-	               		<tr>
-	               			<td>13521621212</td>
-	               			<td>E2:F4:12:32:45:65</td>
-	               			<td>昌平路A段</td>
-	               			<td>2017-08-29 07:58:42</td>
-	               			<td>2017-08-29 21:58:42</td>
-	               			<td>13小时</td>
 	               			<td>
-	               				<span class="badge bg-green">审核</span>
+	               				<font  v-text="item.offWorkTime" v-if="item.offWorkStatus"  ></font>
 	               			</td>
-	               		</tr>
-	               		<tr>
-	               			<td>13521621212</td>
-	               			<td>E2:F4:12:32:45:65</td>
-	               			<td>昌平路A段</td>
-	               			<td>2017-08-30 07:58:42</td>
-	               			<td>2017-08-30 21:58:42</td>
-	               			<td>13小时</td>
-	               			<td>
-	               				<span class="badge bg-green">审核</span>
-	               			</td>
+	               			<td v-text="item.weekTime" ></td>
+	               			<td v-text="item.workTime" ></td>
+	               			<td v-text="item.createTime" ></td>
 	               		</tr>
 	              </tbody>
 	              </table>
@@ -150,7 +128,7 @@
 </div>
 <script src="/themes/awe/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script src="https://cdn.bootcss.com/echarts/2.2.7/echarts-all.js"></script>
-<script src="/themes/js/home/pro/job.js?version=1.18"></script>
+<script src="/themes/js/home/pro/job.js?version=1.88"></script>
 
 </body>
 </html>

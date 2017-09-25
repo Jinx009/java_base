@@ -51,6 +51,8 @@ public class ParkingAttendanceRecord {
 	private Integer workerId;
 	@Column(name = "WORKER_NAME")
 	private String workerName;
+	@Column(name = "DEVICE_ID")
+	private Integer deviceId;
 	
 	
 }
