@@ -57,26 +57,6 @@ public class CommonHelper {
         	if( ttmp[0].equals("image") ){
         		suffix = ttmp[1];
         	}
-//            // 获取所有响应头字段
-//            Map<String, List<String>> map = connection.getHeaderFields();
-//            // 遍历所有的响应头字段
-//            for (String key : map.keySet()) {
-//                System.out.println(key + "--->" + map.get(key));
-//                if( key != null && key.equals("Content-Type") ){
-//                	String value = map.get(key).toString().substring(1);
-//                	value = value.substring(0,value.length()-1);
-//                	//以上去掉 头尾的 [] 方括号
-//                	
-//                }
-//                
-//                if( key != null && key.equals("Content-Length") ){
-//                	String value = map.get(key).toString().substring(1);
-//                	value = value.substring(0,value.length()-1);
-//                	//以上去掉 头尾的 [] 方括号
-//                	contentLength = Long.valueOf(value);
-//                }
-//            }
-            
             if( connection.getContentLengthLong() != 0 ){
             	content = new byte[1024]; //这个一次读取的buffer太大的话会造成内容丢失的现象
             	ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
@@ -125,18 +105,6 @@ public class CommonHelper {
         }
                 
         try {
-//        	System.out.println(System.getProperty("java.library.path"));
-//        	ByteArrayInputStream in = new ByteArrayInputStream(content); 
-//            BufferedImage thePage = ImageIO.read(in);
-//       
-//            ImageIO.write(thePage, "png", targetFile);
-            
-
-//			DataOutputStream dos=new DataOutputStream(new FileOutputStream(targetFile));
-//			dos.write(result.getBytes());
-//			dos.flush();
-//			dos.close();
-        	
         	FileOutputStream fs = new FileOutputStream(targetFile);
         	fs.write(content);
         	fs.flush();
