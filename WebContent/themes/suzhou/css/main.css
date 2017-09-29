@@ -67,3 +67,18 @@
 	margin-top: 80px;
 	margin-left: 15px;
 }
+
+.z_row {
+	float: left;
+	width: 1221px;
+	font-size: 12px;
+}
+
+.z_row span {
+	width: 87px;
+	float: left;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid #adadad
+}
