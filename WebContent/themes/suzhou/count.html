@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>停车统计</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/themes/awe/plugins/datepicker/datepicker3.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"  target="_blank"  href="http://www.zhanway.com"><img height="50px;" style="margin-top: -15px;" src="img/logo.png"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="lot.html">车位数据</a></li>
+                <li><a href="location.html">地理位置</a></li>
+                <li><a href="device.html">设备信息</a></li>
+                <li class="active"><a href="count.html">停车统计</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a target="_blank" href="http://www.zhanway.com">走进展为</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="row" style="width: 98%;margin-left: 1%;" >
+    <div class="col-md-12">
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="sr-only">选择日期</label>
+                <input type="email" class="form-control" id="datepicker" readonly="readonly" placeholder="">
+            </div>
+            <div class="form-group">
+                <label class="sr-only">筛选类型</label>
+                <select class="form-control" id="_type" style="min-width: 200px;">
+                    <option value="1">按日</option>
+                    <option value="2">按月</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-info" onclick="getData();" >&nbsp;查&nbsp;询&nbsp;</button>
+        </form>
+        <div class="location"  id="picturePlace" style="width:910px;height: 400px;margin-top: 80px;margin-left: 45px;" >
+
+
+        </div>
+    </div>
+</div>
+<footer class="main-footer" style="position: absolute;bottom: 10px;text-align: center;width: 100%;">
+    <strong>Copyright &copy; 2014-2026 <a href="http://www.zhanway.com" target="_blank">上海展为智能技术股份有限公司</a>.</strong> All rights reserved.
+</footer>
+<div class="control-sidebar-bg"></div>
+<script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+<script src="/themes/awe/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="https://cdn.bootcss.com/echarts/2.2.7/echarts-all.js"></script>
+<script src="https://cdn.bootcss.com/layer/3.0.3/layer.min.js"></script>
+<script type="text/javascript">
+Date.prototype.Format = function (fmt) { //author: meizz
+    var o = {
+        "M+": this.getMonth() + 1,                 //月份
+        "d+": this.getDate(),                    //日
+        "h+": this.getHours(),                   //小时
+        "m+": this.getMinutes(),                 //分
+        "s+": this.getSeconds(),                 //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds()             //毫秒
+    };
+    if (/(y+)/.test(fmt))
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+};
+$(function(){
+	$('#datepicker').datepicker({
+      autoclose: true,
+      format: 'yyyy-mm-dd',
+      lang: 'ch'
+    });
+    $("#datepicker").val(new Date().Format("yyyy-MM-dd"));
+	$('._b').bind('click',function(){
+		var _d = $(this).attr('data-ref');
+		$('._b').removeClass('btn-info');
+		$('._b').addClass('btn-default');
+		$(this).addClass('btn-info');
+		_type = _d;
+		getData();
+	})
+	getData();
+})
+var _model = [{"id":32472,"inTime":1498109844000,"outTime":1498148520000,"areaId":5,"createTime":null,"description":"2027","mac":"020000fffe000118","times":644,"logId":null},{"id":32473,"inTime":1498125536000,"outTime":1498148520000,"areaId":5,"createTime":null,"description":"2026","mac":"020000fffe0000ef","times":383,"logId":null},{"id":32493,"inTime":1498175497000,"outTime":1498176040000,"areaId":5,"createTime":null,"description":"3012","mac":"020000fffe00011d","times":9,"logId":null},{"id":32494,"inTime":1498175497000,"outTime":1498176040000,"areaId":5,"createTime":null,"description":"3012","mac":"020000fffe00011d","times":9,"logId":null},{"id":32495,"inTime":1498175497000,"outTime":1498176040000,"areaId":5,"createTime":null,"description":"3013","mac":"020000fffe000153","times":9,"logId":null},{"id":32504,"inTime":1498178378000,"outTime":1498178455000,"areaId":5,"createTime":null,"description":"2074","mac":"020000fffe0001c9","times":1,"logId":null},{"id":32507,"inTime":1498174418000,"outTime":1498178621000,"areaId":5,"createTime":null,"description":"3033","mac":"020000fffe0001bd","times":70,"logId":null},{"id":32513,"inTime":1498179862000,"outTime":1498179906000,"areaId":5,"createTime":null,"description":"3038","mac":"020000fffe0000af","times":0,"logId":null},{"id":32516,"inTime":1498181432000,"outTime":1498181465000,"areaId":5,"createTime":null,"description":"3085","mac":"020000fffe000160","times":0,"logId":null},{"id":32518,"inTime":1498181488000,"outTime":1498181584000,"areaId":5,"createTime":null,"description":"3108","mac":"020000fffe000075","times":1,"logId":null},{"id":32521,"inTime":1498178801000,"outTime":1498183176000,"areaId":5,"createTime":null,"description":"3018","mac":"020000fffe000166","times":72,"logId":null}];
+var optionData = [{value:0, name:'小于15分钟'},{value:0, name:'15分至1小时'}, {value:0, name:'1至2小时'}, {value:0, name:'2至4小时'}, {value:0, name:'4至8小时'}, {value:0, name:'8至24小时'}, {value:0, name:'大于24小时'}],resData = [];
+var areaId = '17',_type = 1;
+var myChart = echarts.init(document.getElementById('picturePlace'));
+var option = {};
+function getData(){
+	var _date = $('#datepicker').val();
+    optionData = [{value:0, name:'小于15分钟'},{value:0, name:'15分至1小时'}, {value:0, name:'1至2小时'}, {value:0, name:'2至4小时'}, {value:0, name:'4至8小时'}, {value:0, name:'8至24小时'}, {value:0, name:'大于24小时'}];
+    resData = [];_data_[0]=0;_data_[1]=0;_data_[2]=0;_data_[3]=0;_data_[4]=0;_data_[5]=0; _data_[6]=0;
+    $.ajax({
+        url:'/home/d/car?areaId='+areaId+'&dateStr='+_date+'&type='+_type,
+        type:'get',
+        dataType:'json',
+        success:function(res){
+            if(res.data!=null){
+                for(var i in res.data){
+                    resData.push(res.data[i]);
+                }
+            }
+            if(resData.length==0){
+            	resData = _model;
+            	changeData();
+            }else{
+                changeData();
+            }
+        }
+    })
+}
+var _data_ = new Array();
+
+function changeData(){
+    var max = 0;var times = resData.length;
+    for(var i in resData){
+        max += resData[i].times;
+        if(resData[i].times<15){
+            optionData[0].value ++;
+        }
+        if(resData[i].times>=15&&resData[i].times<60){
+            optionData[1].value ++;
+        }
+        if(resData[i].times>=60&&resData[i].times<120){
+            optionData[2].value ++;
+        }
+        if(resData[i].times>=120&&resData[i].times<240){
+            optionData[3].value ++;
+        }
+        if(resData[i].times>=240&&resData[i].times<480){
+            optionData[4].value ++;
+        }
+        if(resData[i].times<1440&&resData[i].times>=480){
+            optionData[5].value ++;
+        }
+        if(resData[i].times>=1440){
+            optionData[6].value ++;
+        }
+    }
+    _data_[0]=optionData[0].value;
+    _data_[1]=optionData[1].value;
+    _data_[2]=optionData[2].value;
+    _data_[3]=optionData[3].value;
+    _data_[4]=optionData[4].value;
+    _data_[5]=optionData[5].value;
+    _data_[6]=optionData[6].value;
+    if(_type==2){
+        $('#text').html('当月总停车次数:<font style="color: red;" >'+times+'</font>,平均时长:<font style="color: red;" >'+parseInt(max/times)+'</font>分钟');
+    }else{
+        $('#text').html('当日总停车次数:<font style="color: red;" >'+times+'</font>,平均时长:<font style="color: red;" >'+parseInt(max/times)+'</font>分钟');
+    }
+    draw();
+}
+
+function draw(){
+    option = {
+        title: {
+            x: 'center',
+            text: '',
+            subtext: '',
+            link: '#'
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {show: false, readOnly: false},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        grid: {
+            borderWidth: 0,
+            y: 80,
+            y2: 60
+        },
+        xAxis: [
+            {
+                type: 'category',
+                show: false,
+                data: ['小于15分钟', '15分钟至1小时', '1小时至2小时', '2小时至4小时', '4小时至8小时', '8小时至24小时', '大于24小时']
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                show: false
+            }
+        ],
+        series: [
+            {
+                name: '不同时间区间停车次数:',
+                type: 'bar',
+                itemStyle: {
+                    normal: {
+                        color: function(params) {
+                            var colorList = [
+                                '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                                '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                                '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                            ];
+                            return colorList[params.dataIndex]
+                        },
+                        label: {
+                            show: true,
+                            position: 'top',
+                            formatter: '{b}\n\n{c}辆'
+                        }
+                    }
+                },
+                data:_data_
+
+            }
+        ]
+    };
+    myChart.setOption(option,true);
+}
+</script>
+</body>
+</html>
