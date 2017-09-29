@@ -41,8 +41,9 @@ function getData(){
 	var _date = $('#datepicker').val();
     optionData = [{value:0, name:'小于15分钟'},{value:0, name:'15分至1小时'}, {value:0, name:'1至2小时'}, {value:0, name:'2至4小时'}, {value:0, name:'4至8小时'}, {value:0, name:'8至24小时'}, {value:0, name:'大于24小时'}];
     resData = [];_data_[0]=0;_data_[1]=0;_data_[2]=0;_data_[3]=0;_data_[4]=0;_data_[5]=0; _data_[6]=0;
+    _type = $('#_type').val();
     $.ajax({
-        url:'/home/d/car?areaId='+areaId+'&dateStr='+_date+'&type='+_type,
+        url:'/interface/suzhou/car?areaId='+areaId+'&dateStr='+_date+'&type='+_type,
         type:'get',
         dataType:'json',
         success:function(res){
@@ -118,7 +119,7 @@ function draw(){
             show: true,
             feature: {
                 dataView: {show: false, readOnly: false},
-                restore: {show: true},
+                restore: {show: false},
                 saveAsImage: {show: true}
             }
         },

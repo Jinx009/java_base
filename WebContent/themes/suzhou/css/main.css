@@ -28,7 +28,9 @@
 }
 
 .morris-hover.morris-default-style {
-	padding: 6px;
+	padding-top: 6px;
+	padding-left:2px;
+	padding-right:2px;
 	color: #666;
 	font-size: 12px;
 	font-weight: 600;
@@ -53,7 +55,9 @@
 	margin: .25em 0;
 	font-weight: 600;
 }
-
+.morris-hover-point{
+	min-width: 89px;
+}
 ._pic {
 	width: 810px;
 	height: 400px;
@@ -70,7 +74,7 @@
 
 .z_row {
 	float: left;
-	width: 1221px;
+	width: 100%;;
 	font-size: 12px;
 }
 
