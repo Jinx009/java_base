@@ -119,4 +119,24 @@ public class InterfaceSuzhouDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/rush")
+	@ResponseBody
+	public Resp<?> rush(String dateStr){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String token  = getToken(AppInfo.COMPANY_TEST.getAppId());
+			if(token!=null){
+				String result = httpService.get(HttpData.rush(token,dateStr));
+				if(!BaseConstant.HTTP_ERROR_CODE.equals(result)){
+					JSONObject jsonObject = JSON.parseObject(result);
+					resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,JSONArray.parse(jsonObject.getString(BaseConstant.PARAMS)));
+					return resp;
+				}
+			}
+		} catch (Exception e) {
+			logger.error("error:{}", e);
+		}
+		return resp;
+	}
+	
 }

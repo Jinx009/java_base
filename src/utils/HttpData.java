@@ -16,6 +16,7 @@ public class HttpData {
 	private static final String GET_CAR_NUMS_VIEW_URL = "/rest/intersection/numsView";
 	
 	private static final String LOCATION_STATUS_URL = "/rest/parking/locationStatus";
+	private static final String LOCATION_RUSH_URL = "/rest/parking/locationRush";
 	private static final String DEVICE_URL = "/rest/parking/device";
 	private static final String CAR_URL = "/ge/carInOutLog";
 	private static final String BIKE_URL = "/rest/parking/bikes";
@@ -212,6 +213,11 @@ public class HttpData {
 			e.printStackTrace();
 			return "";
 		}
+	}
+
+	public static String rush(String token, String dateStr) {
+		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId=11&token="+token+"&date="+dateStr;
+		return url;
 	}
 	
 }

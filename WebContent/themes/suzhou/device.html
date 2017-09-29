@@ -38,7 +38,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">基本信息</div>
             <div class="panel-body">
-                <p style="letter-spacing: 1px;" class=“text-success” >Location:苏州示范区,Router个数:20<br>Sensor个数:80,运行开始时间:2017-09-30</p>
+                <p style="letter-spacing: 1px;color:rgb(35,159,171);" class=“text-success”  >Location:苏州示范区,Router个数:&nbsp;&nbsp;<font style="color: red;" >1</font>&nbsp;&nbsp;Sensor个数:&nbsp;&nbsp;<font style="color: red;" >60</font>&nbsp;&nbsp;,运行开始时间:&nbsp;&nbsp;<font style="color: red;" >2017-10-09</font></p>
             </div>
             <table class="table">
                 <thead>
@@ -73,22 +73,6 @@
 <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	$.ajax({
-		url:'/interface/suzhou/device',
-		type:'get',
-		dataType:'json',
-		success:function(res){
-			new Vue({
-				el:'#data',
-				data:{
-					datas:res.data.result
-				}
-			})
-		}
-	})
-})
-</script>
+<script src="js/device.js"></script>
 </body>
 </html>
