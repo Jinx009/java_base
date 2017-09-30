@@ -54,6 +54,8 @@ public class ParkingUserService {
 		parkingMonthCard.setUserId(id);
 		parkingMonthCard.setPlateNo(parkingUser.getPlateNo());
 		
+		parkingMonthCardDao.update(parkingMonthCard);
+		
 		parkingUser.setMonthNo(parkingMonthCard.getCardNo());
 		parkingUser.setTotalCost(parkingMonthCard.getPrice());
 		parkingUser.setType(parkingMonthCard.getType());
