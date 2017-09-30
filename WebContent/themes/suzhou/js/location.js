@@ -11,13 +11,13 @@ function _setMap() {
 					+ _item.lot
 					+ '"  src="/themes/img/A-car.png" width="30px;" style="position: absolute;top: '
 					+ _item._top + 'px;left: ' + _item._left
-					+ 'px;display:none;"  />';
+					+ 'px;" class="none"  />';
 		} else {
 			_htmlStr = '<img id="'
 					+ _item.lot
 					+ '" src="/themes/img/A-car-v.png" height="30px;" style="position: absolute;top: '
 					+ _item._top + 'px;left: ' + _item._left
-					+ 'px;display:none;"  />';
+					+ 'px;"  class="none"  />';
 		}
 		$('.location').append(_htmlStr);
 	}
