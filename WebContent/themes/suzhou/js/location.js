@@ -27,10 +27,10 @@ function _setMap() {
 
 		run();
 
-	}, 10000);
+	}, 5000);
 }
 function run() {
-	$.get('/interface/suzhou/view?areaId=17', function(res) {
+	$.get('/interface/suzhou/view?areaId=19', function(res) {
 		var params = res.data;
 		for (idx in params) {
 			var sensorVo = params[idx];

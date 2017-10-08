@@ -216,7 +216,7 @@ public class HttpData {
 	}
 
 	public static String rush(String token, String dateStr) {
-		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId=11&token="+token+"&date="+dateStr;
+		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId=18&token="+token+"&date="+dateStr;
 		return url;
 	}
 	

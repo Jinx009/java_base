@@ -45,7 +45,7 @@ app.chartColors = [ '#D3ECF8', '#f0ad4e', '#444', '#888', '#555', '#999',
 var _i = -1;
 function getData() {
 	var date = $('#datepicker').val();
-	var params = 'locationId=4&op=' + app.type + '&dateStr=' + date;
+	var params = 'locationId=18&op=' + app.type + '&dateStr=' + date;
 	_getData();
 	$.ajax({
 		url : '/interface/suzhou/locationStatus',

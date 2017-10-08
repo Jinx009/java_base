@@ -61,7 +61,7 @@ public class InterfaceSuzhouDataController extends BaseController{
 	public Resp<?> device(){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.COMPANY_TEST.getAppId());
+			String token  = getToken(AppInfo.SUZHOU_DEMO.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.deviceUrl(token));
 				JSONObject jsonObject = JSONObject.parseObject(result);
@@ -99,6 +99,11 @@ public class InterfaceSuzhouDataController extends BaseController{
 		return resp;
 	}
 	
+	/**
+	 * 
+	 * @param areaId
+	 * @return
+	 */
 	@RequestMapping(path = "/view")
 	@ResponseBody
 	public Resp<?> views(Integer areaId){
@@ -119,6 +124,11 @@ public class InterfaceSuzhouDataController extends BaseController{
 		return resp;
 	}
 	
+	/**
+	 * 按星期占有率分析
+	 * @param dateStr
+	 * @return
+	 */
 	@RequestMapping(path = "/rush")
 	@ResponseBody
 	public Resp<?> rush(String dateStr){

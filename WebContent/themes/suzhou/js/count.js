@@ -34,7 +34,7 @@ $(function(){
 })
 var _model = [{"id":32472,"inTime":1498109844000,"outTime":1498148520000,"areaId":5,"createTime":null,"description":"2027","mac":"020000fffe000118","times":644,"logId":null},{"id":32473,"inTime":1498125536000,"outTime":1498148520000,"areaId":5,"createTime":null,"description":"2026","mac":"020000fffe0000ef","times":383,"logId":null},{"id":32493,"inTime":1498175497000,"outTime":1498176040000,"areaId":5,"createTime":null,"description":"3012","mac":"020000fffe00011d","times":9,"logId":null},{"id":32494,"inTime":1498175497000,"outTime":1498176040000,"areaId":5,"createTime":null,"description":"3012","mac":"020000fffe00011d","times":9,"logId":null},{"id":32495,"inTime":1498175497000,"outTime":1498176040000,"areaId":5,"createTime":null,"description":"3013","mac":"020000fffe000153","times":9,"logId":null},{"id":32504,"inTime":1498178378000,"outTime":1498178455000,"areaId":5,"createTime":null,"description":"2074","mac":"020000fffe0001c9","times":1,"logId":null},{"id":32507,"inTime":1498174418000,"outTime":1498178621000,"areaId":5,"createTime":null,"description":"3033","mac":"020000fffe0001bd","times":70,"logId":null},{"id":32513,"inTime":1498179862000,"outTime":1498179906000,"areaId":5,"createTime":null,"description":"3038","mac":"020000fffe0000af","times":0,"logId":null},{"id":32516,"inTime":1498181432000,"outTime":1498181465000,"areaId":5,"createTime":null,"description":"3085","mac":"020000fffe000160","times":0,"logId":null},{"id":32518,"inTime":1498181488000,"outTime":1498181584000,"areaId":5,"createTime":null,"description":"3108","mac":"020000fffe000075","times":1,"logId":null},{"id":32521,"inTime":1498178801000,"outTime":1498183176000,"areaId":5,"createTime":null,"description":"3018","mac":"020000fffe000166","times":72,"logId":null}];
 var optionData = [{value:0, name:'小于15分钟'},{value:0, name:'15分至1小时'}, {value:0, name:'1至2小时'}, {value:0, name:'2至4小时'}, {value:0, name:'4至8小时'}, {value:0, name:'8至24小时'}, {value:0, name:'大于24小时'}],resData = [];
-var areaId = '5',_type = 1;
+var areaId = '19',_type = 1;
 var myChart = echarts.init(document.getElementById('picturePlace'));
 var option = {};
 function getData(){
@@ -53,7 +53,7 @@ function getData(){
                 }
             }
             if(resData.length==0){
-            	resData = _model;
+//            	resData = _model;
             	changeData();
             }else{
                 changeData();
