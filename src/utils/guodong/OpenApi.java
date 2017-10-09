@@ -33,17 +33,16 @@ public class OpenApi {
 
 		// System.out.println("====node" +
 		// ob.getNodeDataListInfo("000000000000006c").toString());
-		System.out.println("====2" + ob.getAppEuiDataListInfo("000000000000006c").toString());
-		String testJson = "\\x480b3506530000e20c00";
-		System.out.println(testJson.length());
-		// ;
-		//
-		//
-		// byte[] data = new byte[DATA_MAX_LENGTH];
-		// for(int i = 0,j = data.length; i < j;i++){
-		// data[i] = (byte)(Math.random()*255);
-		// }
-		// ob.sendDataToNodes("000000000000006c",data);
+		// System.out.println("====2" +
+		// ob.getAppEuiDataListInfo("000000000000006c").toString());
+		// String testJson = "\\x480b3506530000e20c00";
+		// System.out.println(testJson.length());
+
+		byte[] data = new byte[DATA_MAX_LENGTH];
+		for (int i = 0, j = data.length; i < j; i++) {
+			data[i] = (byte) (Math.random() * 255);
+		}
+		System.out.println(ob.sendDataToNodes("0000000000004f8e", data));
 	}
 
 	@SuppressWarnings({ "resource" })
@@ -237,8 +236,8 @@ public class OpenApi {
 		System.out.println("start sendDataToNodes!");
 		String apiUrl = URL + "OpenAPI_SendDataForNode";
 
-		String userId = "XXXXXXX";
-		String userSec = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+		String userId = "3456959";
+		String userSec = "a7da4728e374343d37021e4be5593311";
 
 		String currentTime = String.valueOf(System.currentTimeMillis());
 		String token = null;
