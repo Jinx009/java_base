@@ -75,7 +75,6 @@ public class CallUtils {
     	data.put("applicationCode", "MAGNETIC_APPLICATION");
     	data.put("path", "/park_place");
         String sign = KeyUtils.sign(data);
-        System.out.println(sign);
         data.remove("path");
         String _path = "applicationCode=MAGNETIC_APPLICATION&sign="+getMyURIEncoder(sign);
         String url = "http://120.92.101.137:8080/park-charge-api/park_place?"+_path;
