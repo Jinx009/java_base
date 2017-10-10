@@ -70,12 +70,11 @@ public class OpenApi {
 		jsonInner.element("devEUI", devEUI);
 		jsonInner.element("limit", 100);
 		jsonInner.element("offset", 0);
+		jsonInner.element("obtainStartDataTime", "all");
+		json.element("params", jsonInner);
 		// jsonInner.element("obtainStartDataTime", "2016-08-16 01:23:08");
 		// jsonInner.element("obtainEndDataTime", "2016-08-17 14:23:08");
 		// jsonInner.element("obtainStartDataTime", "latest");
-		jsonInner.element("obtainStartDataTime", "all");
-
-		json.element("params", jsonInner);
 
 		String bodyString = json.toString();
 		StringEntity entity = new StringEntity(bodyString, ContentType.create("plain/text", Consts.UTF_8));
@@ -89,9 +88,7 @@ public class OpenApi {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		String secret = USER_ID + currentTime + USER_SEC;
-
 		try {
 			SecretKey secretKey = new SecretKeySpec(secret.getBytes("US-ASCII"), "HmacSHA1");
 			Mac mac = Mac.getInstance("HmacSHA1");
@@ -104,7 +101,6 @@ public class OpenApi {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpResponse httpResponse = httpClient.execute(post);
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
-
 			if (statusCode == 200) {
 				String strResult = EntityUtils.toString(httpResponse.getEntity());
 				result = JSONObject.fromObject(strResult);
@@ -145,7 +141,6 @@ public class OpenApi {
 		String appEUI = appeui;
 		String currentTime = String.valueOf(System.currentTimeMillis());
 		String token = null;
-
 		JSONObject result = null;
 
 		HttpPost post = new HttpPost(apiUrl);
@@ -177,23 +172,18 @@ public class OpenApi {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		String secret = USER_ID + currentTime + USER_SEC;
-
 		try {
 			SecretKey secretKey = new SecretKeySpec(secret.getBytes("US-ASCII"), "HmacSHA1");
 			Mac mac = Mac.getInstance("HmacSHA1");
 			mac.init(secretKey);
-
 			byte[] text = bodyString.getBytes("US-ASCII");
 			byte[] finalText = mac.doFinal(text);
 			token = Base64.getEncoder().encodeToString(finalText);
 			post.setHeader("token", token);
-
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpResponse httpResponse = httpClient.execute(post);
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
-
 			if (statusCode == 200) {
 				String strResult = EntityUtils.toString(httpResponse.getEntity());
 				result = JSONObject.fromObject(strResult);
@@ -213,7 +203,6 @@ public class OpenApi {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		if (result != null) {
 			System.out.println(result.toString());
 		} else {
@@ -236,18 +225,15 @@ public class OpenApi {
 		String token = null;
 
 		JSONObject result = null;
-
 		if (data.length > DATA_MAX_LENGTH && data.length < 1) {
 			return null;
 		}
-
 		String sendData = "\\x";
 		for (int i = 0, j = data.length; i < j; i++) {
 			sendData += String.format("%02x", data[i]);
 
 		}
 		System.out.println("sendData:" + sendData);
-
 		HttpPost post = new HttpPost(apiUrl);
 		post.setHeader("accept", "application/json");
 		post.setHeader("content-type", "application/json");
@@ -272,23 +258,18 @@ public class OpenApi {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		String secret = USER_ID + currentTime + USER_SEC;
-
 		try {
 			SecretKey secretKey = new SecretKeySpec(secret.getBytes("US-ASCII"), "HmacSHA1");
 			Mac mac = Mac.getInstance("HmacSHA1");
 			mac.init(secretKey);
-
 			byte[] text = bodyString.getBytes("US-ASCII");
 			byte[] finalText = mac.doFinal(text);
 			token = Base64.getEncoder().encodeToString(finalText);
 			post.setHeader("token", token);
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpResponse httpResponse = httpClient.execute(post);
-
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
-
 			if (statusCode == 200) {
 				String strResult = EntityUtils.toString(httpResponse.getEntity());
 				result = JSONObject.fromObject(strResult);
@@ -308,7 +289,6 @@ public class OpenApi {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		if (result != null) {
 			System.out.println(result.toString());
 		} else {
