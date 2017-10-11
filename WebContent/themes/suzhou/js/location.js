@@ -31,12 +31,17 @@ function _setMap() {
 }
 function run() {
 	$.get('/interface/suzhou/view?areaId=19', function(res) {
+		var _num = 0;
 		var params = res.data;
 		for (idx in params) {
 			var sensorVo = params[idx];
 			if (sensorVo.available == 1) {
 				$('#' + sensorVo.addr).show();
+			}else{
+				_num ++;
+				$('#' + sensorVo.addr).hide();
 			}
+			$('#leftLot').html(_num);
 		}
 	})
 }
