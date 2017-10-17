@@ -38,7 +38,9 @@ function run() {
 			if (sensorVo.available == 1) {
 				$('#' + sensorVo.addr).show();
 			}else{
-				_num ++;
+				if($('#' + sensorVo.addr).length>0){
+					_num ++;
+				}
 				$('#' + sensorVo.addr).hide();
 			}
 			$('#leftLot').html(_num);

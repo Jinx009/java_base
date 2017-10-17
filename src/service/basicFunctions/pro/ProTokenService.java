@@ -29,6 +29,7 @@ public class ProTokenService {
 	public ProToken createNew(String appId, ProToken token) {
 		token.setBaseId(appId);
 		token.setCreateTime(new Date());
+		token.setTimestamp(token.getTimestamp());
 		return save(token);
 	}
 	

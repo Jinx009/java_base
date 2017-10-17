@@ -1,9 +1,9 @@
 .location {
 	float: left;
-	height: 854px;
+	height: 858px;
 	position: relative;
-	background: url(/themes/suzhou/img/bg_1.jpeg) no-repeat 0 0;
-	width: 910px
+	background: url(/themes/suzhou/img/bg.jpeg) no-repeat 0 0;
+	width: 915px
 }
 
 .car-row {
