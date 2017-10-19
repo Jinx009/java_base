@@ -90,193 +90,193 @@ var _data = [ {
 }, {
 	_left : 325,
 	_top : 311,
-	lot : '18',
+	lot : 'A18',
 	_type : 'x'
 }, {
 	_left : 357,
 	_top : 311,
-	lot : '19',
+	lot : 'A19',
 	_type : 'x'
 },
 //第三行
 {
 	_left : 528,
 	_top : 430,
-	lot : '20',
+	lot : 'A36',
 	_type : 'y'
 },{
 	_left : 543,
 	_top : 430,
-	lot : '21',
+	lot : '37',
 	_type : 'y'
 },{
 	_left : 558,
 	_top : 430,
-	lot : '22',
+	lot : '38',
 	_type : 'y'
 },{
 	_left : 578,
 	_top : 430,
-	lot : '23',
+	lot : '39',
 	_type : 'y'
 },{
 	_left : 593,
 	_top : 430,
-	lot : '24',
+	lot : '40',
 	_type : 'y'
 },{
 	_left : 608,
 	_top : 430,
-	lot : '25',
+	lot : '41',
 	_type : 'y'
 },{
 	_left : 628,
 	_top : 430,
-	lot : '26',
+	lot : '42',
 	_type : 'y'
 },{
 	_left : 643,
 	_top : 430,
-	lot : '27',
+	lot : '43',
 	_type : 'y'
 },{
 	_left : 658,
 	_top : 430,
-	lot : '28',
+	lot : '44',
 	_type : 'y'
 },{
 	_left : 676,
 	_top : 430,
-	lot : '29',
+	lot : '45',
 	_type : 'y'
 },{
 	_left : 692,
 	_top : 430,
-	lot : '30',
+	lot : '46',
 	_type : 'y'
 },{
 	_left : 707,
 	_top : 430,
-	lot : '31',
+	lot : '47',
 	_type : 'y'
 },{
 	_left : 727,
 	_top : 430,
-	lot : '32',
+	lot : '48',
 	_type : 'y'
 },{
 	_left : 742,
 	_top : 430,
-	lot : '33',
+	lot : '49',
 	_type : 'y'
 },{
 	_left : 757,
 	_top : 430,
-	lot : '34',
+	lot : '50',
 	_type : 'y'
 },{
 	_left : 775,
 	_top : 430,
-	lot : '35',
+	lot : '51',
 	_type : 'y'
 },{
 	_left : 791,
 	_top : 430,
-	lot : '36',
+	lot : '52',
 	_type : 'y'
 },{
 	_left : 806,
 	_top : 430,
-	lot : '37',
+	lot : '53',
 	_type : 'y'
 },{
 	_left : 821,
 	_top : 430,
-	lot : '38',
+	lot : '54',
 	_type : 'y'
 },
 //第四行
 {
 	_left : 97,
 	_top : 657,
-	lot : '39',
+	lot : '20',
 	_type : 'x'
 },{
 	_left : 130,
 	_top : 657,
-	lot : '40',
+	lot : '21',
 	_type : 'x'
 },{
 	_left : 162,
 	_top : 657,
-	lot : '41',
+	lot : '22',
 	_type : 'x'
 },{
 	_left : 195,
 	_top : 657,
-	lot : '42',
+	lot : '23',
 	_type : 'x'
 },{
 	_left : 226,
 	_top : 657,
-	lot : '43',
+	lot : '24',
 	_type : 'x'
 },{
 	_left : 270,
 	_top : 657,
-	lot : '44',
+	lot : 'A25',
 	_type : 'x'
 },{
 	_left : 303,
 	_top : 657,
-	lot : '45',
+	lot : '26',
 	_type : 'x'
 },{
 	_left : 334,
 	_top : 657,
-	lot : '46',
+	lot : '27',
 	_type : 'x'
 },{
 	_left : 366,
 	_top : 657,
-	lot : '47',
+	lot : '28',
 	_type : 'x'
 },{
 	_left : 399,
 	_top : 657,
-	lot : '48',
+	lot : '29',
 	_type : 'x'
 },
 //第五行
 {
 	_left : 2,
 	_top : 741,
-	lot : '49',
+	lot : '30',
 	_type : 'x'
 },{
 	_left : 2,
 	_top : 757,
-	lot : '50',
+	lot : '31',
 	_type : 'x'
 },{
 	_left : 2,
 	_top : 773,
-	lot : '51',
+	lot : '32',
 	_type : 'x'
 },{
 	_left : 2,
 	_top : 790,
-	lot : '52',
+	lot : '33',
 	_type : 'x'
 },{
 	_left : 2,
 	_top : 806,
-	lot : '53',
+	lot : '34',
 	_type : 'x'
 },{
 	_left : 2,
 	_top : 822,
-	lot : '54',
+	lot : '35',
 	_type : 'x'
 },
 ];
