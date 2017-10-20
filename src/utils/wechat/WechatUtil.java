@@ -13,9 +13,11 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -24,6 +26,9 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import common.helper.StringUtil;
+
+@SuppressWarnings("deprecation")
 public class WechatUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(WechatUtil.class);
@@ -158,5 +163,39 @@ public class WechatUtil {
 		}
 		return result;
 	}
+	
+	/**
+	 * 获取openid
+	 * @param appId
+	 * @param appSecret
+	 * @param code
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	@SuppressWarnings({ "resource" })
+	public static String getOauthOpenId(String appId,String appSecret,String code){
+		String openId = null;
+		String url = BufferUtils.add("https://api.weixin.qq.com/sns/oauth2/access_token?appid=",appId,"&secret=",appSecret,"&code=",code,"&grant_type=authorization_code");
+		try {
+			DefaultHttpClient client = new DefaultHttpClient();
+			HttpGet httpGet = new HttpGet(url);
+			HttpResponse httpResponse;
+			httpResponse = client.execute(httpGet);
+			int httpCode = httpResponse.getStatusLine().getStatusCode();
+			String strResult = EntityUtils.toString(httpResponse.getEntity(),WechatData.CHAR_SET);
+			if (httpCode == 200) {
+				JSONObject jsonObject = JSONObject.parseObject(strResult);
+				logger.warn(" get openId:{}",jsonObject);
+				if(StringUtil.isNotBlank(jsonObject.getString("openid"))){
+					openId = jsonObject.getString("openid");
+				}
+			}
+		} catch (Exception e) {
+			logger.error("error:{}",e);
+		}
+		return openId;
+	}
+	
 
 }

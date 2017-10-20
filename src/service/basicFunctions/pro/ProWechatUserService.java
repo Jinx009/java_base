@@ -1,5 +1,6 @@
 package service.basicFunctions.pro;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,27 @@ public class ProWechatUserService {
 
 	public void update(ProWechatUser proWechatUser) {
 		proWechatUserDao.update(proWechatUser);
+	}
+
+	public ProWechatUser findByOpenId(String openid) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("openid", openid);
+		List<ProWechatUser> list = proWechatUserDao.findByCriteria(queryParam);
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0);
+		}
+		return null;
+	}
+
+	public ProWechatUser saveNew(String openid, String qKey) {
+		ProWechatUser user = new ProWechatUser();
+		user.setCreateTime(new Date());
+		user.setOpenid(openid);
+		user.setStatus(0);
+		user.setLoginTime(new Date());
+		user.setLoginTimes(1);
+		user.setQrcode(qKey);
+		return proWechatUserDao.save(user);
 	}
 	
 }

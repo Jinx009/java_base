@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.models.pro.ProWechatUser;
+import utils.BufferUtils;
 import utils.wechat.WechatData;
 
 public class ProPageFilter  implements Filter {
@@ -37,7 +38,7 @@ public class ProPageFilter  implements Filter {
 		ProWechatUser proWechatUser = (ProWechatUser)session.getAttribute("wechat_session");
 		// 通过检查session中的变量，过虑请求
 		if(proWechatUser==null){
-			httpServletResponse.sendRedirect(WechatData.REDIRECT_URL);
+			httpServletResponse.sendRedirect(BufferUtils.add(WechatData.OAUTH_URL_ONE,WechatData.OAUTH_URL_TWO,"/index.html?qKey=0%26id=0",WechatData.OAUTH_URL_THREE));
 			return;
 		}
 		chain.doFilter(request, response);
