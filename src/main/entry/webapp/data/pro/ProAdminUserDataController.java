@@ -14,7 +14,7 @@ import utils.BaseConstant;
 import utils.Resp;
 
 @Controller
-@RequestMapping(value = "/home/d")
+@RequestMapping(value = "/front/d")
 public class ProAdminUserDataController extends BaseController{
 
 	@Autowired

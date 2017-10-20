@@ -12,6 +12,8 @@ import java.util.UUID;
 
 import org.apache.http.client.ClientProtocolException;
 
+import utils.BufferUtils;
+
 
 public class WechatJSSign 
 {
@@ -41,7 +43,7 @@ public class WechatJSSign
 		String string1;
 		String signature = "";
 
-		string1 = "jsapi_ticket="+jsapi_ticket+"&noncestr="+ nonce_str+"&timestamp="+timestamp+"&url="+url;
+		string1 =  BufferUtils.add("jsapi_ticket=",jsapi_ticket,"&noncestr=",nonce_str,"&timestamp=",timestamp,"&url=",url);
 
 		try{
 			MessageDigest crypt = MessageDigest.getInstance("SHA-1");

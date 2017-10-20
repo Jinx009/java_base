@@ -44,5 +44,11 @@ public class ProWechatConn {
 	private String userSex;
 	@Column(name = "like_user_sex")
 	private String likeUserSex;
+	@Column(name = "first")
+	private Integer first;
+	@Column(name = "user_pic")
+	private String userPic;
+	@Column(name = "likeUserPic")
+	private String likeUserPic;
 	
 }

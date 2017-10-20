@@ -67,4 +67,9 @@ public class BaseController {
 		session.setAttribute(key, value);
 	}
 	
+	public Object getSession(HttpServletRequest request,String key){
+		HttpSession session = request.getSession();
+		return session.getAttribute(key);
+	}
+	
 }
