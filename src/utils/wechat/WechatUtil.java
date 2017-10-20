@@ -86,7 +86,7 @@ public class WechatUtil {
 	 * 
 	 * @param 抓取图片流信息
 	 * @return "contentType" & "content"
-	 * @throws IOException 
+	 * @throws IOException
 	 * @throws Exception
 	 */
 	public static Map<String, Object> httpGetBytes(String apiURL) throws IOException {
@@ -103,7 +103,7 @@ public class WechatUtil {
 			if (entity != null) {
 				retValue = new HashMap<String, Object>();
 				retValue.put("contentType", entity.getContentType().toString().split(":")[1].trim());
-				System.out.println("Response content length: " + entity.getContentLength());
+				logger.warn("Response content length:{} ", entity.getContentLength());
 				InputStream isr = entity.getContent();
 				byte[] buf = new byte[(int) entity.getContentLength()];
 				int len = 0;
@@ -121,7 +121,7 @@ public class WechatUtil {
 			response.close();
 			httpclient.close();
 		} catch (Exception e) {
-			logger.error("error:{}",e);
+			logger.error("error:{}", e);
 			response.close();
 			httpclient.close();
 		}
