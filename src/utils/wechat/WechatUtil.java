@@ -5,6 +5,7 @@ import utils.HttpUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,41 +86,43 @@ public class WechatUtil {
 	 * 
 	 * @param 抓取图片流信息
 	 * @return "contentType" & "content"
+	 * @throws IOException 
 	 * @throws Exception
 	 */
-	public static Map<String, Object> httpGetBytes(String apiURL) throws Exception {
+	public static Map<String, Object> httpGetBytes(String apiURL) throws IOException {
 		Boolean outputLogger = true;
+		CloseableHttpResponse response = null;
 		Map<String, Object> retValue = null;
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		try {
 			HttpGet httpGet = new HttpGet(apiURL);
 			logger.warn("executing request:{}", httpGet.getRequestLine());
-			CloseableHttpResponse response = httpclient.execute(httpGet);
-			try {
-				HttpEntity entity = response.getEntity();
-				logger.warn("executing entity:{},{}", "-------------\n", response.getStatusLine());
-				if (entity != null) {
-					retValue = new HashMap<String, Object>();
-					retValue.put("contentType", entity.getContentType().toString().split(":")[1].trim());
-					System.out.println("Response content length: " + entity.getContentLength());
-					InputStream isr = entity.getContent();
-					byte[] buf = new byte[(int) entity.getContentLength()];
-					int len = 0;
-					int totalLen = 0;
-					while (len != -1) {
-						if (outputLogger)
-							logger.warn("read len:{}", len);
+			response = httpclient.execute(httpGet);
+			HttpEntity entity = response.getEntity();
+			logger.warn("executing entity:{},{}", "-------------\n", response.getStatusLine());
+			if (entity != null) {
+				retValue = new HashMap<String, Object>();
+				retValue.put("contentType", entity.getContentType().toString().split(":")[1].trim());
+				System.out.println("Response content length: " + entity.getContentLength());
+				InputStream isr = entity.getContent();
+				byte[] buf = new byte[(int) entity.getContentLength()];
+				int len = 0;
+				int totalLen = 0;
+				while (len != -1) {
+					if (outputLogger)
+						logger.warn("read len:{}", len);
 
-						len = isr.read(buf, totalLen, buf.length + 1);
-						totalLen += len;
-					}
-					retValue.put("content", buf);
+					len = isr.read(buf, totalLen, buf.length + 1);
+					totalLen += len;
 				}
-				EntityUtils.consume(entity);
-			} finally {
-				response.close();
+				retValue.put("content", buf);
 			}
-		} finally {
+			EntityUtils.consume(entity);
+			response.close();
+			httpclient.close();
+		} catch (Exception e) {
+			logger.error("error:{}",e);
+			response.close();
 			httpclient.close();
 		}
 		return retValue;
@@ -128,9 +131,9 @@ public class WechatUtil {
 	/**
 	 * 将微信上传的图片或音频下载到本地
 	 * 
+	 * @param path
 	 * @param mediaId
 	 * @return
-	 * @throws Exception
 	 */
 	public static String downToLocal(String path, String mediaId) {
 		String result = "";
@@ -163,39 +166,38 @@ public class WechatUtil {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 获取openid
+	 * 
 	 * @param appId
 	 * @param appSecret
 	 * @param code
 	 * @return
-	 * @throws ClientProtocolException
-	 * @throws IOException
 	 */
 	@SuppressWarnings({ "resource" })
-	public static String getOauthOpenId(String appId,String appSecret,String code){
+	public static String getOauthOpenId(String appId, String appSecret, String code) {
 		String openId = null;
-		String url = BufferUtils.add("https://api.weixin.qq.com/sns/oauth2/access_token?appid=",appId,"&secret=",appSecret,"&code=",code,"&grant_type=authorization_code");
+		String url = BufferUtils.add("https://api.weixin.qq.com/sns/oauth2/access_token?appid=", appId, "&secret=",
+				appSecret, "&code=", code, "&grant_type=authorization_code");
 		try {
 			DefaultHttpClient client = new DefaultHttpClient();
 			HttpGet httpGet = new HttpGet(url);
 			HttpResponse httpResponse;
 			httpResponse = client.execute(httpGet);
 			int httpCode = httpResponse.getStatusLine().getStatusCode();
-			String strResult = EntityUtils.toString(httpResponse.getEntity(),WechatData.CHAR_SET);
+			String strResult = EntityUtils.toString(httpResponse.getEntity(), WechatData.CHAR_SET);
 			if (httpCode == 200) {
 				JSONObject jsonObject = JSONObject.parseObject(strResult);
-				logger.warn(" get openId:{}",jsonObject);
-				if(StringUtil.isNotBlank(jsonObject.getString("openid"))){
+				logger.warn(" get openId:{}", jsonObject);
+				if (StringUtil.isNotBlank(jsonObject.getString("openid"))) {
 					openId = jsonObject.getString("openid");
 				}
 			}
 		} catch (Exception e) {
-			logger.error("error:{}",e);
+			logger.error("error:{}", e);
 		}
 		return openId;
 	}
-	
 
 }
