@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-import utils.model.HomeConfigConstant;
+import database.models.pro.ProAdminUser;
 
 public class HomePageFilter implements Filter {
 	
@@ -35,7 +34,8 @@ public class HomePageFilter implements Filter {
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		HttpSession session = httpServletRequest.getSession();
 		// 通过检查session中的变量，过虑请求
-		if(!HomeConfigConstant.checkSession(session.getId())){
+		ProAdminUser proAdminUser = (ProAdminUser) session.getAttribute("admin_session");
+		if(proAdminUser==null){
 			httpServletResponse.sendRedirect("/home/index");
 			return;
 		}

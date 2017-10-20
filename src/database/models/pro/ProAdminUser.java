@@ -1,4 +1,4 @@
-package database.models.home;
+package database.models.pro;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,26 +15,27 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
 @Entity
-@Table(name = "HOME_ROLE")
-public class HomeRole implements Serializable{
+@Table(name = "pro_admin_user")
+@Getter
+@Setter
+public class ProAdminUser implements Serializable{
+
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name = "ID",unique=true, nullable=false)
+	@Column(name = "id",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "STATUS")
-	private Integer status;
-	@Column(name = "NAME")
-	private String name;
-	@Column(name = "LEVEL")
-	private Integer level;
+	@Column(name = "username")
+	private String userName;
+	@Column(name = "PWD")
+	private String pwd;
+	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATE_TIME")
 	private Date createTime;
-	@Column(name = "DESCRIPTION")
-	private String description;
+	@Column(name = "status")
+	private Integer status;
+	@Column(name = "real_name")
+	private String realName;
 	
 }

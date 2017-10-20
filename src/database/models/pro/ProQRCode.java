@@ -1,6 +1,5 @@
-package database.models.home.pro;
+package database.models.pro;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,22 +15,25 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "PRO_APP_INFO")
+@Table(name = "pro_qrcode")
 @Getter
 @Setter
-public class ProAppInfo implements Serializable{
+public class ProQRCode {
 
-	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name = "ID",unique=true, nullable=false)
+	@Column(unique = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "APP_NAME")
-	private String appName;
-	@Column(name = "CREATE_TIME")
+	@Column(name = "keyword")
+	private String keyword;
+	@Column(name = "real_url")
+	private String realUrl;
+	@Column(name = "url")
+	private String url;
+	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name ="DOMAIN")
-	private String domain;
+	@Column(name = "description")
+	private String description;
 	
 }

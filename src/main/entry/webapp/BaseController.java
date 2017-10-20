@@ -1,6 +1,5 @@
 package main.entry.webapp;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,13 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import database.models.WebTokenFactory;
-import database.models.home.HomeResource;
-import database.models.home.HomeUser;
-import database.models.home.pro.ProUser;
-import service.basicFunctions.WebTokenFactoryService;
+import database.models.pro.ProWechatToken;
+import service.basicFunctions.pro.ProWechatTokenService;
 import utils.ip.IPUtil;
-import utils.model.HomeConfigConstant;
 import utils.wechat.WechatData;
 import utils.wechat.WechatJSSign;
 
@@ -27,7 +22,7 @@ public class BaseController {
 	private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
 	
 	@Autowired
-	private WebTokenFactoryService webTokenFactoryService;
+	private ProWechatTokenService proWechatTokenService;
 
 	/**
 	 * 微信分享jsapi
@@ -39,9 +34,9 @@ public class BaseController {
 		try {
 			if (null != queryString && !"".equals(queryString)) 
 				url = url + "?" + queryString;
-			WebTokenFactory webTokenFactory = webTokenFactoryService.getByTypeAndId(WechatData.APP_ID,1);
+			ProWechatToken proWechatToken = proWechatTokenService.getByTypeAndId(WechatData.APP_ID,1);
 			Map<String, String> ret;
-			ret = WechatJSSign.createSign(webTokenFactory.getTokenValue(),url, WechatData.APP_ID, WechatData.APP_SECRET);
+			ret = WechatJSSign.createSign(proWechatToken.getTokenValue(),url, WechatData.APP_ID, WechatData.APP_SECRET);
 			request.setAttribute("appId", WechatData.APP_ID);
 			request.setAttribute("timestamp", ret.get("timestamp").toString());
 			request.setAttribute("nonceStr", ret.get("nonceStr").toString());
@@ -62,71 +57,14 @@ public class BaseController {
 	}
 	
 	/**
-	 * 设置菜单
+	 * 设置session
 	 * @param request
-	 * @param menus
+	 * @param key
+	 * @param value
 	 */
-	public void setSessionMenu(HttpServletRequest request,List<HomeResource> menus,HomeUser homeUser){
+	public void setSession(HttpServletRequest request,String key,Object value){
 		HttpSession session = request.getSession();
-		HomeConfigConstant.putNewSession(homeUser.getUserName(),session.getId());
-		HomeConfigConstant.putMenu(menus,session.getId());
+		session.setAttribute(key, value);
 	}
 	
-	/**
-	 * 退出清空
-	 * @param request
-	 * @param menus
-	 */
-	public void setSessionOut(HttpServletRequest request,HomeUser homeUser){
-		HttpSession session = request.getSession();
-		if(homeUser!=null){
-			HomeConfigConstant.putNewSession(homeUser.getUserName(),null);
-		}
-		HomeConfigConstant.putMenu(null,session.getId());
-	}
-	
-	/**
-	 * 设置管理员session
-	 * @param request
-	 * @param menus
-	 */
-	public void setSessionAdmin(HttpServletRequest request,HomeUser homeUser){
-		HttpSession session = request.getSession();
-		session.setAttribute(HomeConfigConstant.HOME_USER, homeUser);
-		logger.warn("[data:{}]",homeUser.getRealName());
-		session.setAttribute(HomeConfigConstant.HOME_NAME,homeUser.getRealName());
-	}
-	
-	/**
-	 * 从session中获取登陆者
-	 * @param request
-	 * @return
-	 */
-	public HomeUser getSessionHomeUser(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		HomeUser homeUser = (HomeUser) session.getAttribute(HomeConfigConstant.HOME_USER);
-		return homeUser;
-	}
-	
-	/**
-	 * 从session中取出项目后台用户
-	 * @param request
-	 * @return
-	 */
-	public ProUser getSessionProUser(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		ProUser proUser = (ProUser) session.getAttribute(HomeConfigConstant.PRO_USER);
-		return proUser;
-	}
-	
-	/**
-	 * 设置session中项目后台用户
-	 * @param request
-	 * @param menus
-	 */
-	public void setSessionProUser(HttpServletRequest request,ProUser proUser){
-		HttpSession session = request.getSession();
-		session.setAttribute(HomeConfigConstant.PRO_USER, proUser);
-		logger.warn("[data:{}]",proUser);
-	}
 }

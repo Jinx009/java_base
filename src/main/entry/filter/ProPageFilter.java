@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import database.models.home.pro.ProUser;
-import utils.model.HomeConfigConstant;
+import database.models.pro.ProWechatUser;
+import utils.wechat.WechatData;
 
 public class ProPageFilter  implements Filter {
 	
@@ -34,10 +34,10 @@ public class ProPageFilter  implements Filter {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		HttpSession session = httpServletRequest.getSession();
-		ProUser proUser = (ProUser)session.getAttribute(HomeConfigConstant.PRO_USER);
+		ProWechatUser proWechatUser = (ProWechatUser)session.getAttribute("wechat_session");
 		// 通过检查session中的变量，过虑请求
-		if(proUser==null){
-			httpServletResponse.sendRedirect("/p/login");
+		if(proWechatUser==null){
+			httpServletResponse.sendRedirect(WechatData.REDIRECT_URL);
 			return;
 		}
 		chain.doFilter(request, response);
