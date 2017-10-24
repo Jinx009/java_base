@@ -72,7 +72,6 @@ public class nbDataSourcePlaceHolder extends PropertyPlaceholderConfigurer{
 					is = location.getInputStream();
 					// 密钥输入流
 					//keyStream = keyLocation.getInputStream();
-					
 					// 得到解密后的输入流对象
 					//readIs = DesUtil.decrypt(is, DesUtil.getKey(keyStream));
 					readIs = is; // 没有加密

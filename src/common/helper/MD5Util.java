@@ -4,6 +4,11 @@ import java.security.MessageDigest;
 
 public class MD5Util {
 
+	/**
+	 * 小写MD5方法
+	 * @param s
+	 * @return
+	 */
     public final static String toMD5(String s)   {  
         char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f' };  
         try{  
@@ -26,6 +31,11 @@ public class MD5Util {
         }  
     }  
     
+    /**
+     * 大写MD5方法
+     * @param s
+     * @return
+     */
     public final static String MD5(String s) {
         char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         try {
@@ -52,6 +62,11 @@ public class MD5Util {
         }
     }
 
+    /**
+     * 和方法一结果一致
+     * @param s
+     * @return
+     */
     public final static String md5(String s) {
         MessageDigest md5 = null;
         try {
@@ -78,5 +93,7 @@ public class MD5Util {
       
     public static void main(String[] args){  
          System.out.println(toMD5("jinx007"));  
+         System.out.println(MD5("jinx007"));  
+         System.out.println(md5("jinx007"));  
     }  
 }
