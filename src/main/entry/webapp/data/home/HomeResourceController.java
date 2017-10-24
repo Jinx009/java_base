@@ -38,7 +38,6 @@ public class HomeResourceController {
 		try {
 			HttpSession session = request.getSession();
 			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,HomeConfigConstant.getResourceBySession(session));
-			logger.warn("123{}{}{}","123","123","123");
 //			logger.warn(" [HomeResourceController.getMenu][data:{}] ",resp);
 		} catch (Exception e) {
 			logger.error("[error:{}] ",e);
