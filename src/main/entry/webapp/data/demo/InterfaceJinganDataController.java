@@ -24,10 +24,10 @@ import utils.enums.AppInfo;
  *
  */
 @Controller
-@RequestMapping(value = "/interface/suzhou")
-public class InterfaceSuzhouDataController extends BaseController{
+@RequestMapping(value = "/interface/ja")
+public class InterfaceJinganDataController extends BaseController{
 
-	private static final Logger logger = LoggerFactory.getLogger(InterfaceSuzhouDataController.class);
+	private static final Logger logger = LoggerFactory.getLogger(InterfaceJinganDataController.class);
 	
 	@Autowired
 	private HttpService httpService;
@@ -37,7 +37,7 @@ public class InterfaceSuzhouDataController extends BaseController{
 	public Resp<?> locationStatus(Integer locationId,Integer op,String dateStr){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.SUZHOU_DEMO.getAppId());
+			String token  = getToken(AppInfo.NB_JINGAN.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.locationStatusUrl(token,op,locationId,dateStr));
 				JSONObject jsonObject = JSONObject.parseObject(result);
@@ -61,7 +61,7 @@ public class InterfaceSuzhouDataController extends BaseController{
 	public Resp<?> device(){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.SUZHOU_DEMO.getAppId());
+			String token  = getToken(AppInfo.NB_JINGAN.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.deviceUrl(token));
 				JSONObject jsonObject = JSONObject.parseObject(result);
@@ -85,7 +85,7 @@ public class InterfaceSuzhouDataController extends BaseController{
 	public Resp<?> car(Integer areaId,String dateStr,Integer type){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.SUZHOU_DEMO.getAppId());
+			String token  = getToken(AppInfo.NB_JINGAN.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.carUrl(token,areaId,dateStr,type));
 				if(!BaseConstant.HTTP_ERROR_CODE.equals(result)){
@@ -109,7 +109,7 @@ public class InterfaceSuzhouDataController extends BaseController{
 	public Resp<?> views(Integer areaId){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.SUZHOU_DEMO.getAppId());
+			String token  = getToken(AppInfo.NB_JINGAN.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.detail(token, areaId));
 				if(!BaseConstant.HTTP_ERROR_CODE.equals(result)){
@@ -134,7 +134,7 @@ public class InterfaceSuzhouDataController extends BaseController{
 	public Resp<?> rush(String dateStr){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.SUZHOU_DEMO.getAppId());
+			String token  = getToken(AppInfo.NB_JINGAN.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.rush(token,dateStr));
 				if(!BaseConstant.HTTP_ERROR_CODE.equals(result)){
