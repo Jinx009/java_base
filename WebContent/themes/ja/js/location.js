@@ -39,7 +39,7 @@ function run() {
 					$('#' + sensorVo.description).attr('data-placement','bottom');
 				}
 				$('#' + sensorVo.description).attr('title','基本信息');
-				$('#' + sensorVo.description).attr('data-content','<b>驶入时间：</b>'+sensorVo.lastSeenTime+'</br><b>车位号：</b>'+sensorVo.description+'</br><b>车牌号：</b>');
+				$('#' + sensorVo.description).attr('data-content','<b>驶入时间：</b>'+sensorVo.lastSeenTime+'</br><b>车位号：</b>'+sensorVo.description+'</br><b>Mac地址：</b>'+sensorVo.mac);
 				$('#' + sensorVo.description).show();
 				$("[data-toggle='popover']").popover({html: true});
 			}else{
