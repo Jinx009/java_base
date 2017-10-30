@@ -65,6 +65,74 @@
   <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
 <![endif]-->
 	<script src="/themes/md5.js?version=1.2"></script>
-	<script src="/themes/js/home/pro/car_.js?version=1.09"></script>
+	<script src="/themes/js/home/pro/car_.js?version=1.89"></script>
+	<script>
+		var _md_str = {
+			appEUI : '000000000000006c',
+			User_Sec : 'a7da4728e374343d37021e4be5593311',
+			time_s : '1504774928'
+		};
+		var _md = hex_md5(_md_str.time_s + _md_str.appEUI + _md_str.User_Sec);
+		var str = 'ws://www.guodongiot.com:92/webs?appEUI=' + _md_str.appEUI
+				+ '&token=' + _md + '&time_s=' + _md_str.time_s;
+		var ws = new WebSocket(str);
+		// 打开Socket
+		ws.onopen = function(event) {
+
+			// 发送一个初始化消息
+			ws.send('I am the client and I\'m listening!');
+
+			// 监听消息
+			ws.onmessage = function(event) {
+				console.log(event.data);
+				var _data = JSON.parse(event.data).data;
+				var _mac = JSON.parse(event.data).devEUI;
+				sendData(_data, _mac);
+			};
+
+			// 监听Socket的关闭
+			ws.onclose = function(event) {
+				console.log('Client notified socket has closed', event);
+			};
+
+			// 关闭Socket....
+			//socket.close()
+		};
+		function hexToString(str) {
+			var val = "";
+			var arr = str.split(",");
+			for (var i = 0; i < arr.length; i++) {
+				val += arr[i].fromCharCode(i);
+			}
+			return val;
+		}
+		function sendData(_data, _mac) {
+			var _arr = _data.split('');
+			console.log(_arr + '----' + _arr[_arr.length - 1] + '--------');
+			if (_arr[6] == '3' && _arr[7] == '0') {
+				_addr = '1000';
+				if (_mac == '0000000000004f90') {
+					_addr = '10002';
+				}else if(_mac == '0000000000004f91') {
+					_addr = '10003';
+				}else if(_mac == '0000000000004f92') {
+					_addr = '10004';
+				}else if(_mac == '0000000000004f93') {
+					_addr = '10005';
+				}else if(_mac == '0000000000004f94') {
+					_addr = '10006';
+				}else if(_mac == '0000000000004f95') {
+					_addr = '10001';
+				}
+				var _data = [ {
+					available : _arr[_arr.length - 1],
+					addr : _addr,
+					mac : _mac,
+					time : new Date().Format("yyyy-MM-dd hh:mm:ss")
+				} ];
+				run(_data);
+			}
+		}
+	</script>
 </body>
 </html>
