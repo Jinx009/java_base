@@ -55,7 +55,6 @@ public class OpenApi {
 		post.setHeader("content-type", "application/json");
 		post.setHeader("userId", USER_ID);
 		post.setHeader("time", currentTime);
-		logger.warn("post:{}",post);
 		JSONObject json = new JSONObject();
 		JSONObject jsonInner = new JSONObject();
 		jsonInner.element("appEUI", appEUI);
@@ -63,14 +62,12 @@ public class OpenApi {
 		jsonInner.element("offset", 0);
 		jsonInner.element("obtainStartDataTime", dateStr);
 		json.element("params", jsonInner);
-		logger.warn("json:{}",json);
 		// jsonInner.element("obtainStartDataTime", "2016-08-16 01:23:08");
 		// jsonInner.element("obtainEndDataTime", "2016-08-17 14:23:08");
 		// jsonInner.element("obtainStartDataTime", "latest");
 
 		try {
 			String bodyString = json.toString();
-			logger.warn("bodyString{}",bodyString);
 			StringEntity entity = new StringEntity(bodyString, ContentType.create("plain/text", Consts.UTF_8));
 			entity.setChunked(true);
 			post.setEntity(entity);
