@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>停车场</title>
+<link
+	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+	<script src="js/data.js" ></script>	
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" target="_blank"
+					href="http://www.zhanway.com"><img height="50px;"
+					style="margin-top: -15px;" src="img/logo.png"></a>
+			</div>
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">选择区域 <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a id="0">马鞍山</a></li>
+							<li><a id="1">上海</a></li>
+							<li><a id="2">北京</a></li>
+							<li><a id="3">成都</a></li>
+							<li><a id="4">西安</a></li>
+							<li><a id="5">丽水</a></li>
+							<li><a id="6">南通</a></li>
+							<li><a id="7">郑州</a></li>
+							<li><a id="8">武汉</a></li>
+						</ul></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a target="_blank" href="http://www.zhanway.com">走进展为</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="row" style="width: 90%; margin-left: 5%;">
+		<div class="col-md-12">
+			<div class="list-group">
+				<a href="#" class="list-group-item active">
+					<h4 class="list-group-item-heading">当前城市 : 上海</h4>
+					<p class="list-group-item-text">SHANG HAI</p>
+				</a>
+			</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>编号</th>
+						<th>名称</th>
+						<th>地址</th>
+					</tr>
+				</thead>
+				<tbody id="_data"></tbody>
+			</table>
+		</div>
+	</div>
+	<footer class="main-footer"
+		style="margin-top: 30px; margin-bottom: 15px; text-align: center; width: 100%;">
+		<strong>Copyright &copy; <a href="http://www.zhanway.com"
+			target="_blank">上海展为智能技术股份有限公司</a>.
+		</strong> All rights reserved.
+	</footer>
+	<div class="control-sidebar-bg"></div>
+	<script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+	<script
+		src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+		_data[0]._name = '马鞍山';
+		_data[0]._desc = 'MA AN SHAN';
+		_data[1]._name = '上海';
+		_data[1]._desc = 'SHANG HAI';
+		_data[2]._name = '北京';
+		_data[2]._desc = 'BEI JING';
+		_data[3]._name = '成都';
+		_data[3]._desc = 'CHENG DU';
+		_data[4]._name = '西安';
+		_data[4]._desc = 'XI AN';
+		_data[5]._name = '丽水';
+		_data[5]._desc = 'LI SHUI';
+		_data[6]._name = '南通';
+		_data[6]._desc = 'NAN TONG';
+		_data[7]._name = '郑州';
+		_data[7]._desc = 'ZHENG ZHOU';
+		_data[8]._name = '武汉';
+		_data[8]._desc = 'WU HAN';
+		function _getData(_index) {
+			_index = parseInt(_index);
+			var _htmlStr = '';
+			var _d = _data[_index];
+			var _list = _d.poiList.pois;
+			for ( var _i in _list) {
+				_htmlStr += '<tr><td>' + (parseInt(_i) + 1) + '</td><td>'
+						+ _list[_i].name + '</td><td>' + _list[_i].address
+						+ '</td></tr>';
+			}
+			$('#_data').html(_htmlStr);
+			$('.list-group-item-heading').html('当前城市 : ' + _d._name);
+			$('.list-group-item-text').html(_d._desc);
+		}
+		$('.dropdown-menu a').each(function() {
+			var _id = $(this).attr('id');
+			$(this).bind('click', function() {
+				_getData(_id);
+			})
+		})
+		_getData(1);
+	</script>
+</body>
+</html>
