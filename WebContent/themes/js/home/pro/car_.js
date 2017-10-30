@@ -65,6 +65,7 @@ function buildMap(baseData) {
 }
 
 function run(_data) {
+	console.log(_data);
 	var params = _data;
 	var totalCnt = params.length;
 	$('.block-value').text(totalCnt);
