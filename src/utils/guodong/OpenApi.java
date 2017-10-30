@@ -1,18 +1,11 @@
 package utils.guodong;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
@@ -115,20 +108,17 @@ public class OpenApi {
 	 */
 	@SuppressWarnings({ "resource" })
 	public JSONObject getNodeDataListInfo(String deveui) {
-		System.out.println("start getNodeDataListInfo!");
+		logger.warn("start getNodeDataListInfo!");
 		String apiUrl = URL + "OpenAPI_Node_GetNodeDataList";
 		String devEUI = deveui;
 		String currentTime = String.valueOf(System.currentTimeMillis());
 		String token = null;
-
 		JSONObject result = null;
-
 		HttpPost post = new HttpPost(apiUrl);
 		post.setHeader("accept", "application/json");
 		post.setHeader("content-type", "application/json");
 		post.setHeader("userId", USER_ID);
 		post.setHeader("time", currentTime);
-
 		JSONObject json = new JSONObject();
 		JSONObject jsonInner = new JSONObject();
 		jsonInner.element("devEUI", devEUI);
@@ -139,56 +129,30 @@ public class OpenApi {
 		json.element("params", jsonInner);
 //		jsonInner.element("obtainStartDataTime", "2017-10-30 00:00:00");
 		// jsonInner.element("obtainEndDataTime", "2016-08-17 14:23:08");
-
-
-		String bodyString = json.toString();
-		StringEntity entity = new StringEntity(bodyString, ContentType.create("plain/text", Consts.UTF_8));
-		entity.setChunked(true);
-		post.setEntity(entity);
-
 		try {
+			String bodyString = json.toString();
+			StringEntity entity = new StringEntity(bodyString, ContentType.create("plain/text", Consts.UTF_8));
+			entity.setChunked(true);
+			post.setEntity(entity);
 			bodyString = EntityUtils.toString(entity);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String secret = USER_ID + currentTime + USER_SEC;
-		try {
+			String secret = USER_ID + currentTime + USER_SEC;
 			SecretKey secretKey = new SecretKeySpec(secret.getBytes("US-ASCII"), "HmacSHA1");
 			Mac mac = Mac.getInstance("HmacSHA1");
 			mac.init(secretKey);
-
 			byte[] text = bodyString.getBytes("US-ASCII");
 			byte[] finalText = mac.doFinal(text);
 			token = Base64.encodeBytes(finalText);
 			post.setHeader("token", token);
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpResponse httpResponse = httpClient.execute(post);
+			logger.warn("data:{}",httpResponse);
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
 			if (statusCode == 200) {
 				String strResult = EntityUtils.toString(httpResponse.getEntity());
 				result = JSONObject.fromObject(strResult);
 			}
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		if (result != null) {
-			System.out.println(result.toString());
-		} else {
-			System.out.println("getNodeDataListInfo fail!");
+		} catch (Exception e) {
+			logger.error("error:{}",e);
 		}
 		return result;
 	}
@@ -203,11 +167,10 @@ public class OpenApi {
 	 */
 	@SuppressWarnings("resource")
 	public JSONObject sendDataToNodes(String devEUI, byte[] data) {
-		System.out.println("start sendDataToNodes!");
+		logger.warn("start sendDataToNodes!");
 		String apiUrl = URL + "OpenAPI_SendDataForNode";
 		String currentTime = String.valueOf(System.currentTimeMillis());
 		String token = null;
-
 		JSONObject result = null;
 		if (data.length > DATA_MAX_LENGTH && data.length < 1) {
 			return null;
@@ -217,33 +180,24 @@ public class OpenApi {
 			sendData += String.format("%02x", data[i]);
 
 		}
-		System.out.println("sendData:" + sendData);
+		logger.warn("sendData:{}" , sendData);
 		HttpPost post = new HttpPost(apiUrl);
 		post.setHeader("accept", "application/json");
 		post.setHeader("content-type", "application/json");
 		post.setHeader("userId", USER_ID);
 		post.setHeader("time", currentTime);
-
 		JSONObject json = new JSONObject();
 		JSONObject jsonInner = new JSONObject();
 		jsonInner.element("devEUI", devEUI);
 		jsonInner.element("data", sendData);
 		json.element("params", jsonInner);
-
-		String bodyString = json.toString();
-		StringEntity entity = new StringEntity(bodyString, ContentType.create("plain/text", Consts.UTF_8));
-		entity.setChunked(true);
-		post.setEntity(entity);
-
 		try {
+			String bodyString = json.toString();
+			StringEntity entity = new StringEntity(bodyString, ContentType.create("plain/text", Consts.UTF_8));
+			entity.setChunked(true);
+			post.setEntity(entity);
 			bodyString = EntityUtils.toString(entity);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String secret = USER_ID + currentTime + USER_SEC;
-		try {
+			String secret = USER_ID + currentTime + USER_SEC;
 			SecretKey secretKey = new SecretKeySpec(secret.getBytes("US-ASCII"), "HmacSHA1");
 			Mac mac = Mac.getInstance("HmacSHA1");
 			mac.init(secretKey);
@@ -253,31 +207,15 @@ public class OpenApi {
 			post.setHeader("token", token);
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpResponse httpResponse = httpClient.execute(post);
+			logger.warn("data:{}",httpResponse);
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
 			if (statusCode == 200) {
 				String strResult = EntityUtils.toString(httpResponse.getEntity());
 				result = JSONObject.fromObject(strResult);
 			}
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		if (result != null) {
-			System.out.println(result.toString());
-		} else {
-			System.out.println("sendDataToNodes fail!");
-		}
+		} catch (Exception e) {
+			logger.error("error:{]",e);
+		} 
 		return result;
 	}
 }
