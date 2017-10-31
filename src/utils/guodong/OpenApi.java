@@ -92,8 +92,7 @@ public class OpenApi {
 	public static void main(String[] args) {
 		OpenApi ob = new OpenApi();
 //		ob.getNodeDataListInfo("0000000000004f93").toString();
-	 System.out.println("====2" + ob.getAppEuiDataListInfo("000000000000006c","2017-10-30 15:00:00").toString());
-
+		System.out.println("====2" + ob.getAppEuiDataListInfo("000000000000006c","2017-10-30 15:00:00").toString());
 //		byte[] data = new byte[DATA_MAX_LENGTH];
 //		for (int i = 0, j = data.length; i < j; i++) {
 //			data[i] = (byte) (Math.random() * 255);
