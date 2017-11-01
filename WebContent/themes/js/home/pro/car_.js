@@ -48,7 +48,7 @@ $(function() {
 
 		getData();
 
-	}, 60000);
+	}, 10000);
 })
 function buildMap(baseData) {
 	for ( var idx in baseData) {
