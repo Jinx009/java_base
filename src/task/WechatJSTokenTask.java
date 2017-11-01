@@ -23,6 +23,7 @@ public class WechatJSTokenTask {
 
     @Scheduled(fixedRate = 60*1000)//每一分钟执行一次
     public void refreshen() throws Exception {
+      logger.warn("wechat task");
        WebTokenFactory webTokenFactory = webTokenFactoryService.getByTypeAndId(WechatData.APP_ID,1);
        if(webTokenFactory!=null){
     	   checkWechatCache(WechatData.APP_ID,WechatData.APP_SECRET,webTokenFactory);

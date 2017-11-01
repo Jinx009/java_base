@@ -94,8 +94,8 @@ function getData() {
 		dataType:'json',
 		success:function(res){
 			if('200'==res.code){
-				for(var i = res.data.result.length-1;i>=0;i--){
-					var _data = res.data.result[i];
+				for(var i = res.data.length-1;i>=0;i--){
+					var _data = res.data[i];
 					if(_data.devEUI=='0000000000004f90'&&_arr[0]==0){
 						_setData(0,_data);
 					}else if(_data.devEUI=='0000000000004f91'&&_arr[1]==0){

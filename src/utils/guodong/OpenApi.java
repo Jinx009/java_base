@@ -23,7 +23,7 @@ public class OpenApi {
 	
 	private static final Logger logger = LoggerFactory.getLogger(OpenApi.class);
 	
-	public static final int DATA_MAX_LENGTH = 51;
+	public static final int DATA_MAX_LENGTH = 12;
 	public static final String URL = "http://www.guodongiot.com:90/api/";
 	private static final String USER_ID = "3456959";
 	private static final String USER_SEC = "a7da4728e374343d37021e4be5593311";
@@ -88,16 +88,16 @@ public class OpenApi {
 		return result;
 	}
 
-	@SuppressWarnings("static-access")
 	public static void main(String[] args) {
 		OpenApi ob = new OpenApi();
 //		ob.getNodeDataListInfo("0000000000004f93").toString();
-		System.out.println("====2" + ob.getAppEuiDataListInfo("000000000000006c","2017-10-30 15:00:00").toString());
-//		byte[] data = new byte[DATA_MAX_LENGTH];
-//		for (int i = 0, j = data.length; i < j; i++) {
-//			data[i] = (byte) (Math.random() * 255);
-//		}
-//		System.out.println(ob.sendDataToNodes("0000000000004f8e", data));
+//		System.out.println("====2" + ob.getAppEuiDataListInfo("000000000000006c","2017-10-30 15:00:00").toString());
+		int [] _i = new int []{4,8,0,0,3,2,0,2,5,2,0,0};
+		byte[] data = new byte[DATA_MAX_LENGTH];
+		for (int i = 0, j = data.length; i < j; i++) {
+			data[i] = (byte) (_i[i]);
+		}
+		System.out.println(ob.sendDataToNodes("0000000000004f91", data));
 	}
 
 	/**
