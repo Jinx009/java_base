@@ -32,6 +32,7 @@ public class InterfaceJinganDataController extends BaseController{
 	@Autowired
 	private HttpService httpService;
 	
+	
 	@RequestMapping(path = "/locationStatus")
 	@ResponseBody
 	public Resp<?> locationStatus(Integer locationId,Integer op,String dateStr){

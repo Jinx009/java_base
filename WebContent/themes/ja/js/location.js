@@ -19,7 +19,7 @@ function _setMap() {
 
 		run();
 
-	}, 10000);
+	}, 15000);
 }
 function run() {
 	$.get('/interface/ja/device', function(res) {
@@ -38,8 +38,27 @@ function run() {
 				}else{
 					$('#' + sensorVo.description).attr('data-placement','bottom');
 				}
+				var _carNo = '未知',_bluetooth = '无';
+				var _detail = '<b>驶入时间：</b>'+sensorVo.lastSeenTime+'</br><b>车位号：</b>'+sensorVo.description+'</br><b>Mac地址：</b>'+sensorVo.mac;
+				if(sensorVo.bluetooth!=null&&''!=sensorVo.bluetooth){
+					$.ajax({
+						url:'/common/bluetooth/findByUuid?uuid='+sensorVo.bluetooth,
+						type:'get',
+						data:'json',
+						async:false,
+						success:function(res){
+							if(res.data!=null){
+								_bluetooth = sensorVo.bluetooth;
+								_carNo = res.data.carNo;
+								if('未知'!=_carNo&&'无'!=_bluetooth){
+									_detail += '</br><b>蓝牙设备：</b>'+_bluetooth+'</br><b>车牌号码：</b>'+_carNo;
+								}
+							}
+						}
+					})
+				}
 				$('#' + sensorVo.description).attr('title','基本信息');
-				$('#' + sensorVo.description).attr('data-content','<b>驶入时间：</b>'+sensorVo.lastSeenTime+'</br><b>车位号：</b>'+sensorVo.description+'</br><b>Mac地址：</b>'+sensorVo.mac);
+				$('#' + sensorVo.description).attr('data-content',_detail);
 				$('#' + sensorVo.description).show();
 				$("[data-toggle='popover']").popover({html: true});
 			}else{

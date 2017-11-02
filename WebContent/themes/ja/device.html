@@ -48,6 +48,8 @@
                         <th>是否有车</th>
                         <th>心跳间隔</th>
                         <th>上次通讯时间</th>
+                        <th>蓝牙设备</th>
+                        <th>车牌信息</th>
                     </tr>
                 </thead>
                 <tbody id="data" >
@@ -60,6 +62,8 @@
                         </td>
                         <td v-text="item.heartBeatInterval+'s'" ></td>
                         <td v-text="item.lastSeenTime" ></td>
+                        <td v-text="item.bluetooth" ></td>
+                        <td v-text="item.uid" ></td>
                     </tr>
                 </tbody>
             </table>
@@ -73,6 +77,6 @@
 <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
-<script src="js/device.js"></script>
+<script src="js/device.js?_v=0.03"></script>
 </body>
 </html>
