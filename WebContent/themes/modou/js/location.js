@@ -34,9 +34,9 @@ function run() {
 				if(parseInt(sensorVo.description)>=24){
 					$('#' + sensorVo.description).attr('data-placement','right');
 				}else if(parseInt(sensorVo.description)<=11){
-					$('#' + sensorVo.description).attr('data-placement','left');
+					$('#' + sensorVo.description).attr('data-placement','right');
 				}else{
-					$('#' + sensorVo.description).attr('data-placement','bottom');
+					$('#' + sensorVo.description).attr('data-placement','right');
 				}
 				var _carNo = '未知',_bluetooth = '无';
 				var _detail = '<b>驶入时间：</b>'+sensorVo.lastSeenTime+'</br><b>车位号：</b>'+sensorVo.description+'</br><b>Mac地址：</b>'+sensorVo.mac;
