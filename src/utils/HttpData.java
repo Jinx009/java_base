@@ -230,4 +230,9 @@ public class HttpData {
 		return url;
 	}
 	
+	public static String modouRush(String token, String dateStr) {
+		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId=21&token="+token+"&date="+dateStr;
+		return url;
+	}
+	
 }

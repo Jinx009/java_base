@@ -10,9 +10,9 @@ public class GuodongSensorTask {
 
 	
 	
-	@Scheduled(fixedRate = 20*1000)//每一分钟执行一次
+	@Scheduled(fixedRate = 1000 * 10,initialDelay = 1000)
 	public void init(){
-		
+		System.out.println("start job ... ... ");
      }
 	
 }
