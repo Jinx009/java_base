@@ -18,16 +18,11 @@ import utils.HttpData;
 import utils.Resp;
 import utils.enums.AppInfo;
 
-/**
- * 公用接口集散
- * @author jinx
- *
- */
 @Controller
-@RequestMapping(value = "/interface/ja")
-public class InterfaceJinganDataController extends BaseController{
+@RequestMapping(value = "/interface/puruan")
+public class InterfacePuruanDataController extends BaseController{
 
-	private static final Logger logger = LoggerFactory.getLogger(InterfaceJinganDataController.class);
+	private static final Logger logger = LoggerFactory.getLogger(InterfacePuruanDataController.class);
 	
 	@Autowired
 	private HttpService httpService;
@@ -38,7 +33,7 @@ public class InterfaceJinganDataController extends BaseController{
 	public Resp<?> locationStatus(Integer locationId,Integer op,String dateStr){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.NB_JINGAN.getAppId());
+			String token  = getToken(AppInfo.PURUAN.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.locationStatusUrl(token,op,locationId,dateStr));
 				JSONObject jsonObject = JSONObject.parseObject(result);
@@ -62,7 +57,7 @@ public class InterfaceJinganDataController extends BaseController{
 	public Resp<?> device(){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.NB_JINGAN.getAppId());
+			String token  = getToken(AppInfo.PURUAN.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.deviceUrl(token));
 				JSONObject jsonObject = JSONObject.parseObject(result);
@@ -86,7 +81,7 @@ public class InterfaceJinganDataController extends BaseController{
 	public Resp<?> car(Integer areaId,String dateStr,Integer type){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.NB_JINGAN.getAppId());
+			String token  = getToken(AppInfo.PURUAN.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.carUrl(token,areaId,dateStr,type));
 				if(!BaseConstant.HTTP_ERROR_CODE.equals(result)){
@@ -110,7 +105,7 @@ public class InterfaceJinganDataController extends BaseController{
 	public Resp<?> views(Integer areaId){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.NB_JINGAN.getAppId());
+			String token  = getToken(AppInfo.PURUAN.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.detail(token, areaId));
 				if(!BaseConstant.HTTP_ERROR_CODE.equals(result)){
@@ -135,9 +130,9 @@ public class InterfaceJinganDataController extends BaseController{
 	public Resp<?> rush(String dateStr){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.NB_JINGAN.getAppId());
+			String token  = getToken(AppInfo.PURUAN.getAppId());
 			if(token!=null){
-				String result = httpService.get(HttpData.jinganRush(token,dateStr));
+				String result = httpService.get(HttpData.puruanRush(token,dateStr));
 				if(!BaseConstant.HTTP_ERROR_CODE.equals(result)){
 					JSONObject jsonObject = JSON.parseObject(result);
 					resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,JSONArray.parse(jsonObject.getString(BaseConstant.PARAMS)));
@@ -149,5 +144,6 @@ public class InterfaceJinganDataController extends BaseController{
 		}
 		return resp;
 	}
+	
 	
 }

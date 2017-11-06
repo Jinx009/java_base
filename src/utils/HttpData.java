@@ -214,9 +214,19 @@ public class HttpData {
 			return "";
 		}
 	}
+	
+	public static String jinganRush(String token, String dateStr) {
+		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId=16&token="+token+"&date="+dateStr;
+		return url;
+	}
 
 	public static String rush(String token, String dateStr) {
 		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId=18&token="+token+"&date="+dateStr;
+		return url;
+	}
+	
+	public static String puruanRush(String token, String dateStr) {
+		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId=22&token="+token+"&date="+dateStr;
 		return url;
 	}
 	

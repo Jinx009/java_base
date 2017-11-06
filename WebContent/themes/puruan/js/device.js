@@ -1,6 +1,6 @@
 $(function(){
 	$.ajax({
-		url:'/interface/ja/device',
+		url:'/interface/puruan/device',
 		type:'get',
 		dataType:'json',
 		success:function(res){
