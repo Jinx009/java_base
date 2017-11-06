@@ -2,14 +2,14 @@
 	float: left;
 	height: 426px;
 	position: relative;
-	background: url(/themes/ja/img/jabg.jpg) no-repeat 0 0;
+	background: url(/themes/modou/img/modoubg.jpg) no-repeat 0 0;
 	width: 911px
 }
 .location-b {
 	float: left;
 	height: 426px;
 	position: relative;
-	background: url(/themes/ja/img/B.jpg) no-repeat 0 0;
+	background: url(/themes/modou/img/B.jpg) no-repeat 0 0;
 	margin-top:20px;
 	width: 911px
 }
