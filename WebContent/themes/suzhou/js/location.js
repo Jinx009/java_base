@@ -27,7 +27,7 @@ function _setMap() {
 
 		run();
 
-	}, 5000);
+	}, 10000);
 }
 function run() {
 	$.get('/interface/suzhou/view?areaId=19', function(res) {

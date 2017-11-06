@@ -46,10 +46,8 @@
                         <th>Mac地址</th>
                         <th>车位号</th>
                         <th>是否有车</th>
-                        <th>心跳间隔</th>
+                        <th>电压</th>
                         <th>上次通讯时间</th>
-                        <th>蓝牙设备</th>
-                        <th>车牌信息</th>
                     </tr>
                 </thead>
                 <tbody id="data" >
@@ -60,10 +58,8 @@
                         	<span v-if="1===item.available" class="label label-success">是</span>
                         	<span v-if="0===item.available" class="label label-danger">否</span>
                         </td>
-                        <td v-text="item.heartBeatInterval+'s'" ></td>
+                        <td v-text="item.batteryVoltage" ></td>
                         <td v-text="item.lastSeenTime" ></td>
-                        <td v-text="item.bluetooth" ></td>
-                        <td v-text="item.uid" ></td>
                     </tr>
                 </tbody>
             </table>
