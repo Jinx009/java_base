@@ -19,6 +19,8 @@
     					default-lazy-init="false"> 
     
 	<tx:annotation-driven transaction-manager="transactionManager" /> 
+    <task:annotation-driven scheduler="qbScheduler" mode="proxy"/>
+    <task:scheduler id="qbScheduler" pool-size="10"/> <!-- @Scheduled -->
     
     <bean id="contextApplicationContextProvider" class="common.helper.ApplicationContextProvider"></bean>
     

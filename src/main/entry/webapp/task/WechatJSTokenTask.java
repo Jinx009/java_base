@@ -1,4 +1,4 @@
-package task;
+package main.entry.webapp.task;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import database.models.WebTokenFactory;
 import service.basicFunctions.WebTokenFactoryService;
-import utils.wechat.WechatData;
+//import utils.wechat.WechatData;
 import utils.wechat.WechatUtil;
 
 @Component
@@ -24,10 +24,10 @@ public class WechatJSTokenTask {
     @Scheduled(fixedRate = 60*1000)//每一分钟执行一次
     public void refreshen() throws Exception {
       logger.warn("wechat task");
-       WebTokenFactory webTokenFactory = webTokenFactoryService.getByTypeAndId(WechatData.APP_ID,1);
-       if(webTokenFactory!=null){
-    	   checkWechatCache(WechatData.APP_ID,WechatData.APP_SECRET,webTokenFactory);
-       }else{
+//       WebTokenFactory webTokenFactory = webTokenFactoryService.getByTypeAndId(WechatData.APP_ID,1);
+//       if(webTokenFactory!=null){
+//    	   checkWechatCache(WechatData.APP_ID,WechatData.APP_SECRET,webTokenFactory);
+//       }else{
 //    	   long currentTimestamp = (long) (System.currentTimeMillis() / 1000);
 //    	   String jsapi_ticket = WechatUtil.getJSApiTicket(WechatData.APP_ID, WechatData.APP_SECRET);
 //    	   webTokenFactory = new WebTokenFactory();
@@ -37,7 +37,7 @@ public class WechatJSTokenTask {
 //    	   webTokenFactory.setTokenType(1);
 //    	   webTokenFactory.setTokenValue(jsapi_ticket);
 //    	   webTokenFactoryService.save(webTokenFactory);
-       }
+//       }
     }
     
     /**

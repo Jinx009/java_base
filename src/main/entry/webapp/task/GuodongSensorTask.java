@@ -1,4 +1,4 @@
-package task;
+package main.entry.webapp.task;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
