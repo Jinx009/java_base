@@ -29,3 +29,14 @@ $(function(){
 		}
 	})
 })
+
+function goLog(_element){
+	if(!window.localStorage){
+        alert('浏览器支持localstorage');
+        return false;
+    }else{
+        var storage = window.localStorage;
+        storage['_mac'] = $(_element).html();
+        location.href = '/themes/ja/logs.html';
+    }
+}

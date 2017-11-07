@@ -64,7 +64,10 @@ function getData(){
 var _data_ = new Array();
 
 function changeData(){
-    var max = 0;var times = resData.length;
+    var max = 0;var times = 1;
+    if(resData!=null){
+    	times = resData.length;
+    }
     for(var i in resData){
         max += resData[i].times;
         if(resData[i].times<15){
