@@ -32,7 +32,7 @@ $(function(){
 
 function goLog(_element){
 	if(!window.localStorage){
-        alert('浏览器支持localstorage');
+        alert('浏览器不支持localstorage');
         return false;
     }else{
         var storage = window.localStorage;

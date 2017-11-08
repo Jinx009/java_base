@@ -24,7 +24,7 @@ $(function() {
 		format : 'yyyy-mm-dd',
 		lang : 'ch'
 	});
-	$("#datepicker").val(new Date().Format("yyyy-MM-dd"));
+	$('#datepicker').val(new Date().Format('yyyy-MM-dd'));
 	$('._b').bind('click', function() {
 		var _d = $(this).attr('data-ref');
 		$('._b').removeClass('btn-info');
