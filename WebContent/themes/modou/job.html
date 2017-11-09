@@ -54,10 +54,10 @@
                         <td v-text="item.baseId" ></td>
                         <td v-text="item.jobDetail" ></td>
                         <td>
-                        	<span v-if="3===item.status" class="label label-success">已完成</span>
-                        	<span v-if="2===item.status" class="label label-success">已失败</span>
+                        	<span v-if="2===item.status" class="label label-info">已完成</span>
+                        	<span v-if="3===item.status" class="label label-danger">已失败</span>
                         	<span v-if="1===item.status" class="label label-success">已接收</span>
-                        	<span v-if="0===item.status" class="label label-danger">新建</span>
+                        	<span v-if="0===item.status" class="label label-default">新建</span>
                         </td>
                     </tr>
                 </tbody>
