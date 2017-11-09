@@ -21,6 +21,19 @@ public class HttpData {
 	private static final String CAR_URL = "/ge/carInOutLog";
 	private static final String BIKE_URL = "/rest/parking/bikes";
 	public static final String VIEW_URL = "/rest/parking/detail";
+	public static final String JOB_ADD_URL = "/rest/job/save";
+	public static final String JOB_FIND_URL = "/rest/job/find";
+	public static final String INOUT_URL = "/rest/sensor/inOutLog";
+	
+	public static String jobFind(Integer id){
+		String url = BASE_URL+JOB_FIND_URL+"?id="+id;
+		return url;
+	}
+	
+	public static String jobAdd(){
+		String url = BASE_URL+JOB_ADD_URL;
+		return url;
+	}
 	
 	/**
 	 * 实况图
@@ -232,6 +245,11 @@ public class HttpData {
 	
 	public static String modouRush(String token, String dateStr) {
 		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId=21&token="+token+"&date="+dateStr;
+		return url;
+	}
+
+	public static String inOutUrl(String dateStr, Integer areaId) {
+		String url = BASE_URL+INOUT_URL+"?areaId="+areaId+"&dateStr="+dateStr;
 		return url;
 	}
 	

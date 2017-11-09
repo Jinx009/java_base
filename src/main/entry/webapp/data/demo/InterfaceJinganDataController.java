@@ -38,6 +38,30 @@ public class InterfaceJinganDataController extends BaseController {
 
 	@Autowired
 	private HttpService httpService;
+	
+
+	@RequestMapping(path = "/inout")
+	@ResponseBody
+	public Resp<?> inout(String dateStr, Integer areaId) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String result = httpService.get(HttpData.inOutUrl(dateStr,areaId));
+			JSONObject jsonObject = JSONObject.parseObject(result);
+			if (!BaseConstant.HTTP_ERROR_CODE.equals(result)) {
+				if ("00".equals(jsonObject.getString(BaseConstant.RESP_CODE))) {
+					resp = new Resp<>(BaseConstant.HTTP_OK_CODE, BaseConstant.HTTP_OK_MSG,
+							jsonObject.get(BaseConstant.PARAMS));
+				} else {
+					resp = new Resp<>(BaseConstant.HTTP_ERROR_CODE, jsonObject.getString(BaseConstant.MSG),
+							jsonObject.getString(BaseConstant.PARAMS));
+				}
+				return resp;
+			}
+		} catch (Exception e) {
+			logger.error("error:{}", e);
+		}
+		return resp;
+	}
 
 	@RequestMapping(path = "/getLog")
 	@ResponseBody

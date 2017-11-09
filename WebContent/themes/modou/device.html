@@ -26,6 +26,7 @@
                 <li><a href="location.html">地理位置</a></li>
                 <li class="active"><a href="device.html">设备信息</a></li>
                 <li><a href="count.html">停车统计</a></li>
+                 <li><a href="job.html">任务日志</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a  target="_blank"  href="http://www.zhanway.com">走进展为</a></li>
@@ -48,6 +49,7 @@
                         <th>是否有车</th>
                         <th>电压</th>
                         <th>上次通讯时间</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody id="data" >
@@ -60,6 +62,9 @@
                         </td>
                         <td v-text="item.batteryVoltage" ></td>
                         <td v-text="item.lastSeenTime" ></td>
+                         <td>
+                         	<span class="label label-success job" v-bind:target="item.routerMac" v-bind:mac="item.mac" onclick="goJob(this)" >校准</span>
+                         </td>
                     </tr>
                 </tbody>
             </table>
@@ -73,6 +78,7 @@
 <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
-<script src="js/device.js?_v=0.05"></script>
+<script src="/themes/layer/layer.js"></script>
+<script src="js/device.js?_v=0.08"></script>
 </body>
 </html>
