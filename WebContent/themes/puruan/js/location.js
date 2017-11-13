@@ -63,7 +63,7 @@ function run() {
 //				$('#' + sensorVo.description).show();
 //				$("[data-toggle='popover']").popover({html: true});
 			}else{
-				if($('#' + sensorVo.description).length>0){
+				if($('#_' + sensorVo.description).length>0){
 //					$('#' + sensorVo.description).removeAttr('data-toggle');
 					_num ++;
 				}
