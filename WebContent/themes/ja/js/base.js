@@ -1,6 +1,14 @@
 $(function(){
 //	_session();
 })
+document.onkeydown = function(e) {
+	if (!e) {
+		e = window.event;
+	}
+	if ((e.keyCode || e.which) == 13) {
+		login();
+	}
+}
 function _session(){
 	$.ajax({
 		url:'/interface/ja/session',
