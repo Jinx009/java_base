@@ -1,4 +1,5 @@
 $(function(){
+	_session();
 	$.ajax({
 		url:'/interface/ja/device',
 		type:'get',

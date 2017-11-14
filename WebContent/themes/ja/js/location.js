@@ -1,4 +1,5 @@
 $(function() {
+	_session();
 	_setMap();
 })
 

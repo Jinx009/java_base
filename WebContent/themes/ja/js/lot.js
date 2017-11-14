@@ -19,6 +19,7 @@ Date.prototype.Format = function(fmt) { // author: meizz
 	return fmt;
 };
 $(function() {
+	_session();
 	$('#datepicker').datepicker({
 		autoclose : true,
 		format : 'yyyy-mm-dd',
