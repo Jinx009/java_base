@@ -163,7 +163,7 @@ function clear(){
 function handle(op, date, params) {
 	var hourMock = [];
 	if (op == 0) {
-		for (var i = 1; i <= 24; i++) {
+		for (var i = 0; i <= 23; i++) {
 			var unit = {
 				period : i,
 				"利用率" : 0
