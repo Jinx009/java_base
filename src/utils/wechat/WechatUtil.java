@@ -1,7 +1,7 @@
 package utils.wechat;
 
 
-import utils.HttpUtils;
+import utils.HttpUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class WechatUtil {
 	public static String getAccessToken(String appId, String appSecret)throws Exception {
 		String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+
 				appId+"&secret="+appSecret;
-		String result = HttpUtils.get(url);
+		String result = HttpUtil.get(url);
 		String access = null;
 		JSONObject jsonObject = JSON.parseObject(result);
 		logger.warn("[WechatUtil.getAccessToken:{}]",result);
@@ -43,7 +43,7 @@ public class WechatUtil {
 		String accessToken = getAccessToken(appId, appsecret);
 		if(accessToken!=null){
 			String url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+accessToken+"&type=jsapi";
-			String result = HttpUtils.get(url);
+			String result = HttpUtil.get(url);
 			JSONObject jsonObject = JSON.parseObject(result);
 			currentJSApiTicket = jsonObject.getString("ticket");
 		}
