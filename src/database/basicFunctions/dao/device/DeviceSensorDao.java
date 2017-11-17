@@ -1,5 +1,11 @@
 package database.basicFunctions.dao.device;
 
-public class DeviceSensorDao {
+import org.springframework.stereotype.Repository;
+
+import database.common.BaseDao;
+import database.models.device.DeviceSensor;
+
+@Repository
+public class DeviceSensorDao extends BaseDao<DeviceSensor>{
 
 }

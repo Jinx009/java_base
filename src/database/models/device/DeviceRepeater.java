@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tbl_sensor")
+@Table(name = "tbl_reperter")
 public class DeviceRepeater {
 
 	@Id
@@ -24,5 +24,7 @@ public class DeviceRepeater {
 	private String mac;
 	@Column(name = "area_id")
 	private Integer areaId;
+	@Column(name = "router_mac")
+	private String routerMac;
 	
 }

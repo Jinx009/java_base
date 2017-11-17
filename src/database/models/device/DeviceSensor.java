@@ -25,8 +25,6 @@ public class DeviceSensor {
     private Integer id;
     @Column(name = "mac")
     private String mac;
-    @Column(name = "uid")
-    private String uid;
     @Column(name = "description")
     private String desc;
     @Column(name = "firmware_version")
@@ -63,18 +61,6 @@ public class DeviceSensor {
     private Integer areaId;
     @Column(name = "addr")
     private String addr;
-    @Column(name = "in_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date inTime;
-    @Column(name = "expire_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date expireTime;
-    @Column(name = "notice_flag")
-    private Integer noticeFlag;
-    @Column(name = "current_member_id")
-    private Integer currentMemberId;
-    @Column(name = "paid")
-    private Integer paid;
     @Column(name = "last_seen_time")
     private Date lastSeenTime;
     @Column(name = "longitude")
@@ -88,8 +74,6 @@ public class DeviceSensor {
     @Column(name = "create_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
-    @Column(name = "mode")
-    private String mode;
     @Column(name="hardware_version")
     private String hardwareVersion;
 
