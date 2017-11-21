@@ -26,5 +26,7 @@ public class DeviceRepeater {
 	private Integer areaId;
 	@Column(name = "router_mac")
 	private String routerMac;
+	@Column(name = "rec_st")
+	private Integer recSt;
 	
 }

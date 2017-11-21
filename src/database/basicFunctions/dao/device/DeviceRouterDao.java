@@ -4,14 +4,14 @@ import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
 import database.common.QueryParam;
-import database.models.device.DeviceRepeater;
+import database.models.device.DeviceRouter;
 
 @Repository
-public class DeviceRepeaterDao extends BaseDao<DeviceRepeater>{
+public class DeviceRouterDao extends BaseDao<DeviceRouter>{
 
-	public DeviceRepeater findByMac(String mac) {
+	public DeviceRouter findByMac(String mac) {
 		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addParam("mac",mac);
+		queryParam.addParam("mac", mac);
 		return findByCriteriaForUnique(queryParam);
 	}
 

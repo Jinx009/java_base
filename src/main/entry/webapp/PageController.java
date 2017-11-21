@@ -12,7 +12,12 @@ public class PageController {
 	 */
 	@RequestMapping(value = "")
 	public String base(){
-		return "/home/index";
+		return "/index";
+	}
+	
+	@RequestMapping(value = "/index")
+	public String index(){
+		return "/index";
 	}
 	
 	/**

@@ -13,7 +13,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum PageCode {
 
-	 INDEX("index","/index",false),
+	 DEVICE_ROUTER_LIST("device_router_list","/device/router",true),
+	 DEVICE_REPEATER_LIST("device_repeater_list","/device/repeater",true),
+	 DEVICE_SENSOR_LIST("device_sensor_list","/device/sensor",true),
 	 ;
 	
 	 private String code;         //编码

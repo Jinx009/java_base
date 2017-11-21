@@ -1,0 +1,83 @@
+<header class="main-header">
+	<a class="logo"> <img alt="" src="/themes/img/logo.png"
+		style="height: 50px;">
+	</a>
+	<nav class="navbar navbar-static-top">
+		<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
+			role="button"> <span class="sr-only">Toggle navigation</span> <span
+			class="icon-bar"></span> <span class="icon-bar"></span> <span
+			class="icon-bar"></span>
+		</a>
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<li class="dropdown user user-menu"><a href="/home/page/notice"
+					class="dropdown-toggle" data-toggle="dropdown"
+					aria-expanded="false"> <i class="fa fa-bell-o"></i> <span
+						class="label label-warning" id="warningNum"></span>
+				</a></li>
+				<li class="dropdown user user-menu"><a class="dropdown-toggle"
+					data-toggle="dropdown"> <span class="hidden-xs">欢迎您：${homeUserName}</span>
+				</a></li>
+				<li><a onclick="loginOut();"><i class="fa fa-sign-out"></i></a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</header>
+<!--左侧导航 -->
+<aside class="main-sidebar">
+	<section class="sidebar">
+		<form action="#" method="get" class="sidebar-form">
+			<div class="input-group">
+				<input type="text" id="warningInput" class="form-control" value=""
+					disabled="disabled"> <span class="input-group-btn">
+					<button type="button" name="search" id="search-btn"
+						class="btn btn-flat">
+						<i class="fa fa-calendar"></i>
+					</button>
+				</span>
+			</div>
+		</form>
+		<ul class="sidebar-menu">
+			<li class="header">MAIN MENUS</li>
+			<li class="treeview l1"><a href="#"> <i class="fa fa-edit"></i>
+					<span>设备管理</span> <span class="pull-right-container"> <i
+						class="fa fa-angle-left pull-right"></i>
+				</span>
+			</a>
+				<ul class="treeview-menu u1">
+					<li onclick="_open('1','/p/device/router/list')"><a><i
+							class="fa fa-circle-o"></i>接收机管理</a></li>
+					<li onclick="_open('1','/p/device/repeater/list')"><a><i
+							class="fa fa-circle-o"></i> 中继器管理</a></li>
+					<li onclick="_open('1','/p/device/sensor/list')"><a><i
+							class="fa fa-circle-o"></i> 停车地磁管理</a></li>
+					<li onclick="_open('1','/p/device/cross_sensor/list')"><a><i
+							class="fa fa-circle-o"></i> 路口地磁管理</a></li>
+					<li onclick="_open('1','/p/device/log/list')"><a><i
+							class="fa fa-circle-o"></i> 日志管理</a></li>
+					<li onclick="_open('1','/p/device/job/list')"><a><i
+							class="fa fa-circle-o"></i> 任务管理</a></li>
+					<li onclick="_open('1','/p/device/error/list')"><a><i
+							class="fa fa-circle-o"></i> 错误管理</a></li>
+				</ul></li>
+			<li class="treeview l2"><a href="#"> <i
+					class="fa fa-briefcase"></i> <span>配置管理</span> <span
+					class="pull-right-container"> <i
+						class="fa fa-angle-left pull-right"></i>
+				</span>
+			</a>
+				<ul class="treeview-menu u2">
+					<li onclick="_open('2','/p/setting/location/list')"><a><i
+							class="fa fa-circle-o"></i>Location管理</a></li>
+					<li onclick="_open('2','/p/setting/area/list')"><a><i
+							class="fa fa-circle-o"></i> Area管理</a></li>
+					<li onclick="_open('2','/p/setting/app/list')"><a><i
+							class="fa fa-circle-o"></i> AppInfo管理</a></li>
+				</ul></li>
+		</ul>
+		<ul class="sidebar-menu">
+
+		</ul>
+	</section>
+</aside>

@@ -22,6 +22,20 @@ import common.helper.FreemarkerUtil;
  * @since 2014年1月28日
  */
 public class StringUtil extends StringUtils {
+	
+	/**
+	 * 字符串拼接
+	 * @param args
+	 * @return
+	 */
+	public static String add(String... args){
+		StringBuilder stringBuilder = new StringBuilder();
+		for(String s : args){
+			stringBuilder.append(s);
+		}
+		return stringBuilder.toString();
+	}
+	
 	/**
 	 * 字符串空处理，去除首尾空格 如果str为null，返回"",否则返回str
 	 * 
