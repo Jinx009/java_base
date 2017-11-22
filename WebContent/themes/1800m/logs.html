@@ -7,8 +7,9 @@
     <title>设备管理</title>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/themes/awe/plugins/datepicker/datepicker3.css">
 </head>
-<body>
+<body onload="window.scrollTo(0,document.body.scrollHeight);">
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -35,46 +36,29 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">基本信息</div>
-            <div class="panel-body">
-                <p style="letter-spacing: 1px;color:rgb(35,159,171);" class=“text-success”  >Location:1800M,Router个数:&nbsp;&nbsp;<font style="color: red;" >1</font>&nbsp;&nbsp;Sensor个数:&nbsp;&nbsp;<font style="color: red;" >2</font>&nbsp;&nbsp;,运行开始时间:&nbsp;&nbsp;<font style="color: red;" >2017-11-22</font></p>
+            <div class="panel-body" id="data" >
+                <p style="letter-spacing: 1px;color:rgb(35,159,171);" class=“text-success”  >当前 mac：:&nbsp;&nbsp;<font style="color: red;" v-text="obj.mac" ></font></p>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Mac地址</th>
-                        <th>车位号</th>
-                        <th>是否有车</th>
-                        <th>电压</th>
-                        <th>上次通讯时间</th>
-                        <!-- <th>蓝牙设备</th>
-                        <th>车牌信息</th> -->
-                    </tr>
-                </thead>
-                <tbody id="data" >
-                    <tr v-for="item in datas" >
-                        <td v-text="item.mac" id="{{item.mac}}" onclick="goLog(this)"  ></td>
-                        <td v-text="item.description" ></td>
-                        <td>
-                        	<span v-if="1===item.available" class="label label-success">是</span>
-                        	<span v-if="0===item.available" class="label label-danger">否</span>
-                        </td>
-                        <td v-text="item.batteryVoltage" ></td>
-                        <td v-text="item.lastSeenTime" ></td>
-             <!--            <td v-text="item.bluetooth" ></td>
-                        <td v-text="item.uid" ></td> -->
-                    </tr>
-                </tbody>
-            </table>
+           	<div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;">
+		      <input type="text" class="form-control" readonly="readonly" id="datepicker" >
+		      <span class="input-group-btn">
+		        <button class="btn btn-default" onclick="_getData();" type="button">&nbsp;查&nbsp;看&nbsp;</button>
+		      </span>
+		    </div>
+        </div>
+        <div id="logs" >
+        
         </div>
     </div>
 </div>
-<footer class="main-footer" style="margin-top:30px;margin-bottom:15px;;text-align: center;width: 100%;">
+<footer class="main-footer" id="_2" style="margin-top:30px;margin-bottom:15px;;text-align: center;width: 100%;">
     <strong>Copyright &copy;  <a href="http://www.zhanway.com" target="_blank">上海展为智能技术股份有限公司</a>.</strong> All rights reserved.
 </footer>
 <div class="control-sidebar-bg"></div>
 <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
-<script src="js/device.js?_v=1.23"></script>
+<script src="/themes/awe/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="js/logs.js?_v=1.05"></script>
 </body>
 </html>
