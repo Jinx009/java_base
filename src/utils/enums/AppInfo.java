@@ -14,7 +14,8 @@ public enum AppInfo {
 	NB_JINGAN("nb_jingan","22621b86-9bbe-45fb-bdbc-0d4b522c7fdf","静安NB"),
 	WENZHOU_MODOU("wenzhou_modou","3d55af8d-e045-46e4-8fdb-75cbc7d700fb","温州魔豆"),
 	PURUAN("puruan","f6b5c9b3-45ca-47da-8af6-4cdf29d28087","浦东软件园"),
-	COMPANY_TEST("pos_taiyuan","7926bbf2-7ecc-43fb-885a-883bd1a8651b","公司和太原公用测试pos")
+	COMPANY_TEST("pos_taiyuan","7926bbf2-7ecc-43fb-885a-883bd1a8651b","公司和太原公用测试pos"),
+	NB_1800M("wuhan_1800m_test","251ffebf-25eb-45b3-95fb-bc0d2a7d71fe","武汉1800M测试")
 	;
 	
 	private String appId;
