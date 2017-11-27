@@ -33,14 +33,14 @@ public abstract class BaseService {
             String serverBean = interCode.getServerBean();
             serverBean = this.firstUpper(serverBean);
             String className = clazz.getSimpleName();
-            log.debug("BaseService.init; serverBean:{},className:{}", serverBean, className);
+            log.debug("serverBean:{},className:{}", serverBean, className);
             if(serverBean.equals(className)) {
                 String funcName = interCode.getFunc();
                 try {
                     Method method = clazz.getMethod(funcName,types);
                     methods.put(funcName, method);
                 } catch (NoSuchMethodException e) {
-                    log.error("BaseService.init; NoSuchMethodException className【{}】 funcName:【{}】", className, funcName);
+                    log.error("NoSuchMethodException className【{}】 funcName:【{}】", className, funcName);
                 }
             }
         }

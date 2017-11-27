@@ -12,6 +12,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum PageCode {
+	
 
 	 DEVICE_ROUTER_LIST("device_router_list","/device/router",true),
 	 DEVICE_REPEATER_LIST("device_repeater_list","/device/repeater",true),

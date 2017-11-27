@@ -1,57 +1,50 @@
-var _menuIconList = ['fa fa-bell-slash-o','fa fa-bicycle','fa fa-binoculars','fa fa-birthday-cake','fa fa-bolt fa-bomb','fa fa-book','fa fa-bookmark','fa fa-briefcase'];
-var _menuParent = new Array();
-var _sonMenuList = new Array();
-var _menuIconIndex = 0;
 /**
- * 导航数据
- * @param _activeName
+ * 打开菜单链接
+ * @param _index
+ * @param _href
  */
-function getNav(_activeName){
-	$('#warningInput').val(new Date().Format("yyyy年MM月dd日"))
-	if(_activeName!=''){
-		$('.treeview').removeClass('active');
-	}
-	$.ajax({
-		url:'/home/d/menu?t='+getTimestamp(),
-		type:'post',
-		dataType:'json',
-		success:function(res){
-			if(res.data!=null){
-				for(var i in res.data){
-					if(0==res.data[i].type&&0==res.data[i].parentId){
-						var obj = {};
-						obj.icon = _menuIconList[_menuIconIndex];
-						obj.name = res.data[i].name;
-						obj.id = res.data[i].id;
-						obj.son = new Array();
-						_menuParent.push(obj);
-						_menuIconIndex++;
-					}else if(0==res.data[i].type&&0!=res.data[i].parentId){
-						_sonMenuList.push(res.data[i]);
-					}
-				}
-				if(_sonMenuList.length!=0){
-					for(var i in _sonMenuList){
-						for(var j in _menuParent){
-							if(_menuParent[j].id==_sonMenuList[i].parentId){
-								_menuParent[j].son.push(_sonMenuList[i]);
-							}
-						}
-					}
-				}
-				new Vue({
-	   				  el: '.sidebar-menu',
-	   				  data:{navs:_menuParent}
-	    		})
-				$('.treeview').each(function(){
-					if($(this).attr('data-info')==_activeName){
-						$(this).addClass('active');
-					}
-				})
-			}
-		}
-	})
+function _open(_index,_href){
+	setSessionStorage('_index',_index);
+	setSessionStorage('_href',_href);
+	location.href = _href;
 }
+function _open_(_index,_href,_href_){
+	setSessionStorage('_index',_index);
+	setSessionStorage('_href',_href);
+	location.href = _href_;
+}
+/**
+ * 操作sessionStorage
+ * @param _key
+ */
+function getSessionStorage(_key){
+	if(window.sessionStorage){     
+		return window.sessionStorage.getItem(_key);
+	}
+}
+function setSessionStorage(_key,_value){
+	if(window.sessionStorage){     
+		var _r = window.sessionStorage.setItem(_key,_value);
+		if(_r!=null&&_r!=''&&_r!=undefined){
+			return _r;
+		}else{
+			return '';
+		}
+	}else{ 
+		return '';
+	}
+}
+/**
+ * 数据加载动画
+ * @returns
+ */
+function showLoad(){  
+    return layer.msg('努力加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false,offset: '200px', time:100000}) ;  
+}  
+function closeLoad(index){  
+	_i = -1;
+    layer.close(index);  
+} 
 /**
  * 获取时间戳
  * @returns
@@ -111,3 +104,21 @@ function toDate(unixtime)  {
 	 var date = new Date(unixtime);
 	 return  date.Format("yyyy-MM-dd"); 
 } 
+/**
+ * 校验正整数
+ * @param str
+ * @returns
+ */
+function isPInt(str) {
+    var g = /^[1-9]*[1-9][0-9]*$/;
+    return g.test(str);
+}
+/**
+ * 校验小数
+ * @param val
+ * @returns
+ */
+function validateFloat(val){
+	var patten = /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/;
+	return patten.test(val);
+}

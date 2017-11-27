@@ -1,6 +1,8 @@
 package main.entry.webapp;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -8,10 +10,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import database.models.home.HomeUser;
 import service.basicFunctions.BaseService;
 import utils.enums.DataCode;
 import utils.model.Resp;
@@ -25,22 +27,31 @@ public class DataServer extends BaseController implements ApplicationContextAwar
 	private ApplicationContext ctx;
 	
 
-	@RequestMapping(value = "/d/{operator}/{version}", produces = "application/json")
+	@RequestMapping(value = "/d/{type}/{operator}/{version}", produces = "application/json")
 	@ResponseBody
-	public Resp<?> executeInterface(@PathVariable(value = "operator") String operator,
+	public Resp<?> executeInterface(@PathVariable(value = "type") String type,
+									@PathVariable(value = "operator") String operator,
 									@PathVariable(value = "version") String version,
-									@RequestBody byte[] requestBody) {
-		DataCode dataCode = DataCode.getByCode(operator + "_" + version);
+									HttpServletRequest request) {
+		DataCode dataCode = DataCode.getByCode(type+"_"+operator + "_" + version);
 		Resp<?> resp = new Resp<>(false);
 		if (dataCode == null) {
 			resp = new Resp<>(RespData.NOT_FIND_CODE, RespData.NOT_FIND_MSG, null);
 			return resp;
 		} else {
 			try {
-				String jsonData = new String(requestBody,RespData.CHAR_SET);
+				if(dataCode.isNeedLogin()){
+					HomeUser homeUser = getSessionHomeUser(request);
+					if(homeUser==null){
+						resp = new Resp<>(RespData.NOT_LOGIN_CODE, RespData.NOT_LOGIN_MSG, null);
+						return resp;
+					}
+				}
+				String jsonData = getRequestPostStr(request);
 				logger.warn("[executeInterface]data:{},bean:{}", jsonData, dataCode.getServerBean());
 				BaseService baseService = (BaseService) ctx.getBean(dataCode.getServerBean());
 				resp = (Resp<?>) baseService.execute(jsonData, dataCode.getFunc());
+				return resp;
 			} catch (Exception e) {
 				logger.error("error:{}",e);
 			}

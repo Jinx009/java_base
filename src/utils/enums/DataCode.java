@@ -13,9 +13,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum DataCode {
 
-	 HOME_USER_LOGIN("home_user_login_1_0","homeUserService","login","1.0后台用户登陆",false),
-	 HOME_USER_LIST("home_user_list_1_0","homeUserService","list","1.0后台用户列表",true)
-
+	 DEVICE_ROUTER_LIST("device_router_list_1_0","deviceRouterService","list","router列表",true),
 	 ;
 	
 	 private String code;         //编码

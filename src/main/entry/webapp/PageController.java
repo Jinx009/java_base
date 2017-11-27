@@ -20,6 +20,11 @@ public class PageController {
 		return "/index";
 	}
 	
+	@RequestMapping(value = "/404")
+	public String _404(){
+		return "/404";
+	}
+	
 	/**
 	 * spring报错
 	 * @return

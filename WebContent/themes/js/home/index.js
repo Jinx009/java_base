@@ -25,7 +25,6 @@ function changeWidth() {
 function login() {
 	var userName = $('#userName').val();
 	var pwd = $('#pwd').val();
-	pwd = CryptoJS.MD5(pwd);
 	var params = 'userName=' + userName + '&pwd=' + pwd;
 	if (userName == null || '' == userName) {
 		$('#errorMsg').html('用户名不能为空！')
@@ -34,12 +33,12 @@ function login() {
 			$('#errorMsg').html('密码不能为空！')
 		} else {
 			$.ajax({
-				url : '/home/config/login',
+				url : '/data/login',
 				type : 'post',
 				data : params,
 				success : function(res) {
 					if ('200' == res.code && '访问成功' == res.msg) {
-						location.href = '/home/page/index'
+						location.href = '/p/device/router/list'
 					} else {
 						$('#errorMsg').html(res.msg)
 					}
