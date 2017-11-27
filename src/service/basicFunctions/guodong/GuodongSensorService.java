@@ -49,6 +49,7 @@ public class GuodongSensorService {
 						guodongJob.setTime_s(time_s);
 						guodongJob.setStatus(1);
 						guodongJobService.update(guodongJob);
+						
 					}
 				}else{
 					GuodongSensor guodongSensor = guodongSensorDao.findByEUI(devEUI);
