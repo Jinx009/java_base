@@ -89,15 +89,15 @@ public class OpenApi {
 	}
 
 	public static void main(String[] args) {
-		OpenApi ob = new OpenApi();
+//		OpenApi ob = new OpenApi();
 //		ob.getNodeDataListInfo("0000000000004f93").toString();
 //		System.out.println("====2" + ob.getAppEuiDataListInfo("000000000000006c","2017-10-30 15:00:00").toString());
-		int [] _i = new int []{4,8,0,0,3,2,0,2,5,2,0,0};
-		byte[] data = new byte[DATA_MAX_LENGTH];
-		for (int i = 0, j = data.length; i < j; i++) {
-			data[i] = (byte) (_i[i]);
-		}
-		System.out.println(ob.sendDataToNodes("0000000000004f91", data));
+//		int [] _i = new int []{4,8,0,0,3,2,0,2,5,2,0,0};
+//		byte[] data = new byte[DATA_MAX_LENGTH];
+//		for (int i = 0, j = data.length; i < j; i++) {
+//			data[i] = (byte) (_i[i]);
+//		}
+
 	}
 
 	/**
@@ -165,20 +165,13 @@ public class OpenApi {
 	 * @return
 	 */
 	@SuppressWarnings("resource")
-	public JSONObject sendDataToNodes(String devEUI, byte[] data) {
+	public static JSONObject sendDataToNodes(String devEUI) {
 		logger.warn("start sendDataToNodes!");
 		String apiUrl = URL + "OpenAPI_SendDataForNode";
 		String currentTime = String.valueOf(System.currentTimeMillis());
 		String token = null;
 		JSONObject result = null;
-		if (data.length > DATA_MAX_LENGTH && data.length < 1) {
-			return null;
-		}
-		String sendData = "\\x";
-		for (int i = 0, j = data.length; i < j; i++) {
-			sendData += String.format("%02x", data[i]);
-
-		}
+		String sendData = "\\x480032025200";
 		logger.warn("sendData:{}" , sendData);
 		HttpPost post = new HttpPost(apiUrl);
 		post.setHeader("accept", "application/json");
