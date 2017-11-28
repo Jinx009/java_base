@@ -24,5 +24,12 @@ public class GuodongJobDao extends BaseDao<GuodongJob>{
 		queryParam.addOrder(OrderType.DESC,"id");
 		return findByCriteria(queryParam);
 	}
+
+	public GuodongJob findByTaskId(String taskID) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("status",0);
+		queryParam.addParam("taskId",taskID);
+		return  findByCriteriaForUnique(queryParam);
+	}
 	
 }

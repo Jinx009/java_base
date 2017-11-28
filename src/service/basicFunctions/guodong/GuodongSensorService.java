@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 
+import common.helper.StringUtil;
 import database.basicFunctions.dao.guodong.GuodongSensorDao;
 import database.models.guodong.GuodongJob;
 import database.models.guodong.GuodongSensor;
@@ -34,6 +35,8 @@ public class GuodongSensorService {
 			String devEUI = jsonObject.getString("devEUI");
 			if(devEUI!=null&&!"".equals(devEUI)){
 				String data = jsonObject.getString("data");
+				String taskID = jsonObject.getString("taskID");
+				String status = jsonObject.getString("status");
 				String time_s = jsonObject.getString("time_s");
 				char[] c = data.toCharArray();
 				String s = "";
@@ -43,13 +46,20 @@ public class GuodongSensorService {
 							s += String.valueOf(c[i]);
 					}
 				}
-				if(s.equals("D20100")){
-					GuodongJob guodongJob = guodongJobService.findByDevEui(devEUI);
-					if(0==guodongJob.getStatus()){
-						guodongJob.setTime_s(time_s);
+				if(StringUtil.isNotBlank(status)&&"1".equals(status)&&StringUtil.isNotBlank(taskID)){
+					GuodongJob guodongJob = guodongJobService.findByTaskId(taskID);
+					if(guodongJob!=null){
+						guodongJob.setTime_s(String.valueOf(new Date().getTime()));
 						guodongJob.setStatus(1);
 						guodongJobService.update(guodongJob);
-						
+					}
+				}
+				if(s.equals("D20100")){
+					GuodongJob guodongJob = guodongJobService.findByDevEui(devEUI);
+					if(guodongJob!=null){
+						guodongJob.setTime_s(String.valueOf(new Date().getTime()));
+						guodongJob.setStatus(1);
+						guodongJobService.update(guodongJob);
 					}
 				}else{
 					GuodongSensor guodongSensor = guodongSensorDao.findByEUI(devEUI);

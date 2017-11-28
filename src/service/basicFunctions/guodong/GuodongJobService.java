@@ -36,5 +36,9 @@ public class GuodongJobService {
 	public List<GuodongJob> findAll() {
 		return guodongJobDao.findAllByTime();
 	}
+
+	public GuodongJob findByTaskId(String taskID) {
+		return guodongJobDao.findByTaskId(taskID);
+	}
 	
 }
