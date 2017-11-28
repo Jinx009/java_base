@@ -57,7 +57,7 @@ public class GuodongSensorService {
 				if(s.equals("D20100")){
 					GuodongJob guodongJob = guodongJobService.findByDevEui(devEUI);
 					if(guodongJob!=null){
-						guodongJob.setTime_s(String.valueOf(new Date().getTime()));
+						guodongJob.setTime_s(time_s);
 						guodongJob.setStatus(1);
 						guodongJobService.update(guodongJob);
 					}
