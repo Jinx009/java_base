@@ -33,7 +33,7 @@ $(function() {
 function goJob(_element) {
 	var _target = $(_element).attr('target');
 	var _mac = $(_element).attr('mac');
-	layer.confirm('您确定要校准' + mac + '吗？', {
+	layer.confirm('您确定要校准' + _mac + '吗？', {
 		btn : [ '确定', '取消' ]
 	}, function() {
 		$.ajax({
