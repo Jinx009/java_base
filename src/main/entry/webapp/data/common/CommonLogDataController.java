@@ -70,10 +70,16 @@ public class CommonLogDataController extends BaseController{
 		BufferedReader br = new BufferedReader(reader);
 		StringBuilder result = new StringBuilder();
 		String s = null;
+		List<String> list = new ArrayList<String>();
 		while ((s = br.readLine()) != null) {
-			result.append(System.lineSeparator() + s);
+			list.add(System.lineSeparator() + s);
 		}
 		br.close();
+		if(list!=null&&!list.isEmpty()){
+			for(int i = list.size()-1;i>=0;i--){
+				result.append(list.get(i));
+			}
+		}
 		return result.toString();
 	} catch (IOException e) {
 		log.error("error:{}",e);
