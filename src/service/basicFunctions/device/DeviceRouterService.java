@@ -1,15 +1,18 @@
 package service.basicFunctions.device;
 
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
+
 import database.basicFunctions.dao.device.DeviceRouterDao;
+import database.common.PageDataList;
 import database.models.device.DeviceRouter;
 import service.basicFunctions.BaseService;
+import utils.model.BaseConstant;
 import utils.model.Resp;
 
 @Service
@@ -27,7 +30,13 @@ public class DeviceRouterService extends BaseService{
 	public Resp<?> list(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			List<DeviceRouter> list = deviceRouterDao.findAll();
+			log.warn("params:{}",params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			Integer p = jsonObject.getInteger(BaseConstant.PAGE_INDEX);
+			if(p==null||p==0){
+				p = 1;
+			}
+			PageDataList<DeviceRouter> list = deviceRouterDao.findAll(p);
 			resp = new Resp<>(list);
 			return resp;
 		} catch (Exception e) {
