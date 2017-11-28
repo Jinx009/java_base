@@ -1,12 +1,6 @@
-$(function() {
-	changeWidth();
-	$('.login-btn').bind('click', function() {
-		login()
-	});
-	$('input').bind('click', function() {
-		$('#errorMsg').html('')
-	})
-});
+/**
+ * 键盘事件
+ */
 document.onkeydown = function(e) {
 	if (!e) {
 		e = window.event;
@@ -22,6 +16,9 @@ function changeWidth() {
 	var _width = $(window).width();
 	$('.bg-table').css('margin-left', (_width - 500) / 2)
 }
+/**
+ * 登陆
+ */
 function login() {
 	var userName = $('#userName').val();
 	var pwd = $('#pwd').val();
@@ -38,7 +35,7 @@ function login() {
 				data : params,
 				success : function(res) {
 					if ('200' == res.code && '访问成功' == res.msg) {
-						location.href = '/p/device/router/list'
+						_open('1','/p/device/router/list');
 					} else {
 						$('#errorMsg').html(res.msg)
 					}

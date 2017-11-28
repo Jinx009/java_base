@@ -1,3 +1,24 @@
+$(function(){
+	getNav();
+})
+/**
+ * 导航数据
+ */
+function getNav(){
+	var _index = getSessionStorage('_index');
+	var _href = getSessionStorage('_href');
+	if(_index!=''){
+		$('.l'+_index).addClass('active');
+		$('.u'+_index).css('display','block');
+		$('.u'+_index+' li').each(function(){
+			var _onclick = $(this).attr('onclick');
+			if(_onclick.indexOf(_href)>-1){
+				$(this).addClass('active');
+			}
+		})
+	}
+	$('#warningInput').val(new Date().Format("yyyy年MM月dd日"));
+}
 /**
  * 打开菜单链接
  * @param _index

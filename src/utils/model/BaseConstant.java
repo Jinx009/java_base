@@ -12,4 +12,5 @@ public class BaseConstant {
 	
 	public static final String NOT_VALIDATE_COE = "10001";
 	public static final String NOT_VALIDATE_MSG = "用户名密码未通过校验！";
+	public static final int PAGE_SIZE = 25;
 }

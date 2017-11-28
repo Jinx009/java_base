@@ -8,6 +8,15 @@ function _getData(){
 		dataType:'json',
 		type:'post',
 		success:function(res){
+			for(var i in res.data){
+				res.data[i].status = 1;
+				var timestamp = new Date().getTime();
+				if((timestamp-res.data[i].lastSeenTime)>1000 * 120){
+					res.data[i].status = 0;
+				}
+				res.data[i].lastSeenTime = toDateTime(res.data[i].lastSeenTime);
+				
+			}
 			if(''==_d){
 				_d = new Vue({
 					el:'#datas',

@@ -30,82 +30,50 @@
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> 账户管理 </a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> Router管理 </a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
 			<section class="content">
-				<div class="box box-default">
-					<div class="box-header with-border">
-						<h3 class="box-title">筛选条件</h3>
-						<div class="box-tools pull-right">
-							<button type="button" class="btn btn-box-tool"
-								data-widget="collapse">
-								<i class="fa fa-minus"></i>
-							</button>
-						</div>
-					</div>
-					<div class="box-body">
-						<div class="row">
-							<div class="col-md-3">
-								<div class="form-group">
-									<label>选择地区</label> <select
-										class="form-control select2 select2-hidden-accessible"
-										style="width: 100%;" tabindex="-1" aria-hidden="true">
-										<option selected="selected">静安NB</option>
-									</select>
-								</div>
+				<div class="row"  >
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-header">
+								<h3 class="box-title">Router列表</h3>
 							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label>选择街道</label> <select
-										class="form-control select2 select2-hidden-accessible"
-										style="width: 100%;" tabindex="-1" aria-hidden="true">
-										<option selected="selected">昌平路A段</option>
-									</select>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="row">
-						<div class="col-xs-12">
-							<div class="box">
-								<div class="box-header">
-									<h3 class="box-title">Router列表</h3>
-								</div>
-								<!-- /.box-header -->
-								<div class="box-body table-responsive no-padding">
-									<table class="table table-hover table-bordered">
-										<thead>
-											<tr>
-												<th>编号</th>
-												<th>MAC</th>
-												<th>信道ID</th>
-												<th>固件版本</th>
-												<th>接口版本</th>
-												<th>上次通信时间</th>
-												<th>状态</th>
-												<th>备注</th>
-												<th>操作</th>
-											</tr>
-										</thead>
-										<tbody id="datas">
-											<tr v-for="item in datas">
-												<td v-text="item.id"></td>
-												<td v-text="item.mac"></td>
-												<td v-text="item.channelId"></td>
-												<td v-text="item.routerFirmwareVersion"></td>
-												<td v-text="item.interfaceVersion"></td>
-												<td v-text="item.lastSeenTime"></td>
-												<td v-text="item.id"></td>
-												<td v-text="item.id"></td>
-												<td v-text="item.id"></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
+							<!-- /.box-header -->
+							<div class="box-body table-responsive no-padding">
+								<table class="table table-hover table-bordered">
+									<thead>
+										<tr>
+											<th>编号</th>
+											<th>MAC</th>
+											<th>信道ID</th>
+											<th>固件版本</th>
+											<th>接口版本</th>
+											<th>上次通信时间</th>
+											<th>状态</th>
+											<th>备注</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody id="datas">
+										<tr v-for="item in datas">
+											<td v-text="item.id"></td>
+											<td v-text="item.mac"></td>
+											<td v-text="item.channelId"></td>
+											<td v-text="item.routerFirmwareVersion"></td>
+											<td v-text="item.interfaceVersion"></td>
+											<td v-text="item.lastSeenTime"></td>
+											<td>
+												<button v-if="1===item.status" class='btn btn-success btn-xs' >正常</button>
+												<button v-if="0===item.status" class='btn btn-danger btn-xs' >异常</button>
+											</td>
+											<td v-html="item.note"></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -114,7 +82,7 @@
 		</div>
 		<#include "_footer.html">
 	</div>
-	<script src="/themes/js/home/device/router.js?version=1.05"></script>
+	<script src="/themes/js/home/device/router.js?version=1.06"></script>
 
 </body>
 </html>

@@ -35,7 +35,7 @@ public class RepeaterTask {
 	 * 获取repeater
 	 * 
 	 */
-	@Scheduled(cron = "0 0 12 * * ?")
+	@Scheduled(cron = "0 0 10 * * ?")
 	public void init(){
 		try {
 			List<DeviceSensor> sensors = deviceSensorService.findAll();

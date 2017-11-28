@@ -1,5 +1,4 @@
-package database.models.device;
-
+package database.models.business;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,21 +13,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tbl_reperter")
-public class DeviceRepeater {
+@Table(name = "tbl_location")
+public class BusinessLocation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(name = "mac")
-	private String mac;
-	@Column(name = "area_id")
-	private Integer areaId;
-	@Column(name = "router_mac")
-	private String routerMac;
-	@Column(name = "rec_st")
-	private Integer recSt;
-	@Column(name = "area_name")
-	private String areaName;
+	@Column(name = "description")
+	private String description;
+	@Column(name = "app_info_id")
+	private Integer appInfoId;
+	@Column(name = "app_info_desc")
+	private String appInfoDesc;
+	@Column(name = "notice_type")
+	private Integer noticeType;
 	
 }
