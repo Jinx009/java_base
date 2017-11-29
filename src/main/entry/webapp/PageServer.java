@@ -42,7 +42,6 @@ public class PageServer extends BaseController {
 				HomeUser homeUser = getSessionHomeUser(request);
 				if (homeUser != null||!pageCode.isNeedLogin()) {
 					return pageCode.getPage();
-					
 				}
 				return "/index";
 			} catch (Exception e) {

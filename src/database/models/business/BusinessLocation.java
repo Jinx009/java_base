@@ -1,11 +1,15 @@
 package database.models.business;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,5 +31,12 @@ public class BusinessLocation {
 	private String appInfoDesc;
 	@Column(name = "notice_type")
 	private Integer noticeType;
+	@Column(name = "rec_st")
+	private Integer recSt;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "create_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createTime;
 	
 }

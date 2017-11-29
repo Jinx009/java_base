@@ -7,24 +7,20 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 
-import database.basicFunctions.dao.business.BusinessAreaDao;
+import database.basicFunctions.dao.business.BusinessAppInfoDao;
 import database.common.PageDataList;
-import database.models.business.BusinessArea;
+import database.models.business.BusinessAppInfo;
 import service.basicFunctions.BaseService;
 import utils.model.BaseConstant;
 import utils.model.Resp;
 
 @Service
-public class BusinessAreaService extends BaseService{
-	
-	private static final Logger log = LoggerFactory.getLogger(BusinessAreaService.class);
+public class BusinessAppInfoService extends BaseService{
 
-	@Autowired
-	private BusinessAreaDao businessAreaDao;
+	private static final Logger log = LoggerFactory.getLogger(BusinessAppInfoService.class);
 	
-	public BusinessArea findById(Integer id){
-		return businessAreaDao.find(id);
-	}
+	@Autowired
+	private BusinessAppInfoDao businessAppInfoDao;
 	
 	public Resp<?> list(String params){
 		Resp<?> resp = new Resp<>(false);
@@ -35,7 +31,7 @@ public class BusinessAreaService extends BaseService{
 			if(p==null||p==0){
 				p = 1;
 			}
-			PageDataList<BusinessArea> list = businessAreaDao.findAll(p);
+			PageDataList<BusinessAppInfo> list = businessAppInfoDao.findAll(p);
 			resp = new Resp<>(list);
 			return resp;
 		} catch (Exception e) {

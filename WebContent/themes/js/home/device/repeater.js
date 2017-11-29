@@ -8,7 +8,7 @@ function _getData(_type,_index){
 	_data.p = _getPage(_type,_index);
 	if(_data.p!=-1){
 		$.ajax({
-			url:'/d/device_router/list/1_0',
+			url:'/d/device_repeater/list/1_0',
 			dataType:'json',
 			data:JSON.stringify(_data),
 			contentType:'application/json;charSet=utf8',
@@ -18,14 +18,6 @@ function _getData(_type,_index){
 					_getData(0,res.data.page.pages);
 				})
 				_max = res.data.page.pages;
-				for(var i in res.data.list){
-					res.data.list[i].status = 1;
-					var timestamp = new Date().getTime();
-					if((timestamp-res.data.list[i].lastSeenTime)>1000 * 120){
-						res.data.list[i].status = 0;
-					}
-					res.data.list[i].lastSeenTime = toDateTime(res.data.list[i].lastSeenTime);
-				}
 				if(''==_d){
 					_d = new Vue({
 						el:'#datas',

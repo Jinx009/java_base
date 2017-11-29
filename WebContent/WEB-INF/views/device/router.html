@@ -76,12 +76,18 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="box-footer clearfix" style="width: 280px;float: right;" >
+							<div class="box-footer clearfix" style="width: 320px;float: right;" >
 								<div class="input-group">
-									<span class="input-group-addon" onclick="_getData(1);" >首页</span> 
-									<input type="text" id="_page" style="text-align: center;"  v-bind:value="datas.page.currentPage" class="form-control">
-									<span class="input-group-addon" v-text="'共'+datas.page.pages+'页'"></span> 
-									<span class="input-group-addon" id="_end" >末页</span>
+									<span class="input-group-addon" onclick="_getData(0,1);" >«</span> 
+									<span class="input-group-addon" onclick="_getData(1,0);" >‹</span> 
+									<input type="text" 
+										 style="text-align:center;"  
+										 onfocus="_getNowPage(this)"
+										 onblur="_getAllPage(this)"
+										 v-bind:value="'当前第'+datas.page.currentPage+'页，共'+datas.page.pages+'页'" 
+										 class="form-control">
+									<span class="input-group-addon" onclick="_getData(1,1);" >›</span> 
+									<span class="input-group-addon" id="_end" >»</span>
 								</div>
 							</div>
 						</div>
@@ -91,7 +97,7 @@
 		</div>
 		<#include "_footer.html">
 	</div>
-	<script src="/themes/js/home/device/router.js?version=1.12"></script>
+	<script src="/themes/js/home/device/router.js?version=1.21"></script>
 
 </body>
 </html>

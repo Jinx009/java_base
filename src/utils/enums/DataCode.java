@@ -13,7 +13,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum DataCode {
 
-	 DEVICE_ROUTER_LIST("device_router_list_1_0","deviceRouterService","list","router列表",true),
+	 DEVICE_ROUTER_LIST("device_router_list_1_0","deviceRouterService","list","router page列表",true),
+	 DEVICE_SENSOR_LIST("device_sensor_list_1_0","deviceSensorService","list","sensor page列表",true),
+	 DEVICE_REPEATER_LIST("device_repeater_list_1_0","deviceRepeaterService","list","repeater page列表",true),
+	 
+	 BUSINESS_LOCATION_LIST("business_location_list_1_0","businessLocationService","list","location page列表",true),
+	 BUSINESS_AREA_LIST("business_area_list_1_0","businessAreaService","list","area page列表",true),
+	 BUSINESS_APPINFO_LIST("business_appinfo_list_1_0","businessAppInfoService","list","appInfo page列表",true),
 	 ;
 	
 	 private String code;         //编码

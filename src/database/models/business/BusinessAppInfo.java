@@ -17,16 +17,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tbl_area")
-public class BusinessArea {
+@Table(name = "tbl_app_info")
+public class BusinessAppInfo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(name = "name")
-	private String name;
-	@Column(name = "location_id")
-	private Integer locationId;
+	@Column(name = "app_id")
+	private String appId;
+	@Column(name = "app_secret")
+	private String appSecret;
 	@Column(name = "description")
 	private String description;
 	@Column(name = "rec_st")
@@ -34,5 +34,9 @@ public class BusinessArea {
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
+	@Column(name = "notice_url")
+	private String noticeUrl;
+	@Column(name = "path")
+	private String path;
 	
 }
