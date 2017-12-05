@@ -22,7 +22,7 @@ function changeWidth() {
 function login() {
 	var userName = $('#userName').val();
 	var pwd = $('#pwd').val();
-	var params = 'userName=' + userName + '&pwd=' + pwd;
+	var params = 'username=' + userName + '&pwd=' + pwd;
 	if (userName == null || '' == userName) {
 		$('#errorMsg').html('用户名不能为空！')
 	} else {

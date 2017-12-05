@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 后台登陆用户
  * 
@@ -19,6 +22,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "tbl_admin")
+@Getter
+@Setter
 public class HomeUser {
 
     @Id

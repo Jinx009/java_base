@@ -9,6 +9,7 @@ import database.basicFunctions.dao.home.HomeUserDao;
 import database.models.home.HomeUser;
 import service.basicFunctions.BaseService;
 import utils.MD5Util;
+import utils.StringUtil;
 
 @Service
 public class HomeUserService extends BaseService{
@@ -20,6 +21,8 @@ public class HomeUserService extends BaseService{
 	
 	public HomeUser login(String username,String password){
 		try {
+			if(StringUtil.isBlank(username)||StringUtil.isBlank(password))
+				return null;
 			return homeUserDao.login(username, MD5Util.toMD5(password));
 		} catch (Exception e) {
 			log.error("error:{}",e);

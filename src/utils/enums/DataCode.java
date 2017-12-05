@@ -17,6 +17,12 @@ public enum DataCode {
 	 DEVICE_SENSOR_LIST("device_sensor_list_1_0","deviceSensorService","list","sensor page列表",true),
 	 DEVICE_REPEATER_LIST("device_repeater_list_1_0","deviceRepeaterService","list","repeater page列表",true),
 	 
+	 DEVICE_JOB_LIST("device_job_list_1_0","deviceJobService","list","job page列表",true),
+	 DEVICE_ERROR_FLOW_LIST("device_error_flow_list_1_0","deviceErrowFlowService","list","errorflow page列表",true),
+	 
+	 
+	 
+	 
 	 BUSINESS_LOCATION_LIST("business_location_list_1_0","businessLocationService","list","location page列表",true),
 	 BUSINESS_AREA_LIST("business_area_list_1_0","businessAreaService","list","area page列表",true),
 	 BUSINESS_APPINFO_LIST("business_appinfo_list_1_0","businessAppInfoService","list","appInfo page列表",true),

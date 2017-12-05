@@ -9,6 +9,7 @@ public class BaseConstant {
 	public static final String PARAMS = "params";
 	public static final String APP_ID = "appId";
 	public static final String HOME_USER = "home_user";
+	public static final String HOME_USER_REAL_NAME = "home_user_real_name";
 	
 	public static final String NOT_VALIDATE_COE = "10001";
 	public static final String NOT_VALIDATE_MSG = "用户名密码未通过校验！";

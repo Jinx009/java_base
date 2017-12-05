@@ -61,6 +61,6 @@ public class MD5Util {
 	
       
     public static void main(String[] args){  
-         System.out.println(toMD5("jinx007"));  
+         System.out.println(toMD5("123456"));  
     }  
 }

@@ -18,6 +18,11 @@ public enum PageCode {
 	 DEVICE_REPEATER_LIST("device_repeater_list","/device/repeater",true),
 	 DEVICE_SENSOR_LIST("device_sensor_list","/device/sensor",true),
 	 
+	 DEVICE_JOB_LIST("device_job_list","/device/job",true),
+	 DEVICE_ERROR_FLOW_LIST("device_error_flow_list","/device/error",true),
+	 
+	 
+	 
 	 SETTING_LOCATION_LIST("setting_location_list","/setting/location",true),
 	 SETTING_AREA_LIST("setting_area_list","/setting/area",true),
 	 SETTING_APPINFO_LIST("setting_appinfo_list","/setting/appinfo",true),
