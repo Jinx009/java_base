@@ -13,6 +13,9 @@ public class RespData {
 	public static final String CHAR_SET = "utf-8";
 	public static final String NOT_LOGIN_CODE = "301";
 	public static final String NOT_LOGIN_MSG = "未检测到登陆信息！";
+	public static final String NOT_VILIDATE_METHOD_CODE = "304";
+	public static final String NOT_VILIDATE_METHOD_MSG = "不合法的请求方法！";
+	public static final String POST = "POST";
 	
 	
 	

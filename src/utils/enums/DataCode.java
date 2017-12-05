@@ -26,6 +26,9 @@ public enum DataCode {
 	 BUSINESS_LOCATION_LIST("business_location_list_1_0","businessLocationService","list","location page列表",true),
 	 BUSINESS_AREA_LIST("business_area_list_1_0","businessAreaService","list","area page列表",true),
 	 BUSINESS_APPINFO_LIST("business_appinfo_list_1_0","businessAppInfoService","list","appInfo page列表",true),
+	 
+	 BUSINESS_LOCATION_ALL("business_location_all_1_0","businessLocationService","all","location all列表",true),
+	 BUSINESS_AREA_ALL("business_area_all_1_0","businessAreaService","all","area all列表",true),
 	 ;
 	
 	 private String code;         //编码

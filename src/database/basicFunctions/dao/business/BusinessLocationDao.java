@@ -1,5 +1,7 @@
 package database.basicFunctions.dao.business;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
@@ -18,6 +20,13 @@ public class BusinessLocationDao extends BaseDao<BusinessLocation>{
 		queryParam.addOrder(OrderType.DESC,"id");
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		return findPageList(queryParam);
+	}
+	
+	public List<BusinessLocation> all(){
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("recSt",1);
+		queryParam.addOrder(OrderType.DESC,"createTime");
+		return findByCriteria(queryParam);
 	}
 	
 }

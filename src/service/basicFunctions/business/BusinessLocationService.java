@@ -1,5 +1,7 @@
 package service.basicFunctions.business;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,25 @@ public class BusinessLocationService extends BaseService {
 				p = 1;
 			}
 			PageDataList<BusinessLocation> list = businessLocationDao.findAll(p);
+			resp = new Resp<>(list);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{]", e);
+		}
+		return resp;
+	}
+	
+	
+	public Resp<?> all(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}", params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			Integer p = jsonObject.getInteger(BaseConstant.PAGE_INDEX);
+			if (p == null || p == 0) {
+				p = 1;
+			}
+			List<BusinessLocation> list = businessLocationDao.all();
 			resp = new Resp<>(list);
 			return resp;
 		} catch (Exception e) {

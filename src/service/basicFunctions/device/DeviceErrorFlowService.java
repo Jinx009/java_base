@@ -37,10 +37,12 @@ public class DeviceErrorFlowService extends BaseService{
 			log.warn("params:{}",params);
 			JSONObject jsonObject = JSONObject.parseObject(params);
 			Integer p = jsonObject.getInteger(BaseConstant.PAGE_INDEX);
+			Integer areaId = jsonObject.getInteger(BaseConstant.AREA_ID);
+			String mac = jsonObject.getString(BaseConstant.MAC);
 			if(p==null||p==0){
 				p = 1;
 			}
-			PageDataList<DeviceErrorFlow> list = deviceErrorFlowDao.findAll(p);
+			PageDataList<DeviceErrorFlow> list = deviceErrorFlowDao.getPage(p,areaId,mac);
 			PageDataList<DeviceErrorFlowVo> vo = new PageDataList<DeviceErrorFlowVo>();
 			vo.setPage(list.getPage());
 			vo.setType(list.getType());

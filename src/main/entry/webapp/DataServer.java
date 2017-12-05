@@ -38,7 +38,10 @@ public class DataServer extends BaseController implements ApplicationContextAwar
 		if (dataCode == null) {
 			resp = new Resp<>(RespData.NOT_FIND_CODE, RespData.NOT_FIND_MSG, null);
 			return resp;
-		} else {
+		}else if(!RespData.POST.equals(request.getMethod().toUpperCase())){
+			resp = new Resp<>(RespData.NOT_VILIDATE_METHOD_CODE, RespData.NOT_VILIDATE_METHOD_MSG, null);
+			return resp;
+		}else {
 			try {
 				if(dataCode.isNeedLogin()){
 					HomeUser homeUser = getSessionHomeUser(request);

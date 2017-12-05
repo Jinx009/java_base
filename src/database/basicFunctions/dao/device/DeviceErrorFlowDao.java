@@ -12,17 +12,23 @@ import database.common.QueryParam;
 import database.common.SearchFilter.Operators;
 import database.common.OrderFilter.OrderType;
 import database.models.device.DeviceErrorFlow;
+import utils.StringUtil;
 import utils.model.BaseConstant;
 
 @Repository
 public class DeviceErrorFlowDao extends BaseDao<DeviceErrorFlow>{
 
-	public PageDataList<DeviceErrorFlow> findAll(Integer p) {
+	public PageDataList<DeviceErrorFlow> getPage(Integer p,Integer areaId,String mac) {
 		QueryParam queryParam = QueryParam.getInstance();
 		queryParam.addParam("recSt", 1);
+		if(0!=areaId){
+			queryParam.addParam("areaId", areaId);
+		}
+		if(StringUtil.isNotBlank(mac)){
+			queryParam.addAddFilter("mac", Operators.LIKE, mac);
+		}
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
-		queryParam.addAddFilter("areaId",Operators.NOTEQ, null);
-		queryParam.addOrder(OrderType.DESC, "createTime");
+		queryParam.addOrder(OrderType.DESC, "logTime");
 		return findPageList(queryParam);
 	}
 	

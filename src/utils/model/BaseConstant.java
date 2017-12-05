@@ -15,4 +15,9 @@ public class BaseConstant {
 	public static final String NOT_VALIDATE_MSG = "用户名密码未通过校验！";
 	public static final int PAGE_SIZE = 25;
 	public static final String PAGE_INDEX = "p";
+	public static final String LOCATION_ID = "locationId";
+	public static final String AREA_ID = "areaId";
+	public static final String MAC = "mac";
+	public static final String POST = null;
+	
 }

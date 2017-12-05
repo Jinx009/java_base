@@ -1,5 +1,7 @@
 package service.basicFunctions.business;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,24 @@ public class BusinessAreaService extends BaseService{
 				p = 1;
 			}
 			PageDataList<BusinessArea> list = businessAreaDao.findAll(p);
+			resp = new Resp<>(list);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	public Resp<?> all(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			Integer id = jsonObject.getInteger(BaseConstant.LOCATION_ID);
+			if(id==null||id==0){
+				return resp;
+			}
+			List<BusinessArea> list = businessAreaDao.all(id);
 			resp = new Resp<>(list);
 			return resp;
 		} catch (Exception e) {
