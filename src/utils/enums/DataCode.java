@@ -18,7 +18,7 @@ public enum DataCode {
 	 DEVICE_REPEATER_LIST("device_repeater_list_1_0","deviceRepeaterService","list","repeater page列表",true),
 	 
 	 DEVICE_JOB_LIST("device_job_list_1_0","deviceJobService","list","job page列表",true),
-	 DEVICE_ERROR_FLOW_LIST("device_error_flow_list_1_0","deviceErrowFlowService","list","errorflow page列表",true),
+	 DEVICE_ERROR_FLOW_LIST("device_error_flow_list_1_0","deviceErrorFlowService","list","errorflow page列表",true),
 	 
 	 
 	 

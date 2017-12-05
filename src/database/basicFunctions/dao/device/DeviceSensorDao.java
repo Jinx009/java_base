@@ -28,5 +28,31 @@ public class DeviceSensorDao extends BaseDao<DeviceSensor>{
 		queryParam.addOrder(OrderType.DESC, "createTime");
 		return findPageList(queryParam);
 	}
+
+	public DeviceSensor findByMac(String mac) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("mac", mac);
+		return findByCriteriaForUnique(queryParam);
+	}
+
+	public DeviceSensor findByParentMac(String mac) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("parentMac", mac);
+		List<DeviceSensor> list = findByCriteria(queryParam);
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0);
+		}
+		return null;
+	}
+
+	public DeviceSensor findByRouterMac(String mac) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("routerMac", mac);
+		List<DeviceSensor> list = findByCriteria(queryParam);
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0);
+		}
+		return null;
+	}
 	
 }

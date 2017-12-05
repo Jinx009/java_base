@@ -18,9 +18,9 @@ import service.basicFunctions.device.DeviceSensorService;
 
 @Component
 @Lazy(value=false)
-public class RepeaterTask {
+public class DeviceRepeaterTask {
 	
-	private static final Logger logger = LoggerFactory.getLogger(RepeaterTask.class);
+	private static final Logger logger = LoggerFactory.getLogger(DeviceRepeaterTask.class);
 	
 	@Autowired
 	private DeviceRepeaterService deviceRepeaterService;
@@ -36,7 +36,6 @@ public class RepeaterTask {
 	 * 
 	 */
 	@Scheduled(cron = "0 0 12 * * ?")
-//	@Scheduled(cron = "*/5 * * * * ?")
 	public void init(){
 		try {
 			List<DeviceSensor> sensors = deviceSensorService.findAll();
