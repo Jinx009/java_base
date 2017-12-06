@@ -35,3 +35,23 @@ function _getData(_type,_index){
 		})
 	}
 }
+
+function _delete(_e){
+	var _id = $(_e).attr('id');
+	var _data = {};
+	_data.id = _id;
+	$.ajax({
+		url:'/d/device_job/delete/1_0',
+		dataType:'json',
+		data:JSON.stringify(_data),
+		contentType:'application/json;charSet=utf8',
+		type:'post',
+		success:function(res){
+			if('200'==res.code){
+				layer.alert('放弃成功！');
+			}else{
+				layer.alert(res.msg);
+			}
+		}
+	})
+}

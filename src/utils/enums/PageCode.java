@@ -18,6 +18,12 @@ public enum PageCode {
 	 DEVICE_REPEATER_LIST("device_repeater_list","/device/repeater",true),
 	 DEVICE_SENSOR_LIST("device_sensor_list","/device/sensor",true),
 	 
+	 DEVICE_ROUTER_JOB("device_router_job","/device/router_job",true),
+	 DEVICE_SENSOR_JOB("device_sensor_job","/device/sensor_job",true),
+	 
+	 DEVICE_ROUTER_DETAIL("device_router_detail","/device/router_detail",true),
+	 DEVICE_SENSOR_DETAIL("device_sensor_detail","/device/sensor_detail",true),
+	 
 	 DEVICE_JOB_LIST("device_job_list","/device/job",true),
 	 DEVICE_ERROR_FLOW_LIST("device_error_flow_list","/device/error",true),
 	 

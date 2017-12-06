@@ -37,7 +37,8 @@ public class PageServer extends BaseController {
 				Enumeration<?> enu = request.getParameterNames();
 				while (enu.hasMoreElements()) {
 					String paraName = (String) enu.nextElement();
-					request.setAttribute(request.getParameter(paraName), request.getParameter(paraName));
+					logger.warn("params:{},value:{}",paraName,request.getParameter(paraName));
+					request.setAttribute(paraName, request.getParameter(paraName));
 				}
 				HomeUser homeUser = getSessionHomeUser(request);
 				if (homeUser != null||!pageCode.isNeedLogin()) {

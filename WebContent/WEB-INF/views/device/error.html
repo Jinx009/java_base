@@ -113,13 +113,13 @@
 											<td v-text="item.deviceErrorFlow.logTime"></td>
 											<td>
 												<button v-if="0===item.deviceErrorFlow.status"
-													class='btn btn-default btn-xs'>未处理</button>
+													class='btn btn-default btn-xs' v-text="'未处理'" ></button>
 												<button v-if="1===item.deviceErrorFlow.status"
-													class='btn btn-default btn-xs'>已处理</button>
+													class='btn btn-default btn-xs' v-text="'已处理'" ></button>
 											</td>
 											<td>
 												<button v-if="0===item.deviceErrorFlow.status"
-													class='btn btn-danger btn-xs'>处理完毕</button>
+													class='btn btn-danger btn-xs' v-text="'处理完毕'" ></button>
 											</td>
 										</tr>
 									</tbody>

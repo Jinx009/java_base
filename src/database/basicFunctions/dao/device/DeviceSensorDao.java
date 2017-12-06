@@ -6,9 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
 import database.common.OrderFilter.OrderType;
+import database.common.SearchFilter.Operators;
 import database.common.PageDataList;
 import database.common.QueryParam;
 import database.models.device.DeviceSensor;
+import utils.StringUtil;
 import utils.model.BaseConstant;
 
 @Repository
@@ -21,9 +23,15 @@ public class DeviceSensorDao extends BaseDao<DeviceSensor>{
 		return findByCriteria(queryParam);
 	}
 	
-	public PageDataList<DeviceSensor> findUse(Integer p){
+	public PageDataList<DeviceSensor> findUse(Integer p,Integer areaId,String mac){
 		QueryParam queryParam = QueryParam.getInstance();
 		queryParam.addParam("recSt", 1);
+		if(0!=areaId){
+			queryParam.addParam("areaId", areaId);
+		}
+		if(StringUtil.isNotBlank(mac)){
+			queryParam.addAddFilter("mac", Operators.LIKE, mac);
+		}
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		queryParam.addOrder(OrderType.DESC, "createTime");
 		return findPageList(queryParam);

@@ -35,51 +35,6 @@
 			</section>
 			<!-- 主内容 -->
 			<section class="content" id="datas">
-				<div class="box box-default">
-					<div class="box-header with-border">
-						<h3 class="box-title">筛选条件</h3>
-						<div class="box-tools pull-right">
-							<button type="button" class="btn btn-box-tool"
-								data-widget="collapse">
-								<i class="fa fa-minus"></i>
-							</button>
-						</div>
-					</div>
-					<div class="box-body">
-						<div class="row">
-							<div class="col-md-3">
-								<div class="form-group">
-									<label>Mac</label> <input type="text" class="form-control"
-										placeholder="请输入查询关键词">
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label>Location</label> <select id="location"
-										class="form-control select2 select2-hidden-accessible"
-										style="width: 100%;" tabindex="-1" aria-hidden="true">
-										<option>请选择Location</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label>Location</label> <select id="area"
-										class="form-control select2 select2-hidden-accessible"
-										style="width: 100%;" tabindex="-1" aria-hidden="true">
-										<option>请选择Area</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label>操作</label> <input type="button"
-										class="btn btn-default btn-xs form-control" value="查询">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="box">
@@ -119,7 +74,7 @@
 											</td>
 											<td>
 												<button v-if="1===item.status||0===item.status"
-													class='btn btn-danger btn-xs'>放弃</button>
+												 v-bind:id="item.id"  onclick="_delete(this)"	class='btn btn-danger btn-xs'>放弃</button>
 											</td>
 										</tr>
 									</tbody>

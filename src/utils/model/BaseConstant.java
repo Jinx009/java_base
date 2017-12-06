@@ -18,6 +18,10 @@ public class BaseConstant {
 	public static final String LOCATION_ID = "locationId";
 	public static final String AREA_ID = "areaId";
 	public static final String MAC = "mac";
-	public static final String POST = null;
+	public static final String POST = "POST";
+	public static final String ID = "id";
+	public static final String CMD = "cmd";
+	public static final String JOB_NOT_DONE = "该接收机下有尚未完成的任务！";
+	public static final String JOB_DETAIL = "job_detail";
 	
 }
