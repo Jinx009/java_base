@@ -23,5 +23,9 @@ public class BaseConstant {
 	public static final String CMD = "cmd";
 	public static final String JOB_NOT_DONE = "该接收机下有尚未完成的任务！";
 	public static final String JOB_DETAIL = "job_detail";
+	public static final String CFG_LOCK = "cfglock";
+	public static final String CFG_LOCK_HAS_CAR = "当前车位有车无法升锁！";
+	public static final String DATA = "data";
+	
 	
 }

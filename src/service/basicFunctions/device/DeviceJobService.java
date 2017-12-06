@@ -60,9 +60,35 @@ public class DeviceJobService extends BaseService{
 				resp.setMsg(BaseConstant.JOB_NOT_DONE);
 				return resp;
 			}else{
+				if(BaseConstant.CFG_LOCK.equals(cmd)){
+					JSONObject jsonObject2 = JSONObject.parseObject(jobDetail);
+					Integer data = jsonObject2.getInteger(BaseConstant.DATA);
+					if(data==1&&deviceSensor.getAvailable()==1){
+						resp.setMsg(BaseConstant.CFG_LOCK_HAS_CAR);
+						return resp;
+					}
+				}
 				deviceJobDao.save(deviceSensor,cmd,jobDetail);
 				resp = new Resp<>(true);
 				return resp;
+			}
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	public Resp<?> delete(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			Integer id = jsonObject.getInteger(BaseConstant.ID);
+			DeviceJob deviceJob = deviceJobDao.find(id);
+			if(deviceJob!=null){
+				deviceJob.setStatus(3);
+				deviceJobDao.update(deviceJob);
+				return  new Resp<>(true);
 			}
 		} catch (Exception e) {
 			log.error("error:{]",e);

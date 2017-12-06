@@ -48,7 +48,9 @@ function _delete(_e){
 		type:'post',
 		success:function(res){
 			if('200'==res.code){
-				layer.alert('放弃成功！');
+				layer.alert('放弃成功！',function(){
+					location.reload();
+				});
 			}else{
 				layer.alert(res.msg);
 			}

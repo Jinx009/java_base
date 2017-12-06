@@ -17,6 +17,7 @@ public enum PageCode {
 	 DEVICE_ROUTER_LIST("device_router_list","/device/router",true),
 	 DEVICE_REPEATER_LIST("device_repeater_list","/device/repeater",true),
 	 DEVICE_SENSOR_LIST("device_sensor_list","/device/sensor",true),
+	 DEVICE_CROSS_SENSOR_LIST("device_cross_sensor_list","/device/cross_sensor",true),
 	 
 	 DEVICE_ROUTER_JOB("device_router_job","/device/router_job",true),
 	 DEVICE_SENSOR_JOB("device_sensor_job","/device/sensor_job",true),

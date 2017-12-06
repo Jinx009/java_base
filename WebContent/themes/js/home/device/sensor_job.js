@@ -32,8 +32,8 @@ function _createJob(_type){
 		_data.cmd = 'singleudsensor';
 		_data.job_detail = {};
 		_data.job_detail.mac = _mac;
-		_data.job.udurl = 'http://iot-admin.zhanway.com/uploads/version/'+_file;
-		_data.job.version = _version;
+		_data.job_detail.udurl = 'http://iot-admin.zhanway.com/uploads/version/'+_file;
+		_data.job_detail.version = _version;
 	}else if(_type=='heartUpdate'){//{"mac":"020000fffe000088","data":"32585"}
 		var _heartTime = $('#heartTime').val();
 		if(_heartTime==''){

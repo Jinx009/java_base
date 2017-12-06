@@ -1,24 +1,29 @@
 $(function(){
-	_getLocation();
+	_getLocation()
 })
-var _d = '',_area = '',_mac = '',_areaId = 0;
+var _d = '',_area = '',_mac = '',_areaId = 0,_locationId = 0;
 var  _nowPage = 0,_max = 0;
 function _getData(_type,_index){
 	var _data = {};
 	_data.mac = $('#mac').val();
 	_data.areaId = $('#area').val();
+	_data.locationId = $('#location').val();
 	if(_data.areaId==''||_data.areaId==null){
 		_data.areaId = 0;
 	}
+	if(_data.locationId==''||_data.locationId==null){
+		_data.locationId = 0;
+	}
 	_data.p = _getPage(_type,_index);
-	if(_data.mac!=_mac||_data.areaId!=_areaId){
+	if(_data.mac!=_mac||_data.areaId!=_areaId||_data.locationId!=_locationId){
 		_mac = _data.mac;
 		_areaId = _data.areaId;
+		_locationId = _data.locationId;
 		_data.p = 1;
 	}
 	if(_data.p!=-1){
 		$.ajax({
-			url:'/d/device_error_flow/list/1_0',
+			url:'/d/device_cross_sensor/list/1_0',
 			dataType:'json',
 			data:JSON.stringify(_data),
 			contentType:'application/json;charSet=utf8',
@@ -29,7 +34,7 @@ function _getData(_type,_index){
 				})
 				_max = res.data.page.pages;
 				for(var i in res.data.list){
-					res.data.list[i].deviceErrorFlow.logTime = toDateTime(res.data.list[i].deviceErrorFlow.logTime);
+					res.data.list[i].updateTime = toDateTime(res.data.list[i].updateTime);
 				}
 				if(''==_d){
 					_d = new Vue({
@@ -46,13 +51,13 @@ function _getData(_type,_index){
 	}
 }
 
+
 function _getArea(){
 	var _locationId = $('#location').val();
 	var _data = {};
 	_data.locationId = _locationId;
 	$.ajax({
 		url:'/d/business_area/all/1_0',
-		dataType:'json',
 		dataType:'json',
 		data:JSON.stringify(_data),
 		contentType:'application/json;charSet=utf8',
@@ -84,10 +89,16 @@ function _getLocation(){
 		dataType:'json',
 		type:'post',
 		success:function(res){
+			var _areaArray = new Array();
+			_areaArray[0] = {};
+			_areaArray[0].id = 0,_areaArray[0].name = '请选择location';
+			for(var i in res.data){
+				_areaArray.push(res.data[i]);
+			}
 			new Vue({
 				el:'#location',
 				data:{
-					locations:res.data
+					locations:_areaArray
 				}
 			})
 			_getArea();
@@ -96,24 +107,12 @@ function _getLocation(){
 	})
 }
 
-function _delete(_e){
-	var _id = $(_e).attr('id');
-	var _data = {};
-	_data.id = _id;
-	$.ajax({
-		url:'/d/device_error_flow/delete/1_0',
-		dataType:'json',
-		data:JSON.stringify(_data),
-		contentType:'application/json;charSet=utf8',
-		type:'post',
-		success:function(res){
-			if('200'==res.code){
-				layer.alert('处理成功！',function(){
-					location.reload();
-				});
-			}else{
-				layer.alert(res.msg);
-			}
-		}
-	})
+function _goJob(_e){
+	var _mac = $(_e).attr('id').split('_j')[1];
+	_open_('1','/p/device/sensor/list','/p/device/sensor/job?mac='+_mac);
+}
+
+function _goDetail(_e){
+	var _mac = $(_e).attr('id').split('_d')[1];
+	_open_('1','/p/device/sensor/list','/p/device/sensor/detail?mac='+_mac);
 }
