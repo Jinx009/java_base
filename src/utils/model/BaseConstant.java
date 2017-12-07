@@ -28,4 +28,12 @@ public class BaseConstant {
 	public static final String DATA = "data";
 	
 	
+	public static final String DEVICE_LOG_FILE_PATH = "/Users/jinx/Downloads/";
+	public static final String BASE_DERICTORY_NAME = "/Users/jinx/Downloads/test/";
+	
+	
+	public static final String FILENAME = "fileName";
+	public static final String FILE_NOT_FOUND = "非文件或文件不存在！";
+	
+	
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 import service.basicFunctions.BaseService;
+import utils.model.BaseConstant;
 import utils.model.Resp;
 
 @Service
@@ -20,7 +21,7 @@ public class UploadFileService extends BaseService {
 	public Resp<?> list(String params) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String baseDirectoryName = "/Users/jinx/Downloads/test/";
+			String baseDirectoryName = BaseConstant.BASE_DERICTORY_NAME;
 			 File file=new File(baseDirectoryName);
 			if (file.isDirectory() && file.exists()) {
 				List<String> list = new ArrayList<String>();

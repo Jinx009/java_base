@@ -109,10 +109,10 @@ function _getLocation(){
 
 function _goJob(_e){
 	var _mac = $(_e).attr('id').split('_j')[1];
-	_open_('1','/p/device/sensor/list','/p/device/sensor/job?mac='+_mac);
+	_open_('1','/p/device/cross_sensor/list','/p/device/cross_sensor/job?mac='+_mac);
 }
 
 function _goDetail(_e){
 	var _mac = $(_e).attr('id').split('_d')[1];
-	_open_('1','/p/device/sensor/list','/p/device/sensor/detail?mac='+_mac);
+	_open_('1','/p/device/cross_sensor/list','/p/device/cross_sensor/detail?mac='+_mac);
 }

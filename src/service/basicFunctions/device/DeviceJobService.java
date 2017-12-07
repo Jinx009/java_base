@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 
+import database.basicFunctions.dao.device.DeviceCrossSensorDao;
 import database.basicFunctions.dao.device.DeviceJobDao;
 import database.basicFunctions.dao.device.DeviceSensorDao;
 import database.common.PageDataList;
+import database.models.device.DeviceCrossSensor;
 import database.models.device.DeviceJob;
 import database.models.device.DeviceSensor;
 import service.basicFunctions.BaseService;
@@ -27,6 +29,8 @@ public class DeviceJobService extends BaseService{
 	private DeviceJobDao deviceJobDao;
 	@Autowired
 	private DeviceSensorDao deviceSensorDao;
+	@Autowired
+	private DeviceCrossSensorDao deviceCrossSensorDao;
 	
 	public Resp<?> list(String params){
 		Resp<?> resp = new Resp<>(false);
@@ -72,6 +76,29 @@ public class DeviceJobService extends BaseService{
 				resp = new Resp<>(true);
 				return resp;
 			}
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	public Resp<?> crossCreate(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			String mac = jsonObject.getString(BaseConstant.MAC);
+			String cmd = jsonObject.getString(BaseConstant.CMD);
+			String jobDetail = jsonObject.getString(BaseConstant.JOB_DETAIL);
+			DeviceCrossSensor deviceCrossSensor = deviceCrossSensorDao.findByMac(mac);
+			List<DeviceJob> list = deviceJobDao.findByTarget(deviceCrossSensor.getRouterMac());
+			if(list!=null&&!list.isEmpty()){
+				resp.setMsg(BaseConstant.JOB_NOT_DONE);
+				return resp;
+			}
+			deviceJobDao.save(deviceCrossSensor,cmd,jobDetail);
+			resp = new Resp<>(true);
+			return resp;
 		} catch (Exception e) {
 			log.error("error:{]",e);
 		}

@@ -31,5 +31,11 @@ public class DeviceCrossSensorDao extends BaseDao<DeviceCrossSensor>{
 		queryParam.addOrder(OrderType.DESC, "createTime");
 		return findPageList(queryParam);
 	}
+
+	public DeviceCrossSensor findByMac(String mac) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("mac",mac);
+		return findByCriteriaForUnique(queryParam);
+	}
 	
 }

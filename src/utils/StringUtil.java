@@ -17,9 +17,6 @@ import common.helper.FreemarkerUtil;
 /**
  * 工具类-字符串处理
  * 
- * @author xx
- * @version 2.0
- * @since 2014年1月28日
  */
 public class StringUtil extends StringUtils {
 	
@@ -531,5 +528,6 @@ public class StringUtil extends StringUtils {
 		}
 		return birthday;
 	}
+
 
 }

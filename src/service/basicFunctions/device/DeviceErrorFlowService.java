@@ -75,6 +75,26 @@ public class DeviceErrorFlowService extends BaseService{
 		return resp;
 	}
 
+	
+	public Resp<?> delete(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			Integer id = jsonObject.getInteger(BaseConstant.ID);
+			DeviceErrorFlow deviceErrorFlow = deviceErrorFlowDao.find(id);
+			if(deviceErrorFlow!=null){
+				deviceErrorFlow.setStatus(1);
+				deviceErrorFlowDao.update(deviceErrorFlow);
+				return  new Resp<>(true);
+			}
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	
 	private String getTypeName(Integer type) {
 		if(type == null)
 			return null;

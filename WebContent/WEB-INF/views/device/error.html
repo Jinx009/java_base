@@ -118,7 +118,7 @@
 													class='btn btn-default btn-xs' v-text="'已处理'" ></button>
 											</td>
 											<td>
-												<button v-if="0===item.deviceErrorFlow.status" v-bind:id="item.id" onclick="_updateStatus(this)"
+												<button v-bind:id="item.deviceErrorFlow.id" v-if="0===item.deviceErrorFlow.status"  onclick="_delete(this)"
 													class='btn btn-danger btn-xs' v-text="'处理完毕'" ></button>
 											</td>
 										</tr>

@@ -19,6 +19,7 @@ import database.models.business.BusinessLocation;
 import database.models.device.DeviceCrossSensor;
 import database.models.device.vo.DeviceCrossSensorVo;
 import service.basicFunctions.BaseService;
+import utils.StringUtil;
 import utils.model.BaseConstant;
 import utils.model.Resp;
 
@@ -65,6 +66,30 @@ public class DeviceCrossSensorService extends BaseService{
 			vos.setList(vo);
 			resp = new Resp<>(vos);
 			return resp;
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	public Resp<?> detail(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			String mac = jsonObject.getString(BaseConstant.MAC);
+			if(StringUtil.isNotBlank(mac)){
+				DeviceCrossSensor deviceCrossSensor = deviceCrossSensorDao.findByMac(mac);
+				DeviceCrossSensorVo deviceCrossSensorVo = DeviceCrossSensorVo.instance(deviceCrossSensor);
+				if(deviceCrossSensor.getAreaId()!=null){
+					BusinessArea businessArea = businessAreaDao.find(deviceCrossSensor.getAreaId());
+					BusinessLocation businessLocation = businessLocationDao.find(businessArea.getLocationId());
+					deviceCrossSensorVo.setAreaName(businessArea.getName());
+					deviceCrossSensorVo.setLocationName(businessLocation.getName());
+				}
+				resp = new Resp<>(deviceCrossSensorVo);
+				return resp;
+			}
 		} catch (Exception e) {
 			log.error("error:{]",e);
 		}

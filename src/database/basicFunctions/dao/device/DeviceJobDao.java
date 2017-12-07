@@ -9,6 +9,7 @@ import database.common.BaseDao;
 import database.common.PageDataList;
 import database.common.QueryParam;
 import database.common.OrderFilter.OrderType;
+import database.models.device.DeviceCrossSensor;
 import database.models.device.DeviceJob;
 import database.models.device.DeviceSensor;
 import utils.model.BaseConstant;
@@ -39,6 +40,17 @@ public class DeviceJobDao extends BaseDao<DeviceJob>{
 		deviceJob.setRecSt(1);
 		deviceJob.setStatus(0);
 		deviceJob.setTarget(deviceSensor.getRouterMac());
+		save(deviceJob);
+	}
+
+	public void save(DeviceCrossSensor deviceCrossSensor, String cmd, String jobDetail) {
+		DeviceJob deviceJob = new DeviceJob();
+		deviceJob.setCmd(cmd);
+		deviceJob.setCreateTime(new Date());
+		deviceJob.setJobDetail(jobDetail);
+		deviceJob.setRecSt(1);
+		deviceJob.setStatus(0);
+		deviceJob.setTarget(deviceCrossSensor.getRouterMac());
 		save(deviceJob);
 	}
 	

@@ -14,25 +14,29 @@ import lombok.Getter;
 public enum PageCode {
 	
 
-	 DEVICE_ROUTER_LIST("device_router_list","/device/router",true),
-	 DEVICE_REPEATER_LIST("device_repeater_list","/device/repeater",true),
-	 DEVICE_SENSOR_LIST("device_sensor_list","/device/sensor",true),
-	 DEVICE_CROSS_SENSOR_LIST("device_cross_sensor_list","/device/cross_sensor",true),
+	 DEVICE_ROUTER_LIST(        "device_router_list",         "/device/router",                true),
+	 DEVICE_ROUTER_JOB(         "device_router_job",          "/device/router_job",            true),
+	 DEVICE_ROUTER_DETAIL(      "device_router_detail",       "/device/router_detail",         true),
 	 
-	 DEVICE_ROUTER_JOB("device_router_job","/device/router_job",true),
-	 DEVICE_SENSOR_JOB("device_sensor_job","/device/sensor_job",true),
+	 DEVICE_REPEATER_LIST(      "device_repeater_list",       "/device/repeater",              true),
 	 
-	 DEVICE_ROUTER_DETAIL("device_router_detail","/device/router_detail",true),
-	 DEVICE_SENSOR_DETAIL("device_sensor_detail","/device/sensor_detail",true),
+	 DEVICE_SENSOR_LIST(        "device_sensor_list",         "/device/sensor",                true),
+	 DEVICE_SENSOR_JOB(         "device_sensor_job",          "/device/sensor_job",            true),
+	 DEVICE_SENSOR_DETAIL(      "device_sensor_detail",       "/device/sensor_detail",         true),
 	 
-	 DEVICE_JOB_LIST("device_job_list","/device/job",true),
-	 DEVICE_ERROR_FLOW_LIST("device_error_flow_list","/device/error",true),
+	 DEVICE_CROSS_SENSOR_LIST(  "device_cross_sensor_list",   "/device/cross_sensor" ,         true),
+	 DEVICE_CROSS_SENSOR_JOB(   "device_cross_sensor_job",    "/device/cross_sensor_job" ,     true),
+	 DEVICE_CROSS_SENSOR_DETAIL("device_cross_sensor_detail", "/device/cross_sensor_detail" ,  true),
 	 
+	 DEVICE_JOB_LIST(           "device_job_list",             "/device/job",                  true),
 	 
+	 DEVICE_LOG_LIST(           "device_log_list",             "/device/log",                  true),
 	 
-	 SETTING_LOCATION_LIST("setting_location_list","/setting/location",true),
-	 SETTING_AREA_LIST("setting_area_list","/setting/area",true),
-	 SETTING_APPINFO_LIST("setting_appinfo_list","/setting/appinfo",true),
+	 DEVICE_ERROR_FLOW_LIST(    "device_error_flow_list",      "/device/error",                true),
+	 
+	 SETTING_LOCATION_LIST(     "setting_location_list",       "/setting/location",            true),
+	 SETTING_AREA_LIST(         "setting_area_list",           "/setting/area",                true),
+	 SETTING_APPINFO_LIST(      "setting_appinfo_list",        "/setting/appinfo",             true),
 	 ;
 	
 	 private String code;         //编码
