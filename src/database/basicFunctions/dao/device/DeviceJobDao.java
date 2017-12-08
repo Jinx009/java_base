@@ -53,5 +53,16 @@ public class DeviceJobDao extends BaseDao<DeviceJob>{
 		deviceJob.setTarget(deviceCrossSensor.getRouterMac());
 		save(deviceJob);
 	}
+
+	public void save(String mac, String cmd, String jobDetail) {
+		DeviceJob deviceJob = new DeviceJob();
+		deviceJob.setCmd(cmd);
+		deviceJob.setCreateTime(new Date());
+		deviceJob.setJobDetail(jobDetail);
+		deviceJob.setRecSt(1);
+		deviceJob.setStatus(0);
+		deviceJob.setTarget(mac);
+		save(deviceJob);
+	}
 	
 }

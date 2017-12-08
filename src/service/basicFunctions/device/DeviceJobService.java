@@ -11,10 +11,12 @@ import com.alibaba.fastjson.JSONObject;
 
 import database.basicFunctions.dao.device.DeviceCrossSensorDao;
 import database.basicFunctions.dao.device.DeviceJobDao;
+import database.basicFunctions.dao.device.DeviceRouterDao;
 import database.basicFunctions.dao.device.DeviceSensorDao;
 import database.common.PageDataList;
 import database.models.device.DeviceCrossSensor;
 import database.models.device.DeviceJob;
+import database.models.device.DeviceRouter;
 import database.models.device.DeviceSensor;
 import service.basicFunctions.BaseService;
 import utils.model.BaseConstant;
@@ -31,7 +33,14 @@ public class DeviceJobService extends BaseService{
 	private DeviceSensorDao deviceSensorDao;
 	@Autowired
 	private DeviceCrossSensorDao deviceCrossSensorDao;
+	@Autowired
+	private DeviceRouterDao deviceRouterDao;
 	
+	/**
+	 * job列表
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> list(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -50,6 +59,11 @@ public class DeviceJobService extends BaseService{
 		return resp;
 	}
 	
+	/**
+	 * 新建地磁job
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> create(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -82,6 +96,11 @@ public class DeviceJobService extends BaseService{
 		return resp;
 	}
 	
+	/**
+	 * 新建路口地磁job
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> crossCreate(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -105,6 +124,39 @@ public class DeviceJobService extends BaseService{
 		return resp;
 	}
 	
+	/**
+	 * 新建接收机job
+	 * @param params
+	 * @return
+	 */
+	public Resp<?> routerCreate(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			String mac = jsonObject.getString(BaseConstant.MAC);
+			String cmd = jsonObject.getString(BaseConstant.CMD);
+			String jobDetail = jsonObject.getString(BaseConstant.JOB_DETAIL);
+			DeviceRouter deviceRouter = deviceRouterDao.findByMac(mac);
+			List<DeviceJob> list = deviceJobDao.findByTarget(deviceRouter.getMac());
+			if(list!=null&&!list.isEmpty()){
+				resp.setMsg(BaseConstant.JOB_NOT_DONE);
+				return resp;
+			}
+			deviceJobDao.save(deviceRouter.getMac(),cmd,jobDetail);
+			resp = new Resp<>(true);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 放弃任务
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> delete(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {

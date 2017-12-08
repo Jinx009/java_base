@@ -31,6 +31,11 @@ public class DeviceErrorFlowService extends BaseService{
 	@Autowired
 	private BusinessAreaDao businessAreaDao;
 	
+	/**
+	 * 错误列表
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> list(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -75,7 +80,11 @@ public class DeviceErrorFlowService extends BaseService{
 		return resp;
 	}
 
-	
+	/**
+	 * 处理完成错误
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> delete(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -94,16 +103,20 @@ public class DeviceErrorFlowService extends BaseService{
 		return resp;
 	}
 	
-	
+	/**
+	 * 辅助方法
+	 * @param type
+	 * @return
+	 */
 	private String getTypeName(Integer type) {
 		if(type == null)
 			return null;
 		else if(1==type)
-			return "接收机";
+			return BaseConstant.ROUTER_NAME;
 		else if(2==type)
-			return "中继器";
+			return BaseConstant.REPEATOR_NAME;
 		else if(3==type)
-			return "车检器";
+			return BaseConstant.SENSOR_NAME;
 		return null;
 	}
 	

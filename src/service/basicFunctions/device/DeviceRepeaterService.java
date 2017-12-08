@@ -28,18 +28,35 @@ public class DeviceRepeaterService extends BaseService{
 	@Autowired
 	private BusinessAreaDao businessAreaDao;
 	
+	/**
+	 * 更新中继器
+	 * @param deviceRepeater
+	 */
 	public void update(DeviceRepeater deviceRepeater){
 		deviceRepeaterDao.update(deviceRepeater);
 	}
 	
+	/**
+	 * mac查找中继器
+	 * @param mac
+	 * @return
+	 */
 	public DeviceRepeater findByMac(String mac){
 		return deviceRepeaterDao.findByMac(mac);
 	}
 	
+	/**
+	 * 新建中继器
+	 * @param deviceRepeater
+	 */
 	public void save(DeviceRepeater deviceRepeater){
 		deviceRepeaterDao.save(deviceRepeater);
 	}
 
+	/**
+	 * 新建中继器
+	 * @param deviceSensor
+	 */
 	public void saveNew(DeviceSensor deviceSensor) {
 		DeviceRepeater deviceRepeater = new DeviceRepeater();
 		if(deviceSensor.getAreaId()!=null){
@@ -55,6 +72,11 @@ public class DeviceRepeaterService extends BaseService{
 		}
 	}
 	
+	/**
+	 * 中继器列表
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> list(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {

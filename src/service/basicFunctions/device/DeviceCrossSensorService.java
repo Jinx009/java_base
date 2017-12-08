@@ -35,6 +35,11 @@ public class DeviceCrossSensorService extends BaseService{
 	@Autowired
 	private BusinessLocationDao businessLocationDao;
 	
+	/**
+	 * 路口地磁列表
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> list(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -72,6 +77,11 @@ public class DeviceCrossSensorService extends BaseService{
 		return resp;
 	}
 	
+	/**
+	 * 路口地磁详情
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> detail(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {

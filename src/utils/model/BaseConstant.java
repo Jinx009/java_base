@@ -31,9 +31,18 @@ public class BaseConstant {
 	public static final String DEVICE_LOG_FILE_PATH = "/Users/jinx/Downloads/";
 	public static final String BASE_DERICTORY_NAME = "/Users/jinx/Downloads/test/";
 	
+	//日志上报文件
+//	public static final String DEVICE_LOG_FILE_PATH = "/home/ftp/logUpload";
+	//升级文件
+//	public static final String BASE_DERICTORY_NAME = "/root/servers/admin-server/webapps/uploads/";
+	public static final String FTP_ADDR = "ftp://wx.zhanway.com";
+	
 	
 	public static final String FILENAME = "fileName";
 	public static final String FILE_NOT_FOUND = "非文件或文件不存在！";
+	public static final String ROUTER_NAME = "接收机";
+	public static final String REPEATOR_NAME = "中继器";
+	public static final String SENSOR_NAME = "车检器";
 	
 	
 }

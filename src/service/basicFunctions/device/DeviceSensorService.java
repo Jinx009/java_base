@@ -36,10 +36,19 @@ public class DeviceSensorService extends BaseService{
 	@Autowired
 	private BusinessLocationDao businessLocationDao;
 	
+	/**
+	 * 批量操作地磁列表
+	 * @return
+	 */
 	public List<DeviceSensor> findAll(){
 		return deviceSensorDao.findAll();
 	}
 	
+	/**
+	 * 地磁分页列表
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> list(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -76,6 +85,11 @@ public class DeviceSensorService extends BaseService{
 		return resp;
 	}
 	
+	/**
+	 * 地磁详情
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> detail(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {

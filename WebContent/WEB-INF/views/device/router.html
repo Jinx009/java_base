@@ -48,6 +48,7 @@
 										<tr>
 											<th>编号</th>
 											<th>MAC</th>
+											<th>Location</th>
 											<th>信道ID</th>
 											<th>固件版本</th>
 											<th>接口版本</th>
@@ -61,6 +62,7 @@
 										<tr v-for="item in datas.list">
 											<td v-text="item.id"></td>
 											<td v-text="item.mac"></td>
+											<td v-text="item.locationName"></td>
 											<td v-text="item.channelId"></td>
 											<td v-text="item.routerFirmwareVersion"></td>
 											<td v-text="item.interfaceVersion"></td>
@@ -71,7 +73,10 @@
 												<button v-if="0===item.status" class='btn btn-danger btn-xs'>异常</button>
 											</td>
 											<td v-html="item.note"></td>
-											<td></td>
+											<td>
+												<button class='btn btn-info btn-xs' v-bind:id="'_d'+item.mac" onclick="_edit(this);" v-text="'编辑'" ></button>
+												<button class='btn btn-info btn-xs' v-bind:id="'_j'+item.mac" onclick="_job(this);"  v-text="'执行任务'"  ></button>
+											</td>
 										</tr>
 									</tbody>
 								</table>

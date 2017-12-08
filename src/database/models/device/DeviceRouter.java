@@ -68,6 +68,6 @@ public class DeviceRouter {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
     @Column(name = "location_id")
-    private Integer location_id;
+    private Integer locationId;
 	
 }

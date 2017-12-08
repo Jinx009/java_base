@@ -21,6 +21,11 @@ public class DeviceLogService extends BaseService {
 
 	private static final Logger log = LoggerFactory.getLogger(DeviceLogService.class);
 
+	/**
+	 * 接收机上报日志列表
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> list(String params) {
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -49,6 +54,11 @@ public class DeviceLogService extends BaseService {
 		return resp;
 	}
 	
+	/**
+	 * 删除无用日志文件
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> delete(String params) {
 		Resp<?> resp = new Resp<>(false);
 		try {

@@ -14,6 +14,7 @@ import lombok.Getter;
 public enum DataCode {
 
 	 DEVICE_ROUTER_LIST(         "device_router_list_1_0",             "deviceRouterService",      "list",        "router page列表",        true),
+	 DEVICE_ROUTER_DETAIL(       "device_router_detail_1_0",           "deviceRouterService",      "detail",      "router 详情",            true),
 	 
 	 DEVICE_SENSOR_LIST(         "device_sensor_list_1_0",             "deviceSensorService",      "list",        "sensor page列表",        true),
 	 DEVICE_SENSOR_DETAIL(       "device_sensor_detail_1_0",           "deviceSensorService",      "detail",      "sensor detail列表",      true),
@@ -29,6 +30,7 @@ public enum DataCode {
 	 DEVICE_JOB_LIST(			 "device_job_list_1_0",				   "deviceJobService",		   "list",		   "job page列表",          true),
 	 DEVICE_JOB_CREATE(			 "device_job_create_1_0",			   "deviceJobService",		   "create",	   "job 新建",			    true),
 	 DEVICE_JOB_CROSS_CREATE(	 "device_job_cross_create_1_0",		   "deviceJobService",		   "crossCreate",  "cross job 新建",			true),
+	 DEVICE_JOB_ROUTER_CREATE(	 "device_job_router_create_1_0",	   "deviceJobService",		   "routerCreate", "router job 新建",		true),
 	 DEVICE_JOB_DELETE(			 "device_job_delete_1_0",			   "deviceJobService",		   "delete", 	   "job 放弃",				true),
 	 
 	 DEVICE_LOG_LIST(			 "device_log_list_1_0",			       "deviceLogService",		   "list", 	        "log 列表",				true),
