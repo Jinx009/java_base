@@ -36,7 +36,10 @@ public enum PageCode {
 	 
 	 SETTING_LOCATION_LIST(     "setting_location_list",       "/setting/location",            true),
 	 SETTING_AREA_LIST(         "setting_area_list",           "/setting/area",                true),
+	 
+	 
 	 SETTING_APPINFO_LIST(      "setting_appinfo_list",        "/setting/appinfo",             true),
+	 SETTING_APPINFO_EDIT(      "setting_appinfo_edit",        "/setting/appinfo_edit",         true),
 	 ;
 	
 	 private String code;         //编码

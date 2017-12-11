@@ -27,4 +27,13 @@ public class DeviceRouterDao extends BaseDao<DeviceRouter>{
 		return findPageList(queryParam);
 	}
 
+	public void update(String mac, Integer locationId, String note) {
+		DeviceRouter deviceRouter = findByMac(mac);
+		if(locationId!=0){
+			deviceRouter.setLocationId(locationId);
+		}
+		deviceRouter.setNote(note);
+		update(deviceRouter);
+	}
+
 }

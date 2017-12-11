@@ -24,3 +24,24 @@
     background-color: white;
     opacity: 1;
 }
+.fly-box{
+	position: fixed;
+    z-index: 999;
+    top: 100px;
+    left: 30%;
+    width: 40%;
+    height: 400px;
+    border: 2px solid lightgray;
+}
+.fly-box-h{
+	position: fixed;
+    z-index: 999;
+    top: 100px;
+    left: 30%;
+    width: 40%;
+    height: 450px;
+    border: 2px solid lightgray;
+}
+.none{
+	display: none;
+}

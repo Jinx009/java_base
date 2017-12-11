@@ -38,6 +38,12 @@ public class BaseController {
 		session.setAttribute(BaseConstant.HOME_USER, homeUser);
 		session.setAttribute(BaseConstant.HOME_USER_REAL_NAME, homeUser.getRealName());
 	}
+	
+	public void setSessionNull(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.setAttribute(BaseConstant.HOME_USER, null);
+		session.setAttribute(BaseConstant.HOME_USER_REAL_NAME, null);
+	}
 
 	public byte[] getRequestPostBytes(HttpServletRequest request) {
 		try {

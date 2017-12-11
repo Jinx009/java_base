@@ -40,3 +40,13 @@ function _getData(_type,_index){
 		})
 	}
 }
+
+function _edit(_e){
+	var _mac = $(_e).attr('id').split('_e')[1];
+	_open_('1','/p/device/router/list','/p/device/router/edit?mac='+_mac);
+}
+
+function _job(_e){
+	var _mac = $(_e).attr('id').split('_j')[1];
+	_open_('1','/p/device/router/list','/p/device/router/job?mac='+_mac);
+}

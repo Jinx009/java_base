@@ -62,6 +62,7 @@ public class DeviceRouterService extends BaseService{
 					vo.add(deviceRouterVo);
 				}
 			}
+			vos.setPage(list.getPage());
 			vos.setList(vo);
 			resp = new Resp<>(vos);
 			return resp;
@@ -84,6 +85,28 @@ public class DeviceRouterService extends BaseService{
 			String mac = jsonObject.getString(BaseConstant.MAC);
 			DeviceRouter deviceRouter = deviceRouterDao.findByMac(mac);
 			resp = new Resp<>(deviceRouter);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * Router详情
+	 * @param params
+	 * @return
+	 */
+	public Resp<?> edit(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			String mac = jsonObject.getString(BaseConstant.MAC);
+			Integer locationId = jsonObject.getInteger(BaseConstant.LOCATION_ID);
+			String note = jsonObject.getString(BaseConstant.NOTE);
+			deviceRouterDao.update(mac,locationId,note);
+			resp = new Resp<>(true);
 			return resp;
 		} catch (Exception e) {
 			log.error("error:{]",e);

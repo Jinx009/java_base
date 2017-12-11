@@ -43,6 +43,10 @@ public class BaseConstant {
 	public static final String ROUTER_NAME = "接收机";
 	public static final String REPEATOR_NAME = "中继器";
 	public static final String SENSOR_NAME = "车检器";
+	public static final String NOTE = "note";
+	public static final String APP_SECRET = "appSecret";
+	public static final String DESCRIPTION = "description";
+	public static final String APP_ID_IS_EXITS = "appId已经存在！";
 	
 	
 }

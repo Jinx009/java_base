@@ -1,5 +1,6 @@
 $(function(){
 	_getData(0,1);
+	_getAppInfo();
 })
 var _d = '';
 var  _nowPage = 0,_max = 0;
@@ -34,4 +35,21 @@ function _getData(_type,_index){
 			}
 		})
 	}
+}
+
+function _getAppInfo(){
+	$.ajax({
+		url:'/d/business_appinfo/all/1_0',
+		dataType:'json',
+		contentType:'application/json;charSet=utf8',
+		type:'post',
+		success:function(res){
+			new Vue({
+				el:'#appInfoId',
+				data:{
+					apps:res.data
+				}
+			})
+		}
+	})
 }

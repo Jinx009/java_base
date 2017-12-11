@@ -48,6 +48,21 @@ public class DataController extends BaseController {
 		}
 		return resp;
 	}
+	
+
+	@RequestMapping(path = "/loginOut")
+	@ResponseBody
+	public Resp<?> loginOut(String username, String pwd, HttpServletRequest request) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			setSessionNull(request);
+		} catch (Exception e) {
+			log.error("error:{]", e);
+		}
+		return resp;
+	}
+
+
 
 	@RequestMapping(path = "/download/log")
 	public void down(String fileName, HttpServletRequest request, HttpServletResponse response) {

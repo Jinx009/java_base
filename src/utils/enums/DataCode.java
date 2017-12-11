@@ -15,6 +15,7 @@ public enum DataCode {
 
 	 DEVICE_ROUTER_LIST(         "device_router_list_1_0",             "deviceRouterService",      "list",        "router page列表",        true),
 	 DEVICE_ROUTER_DETAIL(       "device_router_detail_1_0",           "deviceRouterService",      "detail",      "router 详情",            true),
+	 DEVICE_ROUTER_EDIT(         "device_router_edit_1_0",             "deviceRouterService",      "edit",        "router edit",            true),
 	 
 	 DEVICE_SENSOR_LIST(         "device_sensor_list_1_0",             "deviceSensorService",      "list",        "sensor page列表",        true),
 	 DEVICE_SENSOR_DETAIL(       "device_sensor_detail_1_0",           "deviceSensorService",      "detail",      "sensor detail列表",      true),
@@ -46,6 +47,11 @@ public enum DataCode {
 	 BUSINESS_AREA_ALL(			 "business_area_all_1_0",			   "businessAreaService",		 "all",			"area all列表",			true),
 	 
 	 BUSINESS_APPINFO_LIST(		 "business_appinfo_list_1_0",		   "businessAppInfoService",	"list",			"appInfo page列表",		true),
+	 BUSINESS_APPINFO_EDIT(		 "business_appinfo_edit_1_0",		   "businessAppInfoService",	"edit",			"appInfo edit",		    true),
+	 BUSINESS_APPINFO_CREATE(	 "business_appinfo_create_1_0",		   "businessAppInfoService",	"create",		"appInfo save",		    true),
+	 BUSINESS_APPINFO_DETAIL(	 "business_appinfo_detail_1_0",		   "businessAppInfoService",	"detail",		"appInfo detail",		true),
+	 BUSINESS_APPINFO_DELETE(	 "business_appinfo_delete_1_0",		   "businessAppInfoService",	"delete",		"appInfo delete",		true),
+	 BUSINESS_APPINFO_ALL(	     "business_appinfo_all_1_0",		   "businessAppInfoService",	"all",		    "appInfo all",		true),
 	 ;
 	
 	 private String code;         //编码

@@ -21,6 +21,22 @@ function _getPage(_type,_index){
 	_nowPage = _p;
 	return _p;
 }
+
+/**
+ * 隐藏新建弹框
+ */
+function _hideNew(){
+	$('#newBox').hide();
+	$('.content').css('opacity',1);
+}
+/**
+ * 显示新建弹框
+ */
+function _showNew(){
+	$('#newBox').show();
+	$('.content').css('opacity',0.3);
+}
+
 function _getAllPage(_e){
 	var _p = $(_e).val();
 	if(_p!=_nowPage&&_p>0&&_p<_max){
@@ -110,13 +126,13 @@ function getTimestamp(){
  */
 function loginOut(){
 	$.ajax({
-		url:'/home/config/loginOut',
+		url:'/data/loginOut',
 		dataType:'json',
 		type:'post',
 		success:function(res){
 			if('200'==res.code){
 				layer.alert('账号退出成功！',function(){
-					location.href = '/home/index';
+					location.href = '/index';
 				})
 			}
 		}
@@ -174,4 +190,22 @@ function isPInt(str) {
 function validateFloat(val){
 	var patten = /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/;
 	return patten.test(val);
+}
+
+/**
+ * 生成UUID
+ * @returns {string}
+ */
+function uuid() {
+    var s = [];
+    var hexDigits = '0123456789abcdef';
+    for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+    }
+    s[14] = '4';  // bits 12-15 of the time_hi_and_version field to 0010
+    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+    s[8] = s[13] = s[18] = s[23] = '-';
+
+    var uuid = s.join('');
+    return uuid;
 }
