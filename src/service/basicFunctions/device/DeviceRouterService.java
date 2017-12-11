@@ -92,8 +92,38 @@ public class DeviceRouterService extends BaseService{
 		return resp;
 	}
 	
+	
 	/**
-	 * Router详情
+	 * Router 列表
+	 * @param params
+	 * @return
+	 */
+	public Resp<?> all(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			List<DeviceRouter> list = deviceRouterDao.findAllUse();
+			List<DeviceRouterVo> list2 = new ArrayList<DeviceRouterVo>();
+			if(list!=null&&!list.isEmpty()){
+				for(DeviceRouter deviceRouter : list){
+					DeviceRouterVo deviceRouterVo = DeviceRouterVo.instance(deviceRouter);
+					if(deviceRouter.getLocationId()!=null){
+						BusinessLocation businessLocation = businessLocationDao.find(deviceRouter.getLocationId());
+						deviceRouterVo.setLocationName(businessLocation.getName());
+					}
+					list2.add(deviceRouterVo);
+				}
+			}
+			resp = new Resp<>(list2);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * Router编辑
 	 * @param params
 	 * @return
 	 */

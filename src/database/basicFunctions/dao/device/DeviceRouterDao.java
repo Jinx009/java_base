@@ -1,6 +1,8 @@
 package database.basicFunctions.dao.device;
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
@@ -34,6 +36,12 @@ public class DeviceRouterDao extends BaseDao<DeviceRouter>{
 		}
 		deviceRouter.setNote(note);
 		update(deviceRouter);
+	}
+
+	public List<DeviceRouter> findAllUse() {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("recSt", 1);
+		return findByCriteria(queryParam);
 	}
 
 }

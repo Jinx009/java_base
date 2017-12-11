@@ -1,5 +1,6 @@
 $(function(){
 	_getData(0,1);
+	_getRouters();
 })
 var _d = '';
 var  _nowPage = 0,_max = 0;
@@ -36,6 +37,23 @@ function _getData(_type,_index){
 	}
 }
 
+function _getRouters(){
+	$.ajax({
+		url:'/d/device_router/all/1_0',
+		dataType:'json',
+		contentType:'application/json;charSet=utf8',
+		type:'post',
+		success:function(res){
+			new Vue({
+				el:'#target',
+				data:{
+					routers:res.data
+				}
+			})
+		}
+	})
+}
+
 function _delete(_e){
 	var _id = $(_e).attr('id');
 	var _data = {};
@@ -51,6 +69,32 @@ function _delete(_e){
 				layer.alert('放弃成功！',function(){
 					location.reload();
 				});
+			}else{
+				layer.alert(res.msg);
+			}
+		}
+	})
+}
+
+function _save(){
+	var _target = $('#target').val();
+	var _jobDetail = $('#jobDetail').val();
+	var _cmd = $('#cmd').val();
+	var _data = {};
+	_data.mac = _target;
+	_data.cmd = _cmd;
+	_data.job_detail = _jobDetail;
+	$.ajax({
+		url:'/d/device_job/base_create/1_0',
+		type:'post',
+		dataType:'json',
+		data:JSON.stringify(_data),
+		contentType:'application/json;charSet=utf8',
+		success:function(res){
+			if('200'==res.code){
+				layer.alert('操作成功！',function(){
+					location.reload();
+				})
 			}else{
 				layer.alert(res.msg);
 			}

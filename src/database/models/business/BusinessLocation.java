@@ -1,5 +1,6 @@
 package database.models.business;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,8 +19,9 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "tbl_location")
-public class BusinessLocation {
+public class BusinessLocation implements Serializable{
 
+	private static final long serialVersionUID = 7341878406954473019L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;

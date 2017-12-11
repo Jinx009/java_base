@@ -63,4 +63,11 @@ public class DeviceSensorDao extends BaseDao<DeviceSensor>{
 		return null;
 	}
 	
+	public List<DeviceSensor> findAllUse() {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("recSt",1);
+		queryParam.addOrder(OrderType.ASC,"areaId");
+		return findByCriteria(queryParam);
+	}
+	
 }

@@ -35,11 +35,17 @@ public enum PageCode {
 	 DEVICE_ERROR_FLOW_LIST(    "device_error_flow_list",      "/device/error",                true),
 	 
 	 SETTING_LOCATION_LIST(     "setting_location_list",       "/setting/location",            true),
-	 SETTING_AREA_LIST(         "setting_area_list",           "/setting/area",                true),
+	 SETTING_LOCATION_EDIT(     "setting_location_edit",       "/setting/location_edit",       true),
 	 
+	 SETTING_AREA_LIST(         "setting_area_list",           "/setting/area",                true),
+	 SETTING_AREA_EDIT(         "setting_area_edit",           "/setting/area_edit",           true),
 	 
 	 SETTING_APPINFO_LIST(      "setting_appinfo_list",        "/setting/appinfo",             true),
-	 SETTING_APPINFO_EDIT(      "setting_appinfo_edit",        "/setting/appinfo_edit",         true),
+	 SETTING_APPINFO_EDIT(      "setting_appinfo_edit",        "/setting/appinfo_edit",        true),
+	 
+	 BATCH_FILE_LIST(           "batch_file_batch_list",        "/batch/file_batch",           true),
+	 BATCH_SENSOR_LIST(         "batch_sensor_batch_list",      "/batch/sensor_batch",         true),
+	 BATCH_CROSS_SENSOR_LIST(   "batch_cross_sensor_batch_list", "/batch/cross_sensor_batch",  true),
 	 ;
 	
 	 private String code;         //编码

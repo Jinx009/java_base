@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 
+import database.basicFunctions.dao.business.BusinessAppInfoDao;
 import database.basicFunctions.dao.business.BusinessLocationDao;
 import database.common.PageDataList;
+import database.models.business.BusinessAppInfo;
 import database.models.business.BusinessLocation;
 import service.basicFunctions.BaseService;
 import utils.model.BaseConstant;
@@ -23,7 +25,14 @@ public class BusinessLocationService extends BaseService {
 
 	@Autowired
 	private BusinessLocationDao businessLocationDao;
+	@Autowired
+	private BusinessAppInfoDao businessAppInfoDao;
 
+	/**
+	 * location 列表 page
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> list(String params) {
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -42,7 +51,11 @@ public class BusinessLocationService extends BaseService {
 		return resp;
 	}
 	
-	
+	/**
+	 * location 列表
+	 * @param params
+	 * @return
+	 */
 	public Resp<?> all(String params){
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -60,5 +73,93 @@ public class BusinessLocationService extends BaseService {
 		}
 		return resp;
 	}
+	
+	/**
+	 * 更新
+	 * @param 删除
+	 * @return
+	 */
+	public Resp<?> delete(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}", params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			Integer id = jsonObject.getInteger(BaseConstant.ID);
+			BusinessLocation businessLocation = businessLocationDao.find(id);
+			businessLocation.setRecSt(0);
+			businessLocationDao.update(businessLocation);
+			resp = new Resp<>(true);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{]", e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 更新
+	 * @param params
+	 * @return
+	 */
+	public Resp<?> edit(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}", params);
+			BusinessLocation businessLocation = JSONObject.parseObject(params, BusinessLocation.class);
+			if(0!=businessLocation.getAppInfoId()){
+				BusinessAppInfo businessAppInfo = businessAppInfoDao.find(businessLocation.getAppInfoId());
+				businessLocation.setAppInfoDesc(businessAppInfo.getDescription());
+			}
+			businessLocationDao.update(businessLocation);
+			resp = new Resp<>(true);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{]", e);
+		}
+		return resp;
+	}
 
+	/**
+	 * 新建
+	 * @param params
+	 * @return
+	 */
+	public Resp<?> create(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}", params);
+			BusinessLocation businessLocation = JSONObject.parseObject(params, BusinessLocation.class);
+			if(0!=businessLocation.getAppInfoId()){
+				BusinessAppInfo businessAppInfo = businessAppInfoDao.find(businessLocation.getAppInfoId());
+				businessLocation.setAppInfoDesc(businessAppInfo.getDescription());
+			}
+			businessLocationDao.create(businessLocation);
+			resp = new Resp<>(true);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{]", e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 详情
+	 * @param params
+	 * @return
+	 */
+	public Resp<?> detail(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}", params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			Integer id = jsonObject.getInteger(BaseConstant.ID);
+			BusinessLocation businessLocation = businessLocationDao.find(id);
+			resp = new Resp<>(businessLocation);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{]", e);
+		}
+		return resp;
+	}
+	
 }

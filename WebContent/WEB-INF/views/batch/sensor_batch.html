@@ -31,7 +31,7 @@
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Sensor管理 </a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> Sensor批量操作管理 </a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
@@ -72,10 +72,35 @@
 									</select>
 								</div>
 							</div>
-								<div class="col-md-3">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>操作</label> 
-									<input type="button" class="btn btn-default btn-xs form-control" onclick="_getData(0,1)" value="查询" >
+									<input type="button" class="btn btn-default btn-xs form-control" onclick="_getData()" value="查询" >
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box box-default">
+					<div class="box-header with-border">
+						<h3 class="box-title">执行操作</h3>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool"
+								data-widget="collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+						</div>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<input type="button" class="btn btn-default btn-xs form-control" onclick="_getData()" value="查询" >
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<input type="button" class="btn btn-default btn-xs form-control" onclick="_getData()" value="查询" >
 								</div>
 							</div>
 						</div>
@@ -123,25 +148,11 @@
 											</td>
 											<td v-text="item.lastSeenTime"></td>
 											<td>
-												<button class='btn btn-info btn-xs' v-bind:id="'_d'+item.mac" onclick="_goDetail(this);" v-text="'详情'" ></button>
-												<button class='btn btn-info btn-xs' v-bind:id="'_j'+item.mac" onclick="_goJob(this);"  v-text="'运行指令'"  ></button>
+												<button class='btn btn-info btn-xs' v-bind:id="'_delete'+item.mac" onclick="_delete(this);" v-text="'删除'" ></button>
 											</td>
 										</tr>
 									</tbody>
 								</table>
-							</div>
-							<div class="box-footer clearfix"
-								style="width: 320px; float: right;">
-								<div class="input-group">
-									<span class="input-group-addon" onclick="_getData(0,1);">«</span>
-									<span class="input-group-addon" onclick="_getData(1,0);">‹</span>
-									<input type="text" style="text-align: center;"
-										onfocus="_getNowPage(this)" onblur="_getAllPage(this)"
-										v-bind:value="'当前第'+datas.page.currentPage+'页，共'+datas.page.pages+'页'"
-										class="form-control"> <span class="input-group-addon"
-										onclick="_getData(1,1);">›</span> <span
-										class="input-group-addon" id="_end">»</span>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -150,7 +161,7 @@
 		</div>
 		<#include "_footer.html">
 	</div>
-	<script src="/themes/js/home/device/sensor.js?version=1.23"></script>
+	<script src="/themes/js/home/batch/sensor_batch.js?version=1.23"></script>
 
 </body>
 </html>

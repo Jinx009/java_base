@@ -86,6 +86,37 @@ public class DeviceSensorService extends BaseService{
 	}
 	
 	/**
+	 * 地磁列表
+	 * @param params
+	 * @return
+	 */
+	public Resp<?> all(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			List<DeviceSensor> list = deviceSensorDao.findAllUse();
+			List<DeviceSensorVo> vo = new ArrayList<DeviceSensorVo>();
+			if(list!=null&&!list.isEmpty()){
+				for(DeviceSensor deviceSensor : list){
+					DeviceSensorVo deviceSensorVo = DeviceSensorVo.instance(deviceSensor);
+					if(deviceSensor.getAreaId()!=null){
+						BusinessArea businessArea = businessAreaDao.find(deviceSensor.getAreaId());
+						BusinessLocation businessLocation = businessLocationDao.find(businessArea.getLocationId());
+						deviceSensorVo.setAreaName(businessArea.getName());
+						deviceSensorVo.setLocationName(businessLocation.getName());
+					}
+					vo.add(deviceSensorVo);
+				}
+			}
+			resp = new Resp<>(vo);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	/**
 	 * 地磁详情
 	 * @param params
 	 * @return

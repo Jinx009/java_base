@@ -78,6 +78,37 @@ public class DeviceCrossSensorService extends BaseService{
 	}
 	
 	/**
+	 * 路口地磁列表
+	 * @param params
+	 * @return
+	 */
+	public Resp<?> all(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			List<DeviceCrossSensor> list = deviceCrossSensorDao.findAllUse();
+			List<DeviceCrossSensorVo> list2 = new ArrayList<DeviceCrossSensorVo>(); 
+			if(list!=null&&!list.isEmpty()){
+				for(DeviceCrossSensor deviceCrossSensor : list){
+					DeviceCrossSensorVo deviceCrossSensorVo = DeviceCrossSensorVo.instance(deviceCrossSensor);
+					if(deviceCrossSensor.getAreaId()!=null){
+						BusinessArea businessArea = businessAreaDao.find(deviceCrossSensor.getAreaId());
+						BusinessLocation businessLocation = businessLocationDao.find(businessArea.getLocationId());
+						deviceCrossSensorVo.setAreaName(businessArea.getName());
+						deviceCrossSensorVo.setLocationName(businessLocation.getName());
+					}
+					list2.add(deviceCrossSensorVo);
+				}
+			}
+			resp = new Resp<>(list2);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	/**
 	 * 路口地磁详情
 	 * @param params
 	 * @return

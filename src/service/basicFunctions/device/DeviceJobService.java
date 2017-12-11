@@ -169,6 +169,35 @@ public class DeviceJobService extends BaseService{
 				deviceJobDao.update(deviceJob);
 				return  new Resp<>(true);
 			}
+			resp = new Resp<>(true);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 基础任务创建
+	 * @param params
+	 * @return
+	 */
+	public Resp<?> baseCreate(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			String mac = jsonObject.getString(BaseConstant.MAC);
+			String cmd = jsonObject.getString(BaseConstant.CMD);
+			String jobDetail = jsonObject.getString(BaseConstant.JOB_DETAIL);
+			List<DeviceJob> list = deviceJobDao.findByTarget(mac);
+			if(list!=null&&!list.isEmpty()){
+				resp.setMsg(BaseConstant.JOB_NOT_DONE);
+				return resp;
+			}
+			deviceJobDao.save(mac,cmd,jobDetail);
+			resp = new Resp<>(true);
+			return resp;
 		} catch (Exception e) {
 			log.error("error:{]",e);
 		}

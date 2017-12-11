@@ -1,5 +1,7 @@
 package database.basicFunctions.dao.device;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
@@ -36,6 +38,13 @@ public class DeviceCrossSensorDao extends BaseDao<DeviceCrossSensor>{
 		QueryParam queryParam = QueryParam.getInstance();
 		queryParam.addParam("mac",mac);
 		return findByCriteriaForUnique(queryParam);
+	}
+	
+	public List<DeviceCrossSensor> findAllUse() {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("recSt",1);
+		queryParam.addOrder(OrderType.ASC,"areaId");
+		return findByCriteria(queryParam);
 	}
 	
 }

@@ -1,5 +1,6 @@
 package database.basicFunctions.dao.business;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -28,6 +29,12 @@ public class BusinessAreaDao extends BaseDao<BusinessArea>{
 		queryParam.addParam("recSt",1);
 		queryParam.addOrder(OrderType.DESC,"createTime");
 		return findByCriteria(queryParam);
+	}
+
+	public void create(BusinessArea businessArea) {
+		businessArea.setCreateTime(new Date());
+		businessArea.setRecSt(1);
+		save(businessArea);
 	}
 	
 }
