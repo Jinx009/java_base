@@ -106,7 +106,8 @@ public class DataController extends BaseController {
 		OutputStream out = null;
 		try {
 			if (!file.isEmpty()) {
-				String filePath =  StringUtil.add(BaseConstant.BASE_DERICTORY_NAME,file.getName());
+				String filePath =  StringUtil.add(BaseConstant.BASE_DERICTORY_NAME,file.getOriginalFilename());
+				log.warn("file path:{}",filePath);
 				File serverFile = new File(filePath);
 				in = file.getInputStream();
 				out = new FileOutputStream(serverFile);

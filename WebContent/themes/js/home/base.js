@@ -130,11 +130,9 @@ function loginOut(){
 		dataType:'json',
 		type:'post',
 		success:function(res){
-			if('200'==res.code){
-				layer.alert('账号退出成功！',function(){
-					location.href = '/index';
-				})
-			}
+			layer.alert('账号退出成功！',function(){
+				location.href = '/index';
+			});
 		}
 	})
 }
