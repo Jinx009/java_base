@@ -252,5 +252,6 @@ public class HttpData {
 		String url = BASE_URL+INOUT_URL+"?areaId="+areaId+"&dateStr="+dateStr;
 		return url;
 	}
+
 	
 }
