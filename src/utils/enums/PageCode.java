@@ -46,7 +46,7 @@ public enum PageCode {
 	 BATCH_FILE_LIST(           "batch_file_batch_list",        "/batch/file_batch",           true),
 	 BATCH_SENSOR_LIST(         "batch_sensor_batch_list",      "/batch/sensor_batch",         true),
 	 BATCH_CROSS_SENSOR_LIST(   "batch_cross_sensor_batch_list", "/batch/cross_sensor_batch",  true),
-	 BATCH_PAGE_LIST(   		"batch_page_batch_list", 				 "/batch/pager_batch",  		true),
+	 BATCH_PAGE_LIST(   		"batch_page_batch_list", 		 "/batch/pager_batch",  	   true),
 	 ;
 	
 	 private String code;         //编码
