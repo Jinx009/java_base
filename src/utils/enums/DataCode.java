@@ -20,23 +20,23 @@ public enum DataCode {
 	 
 	 DEVICE_SENSOR_LIST(         "device_sensor_list_1_0",             "deviceSensorService",      "list",        "sensor page列表",        true),
 	 DEVICE_SENSOR_DETAIL(       "device_sensor_detail_1_0",           "deviceSensorService",      "detail",      "sensor detail列表",      true),
-	 DEVICE_SENSOR_ALL(          "device_sensor_all_1_0",              "deviceSensorService",      "all",        "sensor  列表",            true),
+	 DEVICE_SENSOR_ALL(          "device_sensor_all_1_0",              "deviceSensorService",      "all",         "sensor  列表",            true),
 	 DEVICE_SENSOR_SET_AREAL(    "device_sensor_setArea_1_0",          "deviceSensorService",      "setArea",     "sensor  设置区域",        true),
 	 DEVICE_SENSOR_SET_UPDATE(   "device_sensor_setUpdate_1_0",        "deviceSensorService",      "setUpdate",   "sensor  参数更新",        true),
 	 
-	 DEVICE_CROSS_SENSOR_LIST(   "device_cross_sensor_list_1_0",       "deviceCrossSensorService", "list",        "cross_sensor page列表",  true),
-	 DEVICE_CROSS_SENSOR_DETAIL( "device_cross_sensor_detail_1_0",     "deviceCrossSensorService", "detail",      "cross_sensor 详情",      true),
-	 DEVICE_CROSS_SENSOR_ALL(    "device_cross_sensor_all_1_0",        "deviceCrossSensorService", "all",         "cross_sensor 列表",      true),
-	 DEVICE_CROSS_SENSOR_SET_AREAL("device_cross_sensor_setArea_1_0",        "deviceCrossSensorService",  "setArea",     "sensor  设置区域",        true),
-	 DEVICE_CROSS_SENSOR_SET_UPDATE("device_cross_sensor_setUpdate_1_0",     "deviceCrossSensorService",  "setUpdate",   "sensor  参数更新",        true),
+	 DEVICE_CROSS_SENSOR_LIST(   "device_cross_sensor_list_1_0",       "deviceCrossSensorService",  "list",        "cross_sensor page列表",  true),
+	 DEVICE_CROSS_SENSOR_DETAIL( "device_cross_sensor_detail_1_0",     "deviceCrossSensorService",  "detail",      "cross_sensor 详情",      true),
+	 DEVICE_CROSS_SENSOR_ALL(    "device_cross_sensor_all_1_0",        "deviceCrossSensorService",  "all",         "cross_sensor 列表",      true),
+   DEVICE_CROSS_SENSOR_SET_AREAL("device_cross_sensor_setArea_1_0",    "deviceCrossSensorService",  "setArea",     "sensor  设置区域",        true),
+  DEVICE_CROSS_SENSOR_SET_UPDATE("device_cross_sensor_setUpdate_1_0",  "deviceCrossSensorService",  "setUpdate",   "sensor  参数更新",        true),
 	 
 	 DEVICE_REPEATER_LIST(		 "device_repeater_list_1_0",           "deviceRepeaterService",    "list",        "repeater page列表",      true),
 	 
 	 DEVICE_ERROR_FLOW_LIST(     "device_error_flow_list_1_0",         "deviceErrorFlowService",   "list",        "errorflow page列表",     true),
-	 DEVICE_ERROR_FLOW_DELETE(   "device_error_flow_delete_1_0",       "deviceErrorFlowService",   "delete",       "errorflow 完成",        true),
+	 DEVICE_ERROR_FLOW_DELETE(   "device_error_flow_delete_1_0",       "deviceErrorFlowService",   "delete",      "errorflow 完成",         true),
 	 
 	 DEVICE_JOB_LIST(			 "device_job_list_1_0",				   "deviceJobService",		   "list",		   "job page列表",          true),
-	 DEVICE_JOB_BASE_CREATE(	 "device_job_base_create_1_0",		   "deviceJobService",		   "baseCreate",	"job 新建",			    true),
+	 DEVICE_JOB_BASE_CREATE(	 "device_job_base_create_1_0",		   "deviceJobService",		   "baseCreate",   "job 新建",			    true),
 	 DEVICE_JOB_CREATE(			 "device_job_create_1_0",			   "deviceJobService",		   "create",	   "job 新建",			    true),
 	 DEVICE_JOB_CROSS_CREATE(	 "device_job_cross_create_1_0",		   "deviceJobService",		   "crossCreate",  "cross job 新建",			true),
 	 DEVICE_JOB_ROUTER_CREATE(	 "device_job_router_create_1_0",	   "deviceJobService",		   "routerCreate", "router job 新建",		true),
@@ -68,7 +68,7 @@ public enum DataCode {
 	 BUSINESS_APPINFO_CREATE(	 "business_appinfo_create_1_0",		   "businessAppInfoService",	"create",		"appInfo save",		    true),
 	 BUSINESS_APPINFO_DETAIL(	 "business_appinfo_detail_1_0",		   "businessAppInfoService",	"detail",		"appInfo detail",		true),
 	 BUSINESS_APPINFO_DELETE(	 "business_appinfo_delete_1_0",		   "businessAppInfoService",	"delete",		"appInfo delete",		true),
-	 BUSINESS_APPINFO_ALL(	     "business_appinfo_all_1_0",		   "businessAppInfoService",	"all",		    "appInfo all",		true),
+	 BUSINESS_APPINFO_ALL(	     "business_appinfo_all_1_0",		   "businessAppInfoService",	"all",		    "appInfo all",		    true),
 	 ;
 	
 	 private String code;         //编码
