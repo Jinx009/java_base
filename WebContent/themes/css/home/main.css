@@ -51,6 +51,24 @@
     height: 450px;
     border: 2px solid lightgray;
 }
+.fly-box-area{
+	position: fixed;
+    z-index: 999;
+    top: 100px;
+    left: 30%;
+    width: 40%;
+    height: 300px;
+    border: 2px solid lightgray;
+}
+.fly-box-update{
+	position: fixed;
+    z-index: 999;
+    top: 80px;
+    left: 30%;
+    width: 40%;
+    height: 620px;
+    border: 2px solid lightgray;
+}
 .none{
 	display: none;
 }

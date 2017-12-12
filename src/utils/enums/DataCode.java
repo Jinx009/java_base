@@ -21,10 +21,14 @@ public enum DataCode {
 	 DEVICE_SENSOR_LIST(         "device_sensor_list_1_0",             "deviceSensorService",      "list",        "sensor page列表",        true),
 	 DEVICE_SENSOR_DETAIL(       "device_sensor_detail_1_0",           "deviceSensorService",      "detail",      "sensor detail列表",      true),
 	 DEVICE_SENSOR_ALL(          "device_sensor_all_1_0",              "deviceSensorService",      "all",        "sensor  列表",            true),
+	 DEVICE_SENSOR_SET_AREAL(    "device_sensor_setArea_1_0",          "deviceSensorService",      "setArea",     "sensor  设置区域",        true),
+	 DEVICE_SENSOR_SET_UPDATE(   "device_sensor_setUpdate_1_0",        "deviceSensorService",      "setUpdate",   "sensor  参数更新",        true),
 	 
 	 DEVICE_CROSS_SENSOR_LIST(   "device_cross_sensor_list_1_0",       "deviceCrossSensorService", "list",        "cross_sensor page列表",  true),
 	 DEVICE_CROSS_SENSOR_DETAIL( "device_cross_sensor_detail_1_0",     "deviceCrossSensorService", "detail",      "cross_sensor 详情",      true),
 	 DEVICE_CROSS_SENSOR_ALL(    "device_cross_sensor_all_1_0",        "deviceCrossSensorService", "all",         "cross_sensor 列表",      true),
+	 DEVICE_CROSS_SENSOR_SET_AREAL("device_cross_sensor_setArea_1_0",        "deviceCrossSensorService",  "setArea",     "sensor  设置区域",        true),
+	 DEVICE_CROSS_SENSOR_SET_UPDATE("device_cross_sensor_setUpdate_1_0",     "deviceCrossSensorService",  "setUpdate",   "sensor  参数更新",        true),
 	 
 	 DEVICE_REPEATER_LIST(		 "device_repeater_list_1_0",           "deviceRepeaterService",    "list",        "repeater page列表",      true),
 	 

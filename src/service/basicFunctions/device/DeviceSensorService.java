@@ -9,14 +9,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import database.basicFunctions.dao.business.BusinessAreaDao;
 import database.basicFunctions.dao.business.BusinessLocationDao;
+import database.basicFunctions.dao.device.DeviceJobDao;
 import database.basicFunctions.dao.device.DeviceSensorDao;
 import database.common.PageDataList;
 import database.models.business.BusinessArea;
 import database.models.business.BusinessLocation;
+import database.models.device.DeviceJob;
 import database.models.device.DeviceSensor;
 import database.models.device.vo.DeviceSensorVo;
 import service.basicFunctions.BaseService;
@@ -35,6 +38,8 @@ public class DeviceSensorService extends BaseService{
 	private BusinessAreaDao businessAreaDao;
 	@Autowired
 	private BusinessLocationDao businessLocationDao;
+	@Autowired
+	private DeviceJobDao deviceJobDao;
 	
 	/**
 	 * 批量操作地磁列表
@@ -94,7 +99,10 @@ public class DeviceSensorService extends BaseService{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			log.warn("params:{}",params);
-			List<DeviceSensor> list = deviceSensorDao.findAllUse();
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			Integer areaId = jsonObject.getInteger(BaseConstant.AREA_ID);
+			String mac = jsonObject.getString(BaseConstant.MAC);
+			List<DeviceSensor> list = deviceSensorDao.findAllUse(areaId,mac);
 			List<DeviceSensorVo> vo = new ArrayList<DeviceSensorVo>();
 			if(list!=null&&!list.isEmpty()){
 				for(DeviceSensor deviceSensor : list){
@@ -139,6 +147,60 @@ public class DeviceSensorService extends BaseService{
 				resp = new Resp<>(deviceSensorVo);
 				return resp;
 			}
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 地磁设置区域
+	 * @param params
+	 * @return
+	 */
+	public Resp<?> setArea(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			List<String> macs = JSON.parseArray(jsonObject.getString(BaseConstant.MAC),String.class);
+			Integer areaId = jsonObject.getInteger(BaseConstant.AREA_ID);
+			for(String mac : macs){
+				DeviceSensor deviceSensor = deviceSensorDao.findByMac(mac);
+				deviceSensor.setAreaId(areaId);
+				deviceSensorDao.update(deviceSensor);
+			}
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("error:{]",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 地磁设置区域
+	 * @param params
+	 * @return
+	 */
+	public Resp<?> setUpdate(String params){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("params:{}",params);
+			JSONObject jsonObject = JSONObject.parseObject(params);
+			String mac = jsonObject.getString(BaseConstant.MAC);
+			String jobDetail = jsonObject.getString(BaseConstant.JOB_DETAIL);
+			String cmd = jsonObject.getString(BaseConstant.CMD);
+			DeviceSensor deviceSensor = deviceSensorDao.findByMac(mac);
+			List<DeviceJob> list = deviceJobDao.findByTarget(deviceSensor.getRouterMac());
+			if(list!=null&&!list.isEmpty()){
+				resp.setMsg(BaseConstant.JOB_NOT_DONE);
+				return resp;
+			}else{
+				
+			}
+			deviceJobDao.save(deviceSensor,cmd,jobDetail);
+			resp = new Resp<>(true);
+			return resp;
 		} catch (Exception e) {
 			log.error("error:{]",e);
 		}

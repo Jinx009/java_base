@@ -10,7 +10,7 @@ function _getData(){
 		_data.areaId = 0;
 	}
 	$.ajax({
-		url:'/d/device_sensor/all/1_0',
+		url:'/d/device_cross_sensor/all/1_0',
 		dataType:'json',
 		data:JSON.stringify(_data),
 		contentType:'application/json;charSet=utf8',
@@ -142,7 +142,7 @@ function _saveArea(){
          _data.mac = chk_value;
          _data.areaId = areaId;
          $.ajax({
-     		url:'/d/device_sensor/setArea/1_0',
+     		url:'/d/device_cross_sensor/setArea/1_0',
      		dataType:'json',
      		data:JSON.stringify(_data),
      		contentType:'application/json;charSet=utf8',
@@ -190,7 +190,7 @@ function _saveUpdate(){
          _data.cmd = 'patchsetpara';
          _data.id = chk_value[0];
          $.ajax({
-     		url:'/d/device_sensor/setUpdate/1_0',
+     		url:'/d/device_cross_sensor/setUpdate/1_0',
      		dataType:'json',
      		data:JSON.stringify(_data),
      		contentType:'application/json;charSet=utf8',

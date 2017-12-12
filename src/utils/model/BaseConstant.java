@@ -28,13 +28,13 @@ public class BaseConstant {
 	public static final String DATA = "data";
 	
 	
-	public static final String DEVICE_LOG_FILE_PATH = "/Users/jinx/Downloads/";
-	public static final String BASE_DERICTORY_NAME = "/Users/jinx/Downloads/test/";
+//	public static final String DEVICE_LOG_FILE_PATH = "/Users/jinx/Downloads/";
+//	public static final String BASE_DERICTORY_NAME = "/Users/jinx/Downloads/test/";
 	
 	//日志上报文件
-//	public static final String DEVICE_LOG_FILE_PATH = "/home/ftp/logUpload";
+	public static final String DEVICE_LOG_FILE_PATH = "/home/ftp/logUpload";
 	//升级文件
-//	public static final String BASE_DERICTORY_NAME = "/root/servers/admin-server/webapps/uploads/";
+	public static final String BASE_DERICTORY_NAME = "/root/servers/admin-server/webapps/uploads/";
 	public static final String FTP_ADDR = "ftp://wx.zhanway.com";
 	
 	

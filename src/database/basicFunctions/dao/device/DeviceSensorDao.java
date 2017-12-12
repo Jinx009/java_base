@@ -2,6 +2,8 @@ package database.basicFunctions.dao.device;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
@@ -63,11 +65,22 @@ public class DeviceSensorDao extends BaseDao<DeviceSensor>{
 		return null;
 	}
 	
-	public List<DeviceSensor> findAllUse() {
-		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addParam("recSt",1);
-		queryParam.addOrder(OrderType.ASC,"areaId");
-		return findByCriteria(queryParam);
+	@SuppressWarnings("unchecked")
+	public List<DeviceSensor> findAllUse(Integer areaId, String mac) {
+		String sql = " select * from tbl_sensor t where t.rec_st = 1 ";
+		if(StringUtil.isNotBlank(mac)){
+			sql += " and t.mac like '%"+mac+"%' ";
+		}
+		if(0!=areaId){
+			sql += " and t.area_id = "+areaId;
+		}else{
+			sql += " and t.area_id is null  ";
+		}
+		sql += " order by t.area_id ";
+		System.out.println(sql);
+		Query query = em.createNativeQuery(sql, DeviceSensor.class);
+		List<DeviceSensor> list = query.getResultList();
+		return list;
 	}
 	
 }
