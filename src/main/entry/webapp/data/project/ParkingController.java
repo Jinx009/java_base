@@ -1,4 +1,4 @@
-package main.entry.webapp.data.pro;
+package main.entry.webapp.data.project;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class ParkingController extends BaseController{
 	public Resp<?> locationStatus(Integer locationId,Integer op,String dateStr){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.PARKING_DEMO.getAppId());
+			String token  = getToken(AppInfo.XINJIANG.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.locationStatusUrl(token,op,locationId,dateStr));
 				JSONObject jsonObject = JSONObject.parseObject(result);
@@ -56,7 +56,7 @@ public class ParkingController extends BaseController{
 	public Resp<?> device(){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.COMPANY_TEST.getAppId());
+			String token  = getToken(AppInfo.XINJIANG.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.deviceUrl(token));
 				JSONObject jsonObject = JSONObject.parseObject(result);
@@ -80,7 +80,7 @@ public class ParkingController extends BaseController{
 	public Resp<?> car(Integer areaId,String dateStr,Integer type){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.COMPANY_TEST.getAppId());
+			String token  = getToken(AppInfo.XINJIANG.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.carUrl(token,areaId,dateStr,type));
 				if(!BaseConstant.HTTP_ERROR_CODE.equals(result)){
@@ -99,7 +99,7 @@ public class ParkingController extends BaseController{
 	public Resp<?> views(Integer areaId){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.PARKING_DEMO.getAppId());
+			String token  = getToken(AppInfo.XINJIANG.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.detail(token, areaId));
 				if(!BaseConstant.HTTP_ERROR_CODE.equals(result)){

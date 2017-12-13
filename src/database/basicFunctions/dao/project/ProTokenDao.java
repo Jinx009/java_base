@@ -1,4 +1,4 @@
-package database.basicFunctions.dao.pro;
+package database.basicFunctions.dao.project;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
-import database.models.pro.ProToken;
+import database.models.project.ProToken;
 
 @Repository
 public class ProTokenDao extends BaseDao<ProToken>{

@@ -1,4 +1,4 @@
-package database.models.pro;
+package database.models.project;
 
 
 import java.util.Date;

@@ -5,8 +5,8 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import database.basicFunctions.dao.pro.ProTokenDao;
-import database.models.pro.ProToken;
+import database.basicFunctions.dao.project.ProTokenDao;
+import database.models.project.ProToken;
 
 @Service
 public class ProTokenService {

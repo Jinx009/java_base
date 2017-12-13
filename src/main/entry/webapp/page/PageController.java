@@ -1,5 +1,7 @@
 package main.entry.webapp.page;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -31,6 +33,16 @@ public class PageController {
 	@RequestMapping(value = "/index")
 	public String index(){
 		return "/home/index";
+	}
+	
+	/**
+	 * 错误页
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(path = "/error")
+	public String error(HttpServletRequest request){
+		return "/home/error";
 	}
 	
 	/**

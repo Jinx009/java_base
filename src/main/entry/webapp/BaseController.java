@@ -16,7 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import database.models.home.HomeResource;
 import database.models.home.HomeUser;
-import database.models.pro.ProToken;
+import database.models.project.ProToken;
 import service.basicFunctions.HttpService;
 import service.basicFunctions.pro.ProTokenService;
 import utils.BaseConstant;
