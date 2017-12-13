@@ -2,7 +2,6 @@ package main.entry.webapp;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,20 +14,16 @@ import org.springframework.stereotype.Controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-import database.models.WebTokenFactory;
 import database.models.home.HomeResource;
 import database.models.home.HomeUser;
 import database.models.pro.ProToken;
 import service.basicFunctions.HttpService;
-import service.basicFunctions.WebTokenFactoryService;
 import service.basicFunctions.pro.ProTokenService;
 import utils.BaseConstant;
 import utils.HttpData;
 import utils.enums.AppInfo;
 import utils.ip.IPUtil;
 import utils.model.HomeConfigConstant;
-import utils.wechat.WechatData;
-import utils.wechat.WechatJSSign;
 
 
 
@@ -37,8 +32,6 @@ public class BaseController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
 	
-	@Autowired
-	private WebTokenFactoryService webTokenFactoryService;
 	@Autowired
 	private ProTokenService proTokenService;
 	@Autowired
@@ -91,28 +84,6 @@ public class BaseController {
 		return null;
 	}
 
-	/**
-	 * 微信分享jsapi
-	 * @param request
-	 */
-	public void getJsApi(HttpServletRequest request){
-		String url = request.getRequestURL().toString();
-		String queryString = request.getQueryString();
-		try {
-			if (null != queryString && !"".equals(queryString)) 
-				url = url + "?" + queryString;
-			WebTokenFactory webTokenFactory = webTokenFactoryService.getByTypeAndId(WechatData.APP_ID,1);
-			Map<String, String> ret;
-			ret = WechatJSSign.createSign(webTokenFactory.getTokenValue(),url, WechatData.APP_ID, WechatData.APP_SECRET);
-			request.setAttribute("appId", WechatData.APP_ID);
-			request.setAttribute("timestamp", ret.get("timestamp").toString());
-			request.setAttribute("nonceStr", ret.get("nonceStr").toString());
-			request.setAttribute("signature", ret.get("signature").toString());
-			request.setAttribute("desc","");
-		} catch (Exception e) {
-			logger.error("[error:{}]",e);
-		} 
-	}
 	
 	/**
 	 * 获取客户端ip
