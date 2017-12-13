@@ -6,6 +6,38 @@ var _locationId = 14;
 $(function(){
 	getNav();
 })
+function _getPage(_type,_index){
+	var _p = -1;
+	if(_type==0){
+		_p =  _index;
+	}
+	if(_type==1&&_index==0){
+		_p =   (_nowPage - 1);
+	}
+	if(_type==1&&_index==1){
+		_p = (_nowPage + 1);
+	}
+	if(parseInt(_p)<=0||(_max!=0&&_p>_max)){
+		return -1;
+	}
+	if(_p===_nowPage){
+		return -1;
+	}
+	_nowPage = _p;
+	return _p;
+}
+function _getAllPage(_e){
+	var _p = $(_e).val();
+	if(_p!=_nowPage&&_p>0&&_p<_max){
+		_getData(0,parseInt(_p));
+	}else{
+		$(_e).val('当前第'+_nowPage+'页，共'+_max+'页');
+	}
+}
+function _getNowPage(_e){
+	$(_e).val('');
+	$(_e).attr('placeholder',_nowPage);
+}
 /**
  * 导航数据
  */

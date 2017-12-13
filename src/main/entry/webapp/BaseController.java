@@ -18,7 +18,7 @@ import database.models.home.HomeResource;
 import database.models.home.HomeUser;
 import database.models.project.ProToken;
 import service.basicFunctions.HttpService;
-import service.basicFunctions.pro.ProTokenService;
+import service.basicFunctions.project.ProTokenService;
 import utils.BaseConstant;
 import utils.HttpData;
 import utils.enums.AppInfo;
@@ -36,6 +36,11 @@ public class BaseController {
 	private ProTokenService proTokenService;
 	@Autowired
 	private HttpService httpService;
+	
+	
+	public String getMyToken(){
+		return getToken(BaseConstant.APP_ID_NOW);
+	}
 	
 	/**
 	 * 获取token

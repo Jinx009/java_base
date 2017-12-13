@@ -36,6 +36,16 @@ public class PageController {
 	}
 	
 	/**
+	 * 跳转至首页
+	 * @return
+	 */
+	@RequestMapping(value = "/home/index")
+	public String homeIndex(){
+		return "/home/index";
+	}
+	
+	
+	/**
 	 * 错误页
 	 * @param request
 	 * @return

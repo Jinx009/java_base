@@ -10,65 +10,20 @@ public class HttpData {
 	public static final String GET_TOKEN_URL = "/rest/token";
 	public static final String GET_LOCATION_URL = "/rest/locations";
 	public static final String GET_AREA_URL = "/rest/areas";
-	private static final String GET_LID_URL = "/rest/intersection/lids";
-	private static final String GET_POS_URL = "/rest/intersection/poss";
-	private static final String GET_CAR_NUMS_URL = "/rest/intersection/nums";
-	private static final String GET_CAR_NUMS_VIEW_URL = "/rest/intersection/numsView";
 	
 	private static final String LOCATION_STATUS_URL = "/rest/parking/locationStatus";
 	private static final String LOCATION_RUSH_URL = "/rest/parking/locationRush";
 	private static final String DEVICE_URL = "/rest/parking/device";
 	private static final String CAR_URL = "/ge/carInOutLog";
-	private static final String BIKE_URL = "/rest/parking/bikes";
 	public static final String VIEW_URL = "/rest/parking/detail";
 	public static final String JOB_ADD_URL = "/rest/job/save";
 	public static final String JOB_FIND_URL = "/rest/job/find";
 	public static final String INOUT_URL = "/rest/sensor/inOutLog";
 	
-	public static String jobFind(Integer id){
-		String url = BASE_URL+JOB_FIND_URL+"?id="+id;
-		return url;
-	}
-	
-	public static String jobAdd(){
-		String url = BASE_URL+JOB_ADD_URL;
-		return url;
-	}
-	
-	/**
-	 * 实况图
-	 * @param token
-	 * @param routerMac
-	 * @return
-	 */
-	public static String detail(String token, Integer areaId) {
-		String url = BASE_URL+VIEW_URL+"?token="+token+"&areaId="+areaId;
-		return url;
-	}
-	
-	/**
-	 * 自行车
-	 * @param token
-	 * @param routerMac
-	 * @return
-	 */
-	public static String bikeUrl(String token, String routerMac) {
-		String url = BASE_URL+BIKE_URL+"?token="+token+"&mac="+routerMac;
-		return url;
-	}
-	
-	/**
-	 * 车辆统计
-	 * @param token
-	 * @param areaId
-	 * @param dateStr
-	 * @param type
-	 * @return
-	 */
-	public static String carUrl(String token, Integer areaId, String dateStr,Integer type) {
-		String url = BASE_URL+CAR_URL+"?areaId="+areaId+"&dateStr="+dateStr+"&type="+type;
-		return url;
-	}
+	private static final String POS_SERVER_IP = "http://120.92.101.137:8080";
+	private static final String baseOrganId = "200023";
+	private static final String organId = "200023";
+	private static final String  limit = "10";
 	
 	/**
 	 * 获取设备信息
@@ -81,6 +36,31 @@ public class HttpData {
 	}
 	
 	/**
+	 * 获取pos机列表
+	 * @param token
+	 * @param mac
+	 * @return
+	 */
+	public static String posUrl() {
+		return POS_SERVER_IP+"/user-api/device?baseOrganId="+baseOrganId;
+	}
+	
+	public static String appRush(String token, String dateStr) {
+		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId="+BaseConstant.LOCATION_ID+"&token="+token+"&date="+dateStr;
+		return url;
+	}
+	public static String inOutUrl(String dateStr) {
+		String url = BASE_URL+INOUT_URL+"?areaId="+BaseConstant.AREA_ID+"&dateStr="+dateStr;
+		return url;
+	}
+	/**
+	 * pos机登录账号列表
+	 * @return
+	 */
+	public static String accountUrl() {
+		return POS_SERVER_IP+"/user-api/user?organId="+organId+"&limit="+limit;
+	}
+	/**
 	 * 曲线图location
 	 * @param token
 	 * @param op
@@ -88,21 +68,22 @@ public class HttpData {
 	 * @param dateStr
 	 * @return
 	 */
-	public static String locationStatusUrl(String token, Integer op, Integer locationId, String dateStr) {
-		String url = BASE_URL+LOCATION_STATUS_URL+"?token="+token+"&op="+op+"&locationId="+locationId+"&date="+dateStr;
+	public static String locationStatusUrl(String token, Integer op, String dateStr) {
+		String url = BASE_URL+LOCATION_STATUS_URL+"?token="+token+"&op="+op+"&locationId="+BaseConstant.LOCATION_ID+"&date="+dateStr;
 		return url;
 	}
-	
 	/**
-	 * 获取location
-	 * @param appInfo
+	 * 车辆统计
+	 * @param token
+	 * @param areaId
+	 * @param dateStr
+	 * @param type
 	 * @return
 	 */
-	public static String getLocationUrl(String token){
-		String url = BASE_URL+GET_LOCATION_URL+"?token="+token;
+	public static String carUrl(String token,String dateStr,Integer type) {
+		String url = BASE_URL+CAR_URL+"?areaId="+BaseConstant.AREA_ID+"&dateStr="+dateStr+"&type="+type;
 		return url;
 	}
-
 	/**
 	 * 获取token链接
 	 * @param appInfo
@@ -112,86 +93,23 @@ public class HttpData {
 		String url = BASE_URL+GET_TOKEN_URL+"?appId="+appInfo.getAppId()+"&secret="+appInfo.getSecret();
 		return url;
 	}
-
-	/**
-	 * 获取area
-	 * @param id
-	 * @return
-	 */
-	public static String getAreaUrl(Integer id,String token) {
-		String url = BASE_URL+GET_AREA_URL+"?id="+id+"&token="+token;
-		return url;
-	}
-
-	/**
-	 * 获取车道
-	 * @param id
-	 * @return
-	 */
-	public static String getLidUrl(String token,Integer area) {
-		String url = BASE_URL+GET_LID_URL+"?area="+area+"&token="+token;
-		return url;
-	}
-
-	/**
-	 * 获取方向
-	 * @param token
-	 * @param area
-	 * @return
-	 */
-	public static String getPosUrl(String token, Integer area) {
-		String url = BASE_URL+GET_POS_URL+"?area="+area+"&token="+token;
-		return url;
-	}
 	
-	/**
-	 * 首页绘图数据
-	 * @param token
-	 * @param location
-	 * @param area
-	 * @param lid
-	 * @param dateStr
-	 * @param type
-	 * @return
-	 */
-	public static String getCarNumUrl(String token,Integer location,Integer area,Integer lid,String dateStr,Integer type) {
-		String url = BASE_URL+GET_CAR_NUMS_URL+"?area="+area+"&token="+token+"&location="+location+"&lid="+lid+"&type="+type+"&dateStr="+dateStr;
-		return url;
-	}
 	
-	/***
-	 * 实景图绘制
-	 * @param token
-	 * @param location
-	 * @param area
-	 * @param dateStr
-	 * @param type
-	 * @return
-	 */
-	public static String getCarNumViewsUrl(String token,Integer location,Integer area,String dateStr,Integer type) {
-		String url = BASE_URL+GET_CAR_NUMS_VIEW_URL+"?area="+area+"&token="+token+"&location="+location+"&type="+type+"&dateStr="+dateStr;
-		return url;
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+
 
 	
 	
-	/**
-	 * 获取pos机列表
-	 * @param token
-	 * @param mac
-	 * @return
-	 */
-	public static String posUrl() {
-		return "http://120.92.101.137:8080/user-api/device?baseOrganId=200023";
-	}
 
-	/**
-	 * pos机登录账号列表
-	 * @return
-	 */
-	public static String accountUrl() {
-		return "http://120.92.101.137:8080/user-api/user?organId=200023&limit=10";
-	}
+
+
 
 	/**
 	 * pos机账单信息
@@ -228,30 +146,6 @@ public class HttpData {
 		}
 	}
 	
-	public static String jinganRush(String token, String dateStr) {
-		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId=16&token="+token+"&date="+dateStr;
-		return url;
-	}
-
-	public static String rush(String token, String dateStr) {
-		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId=18&token="+token+"&date="+dateStr;
-		return url;
-	}
-	
-	public static String puruanRush(String token, String dateStr) {
-		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId=22&token="+token+"&date="+dateStr;
-		return url;
-	}
-	
-	public static String modouRush(String token, String dateStr) {
-		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId=21&token="+token+"&date="+dateStr;
-		return url;
-	}
-
-	public static String inOutUrl(String dateStr, Integer areaId) {
-		String url = BASE_URL+INOUT_URL+"?areaId="+areaId+"&dateStr="+dateStr;
-		return url;
-	}
 
 	
 }

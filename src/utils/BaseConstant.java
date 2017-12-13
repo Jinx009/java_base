@@ -1,5 +1,7 @@
 package utils;
 
+import utils.enums.AppInfo;
+
 /**
  * 常用静态参数
  * @author jinx
@@ -18,4 +20,8 @@ public class BaseConstant {
 	public static final String PARAMS = "params";
 	public static final String APP_ID = "appId";
 	public static final String MSG = "msg";
+	
+	public static final Integer AREA_ID = 23;
+	public static final Integer LOCATION_ID = 22;
+	public static final String APP_ID_NOW = AppInfo.PURUAN.getAppId();
 }
