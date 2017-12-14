@@ -35,33 +35,34 @@ function _getData(){
 
 function _getArea(){
 	var _locationId = $('#location').val();
-	var _data = {};
-	_data.locationId = _locationId;
-	$.ajax({
-		url:'/d/business_area/all/1_0',
-		dataType:'json',
-		data:JSON.stringify(_data),
-		contentType:'application/json;charSet=utf8',
-		type:'post',
-		success:function(res){
-			var _areaArray = new Array();
-			_areaArray[0] = {};
-			_areaArray[0].id = 0,_areaArray[0].name = '请选择area';
-			if(_area==''){
-				for(var i in res.data){
-					_areaArray.push(res.data[i]);
+	if(0==_locationId){
+		var _areaArray = new Array();
+		_areaArray[0] = {};
+		_areaArray[0].id = 0,_areaArray[0].name = '请选择area';
+		if(_area==''){
+			_area = new Vue({
+				el:'#area',
+				data:{
+					areas:_areaArray
 				}
-				_area = new Vue({
-					el:'#area',
-					data:{
-						areas:_areaArray
-					}
-				})
-			}else{
+			})
+		}else{
+			_area.areas = _areaArray
+		}
+	}else{
+		var _data = {};
+		_data.locationId = _locationId;
+		$.ajax({
+			url:'/d/business_area/all/1_0',
+			dataType:'json',
+			data:JSON.stringify(_data),
+			contentType:'application/json;charSet=utf8',
+			type:'post',
+			success:function(res){
 				_area.areas = res.data
 			}
-		}
-	})
+		})
+	}
 }
 
 function _getAreas(){
@@ -111,10 +112,16 @@ function _getLocation(){
 		dataType:'json',
 		type:'post',
 		success:function(res){
+			var _locationArray = new Array();
+			_locationArray[0] = {};
+			_locationArray[0].id = 0,_locationArray[0].name = '请选择location';
+			for(var i in res.data){
+				_locationArray.push(res.data[i]);
+			}
 			new Vue({
 				el:'#location',
 				data:{
-					locations:res.data
+					locations:_locationArray
 				}
 			})
 			new Vue({
