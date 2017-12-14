@@ -11,6 +11,7 @@ import database.common.OrderFilter.OrderType;
 import database.common.SearchFilter.Operators;
 import database.common.PageDataList;
 import database.common.QueryParam;
+import database.common.SearchFilter;
 import database.models.device.DeviceSensor;
 import utils.StringUtil;
 import utils.model.BaseConstant;
@@ -32,7 +33,9 @@ public class DeviceSensorDao extends BaseDao<DeviceSensor>{
 			queryParam.addParam("areaId", areaId);
 		}
 		if(StringUtil.isNotBlank(mac)){
-			queryParam.addAddFilter("mac", Operators.LIKE, mac);
+			SearchFilter filter = new SearchFilter("mac", Operators.LIKE, mac);
+			SearchFilter filter2 = new SearchFilter("mac", Operators.LIKE, mac);
+			queryParam.addOrFilter(filter,filter2);
 		}
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		queryParam.addOrder(OrderType.DESC, "createTime");

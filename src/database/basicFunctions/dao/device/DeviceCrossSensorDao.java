@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import database.common.BaseDao;
 import database.common.PageDataList;
 import database.common.QueryParam;
+import database.common.SearchFilter;
 import database.common.OrderFilter.OrderType;
 import database.common.SearchFilter.Operators;
 import database.models.device.DeviceCrossSensor;
@@ -27,7 +28,9 @@ public class DeviceCrossSensorDao extends BaseDao<DeviceCrossSensor>{
 			queryParam.addParam("location", locationId);
 		}
 		if(StringUtil.isNotBlank(mac)){
-			queryParam.addAddFilter("mac", Operators.LIKE, mac);
+			SearchFilter filter = new SearchFilter("mac", Operators.LIKE, mac);
+			SearchFilter filter2 = new SearchFilter("mac", Operators.LIKE, mac);
+			queryParam.addOrFilter(filter,filter2);
 		}
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		queryParam.addOrder(OrderType.DESC, "createTime");
