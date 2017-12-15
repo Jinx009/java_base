@@ -224,7 +224,7 @@ var _data = [ {
 },{
 	_left : 270,
 	_top : 657,
-	lot : 'A25',
+	lot : '25',
 	_type : 'x'
 },{
 	_left : 303,

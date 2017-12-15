@@ -31,6 +31,15 @@ public class HomePageController extends BaseController{
 	}
 	
 	/**
+	 * 电子标签
+	 * @return
+	 */
+	@RequestMapping(path = "/bluetooth")
+	public String bluetooth(){
+		return "/home/pro/bluetooth";
+	}
+	
+	/**
 	 * pos机订单列表
 	 * @return
 	 */
