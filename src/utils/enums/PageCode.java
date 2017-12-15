@@ -20,6 +20,8 @@ public enum PageCode {
 	 
 	 DEVICE_REPEATER_LIST(      "device_repeater_list",       "/device/repeater",              true),
 	 
+	 DEVICE_CARD_LIST(          "device_card_list",           "/device/card",                 true),
+	 
 	 DEVICE_SENSOR_LIST(        "device_sensor_list",         "/device/sensor",                true),
 	 DEVICE_SENSOR_JOB(         "device_sensor_job",          "/device/sensor_job",            true),
 	 DEVICE_SENSOR_DETAIL(      "device_sensor_detail",       "/device/sensor_detail",         true),

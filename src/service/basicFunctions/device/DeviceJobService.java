@@ -25,7 +25,7 @@ import utils.model.Resp;
 @Service
 public class DeviceJobService extends BaseService{
 	
-	private static final Logger log = LoggerFactory.getLogger(DeviceJob.class);
+	private static final Logger log = LoggerFactory.getLogger(DeviceJobService.class);
 
 	@Autowired
 	private DeviceJobDao deviceJobDao;

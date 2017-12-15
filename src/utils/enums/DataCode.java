@@ -18,6 +18,8 @@ public enum DataCode {
 	 DEVICE_ROUTER_EDIT(         "device_router_edit_1_0",             "deviceRouterService",      "edit",        "router edit",            true),
 	 DEVICE_ROUTER_ALL(          "device_router_all_1_0",              "deviceRouterService",      "all",         "router 列表",            true),
 	 
+	 DEVICE_CARD_LIST(           "device_card_list_1_0",              "deviceCardService",         "list",         "电子卡片 列表",           true),
+	 
 	 DEVICE_SENSOR_LIST(         "device_sensor_list_1_0",             "deviceSensorService",      "list",        "sensor page列表",        true),
 	 DEVICE_SENSOR_DETAIL(       "device_sensor_detail_1_0",           "deviceSensorService",      "detail",      "sensor detail列表",      true),
 	 DEVICE_SENSOR_ALL(          "device_sensor_all_1_0",              "deviceSensorService",      "all",         "sensor  列表",            true),
