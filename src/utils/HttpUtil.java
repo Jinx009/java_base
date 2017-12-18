@@ -41,11 +41,11 @@ public class HttpUtil {
         	DefaultHttpClient httpClient = new DefaultHttpClient();
         	HttpResponse response = httpClient.execute(post);
 			result = EntityUtils.toString(response.getEntity(),"UTF-8");
-			logger.warn("HttpUtils.postJson[res:{}]",result);
+			logger.warn("post json[res:{}]",result);
 		} catch (ParseException e) {
-			logger.error("HttpUtils.postJson[ParseException.error:{}]",e);
+			logger.error("[ParseException.error:{}]",e);
 		} catch (IOException e) {
-			logger.error("HttpUtils.postJson[IOException.error:{}]",e);
+			logger.error("[IOException.error:{}]",e);
 		}
         return result;
 	}
@@ -64,11 +64,11 @@ public class HttpUtil {
 		try {
 			HttpResponse response = httpClient.execute(post);
 			result = EntityUtils.toString(response.getEntity(),"UTF-8");
-			logger.warn("HttpUtils.postParams[res:{}]",result);
+			logger.warn("post params[res:{}]",result);
 		} catch (ParseException e) {
-			logger.error("HttpUtils.postParams[ParseException.error:{}]",e);
+			logger.error("post params[ParseException.error:{}]",e);
 		} catch (IOException e) {
-			logger.error("HttpUtils.postParams[IOException.error:{}]",e);
+			logger.error("post params[IOException.error:{}]",e);
 		}
 		return result;
     }
@@ -87,11 +87,11 @@ public class HttpUtil {
 		try {
 			HttpResponse response = httpClient.execute(get);
 			result = EntityUtils.toString(response.getEntity(),"UTF-8");
-			logger.warn("HttpUtils.get[res:{}]",result);
+			logger.warn("get[res:{}]",result);
 		} catch (ParseException e) {
-			logger.error("HttpUtils.get[ParseException.error:{}]",e);
+			logger.error("get[ParseException.error:{}]",e);
 		} catch (IOException e) {
-			logger.error("HttpUtils.get[IOException.error:{}]",e);
+			logger.error("get[IOException.error:{}]",e);
 		}
 		return result;
     }

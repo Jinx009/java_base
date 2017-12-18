@@ -47,7 +47,7 @@ public class DataController extends BaseController {
 				return new Resp<>(BaseConstant.NOT_VALIDATE_COE, BaseConstant.NOT_VALIDATE_MSG, null);
 			}
 		} catch (Exception e) {
-			log.error("error:{]", e);
+			log.error("error:{}", e);
 		}
 		return resp;
 	}
@@ -59,7 +59,7 @@ public class DataController extends BaseController {
 		try {
 			setSessionNull(request);
 		} catch (Exception e) {
-			log.error("error:{]", e);
+			log.error("error:{}", e);
 		}
 		return resp;
 	}
@@ -70,9 +70,10 @@ public class DataController extends BaseController {
 		try {
 			String fullName = StringUtil.add(BaseConstant.DEVICE_LOG_FILE_PATH, fileName);
 			File file = new File(fullName);
-			if (!file.exists())
+			if (!file.exists()){
+				log.error("error: file not found!");
 				return;
-
+			}
 			response.setCharacterEncoding("utf-8");
 			response.setContentType("multipart/form-data");
 			response.setHeader("Content-Disposition", StringUtil.add("attachment;fileName=", fileName));
@@ -86,7 +87,7 @@ public class DataController extends BaseController {
 			}
 			inputStream.close();
 		} catch (Exception e) {
-			log.error("error:{]", e);
+			log.error("error:{}", e);
 		} finally {
 			try {
 				inputStream.close();
@@ -95,7 +96,7 @@ public class DataController extends BaseController {
 			} finally {
 				inputStream = null;
 			}
-		}
+		}  
 	}
 
 	@RequestMapping(path = "/uploadFile")
