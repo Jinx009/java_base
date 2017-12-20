@@ -53,7 +53,7 @@
 	                </tr>
 	                </thead>
 		               <tbody id="data" >
-		               		<tr v-for="device in datas" >
+		             		<tr v-for="device in datas" >
 		               			<td v-text="device.mac" ></td>
 		               			<td v-text="device.description" ></td>
 		               			<td v-text="device.batteryVoltage" ></td>
@@ -64,9 +64,24 @@
 		               			<td v-text="device.parentMac" ></td>
 		               			<td v-text="device.routerMac" ></td>
 		               			<td v-text="device.lastSeenTime" ></td>
-		               		</tr>
+		               		</tr> 
 		              </tbody>
 	              </table>
+	            </div>
+	            <div class="box-footer clearfix">
+	              <ul class="pagination pagination-sm no-margin pull-right">
+	                <li><a onclick="_getData(1)">«</a></li>
+	                <li id="index1"  class="active"><a onclick="_getData(1)" >1</a></li>
+	                <li id="index2"  ><a onclick="_getData(2)" >2</a></li>
+	                <li id="index3"  ><a onclick="_getData(3)" >3</a></li>
+	                <li id="index4"  ><a onclick="_getData(4)" >4</a></li>
+	                <li id="index5"  ><a onclick="_getData(5)" >5</a></li>
+	                <li id="index6"  ><a onclick="_getData(6)" >6</a></li>
+	                <li id="index7"  ><a onclick="_getData(7)" >7</a></li>
+	                <li id="index8"  ><a onclick="_getData(8)" >8</a></li>
+	                <li id="index9"  ><a onclick="_getData(9)" >9</a></li>
+	                <li><a onclick="_getData(9)" >»</a></li>
+	              </ul>
 	            </div>
 	          </div>
 	        </div>
@@ -76,7 +91,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/device/sensor.js?version=1.16"></script>
+<script src="/themes/js/home/device/sensor.js?version=1.29"></script>
 
 </body>
 </html>
