@@ -74,6 +74,7 @@ public class CallUtils {
     	Map<String,String> data = new HashMap<String,String>();
     	data.put("applicationCode", "MAGNETIC_APPLICATION");
     	data.put("path", "/park_place");
+    	data.put("baseOrganId", "200032");
         String sign = KeyUtils.sign(data);
         data.remove("path");
         String _path = "applicationCode=MAGNETIC_APPLICATION&sign="+getMyURIEncoder(sign);
