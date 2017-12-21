@@ -53,6 +53,7 @@ public class CallUtils {
     	if(StringUtil.isNotBlank(place)){
     		data.put("parkPlaceId",place);
     	}
+//    	data.put("baseOrganId", "200032");
     	data.put("code", code);
     	data.put("magneticStripeId", mac);
     	data.put("remark",remark);
@@ -73,10 +74,11 @@ public class CallUtils {
     public static String getPlace() throws Exception {
     	Map<String,String> data = new HashMap<String,String>();
     	data.put("applicationCode", "MAGNETIC_APPLICATION");
+    	data.put("baseOrganId", "200032");
     	data.put("path", "/park_place");
         String sign = KeyUtils.sign(data);
         data.remove("path");
-        String _path = "applicationCode=MAGNETIC_APPLICATION&sign="+getMyURIEncoder(sign);
+        String _path = "applicationCode=MAGNETIC_APPLICATION&baseOrganId=200032&sign="+getMyURIEncoder(sign);
         String url = "http://120.92.101.137:8080/park-charge-api/park_place?"+_path;
         return HttpUtils.get(url);
     }
