@@ -53,7 +53,7 @@ public class CallUtils {
     	if(StringUtil.isNotBlank(place)){
     		data.put("parkPlaceId",place);
     	}
-//    	data.put("baseOrganId", "200032");
+    	data.put("baseOrganId", "200032");
     	data.put("code", code);
     	data.put("magneticStripeId", mac);
     	data.put("remark",remark);
