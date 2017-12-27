@@ -47,23 +47,29 @@
 	                  <th>车位号</th>
 	                  <th>电量</th>
 	                  <th>有车</th>
-	                  <th>ParentMac</th>
 	                  <th>RouterMac</th>
 	                  <th>上次通信时间</th>
+	                  <th>操作</th>
 	                </tr>
 	                </thead>
 		               <tbody id="data" >
 		               		<tr v-for="device in datas" >
 		               			<td v-text="device.mac" ></td>
-		               			<td v-text="device.description" ></td>
+		               			<td>
+		               				<input type="text" v-bind:id="device.mac" class="form-control input-sm" style="width: 100px;"  v-bind:value = "device.description"  >
+		               			</td>
 		               			<td v-text="device.batteryVoltage" ></td>
 		               			<td>
 		               				<span v-if="1===device.available" class="badge bg-red">有车</span>
 		               				<span v-if="0===device.available" class="badge bg-green">无车</span>
 		               			</td>
-		               			<td v-text="device.parentMac" ></td>
 		               			<td v-text="device.routerMac" ></td>
 		               			<td v-text="device.lastSeenTime" ></td>
+		               			<td>
+		               				<button  class='btn btn-info btn-xs' 
+										v-bind:mac="'_mac'+device.mac" 
+										onclick="_edit(this);" >保存车位信息</button>
+		               			</td>
 		               		</tr>
 		              </tbody>
 	              </table>

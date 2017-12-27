@@ -6,6 +6,20 @@ var _locationId = 14;
 $(function(){
 	getNav();
 })
+/**
+ * 隐藏新建弹框
+ */
+function _hideNew(){
+	$('#newBox').hide();
+	$('.content').css('opacity',1);
+}
+/**
+ * 显示新建弹框
+ */
+function _showNew(){
+	$('#newBox').show();
+	$('.content').css('opacity',0.3);
+}
 function _getPage(_type,_index){
 	var _p = -1;
 	if(_type==0){
