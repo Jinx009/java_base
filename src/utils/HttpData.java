@@ -15,15 +15,21 @@ public class HttpData {
 	private static final String LOCATION_RUSH_URL = "/rest/parking/locationRush";
 	private static final String DEVICE_URL = "/rest/parking/device";
 	private static final String CAR_URL = "/ge/carInOutLog";
+	private static final String LOCATION_LIST_URL = "/rest/locations";
+	private static final String LOCATION_UPDATE_URL = "/rest/location/update";
+	private static final String AREA_LIST_URL = "/rest/areas";
+	private static final String AREA_UPDATE_URL = "/rest/area/update";
 	public static final String VIEW_URL = "/rest/parking/detail";
 	public static final String JOB_ADD_URL = "/rest/job/save";
 	public static final String JOB_FIND_URL = "/rest/job/find";
 	public static final String INOUT_URL = "/rest/sensor/inOutLog";
 	
+	
 	private static final String POS_SERVER_IP = "http://120.92.101.137:8080";
 	private static final String baseOrganId = "200023";
 	private static final String organId = "200023";
 	private static final String  limit = "10";
+	
 	
 	/**
 	 * 获取设备信息
@@ -94,7 +100,51 @@ public class HttpData {
 		return url;
 	}
 	
+	/**
+	 * 获取location列表
+	 * @param token
+	 * @return
+	 */
+	public static String locationListeUrl(String token) {
+		String url = BASE_URL+LOCATION_LIST_URL+"?token="+token;
+		return url;
+	}
 	
+	/**
+	 * 修改location信息
+	 * @param token
+	 * @param id
+	 * @param name
+	 * @param desc
+	 * @return
+	 */
+	public static String locationUpdateUrl(String token, Integer id, String name, String desc) {
+		String url = BASE_URL+LOCATION_UPDATE_URL+"?token="+token+"&id="+id+"&name="+name+"&desc="+desc;
+		return url;
+	}
+	
+	/**
+	 * 获取Area列表
+	 * @param token
+	 * @return
+	 */
+	public static String areaListeUrl(Integer id,String token) {
+		String url = BASE_URL+AREA_LIST_URL+"?id="+id+"&token="+token;
+		return url;
+	}
+	
+	/**
+	 * 修改Area信息
+	 * @param token
+	 * @param id
+	 * @param name
+	 * @param desc
+	 * @return
+	 */
+	public static String areaUpdateUrl(String token, Integer id, String name, String desc) {
+		String url = BASE_URL+AREA_UPDATE_URL+"?token="+token+"&id="+id+"&name="+name+"&desc="+desc;
+		return url;
+	}
 	
 	
 	
@@ -145,6 +195,10 @@ public class HttpData {
 			return "";
 		}
 	}
+
+	
+
+	
 	
 
 	

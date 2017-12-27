@@ -48,9 +48,29 @@ public class HomePageController extends BaseController{
 		return "/home/order/list";
 	}
 	
-	@RequestMapping(path = "/account/pos")
-	public String account(){
-		return "/home/account/pos";
+	@RequestMapping(path = "/setting/pos")
+	public String setting(){
+		return "/home/setting/pos";
+	}
+	
+	@RequestMapping(path = "/setting/location")
+	public String location(){
+		return "/home/setting/location";
+	}
+	
+	@RequestMapping(path = "/setting/location_update")
+	public String location_update(){
+		return "/home/setting/location_update";
+	}
+	
+	@RequestMapping(path = "/setting/area")
+	public String area(){
+		return "/home/setting/area";
+	}
+	
+	@RequestMapping(path = "/setting/area_update")
+	public String area_update(){
+		return "/home/setting/area_update";
 	}
 	
 
