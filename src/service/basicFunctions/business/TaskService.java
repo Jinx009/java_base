@@ -45,9 +45,9 @@ public class TaskService {
 					i++;//63556   73382
 					System.out.println("----------"+businessMember.getId()+"----"+businessPointsHis.getId()+"---"+i);
 				}
-				businessMember.setCurrentPoints(0);
-				businessMember.setExpiredTime(date1);
-				businessMemberDao.update(businessMember);
+//				businessMember.setCurrentPoints(0);
+//				businessMember.setExpiredTime(date1);
+//				businessMemberDao.update(businessMember);
 			}
 		}
 	}
