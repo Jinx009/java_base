@@ -27,10 +27,10 @@ public class TaskService {
 			int i = 0;
 			for(BusinessMember businessMember : list){
 				String dateStr = "2018-01-01 00:00:00";
-				String dateStr1 = "2018-12-31 00:00:00";
+//				String dateStr1 = "2018-12-31 00:00:00";
 				SimpleDateFormat seDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Date date = seDateFormat.parse(dateStr);
-				Date date1 = seDateFormat.parse(dateStr1);
+//				Date date1 = seDateFormat.parse(dateStr1);
 				if(businessMember.getCurrentPoints()!=0){
 					BusinessPointsHis businessPointsHis = new BusinessPointsHis();
 					businessPointsHis.setCreateTime(date);
