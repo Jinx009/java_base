@@ -42,7 +42,7 @@ public class TaskService {
 					businessPointsHis.setRemarks("积分清零");
 					businessPointsHis.setUseTime(date);
 					businessPointsHisDao.save(businessPointsHis);
-					i++;//63556   73382
+					i++;//1117   86194
 					System.out.println("----------"+businessMember.getId()+"----"+businessPointsHis.getId()+"---"+i);
 				}
 //				businessMember.setCurrentPoints(0);
