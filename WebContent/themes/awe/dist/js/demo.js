@@ -324,7 +324,7 @@
       if (!$('body').hasClass('sidebar-collapse'))
         $("[data-layout='sidebar-collapse']").click();
     });
-    change_skin('skin-black');
+    change_skin('skin-blue-light');
     // Reset options
     if ($('body').hasClass('fixed')) {
       $("[data-layout='fixed']").attr('checked', 'checked');
