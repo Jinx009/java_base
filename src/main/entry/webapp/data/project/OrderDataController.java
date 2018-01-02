@@ -25,10 +25,10 @@ public class OrderDataController extends BaseController{
 	 */
 	@RequestMapping(path = "/list")
 	@ResponseBody
-	public Resp<?> order(){
+	public Resp<?> order(Integer page,String status){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String result = HttpData.order();
+			String result = HttpData.order(page,status);
 			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,JSON.parse(result));
 			return resp;
 		} catch (Exception e) {

@@ -172,9 +172,9 @@ public class HttpData {
 	 * pos机账单信息
 	 * @return
 	 */
-	public static String order() {
+	public static String order(Integer page,String status) {
 		try {
-			return CallUtils.getOrders3();
+			return CallUtils.getOrders3(page,status);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "";

@@ -24,19 +24,7 @@ public class CallUtils {
         String url = "http://120.92.101.137:8080/trade-api/order?"+_path;
         return HttpUtils.get(url);
     }
-    
-    public static String getOrders3() throws Exception {
-    	Map<String,String> data = new HashMap<String,String>();
-    	data.put("applicationCode", "MAGNETIC_APPLICATION");
-    	data.put("path", "/product");
-		data.put("size", "40");
-        String sign = KeyUtils.sign(data);
-        data.put("sign", sign);
-        data.remove("path");
-        String _path = "applicationCode=MAGNETIC_APPLICATION&size=40&sign="+getMyURIEncoder(sign);
-        String url = "http://120.92.101.137:8080/park-charge-api/product?"+_path;
-        return HttpUtils.get(url);
-    }
+
     
     /**
      * 更新或者新增车位地磁对应关系
@@ -126,6 +114,26 @@ public class CallUtils {
 //    	getMyURIEncoder("WRjKoUXCulXIr9/wY3gRPx+ssW5hnT720xEdDkaki503tN+ZQYtLaVdE1861orsCU4uzEBbY8sf+SDTRX4BylHOKhXUDMh2xdPaJ9LWeHSApiHtGd1sRGPnPldsFpuA9u369KfmWh/eHX7VCI6rFaZFOY46LygE4jYMekrDl+hQ=");
 	}
 
+    
+    public static String getOrders3(Integer page,String status) throws Exception {
+    	Map<String,String> data = new HashMap<String,String>();
+    	data.put("applicationCode", "MAGNETIC_APPLICATION");
+    	data.put("path", "/product");
+		data.put("size", "20");
+		data.put("page", String.valueOf(page));
+		if(!"ALL".equals(status)){
+			data.put("status", status);
+		}
+        String sign = KeyUtils.sign(data);
+        data.put("sign", sign);
+        data.remove("path");
+        String _path = "applicationCode=MAGNETIC_APPLICATION&size=20&page="+page+"&sign="+getMyURIEncoder(sign);
+        if(!"ALL".equals(status)){
+        	_path = "applicationCode=MAGNETIC_APPLICATION&size=20&page="+page+"&status="+status+"&sign="+getMyURIEncoder(sign);
+		}
+        String url = "http://120.92.101.137:8080/park-charge-api/product?"+_path;
+        return HttpUtils.get(url);
+    }
 	
 	
 }
