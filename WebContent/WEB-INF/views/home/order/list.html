@@ -19,7 +19,8 @@
     	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-   <link rel="shortcut icon" href="/themes/img/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/themes/img/favicon.ico"
+	type="image/x-icon">
 </head>
 <body>
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -50,7 +51,7 @@
 						<div class="row">
 							<div class="col-md-3">
 								<div class="form-group">
-									<label>支付状态</label> <select 
+									<label>支付状态</label> <select
 										class="form-control select2 select2-hidden-accessible"
 										id="status" style="width: 100%;" tabindex="-1"
 										aria-hidden="true">
@@ -116,11 +117,11 @@
 											<td>
 												<button v-if="'cancel_1'===order.notChargeReason"
 													class='btn btn-default btn-xs'>逃费</button>
-													<button v-if="'cancel_2'===order.notChargeReason"
+												<button v-if="'cancel_2'===order.notChargeReason"
 													class='btn btn-default btn-xs'>临时停车</button>
-													<button v-if="'cancel_3'===order.notChargeReason"
+												<button v-if="'cancel_3'===order.notChargeReason"
 													class='btn btn-default btn-xs'>公免车</button>
-													<button v-if="'cancel_4'===order.notChargeReason"
+												<button v-if="'cancel_4'===order.notChargeReason"
 													class='btn btn-default btn-xs'>支付失败</button>
 											</td>
 										</tr>
