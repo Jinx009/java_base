@@ -4,8 +4,11 @@ import org.springframework.stereotype.Repository;
 
 import common.helper.MD5Util;
 import database.common.BaseDao;
+import database.common.PageDataList;
 import database.common.QueryParam;
+import database.common.OrderFilter.OrderType;
 import database.models.project.ProUser;
+import utils.BaseConstant;
 
 @Repository
 public class ProUserDao extends BaseDao<ProUser>{
@@ -17,5 +20,17 @@ public class ProUserDao extends BaseDao<ProUser>{
 		return findByCriteriaForUnique(queryParam);
 	}
 
+	public PageDataList<ProUser> homeList(Integer p) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
+		queryParam.addOrder(OrderType.DESC, "id");
+		return findPageList(queryParam);
+	}
+
+	public ProUser findByMobile(String mobilePhone) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("mobilePhone", mobilePhone);
+		return findByCriteriaForUnique(queryParam);
+	}
 	
 }

@@ -41,7 +41,11 @@ public class ProUserFrontDataController extends BaseController{
 				setSessionFront(request, proUser);
 				return new Resp<>(RespData.OK_CODE,RespData.OK_MSG,MD5Util.md5(pwd));
 			}
-			return new Resp<>(RespData.ERROR_CODE,"账号或密码有误！",null);
+			proUser = proUserService.findByMobilePhone(mobilePhone);
+			if(proUser!=null){
+				return new Resp<>(RespData.ERROR_CODE,"账号或密码有误！",null);
+			}
+			proUser = proUserService
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

@@ -39,5 +39,7 @@ public class ProBookPost {
 	private String pointsRemark;
 	@Column(name = "status")
 	private Integer status;
+	@Column(name = "sell_points")
+	private Integer sellPoints;
 	
 }

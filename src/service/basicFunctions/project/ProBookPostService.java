@@ -7,13 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import database.basicFunctions.dao.project.ProBookPostDao;
+import database.basicFunctions.dao.project.ProUserDao;
 import database.models.project.ProBookPost;
+import database.models.project.ProUser;
 
 @Service
 public class ProBookPostService {
 
 	@Autowired
 	private ProBookPostDao proBookPostDao;
+	@Autowired
+	private ProUserDao proUserDao;
 	
 	public void saveNew(String postNum,String remark,String mobilePhone){
 		ProBookPost proBookPost = new ProBookPost();
@@ -30,4 +34,17 @@ public class ProBookPostService {
 	public List<ProBookPost> personList(String mobilePhone){
 		return proBookPostDao.personList(mobilePhone);
 	}
+	
+	public void update(Integer id,Integer points,String pointsRemark,Integer sellPoints){
+		ProBookPost proBookPost = proBookPostDao.find(id);
+		proBookPost.setStatus(1);
+		proBookPost.setPoints(points);
+		proBookPost.setPointsRemark(pointsRemark);
+		proBookPost.setSellPoints(sellPoints);
+		proBookPostDao.update(proBookPost);
+		ProUser proUser = proUserDao.findByMobile(proBookPost.getMobilePhone());
+		proUser.setCurrentPoints(proUser.getCurrentPoints()+points);
+		proUserDao.update(proUser);
+	}
+	
 }

@@ -32,6 +32,10 @@ public class ProUserService {
 		return proUserDao.login(mobilePhone,pwd);
 	}
 	
+	public ProUser findByMobilePhone(String mobilePhone){
+		return proUserDao.findByMobile(mobilePhone);
+	}
+	
 	public  void update(ProUser proUser){
 		proUserDao.update(proUser);
 	}
