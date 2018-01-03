@@ -37,6 +37,8 @@ public class ProBook {
 	private String desc;
 	@Column(name = "status")
 	private Integer status;
+	@Column(name = "pic_path")
+	private String picPath;
 	
 	
 }

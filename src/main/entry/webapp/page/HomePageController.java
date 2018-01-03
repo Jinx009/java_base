@@ -10,68 +10,44 @@ import main.entry.webapp.BaseController;
 @RequestMapping(value = "/home/p")
 public class HomePageController extends BaseController{
 	
-	/**
-	 * 车检器管理
-	 * @return
-	 */
-	@RequestMapping(path = "/device/sensor")
-	public String sensor(){
-		return "/home/device/sensor";
+	@RequestMapping(path = "/pro_user")
+	public String user(){
+		return "/home/pro_user";
 	}
 	
-	/**
-	 * 车检器管理
-	 * @return
-	 */
-	@RequestMapping(path = "/device/pos")
-	public String pos(){
-		return "/home/device/pos";
+	@RequestMapping(path = "/pro_pic")
+	public String pic(){
+		return "/home/pro_pic";
 	}
 	
-	@RequestMapping(path = "/parking_data/time")
-	public String time(){
-		return "/home/parking_data/time";
+	@RequestMapping(path = "/pro_book")
+	public String book(){
+		return "/home/pro_book";
 	}
 	
-	@RequestMapping(path = "/parking_data/inOut")
-	public String inOut(){
-		return "/home/parking_data/inOut";
+	@RequestMapping(path = "/pro_book_new")
+	public String bookNew(){
+		return "/home/pro_book_new";
 	}
 	
-	@RequestMapping(path = "/parking_data/rush")
-	public String rush(){
-		return "/home/parking_data/rush";
+	@RequestMapping(path = "/pro_book_edit")
+	public String bookEdit(){
+		return "/home/pro_book_edit";
 	}
 	
-	@RequestMapping(path = "/order/list")
-	public String order(){
-		return "/home/order/list";
+	@RequestMapping(path = "/pro_book_order")
+	public String bookOrder(){
+		return "/home/pro_book_order";
 	}
 	
-	@RequestMapping(path = "/setting/pos")
-	public String setting(){
-		return "/home/setting/pos";
+	@RequestMapping(path = "/pro_book_post")
+	public String post(){
+		return "/home/pro_book_post";
 	}
 	
-	@RequestMapping(path = "/setting/location")
-	public String location(){
-		return "/home/setting/location";
+	@RequestMapping(path = "/pro_book_post_edit")
+	public String postEdit(){
+		return "/home/pro_book_post_edit";
 	}
-	
-	@RequestMapping(path = "/setting/location_update")
-	public String location_update(){
-		return "/home/setting/location_update";
-	}
-	
-	@RequestMapping(path = "/setting/area")
-	public String area(){
-		return "/home/setting/area";
-	}
-	
-	@RequestMapping(path = "/setting/area_update")
-	public String area_update(){
-		return "/home/setting/area_update";
-	}
-	
 
 }

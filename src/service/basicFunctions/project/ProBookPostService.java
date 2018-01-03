@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import database.basicFunctions.dao.project.ProBookPostDao;
 import database.basicFunctions.dao.project.ProUserDao;
+import database.common.PageDataList;
 import database.models.project.ProBookPost;
 import database.models.project.ProUser;
 
@@ -45,6 +46,10 @@ public class ProBookPostService {
 		ProUser proUser = proUserDao.findByMobile(proBookPost.getMobilePhone());
 		proUser.setCurrentPoints(proUser.getCurrentPoints()+points);
 		proUserDao.update(proUser);
+	}
+
+	public PageDataList<ProBookPost> homeList(Integer p) {
+		return proBookPostDao.homeList(p);
 	}
 	
 }

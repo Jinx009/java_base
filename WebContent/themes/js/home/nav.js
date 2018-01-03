@@ -52,22 +52,20 @@ function _getNowPage(_e){
 	$(_e).val('');
 	$(_e).attr('placeholder',_nowPage);
 }
+function _openC(_class,_url){
+	setSessionStorage('_class',_class);
+	location.href = _url;
+}
+
 /**
  * 导航数据
  */
 function getNav(){
-	var _index = getSessionStorage('_index');
-	var _href = getSessionStorage('_href');
-	if(_index!=''){
-		$('.l'+_index).addClass('active');
-		$('.u'+_index).css('display','block');
-		$('.u'+_index+' li').each(function(){
-			var _onclick = $(this).attr('onclick');
-			if(_onclick.indexOf(_href)>-1){
-				$(this).addClass('active');
-			}
-		})
-	}
+	var _class = getSessionStorage('_class');
+	$('.treeview').each(function(){
+		$(this).removeClass('active');
+	})
+	$('.'+_class).addClass('active');
 	$('#warningInput').val(new Date().Format("yyyy年MM月dd日"));
 }
 /**
@@ -129,13 +127,13 @@ function getTimestamp(){
  */
 function loginOut(){
 	$.ajax({
-		url:'/home/config/loginOut',
+		url:'/book/home/config/loginOut',
 		dataType:'json',
 		type:'post',
 		success:function(res){
 			if('200'==res.code){
 				layer.alert('账号退出成功！',function(){
-					location.href = '/home/index';
+					location.href = '/book/home/index';
 				})
 			}
 		}

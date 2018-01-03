@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import common.helper.MD5Util;
 import database.basicFunctions.dao.project.ProUserDao;
+import database.common.PageDataList;
 import database.models.project.ProUser;
 
 @Service
@@ -38,6 +39,10 @@ public class ProUserService {
 	
 	public  void update(ProUser proUser){
 		proUserDao.update(proUser);
+	}
+
+	public PageDataList<ProUser> all(Integer p) {
+		return proUserDao.homeList(p);
 	}
 	
 }

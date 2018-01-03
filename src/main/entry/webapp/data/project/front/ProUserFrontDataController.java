@@ -45,7 +45,7 @@ public class ProUserFrontDataController extends BaseController{
 			if(proUser!=null){
 				return new Resp<>(RespData.ERROR_CODE,"账号或密码有误！",null);
 			}
-			proUser = proUserService
+//			proUser = proUserService
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

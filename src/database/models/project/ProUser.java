@@ -41,5 +41,7 @@ public class ProUser {
 	private String openid;
 	@Column(name = "address")
 	private String address;
+	@Column(name = "pic_path")
+	private String picPath;
 	
 }

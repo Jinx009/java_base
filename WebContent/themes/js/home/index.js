@@ -1,6 +1,6 @@
 $(function() {
-	setSessionStorage('_index','1');
-	setSessionStorage('_href','/home/p/pos');
+	setSessionStorage('_class','l1');
+	setSessionStorage('_href','/book/home/p/pro_user');
 	changeWidth();
 	$('.login-btn').bind('click', function() {
 		login()
@@ -60,12 +60,12 @@ function login() {
 			$('#errorMsg').html('密码不能为空！')
 		} else {
 			$.ajax({
-				url : '/home/config/login',
+				url : '/book/home/config/login',
 				type : 'post',
 				data : params,
 				success : function(res) {
 					if ('200' == res.code && '访问成功' == res.msg) {
-						_open('1','/home/p/device/sensor');
+						_open('l1','/book/home/p/pro_user');
 					} else {
 						$('#errorMsg').html(res.msg)
 					}
