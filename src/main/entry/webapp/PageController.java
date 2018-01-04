@@ -15,6 +15,11 @@ public class PageController {
 		return "/index";
 	}
 	
+	@RequestMapping(value = "/iot-admin/welcome")
+	public String admin(){
+		return "/index";
+	}
+	
 	@RequestMapping(value = "/index")
 	public String index(){
 		return "/index";
