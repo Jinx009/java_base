@@ -41,5 +41,10 @@ public class ProBookOrder {
 	private String userName;
 	@Column(name = "post_num")
 	private String postNum;
+	@Column(name = "status")
+	private Integer status;
+	@Column(name = "post_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date postTime;
 	
 }

@@ -36,4 +36,14 @@ public class ProBookOrderHomeDataController extends BaseController{
 		return resp;
 	}
 	
+	public Resp<?> update(Integer id,String postNum){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			proBookOrderService.updateStatus(id,postNum);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 }

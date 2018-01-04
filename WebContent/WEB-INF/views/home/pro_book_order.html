@@ -48,6 +48,8 @@
 											<th>购买者手机号</th>
 											<th>购买者姓名</th>
 											<th>发货地址</th>
+											<th>兑换时间</th>
+											<th>发货时间</th>
 											<th>快递编号</th>
 											<th>状态</th>
 											<th>操作</th>
@@ -61,9 +63,11 @@
 											<td v-text="item.mobilePhone"></td>
 											<td v-text="item.userName"></td>
 											<td v-text="item.address"></td>
+											<td v-text="item.createTime"></td>
+											<td v-text="item.postTime"></td>
 											<td v-text="item.postNum">
 												<span v-if="0!=item.status" v-text="item.postNum" ></span>
-												
+												<input v-if="0===item.status" value="" id="postNum" >
 											</td>
 											<td>
 												<button class='btn btn-default btn-xs'  v-if="0===item.status" >确认已寄出</button>
