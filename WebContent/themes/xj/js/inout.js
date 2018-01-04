@@ -10,13 +10,13 @@ $(function(){
 
 		_getData();
 
-	}, 15000);
+	}, 2000);
 })
 var _data = '';
 function _getData(){
 	var dateStr = $('#datepicker').val(),areaId=27;
 	$.ajax({
-		url:'/interface/1800/inout?areaId='+areaId+'&dateStr='+dateStr,
+		url:'/interface/1800/inout?areaId='+areaId+'&dateStr='+dateStr+'&t='+new Date(),
 		type:'get',
 		dataType:'json',
 		success:function(res){
