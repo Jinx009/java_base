@@ -37,5 +37,9 @@ public class ProBookOrder {
 	private Date createTime;
 	@Column(name = "address")
 	private String address;
+	@Column(name = "user_name")
+	private String userName;
+	@Column(name = "post_num")
+	private String postNum;
 	
 }

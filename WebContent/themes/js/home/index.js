@@ -1,6 +1,6 @@
 $(function() {
 	setSessionStorage('_class','l1');
-	setSessionStorage('_href','/book/home/p/pro_user');
+	setSessionStorage('_href','/home/p/pro_user');
 	changeWidth();
 	$('.login-btn').bind('click', function() {
 		login()
@@ -60,7 +60,7 @@ function login() {
 			$('#errorMsg').html('密码不能为空！')
 		} else {
 			$.ajax({
-				url : '/book/home/config/login',
+				url : '/home/config/login',
 				type : 'post',
 				data : params,
 				success : function(res) {

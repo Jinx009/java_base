@@ -127,7 +127,7 @@ function getTimestamp(){
  */
 function loginOut(){
 	$.ajax({
-		url:'/book/home/config/loginOut',
+		url:'/home/config/loginOut',
 		dataType:'json',
 		type:'post',
 		success:function(res){

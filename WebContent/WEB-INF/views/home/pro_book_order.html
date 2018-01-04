@@ -26,7 +26,7 @@
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> 用户管理 </a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> 书籍订单管理 </a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
@@ -35,7 +35,7 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">用户列表</h3>
+								<h3 class="box-title">书籍订单列表</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body table-responsive no-padding">
@@ -43,21 +43,36 @@
 									<thead>
 										<tr>
 											<th>编号</th>
-											<th>手机号码</th>
-											<th>注册时间</th>
-											<th>当前积分</th>
-											<th>姓名</th>
-											<th>地址</th>
+											<th>书籍编号</th>
+											<th>书籍名称</th>
+											<th>购买者手机号</th>
+											<th>购买者姓名</th>
+											<th>发货地址</th>
+											<th>快递编号</th>
+											<th>状态</th>
+											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr v-for="item in datas.list">
 											<td v-text="item.id"></td>
+											<td v-text="item.bookId"></td>
+											<td v-text="item.bookName"></td>
 											<td v-text="item.mobilePhone"></td>
-											<td v-text="item.createTime"></td>
-											<td v-text="item.currentPoints" ></td>
-											<td v-text="item.realName"></td>
+											<td v-text="item.userName"></td>
 											<td v-text="item.address"></td>
+											<td v-text="item.postNum">
+												<span v-if="0!=item.status" v-text="item.postNum" ></span>
+												
+											</td>
+											<td>
+												<button class='btn btn-default btn-xs'  v-if="0===item.status" >确认已寄出</button>
+												<button class='btn btn-default btn-xs'  v-if="1===item.status" >寄送中</button>
+												<button class='btn btn-default btn-xs'  v-if="2===item.status" >已收货</button>
+											</td>
+											<td>
+												<button class='btn btn-info btn-xs' v-bind:id="item.id" onclick="_update(this)"  v-if="0===item.status" >确认已寄出</button>
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -83,7 +98,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_user.js?version=1.014"></script>
+	<script src="/themes/js/home/pro_book_order.js?version=1.014"></script>
 
 </body>
 </html>

@@ -26,56 +26,60 @@
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> 用户管理 </a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> 书籍管理 </a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
-			<section class="content"  id="data">
+<section class="content-header" style="height: 50px;">
+				<h1></h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> AppInfo编辑 </a></li>
+				</ol>
+			</section>
+			<!-- 主内容 -->
+			<section class="content" id="datas">
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">用户列表</h3>
+								<h3 class="box-title">
+									<button type="button" class="btn btn-info btn-xs" onclick="_open('l1','/home/p/pro_book')" data-widget="collapse">返回</button>
+								</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body table-responsive no-padding">
 								<table class="table table-hover table-bordered">
-									<thead>
+									<tbody id="data" >
 										<tr>
-											<th>编号</th>
-											<th>手机号码</th>
-											<th>注册时间</th>
-											<th>当前积分</th>
-											<th>姓名</th>
-											<th>地址</th>
+											<th>编号：</th><td v-text="datas.id" ></td>
 										</tr>
-									</thead>
-									<tbody>
-										<tr v-for="item in datas.list">
-											<td v-text="item.id"></td>
-											<td v-text="item.mobilePhone"></td>
-											<td v-text="item.createTime"></td>
-											<td v-text="item.currentPoints" ></td>
-											<td v-text="item.realName"></td>
-											<td v-text="item.address"></td>
+										<tr>
+											<th>appId:</th>
+											<td>
+												<input type="text" class="form-control" v-bind:value="datas.appId" id="appId" >
+											</td>
+										</tr>
+										<tr>
+											<th>appSecret:</th>
+											<td >
+												<input type="text" class="form-control" v-bind:value="datas.appSecret" readonly="readonly" id="appSecret" >
+												<button  class="btn btn-default btn-xs" style="margin-top: 10px;"  onclick="_newSecret();" >生成秘钥</button>
+											</td>
+										</tr>
+										<tr>
+											<th>备注</th>
+											<td>
+												<input class="form-control" id="description"  v-bind:value="datas.description"  />
+											</td>
+										</tr>
+										<tr>
+											<th >
+												<button class="btn btn-danger btn-xs" style="width: 40%;margin-left:2%;"  onclick="_save();" v-text="'完成'" ></button>
+											</th>
 										</tr>
 									</tbody>
 								</table>
 							</div>
-							<div class="box-footer clearfix"
-								style="width: 320px; float: right;">
-								<div class="input-group">
-									<span class="input-group-addon" onclick="_getData(0,1);">«</span>
-									<span class="input-group-addon" onclick="_getData(1,0);">‹</span>
-									<input type="text" style="text-align: center;"
-										onfocus="_getNowPage(this)" onblur="_getAllPage(this)"
-										v-bind:value="'当前第'+datas.page.currentPage+'页，共'+datas.page.pages+'页'"
-										class="form-control"> <span class="input-group-addon"
-										onclick="_getData(1,1);">›</span> <span
-										class="input-group-addon" id="_end">»</span>
-								</div>
-							</div>
-
 						</div>
 					</div>
 				</div>
@@ -83,7 +87,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_user.js?version=1.014"></script>
+	<script src="/themes/js/home/pro_book_add.js?version=1.014"></script>
 
 </body>
 </html>
