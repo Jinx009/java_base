@@ -53,7 +53,7 @@ function goJob(_element) {
 						success : function(resp) {
 							if ('200' == resp.code) {
 								layer.alert('正在校准中...', function() {
-									location.href = '/themes/modou/job.html';
+									location.href = '/themes/xj/job.html';
 								})
 							} else {
 								layer.alert(resp.msg);
