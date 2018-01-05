@@ -1,4 +1,5 @@
 $(function(){
+	setSessionStorage('_class','icon-star-');
 	_loadClass();
 	_getData();
 })
