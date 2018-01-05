@@ -21,6 +21,7 @@ public class ProBookPostHomeDataController extends BaseController{
 	@Autowired
 	private ProBookPostService proBookPostService;
 	
+	@RequestMapping(path = "list")
 	public Resp<?> list(Integer p){
 		Resp<?> resp = new Resp<>(false);
 		try {

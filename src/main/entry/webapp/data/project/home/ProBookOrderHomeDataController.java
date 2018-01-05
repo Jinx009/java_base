@@ -36,6 +36,7 @@ public class ProBookOrderHomeDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "update")
 	public Resp<?> update(Integer id,String postNum){
 		Resp<?> resp = new Resp<>(false);
 		try {

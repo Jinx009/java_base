@@ -14,7 +14,7 @@ import service.basicFunctions.project.ProPicService;
 import utils.Resp;
 
 @Controller
-@RequestMapping(value = "/home/p")
+@RequestMapping(value = "/home/d/pro_pic")
 public class ProPicHomeDataController extends BaseController{
 
 	private static final Logger log = LoggerFactory.getLogger(ProPicHomeDataController.class);
