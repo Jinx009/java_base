@@ -25,4 +25,5 @@ public class BaseConstant {
 	public static final Integer LOCATION_ID = 22;
 	public static final String APP_ID_NOW = AppInfo.XINJIANG.getAppId();
 	public static final int PAGE_SIZE = 20;
+	public static final String FRONT_USER = "front_user";
 }

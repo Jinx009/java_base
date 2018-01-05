@@ -18,7 +18,7 @@ import utils.Resp;
 import utils.RespData;
 
 @Controller
-@RequestMapping(value = "/front/d")
+@RequestMapping(value = "/front/d/pro_user")
 public class ProUserFrontDataController extends BaseController{
 
 	private static final Logger log = LoggerFactory.getLogger(ProUserFrontDataController.class);
@@ -44,14 +44,54 @@ public class ProUserFrontDataController extends BaseController{
 			proUser = proUserService.findByMobilePhone(mobilePhone);
 			if(proUser!=null){
 				return new Resp<>(RespData.ERROR_CODE,"账号或密码有误！",null);
+			}else{
+				return new Resp<>(RespData.ERROR_CODE,"账户不存在！",null);
 			}
-//			proUser = proUserService
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
 		return resp;
 	}
 
+	@RequestMapping(path = "/login_m")
+	@ResponseBody
+	public Resp<?> login_m(String mobilePhone,String pwd,HttpServletRequest request){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			if(StringUtil.isBlank(mobilePhone)){
+				return new Resp<>(RespData.ERROR_CODE,"手机号码不能为空！",null);
+			}else if(StringUtil.isBlank(pwd)){
+				return new Resp<>(RespData.ERROR_CODE,"密码不能为空！",null);
+			}
+			ProUser proUser = proUserService.login_m(mobilePhone, pwd);
+			if(proUser!=null){
+				setSessionFront(request, proUser);
+				return new Resp<>(RespData.OK_CODE,RespData.OK_MSG,MD5Util.md5(pwd));
+			}
+			proUser = proUserService.findByMobilePhone(mobilePhone);
+			if(proUser!=null){
+				return new Resp<>(RespData.ERROR_CODE,"账号或密码有误！",null);
+			}else{
+				return new Resp<>(RespData.ERROR_CODE,"账户不存在！",null);
+			}
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/me")
+	@ResponseBody
+	public Resp<?> me(String mobilePhone,String pwd,HttpServletRequest request){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			ProUser proUser = getSessionFrontUser(request);
+			return new Resp<>(proUser);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
 	
 	
 }

@@ -44,5 +44,9 @@ public class ProUserService {
 	public PageDataList<ProUser> all(Integer p) {
 		return proUserDao.homeList(p);
 	}
+
+	public ProUser login_m(String mobilePhone, String pwd) {
+		return proUserDao.login_m(mobilePhone,pwd);
+	}
 	
 }

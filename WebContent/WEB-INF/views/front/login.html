@@ -1,6 +1,6 @@
 <#include "m_header.html">
 <header class="bar bar-nav">
-  <h1 class='title'>表单</h1>
+  <h1 class='title'>登录</h1>
 </header>
 <div class="content">
   <div class="list-block">
@@ -10,9 +10,9 @@
         <div class="item-content">
           <div class="item-media"><i class="icon icon-form-name"></i></div>
           <div class="item-inner">
-            <div class="item-title label">姓名</div>
+            <div class="item-title label">手机号</div>
             <div class="item-input">
-              <input type="text" placeholder="Your name">
+              <input type="text" id="mobilePhone" placeholder="请输入您的手机号">
             </div>
           </div>
         </div>
@@ -21,72 +21,23 @@
         <div class="item-content">
           <div class="item-media"><i class="icon icon-form-email"></i></div>
           <div class="item-inner">
-            <div class="item-title label">邮箱</div>
-            <div class="item-input">
-              <input type="email" placeholder="E-mail">
-            </div>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="item-content">
-          <div class="item-media"><i class="icon icon-form-password"></i></div>
-          <div class="item-inner">
             <div class="item-title label">密码</div>
             <div class="item-input">
-              <input type="password" placeholder="Password" class="">
+              <input id="password" type="password" placeholder="请输入您的密码">
             </div>
           </div>
         </div>
       </li>
-      <li>
-        <div class="item-content">
-          <div class="item-media"><i class="icon icon-form-gender"></i></div>
-          <div class="item-inner">
-            <div class="item-title label">性别</div>
-            <div class="item-input">
-              <select>
-                <option>Male</option>
-                <option>Female</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </li>
-      <!-- Date -->
-      <li>
-        <div class="item-content">
-          <div class="item-media"><i class="icon icon-form-calendar"></i></div>
-          <div class="item-inner">
-            <div class="item-title label">生日</div>
-            <div class="item-input">
-              <input type="date" placeholder="Birth day" value="2014-04-30">
-            </div>
-          </div>
-        </div>
-      </li>
-      <!-- Switch (Checkbox) -->
       <li>
         <div class="item-content">
           <div class="item-media"><i class="icon icon-form-toggle"></i></div>
           <div class="item-inner">
-            <div class="item-title label">开关</div>
+            <div class="item-title label">保持登录状态</div>
             <div class="item-input">
               <label class="label-switch">
-                <input type="checkbox">
+                <input id="check" type="checkbox">
                 <div class="checkbox"></div>
               </label>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="align-top">
-        <div class="item-content">
-          <div class="item-media"><i class="icon icon-form-comment"></i></div>
-          <div class="item-inner">
-            <div class="item-title label">文本域</div>
-            <div class="item-input">
-              <textarea></textarea>
             </div>
           </div>
         </div>
@@ -95,9 +46,13 @@
   </div>
   <div class="content-block">
     <div class="row">
-      <div class="col-50"><a href="#" class="button button-big button-fill button-danger">取消</a></div>
-      <div class="col-50"><a href="#" class="button button-big button-fill button-success">提交</a></div>
+      <div class="col-100"><a onclick="login();" class="button button-big button-fill button-success">登录</a></div>
+    </div>
+      <div class="row" style="margin-top: 20px;" >
+      <div class="col-100"><a href="/f/p/register" class="button button-big button-fill button-danger">注册</a></div>
     </div>
   </div>
 </div>
+<script src="/themes/md5.js?_v=1.01" ></script>
+<script src="/themes/js/front/login.js?_v=1.02" ></script>
 <#include "m_footer.html">

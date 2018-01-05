@@ -5,13 +5,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import main.entry.webapp.BaseController;
 
-@RequestMapping(value = "/front/p")
 @Controller
 public class FrontPageController extends BaseController{
 
-	@RequestMapping(path = "/login")
+	@RequestMapping(value = "/f/p/login")
 	public String login(){
 		return "/front/login";
+	}
+	
+	@RequestMapping(value = "/f/p/book")
+	public String book(){
+		return "/front/book";
+	}
+	
+	@RequestMapping(value = "/f/p/pic")
+	public String pic(){
+		return "/front/pic";
+	}
+	
+	@RequestMapping(value = "/front/p/me")
+	public String me(){
+		return "/front/me";
 	}
 	
 }

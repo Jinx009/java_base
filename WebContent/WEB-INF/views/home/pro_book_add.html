@@ -30,63 +30,68 @@
 				</ol>
 			</section>
 			<!-- 主内容 -->
-<section class="content-header" style="height: 50px;">
+			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> AppInfo编辑 </a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> 新增书籍 </a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
 			<section class="content" id="datas">
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="box">
-							<div class="box-header">
-								<h3 class="box-title">
-									<button type="button" class="btn btn-info btn-xs" onclick="_open('l1','/home/p/pro_book')" data-widget="collapse">返回</button>
-								</h3>
-							</div>
-							<!-- /.box-header -->
-							<div class="box-body table-responsive no-padding">
-								<table class="table table-hover table-bordered">
-									<tbody id="data" >
-										<tr>
-											<th>编号：</th><td v-text="datas.id" ></td>
-										</tr>
-										<tr>
-											<th>appId:</th>
-											<td>
-												<input type="text" class="form-control" v-bind:value="datas.appId" id="appId" >
-											</td>
-										</tr>
-										<tr>
-											<th>appSecret:</th>
-											<td >
-												<input type="text" class="form-control" v-bind:value="datas.appSecret" readonly="readonly" id="appSecret" >
-												<button  class="btn btn-default btn-xs" style="margin-top: 10px;"  onclick="_newSecret();" >生成秘钥</button>
-											</td>
-										</tr>
-										<tr>
-											<th>备注</th>
-											<td>
-												<input class="form-control" id="description"  v-bind:value="datas.description"  />
-											</td>
-										</tr>
-										<tr>
-											<th >
-												<button class="btn btn-danger btn-xs" style="width: 40%;margin-left:2%;"  onclick="_save();" v-text="'完成'" ></button>
-											</th>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
+				 <div class="row">
+			      <div class="col-md-3"></div>
+			      <div class="col-md-6">
+			      	<div class="box box-primary">
+			            <form role="form">
+			              <div class="box-body">
+			                <div class="form-group">
+			                  <label>书籍名称</label>
+			                  <input type="text" class="form-control" id="name" placeholder="请输入书籍名称">
+			                </div>
+			                <div class="form-group">
+			                  <label>邮寄者手机号</label>
+			                  <input type="text" style="margin-top: 20px;" class="form-control" id="mobilePhone" placeholder="请输入手机号">
+			                </div>
+			                 <div class="form-group">
+			                  <label>书籍描述</label>
+			                  <input type="text" class="form-control" id="desc" placeholder="请输入描述内容">
+			                </div>
+			                  <div class="form-group">
+			                  <label>兑换积分</label>
+			                  <input type="text" class="form-control" id="points" placeholder="请输入兑换积分">
+			                </div>
+			                  <div class="form-group">
+			                	<label>展示头图</label>
+				                <div class="input-group">
+				                	<input type="text" id="fileShow" readonly="readonly" class="form-control">
+				                    <span class="input-group-btn">
+				                      <button type="button" onclick="_showUpload();" class="btn btn-info btn-flat"> 上 传 </button>
+				                    </span>
+				               </div>
+			               </div>
+			                <div class="form-group">
+			                   <img alt="" id="img"  src="" >
+			                </div>
+			                <div class="form-group">
+			                  <span class="badge bg-red" id="errorMsg" ></span>
+			                </div>
+			              </div>
+			              <div class="box-footer">
+			                <button type="button" class="btn btn-primary submit-btn">保存</button>
+			              </div>
+			            </form>
+			              <form id="form" action="/base/uploadImg" enctype="multipart/form-data"  method="post" style="display: none;" >
+		                    <input type="file"  id="file" name="file" >
+		                  </form>
+			            </div>
+		            </div>
+		          </div>
 			</section>
 		</div>
 		<#include "home_footer.html">
 	</div>
+	<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+	<script src="/themes/js/ajaxUpload.js?version=1.43"></script>
 	<script src="/themes/js/home/pro_book_add.js?version=1.014"></script>
 
 </body>

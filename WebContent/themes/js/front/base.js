@@ -28,6 +28,7 @@ function getSessionStorage(_key){
 	if(window.sessionStorage){     
 		return window.sessionStorage.getItem(_key);
 	}
+	return '';
 }
 /**
  * 设置storage
@@ -38,6 +39,36 @@ function getSessionStorage(_key){
 function setSessionStorage(_key,_value){
 	if(window.sessionStorage){     
 		var _r = window.sessionStorage.setItem(_key,_value);
+		if(_r!=null&&_r!=''&&_r!=undefined){
+			return _r;
+		}else{
+			return '';
+		}
+	}else{ 
+		return '';
+	}
+}
+
+/**
+ * 获取storage
+ * @param _key
+ * @returns
+ */
+function getLocalStorage(_key){
+	if(window.sessionStorage){     
+		return window.localStorage.getItem(_key);
+	}
+	return '';
+}
+/**
+ * 设置storage
+ * @param _key
+ * @param _value
+ * @returns
+ */
+function setLocalStorage(_key,_value){
+	if(window.localStorage){     
+		var _r = window.localStorage.setItem(_key,_value);
 		if(_r!=null&&_r!=''&&_r!=undefined){
 			return _r;
 		}else{

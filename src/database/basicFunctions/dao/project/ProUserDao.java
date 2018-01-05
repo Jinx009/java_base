@@ -32,5 +32,12 @@ public class ProUserDao extends BaseDao<ProUser>{
 		queryParam.addParam("mobilePhone", mobilePhone);
 		return findByCriteriaForUnique(queryParam);
 	}
+
+	public ProUser login_m(String mobilePhone, String pwd) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("mobilePhone", mobilePhone);
+		queryParam.addParam("pwd", pwd);
+		return findByCriteriaForUnique(queryParam);
+	}
 	
 }

@@ -35,5 +35,9 @@ public class ProPicService {
 		proPic.setStar(0);
 		proPicDao.save(proPic);
 	}
+
+	public List<ProPic> list() {
+		return proPicDao.frontList();
+	}
 	
 }

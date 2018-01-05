@@ -35,4 +35,16 @@ public class ProBookHomeDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/add")
+	public Resp<?> save(String name,String desc,String picPath,Integer points,String mobilePhone){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			proBookService.saveNew(name, desc, picPath, points, mobilePhone);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 }
