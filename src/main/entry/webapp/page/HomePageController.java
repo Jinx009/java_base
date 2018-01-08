@@ -45,6 +45,11 @@ public class HomePageController extends BaseController{
 		return "/home/pro_book_post";
 	}
 	
+	@RequestMapping(path = "/pro_book_trans")
+	public String trans(){
+		return "/home/pro_book_post";
+	}
+	
 	@RequestMapping(path = "/pro_book_post_edit")
 	public String postEdit(){
 		return "/home/pro_book_post_edit";
