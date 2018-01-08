@@ -11,19 +11,6 @@ import common.helper.StringUtil;
 import utils.HttpUtils;
 
 public class CallUtils {
-	
-    public static String getOrders2() throws Exception {
-    	Map<String,String> data = new HashMap<String,String>();
-    	data.put("applicationCode", "MAGNETIC_APPLICATION");
-    	data.put("path", "/order");
-		data.put("baseOrganId", "200023");
-        String sign = KeyUtils.sign(data);
-        data.put("sign", sign);
-        data.remove("path");
-        String _path = "baseOrganId=200023&applicationCode=MAGNETIC_APPLICATION&sign="+getMyURIEncoder(sign);
-        String url = "http://120.92.101.137:8080/trade-api/order?"+_path;
-        return HttpUtils.get(url);
-    }
 
     
     /**
@@ -110,7 +97,7 @@ public class CallUtils {
     
     
     public static void main(String[] args) throws Exception{
-    	getPlace();
+    	getOrders3(1,"ALL");
 //    	getMyURIEncoder("WRjKoUXCulXIr9/wY3gRPx+ssW5hnT720xEdDkaki503tN+ZQYtLaVdE1861orsCU4uzEBbY8sf+SDTRX4BylHOKhXUDMh2xdPaJ9LWeHSApiHtGd1sRGPnPldsFpuA9u369KfmWh/eHX7VCI6rFaZFOY46LygE4jYMekrDl+hQ=");
 	}
 
@@ -134,6 +121,5 @@ public class CallUtils {
         String url = "http://120.92.101.137:8080/park-charge-api/product?"+_path;
         return HttpUtils.get(url);
     }
-	
-	
+    
 }
