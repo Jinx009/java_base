@@ -48,6 +48,11 @@ public class HomePageController extends BaseController{
 		return "/home/order/list";
 	}
 	
+	@RequestMapping(path = "/order/role_add")
+	public String role_add(){
+		return "/home/order/role_add";
+	}
+	
 	@RequestMapping(path = "/order/detail")
 	public String detail(){
 		return "/home/order/detail";
