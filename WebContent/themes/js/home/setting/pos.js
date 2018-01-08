@@ -24,3 +24,6 @@ function getData(){
 		}
 	})
 }
+function _newUser(){
+	_open_('3','/home/p/setting/pos','/home/p/setting/pos_add');
+}

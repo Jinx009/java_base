@@ -68,6 +68,12 @@ public class HomePageController extends BaseController{
 		return "/home/setting/pos";
 	}
 	
+	@RequestMapping(path = "/setting/pos_add")
+	public String pos_add(){
+		return "/home/setting/pos_add";
+	}
+	
+	
 	@RequestMapping(path = "/setting/location")
 	public String location(){
 		return "/home/setting/location";
