@@ -23,7 +23,7 @@
       
     <!-- 通过component-scan 让Spring扫描org.swinglife.controller下的所有的类，让Spring的代码注解生效 -->  
     
-    <context:component-scan base-package="main.*; database.*; service.*;"></context:component-scan>  
+    <context:component-scan base-package="main.*;service.*;"></context:component-scan>  
     <mvc:annotation-driven/>
     <context:annotation-config />
       

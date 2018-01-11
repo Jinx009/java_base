@@ -25,17 +25,6 @@
     
     <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
      	
-	<bean id="nbDataSourcePlaceHolder" class="common.helper.nbDataSourcePlaceHolder">
-        <property name="locations">
-            <list>      
-                <value>/config/mysql.properties</value><!-- 加密后文件 -->
-            </list>
-        </property>
-        <property name="fileEncoding" value="utf-8"/> 
-    </bean>
-    
- 	<import resource="redis-context.xml"/> 
- 	
  	<bean id="nbTransactionInterceptor" class="common.helper.nbTransactionInterceptor"/>
 	<!-- freemarker html视图渲染器 -->
 	<bean id="freemarkerConfig"
@@ -52,36 +41,4 @@
             </props>
         </property>
     </bean>
-    <!-- dataSource -->
-  	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-	    <property name="driverClassName" value="${jdbc.driverClassName}" />  
-	    <property name="url" value="${jdbc.url}" />  
-	    <property name="username" value="${jdbc.username}" />  
-        <property name="password" value="${jdbc.password}" />
-         <property name="defaultAutoCommit" value="true" />
-	</bean>  
-	<!-- jpa -->
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">  
-        <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="database.*" />
-        <property name="jpaVendorAdapter">  
-              <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
-        </property>  
-        <property name="jpaProperties">
-          	<map>
-				<entry key="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
-				<entry key="hibernate.show_sql" value="false"/>
-				<entry key="hibernate.hbm2ddl.auto" value="update"/>
-				<entry key="hibernate.format_sql" value="true"/>
-				<entry key="hibernate.ejb.interceptor" value-ref="nbTransactionInterceptor"/>
-			</map>
-		</property> 
-     </bean>   
-	  
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" >  
-        <property name="entityManagerFactory" ref="entityManagerFactory"></property>
-    </bean>
-    
-    <context:component-scan base-package="database.*"/>
-    
 </beans>
