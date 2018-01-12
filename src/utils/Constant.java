@@ -10,6 +10,9 @@ public class Constant {
     public static final String REFRESH_TOKEN = BASE_URL + "/iocm/app/sec/v1.1.0/refreshToken";
     public static final String CALLBACK_BASE_URL = "http://139.196.205.157:8080/iot";
     public static final String NOTICE_URL = CALLBACK_BASE_URL + "/rest/notice";
+    public static final String CERT_DIR = "/data/cert";
+    public static String SELFCERTPATH = "/cert/outgoing.CertwithKey.pkcs12";
+    public static String TRUSTCAPATH = "/cert/ca.jks";
 
     /*
      * complete callback url：
@@ -35,9 +38,6 @@ public class Constant {
     public static final String REPORT_CMD_EXEC_RESULT_CALLBACK_URL = CALLBACK_BASE_URL + "/na/iocm/devNotify/v1.1.0/reportCmdExecResult";
 
 
-    //Paths of certificates.
-    public static String SELFCERTPATH = "/src/resource/cert/outgoing.CertwithKey.pkcs12";
-    public static String TRUSTCAPATH = "/src/resource/cert/ca.jks";
 
     //Password of certificates.
     public static String SELFCERTPWD = "IoM@1234";
@@ -129,5 +129,6 @@ public class Constant {
     public static final String DEVICE_EVENT = "deviceEvent";
     public static final String RULE_EVENT = "ruleEvent";
     public static final String DEVICE_DATAS_CHANGED = "deviceDatasChanged";
+	
 
 }

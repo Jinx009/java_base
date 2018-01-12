@@ -21,7 +21,7 @@ public class AccessTokenService {
 			HttpsUtil httpsUtil = new HttpsUtil();
 			httpsUtil.initSSLConfigForTwoWay();
 
-			Map<String, String> param = new HashMap<>();
+			Map<String, String> param = new HashMap<String,String>();
 			param.put("appId", Constant.APPID);
 			param.put("secret", Constant.SECRET);
 
@@ -31,33 +31,8 @@ public class AccessTokenService {
 			Map<String, String> data = new HashMap<>();
 			data = JsonUtil.jsonString2SimpleObj(responseLogin.getContent(), data.getClass());
 			String accessToken = data.get("accessToken");
-			log.warn("accessToken:",accessToken);
+			log.warn("accessToken:{}",accessToken);
 			return accessToken;
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return null;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static String refreshToken(){
-		try {
-	        HttpsUtil httpsUtil = new HttpsUtil();
-	        httpsUtil.initSSLConfigForTwoWay();
-	        String refreshToken = getRefreshToken(httpsUtil); 
-
-	        Map<String, Object> param_reg = new HashMap<>();
-	        param_reg.put("appId", Constant.APPID);
-	        param_reg.put("secret",  Constant.SECRET);
-	        param_reg.put("refreshToken", refreshToken);
-
-	        String jsonRequest = JsonUtil.jsonObj2Sting(param_reg);
-	        StreamClosedHttpResponse bodyRefreshToken = httpsUtil.doPostJsonGetStatusLine(Constant.REFRESH_TOKEN, jsonRequest);
-
-	        log.warn("msg:{},{}",bodyRefreshToken.getStatusLine(),bodyRefreshToken.getContent());
-	        Map<String, String> data = new HashMap<>();
-	        data = JsonUtil.jsonString2SimpleObj(bodyRefreshToken.getContent(), data.getClass());
-	        return data.get("refreshToken");
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 
+import service.AccessTokenService;
 import service.NoticeService;
 import utils.Resp;
 
@@ -40,6 +41,20 @@ public class NoticeController {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			String res = NoticeService.notice();
+			return new Resp<>(res);
+		} catch (Exception e) {
+			log.error("erroe:{}",e);
+		}
+		return resp;
+		
+	}
+	
+	@RequestMapping(path = "/token")
+	@ResponseBody
+	public Resp<?> token(){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String res = AccessTokenService.getAccessToken();
 			return new Resp<>(res);
 		} catch (Exception e) {
 			log.error("erroe:{}",e);
