@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+<link rel="stylesheet" href="./weui.css">
+<style>
+body {
+	width: 98%;
+	margin-left: 1%;
+}
+
+.weui-slider__handler {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 18px;
+	height: 18px;
+	margin-left: -14px;
+	margin-top: -9px;
+	border-radius: 50%;
+	background-color: #FFFFFF;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+.weui-cell:before{
+	border-top: 0px solid #e5e5e5
+}
+</style>
+</head>
+<body ontouchstart>
+
+	<div class="page__bd">
+		<div class="weui-panel weui-panel_access">
+			<div class="weui-panel__hd">NB_IoT</div>
+			<div class="weui-panel__bd">
+				<a href="javascript:void(0);"
+					class="weui-media-box weui-media-box_appmsg">
+					<div class="weui-media-box__hd">
+						<div class="weui-cell__hd">
+							<img src="1.png" height="50px;" />
+						</div>
+						<div class="weui-media-box__bd">
+							<h4 class="weui-media-box__title">NB灯具</h4>
+							<p class="weui-media-box__desc">当前电压：220V;当前电流：1ma；当前功耗：5W</p>
+						</div>
+				</a> 
+			</div>
+		</div>
+	</div>
+	<div class="weui-cell weui-cell_switch" style="margin-top: 10px;">
+		<div class="weui-cell__bd"></div>
+		<div class="weui-cell__ft">
+			<input class="weui-switch" type="checkbox">
+		</div>
+	</div>
+	<div class="page">
+		<div class="page__bd page__bd_spacing">
+			<div class="weui-slider-box">
+				<div class="weui-slider">
+					<div id="sliderInner" class="weui-slider__inner">
+						<div id="sliderTrack" style="width: 50%;"
+							class="weui-slider__track"></div>
+						<div id="sliderHandler" style="left: 50%;"
+							class="weui-slider__handler"></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<a href="javascript:;" class="weui-btn weui-btn_mini  weui-btn_primary" style="width: 96%;margin-left: 2%;margin-top: 10px;" >点击设置20%亮度</a>
+	
+	<div class="page__bd">
+		<div class="weui-panel weui-panel_access">
+			<div class="weui-panel__bd">
+				<a href="javascript:void(0);"
+					class="weui-media-box weui-media-box_appmsg">
+					<div class="weui-media-box__hd">
+						<div class="weui-cell__hd">
+							<img src="timg1.jpg" height="50px;" />
+						</div>
+						<div class="weui-media-box__bd">
+							<h4 class="weui-media-box__title">NB-PM2.5检测</h4>
+							<p class="weui-media-box__desc">当前电压：220V;当前电流：1ma；当前功耗：5W</p>
+						</div>
+				</a> 
+			</div>
+		</div>
+	</div>
+	
+	<a href="javascript:;" class="weui-btn weui-btn_mini  weui-btn_primary" style="width: 96%;margin-left: 2%;margin-top: 10px;" >查询</a>
+	<script src="./zepto.min.js"></script>
+	<script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			var $sliderTrack = $('#sliderTrack'), $sliderHandler = $('#sliderHandler'), $sliderValue = $('#sliderValue');
+
+			var totalLen = $('#sliderInner').width(), startLeft = 0, startX = 0;
+
+			$sliderHandler
+					.on(
+							'touchstart',
+							function(e) {
+								startLeft = parseInt($sliderHandler.css('left'))
+										* totalLen / 100;
+								startX = e.changedTouches[0].clientX;
+							})
+					.on(
+							'touchmove',
+							function(e) {
+								var dist = startLeft
+										+ e.changedTouches[0].clientX - startX, percent;
+								dist = dist < 0 ? 0
+										: dist > totalLen ? totalLen : dist;
+								percent = parseInt(dist / totalLen * 100);
+								$sliderTrack.css('width', percent + '%');
+								$sliderHandler.css('left', percent + '%');
+								$sliderValue.text(percent);
+
+								e.preventDefault();
+							});
+		});
+	</script>
+</body>
+</html>
