@@ -60,7 +60,6 @@ function _getLight(){
 	})
 }
 function _setOpenOrClose(){
-	console.log($('#check').attr('checked')+''+$('#check').prop('checked'))
 	if($('#check').attr('checked') == 'checked'||$('#check').prop('checked')){
 		_setStatus = '0001';
 		_setData();
@@ -83,7 +82,7 @@ function _setData(){
 				 });
 				setTimeout('_getData();',1000);
 			}else{
-				var _data = res.data;
+				var _data = '设备不在线！';
 			    layer.open({
 				    content: _data
 				    ,btn: '好'
@@ -140,7 +139,7 @@ function _setPM2_5(){
 			if('success'==res){
 				setTimeout('_getPMData();',30000);
 			}else{
-				var _data = res.data;
+				var _data = '设备不在线！';
 			    layer.open({
 				    content: _data
 				    ,btn: '好'
