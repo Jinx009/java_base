@@ -19,7 +19,7 @@ function _getData(){
 				 });
 				setTimeout('_getLight();',30000);
 			}else{
-				var _data = res.data;
+				var _data = '设备不在线！';
 			    layer.open({
 				    content: _data
 				    ,btn: '好'
