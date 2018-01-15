@@ -1,10 +1,17 @@
 package utils;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
 import utils.enums.AppInfo;
 import utils.pos.CallUtils;
 
 public class HttpData {
+	
 
 	public static final String BASE_URL = "http://wx.zhanway.com/gtw";
 	public static final String GET_TOKEN_URL = "/rest/token";
@@ -24,6 +31,11 @@ public class HttpData {
 	public static final String JOB_FIND_URL = "/rest/job/find";
 	public static final String INOUT_URL = "/rest/sensor/inOutLog";
 	private static final String UPDATE_SENSOR_DESC = "/rest/sensor/updateDesc";
+	
+	
+	
+	private static final String MOFANG_BASE_URL = "http://120.92.101.137:8081";
+	private static final String LOGIN = "/user_auth/login";
 	
 	
 	private static final String POS_SERVER_IP = "http://120.92.101.137:8080";
@@ -156,12 +168,29 @@ public class HttpData {
 	
 	
 	
+	public static String mofang_login_url(){
+		return MOFANG_BASE_URL+LOGIN;
+	}
 	
+	public static String mofang_get_organ(String companyId){
+		return MOFANG_BASE_URL+"/organ?companyOrganId="+companyId;
+	}
+	
+	
+	
+	public static JSONObject mofang_login(){
+		Map<String, String> data = new HashMap<String,String>();
+		data.put("mobile", "13800138000");
+		data.put("password", "123456");
+		return JSONObject.parseObject(HttpUtils.postJson(mofang_login_url(),JSON.toJSONString(data)));
+	}
 	
 	
 	
 
-
+	public static void main(String[] args) {
+		mofang_login();
+	}
 	
 	
 

@@ -37,9 +37,41 @@ public class BaseController {
 	@Autowired
 	private HttpService httpService;
 	
+	public static  String MOFANG_SESSION_ID = "";
+	public static  long MOFANG_SESSION_END_TIME = 0;
+	public static  String MOFANG_USER_ID = "";
+	public static  String MOFANG_COMPANY_ID = "";
+	public static  String MOFANG_STORE_ID = "";
+
+	
 	
 	public String getMyToken(){
 		return getToken(BaseConstant.APP_ID_NOW);
+	}
+	
+	public String getMofangSessionId(){
+		try {
+			Date date = new Date();
+			long timestamp = date.getTime();
+			JSONObject json = new JSONObject();
+			if("".equals(MOFANG_SESSION_ID)){
+				json = HttpData.mofang_login();
+			}else if(!"".equals(MOFANG_SESSION_ID)&&timestamp>MOFANG_SESSION_END_TIME){
+				json = HttpData.mofang_login();
+			}else{
+				return MOFANG_SESSION_ID;
+			}
+			JSONObject json1 = json.getJSONObject(BaseConstant.DATA);
+			MOFANG_SESSION_ID = json1.getString(BaseConstant.SESSION_ID);
+			JSONObject json2 = json1.getJSONObject(BaseConstant.USER);
+			MOFANG_COMPANY_ID = json2.getString(BaseConstant.COMPANY_ID);
+			MOFANG_STORE_ID = json2.getString(BaseConstant.STORE_ID);
+			logger.warn("mofang session id:{}",json1);
+			return MOFANG_SESSION_ID;
+		} catch (Exception e) {
+			logger.error("error:{}",e);
+		}
+		return null;
 	}
 	
 	/**

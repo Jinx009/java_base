@@ -21,4 +21,17 @@ public class HttpService {
 		return HttpUtils.postParams(url);
 	}
 	
+	public String getMofang(String sessionId,String url){
+		return HttpUtils.getMofang(sessionId,url);
+	}
+	
+	public String postMofangParams(String sessionId,String url){
+		return HttpUtils.postMofangParams(sessionId,url);
+	}
+	
+	public String postMofangJson(String sessionId,String url,String jsonStr){
+		return HttpUtils.postMofangJson(sessionId,url, jsonStr);
+	}
+	
+	
 }

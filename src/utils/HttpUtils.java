@@ -51,6 +51,34 @@ public class HttpUtils {
 	}
 	
 	/**
+	 * http发送json
+	 * @param url
+	 * @param jsonStr
+	 * @return
+	 */
+	@SuppressWarnings("resource")
+	public static String postMofangJson(String sessionId,String url,String jsonStr){
+		logger.warn("HttpUtils.postJson[info:{},{}]",url,jsonStr);
+		String result = "500";
+        HttpPost post = new HttpPost(url);
+        post.addHeader("Content-type","application/json;charset=utf-8");
+        post.addHeader("sessionId",sessionId);
+        post.setHeader("Accept", "application/json");
+        post.setEntity(new StringEntity(jsonStr, Charset.forName("UTF-8")));
+        try {
+        	DefaultHttpClient httpClient = new DefaultHttpClient();
+        	HttpResponse response = httpClient.execute(post);
+			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			logger.warn("HttpUtils.postJson[res:{}]",result);
+		} catch (ParseException e) {
+			logger.error("HttpUtils.postJson[ParseException.error:{}]",e);
+		} catch (IOException e) {
+			logger.error("HttpUtils.postJson[IOException.error:{}]",e);
+		}
+        return result;
+	}
+	
+	/**
 	 * post发送http请求
 	 * @param url
 	 * @return
@@ -61,6 +89,54 @@ public class HttpUtils {
         String result = "500";
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpPost post = new HttpPost(url);
+		try {
+			HttpResponse response = httpClient.execute(post);
+			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			logger.warn("HttpUtils.postParams[res:{}]",result);
+		} catch (ParseException e) {
+			logger.error("HttpUtils.postParams[ParseException.error:{}]",e);
+		} catch (IOException e) {
+			logger.error("HttpUtils.postParams[IOException.error:{}]",e);
+		}
+		return result;
+    }
+    
+    /**
+     * http get
+     * @param url
+     * @return
+     */
+    @SuppressWarnings("resource")
+	public static String getMofang(String sessionId,String url){
+    	logger.warn("HttpUtils.get[info:{}]",url);
+        String result = "500";
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpGet get = new HttpGet(url);
+        get.addHeader("sessionId",sessionId);
+		try {
+			HttpResponse response = httpClient.execute(get);
+			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			logger.warn("HttpUtils.get[res:{}]",result);
+		} catch (ParseException e) {
+			logger.error("HttpUtils.get[ParseException.error:{}]",e);
+		} catch (IOException e) {
+			logger.error("HttpUtils.get[IOException.error:{}]",e);
+		}
+		return result;
+    }
+    
+	/**
+	 * post发送http请求
+	 * @param url
+	 * @return
+	 */
+    @SuppressWarnings("resource")
+	public static String postMofangParams(String sessionId,String url){
+    	logger.warn("HttpUtils.postParams[info:{}]",url);
+        String result = "500";
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpPost post = new HttpPost(url);
+        post.addHeader("sessionId",sessionId);
 		try {
 			HttpResponse response = httpClient.execute(post);
 			result = EntityUtils.toString(response.getEntity(),"UTF-8");
