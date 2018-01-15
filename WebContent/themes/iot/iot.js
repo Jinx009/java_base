@@ -8,10 +8,34 @@ $(function(){
 var $sliderTrack = $('#sliderTrack'), $sliderHandler = $('#sliderHandler'), $sliderValue = $('#sliderValue');
 function _getData(){
 	$.ajax({
+		url:'/interface/product/set/light',
+		type:'get',
+		dataType:'json',
+		success:function(res){
+			if('success'==res){
+				layer.open({
+				    type: 2
+				    ,content: '等待数据上报...'
+				 });
+				setTimeout('_getLight();',30000);
+			}else{
+				var _data = res.data;
+			    layer.open({
+				    content: _data
+				    ,btn: '好'
+				});
+			}
+		}
+	})
+}
+
+function _getLight(){
+	$.ajax({
 		url:'/interface/product/get',
 		type:'get',
 		dataType:'json',
 		success:function(res){
+			layer.closeAll();
 			var _data = JSON.parse(res.data);
 			var _arr = _data.rawData.split('');
 			var _v = parseInt(_arr[3]+_arr[4]+_arr[5]+_arr[6]);
@@ -53,6 +77,10 @@ function _setData(){
 		dataType:'json',
 		success:function(res){
 			if('success'==res){
+				layer.open({
+				    type: 2
+				    ,content: '等待数据上报...'
+				 });
 				setTimeout('_getData();',1000);
 			}else{
 				var _data = res.data;
@@ -129,6 +157,7 @@ function _getPMData(){
 		type:'get',
 		dataType:'json',
 		success:function(res){
+			layer.closeAll();
 			$('#pmBtn').show();
 			$('#pm_Btn').hide();
 			var _data = JSON.parse(res.data).rawData;

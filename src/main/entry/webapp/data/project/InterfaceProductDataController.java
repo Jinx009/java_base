@@ -47,9 +47,22 @@ public class InterfaceProductDataController {
 		return resp;
 	}
 	
+	@RequestMapping(path = "/set/light")
+	@ResponseBody
+	public Resp<?> setLight() {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String result = productService.setLight();
+			return new Resp<>(BaseConstant.HTTP_OK_CODE, BaseConstant.HTTP_OK_MSG, result);
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/set/PM2_5")
 	@ResponseBody
-	public Resp<?> setPM2_5(String status) {
+	public Resp<?> setPM2_5() {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			String result = productService.setPM2_5();
