@@ -23,7 +23,8 @@ body {
 	background-color: #FFFFFF;
 	box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
-.weui-cell:before{
+
+.weui-cell:before {
 	border-top: 0px solid #e5e5e5
 }
 </style>
@@ -42,16 +43,16 @@ body {
 						</div>
 						<div class="weui-media-box__bd">
 							<h4 class="weui-media-box__title">NB灯具</h4>
-							<p class="weui-media-box__desc">当前电压：220V;当前电流：1ma；当前功耗：5W</p>
+							<p class="weui-media-box__desc" id="lightStatus" ></p>
 						</div>
-				</a> 
+				</a>
 			</div>
 		</div>
 	</div>
 	<div class="weui-cell weui-cell_switch" style="margin-top: 10px;">
 		<div class="weui-cell__bd"></div>
 		<div class="weui-cell__ft">
-			<input class="weui-switch" type="checkbox">
+			<input class="weui-switch" id="check" onchange="_setOpenOrClose()" type="checkbox">
 		</div>
 	</div>
 	<div class="page">
@@ -70,8 +71,9 @@ body {
 		</div>
 
 	</div>
-	<a href="javascript:;" class="weui-btn weui-btn_mini  weui-btn_primary" style="width: 96%;margin-left: 2%;margin-top: 10px;" >点击设置20%亮度</a>
-	
+	<a href="javascript:;" class="weui-btn weui-btn_mini  weui-btn_primary"
+		style="width: 96%; margin-left: 2%; margin-top: 10px;" id="lightBtn" >点击设置20%亮度</a>
+
 	<div class="page__bd">
 		<div class="weui-panel weui-panel_access">
 			<div class="weui-panel__bd">
@@ -79,49 +81,24 @@ body {
 					class="weui-media-box weui-media-box_appmsg">
 					<div class="weui-media-box__hd">
 						<div class="weui-cell__hd">
-							<img src="timg1.jpg" height="50px;" />
+							<img src="timg1.jpg" height="30px;" />
 						</div>
 						<div class="weui-media-box__bd">
 							<h4 class="weui-media-box__title">NB-PM2.5检测</h4>
-							<p class="weui-media-box__desc">当前电压：220V;当前电流：1ma；当前功耗：5W</p>
+							<p class="weui-media-box__desc" id="pm" >最近检测结果：</p>
 						</div>
-				</a> 
+				</a>
 			</div>
 		</div>
 	</div>
-	
-	<a href="javascript:;" class="weui-btn weui-btn_mini  weui-btn_primary" style="width: 96%;margin-left: 2%;margin-top: 10px;" >查询</a>
+
+	<a href="javascript:;" class="weui-btn weui-btn_mini  weui-btn_primary"
+		style="width: 96%; margin-left: 2%; margin-top: 10px;" id="pmBtn" onclick="_setPM2_5();" >查询</a>
+	<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_loading"
+	 	style="width: 96%; margin-left: 2%; margin-top: 10px;display: none;color: black;" id="pm_Btn"   ><i class="weui-loading"></i>等待数据上报中...</a>
 	<script src="./zepto.min.js"></script>
 	<script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
-	<script type="text/javascript">
-		$(function() {
-			var $sliderTrack = $('#sliderTrack'), $sliderHandler = $('#sliderHandler'), $sliderValue = $('#sliderValue');
-
-			var totalLen = $('#sliderInner').width(), startLeft = 0, startX = 0;
-
-			$sliderHandler
-					.on(
-							'touchstart',
-							function(e) {
-								startLeft = parseInt($sliderHandler.css('left'))
-										* totalLen / 100;
-								startX = e.changedTouches[0].clientX;
-							})
-					.on(
-							'touchmove',
-							function(e) {
-								var dist = startLeft
-										+ e.changedTouches[0].clientX - startX, percent;
-								dist = dist < 0 ? 0
-										: dist > totalLen ? totalLen : dist;
-								percent = parseInt(dist / totalLen * 100);
-								$sliderTrack.css('width', percent + '%');
-								$sliderHandler.css('left', percent + '%');
-								$sliderValue.text(percent);
-
-								e.preventDefault();
-							});
-		});
-	</script>
+	<script src="./layer_mobile/layer.js?_v=1.19"></script>
+	<script src="./iot.js?_v=1.24"></script>
 </body>
 </html>

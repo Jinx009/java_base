@@ -33,6 +33,17 @@ public class ProductService {
 		return null;
 	}
 	
+	public String setPM2_5(){
+		try {
+			String result = HttpUtils.get("http://111.231.132.234:8091/cmd,863703032244720,3000");
+			return result;
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		
+		return null;
+	}
+	
 	public static void main(String[] args) {
 //		System.out.println(getStatus());
 	}
