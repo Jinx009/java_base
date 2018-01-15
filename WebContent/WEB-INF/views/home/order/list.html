@@ -37,7 +37,7 @@
 			</section>
 			<!-- 主内容 -->
 			<section class="content" id="order">
-				<div class="box box-default">
+			<!-- 	<div class="box box-default">
 					<div class="box-header with-border">
 						<h3 class="box-title">筛选条件</h3>
 						<div class="box-tools pull-right">
@@ -72,7 +72,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="box">
@@ -98,9 +98,9 @@
 									<tbody>
 										<tr v-for="order in orders.data">
 											<td v-text="order.id"></td>
-											<td v-text="order.parkPlaceCode"></td>
-											<td v-text="order.beginTimeStr"></td>
-											<td v-text="order.endTimeStr"></td>
+											<td v-text="order.parkPlaceId"></td>
+											<td v-text="order.beginTime"></td>
+											<td v-text="order.endTime"></td>
 											<td v-text="order.plateNumber"></td>
 											<td v-text="order.price"></td>
 											<td v-text="order.realPrice"></td>
@@ -149,7 +149,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/order/list.js?version=1.27"></script>
+	<script src="/themes/js/home/order/list.js?version=1.29112"></script>
 
 </body>
 </html>

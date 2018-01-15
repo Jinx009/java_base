@@ -7,6 +7,7 @@ import java.util.Map;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import common.helper.StringUtil;
 import utils.enums.AppInfo;
 import utils.pos.CallUtils;
 
@@ -36,6 +37,7 @@ public class HttpData {
 	
 	private static final String MOFANG_BASE_URL = "http://120.92.101.137:8081";
 	private static final String LOGIN = "/user_auth/login";
+	private static final String MOFANG_BASE_URL_1 = "http://120.92.101.137:8083";
 	
 	
 	private static final String POS_SERVER_IP = "http://120.92.101.137:8080";
@@ -163,7 +165,15 @@ public class HttpData {
 		String url = BASE_URL+UPDATE_SENSOR_DESC+"?token="+token+"&mac="+mac+"&desc="+desc;
 		return url;
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -172,10 +182,77 @@ public class HttpData {
 		return MOFANG_BASE_URL+LOGIN;
 	}
 	
-	public static String mofang_get_organ(String companyId){
-		return MOFANG_BASE_URL+"/organ?companyOrganId="+companyId;
+	
+	public static String mofang_get_user(String companyOrganId){
+		return MOFANG_BASE_URL+"/user?companyOrganId="+companyOrganId;
 	}
 	
+	public static String mofang_add_user_post(){
+		return MOFANG_BASE_URL+"/user";
+	}
+	
+	
+	public static JSONObject mofang_add_user(String sessionId,String name,String storeOrganId,String password,String mobilePhone,String birthday,String sex, String email){
+		Map<String, String> data = new HashMap<String,String>();
+		data.put("storeOrganId", storeOrganId);
+		data.put("companyOrganId", "10351");
+		data.put("name",name);
+		data.put("password", password);
+		data.put("birthday", birthday);
+		data.put("email", email);
+		data.put("sex", sex);
+		data.put("mobile", mobilePhone);
+		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_add_user_post(),JSON.toJSONString(data)));
+	}
+	
+	public static String mofang_get_order(String companyOrganId, Integer page){
+		StringBuffer params = new StringBuffer("a=a");
+		if(StringUtil.isNotBlank(companyOrganId)){
+			params.append("&companyOrganId="+companyOrganId);
+		}else{
+			params.append("&companyOrganId=10351");
+		}
+		params.append("&pageNum="+page);
+		params.append("&pageSize=25");
+		return MOFANG_BASE_URL_1+"/product?"+params.toString();
+	}
+	
+	public static String mofang_get_organ(String status,String type, String companyOrganId, String name){
+		StringBuffer params = new StringBuffer("a=a");
+		if(StringUtil.isNotBlank(type)){
+			params.append("&type="+type);
+		}
+		if(StringUtil.isNotBlank(companyOrganId)){
+			params.append("&companyOrganId="+companyOrganId);
+		}
+		if(StringUtil.isNotBlank(name)){
+			params.append("&name="+name);
+		}
+		if(StringUtil.isNotBlank(status)){
+			params.append("&status="+status);
+		}
+		return MOFANG_BASE_URL+"/organ?"+params.toString();
+	}
+	
+	public static String mofang_add_organ(){
+		return MOFANG_BASE_URL+"/organ";
+	}
+	
+	public static JSONObject mofang_add_company_organ(String sessionId,String companyOrganId,String name){
+		Map<String, String> data = new HashMap<String,String>();
+		data.put("companyOrganId", companyOrganId);
+		data.put("name",name);
+		data.put("type", "COMPANY");
+		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_add_organ(),JSON.toJSONString(data)));
+	}
+	
+	public static Object mofang_add_store_organ(String sessionId,String companyOrganId, String name) {
+		Map<String, String> data = new HashMap<String,String>();
+		data.put("companyOrganId", companyOrganId);
+		data.put("name",name);
+		data.put("type", "STORE");
+		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_add_organ(),JSON.toJSONString(data)));
+	}
 	
 	
 	public static JSONObject mofang_login(){
@@ -231,6 +308,8 @@ public class HttpData {
 			return "";
 		}
 	}
+
+	
 
 	
 	

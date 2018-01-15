@@ -59,6 +59,7 @@ public class BaseController {
 			}else if(!"".equals(MOFANG_SESSION_ID)&&timestamp>MOFANG_SESSION_END_TIME){
 				json = HttpData.mofang_login();
 			}else{
+				logger.warn("mofang session id:{}_",MOFANG_SESSION_ID);
 				return MOFANG_SESSION_ID;
 			}
 			JSONObject json1 = json.getJSONObject(BaseConstant.DATA);

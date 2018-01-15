@@ -60,19 +60,42 @@
 										<tr>
 											<th>手机号码:</th>
 											<td >
-												<input type="text" class="form-control" placeholder="请输入手机号码" >
+												<input type="text" id="mobile" class="form-control" placeholder="请输入手机号码" >
+											</td>
+										</tr>
+										<tr>
+											<th>姓名:</th>
+											<td >
+												<input type="text" id="name" class="form-control" placeholder="请输入姓名" >
+											</td>
+										</tr>
+										<tr>
+											<th>性别:</th>
+											<td >
+												 <select class="form-control select2 select2-hidden-accessible"
+													id="sex" style="width: 100%;" tabindex="-1"
+													aria-hidden="true">
+													<option value="MALE">MALE</option>
+													<option value="FEMALE">FEMALE</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<th>生日:</th>
+											<td>
+												<input type="text"  class="form-control" id="birthday"  >
 											</td>
 										</tr>
 										<tr>
 											<th>密码:</th>
 											<td>
-												<input type="text" class="form-control" placeholder="请输入登录密码" >
+												<input type="password" id="password" class="form-control" placeholder="请输入登录密码" >
 											</td>
 										</tr>
 										<tr>
 											<th>邮箱:</th>
 											<td>
-												<input type="text" class="form-control" placeholder="请输入邮箱" >
+												<input type="text" id="email" class="form-control" placeholder="请输入邮箱" >
 											</td>
 										</tr>
 										<tr>
@@ -90,7 +113,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/setting/pos_add.js?version=1.271"></script>
+	<script src="/themes/js/home/setting/pos_add.js?version=1.2711"></script>
 
 </body>
 </html>

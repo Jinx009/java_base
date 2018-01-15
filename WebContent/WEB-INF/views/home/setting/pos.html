@@ -55,17 +55,21 @@
 										<thead>
 											<tr>
 												<th>手机号码</th>
-												<th>组织id</th>
+												<th>姓名</th>
 												<th>邮箱</th>
-												<th>密码</th>
+												<th>性别</th>
+												<th>生日</th>
+												<th>创建日期</th>
 											</tr>
 										</thead>
 										<tbody id="account">
 											<tr v-for="account in accounts">
-												<td v-text="account.mobilePhoneNo"></td>
-												<td v-text="account.organId"></td>
+												<td v-text="account.mobile"></td>
+												<td v-text="account.name"></td>
 												<td v-text="account.email"></td>
-												<td v-text="account.password"></td>
+												<td v-text="account.sex"></td>
+												<td v-text="account.birthday"></td>
+												<td v-text="account.createTime"></td>
 											</tr>
 										</tbody>
 									</table>
