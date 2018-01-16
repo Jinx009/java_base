@@ -1,5 +1,4 @@
 $(function(){
-	_getLight();
 	_getData();
 	var _pm = getSessionStorage('_pm');
 	if(_pm!=null&&_pm!=''){
@@ -14,19 +13,24 @@ function _getData(){
 		dataType:'json',
 		success:function(res){
 			if(res!=null&&'success'==res.data){
+				layer.open({
+				    type: 2
+				    ,content: '等待数据上报...'
+				 });
 				$('#pmBtn').html('查询').attr('onclick','_setPM2_5();').removeClass('weui-btn_disabled');
 				setTimeout('_getLight();',30000);
 			}else{
-				var _data = '设备不在线！';
+				var _data = JSON.parse(res.data);
 			    layer.open({
-				    content: _data
+				    content: _data.errorMsg
 				    ,btn: '好'
 				});
 			    $('#status').val('OFFLINE');
+			    $('#l').val('0%');
 			    $('#status_1').val('OFFLINE');
 				$sliderTrack.css('width','0%');
 				$sliderHandler.css('left','0%');
-				$('#lightBtn').html('当前灯具关闭').attr('onclick','').addClass('weui-btn_disabled');
+				$('#lightBtn').html('当前设备关闭').attr('onclick','').addClass('weui-btn_disabled');
 				$('#pmBtn').html('当前设备关闭').attr('onclick','').addClass('weui-btn_disabled');
 				_noTouch();
 			}
@@ -53,7 +57,7 @@ function _getLight(){
 			    $('#v').val(_v+'V');
 			    $('#a').val(_a+'A');
 			    $('#w').val(_w+'W');
-				
+			    $('#l').val(_l+'%');
 				$sliderTrack.css('width',_l+'%');
 				$sliderHandler.css('left',_l+'%');
 				$('#lightBtn').html('设置亮度'+_l).attr('onclick','_setData();').removeClass('weui-btn_disabled');
@@ -72,11 +76,15 @@ function _setData(){
 		dataType:'json',
 		success:function(res){
 			if(res!=null&&'success'==res.data){
-				
+				if(_setStatus=='000A'){
+					 $('#l').val('100%');
+				}else{
+					$('#l').val(_l+'%');
+				}
 			}else{
-				var _data = '设备不在线！';
+				var _data = JSON.parse(res.data);
 			    layer.open({
-				    content: _data
+				    content: _data.errorMsg
 				    ,btn: '好'
 				});
 			}

@@ -40,37 +40,43 @@ body {
     	<div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">设备编号：</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" value="863703032244720">
+                <input class="weui-input" readonly="readonly" type="text" value="863703032244720">
             </div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">设备状态：</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" id="status" type="text" value="OFFLINE">
+                <input class="weui-input" readonly="readonly" id="status" type="text" value="OFFLINE">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">设备亮度：</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" readonly="readonly" id="l" type="text" value="">
             </div>
         </div>
          <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">设备电压：</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" id="v" type="text" value="">
+                <input class="weui-input" readonly="readonly" id="v" type="text" value="">
             </div>
         </div>
          <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">设备电流：</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" id="a" type="text" value="">
+                <input class="weui-input" readonly="readonly" id="a" type="text" value="">
             </div>
         </div>
           <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">设备功耗：</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" id="w" type="text" value="">
+                <input class="weui-input" readonly="readonly" id="w" type="text" value="">
             </div>
         </div> 
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">设备亮度：</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" id="w" type="text" value="">
+                <input class="weui-input" readonly="readonly" id="w" type="text" value="">
             </div>
         </div>
         	<div class="page">
@@ -83,12 +89,12 @@ body {
 						<div id="sliderHandler" style="left: 0%;"
 							class="weui-slider__handler"></div>
 					</div>
+					<div style="height: 10px;" ></div> 
 				</div>
 			</div>
 		</div>
 	</div>
     </div>
-
 	<a href="javascript:;" class="weui-btn  weui-btn_primary"
 		style="width: 96%; margin-left: 2%; margin-top: 10px;" id="lightBtn" ></a>
 
@@ -97,19 +103,19 @@ body {
     	<div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">设备编号：</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" value="863703032244720">
+                <input class="weui-input" readonly="readonly" type="text" value="863703032244720">
             </div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">设备状态：</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" id="status_1" type="text" value="OFFLINE">
+                <input class="weui-input" readonly="readonly" id="status_1" type="text" value="OFFLINE">
             </div>
         </div>
          <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">检测结果：</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" id="r" type="text" value="">
+                <input class="weui-input" readonly="readonly" id="r" type="text" value="">
             </div>
         </div>
 	</div>
@@ -118,9 +124,10 @@ body {
 		style="width: 96%; margin-left: 2%; margin-top: 10px;" id="pmBtn" onclick="_setPM2_5();" >查询</a>
 	<a href="javascript:;" class="weui-btn weui-btn_loading"
 	 	style="width: 96%; margin-left: 2%; margin-top: 10px;display: none;color: black;" id="pm_Btn"   ><i class="weui-loading"></i>等待数据上报中...</a>
+	<div style="height: 30px;" ></div> 	
 	<script src="./zepto.min.js"></script>
 	<script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
 	<script src="./layer_mobile/layer.js?_v=1.19"></script>
-	<script src="./iot_1.js?_v=1.44"></script>
+	<script src="./iot_1.js?_v=1.84"></script>
 </body>
 </html>
