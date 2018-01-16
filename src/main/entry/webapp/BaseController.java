@@ -1,5 +1,6 @@
 package main.entry.webapp;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -67,6 +68,11 @@ public class BaseController {
 			JSONObject json2 = json1.getJSONObject(BaseConstant.USER);
 			MOFANG_COMPANY_ID = json2.getString(BaseConstant.COMPANY_ID);
 			MOFANG_STORE_ID = json2.getString(BaseConstant.STORE_ID);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.add(Calendar.MINUTE,20);
+			date = calendar.getTime();
+			MOFANG_SESSION_END_TIME = date.getTime();
 			logger.warn("mofang session id:{}",json1);
 			return MOFANG_SESSION_ID;
 		} catch (Exception e) {
