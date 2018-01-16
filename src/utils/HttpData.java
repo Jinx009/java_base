@@ -191,6 +191,10 @@ public class HttpData {
 		return MOFANG_BASE_URL+"/user";
 	}
 	
+	public static JSONObject mergeOrgan(String sessionId){
+		Map<String, String> data = new HashMap<String,String>();
+		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_add_user_post(),JSON.toJSONString(data)));
+	}
 	
 	public static JSONObject mofang_add_user(String sessionId,String name,String storeOrganId,String password,String mobilePhone,String birthday,String sex, String email){
 		Map<String, String> data = new HashMap<String,String>();
