@@ -24,6 +24,8 @@ public class MofangDataController extends BaseController{
 	@Autowired
 	private HttpService httpService;
 	
+	
+	
 	@RequestMapping(path = "/mofang/organ")
 	@ResponseBody
 	public Resp<?> getOrgan(String status,String type,String companyOrganId,String name){

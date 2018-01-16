@@ -28,6 +28,11 @@ public class HomePageController extends BaseController{
 		return "/home/device/pos";
 	}
 	
+	@RequestMapping(path = "/device/error")
+	public String error(){
+		return "/home/device/error";
+	}
+	
 	@RequestMapping(path = "/parking_data/time")
 	public String time(){
 		return "/home/parking_data/time";
