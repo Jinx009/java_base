@@ -50,7 +50,7 @@ public class ProductService {
 
 	public String setLight() {
 		try {
-			String result = HttpUtils.get("http://111.231.132.234:8091/cmd,863703032244720,9000");
+			String result = HttpUtils.get("http://111.231.132.234:8091/cmd,863703032244720,9999");
 			return result;
 		} catch (Exception e) {
 			log.error("error:{}",e);

@@ -60,7 +60,7 @@ function _getLight(){
 			    $('#l').val(_l+'%');
 				$sliderTrack.css('width',_l+'%');
 				$sliderHandler.css('left',_l+'%');
-				$('#lightBtn').html('设置亮度'+_l).attr('onclick','_setData();').removeClass('weui-btn_disabled');
+				$('#lightBtn').html('设置亮度'+_l+'%').attr('onclick','_setData();').removeClass('weui-btn_disabled');
 				_hasTouch();
 			}else{
 				_getData();
@@ -79,7 +79,7 @@ function _setData(){
 				if(_setStatus=='000A'){
 					 $('#l').val('100%');
 				}else{
-					$('#l').val(_l+'%');
+					$('#l').val(parseInt(_setStatus)+'%');
 				}
 			}else{
 				var _data = JSON.parse(res.data);
@@ -163,7 +163,7 @@ function _getPMData(){
 			$('#pmBtn').show();
 			$('#pm_Btn').hide();
 			var _data = JSON.parse(res.data).rawData;
-			$('#r').html(_data);
+			$('#r').val(_data);
 			setSessionStorage('_pm',_data);
 		}
 	})
