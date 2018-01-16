@@ -24,6 +24,8 @@ function _getData(){
 				    content: _data
 				    ,btn: '好'
 				});
+			    $('#lightStatus').html('设备不在线！');
+			    $('#lightBtn').html('设备不在线！');
 			}
 		}
 	})
@@ -42,7 +44,7 @@ function _getLight(){
 			var _a = parseInt(_arr[10]+_arr[11]+_arr[12]+_arr[13]);
 			var _w = parseInt(_arr[17]+_arr[18]+_arr[19]+_arr[20]);
 			var _l = parseInt(_arr[23]+_arr[24]+_arr[25]);
-			$('#lightStatus').html('当前电压：'+_v+'V；当前电流：'+_a+'A；当前功率：'+_w+'W'+'；当前亮度：'+_l+'%；');
+			$('#lightStatus').html('设备编号：863703032244720，当前电压：'+_v+'V；当前电流：'+_a+'A；当前功率：'+_w+'W'+'；当前亮度：'+_l+'%；');
 			if(_v==0){
 				$sliderTrack.css('width','0%');
 				$sliderHandler.css('left','0%');
@@ -51,7 +53,7 @@ function _getLight(){
 			}else{
 				$sliderTrack.css('width',_l+'%');
 				$sliderHandler.css('left',_l+'%');
-				$('#lightBtn').html('设置亮度').attr('onclick',function(){
+				$('#lightBtn').html('设置亮度'+_l).attr('onclick',function(){
 					_setData();
 				}).removeClass('weui-btn_disabled');
 				_hasTouch();
