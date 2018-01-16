@@ -76,10 +76,10 @@ function _setData(){
 		dataType:'json',
 		success:function(res){
 			if('success'==res){
-				layer.open({
-				    type: 2
-				    ,content: '等待数据上报...'
-				 });
+//				layer.open({
+//				    type: 2
+//				    ,content: '等待数据上报...'
+//				 });
 				setTimeout('_getData();',1000);
 			}else{
 				var _data = '设备不在线！';
