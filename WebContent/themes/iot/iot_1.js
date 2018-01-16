@@ -1,9 +1,10 @@
 $(function(){
-	_getData();
+	_getLight();
 	var _pm = getSessionStorage('_pm');
 	if(_pm!=null&&_pm!=''){
 		$('#r').val(_pm);
 	}
+	_hasTouch();
 })
 var $sliderTrack = $('#sliderTrack'), $sliderHandler = $('#sliderHandler'), $sliderValue = $('#sliderValue');
 function _getData(){
@@ -32,7 +33,6 @@ function _getData(){
 				$sliderHandler.css('left','0%');
 				$('#lightBtn').html('当前设备关闭').attr('onclick','').addClass('weui-btn_disabled');
 				$('#pmBtn').html('当前设备关闭').attr('onclick','').addClass('weui-btn_disabled');
-				_noTouch();
 			}
 		}
 	})
@@ -47,7 +47,12 @@ function _getLight(){
 			layer.closeAll();
 			var _data = JSON.parse(res.data);
 			var _arr = _data.rawData.split('');
-			if(_arr.length>14){
+			var _date = _data.eventTime;
+			var date1 = new Date( new Date(Date.parse(_date.replace(/-/g,"/"))).getTime());
+			var date2 = new Date();
+			var s1 = date1.getTime(),s2 = date2.getTime();
+			var total = (s2 - s1)/1000;
+			if(_arr.length>14&&total<30){
 				var _v = parseInt(_arr[3]+_arr[4]+_arr[5]+_arr[6]);
 				var _a = parseInt(_arr[10]+_arr[11]+_arr[12]+_arr[13]);
 				var _w = parseInt(_arr[17]+_arr[18]+_arr[19]+_arr[20]);
@@ -79,7 +84,7 @@ function _setData(){
 				if(_setStatus=='000A'){
 					 $('#l').val('100%');
 				}else{
-					$('#l').val(parseInt(_setStatus)+'%');
+					$('#l').val(parseInt(_setStatus)*10+'%');
 				}
 			}else{
 				var _data = JSON.parse(res.data);

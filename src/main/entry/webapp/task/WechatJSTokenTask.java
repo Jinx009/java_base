@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.scheduling.annotation.Scheduled;
+//import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import database.models.WebTokenFactory;
@@ -21,9 +21,9 @@ public class WechatJSTokenTask {
     @Autowired
     private WebTokenFactoryService webTokenFactoryService;
 
-    @Scheduled(fixedRate = 60*1000)//每一分钟执行一次
-    public void refreshen() throws Exception {
-      logger.warn("wechat task");
+//    @Scheduled(fixedRate = 60*1000)//每一分钟执行一次
+//    public void refreshen() throws Exception {
+//      logger.warn("wechat task");
 //       WebTokenFactory webTokenFactory = webTokenFactoryService.getByTypeAndId(WechatData.APP_ID,1);
 //       if(webTokenFactory!=null){
 //    	   checkWechatCache(WechatData.APP_ID,WechatData.APP_SECRET,webTokenFactory);
@@ -38,7 +38,7 @@ public class WechatJSTokenTask {
 //    	   webTokenFactory.setTokenValue(jsapi_ticket);
 //    	   webTokenFactoryService.save(webTokenFactory);
 //       }
-    }
+//    }
     
     /**
      * 获取
