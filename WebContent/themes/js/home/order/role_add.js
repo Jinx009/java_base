@@ -24,3 +24,11 @@ function _getArea() {
 		}
 	})
 }
+function _save(){
+    var period = $('#period').val(),
+    amountOfMoney = $('#amountOfMoney').val(),
+    amountOfMoneyForNotEnough = $('#amountOfMoneyForNotEnough').val();
+	if(period==null||period==''||amountOfMoney==null||amountOfMoney==''||amountOfMoneyForNotEnough==null||amountOfMoneyForNotEnough==''){
+		layer.alert('请完善收费规则！');
+	}
+}

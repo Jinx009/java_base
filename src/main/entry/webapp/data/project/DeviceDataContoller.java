@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import main.entry.webapp.BaseController;
@@ -60,6 +61,14 @@ public class DeviceDataContoller extends BaseController{
 				JSONObject jsonObject = JSONObject.parseObject(result);
 				if(!BaseConstant.HTTP_ERROR_CODE.equals(result)){
 					if(BaseConstant.HTTP_OK_CODE.equals(jsonObject.getString(BaseConstant.RESP_CODE))){
+						JSONObject json1 = HttpData.getPark(getMofangSessionId(), mac);
+						JSONArray jsonArray = JSON.parseArray(JSON.parseObject(json1.getString("data")).getString("parkPlaces"));
+						if(jsonArray.size()<1){
+							HttpData.addPark(getMofangSessionId(), mac, desc);
+						}else{
+							String parkId = jsonArray.getJSONObject(0).getString("parkPlaceId");
+							HttpData.updatePark(getMofangSessionId(), mac, desc, parkId);
+						}
 						resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,jsonObject.get(BaseConstant.PARAMS));
 					}else{
 						resp = new Resp<>(BaseConstant.HTTP_ERROR_CODE,jsonObject.getString(BaseConstant.MSG),jsonObject.getString(BaseConstant.PARAMS));

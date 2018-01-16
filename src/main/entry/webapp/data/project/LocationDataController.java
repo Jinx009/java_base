@@ -67,6 +67,7 @@ public class LocationDataController extends BaseController{
 				JSONObject jsonObject = JSONObject.parseObject(result);
 				if(!BaseConstant.HTTP_ERROR_CODE.equals(result)){
 					if(BaseConstant.HTTP_OK_CODE.equals(jsonObject.getString(BaseConstant.RESP_CODE))){
+						HttpData.mergeOrgan(getMofangSessionId(),1,name,"VALID");
 						resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,jsonObject.get(BaseConstant.PARAMS));
 					}else{
 						resp = new Resp<>(BaseConstant.HTTP_ERROR_CODE,jsonObject.getString(BaseConstant.MSG),jsonObject.getString(BaseConstant.PARAMS));

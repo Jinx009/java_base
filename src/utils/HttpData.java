@@ -191,9 +191,52 @@ public class HttpData {
 		return MOFANG_BASE_URL+"/user";
 	}
 	
-	public static JSONObject mergeOrgan(String sessionId){
+	public static String mofang_update_organ_post(){
+		return MOFANG_BASE_URL+"/organ/update";
+	}
+	
+	public static String mofang_update_park_url(){
+		return MOFANG_BASE_URL_1+"/park_place";
+	}
+	
+	public static String mofang_update_park_update_url(){
+		return MOFANG_BASE_URL_1+"/park_place/update";
+	}
+	
+	public static JSONObject getPark(String sessionId,String mac){
+		String params = "?companyOrganId=10351&storeOrganId=10352&magneticStripeId="+mac;
+		return  JSONObject.parseObject(HttpUtils.getMofang(sessionId, mofang_update_park_url()+params));
+	}
+	
+	public static JSONObject addPark(String sessionId,String mac,String desc){
 		Map<String, String> data = new HashMap<String,String>();
-		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_add_user_post(),JSON.toJSONString(data)));
+		data.put("code", desc);
+		data.put("magneticStripeId", mac);
+		data.put("storeOrganId", "10352");
+		data.put("companyOrganId", "10351");
+		data.put("status", "EMPTY");
+		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_update_park_url(),JSON.toJSONString(data)));
+	}
+	
+	public static JSONObject updatePark(String sessionId,String mac,String desc,String parkId){
+		Map<String, String> data = new HashMap<String,String>();
+		data.put("code", desc);
+		data.put("magneticStripeId", mac);
+		data.put("parkPlaceId", parkId);
+		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_update_park_update_url(),JSON.toJSONString(data)));
+	}
+	
+
+	
+	public static JSONObject mergeOrgan(String sessionId,Integer type,String name,String status){
+		Map<String, String> data = new HashMap<String,String>();
+		data.put("organId", "10352");
+		if(1==type){
+			data.put("organId", "10351");
+		}
+		data.put("status", status);
+		data.put("name", name);
+		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_update_organ_post(),JSON.toJSONString(data)));
 	}
 	
 	public static JSONObject mofang_add_user(String sessionId,String name,String storeOrganId,String password,String mobilePhone,String birthday,String sex, String email){
