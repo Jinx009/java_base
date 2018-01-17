@@ -99,5 +99,10 @@ public class HomePageController extends BaseController{
 		return "/home/setting/area_update";
 	}
 	
+	@RequestMapping(path = "/user/sign")
+	public String user_sign(){
+		return "/home/user/sign";
+	}
+	
 
 }

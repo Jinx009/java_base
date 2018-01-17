@@ -219,6 +219,14 @@ public class HttpData {
 		return MOFANG_BASE_URL_1+"/charging_rule";
 	}
 	
+	public static String mofang_order_statistics_url(){
+		return MOFANG_BASE_URL_1+"/product/statistics";
+	}
+	
+	public static JSONObject getOrderStatistics(String sessionId,String beginTime,String endTime,String status){
+		String params = "?beginTime="+beginTime+"&endTime="+endTime+"&status="+status+"&storeOrganId=10352";
+		return  JSONObject.parseObject(HttpUtils.getMofang(sessionId, mofang_order_statistics_url()+params));
+	}
 	
 	public static Object mofang_add_rule(String mofangSessionId, String companyOrganId, String storeOrganId,
 			String period, String amountOfMoney, String amountOfMoneyForNotEnough) {

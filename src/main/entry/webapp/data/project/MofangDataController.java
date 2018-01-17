@@ -1,5 +1,8 @@
 package main.entry.webapp.data.project;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import common.helper.StringUtil;
+import database.models.project.model.ProOrderStatisticsModel;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.HttpService;
 import utils.HttpData;
@@ -125,5 +130,37 @@ public class MofangDataController extends BaseController{
 		}
 		return resp;
 	}
+	
+	
+	@RequestMapping(path = "/mofang/order/statistics")
+	@ResponseBody
+	public Resp<?> orderStatistics(String beginTime,String endTime){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			JSONObject unpayJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "UNPAY");
+			ProOrderStatisticsModel unpay = unpayJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
+			JSONObject payedJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "PAYED");
+			ProOrderStatisticsModel payed = payedJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
+			JSONObject notPayJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "NOT_PAY");
+			ProOrderStatisticsModel notPay = notPayJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
+			JSONObject inParkJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "IN_PARK");
+			ProOrderStatisticsModel inPark = inParkJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
+			Map<String, ProOrderStatisticsModel> map = new HashMap<String, ProOrderStatisticsModel>();
+			map.put("unpay", unpay);
+			map.put("payed", payed);
+			map.put("notPay", notPay);
+			map.put("inpark", inPark);
+			ProOrderStatisticsModel pModel = new ProOrderStatisticsModel();
+			pModel.setCountAmount(unpay.getCountAmount()+payed.getCountAmount()+inPark.getCountAmount()+notPay.getCountAmount());
+			pModel.setMinuteAmount(unpay.getMinuteAmount()+notPay.getMinuteAmount()+inPark.getMinuteAmount()+payed.getMinuteAmount());
+			pModel.setPriceAmount(unpay.getPriceAmount()+notPay.getPriceAmount()+inPark.getPriceAmount()+payed.getPriceAmount());
+			map.put("total", pModel);
+			return new Resp<>(map);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	
 }
