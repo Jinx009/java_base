@@ -43,7 +43,7 @@ public class OpenApiDataController extends BaseController{
 	            map.put("magneticStripleId","0001171116000006");
 	            map.put("status","EMPTY");
 	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	            map.put("occurrenceTime",sdf.format(new Date()));
+	            map.put("occurrenceTimeString",sdf.format(new Date()));
 	            map.put("companyOrganId","10351");
 	            map.put("storeOrganId","10352");
 	            String jsonStr = JSON.toJSONString(map);

@@ -6,11 +6,11 @@ $(function(){
 	});
 	$('#datepicker').val(new Date().Format('yyyy-MM-dd'));
 	_getData();
-	setInterval(function() {
-
-		_getData();
-
-	}, 15000);
+//	setInterval(function() {
+//
+//		_getData();
+//
+//	}, 15000);
 })
 var _data = '';
 function _getData(){

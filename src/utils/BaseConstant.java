@@ -21,8 +21,8 @@ public class BaseConstant {
 	public static final String APP_ID = "appId";
 	public static final String MSG = "msg";
 	
-	public static final Integer AREA_ID = 23;
-	public static final Integer LOCATION_ID = 22;
+	public static final Integer AREA_ID = 27;
+	public static final Integer LOCATION_ID = 26;
 	public static final String APP_ID_NOW = AppInfo.XINJIANG.getAppId();
 	public static final String DATA = "data";
 	public static final String SESSION_ID = "sessionId";

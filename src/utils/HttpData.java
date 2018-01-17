@@ -15,7 +15,7 @@ public class HttpData {
 	
 
 	public static final String BASE_URL = "http://wx.zhanway.com/gtw";
-	public static final String BASE_URL_TEST = "http://127.0.0.1:9002/gtw";
+	public static final String BASE_URL_TEST = "http://wx.zhanway.com/gtw";
 	public static final String GET_TOKEN_URL = "/rest/token";
 	public static final String GET_LOCATION_URL = "/rest/locations";
 	public static final String GET_AREA_URL = "/rest/areas";
