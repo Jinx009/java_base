@@ -37,7 +37,11 @@ function _getData(){
 		}
 	})
 }
-
+function _setV(){
+	$('#v').val('50V');
+    $('#a').val('350mA');
+    $('#w').val('17.5W');
+}
 function _getLight(){
 	$.ajax({
 		url:'/interface/product/get',
@@ -63,6 +67,9 @@ function _getLight(){
 			    $('#a').val(_a+'A');
 			    $('#w').val(_w+'W');
 			    $('#l').val(_l+'%');
+			    if(_l>0){
+			    	_setV();
+			    }
 				$sliderTrack.css('width',_l+'%');
 				$sliderHandler.css('left',_l+'%');
 				$('#lightBtn').html('设置亮度'+_l+'%').attr('onclick','_setData();').removeClass('weui-btn_disabled');
@@ -100,7 +107,11 @@ function _setData(){
 				if(res!=null&&'success'==res.data){
 					if(_setStatus=='000A'){
 						 $('#l').val('100%');
+						 _setV();
 					}else{
+						if(_setStatus>0){
+							_setV();
+						}
 						$('#l').val(parseInt(_setStatus)*10+'%');
 					}
 				}else{
