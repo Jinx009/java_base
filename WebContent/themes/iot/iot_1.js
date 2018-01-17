@@ -75,26 +75,44 @@ function _getLight(){
 }
 var _setStatus ='0001';
 function _setData(){
-	$.ajax({
-		url:'/interface/product/set?status='+_setStatus,
-		type:'get',
-		dataType:'json',
-		success:function(res){
-			if(res!=null&&'success'==res.data){
-				if(_setStatus=='000A'){
-					 $('#l').val('100%');
-				}else{
-					$('#l').val(parseInt(_setStatus)*10+'%');
+	if(_pmStatus){
+		$.ajax({
+			url:'/interface/product/set/light',
+			type:'get',
+			dataType:'json',
+			success:function(res){
+				if(res!=null&&'success'==res.data){
+					_pmStatus = false;
+					layer.open({
+					    type: 2
+					    ,content: '状态切换中...'
+					 });
+					setTimeout('_getLight();',10000);
 				}
-			}else{
-				var _data = JSON.parse(res.data);
-			    layer.open({
-				    content: _data.errorMsg
-				    ,btn: '好'
-				});
 			}
-		}
-	})
+		})
+	}else{
+		$.ajax({
+			url:'/interface/product/set?status='+_setStatus,
+			type:'get',
+			dataType:'json',
+			success:function(res){
+				if(res!=null&&'success'==res.data){
+					if(_setStatus=='000A'){
+						 $('#l').val('100%');
+					}else{
+						$('#l').val(parseInt(_setStatus)*10+'%');
+					}
+				}else{
+					var _data = JSON.parse(res.data);
+				    layer.open({
+					    content: _data.errorMsg
+					    ,btn: '好'
+					});
+				}
+			}
+		})
+	}
 }
 function _hasTouch(){
 	var totalLen = $('#sliderInner').width(), startLeft = 0, startX = 0;
@@ -135,7 +153,7 @@ function _noTouch(){
 					'touchmove',
 					function(e) {});
 }
-
+var _pmStatus = false;
 function _setPM2_5(){
 	$('#pmBtn').hide();
 	$('#pm_Btn').show();
@@ -145,6 +163,7 @@ function _setPM2_5(){
 		dataType:'json',
 		success:function(res){
 			if(res!=null&&'success'==res.data){
+				_pmStatus = true;
 				setTimeout('_getPMData();',30000);
 			}else{
 				var _data = '设备不在线！';
