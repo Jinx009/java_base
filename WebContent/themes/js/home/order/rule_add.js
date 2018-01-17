@@ -30,5 +30,20 @@ function _save(){
     amountOfMoneyForNotEnough = $('#amountOfMoneyForNotEnough').val();
 	if(period==null||period==''||amountOfMoney==null||amountOfMoney==''||amountOfMoneyForNotEnough==null||amountOfMoneyForNotEnough==''){
 		layer.alert('请完善收费规则！');
+	}else{
+		var params = 'period='+period+'&amountOfMoney='+amountOfMoney+'&amountOfMoneyForNotEnough='+amountOfMoneyForNotEnough;
+		$.ajax({
+			url:'/home/d/role/add',
+			type:'post',
+			data:params,
+			dataType:'json',
+			success:function(res){
+				if('200'==res.code){
+					layer.alert('操作成功！',function(){
+						_open('4','/home/p/order/role');
+					})
+				}
+			}
+		})
 	}
 }

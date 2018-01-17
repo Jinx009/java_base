@@ -71,6 +71,25 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/mofang/rule_user")
+	@ResponseBody
+	public Resp<?> addRole(String period,String amountOfMoney,String amountOfMoneyForNotEnough,String storeOrganId,String companyOrganId){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			if(StringUtil.isBlank(storeOrganId)){
+				storeOrganId = "10352";
+			}
+			if(StringUtil.isBlank(companyOrganId)){
+				companyOrganId = "10351";
+			}
+			return new Resp<>(HttpData.mofang_add_rule(getMofangSessionId(), companyOrganId, storeOrganId, period, amountOfMoney, amountOfMoneyForNotEnough));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	
 	@RequestMapping(path = "/mofang/add_company_organ")
 	@ResponseBody
 	public Resp<?> addOrgan(String companyId,String name){

@@ -15,6 +15,7 @@ public class HttpData {
 	
 
 	public static final String BASE_URL = "http://wx.zhanway.com/gtw";
+	public static final String BASE_URL_TEST = "http://127.0.0.1:9002/gtw";
 	public static final String GET_TOKEN_URL = "/rest/token";
 	public static final String GET_LOCATION_URL = "/rest/locations";
 	public static final String GET_AREA_URL = "/rest/areas";
@@ -32,6 +33,7 @@ public class HttpData {
 	public static final String JOB_FIND_URL = "/rest/job/find";
 	public static final String INOUT_URL = "/rest/sensor/inOutLog";
 	private static final String UPDATE_SENSOR_DESC = "/rest/sensor/updateDesc";
+	private static final String SENSOR_ERROR_FLOW = "/rest/sensor/error";
 	
 	
 	
@@ -55,6 +57,16 @@ public class HttpData {
 	public static String deviceUrl(String token) {
 		String url = BASE_URL+DEVICE_URL+"?token="+token;
 		return url;
+	}
+	
+	public static String errorFlow(Integer p,Integer areaId){
+		if(p==null){
+			p = 1;
+		}
+		if(areaId == null){
+			areaId = 27;
+		}
+		return BASE_URL_TEST+SENSOR_ERROR_FLOW+"?areaId="+areaId+"&p="+p;
 	}
 	
 	/**
@@ -201,6 +213,22 @@ public class HttpData {
 	
 	public static String mofang_update_park_update_url(){
 		return MOFANG_BASE_URL_1+"/park_place/update";
+	}
+	
+	public static String mofang_add_rule_url(){
+		return MOFANG_BASE_URL_1+"/charging_rule";
+	}
+	
+	
+	public static Object mofang_add_rule(String mofangSessionId, String companyOrganId, String storeOrganId,
+			String period, String amountOfMoney, String amountOfMoneyForNotEnough) {
+		Map<String, String> data = new HashMap<String,String>();
+		data.put("companyOrganId", companyOrganId);
+		data.put("storeOrganId", storeOrganId);
+		data.put("period", period);
+		data.put("amountOfMoney",amountOfMoney);
+		data.put("amountOfMoneyForNotEnough",amountOfMoneyForNotEnough);
+		return  JSONObject.parseObject(HttpUtils.postMofangJson(mofangSessionId,mofang_add_rule_url(),JSON.toJSONString(data)));
 	}
 	
 	public static JSONObject getPark(String sessionId,String mac){
@@ -355,6 +383,8 @@ public class HttpData {
 			return "";
 		}
 	}
+
+
 
 	
 
