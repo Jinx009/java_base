@@ -244,7 +244,7 @@ public class HttpData {
 	}
 	
 	public static JSONObject getPark(String sessionId,String mac){
-		String params = "?companyOrganId=10351&storeOrganId=10352&magneticStripeId="+mac;
+		String params = "?companyOrganId="+BaseConstant.BASE_COMPANY_ID+"&storeOrganId="+BaseConstant.BASE_STORE_ID+"&magneticStripeId="+mac;
 		return  JSONObject.parseObject(HttpUtils.getMofang(sessionId, mofang_update_park_url()+params));
 	}
 	
@@ -252,8 +252,8 @@ public class HttpData {
 		Map<String, String> data = new HashMap<String,String>();
 		data.put("code", desc);
 		data.put("magneticStripeId", mac);
-		data.put("storeOrganId", "10352");
-		data.put("companyOrganId", "10351");
+		data.put("storeOrganId",BaseConstant.BASE_STORE_ID);
+		data.put("companyOrganId", BaseConstant.BASE_COMPANY_ID);
 		data.put("status", "EMPTY");
 		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_update_park_url(),JSON.toJSONString(data)));
 	}
@@ -270,9 +270,9 @@ public class HttpData {
 	
 	public static JSONObject mergeOrgan(String sessionId,Integer type,String name,String status){
 		Map<String, String> data = new HashMap<String,String>();
-		data.put("organId", "10352");
+		data.put("organId", BaseConstant.BASE_STORE_ID);
 		if(1==type){
-			data.put("organId", "10351");
+			data.put("organId",BaseConstant.BASE_COMPANY_ID);
 		}
 		data.put("status", status);
 		data.put("name", name);
@@ -282,7 +282,7 @@ public class HttpData {
 	public static JSONObject mofang_add_user(String sessionId,String name,String storeOrganId,String password,String mobilePhone,String birthday,String sex, String email){
 		Map<String, String> data = new HashMap<String,String>();
 		data.put("storeOrganId", storeOrganId);
-		data.put("companyOrganId", "10351");
+		data.put("companyOrganId",BaseConstant.BASE_COMPANY_ID);
 		data.put("name",name);
 		data.put("password", password);
 		data.put("birthday", birthday);
@@ -297,7 +297,7 @@ public class HttpData {
 		if(StringUtil.isNotBlank(companyOrganId)){
 			params.append("&companyOrganId="+companyOrganId);
 		}else{
-			params.append("&companyOrganId=10351");
+			params.append("&companyOrganId="+BaseConstant.BASE_COMPANY_ID);
 		}
 		params.append("&pageNum="+page);
 		params.append("&pageSize=25");

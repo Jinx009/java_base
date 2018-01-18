@@ -1,10 +1,8 @@
 $(function(){
-	$('#datepicker').datepicker({
-		autoclose : true,
-		format : 'yyyy-mm-dd',
-		lang : 'ch'
-	});
 	$('#datepicker').val(new Date().Format('yyyy-MM-dd'));
+	laydate.render({
+		elem : '#datepicker',
+	});
 	_getData();
 //	setInterval(function() {
 //

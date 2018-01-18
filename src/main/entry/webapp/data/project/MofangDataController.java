@@ -17,6 +17,7 @@ import common.helper.StringUtil;
 import database.models.project.model.ProOrderStatisticsModel;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.HttpService;
+import utils.BaseConstant;
 import utils.HttpData;
 import utils.Resp;
 
@@ -37,7 +38,7 @@ public class MofangDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			if(StringUtil.isBlank(companyOrganId)){
-				companyOrganId = "10351";
+				companyOrganId = BaseConstant.BASE_COMPANY_ID;
 			}
 			return new Resp<>(JSON.parseObject(httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_organ(status,type,companyOrganId,name))));
 		} catch (Exception e) {
@@ -52,7 +53,7 @@ public class MofangDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			if(StringUtil.isBlank(storeOrganId)){
-				storeOrganId = "10352";
+				storeOrganId = BaseConstant.BASE_STORE_ID;
 			}
 			return new Resp<>(HttpData.mofang_update_user(getMofangSessionId(),name,storeOrganId,password,mobile,birthday,sex,email,userId,status));
 		} catch (Exception e) {
@@ -67,7 +68,7 @@ public class MofangDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			if(StringUtil.isBlank(companyOrganId)){
-				companyOrganId = "10351";
+				companyOrganId = BaseConstant.BASE_COMPANY_ID;
 			}
 			return new Resp<>(JSON.parseObject(httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_user(companyOrganId))));
 		} catch (Exception e) {
@@ -82,7 +83,7 @@ public class MofangDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			if(StringUtil.isBlank(storeOrganId)){
-				storeOrganId = "10352";
+				storeOrganId = BaseConstant.BASE_STORE_ID;
 			}
 			return new Resp<>(HttpData.mofang_add_user(getMofangSessionId(), name, storeOrganId, password, mobilePhone, birthday,sex,email));
 		} catch (Exception e) {
@@ -91,16 +92,16 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
-	@RequestMapping(path = "/mofang/rule_user")
+	@RequestMapping(path = "/mofang/add_rule")
 	@ResponseBody
 	public Resp<?> addRole(String period,String amountOfMoney,String amountOfMoneyForNotEnough,String storeOrganId,String companyOrganId){
 		Resp<?> resp = new Resp<>(false);
 		try {
 			if(StringUtil.isBlank(storeOrganId)){
-				storeOrganId = "10352";
+				storeOrganId = BaseConstant.BASE_STORE_ID;
 			}
 			if(StringUtil.isBlank(companyOrganId)){
-				companyOrganId = "10351";
+				companyOrganId = BaseConstant.BASE_COMPANY_ID;
 			}
 			return new Resp<>(HttpData.mofang_add_rule(getMofangSessionId(), companyOrganId, storeOrganId, period, amountOfMoney, amountOfMoneyForNotEnough));
 		} catch (Exception e) {
@@ -127,7 +128,7 @@ public class MofangDataController extends BaseController{
 	public Resp<?> addStoreOrgan(String companyId,String name){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(HttpData.mofang_add_store_organ(getMofangSessionId(),"10351", "新疆立昂"));
+			return new Resp<>(HttpData.mofang_add_store_organ(getMofangSessionId(),BaseConstant.BASE_COMPANY_ID, "新疆立昂"));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

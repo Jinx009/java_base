@@ -27,7 +27,11 @@ function _getData(_type,_index){
 						_d.data = res.data.data.products;
 						for(var i in _d.data){
 							_d.data[i].beginTime = toDateTime(_d.data[i].beginTime);
-							_d.data[i].endTime = toDateTime(_d.data[i].endTime);
+							if(_d.data[i].endTime!=null&&_d.data[i].endTime!=''){
+								_d.data[i].endTime = toDateTime(_d.data[i].endTime);
+							}else{
+								_d.data[i].endTime = '';
+							}
 						}
 						_d.currentPage = page;
 						_d.max = _max;

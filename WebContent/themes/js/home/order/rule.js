@@ -1,5 +1,5 @@
 function _newRole(){
-	 _open_('4','/home/p/order/role','/home/p/order/role_add');
+	 _open_('4','/home/p/order/role','/home/p/order/rule_add');
 }
 $(function(){
 	_getArea();

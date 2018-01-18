@@ -33,14 +33,14 @@ function _save(){
 	}else{
 		var params = 'period='+period+'&amountOfMoney='+amountOfMoney+'&amountOfMoneyForNotEnough='+amountOfMoneyForNotEnough;
 		$.ajax({
-			url:'/home/d/role/add',
+			url:'/home/d/mofang/add_rule',
 			type:'post',
 			data:params,
 			dataType:'json',
 			success:function(res){
 				if('200'==res.code){
 					layer.alert('操作成功！',function(){
-						_open('4','/home/p/order/role');
+						_open('4','/home/p/order/rule');
 					})
 				}
 			}

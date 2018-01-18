@@ -49,13 +49,13 @@ function _edit(_e){
 		_htmlStr += '<option value="INVALID"  selected="selected" >禁用</option>';
 		$('#status').html(_htmlStr);
 	}
-	if(_sex==='MALE'){
-		var _htmlStr = '<option value="MALE" selected="selected"  >MALE</option>';
-		_htmlStr += '<option value="FEMALE"  >FEMALE</option>';
+	if(_sex==='男'){
+		var _htmlStr = '<option value="男" selected="selected"  >男</option>';
+		_htmlStr += '<option value="女"  >女</option>';
 		$('#sex').html(_htmlStr);
 	}else{
-		var _htmlStr = '<option value="MALE"  >MALE</option>';
-		_htmlStr += '<option value="FEMALE"  selected="selected" >FEMALE</option>';
+		var _htmlStr = '<option value="男"  >男</option>';
+		_htmlStr += '<option value="女"  selected="selected" >女</option>';
 		$('#sex').html(_htmlStr);
 	}
 	_showNew();
