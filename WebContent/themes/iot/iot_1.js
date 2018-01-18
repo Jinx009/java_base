@@ -37,10 +37,10 @@ function _getData(){
 		}
 	})
 }
-function _setV(){
+function _setV(_t){
 	$('#v').val('50V');
-    $('#a').val('350mA');
-    $('#w').val('17.5W');
+    $('#a').val(350*_t+'mA');
+    $('#w').val(17.5*_t+'W');
 }
 function _getLight(){
 	$.ajax({
@@ -68,7 +68,7 @@ function _getLight(){
 			    $('#w').val(_w+'W');
 			    $('#l').val(_l+'%');
 			    if(_l>0){
-			    	_setV();
+			    	_setV(_l/10);
 			    }
 				$sliderTrack.css('width',_l+'%');
 				$sliderHandler.css('left',_l+'%');
@@ -107,10 +107,10 @@ function _setData(){
 				if(res!=null&&'success'==res.data){
 					if(_setStatus=='000A'){
 						 $('#l').val('100%');
-						 _setV();
+						 _setV(1);
 					}else{
 						if(_setStatus>0){
-							_setV();
+							_setV(_setStatus/10);
 						}
 						$('#l').val(parseInt(_setStatus)*10+'%');
 					}
