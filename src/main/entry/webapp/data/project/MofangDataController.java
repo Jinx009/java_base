@@ -92,6 +92,24 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/mofang/sign_log")
+	@ResponseBody
+	public Resp<?> signLog(String userId,String companyOrganId,String storeOrganId,Integer page){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			if(StringUtil.isBlank(storeOrganId)){
+				storeOrganId = BaseConstant.BASE_STORE_ID;
+			}
+			if(StringUtil.isBlank(companyOrganId)){
+				companyOrganId = BaseConstant.BASE_COMPANY_ID;
+			}
+			return new Resp<>(HttpData.mofang_get_sign(getMofangSessionId(), companyOrganId, storeOrganId, userId,page));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/mofang/add_rule")
 	@ResponseBody
 	public Resp<?> addRole(String period,String amountOfMoney,String amountOfMoneyForNotEnough,String storeOrganId,String companyOrganId){

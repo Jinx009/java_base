@@ -227,6 +227,19 @@ public class HttpData {
 		return MOFANG_BASE_URL+"/user/update";
 	}
 	
+	private static String mofang_sign_log_url() {
+		return MOFANG_BASE_URL+"/operation_log";
+	}
+	
+	public static JSONObject mofang_get_sign(String mofangSessionId, String companyOrganId, String storeOrganId,
+			String userId, Integer page) {
+		String params = "?&storeOrganId="+storeOrganId+"&pageNum="+page+"&pageSize=25";
+		if(StringUtil.isNotBlank(userId)){
+			params+= "&userId="+userId;
+		}
+		return JSONObject.parseObject(HttpUtils.getMofang(mofangSessionId, mofang_sign_log_url()+params));
+	}
+	
 	public static JSONObject getOrderStatistics(String sessionId,String beginTime,String endTime,String status, String storeOrganId){
 		String params = "?beginTime="+beginTime+"&endTime="+endTime+"&status="+status+"&storeOrganId="+storeOrganId;
 		return  JSONObject.parseObject(HttpUtils.getMofang(sessionId, mofang_order_statistics_url()+params));
@@ -413,6 +426,8 @@ public class HttpData {
 			return "";
 		}
 	}
+
+
 
 
 
