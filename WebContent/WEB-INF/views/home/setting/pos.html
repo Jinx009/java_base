@@ -57,9 +57,11 @@
 												<th>手机号码</th>
 												<th>姓名</th>
 												<th>邮箱</th>
+												<th>状态</th>
 												<th>性别</th>
 												<th>生日</th>
 												<th>创建日期</th>
+												<th>操作</th>
 											</tr>
 										</thead>
 										<tbody id="account">
@@ -67,9 +69,25 @@
 												<td v-text="account.mobile"></td>
 												<td v-text="account.name"></td>
 												<td v-text="account.email"></td>
+												<td>
+													<button v-if="'VALID'===account.status" class='btn btn-success btn-xs'>可用</button>
+													<button v-if="'INVALID'===account.status" class='btn btn-default btn-xs'>禁用</button>
+												</td>
 												<td v-text="account.sex"></td>
 												<td v-text="account.birthday"></td>
 												<td v-text="account.createTime"></td>
+												<td>
+													<button class='btn btn-info btn-xs'
+													:userId="account.userId" 
+													:birthday="account.birthday"
+													:name="account.name"
+													:password="account.password"
+													:sex="account.sex"
+													:status="account.status"
+													:mobile="account.mobile"
+													:email="account.email"
+													 onclick="_edit(this);">编辑</button>
+												</td>
 											</tr>
 										</tbody>
 									</table>
@@ -80,9 +98,59 @@
 				</div>
 			</section>
 		</div>
+		<div class="box box-primary fly-box-area none" style="top:60px;height: 650px;" id="newBox">
+			<div class="box-header with-border">
+				<h3 class="box-title">操作员编辑</h3>
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool"
+						onclick="_hideNew();">
+						<i class="fa fa-remove"></i>
+					</button>
+				</div>
+			</div>
+			<!-- /.box-header -->
+			<!-- form start -->
+			<form role="form" style="width: 90%; margin-left: 5%;">
+				<div class="box-body">
+					<div class="form-group">
+						<label for="">姓名</label> <input type="text" class="form-control"
+							id="name" >
+					</div>
+					<div class="form-group">
+						<label for="">邮箱</label> <input type="text" class="form-control"
+							id="email" >
+					</div>
+					<div class="form-group">
+						<label for="">手机号码</label> <input type="text" class="form-control"
+							id="mobile" >
+					</div>
+					<div class="form-group">
+						<label for="">密码</label> <input type="text" class="form-control"
+							id="password" placeholder="重新填写即修改密码" >
+					</div>
+					<div class="form-group">
+						<label for="">性别</label> <select class="form-control"
+							id="sex" >
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="">生日</label> <input type="text" class="form-control"
+							id="birthday" />
+					</div>
+					<div class="form-group">
+						<label for="">状态</label> <select class="form-control"
+							id="status" >
+						</select>
+					</div>
+				</div>
+				<div class="box-footer">
+					<button type="button" onclick="_save();" class="btn btn-primary">提交</button>
+				</div>
+			</form>
+		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/setting/pos.js?version=1.182"></script>
+	<script src="/themes/js/home/setting/pos.js?version=1.26"></script>
 
 </body>
 </html>

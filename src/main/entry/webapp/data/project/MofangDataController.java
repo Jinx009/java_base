@@ -46,6 +46,21 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/mofang/update_user")
+	@ResponseBody
+	public Resp<?> updateUser(String storeOrganId,String mobile,String sex,String email,String status,String userId,String name,String birthday,String password){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			if(StringUtil.isBlank(storeOrganId)){
+				storeOrganId = "10352";
+			}
+			return new Resp<>(HttpData.mofang_update_user(getMofangSessionId(),name,storeOrganId,password,mobile,birthday,sex,email,userId,status));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/mofang/user")
 	@ResponseBody
 	public Resp<?> getUser(String companyOrganId){

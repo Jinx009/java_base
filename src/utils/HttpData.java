@@ -223,6 +223,10 @@ public class HttpData {
 		return MOFANG_BASE_URL_1+"/product/statistics";
 	}
 	
+	private static String mofang_update_user_url() {
+		return MOFANG_BASE_URL+"/user/update";
+	}
+	
 	public static JSONObject getOrderStatistics(String sessionId,String beginTime,String endTime,String status, String storeOrganId){
 		String params = "?beginTime="+beginTime+"&endTime="+endTime+"&status="+status+"&storeOrganId="+storeOrganId;
 		return  JSONObject.parseObject(HttpUtils.getMofang(sessionId, mofang_order_statistics_url()+params));
@@ -321,6 +325,24 @@ public class HttpData {
 		return MOFANG_BASE_URL+"/organ";
 	}
 	
+	public static JSONObject mofang_update_user(String mofangSessionId, String name, String storeOrganId, String password,
+			String mobilePhone, String birthday, String sex, String email,String userId, String status) {
+		Map<String, String> data = new HashMap<String,String>();
+		data.put("storeOrganId", storeOrganId);
+		if(StringUtil.isNotBlank(password)){
+			data.put("password",password);
+		}
+		data.put("name",name);
+		data.put("mobile", mobilePhone);
+		data.put("birthday", birthday);
+		data.put("sex", sex);
+		data.put("email", email);
+		data.put("status", status);
+		data.put("userId", userId);
+		return JSONObject.parseObject(HttpUtils.postMofangJson(mofangSessionId,mofang_update_user_url(),JSON.toJSONString(data)));
+	}
+	
+
 	public static JSONObject mofang_add_company_organ(String sessionId,String companyOrganId,String name){
 		Map<String, String> data = new HashMap<String,String>();
 		data.put("companyOrganId", companyOrganId);
@@ -391,6 +413,8 @@ public class HttpData {
 			return "";
 		}
 	}
+
+
 
 
 

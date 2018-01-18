@@ -19,11 +19,11 @@ function _getData(){
 	var time2 = timestamp-60*60*24*1000;
 	var _beginTime = toDate(time2),_endTime = toDate(timestamp);
 	if(time!=null&&time!=''){
-		_beginTime = time.split(' - ')[0];
-		_endTime = time.split(' - ')[1];
+		_beginTime = time.split(' - ')[0]+' 00:00:00';
+		_endTime = time.split(' - ')[1]+' 23:59:59';
 	}
 //	var params = 'beginTime='+_beginTime+'&endTime='+_endTime;
-	var params = 'beginTime=2018-01-01&endTime=2018-01-20&storeOrganId=10031';
+	var params = 'beginTime=2018-01-01 00:00:00&endTime=2018-01-20 23:59:59&storeOrganId=10031';
 	$.ajax({
 		url:'/home/d/mofang/order/statistics',
 		type:'post',

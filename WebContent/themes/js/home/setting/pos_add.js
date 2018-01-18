@@ -35,6 +35,8 @@ function _save(){
 	   _email==null||_email==''||
 	   _birthday==null||_birthday==''){
 		layer.alert('请完善个人资料！');
+	}else if(!/^1[3|4|5|8][0-9]\d{4,8}$/.test(_mobile)){
+		layer.alert('手机号码不合法！');
 	}else{
 		$.ajax({
 			url:'/home/d/mofang/add_user',
