@@ -51,10 +51,10 @@ function _edit(_e){
 	}
 	if(_sex==='MALE'){
 		var _htmlStr = '<option value="MALE" selected="selected"  >MALE</option>';
-		_htmlStr += '<option value="INVALID"  >禁用</option>';
+		_htmlStr += '<option value="FEMALE"  >FEMALE</option>';
 		$('#sex').html(_htmlStr);
 	}else{
-		var _htmlStr = '<option value="FEMALE"  >FEMALE</option>';
+		var _htmlStr = '<option value="MALE"  >MALE</option>';
 		_htmlStr += '<option value="FEMALE"  selected="selected" >FEMALE</option>';
 		$('#sex').html(_htmlStr);
 	}
