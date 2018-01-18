@@ -17,6 +17,7 @@ import database.models.project.ProOrder;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.HttpService;
 import service.basicFunctions.project.ProOrderService;
+import utils.BaseConstant;
 import utils.HttpData;
 
 
@@ -40,7 +41,7 @@ public class JobTask extends BaseController{
 		
 		private void getOrder(Integer p){
 			try {
-				String r = httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_order("10351",p));
+				String r = httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_order(BaseConstant.BASE_COMPANY_ID,p));
 				 JSONObject  j = JSON.parseObject(r);
 				 JSONObject j2 = j.getJSONObject("data");
 				 logger.warn("{}",j2.toJSONString());
