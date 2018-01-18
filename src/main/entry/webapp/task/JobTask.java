@@ -14,9 +14,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import database.models.project.ProOrder;
+import database.models.project.ProSign;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.HttpService;
 import service.basicFunctions.project.ProOrderService;
+import service.basicFunctions.project.ProSignService;
 import utils.BaseConstant;
 import utils.HttpData;
 
@@ -29,16 +31,23 @@ public class JobTask extends BaseController{
 		@Autowired
 		private ProOrderService proOrderService;
 		@Autowired
+		private ProSignService proSignService;
+		@Autowired
 		private HttpService httpService;
 		
 		
 //		@Scheduled(fixedRate = 1000 * 120,initialDelay = 1000)
-		@Scheduled(cron = "0 */50 * * * ?")//50分钟处理一次
+		@Scheduled(cron = "0 */240 * * * ?")//50分钟处理一次
 		public void init(){
 			logger.warn("start job job... ... ");
 			getOrder(1);
+			getLog(1);
 	     }
 		
+		/**
+		 * 同步订单
+		 * @param p
+		 */
 		private void getOrder(Integer p){
 			try {
 				String r = httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_order(BaseConstant.BASE_COMPANY_ID,p));
@@ -51,6 +60,27 @@ public class JobTask extends BaseController{
 				 if(res){
 					 p++;
 					 getOrder(p);
+				 }
+			} catch (Exception e) {
+				logger.error("error:{}",e);
+			}
+		}
+		
+		/**
+		 * 同步考勤
+		 * @param p
+		 */
+		private void getLog(Integer p){
+			try {
+				JSONObject  j = HttpData.mofang_get_sign(getMofangSessionId(),BaseConstant.BASE_COMPANY_ID,BaseConstant.BASE_STORE_ID,null,p);
+				 JSONObject j2 = j.getJSONObject("data");
+				 logger.warn("{}",j2.toJSONString());
+				 List<ProSign> list = JSONArray.parseArray(j2.getString("operationLogs"), ProSign.class);
+				 boolean res = proSignService.save(list);
+				 logger.warn("b : {}",res);
+				 if(res){
+					 p++;
+					 getLog(p);
 				 }
 			} catch (Exception e) {
 				logger.error("error:{}",e);
