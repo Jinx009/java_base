@@ -22,19 +22,19 @@ function _getData(){
 		_beginTime = time.split(' - ')[0];
 		_endTime = time.split(' - ')[1];
 	}
-	_draw_1('');
-	_draw_2('');
-	_draw_3('');
 //	var params = 'beginTime='+_beginTime+'&endTime='+_endTime;
-//	$.ajax({
-//		url:'/home/d/mofang/order/statistics',
-//		type:'post',
-//		data:params,
-//		dataType:'json',
-//		success:function(res){
-//			_draw(res.data);
-//		}
-//	})
+	var params = 'beginTime=2018-01-01&endTime=2018-01-20&storeOrganId=10031';
+	$.ajax({
+		url:'/home/d/mofang/order/statistics',
+		type:'post',
+		data:params,
+		dataType:'json',
+		success:function(res){
+			_draw_1(res.data);
+			_draw_2(res.data);
+			_draw_3(res.data);
+		}
+	})
 }
 function _darw(_d){
 	_draw_1();
@@ -55,7 +55,7 @@ function _draw_1(_d){
 		        // top: 'middle',
 		        bottom: 10,
 		        left: 'center',
-		        data: ['已支付', '在停','不需支付','逃单']
+		        data: ['已支付', '不需支付','逃单']
 		    },
 		    series : [
 		        {
@@ -64,11 +64,10 @@ function _draw_1(_d){
 		            center: ['50%', '50%'],
 		            selectedMode: 'single',
 		            data:[
-		          
-		                {value:535, name: '已支付'},
-		                {value:510, name: '在停'},
-		                {value:634, name: '不需支付'},
-		                {value:735, name: '逃单'}
+		                {value:_d.payed.priceAmount, name: '已支付:'+_d.payed.priceAmount+'元'},
+//		                {value:_d.inpark.priceAmount, name: '在停:'+_d.inpark.priceAmount},
+		                {value:_d.notPay.priceAmount, name: '不需支付:'+_d.notPay.priceAmount+'元'},
+		                {value:_d.unpay.priceAmount, name: '逃单:'+_d.unpay.priceAmount+'元'}
 		            ],
 		            itemStyle: {
 		                emphasis: {
@@ -98,7 +97,7 @@ function _draw_2(_d){
 		        // top: 'middle',
 		        bottom: 10,
 		        left: 'center',
-		        data: ['已支付', '在停','不需支付','逃单']
+		        data: ['已支付','不需支付','逃单']
 		    },
 		    series : [
 		        {
@@ -107,11 +106,10 @@ function _draw_2(_d){
 		            center: ['50%', '50%'],
 		            selectedMode: 'single',
 		            data:[
-		          
-		                {value:535, name: '已支付'},
-		                {value:510, name: '在停'},
-		                {value:634, name: '不需支付'},
-		                {value:735, name: '逃单'}
+			                {value:_d.payed.countAmount, name: '已支付:'+_d.payed.countAmount+'次'},
+//			                {value:_d.inpark.priceAmount, name: '在停:'+_d.inpark.priceAmount},
+			                {value:_d.notPay.countAmount, name: '不需支付:'+_d.notPay.countAmount+'次'},
+			                {value:_d.unpay.countAmount, name: '逃单:'+_d.unpay.countAmount+'次'}
 		            ],
 		            itemStyle: {
 		                emphasis: {
@@ -141,7 +139,7 @@ function _draw_3(_d){
 		        // top: 'middle',
 		        bottom: 10,
 		        left: 'center',
-		        data: ['已支付', '在停','不需支付','逃单']
+		        data: ['已支付','不需支付','逃单']
 		    },
 		    series : [
 		        {
@@ -150,11 +148,10 @@ function _draw_3(_d){
 		            center: ['50%', '50%'],
 		            selectedMode: 'single',
 		            data:[
-		          
-		                {value:535, name: '已支付'},
-		                {value:510, name: '在停'},
-		                {value:634, name: '不需支付'},
-		                {value:735, name: '逃单'}
+		                    {value:_d.payed.minuteAmount, name: '已支付:'+_d.payed.minuteAmount+'分钟'},
+//			                {value:_d.inpark.priceAmount, name: '在停:'+_d.inpark.priceAmount},
+			                {value:_d.notPay.minuteAmount, name: '不需支付:'+_d.notPay.minuteAmount+'分钟'},
+			                {value:_d.unpay.minuteAmount, name: '逃单:'+_d.unpay.minuteAmount+'分钟'}
 		            ],
 		            itemStyle: {
 		                emphasis: {

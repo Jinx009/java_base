@@ -134,16 +134,19 @@ public class MofangDataController extends BaseController{
 	
 	@RequestMapping(path = "/mofang/order/statistics")
 	@ResponseBody
-	public Resp<?> orderStatistics(String beginTime,String endTime){
+	public Resp<?> orderStatistics(String beginTime,String endTime,String storeOrganId){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			JSONObject unpayJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "UNPAY");
+			if(StringUtil.isBlank(storeOrganId)){
+				storeOrganId = "10352";
+			}
+			JSONObject unpayJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "UNPAY",storeOrganId);
 			ProOrderStatisticsModel unpay = unpayJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
-			JSONObject payedJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "PAYED");
+			JSONObject payedJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "PAYED",storeOrganId);
 			ProOrderStatisticsModel payed = payedJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
-			JSONObject notPayJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "NOT_PAY");
+			JSONObject notPayJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "NOT_PAY",storeOrganId);
 			ProOrderStatisticsModel notPay = notPayJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
-			JSONObject inParkJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "IN_PARK");
+			JSONObject inParkJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "IN_PARK",storeOrganId);
 			ProOrderStatisticsModel inPark = inParkJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
 			Map<String, ProOrderStatisticsModel> map = new HashMap<String, ProOrderStatisticsModel>();
 			map.put("unpay", unpay);

@@ -11,4 +11,11 @@ public class ProOrderStatisticsModel {
 	private Double priceAmount;
 	private Integer minuteAmount;
 	
+	public Double getPriceAmount() {
+		if(this.priceAmount==null)
+			return 0.00;
+		return priceAmount;
+	}
+	
+	
 }

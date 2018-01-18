@@ -223,8 +223,8 @@ public class HttpData {
 		return MOFANG_BASE_URL_1+"/product/statistics";
 	}
 	
-	public static JSONObject getOrderStatistics(String sessionId,String beginTime,String endTime,String status){
-		String params = "?beginTime="+beginTime+"&endTime="+endTime+"&status="+status+"&storeOrganId=10352";
+	public static JSONObject getOrderStatistics(String sessionId,String beginTime,String endTime,String status, String storeOrganId){
+		String params = "?beginTime="+beginTime+"&endTime="+endTime+"&status="+status+"&storeOrganId="+storeOrganId;
 		return  JSONObject.parseObject(HttpUtils.getMofang(sessionId, mofang_order_statistics_url()+params));
 	}
 	
