@@ -91,7 +91,10 @@
 										<tr v-for="item in logs.data">
 											<td v-text="item.id"></td>
 											<td v-text="item.name"></td>
-											<td v-text="item.type"></td>
+											<td>
+												<button class='btn btn-success btn-xs' v-if="'LOGIN'===item.type" >登入</button>
+												<button class='btn btn-danger btn-xs' v-if="'LOGINOUT'===item.type" >登出</button>
+											</td>
 											<td v-text="item.updateTime"></td>
 										</tr>
 									</tbody>
