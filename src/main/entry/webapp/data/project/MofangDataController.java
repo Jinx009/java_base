@@ -1,6 +1,9 @@
 package main.entry.webapp.data.project;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -15,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import common.helper.StringUtil;
 import database.models.project.model.ProOrderStatisticsModel;
+import database.models.project.model.ProPosModel;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.HttpService;
 import utils.BaseConstant;
@@ -229,6 +233,38 @@ public class MofangDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			return new Resp<>(JSON.parseObject(httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_order(companyId,page))));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	
+	/**
+	 * 获取订单列表
+	 * @param companyId
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(path = "/mofang/pos")
+	@ResponseBody
+	public Resp<?> pos(String companyId){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<ProPosModel> list = new ArrayList<ProPosModel>();
+			ProPosModel proPosModel = new ProPosModel();
+			proPosModel.setCreateTime(new Date());
+			proPosModel.setModel("X9");
+			proPosModel.setMac("0001171228000003");
+			proPosModel.setName("zhanway_001");
+			list.add(proPosModel);
+			proPosModel = new ProPosModel();
+			proPosModel.setCreateTime(new Date());
+			proPosModel.setModel("X9 Plus");
+			proPosModel.setMac("0001171228000004");
+			proPosModel.setName("zhanway_002");
+			list.add(proPosModel);
+			return new Resp<>(list);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

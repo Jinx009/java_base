@@ -49,18 +49,16 @@
 									<table class="table table-hover table-bordered">
 										<thead>
 											<tr>
-												<th>设备厂商</th>
-												<th>识别码</th>
-												<th>状态</th>
+												<th>名称</th>
+												<th>型号</th>
 												<th>MAC</th>
 												<th>运行日期</th>
 											</tr>
 										</thead>
 										<tbody id="data">
 											<tr v-for="device in datas">
-												<td v-text="device.topOrganName"></td>
-												<td v-text="device.identifier"></td>
-												<td v-text="device.status"></td>
+												<td v-text="device.name"></td>
+												<td v-text="device.model"></td>
 												<td v-text="device.mac"></td>
 												<td v-text="device.createTime"></td>
 											</tr>
@@ -75,7 +73,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/device/pos.js?version=1.15"></script>
+	<script src="/themes/js/home/device/pos.js?version=1.16"></script>
 
 </body>
 </html>
