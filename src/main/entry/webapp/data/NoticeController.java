@@ -21,7 +21,7 @@ public class NoticeController {
 
 	private static final Logger log = LoggerFactory.getLogger(NoticeController.class);
 
-	@RequestMapping(path = "/notice",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/notice/na/iocm/devNotify/v1.1.0/updateDeviceDatas",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Resp<?> notice(@RequestBody Object r){
 		Resp<?> resp = new Resp<>(false);
