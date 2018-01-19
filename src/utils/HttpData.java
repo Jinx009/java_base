@@ -9,7 +9,6 @@ import com.alibaba.fastjson.JSONObject;
 
 import common.helper.StringUtil;
 import utils.enums.AppInfo;
-import utils.pos.CallUtils;
 
 public class HttpData {
 	
@@ -59,12 +58,18 @@ public class HttpData {
 		return url;
 	}
 	
+	/**
+	 * 错误日志
+	 * @param p
+	 * @param areaId
+	 * @return
+	 */
 	public static String errorFlow(Integer p,Integer areaId){
 		if(p==null){
 			p = 1;
 		}
 		if(areaId == null){
-			areaId = 27;
+			areaId = BaseConstant.AREA_ID;
 		}
 		return BASE_URL_TEST+SENSOR_ERROR_FLOW+"?areaId="+areaId+"&p="+p;
 	}
@@ -79,14 +84,27 @@ public class HttpData {
 		return POS_SERVER_IP+"/user-api/device?baseOrganId="+baseOrganId;
 	}
 	
+	/**
+	 * 曲线图表
+	 * @param token
+	 * @param dateStr
+	 * @return
+	 */
 	public static String appRush(String token, String dateStr) {
 		String url = BASE_URL+LOCATION_RUSH_URL+"?locationId="+BaseConstant.LOCATION_ID+"&token="+token+"&date="+dateStr;
 		return url;
 	}
+	
+	/**
+	 * 车进车出日志
+	 * @param dateStr
+	 * @return
+	 */
 	public static String inOutUrl(String dateStr) {
 		String url = BASE_URL+INOUT_URL+"?areaId="+BaseConstant.AREA_ID+"&dateStr="+dateStr;
 		return url;
 	}
+	
 	/**
 	 * pos机登录账号列表
 	 * @return
@@ -94,6 +112,7 @@ public class HttpData {
 	public static String accountUrl() {
 		return POS_SERVER_IP+"/user-api/user?organId="+organId+"&limit="+limit;
 	}
+	
 	/**
 	 * 曲线图location
 	 * @param token
@@ -194,7 +213,6 @@ public class HttpData {
 		return MOFANG_BASE_URL+LOGIN;
 	}
 	
-	
 	public static String mofang_get_user(String companyOrganId){
 		return MOFANG_BASE_URL+"/user?companyOrganId="+companyOrganId;
 	}
@@ -231,6 +249,19 @@ public class HttpData {
 		return MOFANG_BASE_URL+"/operation_log";
 	}
 	
+	public static String mofang_add_organ(){
+		return MOFANG_BASE_URL+"/organ";
+	}
+	
+	/**
+	 * 考勤记录
+	 * @param mofangSessionId
+	 * @param companyOrganId
+	 * @param storeOrganId
+	 * @param userId
+	 * @param page
+	 * @return
+	 */
 	public static JSONObject mofang_get_sign(String mofangSessionId, String companyOrganId, String storeOrganId,
 			String userId, Integer page) {
 		String params = "?&storeOrganId="+storeOrganId+"&pageNum="+page+"&pageSize=25";
@@ -240,11 +271,30 @@ public class HttpData {
 		return JSONObject.parseObject(HttpUtils.getMofang(mofangSessionId, mofang_sign_log_url()+params));
 	}
 	
+	/**
+	 * 订单分析
+	 * @param sessionId
+	 * @param beginTime
+	 * @param endTime
+	 * @param status
+	 * @param storeOrganId
+	 * @return
+	 */
 	public static JSONObject getOrderStatistics(String sessionId,String beginTime,String endTime,String status, String storeOrganId){
 		String params = "?beginTime="+beginTime+"&endTime="+endTime+"&status="+status+"&storeOrganId="+storeOrganId;
 		return  JSONObject.parseObject(HttpUtils.getMofang(sessionId, mofang_order_statistics_url()+params));
 	}
 	
+	/**
+	 * 增加收费规则
+	 * @param mofangSessionId
+	 * @param companyOrganId
+	 * @param storeOrganId
+	 * @param period
+	 * @param amountOfMoney
+	 * @param amountOfMoneyForNotEnough
+	 * @return
+	 */
 	public static Object mofang_add_rule(String mofangSessionId, String companyOrganId, String storeOrganId,
 			String period, String amountOfMoney, String amountOfMoneyForNotEnough) {
 		Map<String, String> data = new HashMap<String,String>();
@@ -256,11 +306,24 @@ public class HttpData {
 		return  JSONObject.parseObject(HttpUtils.postMofangJson(mofangSessionId,mofang_add_rule_url(),JSON.toJSONString(data)));
 	}
 	
+	/**
+	 * 车位信息
+	 * @param sessionId
+	 * @param mac
+	 * @return
+	 */
 	public static JSONObject getPark(String sessionId,String mac){
 		String params = "?companyOrganId="+BaseConstant.BASE_COMPANY_ID+"&storeOrganId="+BaseConstant.BASE_STORE_ID+"&magneticStripeId="+mac;
 		return  JSONObject.parseObject(HttpUtils.getMofang(sessionId, mofang_update_park_url()+params));
 	}
 	
+	/**
+	 * 增加车位
+	 * @param sessionId
+	 * @param mac
+	 * @param desc
+	 * @return
+	 */
 	public static JSONObject addPark(String sessionId,String mac,String desc){
 		Map<String, String> data = new HashMap<String,String>();
 		data.put("code", desc);
@@ -271,6 +334,14 @@ public class HttpData {
 		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_update_park_url(),JSON.toJSONString(data)));
 	}
 	
+	/**
+	 * 更新车位
+	 * @param sessionId
+	 * @param mac
+	 * @param desc
+	 * @param parkId
+	 * @return
+	 */
 	public static JSONObject updatePark(String sessionId,String mac,String desc,String parkId){
 		Map<String, String> data = new HashMap<String,String>();
 		data.put("code", desc);
@@ -280,7 +351,14 @@ public class HttpData {
 	}
 	
 
-	
+	/**
+	 * 更新组织名称
+	 * @param sessionId
+	 * @param type
+	 * @param name
+	 * @param status
+	 * @return
+	 */
 	public static JSONObject mergeOrgan(String sessionId,Integer type,String name,String status){
 		Map<String, String> data = new HashMap<String,String>();
 		data.put("organId", BaseConstant.BASE_STORE_ID);
@@ -292,6 +370,18 @@ public class HttpData {
 		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_update_organ_post(),JSON.toJSONString(data)));
 	}
 	
+	/**
+	 * 添加POS机用户
+	 * @param sessionId
+	 * @param name
+	 * @param storeOrganId
+	 * @param password
+	 * @param mobilePhone
+	 * @param birthday
+	 * @param sex
+	 * @param email
+	 * @return
+	 */
 	public static JSONObject mofang_add_user(String sessionId,String name,String storeOrganId,String password,String mobilePhone,String birthday,String sex, String email){
 		Map<String, String> data = new HashMap<String,String>();
 		data.put("storeOrganId", storeOrganId);
@@ -305,6 +395,12 @@ public class HttpData {
 		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_add_user_post(),JSON.toJSONString(data)));
 	}
 	
+	/**
+	 * 获取订单列表
+	 * @param companyOrganId
+	 * @param page
+	 * @return
+	 */
 	public static String mofang_get_order(String companyOrganId, Integer page){
 		StringBuffer params = new StringBuffer("a=a");
 		if(StringUtil.isNotBlank(companyOrganId)){
@@ -317,6 +413,14 @@ public class HttpData {
 		return MOFANG_BASE_URL_1+"/product?"+params.toString();
 	}
 	
+	/**
+	 * 获取组织列表
+	 * @param status
+	 * @param type
+	 * @param companyOrganId
+	 * @param name
+	 * @return
+	 */
 	public static String mofang_get_organ(String status,String type, String companyOrganId, String name){
 		StringBuffer params = new StringBuffer("a=a");
 		if(StringUtil.isNotBlank(type)){
@@ -334,10 +438,20 @@ public class HttpData {
 		return MOFANG_BASE_URL+"/organ?"+params.toString();
 	}
 	
-	public static String mofang_add_organ(){
-		return MOFANG_BASE_URL+"/organ";
-	}
-	
+	/**
+	 * 更新POS机操作员
+	 * @param mofangSessionId
+	 * @param name
+	 * @param storeOrganId
+	 * @param password
+	 * @param mobilePhone
+	 * @param birthday
+	 * @param sex
+	 * @param email
+	 * @param userId
+	 * @param status
+	 * @return
+	 */
 	public static JSONObject mofang_update_user(String mofangSessionId, String name, String storeOrganId, String password,
 			String mobilePhone, String birthday, String sex, String email,String userId, String status) {
 		Map<String, String> data = new HashMap<String,String>();
@@ -355,7 +469,13 @@ public class HttpData {
 		return JSONObject.parseObject(HttpUtils.postMofangJson(mofangSessionId,mofang_update_user_url(),JSON.toJSONString(data)));
 	}
 	
-
+	/**
+	 * 添加公司组织
+	 * @param sessionId
+	 * @param companyOrganId
+	 * @param name
+	 * @return
+	 */
 	public static JSONObject mofang_add_company_organ(String sessionId,String companyOrganId,String name){
 		Map<String, String> data = new HashMap<String,String>();
 		data.put("companyOrganId", companyOrganId);
@@ -364,6 +484,13 @@ public class HttpData {
 		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_add_organ(),JSON.toJSONString(data)));
 	}
 	
+	/**
+	 * 添加街道组织
+	 * @param sessionId
+	 * @param companyOrganId
+	 * @param name
+	 * @return
+	 */
 	public static Object mofang_add_store_organ(String sessionId,String companyOrganId, String name) {
 		Map<String, String> data = new HashMap<String,String>();
 		data.put("companyOrganId", companyOrganId);
@@ -372,7 +499,10 @@ public class HttpData {
 		return  JSONObject.parseObject(HttpUtils.postMofangJson(sessionId,mofang_add_organ(),JSON.toJSONString(data)));
 	}
 	
-	
+	/**
+	 * 登录获取sessionId
+	 * @return
+	 */
 	public static JSONObject mofang_login(){
 		Map<String, String> data = new HashMap<String,String>();
 		data.put("mobile", "13800138000");
@@ -390,42 +520,6 @@ public class HttpData {
 	
 
 
-
-
-	/**
-	 * pos机账单信息
-	 * @return
-	 */
-	public static String order(Integer page,String status) {
-		try {
-			return CallUtils.getOrders3(page,status);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "";
-		}
-	}
-
-	/**
-	 * 车位信息
-	 * @return
-	 */
-	public static String place() {
-		try {
-			return CallUtils.getPlace();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "";
-		}
-	}
-
-	public static String insert(String mac, String code, String place, String remark) {
-		try {
-			return CallUtils.insert(mac,code,place,remark);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "";
-		}
-	}
 
 
 

@@ -31,7 +31,14 @@ public class MofangDataController extends BaseController{
 	private HttpService httpService;
 	
 	
-	
+	/**
+	 * 获取组织
+	 * @param status
+	 * @param type
+	 * @param companyOrganId
+	 * @param name
+	 * @return
+	 */
 	@RequestMapping(path = "/mofang/organ")
 	@ResponseBody
 	public Resp<?> getOrgan(String status,String type,String companyOrganId,String name){
@@ -47,6 +54,19 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
+	/**
+	 * 更新POS机操作员
+	 * @param storeOrganId
+	 * @param mobile
+	 * @param sex
+	 * @param email
+	 * @param status
+	 * @param userId
+	 * @param name
+	 * @param birthday
+	 * @param password
+	 * @return
+	 */
 	@RequestMapping(path = "/mofang/update_user")
 	@ResponseBody
 	public Resp<?> updateUser(String storeOrganId,String mobile,String sex,String email,String status,String userId,String name,String birthday,String password){
@@ -62,6 +82,11 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
+	/**
+	 * POS机操作员列表
+	 * @param companyOrganId
+	 * @return
+	 */
 	@RequestMapping(path = "/mofang/user")
 	@ResponseBody
 	public Resp<?> getUser(String companyOrganId){
@@ -77,6 +102,17 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
+	/**
+	 * 增加POS机操作员
+	 * @param name
+	 * @param storeOrganId
+	 * @param password
+	 * @param mobilePhone
+	 * @param birthday
+	 * @param sex
+	 * @param email
+	 * @return
+	 */
 	@RequestMapping(path = "/mofang/add_user")
 	@ResponseBody
 	public Resp<?> addUser(String name,String storeOrganId,String password,String mobilePhone,String birthday,String sex,String email){
@@ -92,6 +128,14 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
+	/**
+	 * 考勤日志
+	 * @param userId
+	 * @param companyOrganId
+	 * @param storeOrganId
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(path = "/mofang/sign_log")
 	@ResponseBody
 	public Resp<?> signLog(String userId,String companyOrganId,String storeOrganId,Integer page){
@@ -110,6 +154,15 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
+	/**
+	 * 增加收费规则
+	 * @param period
+	 * @param amountOfMoney
+	 * @param amountOfMoneyForNotEnough
+	 * @param storeOrganId
+	 * @param companyOrganId
+	 * @return
+	 */
 	@RequestMapping(path = "/mofang/add_rule")
 	@ResponseBody
 	public Resp<?> addRole(String period,String amountOfMoney,String amountOfMoneyForNotEnough,String storeOrganId,String companyOrganId){
@@ -128,7 +181,12 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
-	
+	/**
+	 * 增加公司组织
+	 * @param companyId
+	 * @param name
+	 * @return
+	 */
 	@RequestMapping(path = "/mofang/add_company_organ")
 	@ResponseBody
 	public Resp<?> addOrgan(String companyId,String name){
@@ -141,6 +199,12 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
+	/**
+	 * 增加门店组织
+	 * @param companyId
+	 * @param name
+	 * @return
+	 */
 	@RequestMapping(path = "/mofang/add_store_organ")
 	@ResponseBody
 	public Resp<?> addStoreOrgan(String companyId,String name){
@@ -153,6 +217,12 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
+	/**
+	 * 获取订单列表
+	 * @param companyId
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(path = "/mofang/order")
 	@ResponseBody
 	public Resp<?> order(String companyId,Integer page){
@@ -165,7 +235,13 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
-	
+	/**
+	 * 订单分析接口
+	 * @param beginTime
+	 * @param endTime
+	 * @param storeOrganId
+	 * @return
+	 */
 	@RequestMapping(path = "/mofang/order/statistics")
 	@ResponseBody
 	public Resp<?> orderStatistics(String beginTime,String endTime,String storeOrganId){
