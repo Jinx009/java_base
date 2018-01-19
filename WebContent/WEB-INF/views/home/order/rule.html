@@ -36,40 +36,7 @@
 				</ol>
 			</section>
 			<!-- 主内容 -->
-			<section class="content" id="order">
-<!-- 				<div class="box box-default">
-					<div class="box-header with-border">
-						<h3 class="box-title">筛选条件</h3>
-						<div class="box-tools pull-right">
-							<button type="button" class="btn btn-box-tool"
-								data-widget="collapse">
-								<i class="fa fa-minus"></i>
-							</button>
-						</div>
-					</div>
-					<div class="box-body">
-						<div class="row">
-								<div class="col-md-3">
-								<div class="form-group">
-									<label>选择街道</label> <select
-										class="form-control select2 select2-hidden-accessible"
-										id="area" style="width: 100%;" tabindex="-1"
-										aria-hidden="true">
-										<option value="ALL">全部街道</option>
-										<option v-for="item in datas" :value="item.id" v-text="item.name" ></option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label>操作</label> <input type="button"
-										class="btn btn-default btn-xs form-control"
-										onclick="_getData(0,1)" value="查询">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> -->
+			<section class="content" id="data">
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="box">
@@ -86,44 +53,26 @@
 								<table class="table table-hover table-bordered">
 									<thead>
 										<tr>
-											<th>编号</th>
-											<th>归属</th>
-											<th>街道</th>
-											<th>免单时长</th>
-											<th>收费时段</th>
-											<th>单价</th>
+											<th>周期时长</th>
+											<th>满周期金额</th>
+											<th>不满周期金额</th>
+											<th>创建时间</th>
 											<th>操作</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr v-for="order in orders.data">
-											<td v-text="order.id">1</td>
-											<td v-text="order.locationName">新疆立昂</td>
-											<td v-text="order.areaName">乌鲁木齐</td>
-											<td v-text="order.freeTime">60min</td>
-											<td v-text="order.payTime">06:00:00-18:00:00</td>
-											<td v-text="order.price">5</td>
+									<tbody >
+										<tr v-for="item in datas">
+											<td v-text="item.period+'分钟'">1</td>
+											<td v-text="item.amountOfMoney+'元'"></td>
+											<td v-text="item.amountOfMoneyForNotEnough+'元'"></td>
+											<td v-text="item.createTime"></td>
 											<td>
-												<button v-if="'cancel_1'===order.notChargeReason"
-													class='btn btn-default btn-xs'>编辑</button>
+												<button class='btn btn-info btn-xs'>编辑</button>
 											</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
-					<!-- 		<div class="box-footer clearfix"
-								style="width: 320px; float: right;">
-								<div class="input-group">
-									<span class="input-group-addon" onclick="_getData(0,1);">«</span>
-									<span class="input-group-addon" onclick="_getData(1,0);">‹</span>
-									<input type="text" style="text-align: center;"
-										onfocus="_getNowPage(this)" onblur="_getAllPage(this)"
-										v-bind:value="'当前第'+orders.currentPage+'页，共'+orders.max+'页'"
-										class="form-control"> <span class="input-group-addon"
-										onclick="_getData(1,1);">›</span> <span
-										class="input-group-addon" id="_end">»</span>
-								</div>
-							</div> -->
 						</div>
 					</div>
 				</div>
@@ -131,7 +80,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/order/rule.js?version=1.32"></script>
+	<script src="/themes/js/home/order/rule.js?version=1.36"></script>
 
 </body>
 </html>

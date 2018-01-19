@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONObject;
 import common.helper.StringUtil;
 import database.models.project.model.ProOrderStatisticsModel;
 import database.models.project.model.ProPosModel;
+import database.models.project.model.ProRuleModel;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.HttpService;
 import utils.BaseConstant;
@@ -239,9 +240,35 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
+	/**
+	 * 获取收费规则列表
+	 * @param companyId
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(path = "/mofang/rule")
+	@ResponseBody
+	public Resp<?> ruleList(String companyId){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<ProRuleModel> list = new ArrayList<ProRuleModel>();
+			ProRuleModel proRuleModel = new ProRuleModel();
+			proRuleModel.setCreateTime(new Date());
+			proRuleModel.setAmountOfMoney("2.5");
+			proRuleModel.setAmountOfMoneyForNotEnough("0.5");
+			proRuleModel.setPeriod(30);
+			proRuleModel.setStoreOrganId(BaseConstant.BASE_STORE_ID);
+			list.add(proRuleModel);
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	
 	/**
-	 * 获取订单列表
+	 * 获取POS设备列表
 	 * @param companyId
 	 * @param page
 	 * @return
