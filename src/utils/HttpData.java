@@ -253,6 +253,11 @@ public class HttpData {
 		return MOFANG_BASE_URL+"/organ";
 	}
 	
+	public static JSONObject mofang_get_rule(String mofangSessionId, String companyOrganId) {
+		String params = "?&companyOrganId="+companyOrganId;
+		return JSONObject.parseObject(HttpUtils.getMofang(mofangSessionId, mofang_add_rule_url()+params));
+	}
+	
 	/**
 	 * 考勤记录
 	 * @param mofangSessionId

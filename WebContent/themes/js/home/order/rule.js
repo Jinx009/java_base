@@ -11,12 +11,9 @@ function _getData(){
 		dataType:'json',
 		success:function(res){
 			if(res.data!=null){
-				for(var i in res.data){
-					res.data[i].createTime = toDate(res.data[i].createTime);
-				}
 				new Vue({
 	   				  el: '#data',
-	   				  data:{datas:res.data}
+	   				  data:{datas:res.data.data.chargingRules}
 	    		})
 			}
 		}
