@@ -11,7 +11,7 @@ function _getData(){
 			new Vue({
 				el:'#data',
 				data:{
-					datas:res.data
+					datas:res.data.data.devices
 				}
 			})
 		}

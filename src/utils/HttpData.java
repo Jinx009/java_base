@@ -253,6 +253,31 @@ public class HttpData {
 		return MOFANG_BASE_URL+"/organ";
 	}
 	
+	private static String mofang_update_rule_url() {
+		return MOFANG_BASE_URL_1+"/charging_rule/update";
+	}
+	private static String mofang_get_device_url() {
+		return MOFANG_BASE_URL+"/device";
+	}
+	
+	
+	/**
+	 * pos机列表
+	 * @param mofangSessionId
+	 * @param companyOrganId
+	 * @return
+	 */
+	public static JSONObject mofang_get_device(String mofangSessionId, String companyOrganId) {
+		String params = "?&companyOrganId="+companyOrganId;
+		return JSONObject.parseObject(HttpUtils.getMofang(mofangSessionId, mofang_get_device_url()+params));
+	}
+	
+	/**
+	 * 收费规则列表
+	 * @param mofangSessionId
+	 * @param companyOrganId
+	 * @return
+	 */
 	public static JSONObject mofang_get_rule(String mofangSessionId, String companyOrganId) {
 		String params = "?&companyOrganId="+companyOrganId;
 		return JSONObject.parseObject(HttpUtils.getMofang(mofangSessionId, mofang_add_rule_url()+params));
@@ -311,6 +336,26 @@ public class HttpData {
 		return  JSONObject.parseObject(HttpUtils.postMofangJson(mofangSessionId,mofang_add_rule_url(),JSON.toJSONString(data)));
 	}
 	
+	/**
+	 * 更新收费规则
+	 * @param mofangSessionId
+	 * @param period
+	 * @param amountOfMoney
+	 * @param amountOfMoneyForNotEnough
+	 * @param ruleId
+	 * @return
+	 */
+	public static Object mofang_update_rule(String mofangSessionId, String period, String amountOfMoney,
+			String amountOfMoneyForNotEnough,String ruleId) {
+		Map<String, String> data = new HashMap<String,String>();
+		data.put("period", period);
+		data.put("ruleId", ruleId);
+		data.put("amountOfMoney",amountOfMoney);
+		data.put("amountOfMoneyForNotEnough",amountOfMoneyForNotEnough);
+		return  JSONObject.parseObject(HttpUtils.postMofangJson(mofangSessionId,mofang_update_rule_url(),JSON.toJSONString(data)));
+	}
+	
+
 	/**
 	 * 车位信息
 	 * @param sessionId
@@ -521,6 +566,7 @@ public class HttpData {
 	public static void main(String[] args) {
 		mofang_login();
 	}
+
 	
 	
 
