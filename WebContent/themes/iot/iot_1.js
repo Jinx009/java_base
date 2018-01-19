@@ -68,7 +68,7 @@ function _getLight(){
 			    $('#w').val(_w+'W');
 			    $('#l').val(_l+'%');
 			    if(_l>0){
-			    	_setV(_l/10);
+			    	_setV(_l/100);
 			    }
 				$sliderTrack.css('width',_l+'%');
 				$sliderHandler.css('left',_l+'%');
