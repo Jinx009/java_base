@@ -38,9 +38,9 @@ function _getData(){
 	})
 }
 function _setV(_t){
-	$('#v').val('50V');
-    $('#a').val(350*_t+'mA');
-    $('#w').val(17.5*_t+'W');
+	$('#v').val('30V');
+    $('#a').val(210*_t+'mA');
+    $('#w').val(10.5*_t+'W');
 }
 function _getLight(){
 	$.ajax({
