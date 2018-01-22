@@ -25,7 +25,7 @@ function _getData(){
 		$('#datepicker').val(_beginTime+' - '+_endTime);
 	}
 //	var params = 'beginTime='+_beginTime+'&endTime='+_endTime;
-	var params = 'beginTime=2018-01-01&endTime=2018-01-20&storeOrganId=10031';
+	var params = 'beginTime=2018-01-01&endTime=2018-01-25&storeOrganId=10040';
 	$.ajax({
 		url:'/home/d/mofang/order/statistics',
 		type:'post',

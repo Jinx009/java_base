@@ -54,4 +54,24 @@ public class HomeRoleController {
 		}
 		return resp;
 	}
+	
+	/**
+	 * 新增角色
+	 * @param level
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping(path = "/role_delete")
+	@ResponseBody
+	public Resp<?> delete(Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			homeRoleService.delete(id);
+			resp = new Resp<>(RespData.OK_CODE,RespData.OK_MSG,null);
+			logger.warn("[data:{}]",id);
+		} catch (Exception e) {
+			logger.error("[error:{}]",e);
+		}
+		return resp;
+	}
 }

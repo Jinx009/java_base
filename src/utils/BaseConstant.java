@@ -30,7 +30,7 @@ public class BaseConstant {
 	public static final String COMPANY_ID = "companyOrganId";
 	public static final String STORE_ID = "storeOrganId";
 	
-	public static final String BASE_COMPANY_ID = "10351";
-	public static final String BASE_STORE_ID = "10352";
+	public static final String BASE_COMPANY_ID = "10039";
+	public static final String BASE_STORE_ID = "10040";
 	
 }

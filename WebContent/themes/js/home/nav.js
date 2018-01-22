@@ -56,19 +56,79 @@ function _getNowPage(_e){
  * 导航数据
  */
 function getNav(){
-	var _index = getSessionStorage('_index');
-	var _href = getSessionStorage('_href');
-	if(_index!=''){
-		$('.l'+_index).addClass('active');
-		$('.u'+_index).css('display','block');
-		$('.u'+_index+' li').each(function(){
-			var _onclick = $(this).attr('onclick');
-			if(_onclick.indexOf(_href)>-1){
-				$(this).addClass('active');
+	$.ajax({
+		url:'/home/d/menu',
+		type:'post',
+		dataType:'json',
+		success:function(res){
+			var _htmlStr = '<li class="header">MAIN MENUS</li>',h1='',h2='',h3='',h4='',h5='',h6='';
+			for(var i in res.data){
+				var obj = res.data[i];
+				if(obj.parentId==0&&obj.description==1){
+					h1+= '<li class="treeview l1"><a href="#"> <i class="fa fa-bell-slash-o"></i><span>设备管理</span> <span class="pull-right-container"> <iclass="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu u1">'
+				}
+				if(obj.parentId!=0&&obj.description==1){
+					h1+='<li onclick=_open("1","'+obj.uri+'")><a><i class="fa fa-circle-o"></i>'+obj.name+'</a></li>';
+				}
+				if(obj.parentId==0&&obj.description==2){
+					h2+= '<li class="treeview l2"><a href="#"> <i class="fa fa-book"></i><span>停车数据管理</span> <span class="pull-right-container"> <iclass="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu u2">'
+				}
+				if(obj.parentId!=0&&obj.description==2){
+					h2+='<li onclick=_open("2","'+obj.uri+'")><a><i class="fa fa-circle-o"></i>'+obj.name+'</a></li>';
+				}
+				if(obj.parentId==0&&obj.description==3){
+					h3+= '<li class="treeview l3"><a href="#"> <i class="fa fa-edit"></i><span>配置管理</span> <span class="pull-right-container"> <iclass="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu u3">'
+				}
+				if(obj.parentId!=0&&obj.description==3){
+					h3+='<li onclick=_open("3","'+obj.uri+'")><a><i class="fa fa-circle-o"></i>'+obj.name+'</a></li>';
+				}
+				if(obj.parentId==0&&obj.description==4){
+					h4+= '<li class="treeview l4"><a href="#"> <i class="fa fa-birthday-cake"></i><span>收费相关</span> <span class="pull-right-container"> <iclass="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu u4">'
+				}
+				if(obj.parentId!=0&&obj.description==4){
+					h4+='<li onclick=_open("4","'+obj.uri+'")><a><i class="fa fa-circle-o"></i>'+obj.name+'</a></li>';
+				}
+				if(obj.parentId==0&&obj.description==5){
+					h5+= '<li class="treeview l5"><a href="#"> <i class="fa fa-bolt"></i><span>考勤管理</span> <span class="pull-right-container"> <iclass="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu u5">'
+				}
+				if(obj.parentId!=0&&obj.description==5){
+					h5+='<li onclick=_open("5","'+obj.uri+'")><a><i class="fa fa-circle-o"></i>'+obj.name+'</a></li>';
+				}
+				if(obj.parentId==0&&obj.description==6){
+					h6+= '<li class="treeview l6"><a href="#"> <i class="fa fa-binoculars"></i><span>系统管理</span> <span class="pull-right-container"> <iclass="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu u6">'
+				}
+				if(obj.parentId!=0&&obj.description==6){
+					h6+='<li onclick=_open("6","'+obj.uri+'")><a><i class="fa fa-circle-o"></i>'+obj.name+'</a></li>';
+				}
 			}
-		})
-	}
-	$('#warningInput').val(new Date().Format("yyyy年MM月dd日"));
+			h1+= '</ul></li>';
+			h2+= '</ul></li>';
+			h3+= '</ul></li>';
+			h4+= '</ul></li>';
+			h5+= '</ul></li>';
+			h6+= '</ul></li>';
+			_htmlStr += h1;
+			_htmlStr += h2;
+			_htmlStr += h3;
+			_htmlStr += h4;
+			_htmlStr += h5;
+			_htmlStr += h6;
+			$('#nav_menu').html(_htmlStr);
+			var _index = getSessionStorage('_index');
+			var _href = getSessionStorage('_href');
+			if(_index!=''){
+				$('.l'+_index).addClass('active');
+				$('.u'+_index).css('display','block');
+				$('.u'+_index+' li').each(function(){
+					var _onclick = $(this).attr('onclick');
+					if(_onclick.indexOf(_href)>-1){
+						$(this).addClass('active');
+					}
+				})
+			}
+			$('#warningInput').val(new Date().Format("yyyy年MM月dd日"));
+		}
+	})
 }
 /**
  * 打开菜单链接

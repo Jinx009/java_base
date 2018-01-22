@@ -1,6 +1,8 @@
 package main.entry.webapp.data.home;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import database.models.home.HomeResource;
 import database.models.home.HomeUser;
 import lombok.Setter;
 import main.entry.webapp.BaseController;
+import service.basicFunctions.home.HomeResourceService;
 import service.basicFunctions.home.HomeUserService;
 import utils.BaseConstant;
 import utils.Resp;
@@ -24,6 +28,8 @@ public class HomeConfigController extends BaseController{
 	
 	@Autowired
 	private HomeUserService homeUserService;
+	@Autowired
+	private HomeResourceService homeResourceService;
 
 	@RequestMapping(path = "/ip")
 	@ResponseBody
@@ -46,6 +52,9 @@ public class HomeConfigController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		HomeUser homeUser = homeUserService.login(userName, pwd);
 		if(null!=homeUser){
+			List<HomeResource> menus = homeResourceService.getMenu(homeUser.getId());
+			setSessionMenu(request,menus,homeUser);
+			setSessionAdmin(request,homeUser);
 			setSessionAdmin(request,homeUser);
 			resp.setCode(RespData.OK_CODE);
 			resp.setMsg(RespData.OK_MSG);

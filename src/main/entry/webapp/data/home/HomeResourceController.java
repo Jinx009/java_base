@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import database.models.home.HomeResource;
 import lombok.Setter;
+import service.basicFunctions.home.HomeResourceRoleService;
 import service.basicFunctions.home.HomeResourceService;
 import utils.Resp;
 import utils.RespData;
@@ -30,6 +31,34 @@ public class HomeResourceController {
 	
 	@Autowired
 	private HomeResourceService homeResourceService;
+	@Autowired
+	private HomeResourceRoleService homeResourceRoleService;
+	
+	@RequestMapping(path = "/saveResourceRole",method = RequestMethod.POST)
+	@ResponseBody
+	public Resp<?> saveResourceRole(Integer roleId,String arr){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String[] s = arr.split("@");
+			homeResourceRoleService.save(roleId,s);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			logger.error("[error:{}] ",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/resourceRole",method = RequestMethod.POST)
+	@ResponseBody
+	public Resp<?> resourceRole(Integer roleId){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(homeResourceRoleService.findByRoleId(roleId));
+		} catch (Exception e) {
+			logger.error("[error:{}] ",e);
+		}
+		return resp;
+	}
 	
 	@RequestMapping(path = "/menu",method = RequestMethod.POST)
 	@ResponseBody
@@ -80,6 +109,8 @@ public class HomeResourceController {
 		}
 		return resp;
 	}
+	
+	
 	
 	/**
 	 * 新增数据菜单

@@ -54,9 +54,13 @@ public class HomeUserController extends BaseController {
 	 */
 	@RequestMapping(path = "/user_add", method = RequestMethod.POST)
 	@ResponseBody
-	public Resp<?> add(HttpServletRequest request, HomeUser homeUser, Integer roleId) {
+	public Resp<?> add(HttpServletRequest request, String userName,String realName,String pwd, Integer roleId) {
 		Resp<?> resp = new Resp<>(false);
 		try {
+			HomeUser homeUser = new HomeUser();
+			homeUser.setRealName(realName);
+			homeUser.setPwd(pwd);
+			homeUser.setUserName(userName);
 			boolean res = homeUserService.add(homeUser, roleId);
 			if (res)
 				resp = new Resp<>(RespData.OK_CODE, RespData.OK_MSG, null);
@@ -79,9 +83,13 @@ public class HomeUserController extends BaseController {
 	 */
 	@RequestMapping(path = "/user_update", method = RequestMethod.POST)
 	@ResponseBody
-	public Resp<?> update(HttpServletRequest request, HomeUser homeUser, Integer roleId, Integer userId) {
+	public Resp<?> update(HttpServletRequest request, String userName,String realName,String pwd, Integer roleId, Integer userId) {
 		Resp<?> resp = new Resp<>(false);
 		try {
+			HomeUser homeUser = new HomeUser();
+			homeUser.setRealName(realName);
+			homeUser.setPwd(pwd);
+			homeUser.setUserName(userName);
 			String res = homeUserService.update(homeUser, roleId, userId);
 			if (RespData.OK_CODE.equals(res))
 				resp = new Resp<>(RespData.OK_CODE, RespData.OK_MSG, null);

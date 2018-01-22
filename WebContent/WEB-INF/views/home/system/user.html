@@ -71,12 +71,12 @@
 												<td v-text="item.createTime"></td>
 												<td>
 													<button class='btn btn-info btn-xs'
-														v-bind:userName="item.userName"
-														v-bind:realName="item.realName"
-														v-bind:roleName="item.roleName"
-														v-bind:id="item.id" onclick="_edit(this);">编辑</button>
+														v-bind:userName="item.id+'_'+item.userName"
+														v-bind:realName="item.id+'_'+item.realName"
+														v-bind:roleName="item.id+'_'+item.roleName"
+														v-bind:id="'_edit'+item.id" onclick="_edit(this);">编辑</button>
 													<button class='btn btn-info btn-xs'
-														v-bind:id="item.id" onclick="_delete(this);">删除</button>
+														v-bind:id="'_delete'+item.id" onclick="_delete(this);">删除</button>
 												</td>
 											</tr>
 										</tbody>
@@ -88,7 +88,7 @@
 				</div>
 			</section>
 		</div>
-		<div class="box box-primary fly-box-area none" style="top:60px;height: 650px;" id="newBox">
+		<div class="box box-primary fly-box-area none" style="top:60px;height: 430px;" id="newBox">
 			<div class="box-header with-border">
 				<h3 class="box-title">操作员编辑</h3>
 				<div class="box-tools pull-right">
@@ -103,19 +103,18 @@
 			<form role="form" style="width: 90%; margin-left: 5%;">
 				<div class="box-body">
 					<div class="form-group">
-						<label for="">用户名</label> <input type="text" class="form-control" id="userName" >
+						<label for="">用户名</label> <input type="text" class="form-control" readonly="readonly" id="userName" >
 					</div>
 					<div class="form-group">
 						<label for="">姓名</label> <input type="text" class="form-control" id="realName" >
 					</div>
 					<div class="form-group">
 						<label for="">密码</label>
-						<input type="text" class="form-control" id="password" placeholder="重新填写即修改密码" >
+						<input type="text" class="form-control" id="pwd" placeholder="重新填写即修改密码" >
 					</div>
 					<div class="form-group">
 						<label for="">角色</label> 
 						<select class="form-control" id="roleId" >
-							<option v-for="i in roles" v-text="i.name" :id="i.id" ></option>
 						</select>
 					</div>
 				</div>
@@ -126,7 +125,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/system/user.js?version=1.17"></script>
+	<script src="/themes/js/home/system/user.js?version=1.36"></script>
 
 </body>
 </html>

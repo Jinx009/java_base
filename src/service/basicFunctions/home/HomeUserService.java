@@ -62,6 +62,7 @@ public class HomeUserService {
 			homeUser2.setPwd(homeUser.getPwd());
 		}
 		homeUser2.setRealName(homeUser.getRealName());
+		homeUser2.setUserName(homeUser.getUserName());
 		homeUserDao.update(homeUser2);
 		HomeUserRole homeUserRole = homeUserRoleDao.findByUserId(userId);
 		if(homeUserRole!=null&&homeUserRole.getRoleId()!=roleId){

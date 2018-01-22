@@ -109,13 +109,30 @@ public class HomePageController extends BaseController{
 		return "/home/system/user";
 	}
 	
+	@RequestMapping(path = "/system/user_add")
+	public String system_user_add(){
+		return "/home/system/user_add";
+	}
+	
 	@RequestMapping(path = "/system/role")
 	public String system_role(){
 		return "/home/system/role";
 	}
+	
+	@RequestMapping(path = "/system/role_add")
+	public String system_role_add(){
+		return "/home/system/role_add";
+	}
+	
 	@RequestMapping(path = "/system/resource")
 	public String system_resource(){
 		return "/home/system/resource";
+	}
+	
+	
+	@RequestMapping(path = "/_index")
+	public String _index(){
+		return "/home/_index";
 	}
 	
 

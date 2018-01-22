@@ -31,5 +31,11 @@ public class HomeRoleService {
 		homeRole.setDescription(description);
 		homeRoleDao.save(homeRole);
 	}
+
+	public void delete(Integer id) {
+		HomeRole homeRole = homeRoleDao.find(id);
+		homeRole.setStatus(0);
+		homeRoleDao.update(homeRole);
+	}
 	
 }

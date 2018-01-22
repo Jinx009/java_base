@@ -42,5 +42,7 @@ public class HomeResource implements Serializable{
 	private Integer parentId;
 	@Column(name = "TYPE")
 	private Integer type;
+	@Column(name = "ICON")
+	private String icon;
 	
 }
