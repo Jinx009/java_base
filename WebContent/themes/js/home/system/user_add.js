@@ -39,6 +39,8 @@ function _save(){
 					layer.alert('操作成功！',function(){
 						_open('5','/home/p/system/user');
 					})
+				}else{
+					layer.alert(res.msg);
 				}
 			}
 		})
