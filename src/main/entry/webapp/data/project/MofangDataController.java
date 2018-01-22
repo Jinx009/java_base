@@ -310,7 +310,7 @@ public class MofangDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			if(StringUtil.isBlank(storeOrganId)){
-				storeOrganId = "10352";
+				storeOrganId = BaseConstant.BASE_STORE_ID;
 			}
 			JSONObject unpayJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "UNPAY",storeOrganId);
 			ProOrderStatisticsModel unpay = unpayJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
