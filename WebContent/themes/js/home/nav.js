@@ -101,12 +101,24 @@ function getNav(){
 					h6+='<li onclick=_open("6","'+obj.uri+'")><a><i class="fa fa-circle-o"></i>'+obj.name+'</a></li>';
 				}
 			}
-			h1+= '</ul></li>';
-			h2+= '</ul></li>';
-			h3+= '</ul></li>';
-			h4+= '</ul></li>';
-			h5+= '</ul></li>';
-			h6+= '</ul></li>';
+			if(h1!=''){
+				h1+= '</ul></li>';
+			}
+			if(h2!=''){
+				h2+= '</ul></li>';
+			}
+			if(h13=''){
+				h3+= '</ul></li>';
+			}
+			if(h4!=''){
+				h4+= '</ul></li>';
+			}
+			if(h5!=''){
+				h5+= '</ul></li>';
+			}
+			if(h6!=''){
+				h6+= '</ul></li>';
+			}
 			_htmlStr += h1;
 			_htmlStr += h2;
 			_htmlStr += h3;
