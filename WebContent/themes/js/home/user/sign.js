@@ -1,7 +1,6 @@
 $(function(){
 	_i = showLoad();
 	_getUser();
-	_getData(0,1);
 })
 var _i = -1,_data = '',_nowUser = "";
 var  _nowPage = 0,_max = 0,_search = '';
@@ -81,6 +80,7 @@ function _getUser(){
 	   				  el: '#account',
 	   				  data:{accounts:res.data.data.users}
 	    		})
+				_getData(0,1);
 			}
 		}
 	})
