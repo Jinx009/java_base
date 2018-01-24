@@ -17,7 +17,8 @@ public enum AppInfo {
 	COMPANY_TEST("pos_taiyuan","7926bbf2-7ecc-43fb-885a-883bd1a8651b","公司和太原公用测试pos"),
 	CHENGDU_TEST("chengdu_test","c1d1b78d-8fa3-411d-88bd-047edbcedc75","成都测试"),
 	NB_1800M("wuhan_1800m_test","251ffebf-25eb-45b3-95fb-bc0d2a7d71fe","武汉1800M测试"),
-	XINJIANG("zhanway_xinjiang","21c4c522-2d8c-4a9f-888b-57eb9ecb0c85","新疆")
+	XINJIANG("zhanway_xinjiang","21c4c522-2d8c-4a9f-888b-57eb9ecb0c85","新疆"),
+	EVCARD("ev_card","bc6a9067-44a2-44dc-87b7-c08414350e10","EVCard")
 	;
 	
 	private String appId;
