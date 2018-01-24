@@ -70,7 +70,7 @@ function _getName(_userId){
 var _userArr = [];
 function _getUser(){
 	$.ajax({
-		url:'/home/d/mofang/user?companyOrganId=9999',
+		url:'/home/d/mofang/user?companyOrganId=10071',
 		type:'post',
 		dataType:'json',
 		success:function(res){
