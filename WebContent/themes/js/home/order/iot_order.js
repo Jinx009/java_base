@@ -51,6 +51,7 @@ function _getData(_type,_index){
 				}else{
 					layer.alert(res.msg);
 					
+					
 				}
 			}
 		})
