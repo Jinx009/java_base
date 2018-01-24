@@ -107,7 +107,7 @@ function getNav(){
 			if(h2!=''){
 				h2+= '</ul></li>';
 			}
-			if(h13=''){
+			if(h3!=''){
 				h3+= '</ul></li>';
 			}
 			if(h4!=''){
