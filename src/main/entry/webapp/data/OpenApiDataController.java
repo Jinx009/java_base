@@ -16,12 +16,15 @@ import com.alibaba.fastjson.JSON;
 
 import common.helper.StringUtil;
 import database.models.project.ProIoTOrder;
+import database.models.project.ProUser;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.project.ProIoTOrderService;
+import service.basicFunctions.project.ProUserService;
 import utils.HttpUtils;
 import utils.Resp;
 
 @Controller
+@RequestMapping(value = "/openApi")
 public class OpenApiDataController extends BaseController{
 	
 	private static final Logger log = LoggerFactory.getLogger(OpenApiDataController.class);
@@ -30,17 +33,22 @@ public class OpenApiDataController extends BaseController{
 	
 	@Autowired
 	private ProIoTOrderService proIoTOrderService;
+	@Autowired
+	private ProUserService proUserService;
 	
-	@RequestMapping(path = "/set/carNum")
+	@RequestMapping(path = "/rfid/push")
 	@ResponseBody
-	public Resp<?> setCarNum(String mac,String carNum){
-		Resp<?> resp = new Resp<>(false);
+	public Resp<?> setCarNum(String mac,String card){
+		Resp<?> resp = new Resp<>(true);
 		try {
-			log.warn("mac:{},carNum:{}",mac,carNum);
+			log.warn("mac:{},card:{}",mac,card);
 			ProIoTOrder proIoTOrder = proIoTOrderService.findByMacNear(mac);
 			if(proIoTOrder!=null&&proIoTOrder.getEndTime()==null){
-				proIoTOrder.setCarNum(carNum);
-				proIoTOrderService.update(proIoTOrder);
+				ProUser proUser = proUserService.findByCard(card);
+				if(proUser!=null){
+					proIoTOrder.setCarNum(proUser.getCarNum());
+					proIoTOrderService.update(proIoTOrder);
+				}
 			}
 		} catch (Exception e) {
 			log.error("error:{}",e);
@@ -48,10 +56,10 @@ public class OpenApiDataController extends BaseController{
 		return resp;
 	}
 	
-	@RequestMapping(path = "/order/push")
+	@RequestMapping(path = "/status/push")
 	@ResponseBody
 	public Resp<?> getOrder(String mac,String logId,String changeTime,Integer status,String desc){
-		Resp<?> resp = new Resp<>(false);
+		Resp<?> resp = new Resp<>(true);
 		try {
 			log.warn("mac:{},logId:{},status:{},changeTime:{},desc:{}",mac,logId,status,changeTime,desc);
 			Long time = Long.valueOf(changeTime);
@@ -92,7 +100,7 @@ public class OpenApiDataController extends BaseController{
 		return resp;
 	}
 
-	@RequestMapping(value = "/mofang/session")
+	@RequestMapping(path = "/mofang/session")
 	@ResponseBody
 	public String getSession(){
 		try {
@@ -104,7 +112,7 @@ public class OpenApiDataController extends BaseController{
 		return null;
 	}
 	
-	@RequestMapping(value = "/mofang/notice")
+	@RequestMapping(path = "/mofang/notice")
 	@ResponseBody
 	 public String sendNotice(){
 	        try {

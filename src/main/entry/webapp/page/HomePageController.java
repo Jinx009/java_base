@@ -135,5 +135,15 @@ public class HomePageController extends BaseController{
 		return "/home/_index";
 	}
 	
+	@RequestMapping(path = "/setting/pro_user")
+	public String proUser(){
+		return "/home/setting/pro_user";
+	}
+	
+	@RequestMapping(path = "/order/iot_order")
+	public String iot_order(){
+		return "/home/order/iot_order";
+	}
+	
 
 }

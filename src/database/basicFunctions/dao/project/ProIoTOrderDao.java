@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
 import database.common.OrderFilter.OrderType;
+import database.common.PageDataList;
 import database.common.QueryParam;
 import database.models.project.ProIoTOrder;
 
@@ -21,6 +22,13 @@ public class ProIoTOrderDao extends BaseDao<ProIoTOrder>{
 			return list.get(0);
 		}
 		return null;
+	}
+	
+	public PageDataList<ProIoTOrder> findUse(Integer p){
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addPage(p, 25);
+		queryParam.addOrder(OrderType.DESC, "id");
+		return findPageList(queryParam);
 	}
 
 }
