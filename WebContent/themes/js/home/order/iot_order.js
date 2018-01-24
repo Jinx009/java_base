@@ -50,6 +50,7 @@ function _getData(_type,_index){
 					layer.alert('您无权限操作此项！');
 				}else{
 					layer.alert(res.msg);
+					
 				}
 			}
 		})
