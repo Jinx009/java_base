@@ -11,7 +11,7 @@ function _getData(_type,_index){
 	var page = _getPage(_type,_index);
 	if(page!=-1){
 		$.ajax({
-			url:'/home/d/mofang/order?companyId=9999&page='+page,
+			url:'/home/d/mofang/order?page='+page,
 			type:'post',
 			dataType:'json',
 			success:function(res){
