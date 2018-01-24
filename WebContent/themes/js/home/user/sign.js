@@ -16,7 +16,7 @@ function _getData(_type,_index){
 	}
 	if(page!=-1){
 		$.ajax({
-			url:'/home/d/mofang/sign_log?companyId=9999&page='+page+'&storeOrganId=10031&userId='+userId,
+			url:'/home/d/mofang/sign_log?companyId=10071&page='+page+'&storeOrganId=10072&userId='+userId,
 			type:'post',
 			dataType:'json',
 			success:function(res){
