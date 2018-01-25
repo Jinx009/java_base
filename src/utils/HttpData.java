@@ -451,8 +451,11 @@ public class HttpData {
 	 * @param page
 	 * @return
 	 */
-	public static String mofang_get_order(String companyOrganId, Integer page){
+	public static String mofang_get_order(String companyOrganId, Integer page,String eventId){
 		StringBuffer params = new StringBuffer("a=a");
+		if(StringUtil.isNotBlank(eventId)){
+			params.append("&eventId="+eventId);
+		}
 		if(StringUtil.isNotBlank(companyOrganId)){
 			params.append("&companyOrganId="+companyOrganId);
 		}else{

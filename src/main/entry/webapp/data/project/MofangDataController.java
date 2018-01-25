@@ -250,7 +250,7 @@ public class MofangDataController extends BaseController{
 	public Resp<?> order(String companyId,Integer page){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(JSON.parseObject(httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_order(companyId,page))));
+			return new Resp<>(JSON.parseObject(httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_order(companyId,page,""))));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

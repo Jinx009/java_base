@@ -13,10 +13,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import database.models.project.ProIoTOrder;
 import database.models.project.ProOrder;
 import database.models.project.ProSign;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.HttpService;
+import service.basicFunctions.project.ProIoTOrderService;
 import service.basicFunctions.project.ProOrderService;
 import service.basicFunctions.project.ProSignService;
 import utils.BaseConstant;
@@ -34,15 +36,50 @@ public class JobTask extends BaseController{
 		private ProSignService proSignService;
 		@Autowired
 		private HttpService httpService;
+		@Autowired
+		private ProIoTOrderService proIoTOrderService;
 		
 		
 //		@Scheduled(fixedRate = 1000 * 120,initialDelay = 1000)
-		@Scheduled(cron = "0 */240 * * * ?")//50分钟处理一次
+		@Scheduled(cron = "0 59 23 * * ?")//每天凌晨0点0分
 		public void init(){
 			logger.warn("start job job... ... ");
 			getOrder(1);
 			getLog(1);
+			getBaseOrder();
 	     }
+		
+		/**
+		 * 同步IoT订单
+		 * @param p
+		 */
+		private void getBaseOrder(){
+			try {
+				List<ProIoTOrder> list = proIoTOrderService.findByStatus("1");
+				if(list!=null&&!list.isEmpty()){
+					for(ProIoTOrder proIoTOrder : list){
+						String eventId = proIoTOrder.getStartUuid();
+						String r = httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_order(BaseConstant.BASE_COMPANY_ID,1,eventId));
+						 JSONObject  j = JSON.parseObject(r);
+						 JSONObject j2 = j.getJSONObject("data");
+						 logger.warn("{}",j2.toJSONString());
+						 List<ProOrder> list1 = JSONArray.parseArray(j2.getString("products"), ProOrder.class);
+						 if(list1!=null&&!list1.isEmpty()){
+							 ProOrder proOrder = list1.get(0);
+							 proIoTOrder.setCarNum(proOrder.getPlateNumber());
+							 proIoTOrder.setPayTime(proOrder.getEndTime());
+							 proIoTOrder.setPrice(proOrder.getPrice());
+							 proIoTOrder.setRealPrice(proOrder.getRealPrice());
+							 proIoTOrder.setRemark(proOrder.getRemark());
+							 proIoTOrder.setStatus(proOrder.getStatus());
+							 proIoTOrderService.update(proIoTOrder);
+						 }
+					}
+				}
+			} catch (Exception e) {
+				logger.error("error:{}",e);
+			}
+		}
 		
 		/**
 		 * 同步订单
@@ -50,7 +87,7 @@ public class JobTask extends BaseController{
 		 */
 		private void getOrder(Integer p){
 			try {
-				String r = httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_order(BaseConstant.BASE_COMPANY_ID,p));
+				String r = httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_order(BaseConstant.BASE_COMPANY_ID,p,""));
 				 JSONObject  j = JSON.parseObject(r);
 				 JSONObject j2 = j.getJSONObject("data");
 				 logger.warn("{}",j2.toJSONString());

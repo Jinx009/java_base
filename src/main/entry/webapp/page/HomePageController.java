@@ -136,4 +136,9 @@ public class HomePageController extends BaseController{
 	}
 	
 
+	@RequestMapping(path = "/order/iot_order")
+	public String iot_order(){
+		return "/home/order/iot_order";
+	}
+
 }
