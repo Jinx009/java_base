@@ -110,7 +110,7 @@ public class OpenApiDataController extends BaseController{
 	        try {
 	            Map<String,String> map = new HashMap<String, String>();
 	            map.put("magneticStripleId","0001171116000006");
-	            map.put("status","FULL");
+	            map.put("status","EMPTY");
 	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	            map.put("occurrenceTimeString",sdf.format(new Date()));
 	            map.put("companyOrganId","10039");
