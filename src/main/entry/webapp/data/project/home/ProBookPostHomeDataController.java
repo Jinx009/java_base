@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import database.common.PageDataList;
 import database.models.project.ProBookPost;
@@ -13,7 +14,7 @@ import service.basicFunctions.project.ProBookPostService;
 import utils.Resp;
 
 @Controller
-@RequestMapping(value = "/home/d/pro/book_post")
+@RequestMapping(value = "/home/d/pro_book_post")
 public class ProBookPostHomeDataController extends BaseController{
 
 	private static final Logger log = LoggerFactory.getLogger(ProBookPostHomeDataController.class);
@@ -22,6 +23,7 @@ public class ProBookPostHomeDataController extends BaseController{
 	private ProBookPostService proBookPostService;
 	
 	@RequestMapping(path = "list")
+	@ResponseBody
 	public Resp<?> list(Integer p){
 		Resp<?> resp = new Resp<>(false);
 		try {

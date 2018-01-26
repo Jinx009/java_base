@@ -36,6 +36,7 @@ public class ProBookHomeDataController extends BaseController{
 	}
 	
 	@RequestMapping(path = "/add")
+	@ResponseBody
 	public Resp<?> save(String name,String desc,String picPath,Integer points,String mobilePhone){
 		Resp<?> resp = new Resp<>(false);
 		try {

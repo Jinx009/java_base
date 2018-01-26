@@ -22,7 +22,7 @@ function _save(){
 			success:function(res){
 				if('200'==res.code){
 					layer.alert('添加成功！',function(){
-						_open('l4','/home/p/pro_pic');
+						_open('l4','/home/p/pro_book');
 					})
 				}else{
 					layer.alert(res.msg);

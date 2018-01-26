@@ -36,6 +36,7 @@ public class ProPicHomeDataController extends BaseController{
 	}
 	
 	@RequestMapping(path = "/add")
+	@ResponseBody
 	public Resp<?> save(String name,String desc,String picPath,String autor,String mobilePhone){
 		Resp<?> resp = new Resp<>(false);
 		try {

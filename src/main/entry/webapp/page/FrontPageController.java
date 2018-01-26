@@ -33,4 +33,14 @@ public class FrontPageController extends BaseController{
 		return "/front/book_post";
 	}
 	
+	@RequestMapping(value = "/front/p/my_book_post")
+	public String my_book_post(){
+		return "/front/my_book_post";
+	}
+	
+	@RequestMapping(value = "/front/p/my_book")
+	public String my_book(){
+		return "/front/my_book";
+	}
+	
 }

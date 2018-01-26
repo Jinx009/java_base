@@ -11,9 +11,12 @@ function _save(){
 			data:_params,
 			success:function(res){
 				if('200'==res.code){
-					layer.alert('操作成功！',function(){
-						
-					})
+					layer.open({
+				    content: '操作成功！'
+				    ,btn: '好'
+				  },function(){
+					  _open('icon-settings-','/front/p/my_book_post');
+				  });
 				}
 			}
 		})
