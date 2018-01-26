@@ -13,7 +13,7 @@
 					<div class="item-inner">
 						<div class="item-title label">昵称</div>
 						<div class="item-input">
-							<input type="text" id="nickName"  v-bind:value="item.nickName">
+							<input type="text"  placeholder="请输入您的昵称" id="nickName"  v-bind:value="item.nickName">
 						</div>
 					</div>
 				</div>
@@ -26,7 +26,7 @@
 					<div class="item-inner">
 						<div class="item-title label">姓名</div>
 						<div class="item-input">
-							<input type="text" id="realName" v-bind:value="item.realName" >
+							<input type="text" placeholder="请输入您的姓名" id="realName" v-bind:value="item.realName" >
 						</div>
 					</div>
 				</div>
@@ -53,7 +53,7 @@
 					<div class="item-inner">
 						<div class="item-title label">地址</div>
 						<div class="item-input">
-							<textarea  v-bind:value="item.address" ></textarea>
+							<textarea  placeholder="请输入您的地址"  v-bind:value="item.address" ></textarea>
 						</div>
 					</div>
 				</div>
@@ -70,7 +70,7 @@
 	</div>
 	<div class="list-block">
 		<ul>
-			<li>
+			<li onclick="_open('icon-settings-','/front/p/book_post')" >
 				<div class="item-content">
 					<div class="item-media">
 						<i class="icon icon-form-calendar"></i>
@@ -81,7 +81,7 @@
 					</div>
 				</div>
 			</li>
-			<li>
+			<li  onclick="_open('icon-settings-','/front/p/my_book_post')" >
 				<div class="item-content">
 					<div class="item-media">
 						<i class="icon icon-form-calendar"></i>
@@ -92,7 +92,7 @@
 					</div>
 				</div>
 			</li>
-			<li>
+			<li  onclick="_open('icon-settings-','/front/p/my_book')" >
 				<div class="item-content">
 					<div class="item-media">
 						<i class="icon icon-form-calendar"></i>

@@ -20,6 +20,11 @@ public class HomePageController extends BaseController{
 		return "/home/pro_pic";
 	}
 	
+	@RequestMapping(path = "/pro_pic_new")
+	public String picNew(){
+		return "/home/pro_pic_new";
+	}
+	
 	@RequestMapping(path = "/pro_book")
 	public String book(){
 		return "/home/pro_book";

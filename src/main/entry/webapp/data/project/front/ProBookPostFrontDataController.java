@@ -19,7 +19,7 @@ import service.basicFunctions.project.ProBookPostService;
 import utils.Resp;
 
 @Controller
-@RequestMapping(value = "/front/d")
+@RequestMapping(value = "/front/d/pro_book_post")
 public class ProBookPostFrontDataController extends BaseController{
 
 	private static final Logger log = LoggerFactory.getLogger(ProBookPostFrontDataController.class);
