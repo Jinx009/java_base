@@ -70,7 +70,7 @@ public class OpenApiDataController extends BaseController{
 				proIoTOrder.setDescription(desc);
 				proIoTOrder.setLogId(logId);
 				proIoTOrder.setMac(mac);
-				proIoTOrder.setStartTime(new Date(time*1000));
+				proIoTOrder.setStartTime(new Date(time));
 				proIoTOrder.setStartUuid(uuid);
 				proIoTOrder.setStatus("0");
 				proIoTOrderService.save(proIoTOrder);
@@ -78,7 +78,7 @@ public class OpenApiDataController extends BaseController{
 				ProIoTOrder proIoTOrder = proIoTOrderService.findByMacNear(mac);
 				if(proIoTOrder!=null&&proIoTOrder.getEndTime()==null){
 					proIoTOrder.setEndUuid(uuid);
-					proIoTOrder.setEndTime(new Date(time*1000));
+					proIoTOrder.setEndTime(new Date(time));
 					proIoTOrder.setStatus("1");
 					proIoTOrderService.update(proIoTOrder);
 				}else{
@@ -88,7 +88,7 @@ public class OpenApiDataController extends BaseController{
 					proIoTOrder.setEndUuid(uuid);
 					proIoTOrder.setLogId(logId);
 					proIoTOrder.setMac(mac);
-					proIoTOrder.setEndTime(new Date(time*1000));
+					proIoTOrder.setEndTime(new Date(time));
 					proIoTOrder.setStatus("3");
 					proIoTOrderService.save(proIoTOrder);
 				}
