@@ -59,13 +59,13 @@
 											<td v-text="item.remark"></td>
 											<td v-text="item.points"></td>
 											<td v-text="item.pointsRemark"></td>
-											<td v-text="item.sellRemark"></td>
+											<td v-text="item.sellPoints"></td>
 											<td>
 												<button class='btn btn-info btn-xs' v-if="0===item.status" >未处理</button>
 												<button class='btn btn-default btn-xs'  v-if="1===item.status" >已处理</button>
 											</td>
 											<td>
-												<button class='btn btn-info btn-xs' v-if="0===item.status" >编辑</button>
+												<button class='btn btn-info btn-xs' v-if="0===item.status" v-bind:id="item.id" onclick="_edit(this)" >编辑</button>
 											</td>
 										</tr>
 									</tbody>
@@ -84,15 +84,46 @@
 										class="input-group-addon" id="_end">»</span>
 								</div>
 							</div>
-
 						</div>
 					</div>
 				</div>
 			</section>
 		</div>
+		<div class="box box-primary fly-box-area none" style="top:60px;height: 370px;" id="newBox">
+			<div class="box-header with-border">
+				<h3 class="box-title">邮寄编辑</h3>
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool"
+						onclick="_hideNew();">
+						<i class="fa fa-remove"></i>
+					</button>
+				</div>
+			</div>
+			<!-- /.box-header -->
+			<!-- form start -->
+			<form role="form" style="width: 90%; margin-left: 5%;">
+				<div class="box-body">
+					<div class="form-group">
+						<label for="">给予积分</label> <input type="text" class="form-control"
+							id="points" >
+					</div>
+					<div class="form-group">
+						<label for="">积分说明</label> 
+						<textarea rows="" class="form-control"  id="pointsRemark" cols=""></textarea>
+					</div>
+					<div class="form-group">
+						<label for="">出售积分</label> <input type="text" class="form-control"
+							id="sellPoints" >
+					</div>
+				</div>
+				<div class="box-footer">
+					<button type="button" onclick="_save();" class="btn btn-primary">提交</button>
+				</div>
+			</form>
+		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_book_post.js?version=1.014"></script>
+	<script src="/themes/js/home/pro_book_post.js?version=1.015"></script>
 
 </body>
 </html>

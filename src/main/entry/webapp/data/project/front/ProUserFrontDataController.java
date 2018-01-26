@@ -1,5 +1,6 @@
 package main.entry.webapp.data.project.front;
 
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -45,7 +46,9 @@ public class ProUserFrontDataController extends BaseController{
 			if(proUser!=null){
 				return new Resp<>(RespData.ERROR_CODE,"账号或密码有误！",null);
 			}else{
-				return new Resp<>(RespData.ERROR_CODE,"账户不存在！",null);
+				proUser = proUserService.saveNew(mobilePhone, pwd, "", "");
+				setSessionFront(request, proUser);
+				return new Resp<>(RespData.OK_CODE,RespData.OK_MSG,MD5Util.md5(pwd));
 			}
 		} catch (Exception e) {
 			log.error("error:{}",e);
@@ -74,6 +77,27 @@ public class ProUserFrontDataController extends BaseController{
 			}else{
 				return new Resp<>(RespData.ERROR_CODE,"账户不存在！",null);
 			}
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/update")
+	@ResponseBody
+	public Resp<?> update(String mobilePhone,String name,String address,String nickName,String pwd,HttpServletRequest request){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			ProUser proUser = getSessionFrontUser(request);
+			proUser.setAddress(address);
+			proUser.setNickName(nickName);
+			proUser.setRealName(name);
+			if(StringUtil.isNotBlank(pwd)){
+				proUser.setPwd(MD5Util.md5(pwd));
+			}
+			setSessionFront(request, proUser);
+			proUserService.update(proUser);
+			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

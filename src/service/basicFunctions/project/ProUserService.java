@@ -16,7 +16,7 @@ public class ProUserService {
 	@Autowired
 	private ProUserDao proUserDao;
 	
-	public void saveNew(String mobilePhone,String pwd,String realName,String address){
+	public ProUser saveNew(String mobilePhone,String pwd,String realName,String address){
 		ProUser proUser = new ProUser();
 		proUser.setAddress(address);
 		proUser.setCreateTime(new Date());
@@ -26,7 +26,7 @@ public class ProUserService {
 		proUser.setOpenid("");
 		proUser.setPwd(MD5Util.md5(pwd));
 		proUser.setRealName(realName);
-		proUserDao.save(proUser);
+		return proUserDao.save(proUser);
 	}
 	
 	public ProUser login(String mobilePhone,String pwd){

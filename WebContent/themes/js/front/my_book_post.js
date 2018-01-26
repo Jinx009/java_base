@@ -18,3 +18,6 @@ function _getData(){
 		}
 	})
 }
+$(function(){
+	_loadClass();
+})

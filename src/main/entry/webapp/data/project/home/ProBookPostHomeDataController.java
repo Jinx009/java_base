@@ -35,4 +35,17 @@ public class ProBookPostHomeDataController extends BaseController{
 		return resp;
 	}
 	
+	
+	@RequestMapping(path = "edit")
+	@ResponseBody
+	public Resp<?> update(Integer id,Integer points,Integer sellPoints,String pointsRemark){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			proBookPostService.update(id, points, pointsRemark, sellPoints);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
 }

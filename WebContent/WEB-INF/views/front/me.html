@@ -2,7 +2,7 @@
 <header class="bar bar-nav">
 	<h1 class='title'>关于我</h1>
 </header>
-<div class="content">
+<div class="content" style="margin-bottom: 80px;">
 	<div class="list-block">
 		<ul>
 			<li>
@@ -26,7 +26,33 @@
 					<div class="item-inner">
 						<div class="item-title label">姓名</div>
 						<div class="item-input">
-							<input type="text" placeholder="请输入您的姓名" id="realName" v-bind:value="item.realName" >
+							<input type="text" placeholder="请输入您的姓名" id="name" v-bind:value="item.realName" >
+						</div>
+					</div>
+				</div>
+			</li>
+				<li>
+				<div class="item-content">
+					<div class="item-media">
+						<i class="icon icon-form-name"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title label">我的积分</div>
+						<div class="item-input">
+							<input type="text"  v-bind:value="item.points" >
+						</div>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class="item-content">
+					<div class="item-media">
+						<i class="icon icon-form-name"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title label">密码</div>
+						<div class="item-input">
+							<input type="password" placeholder="重写填写以充值密码" id="pwd"  >
 						</div>
 					</div>
 				</div>
@@ -53,7 +79,7 @@
 					<div class="item-inner">
 						<div class="item-title label">地址</div>
 						<div class="item-input">
-							<textarea  placeholder="请输入您的地址"  v-bind:value="item.address" ></textarea>
+							<textarea id="address" placeholder="请输入您的地址"  v-bind:value="item.address" ></textarea>
 						</div>
 					</div>
 				</div>
@@ -92,7 +118,7 @@
 					</div>
 				</div>
 			</li>
-			<li  onclick="_open('icon-settings-','/front/p/my_book')" >
+			<!-- <li  onclick="_open('icon-settings-','/front/p/my_book')" >
 				<div class="item-content">
 					<div class="item-media">
 						<i class="icon icon-form-calendar"></i>
@@ -102,7 +128,7 @@
 						<span class="icon icon-right"></span>
 					</div>
 				</div>
-			</li>
+			</li> -->
 		</ul>
 	</div>
 </div>

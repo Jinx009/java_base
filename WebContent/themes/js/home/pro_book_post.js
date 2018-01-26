@@ -33,3 +33,36 @@ function _getData(_type,_index){
 		})
 	}
 }
+var _editId = '';
+function _edit(_e){
+	var _id = $(_e).attr('id');
+	_editId = _id;
+	_showNew();
+}
+function _save(){
+	var points = $('#points').val(),
+		pointsRemark = $('#pointsRemark').val(),
+		sellPoints = $('#sellPoints').val();
+	if(points==null||points==''||
+	   pointsRemark==null||pointsRemark==''||
+	   sellPoints==null||sellPoints==''){
+		layer.alert('请完善信息！');
+	}else{
+		var _params = 'points='+points+'&pointsRemark='+pointsRemark+'&sellPoints='+sellPoints+'&id='+_editId;
+		$.ajax({
+			url:'/home/d/pro_book_post/edit',
+			type:'post',
+			data:_params,
+			dataType:'json',
+			success:function(res){
+				if('200'==res.code){
+					layer.alert('操作成功！',function(){
+						location.reload();
+					})
+				}else{
+					layer.alert(res.msg);
+				}
+			}
+		})
+	}
+}

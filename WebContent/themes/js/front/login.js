@@ -8,10 +8,6 @@ $(function(){
 function login(){
    var _mobilePhone = $('#mobilePhone').val();
    var _password = $('#password').val();
-   if($('#check').is(':checked')) {
-	    setLocalStorage('_m',_mobilePhone);
-	    setLocalStorage('_p',hex_md5(_password));
-   }
    if(_mobilePhone==null||_mobilePhone==''){
 	   layer.open({
 	    content: '手机号码不能为空！'
@@ -32,7 +28,11 @@ function login(){
 		   type:'post',
 		   success:function(res){
 			   if('200'==res.code){
-				   location.href = '/front/p/me';
+				   if($('#check').is(':checked')) {
+					    setLocalStorage('_m',_mobilePhone);
+					    setLocalStorage('_p',hex_md5(_password));
+				   }
+				   _open('icon-settings-','/front/p/me');
 			   }else{
 				   layer.open({
 				    content: res.msg
@@ -51,7 +51,7 @@ function _login(_m,_p){
 		dataType:'json',
 		success:function(res){
 			if('200'==res.code){
-				location.href = '/front/p/me';
+				_open('icon-settings-','/front/p/me');
 			}
 		}
 	})
