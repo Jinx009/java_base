@@ -49,16 +49,16 @@
 									<table class="table table-hover table-bordered">
 										<thead>
 											<tr>
-												<th>名称</th>
+												<th>编号</th>
 												<th>型号</th>
-												<th>MAC</th>
+												<th>SN</th>
 												<th>运行日期</th>
 											</tr>
 										</thead>
 										<tbody id="data">
 											<tr v-for="device in datas">
-												<td v-text="device.name"></td>
-												<td v-text="device.model"></td>
+												<td v-text="device.deviceId"></td>
+												<td v-text="device.remark"></td>
 												<td v-text="device.mac"></td>
 												<td v-text="device.createTime"></td>
 											</tr>
