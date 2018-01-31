@@ -26,7 +26,11 @@ function _getData(_type,_index){
 						var _d = {};
 						_d.data = res.data.list;
 						for(var i in _d.data){
-							_d.data[i].startTime = toDateTime(_d.data[i].startTime);
+							if(_d.data[i].startTime!=null&&_d.data[i].startTime!=''){
+								_d.data[i].startTime = toDateTime(_d.data[i].startTime);
+							}else{
+								_d.data[i].startTime = '';
+							}
 							if(_d.data[i].endTime!=null&&_d.data[i].endTime!=''){
 								_d.data[i].endTime = toDateTime(_d.data[i].endTime);
 							}else{
