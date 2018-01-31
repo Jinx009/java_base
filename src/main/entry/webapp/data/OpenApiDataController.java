@@ -22,6 +22,7 @@ import utils.HttpUtils;
 import utils.Resp;
 
 @Controller
+@RequestMapping(value = "/openApi")
 public class OpenApiDataController extends BaseController{
 	
 	private static final Logger log = LoggerFactory.getLogger(OpenApiDataController.class);
