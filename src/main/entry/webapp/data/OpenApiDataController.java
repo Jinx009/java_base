@@ -22,7 +22,6 @@ import utils.HttpUtils;
 import utils.Resp;
 
 @Controller
-@RequestMapping(value = "/openApi")
 public class OpenApiDataController extends BaseController{
 	
 	private static final Logger log = LoggerFactory.getLogger(OpenApiDataController.class);
@@ -32,7 +31,7 @@ public class OpenApiDataController extends BaseController{
 	@Autowired
 	private ProIoTOrderService proIoTOrderService;
 	
-	@RequestMapping(path = "/set/carNum")
+	@RequestMapping(value = "/openApi/rfid/push")
 	@ResponseBody
 	public Resp<?> setCarNum(String mac,String carNum){
 		Resp<?> resp = new Resp<>(false);
@@ -49,7 +48,7 @@ public class OpenApiDataController extends BaseController{
 		return resp;
 	}
 	
-	@RequestMapping(path = "/order/push")
+	@RequestMapping(value = "/openApi/status/push")
 	@ResponseBody
 	public Resp<?> getOrder(String mac,String logId,String changeTime,Integer status,String desc){
 		Resp<?> resp = new Resp<>(false);
