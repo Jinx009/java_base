@@ -36,21 +36,6 @@ public class InterfaceXinjiangDataController extends BaseController{
 	@Autowired
 	private HttpService httpService;
 	
-	@RequestMapping(path = "/session")
-	@ResponseBody
-	public Resp<?> session(HttpServletRequest request) {
-		Resp<?> resp = new Resp<>(false);
-		try {
-				HomeUser homeUser = getSessionHomeUser(request);
-				if(homeUser!=null){
-					return new Resp<>(true);
-				}
-		} catch (Exception e) {
-			log.error("error:{}", e);
-		}
-		return resp;
-	}
-	
 
 	@RequestMapping(path = "/inout")
 	@ResponseBody
@@ -115,31 +100,6 @@ public class InterfaceXinjiangDataController extends BaseController{
 		return null;
 	}
 
-	@RequestMapping(path = "/locationStatus")
-	@ResponseBody
-	public Resp<?> locationStatus(Integer locationId, Integer op, String dateStr) {
-		Resp<?> resp = new Resp<>(false);
-		try {
-			String token = getToken(AppInfo.XINJIANG.getAppId());
-			if (token != null) {
-				String result = httpService.get(HttpData.locationStatusUrl(token, op, locationId, dateStr));
-				JSONObject jsonObject = JSONObject.parseObject(result);
-				if (!BaseConstant.HTTP_ERROR_CODE.equals(result)) {
-					if (BaseConstant.HTTP_OK_CODE.equals(jsonObject.getString(BaseConstant.RESP_CODE))) {
-						resp = new Resp<>(BaseConstant.HTTP_OK_CODE, BaseConstant.HTTP_OK_MSG,
-								jsonObject.get(BaseConstant.PARAMS));
-					} else {
-						resp = new Resp<>(BaseConstant.HTTP_ERROR_CODE, jsonObject.getString(BaseConstant.MSG),
-								jsonObject.getString(BaseConstant.PARAMS));
-					}
-					return resp;
-				}
-			}
-		} catch (Exception e) {
-			log.error("error:{}", e);
-		}
-		return resp;
-	}
 
 	@RequestMapping(path = "/device")
 	@ResponseBody
