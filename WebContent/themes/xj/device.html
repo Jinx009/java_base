@@ -37,7 +37,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">基本信息</div>
             <div class="panel-body">
-                <p style="letter-spacing: 1px;color:rgb(35,159,171);" class=“text-success”  >Location:新疆,Router个数:&nbsp;&nbsp;<font style="color: red;" >1</font>&nbsp;&nbsp;Sensor个数:&nbsp;&nbsp;<font style="color: red;" >2</font>&nbsp;&nbsp;,运行开始时间:&nbsp;&nbsp;<font style="color: red;" >2017-11-01</font></p>
+                <p style="letter-spacing: 1px;color:rgb(35,159,171);" class=“text-success”  >Location:新疆,Router个数:&nbsp;&nbsp;<font style="color: red;" >1</font>&nbsp;&nbsp;Sensor个数:&nbsp;&nbsp;<font style="color: red;" >34</font>&nbsp;&nbsp;,运行开始时间:&nbsp;&nbsp;<font style="color: red;" >2017-11-01</font></p>
             </div>
             <table class="table">
                 <thead>
@@ -52,7 +52,7 @@
                 </thead>
                 <tbody id="data" >
                     <tr v-for="item in datas" >
-                        <td v-text="item.mac" ></td>
+                        <td v-text="item.mac" id="{{item.mac}}" onclick="goLog(this)"  ></td>
                         <td v-text="item.description" ></td>
                         <td>
                         	<span v-if="1===item.available" class="label label-success">是</span>
@@ -69,7 +69,7 @@
         </div>
     </div>
 </div>
-<footer class="main-footer" style="text-align: center;width: 100%;position: absolute;bottom: 15px;">
+<footer class="main-footer" style="text-align: center;width: 100%;">
     <strong>Copyright &copy;  <a href="http://www.zhanway.com" target="_blank">上海展为智能技术股份有限公司</a>.</strong> All rights reserved.
 </footer>
 <div class="control-sidebar-bg"></div>
@@ -77,6 +77,6 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/vue.min.js"></script>
 <script src="/themes/layer/layer.js"></script>
-<script src="js/device.js?_v=0.13"></script>
+<script src="js/device.js?_v=0.14"></script>
 </body>
 </html>
