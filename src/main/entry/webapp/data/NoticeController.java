@@ -20,6 +20,21 @@ import utils.Resp;
 public class NoticeController {
 
 	private static final Logger log = LoggerFactory.getLogger(NoticeController.class);
+	
+	
+	@RequestMapping(path = "/notice/na/iocm/devNotify/v1.1.0/addDevice",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Resp<?> addDevice(@RequestBody Object r){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("notice msg:{}",JSON.toJSONString(r));
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("erroe:{}",e);
+		}
+		return resp;
+		
+	}
 
 	@RequestMapping(path = "/notice/na/iocm/devNotify/v1.1.0/updateDeviceDatas",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
