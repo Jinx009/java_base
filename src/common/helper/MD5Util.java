@@ -95,5 +95,15 @@ public class MD5Util {
          System.out.println(toMD5("jinx007"));  
          System.out.println(MD5("jinx007"));  
          System.out.println(md5("jinx007"));  
+         double a = 1;
+         for(int i = 1;i<=36;i++){
+        	 a = a*i;
+        	 System.out.println(a);
+         }
+         long b = 1;
+         for(int i = 1;i<=6;i++){
+        	 b = b*i;
+         }
+         System.out.println(b/a);
     }  
 }
