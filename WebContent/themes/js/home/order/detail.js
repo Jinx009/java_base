@@ -165,7 +165,7 @@ function _draw_3(_d){
 		        }
 		    ]
 		};
-	   myChart3.setOption(option,true);
+	   myChart3.setOption(option2,true);
 }
 var option = {};
 var option1 = {};
