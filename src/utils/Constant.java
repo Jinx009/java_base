@@ -8,7 +8,7 @@ public class Constant {
     public static final String SECRET = "PfYwRjAgXTIxfIcUPl882tV82K8a";
     public static final String APP_AUTH = BASE_URL + "/iocm/app/sec/v1.1.0/login";
     public static final String REFRESH_TOKEN = BASE_URL + "/iocm/app/sec/v1.1.0/refreshToken";
-    public static final String CALLBACK_BASE_URL = "http://139.196.205.157:8081/tianyiiot";
+    public static final String CALLBACK_BASE_URL = "https://139.196.205.157:8443/tianyiiot";
     public static final String NOTICE_URL = CALLBACK_BASE_URL + "/rest/notice";
     public static final String CERT_DIR = "/data/cert";
     public static String SELFCERTPATH = "/cert/outgoing.CertwithKey.pkcs12";
