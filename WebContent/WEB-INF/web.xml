@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd" id="WebApp_ID" version="3.0">
-    <display-name>nbBase</display-name>
+    <display-name>tianyiiot</display-name>
    <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>

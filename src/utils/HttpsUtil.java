@@ -66,6 +66,7 @@ public class HttpsUtil extends DefaultHttpClient {
 		String demo_base_Path = Constant.CERT_DIR;// "/Users/jinx/Documents/jobs/git_mine/base/base";//System.getProperty("user.dir");
 		String selfcertpath = demo_base_Path + Constant.SELFCERTPATH;
 		String trustcapath = demo_base_Path + Constant.TRUSTCAPATH;
+		log.info("1:"+selfcertpath+"  2:"+trustcapath);
 
 		KeyStore selfCert = KeyStore.getInstance("pkcs12");
 		selfCert.load(new FileInputStream(selfcertpath), Constant.SELFCERTPWD.toCharArray());
@@ -75,7 +76,7 @@ public class HttpsUtil extends DefaultHttpClient {
 		caCert.load(new FileInputStream(trustcapath), Constant.TRUSTCAPWD.toCharArray());
 		TrustManagerFactory tmf = TrustManagerFactory.getInstance("sunx509");
 		tmf.init(caCert);
-		SSLContext sc = SSLContext.getInstance("TLS");
+		SSLContext sc = SSLContext.getInstance("TLSv1.2");
 		sc.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 		SSLSocketFactory ssf = new SSLSocketFactory(sc, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 		ClientConnectionManager ccm = this.getConnectionManager();
@@ -83,6 +84,7 @@ public class HttpsUtil extends DefaultHttpClient {
 		sr.register(new Scheme("https", 8743, ssf));
 
 		httpClient = new DefaultHttpClient(ccm);
+		
 	}
 
 
@@ -258,12 +260,12 @@ public class HttpsUtil extends DefaultHttpClient {
 		try {
 			response = httpClient.execute(request);
 		} catch (Exception e) {
-			System.out.println("executeHttpRequest failed.");
+			log.error("executeHttpRequest failed."+e.getMessage());
 		} finally {
 			try {
 				response = new StreamClosedHttpResponse(response);
 			} catch (IOException e) {
-				System.out.println("IOException: " + e.getMessage());
+				log.error("IOException: " + e.getMessage());
 			}
 		}
 

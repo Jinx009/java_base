@@ -33,7 +33,7 @@ public class NoticeService {
 	        paramSubscribe_deviceDataChanged.put("callbackurl", callbackurl_deviceDataChanged);
 
 	        String jsonRequest_deviceInfoChanged = JsonUtil.jsonObj2Sting(paramSubscribe_deviceDataChanged);
-
+	        
 	        Map<String, String> header_deviceDataChanged = new HashMap<>();
 	        header_deviceDataChanged.put(Constant.HEADER_APP_KEY, appId);
 	        header_deviceDataChanged.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
