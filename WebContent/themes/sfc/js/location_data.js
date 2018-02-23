@@ -11,7 +11,7 @@ var _data = [ {
 }, {
 	_left : 86,
 	_top : 348,
-	lot : '24',
+	lot : '3',
 	_type : 'x'
 }, {
 	_left : 266,
@@ -123,7 +123,7 @@ var _data = [ {
 },{
 	_left : 837,
 	_top : 52,
-	lot : '3',
+	lot : '3x',
 	_type : 'y'
 },{
 	_left : 854,
