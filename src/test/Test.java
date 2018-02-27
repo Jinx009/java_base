@@ -34,15 +34,23 @@ public class Test {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
+		List<String> s = new ArrayList<String>();
+		s.add("1");
+		s.add("1");
+		s.add("1");
+		s.add("1");
+		s.add("1");
+		System.out.println(PPrinter.pformat(s));
 		
 		
-		String pathname = "/Users/jinx/Downloads/files/xxxx";
-		File fileName = new File(pathname);
-		if (fileName.exists()) {
-			System.out.println(getLog(fileName));
-		} else{
-			System.out.println("xx");
-		}
+		
+//		String pathname = "/Users/jinx/Downloads/files/xxxx";
+//		File fileName = new File(pathname);
+//		if (fileName.exists()) {
+//			System.out.println(getLog(fileName));
+//		} else{
+//			System.out.println("xx");
+//		}
 //		File file=new File("/Users/jinx/Downloads");
 //        for(File temp:file.listFiles()){
 //            if(temp.isFile()){
@@ -51,6 +59,8 @@ public class Test {
 //            
 //        }
 	}
+	
+	
 	
 	private static String getLog(File fileName){
 		try {

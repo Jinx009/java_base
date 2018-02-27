@@ -67,6 +67,11 @@ public class WeixinParkPageController extends BaseController{
 		return "/wx/me";
 	}
 	
+	@RequestMapping(value = "/wx/p/order")
+	public String edit(){
+		return "/wx/order";
+	}
+	
 	
 	@RequestMapping(value = "/wx/park")
 	public String park(HttpServletRequest request,String code){
