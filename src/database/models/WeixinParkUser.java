@@ -33,5 +33,9 @@ public class WeixinParkUser {
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
+	@Column(name = "headimg_url")
+	private String headimgUrl;
+	@Column(name = "nick_name")
+	private String nickName;
 	
 }

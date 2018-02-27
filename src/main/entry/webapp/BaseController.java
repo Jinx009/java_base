@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import database.models.WebTokenFactory;
+import database.models.WeixinParkUser;
 import database.models.home.HomeResource;
 import database.models.home.HomeUser;
 import database.models.pro.ProToken;
@@ -144,6 +145,28 @@ public class BaseController {
 			HomeConfigConstant.putNewSession(homeUser.getUserName(),null);
 		}
 		HomeConfigConstant.putMenu(null,session.getId());
+	}
+	
+	
+	/**
+	 * 设置前端session
+	 * @param request
+	 * @param menus
+	 */
+	public void setSessionUser(HttpServletRequest request,WeixinParkUser weixinParkUser){
+		HttpSession session = request.getSession();
+		session.setAttribute(BaseConstant.WEB_USER, weixinParkUser);
+	}
+	
+	/**
+	 * 从session中获取登陆者
+	 * @param request
+	 * @return
+	 */
+	public WeixinParkUser getSessionWebUser(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		WeixinParkUser weixinParkUser = (WeixinParkUser) session.getAttribute(BaseConstant.WEB_USER);
+		return weixinParkUser;
 	}
 	
 	/**
