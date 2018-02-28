@@ -77,31 +77,34 @@ public class WeixinParkPageController extends BaseController{
 	public String park(HttpServletRequest request,String code){
 		WeixinParkUser user = getSessionWebUser(request);
 		try {
-			if(null==user){
-				if (StringUtil.isNotBlank(code)) {
-					String[] s = WechatUtil.getOpenid(code);
-					if(null!=s){
-						String accessToken = s[0];
-						String openid = s[1];
-						user = weixinParkUserService.findByOpenid(openid);
-						JSONObject json = WechatUtil.getRealUserInfo(accessToken, openid);
-						if(null==user){
-							user = new WeixinParkUser();
-							user.setCreateTime(new Date());
-							user.setHeadimgUrl(json.getString("headimgurl"));
-							user.setNickName(UnicodeUtils.string2Unicode(json.getString("nickname")));
-							user.setOpenid(openid);
-							user =  weixinParkUserService.save(user);
-						}else{
-							user.setNickName(UnicodeUtils.string2Unicode(json.getString("nickname")));
-							user.setHeadimgUrl(json.getString("headimgurl"));
-							weixinParkUserService.update(user);
-						}
-						setSessionUser(request, user);
-						request.setAttribute("plate_number", user.getPlateNumber());
-					}
-				} 
-			}
+//			if(null==user){
+//				if (StringUtil.isNotBlank(code)) {
+//					String[] s = WechatUtil.getOpenid(code);
+//					if(null!=s){
+//						String accessToken = s[0];
+//						String openid = s[1];
+//						user = weixinParkUserService.findByOpenid(openid);
+//						JSONObject json = WechatUtil.getRealUserInfo(accessToken, openid);
+//						if(null==user){
+//							user = new WeixinParkUser();
+//							user.setCreateTime(new Date());
+//							user.setHeadimgUrl(json.getString("headimgurl"));
+//							user.setNickName(UnicodeUtils.string2Unicode(json.getString("nickname")));
+//							user.setOpenid(openid);
+//							user =  weixinParkUserService.save(user);
+//						}else{
+//							user.setNickName(UnicodeUtils.string2Unicode(json.getString("nickname")));
+//							user.setHeadimgUrl(json.getString("headimgurl"));
+//							weixinParkUserService.update(user);
+//						}
+//						setSessionUser(request, user);
+//						request.setAttribute("plate_number", user.getPlateNumber());
+//					}
+//				} 
+//			}
+			user = weixinParkUserService.findById(1);
+			setSessionUser(request, user);
+			request.setAttribute("plate_number", user.getPlateNumber());
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

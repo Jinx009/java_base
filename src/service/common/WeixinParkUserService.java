@@ -41,5 +41,9 @@ public class WeixinParkUserService {
 	public void update(WeixinParkUser user) {
 		weixinParkUserDao.update(user);
 	}
+
+	public WeixinParkUser findById(int id) {
+		return weixinParkUserDao.find(id);
+	}
 	
 }

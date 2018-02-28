@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="WEB_TOKEN_FACTORY")
+@Table(name="WEB_PARK_USER")
 @Setter
 @Getter
 public class WeixinParkUser {

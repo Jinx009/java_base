@@ -19,12 +19,18 @@
 <script type='text/javascript' src='/themes/layer_mobile/layer.js' charset='utf-8'></script>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=1aQNZzVasvc5lHlVVLQSemZpX018UEhb"></script>
 <script src="/themes/js/vue.min.js"></script>
+<style type="text/css">
+.actions-modal-button.bg-success, .actions-modal-label.bg-success {
+    background: #4cd964;
+    color: #fff;
+}
+</style>
 </head>
 <body>
 	<header class="bar bar-nav">
 		<h1 class='title'>区域停车</h1>
 	</header>
-	<div class="content" style="margin-bottom: 40px;" >
+	<div class="content" style="margin-bottom: 40px;top:0.2rem;" >
 	  <div class="list-block">
 	    <ul>
 	      <li>
@@ -33,6 +39,7 @@
 	          <div class="item-inner">
 	             <div class="item-title label">车位号</div>
 	             <div class="item-title label">状态</div>
+	             <div class="item-title label">操作</div>
 	          </div>
 	        </div>
 	      </li>
@@ -40,17 +47,38 @@
 	        <div class="item-content"  >
 	          <div class="item-media"><i class="icon icon-form-email"></i></div>
 	          <div class="item-inner">
-	             <div class="item-titlel label" v-text="item.description" ></div>
-	             <div class="item-title label"  >
-	             	<a v-if="0===item.available"  style="line-height: 1.35rem;height: 1.35rem;width: 60px;"  class="button button-big button-fill button-danger">无车</a>
-	             	<a v-if="1===item.available"  style="line-height: 1.35rem;height: 1.35rem;width: 60px;"  class="button button-big button-fill button-success">有车</a>
+	             <div class="item-title label" v-text="item.description" ></div>
+	             <div class="item-title label" style="text-align: center;" >
+	             	<a v-if="0===item.available"  style="line-height: 1.35rem;height: 1.35rem;width: 60px;"  class="button button-dark" >无车</a>
+	             	<a v-if="1===item.available"  style="line-height: 1.35rem;height: 1.35rem;width: 60px;"  class="button"  >有车</a>
+	             </div>
+	              <div class="item-title label"  style="text-align: center;"  >
+	             	<a v-if="0===item.available"  v-attr:id="item.description" onclick="showPay(this);" style="line-height: 1.35rem;height: 1.35rem;width: 60px;"  class="button button-danger" >预约</a>
 	             </div>
 	          </div>
 	        </div>
 	      </li>
 	    </ul>
 	  </div>
-  </div>
+   </div>
+   <div id="pay" style="display: none;" >
+	   <div class="modal-overlay modal-overlay-visible"></div>
+	   <div class="actions-modal modal-in">
+	   		<div class="actions-modal-group">
+		   		<span class="actions-modal-label">请输入预约时长</span>
+		   		<span class="actions-modal-button actions-modal-button-bold color-danger">
+		   			<input type="text" id="payInput" style="text-align: center;background: rgba(243,243,243,.95);border: 0px;font-size:14px;color:#0894ec;" placeholder="请输入预约时长（分钟）" />
+		   		</span>
+		   		<span class="actions-modal-button" style="font-size: 14px;" id="payInfo" >待支付：0元</span>
+	   		</div>
+	   		<div class="actions-modal-group">
+	   			<span class="actions-modal-button bg-success">预约</span>
+	   		</div>
+	   		<div class="actions-modal-group">
+	   			<span class="actions-modal-button bg-danger">取消</span>
+	   		</div>
+	   	</div>
+   	</div>
 	<nav class="bar bar-tab" style="z-index: 9999;">
 		<a class="tab-item external active icon-home-" href="/themes/park/index.html"> 
 			<span class="icon icon-home"></span>
@@ -66,5 +94,12 @@
 		</a>
 	</nav>
 	<script src="/themes/park/detail.js?_v=1.01" ></script>
+	<script type="text/javascript">
+	function showPay(_e){
+		$('#payInput').val('');
+		$('#payInfo').html('待支付：0元');
+		$('#pay').show();
+	}
+	</script>
 </body>
 </html>
