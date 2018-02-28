@@ -61,6 +61,9 @@ public class WeixinParkPageController extends BaseController{
 					}
 				} 
 			}
+			user = weixinParkUserService.findById(1);
+			setSessionUser(request, user);
+			request.setAttribute("plate_number", user.getPlateNumber());
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

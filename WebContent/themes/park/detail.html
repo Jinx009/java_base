@@ -53,6 +53,7 @@
 	             	<a v-if="1===item.available"  style="line-height: 1.35rem;height: 1.35rem;width: 60px;"  class="button"  >有车</a>
 	             </div>
 	              <div class="item-title label"  style="text-align: center;"  >
+	              	<a v-if="1===item.available"  style="line-height: 1.35rem;height: 1.35rem;width: 80px;"  class="button button-light" >不可预约</a>
 	             	<a v-if="0===item.available"  v-attr:id="item.description" onclick="showPay(this);" style="line-height: 1.35rem;height: 1.35rem;width: 60px;"  class="button button-danger" >预约</a>
 	             </div>
 	          </div>
@@ -75,7 +76,7 @@
 	   			<span class="actions-modal-button bg-success">预约</span>
 	   		</div>
 	   		<div class="actions-modal-group">
-	   			<span class="actions-modal-button bg-danger">取消</span>
+	   			<span class="actions-modal-button bg-danger" onclick="hidePay();" >取消</span>
 	   		</div>
 	   	</div>
    	</div>
@@ -84,11 +85,11 @@
 			<span class="icon icon-home"></span>
 			<span class="tab-label">全部车位</span>
 		</a> 
-		<a class="tab-item external icon-star-"  href="/themes/park/park.html"> 
+		<a class="tab-item external icon-star-"  href="/wx/park.html"> 
 			<span class="icon icon-star"></span>
 			<span class="tab-label">我要缴费</span>
 		</a> 
-		<a class="tab-item external icon-settings-"  href="/themes/park/me.html"> 
+		<a class="tab-item external icon-settings-"  href="/wx/p/me.html"> 
 			<span class="icon icon-settings" ></span> 
 			<span class="tab-label">关于我</span>
 		</a>
@@ -99,6 +100,9 @@
 		$('#payInput').val('');
 		$('#payInfo').html('待支付：0元');
 		$('#pay').show();
+	}
+	function hidePay(){
+		$('#pay').hide();
 	}
 	</script>
 </body>
