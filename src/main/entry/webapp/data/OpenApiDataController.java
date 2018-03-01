@@ -31,26 +31,10 @@ public class OpenApiDataController extends BaseController{
 	@Autowired
 	private ProIoTOrderService proIoTOrderService;
 	
-	@RequestMapping(value = "/openApi/rfid/push")
-	@ResponseBody
-	public Resp<?> setCarNum(String mac,String carNum){
-		Resp<?> resp = new Resp<>(false);
-		try {
-			log.warn("mac:{},carNum:{}",mac,carNum);
-			ProIoTOrder proIoTOrder = proIoTOrderService.findByMacNear(mac);
-			if(proIoTOrder!=null&&proIoTOrder.getEndTime()==null){
-				proIoTOrder.setCarNum(carNum);
-				proIoTOrderService.update(proIoTOrder);
-			}
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return resp;
-	}
 	
 	@RequestMapping(value = "/openApi/status/push")
 	@ResponseBody
-	public Resp<?> getOrder(String mac,String logId,String changeTime,Integer status,String desc){
+	public Resp<?> getOrder(String mac,String logId,String changeTime,Integer status,String desc,String appId){
 		Resp<?> resp = new Resp<>(false);
 		try {
 			log.warn("mac:{},logId:{},status:{},changeTime:{},desc:{}",mac,logId,status,changeTime,desc);

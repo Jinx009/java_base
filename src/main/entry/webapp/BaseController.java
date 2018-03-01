@@ -2,10 +2,8 @@ package main.entry.webapp;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +12,6 @@ import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-
-import database.models.home.HomeResource;
-import database.models.home.HomeUser;
 import database.models.project.ProToken;
 import service.basicFunctions.HttpService;
 import service.basicFunctions.project.ProTokenService;
@@ -24,7 +19,6 @@ import utils.BaseConstant;
 import utils.HttpData;
 import utils.enums.AppInfo;
 import utils.ip.IPUtil;
-import utils.model.HomeConfigConstant;
 
 
 
@@ -136,53 +130,6 @@ public class BaseController {
 	 */
 	public String getClientIp(HttpServletRequest request){
 		return IPUtil.getRemortIP(request);
-	}
-	
-	/**
-	 * 设置菜单
-	 * @param request
-	 * @param menus
-	 */
-	public void setSessionMenu(HttpServletRequest request,List<HomeResource> menus,HomeUser homeUser){
-		HttpSession session = request.getSession();
-		HomeConfigConstant.putMenu(menus,session.getId());
-	}
-	
-	/**
-	 * 退出清空
-	 * @param request
-	 * @param menus
-	 */
-	public void setSessionOut(HttpServletRequest request,HomeUser homeUser){
-		HttpSession session = request.getSession();
-		if(homeUser!=null){
-			HomeConfigConstant.putNewSession(homeUser.getUserName(),null);
-		}
-		HomeConfigConstant.putMenu(null,session.getId());
-	}
-	
-	/**
-	 * 设置管理员session
-	 * @param request
-	 * @param menus
-	 */
-	public void setSessionAdmin(HttpServletRequest request,HomeUser homeUser){
-		HttpSession session = request.getSession();
-		session.setAttribute(HomeConfigConstant.HOME_USER, homeUser);
-		HomeConfigConstant.putNewSession(homeUser.getUserName(),session.getId());
-		logger.warn("[data:{}]",homeUser.getRealName());
-		session.setAttribute(HomeConfigConstant.HOME_NAME,homeUser.getRealName());
-	}
-	
-	/**
-	 * 从session中获取登陆者
-	 * @param request
-	 * @return
-	 */
-	public HomeUser getSessionHomeUser(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		HomeUser homeUser = (HomeUser) session.getAttribute(HomeConfigConstant.HOME_USER);
-		return homeUser;
 	}
 	
 }
