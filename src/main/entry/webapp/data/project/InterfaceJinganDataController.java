@@ -83,11 +83,11 @@ public class InterfaceJinganDataController extends BaseController {
 	
 	@RequestMapping(path = "/money")
 	@ResponseBody
-	public Resp<?> money(String dateStr, Integer areaId) {
+	public Resp<?> money(String dateStr, Integer areaId,Integer type) {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			String token = getToken(AppInfo.NB_JINGAN.getAppId());
-			String result = httpService.get(HttpData.moneyUrl(dateStr,areaId,token));
+			String result = httpService.get(HttpData.moneyUrl(dateStr,areaId,token,type));
 			JSONObject jsonObject = JSONObject.parseObject(result);
 			if (!BaseConstant.HTTP_ERROR_CODE.equals(result)) {
 				if ("00".equals(jsonObject.getString(BaseConstant.RESP_CODE))) {

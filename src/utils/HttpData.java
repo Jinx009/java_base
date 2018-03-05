@@ -254,8 +254,8 @@ public class HttpData {
 		return url;
 	}
 
-	public static String moneyUrl(String dateStr, Integer areaId,String token) {
-		String url = BASE_URL+MONEY_URL+"?areaId="+areaId+"&dateStr="+dateStr+"&token="+token+"&type=1";
+	public static String moneyUrl(String dateStr, Integer areaId,String token, Integer type) {
+		String url = BASE_URL+MONEY_URL+"?areaId="+areaId+"&dateStr="+dateStr+"&token="+token+"&type="+type;
 		return url;
 	}
 

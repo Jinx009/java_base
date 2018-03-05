@@ -34,7 +34,7 @@ public class Test {
 	
 	
 	public static void main(String[] args) {
-		System.out.println(getDistance(116.454071,39.978437,116.444585,39.983247));
+		System.out.println(13%30);
 	}
 	
 	

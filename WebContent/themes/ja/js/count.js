@@ -54,7 +54,19 @@ function getData(){
             }
         })
     }else{
-    	 $('#money').text('暂不支持按月查询计费！');
+    	$.ajax({
+            url:'/interface/ja/money?areaId='+areaId+'&dateStr='+_date+'&type='+_type,
+            type:'get',
+            dataType:'json',
+            success:function(res){
+            	var money = 0;
+            	var _obj = JSON.parse(res.data);
+            	for(var i in _obj){
+            		money+= parseFloat(_obj[i].money);
+            	}
+               $('#money').text(_date+' 前一月理论收费：'+money+'元');
+            }
+        })
     }
     $.ajax({
         url:'/interface/ja/car?areaId='+areaId+'&dateStr='+_date+'&type='+_type,
