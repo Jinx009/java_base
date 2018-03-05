@@ -24,6 +24,7 @@ public class HttpData {
 	public static final String JOB_ADD_URL = "/rest/job/save";
 	public static final String JOB_FIND_URL = "/rest/job/find";
 	public static final String INOUT_URL = "/rest/sensor/inOutLog";
+	private static final String MONEY_URL = "/rest/parking/money";
 	
 	public static String jobFind(Integer id){
 		String url = BASE_URL+JOB_FIND_URL+"?id="+id;
@@ -250,6 +251,11 @@ public class HttpData {
 
 	public static String inOutUrl(String dateStr, Integer areaId) {
 		String url = BASE_URL+INOUT_URL+"?areaId="+areaId+"&dateStr="+dateStr;
+		return url;
+	}
+
+	public static String moneyUrl(String dateStr, Integer areaId,String token) {
+		String url = BASE_URL+MONEY_URL+"?areaId="+areaId+"&dateStr="+dateStr+"&token="+token+"&type=1";
 		return url;
 	}
 

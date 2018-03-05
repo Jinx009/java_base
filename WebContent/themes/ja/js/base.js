@@ -41,7 +41,7 @@ function login() {
 				type : 'post',
 				data : params,
 				success : function(res) {
-					if ('200' == res.code ) {
+					if ('200' == res.code && '访问成功'==res.msg) {
 						location.href = '/themes/ja/lot.html'
 					} else {
 						$('#errorMsg').html(res.msg)

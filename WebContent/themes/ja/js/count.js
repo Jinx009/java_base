@@ -44,6 +44,18 @@ function getData(){
     optionData = [{value:0, name:'小于15分钟'},{value:0, name:'15分至1小时'}, {value:0, name:'1至2小时'}, {value:0, name:'2至4小时'}, {value:0, name:'4至8小时'}, {value:0, name:'8至24小时'}, {value:0, name:'大于24小时'}];
     resData = [];_data_[0]=0;_data_[1]=0;_data_[2]=0;_data_[3]=0;_data_[4]=0;_data_[5]=0; _data_[6]=0;
     _type = $('#_type').val();
+    if(_type==1){
+        $.ajax({
+            url:'/interface/ja/money?areaId='+areaId+'&dateStr='+_date+'&type='+_type,
+            type:'get',
+            dataType:'json',
+            success:function(res){
+               $('#money').text(_date+' 07:30:00 前24小时理论收费：'+JSON.parse(res.data).money+'元');
+            }
+        })
+    }else{
+    	 $('#money').text('暂不支持按月查询计费！');
+    }
     $.ajax({
         url:'/interface/ja/car?areaId='+areaId+'&dateStr='+_date+'&type='+_type,
         type:'get',
@@ -54,9 +66,6 @@ function getData(){
                     resData.push(res.data[i]);
                 }
             }
-            if(_type==1){
-            	_money = _getMoney();
-            }
             if(resData.length==0){
 //            	resData = _model;
             	changeData();
@@ -65,17 +74,6 @@ function getData(){
             }
         }
     })
-}
-function _getMoney(){
-	_money = 0;
-	 for(var i in resData){
-		 if(resData[i].times<=60){
-	         _money+= 10;
-	     }
-		 if(resData[i].times<=60){
-	         _money+= 10;
-	     }
-	 }
 }
 var _data_ = new Array();
 
