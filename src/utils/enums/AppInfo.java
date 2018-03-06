@@ -19,6 +19,7 @@ public enum AppInfo {
 	NB_1800M("wuhan_1800m_test","251ffebf-25eb-45b3-95fb-bc0d2a7d71fe","武汉1800M测试"),
 	XINJIANG("zhanway_xinjiang","21c4c522-2d8c-4a9f-888b-57eb9ecb0c85","新疆"),
 	EVCARD("ev_card","bc6a9067-44a2-44dc-87b7-c08414350e10","EVCard"),
+	SHENZHEN_OUFEIGUANG("oufeiguang","cde17d8e-dd84-4cb3-b5ee-8c24deb58261","深圳欧菲光"),
 	SHANGHAI_FIRE_CONTROL("shanghai_fire_control","d1d3337f-90f2-49cf-8c0c-c3ec4f105218","上海消防")
 	;
 	
