@@ -32,5 +32,9 @@ public class ProGatewayArea {
 	private String lng;
 	@Column(name = "address")
 	private String address;
+	@Column(name = "location_id")
+	private Integer locationId;
+	@Column(name = "company_id")
+	private Integer companyId;
 	
 }
