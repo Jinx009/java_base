@@ -69,10 +69,7 @@ function changeData(){
     var max = 0;var times = resData.length;
     for(var i in resData){
         max += resData[i].times;
-        if(resData[i].times<15){
-            optionData[0].value ++;
-        }
-        if(resData[i].times>=15&&resData[i].times<60){
+        if(resData[i].times>=1&&resData[i].times<60){
             optionData[1].value ++;
         }
         if(resData[i].times>=60&&resData[i].times<120){
@@ -91,14 +88,13 @@ function changeData(){
             optionData[6].value ++;
         }
     }
-    _data_[0]=optionData[0].value;
-    _data_[1]=optionData[1].value;
-    _data_[2]=optionData[2].value;
-    _data_[3]=optionData[3].value;
-    _data_[4]=optionData[4].value;
-    _data_[5]=optionData[5].value;
-    _data_[6]=optionData[6].value;
-    if(_type==2){
+    _data_[0]=optionData[1].value;
+    _data_[1]=optionData[2].value;
+    _data_[2]=optionData[3].value;
+    _data_[3]=optionData[4].value;
+    _data_[4]=optionData[5].value;
+    _data_[5]=optionData[6].value;
+    if(_type==3){
         $('#text').html('当月总停车次数:<font style="color: rgb(35,159,171);" >&nbsp;&nbsp;'+times+'&nbsp;&nbsp;</font>,平均时长:<font style="color: rgb(35,159,171);" >&nbsp;&nbsp;'+parseInt(max/times)+'&nbsp;&nbsp;</font>分钟');
     }else{
         $('#text').html('当日总停车次数:<font style="color: rgb(35,159,171);" >&nbsp;&nbsp;'+times+'&nbsp;&nbsp;</font>,平均时长:<font style="color:  rgb(35,159,171);" >&nbsp;&nbsp;'+parseInt(max/times)+'&nbsp;&nbsp;</font>分钟');
@@ -135,7 +131,7 @@ function draw(){
             {
                 type: 'category',
                 show: false,
-                data: ['小于15分钟', '15分钟至1小时', '1小时至2小时', '2小时至4小时', '4小时至8小时', '8小时至24小时', '大于24小时']
+                data: ['小于1小时', '1小时至2小时', '2小时至4小时', '4小时至8小时', '8小时至24小时', '大于24小时']
             }
         ],
         yAxis: [
