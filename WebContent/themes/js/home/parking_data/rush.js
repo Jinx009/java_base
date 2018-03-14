@@ -224,7 +224,7 @@ function handle(op, date, params) {
 function _draw(){
 	$('#rushhour-chart-real').empty();
     var result = new Array();
-    for(var i=8;i<=20;i++){
+    for(var i=0;i<=23;i++){
         var data = {};
         var literal = i;
         if(i<10){

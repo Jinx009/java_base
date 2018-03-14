@@ -48,21 +48,22 @@
 								<div class="box-body table-responsive no-padding">
 									<div class="row" style="width: 98%; margin-left: 1%;">
 										<div class="col-md-12">
-											<div class="form-group" style="width: 500px;">
-												<div class="btn-group">
-													<button type="button" data-ref="0" class="btn btn-info _b">天</button>
-													<div class="input-group"
-														style="padding-left: 15px; width: 300px;">
-														<input type="text" class="form-control"
-															readonly="readonly" id="datepicker"> <span
-															class="input-group-btn">
-															<button class="btn btn-default" onclick="_getData();"
-																type="button">&nbsp;确&nbsp;定&nbsp;</button>
-														</span>
-													</div>
+											<form class="form-inline">
+												<div class="form-group">
+													<label class="sr-only">筛选车位</label> 
+													<select class="form-control" style="width: 220px;" id="mac" >
+														<option value="0" >全部车位</option>
+														<option v-for="d in devices"  v-bind:value="d.mac" v-text="d.description" ></option>
+													</select>
 												</div>
-											</div>
-											<div class="panel panel-default">
+												<div class="form-group"  >
+													<label class="sr-only">选择日期</label> 
+													<input type="text"   style="width: 220px;" class="form-control" readonly="readonly" id="datepicker"> 
+												</div>
+												<button type="button" class="btn btn-info"
+													onclick="getData();">&nbsp;查&nbsp;询&nbsp;</button>
+											</form>
+											<div class="panel panel-default" style="margin-top: 20px;">
 												<table class="table">
 													<thead>
 														<tr>
@@ -96,7 +97,7 @@
 		<#include "home_footer.html">
 	</div>
 	<script src="/themes/awe/plugins/datepicker/bootstrap-datepicker.js"></script>
-	<script src="/themes/js/home/parking_data/inOut.js?version=1.21"></script>
+	<script src="/themes/js/home/parking_data/inOut.js?version=1.22"></script>
 
 </body>
 </html>

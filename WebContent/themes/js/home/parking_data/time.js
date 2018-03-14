@@ -41,6 +41,9 @@ function getData(){
     optionData = [{value:0, name:'小于15分钟'},{value:0, name:'15分至1小时'}, {value:0, name:'1至2小时'}, {value:0, name:'2至4小时'}, {value:0, name:'4至8小时'}, {value:0, name:'8至24小时'}, {value:0, name:'大于24小时'}];
     resData = [];_data_[0]=0;_data_[1]=0;_data_[2]=0;_data_[3]=0;_data_[4]=0;_data_[5]=0; _data_[6]=0;
     _type = $('#_type').val();
+    if(_type==3){
+    	_date = $('#monthSelect').val();
+    }
     $.ajax({
         url:'/home/d/parking_data/time?&dateStr='+_date+'&type='+_type,
         type:'get',
@@ -168,4 +171,15 @@ function draw(){
         ]
     };
     myChart.setOption(option,true);
+}
+function changeType(){
+	var _type = $('#_type').val();
+	if(1==_type){
+		$('#day').show();
+		$('#month').hide();
+	}
+	if(3==_type){
+		$('#day').hide();
+		$('#month').show();
+	}
 }

@@ -3,18 +3,36 @@ $(function(){
 	laydate.render({
 		elem : '#datepicker',
 	});
-	_getData();
+	_getDevice();
 //	setInterval(function() {
 //
 //		_getData();
 //
 //	}, 15000);
 })
+
+function _getDevice(){
+	$.ajax({
+		url:'/home/d/device/sensor',
+		type:'post',
+		dataType:'json',
+		success:function(res){
+			_getData();
+			new Vue({
+				el:'#mac',
+				data:{
+					devices:res.data.result
+				}
+			})
+		}
+	})
+}
 var _data = '';
 function _getData(){
 	var dateStr = $('#datepicker').val();
+	var mac = $('#mac').val();
 	$.ajax({
-		url:'/home/d/parking_data/inOut?dateStr='+dateStr,
+		url:'/home/d/parking_data/inOut?dateStr='+dateStr+'&mac='+mac,
 		type:'get',
 		dataType:'json',
 		success:function(res){

@@ -68,10 +68,10 @@ public class ParkingDataDataController extends BaseController{
 	
 	@RequestMapping(path = "/inOut")
 	@ResponseBody
-	public Resp<?> inout(String dateStr) {
+	public Resp<?> inout(String dateStr,String mac) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String result = httpService.get(HttpData.inOutUrl(dateStr));
+			String result = httpService.get(HttpData.inOutUrl(dateStr,mac));
 			JSONObject jsonObject = JSONObject.parseObject(result);
 			if (!BaseConstant.HTTP_ERROR_CODE.equals(result)) {
 				if ("00".equals(jsonObject.getString(BaseConstant.RESP_CODE))) {

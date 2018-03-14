@@ -58,15 +58,32 @@
 											</div>
 											<form class="form-inline">
 												<div class="form-group">
+													<label class="sr-only">筛选类型</label> 
+													<select class="form-control" id="_type" style="min-width: 200px;" onchange="changeType();" >
+														<option value="1">按日</option>
+														<option value="3">按月</option>
+													</select>
+												</div>
+												<div class="form-group" id="day" >
 													<label class="sr-only">选择日期</label> <input type="email"
 														class="form-control" id="datepicker" readonly="readonly"
 														placeholder="">
 												</div>
-												<div class="form-group">
-													<label class="sr-only">筛选类型</label> <select
-														class="form-control" id="_type" style="min-width: 200px;">
-														<option value="1">按日</option>
-														<option value="2">按月</option>
+												<div class="form-group" id="month" style="display: none;" >
+													<label class="sr-only">选择月份</label> 
+													<select id="monthSelect"  class="form-control"style="min-width: 200px;" >
+														<option value="1">1月份</option>
+														<option value="2">2月份</option>
+														<option value="3">3月份</option>
+														<option value="4">4月份</option>
+														<option value="5">5月份</option>
+														<option value="6">6月份</option>
+														<option value="7">7月份</option>
+														<option value="8">8月份</option>
+														<option value="9">9月份</option>
+														<option value="10">10月份</option>
+														<option value="11">11月份</option>
+														<option value="12">12月份</option>
 													</select>
 												</div>
 												<button type="button" class="btn btn-info"
@@ -89,6 +106,6 @@
 	<script src="/themes/awe/plugins/datepicker/bootstrap-datepicker.js"></script>
 	<script src="/themes/awe/plugins/datepicker/bootstrap-datepicker.js"></script>
 	<script src="https://cdn.bootcss.com/echarts/2.2.7/echarts-all.js"></script>
-	<script src="/themes/js/home/parking_data/time.js?version=1.21"></script>
+	<script src="/themes/js/home/parking_data/time.js?version=1.22"></script>
 </body>
 </html>

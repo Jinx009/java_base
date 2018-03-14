@@ -98,10 +98,11 @@ public class HttpData {
 	/**
 	 * 车进车出日志
 	 * @param dateStr
+	 * @param mac 
 	 * @return
 	 */
-	public static String inOutUrl(String dateStr) {
-		String url = BASE_URL+INOUT_URL+"?areaId="+BaseConstant.AREA_ID+"&dateStr="+dateStr;
+	public static String inOutUrl(String dateStr, String mac) {
+		String url = BASE_URL+INOUT_URL+"?areaId="+BaseConstant.AREA_ID+"&dateStr="+dateStr+"&mac="+mac;
 		return url;
 	}
 	
