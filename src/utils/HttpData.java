@@ -567,7 +567,7 @@ public class HttpData {
 	
 
 	public static void main(String[] args) {
-		mofang_add_store_organ("USI_5e4c2a17-aeef-42d6-a19b-915368df0f41", "10254", "潮州智信");
+		mofang_login();
 	}
 
 	

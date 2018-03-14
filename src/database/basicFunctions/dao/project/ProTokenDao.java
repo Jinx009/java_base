@@ -25,4 +25,10 @@ public class ProTokenDao extends BaseDao<ProToken>{
 		return null;
 	}
 	
+	public ProToken getByToken(String token){
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("token",token);
+		return findByCriteriaForUnique(queryParam);
+	}
+	
 }

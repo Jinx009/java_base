@@ -32,5 +32,9 @@ public class BaseConstant {
 	
 	public static final String BASE_COMPANY_ID = "10039";
 	public static final String BASE_STORE_ID = "10040";
+	public static final String TOKEN = "token";
+	public static final String STATUS = "status";
+	public static final String AREA_ID_NAME = "areaId";
+	public static final String PARK_NO = "parkNo";
 	
 }

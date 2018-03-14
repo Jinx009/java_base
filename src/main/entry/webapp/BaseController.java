@@ -2,6 +2,7 @@ package main.entry.webapp;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,7 +39,13 @@ public class BaseController {
 	public static  String MOFANG_COMPANY_ID = "";
 	public static  String MOFANG_STORE_ID = "";
 
+	public Integer getInt(Map<String, Object> data,String key){
+		return Integer.valueOf(String.valueOf(data.get(key)));
+	}
 	
+	public String getString(Map<String, Object> data,String key){
+		return String.valueOf(data.get(key));
+	}
 	
 	public String getMyToken(){
 		return getToken(BaseConstant.APP_ID_NOW);
@@ -73,6 +80,14 @@ public class BaseController {
 			logger.error("error:{}",e);
 		}
 		return null;
+	}
+	
+	public boolean checkToken(String token){
+		return proTokenService.checkToken(token);
+	}
+	
+	public ProToken getByToken(String token){
+		return proTokenService.getByToken(token);
 	}
 	
 	/**
