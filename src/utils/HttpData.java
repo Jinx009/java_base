@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import common.helper.StringUtil;
+import main.entry.webapp.BaseController;
 import utils.enums.AppInfo;
 
 public class HttpData {
@@ -567,7 +568,7 @@ public class HttpData {
 	
 
 	public static void main(String[] args) {
-		mofang_login();
+		addPark(new BaseController().getMofangSessionId(), "020000fffe000030", "0002");
 	}
 
 	

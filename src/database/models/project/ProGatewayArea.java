@@ -37,4 +37,7 @@ public class ProGatewayArea {
 	@Column(name = "company_id")
 	private Integer companyId;
 	
+	private Integer total;
+	private Integer available;
+	
 }

@@ -82,8 +82,10 @@ public class BaseController {
 		return null;
 	}
 	
-	public boolean checkToken(String token){
-		return proTokenService.checkToken(token);
+	public boolean checkToken(String token,String token1){
+		if(token.equals(token1))
+			return true;
+		return false;
 	}
 	
 	public ProToken getByToken(String token){

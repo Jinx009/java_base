@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum AppInfo {
 	
 	XINJIANG("zhanway_xinjiang","21c4c522-2d8c-4a9f-888b-57eb9ecb0c85","新疆"),
-	PURUAN("puruan","f6b5c9b3-45ca-47da-8af6-4cdf29d28087","浦东软件园"),
+	CHAOZHOUZHIXIN("chaozhouzhixin","ee9c78ec-d226-474d-8c95-11da6d54456f","潮州智信"),
 	;
 	
 	private String appId;

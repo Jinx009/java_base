@@ -37,16 +37,4 @@ public class ProTokenService {
 		return proTokenDao.getByToken(token);
 	}
 	
-	public boolean checkToken(String token){
-		ProToken proToken = proTokenDao.getByToken(token);
-		if(proToken!=null){
-			long now = new Date().getTime();
-			if(now>proToken.getTimestamp()){
-				return false;
-			}
-			return true;
-		}
-		return false;
-	}
-	
 }
