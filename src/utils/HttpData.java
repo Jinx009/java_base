@@ -568,7 +568,7 @@ public class HttpData {
 	
 
 	public static void main(String[] args) {
-		addPark(new BaseController().getMofangSessionId(), "020000fffe000030", "0002");
+		mofang_add_rule(new BaseController().getMofangSessionId(), "10254","10255", "1800", "3.00", "0.50");
 	}
 
 	
