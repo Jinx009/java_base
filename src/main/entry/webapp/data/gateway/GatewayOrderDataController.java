@@ -1,10 +1,13 @@
 package main.entry.webapp.data.gateway;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.map.introspect.BasicClassIntrospector.GetterMethodFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -113,22 +117,26 @@ public class GatewayOrderDataController extends BaseController{
 		try {
 			String token = getString(data, BaseConstant.TOKEN);
 			String productId = getString(data, "productId");
-			Integer areaId = getInt(data, "areaId");
+			String companyId = getString(data, "companyId");
+			String storeId = getString(data, "storeId");
+			String parkPlaceId = getString(data, "parkPlaceId");
 			log.warn("token:{},orderId:{},appId:{}",token,productId);
 			if(StringUtil.isBlank(token)||StringUtil.isBlank(productId)){
 				resp.setMsg(RespData.PARAMS_ERROR);
 				return resp;
 			}
+			String params = "http://120.92.101.137:8083/park_place?companyOrganId="+companyId+"&storeOrganId="+storeId+"&parkPlaceId="+parkPlaceId;
+			String mac = JSONObject.parseObject(HttpUtils.getMofang(getMofangSessionId(),params)).getJSONObject("data").getJSONArray("parkPlaces").getJSONObject(0).getString("magneticStripeId");
+			Double money = sendNotice(mac, companyId, storeId,productId);
 			String url = "http://120.92.101.137:8081/order";
-			ProGatewayArea proGatewayArea = proGatewayAreaService.getByAreaId(areaId);
 			Map<String, Object> map = new HashMap<String,Object>();
 			map.put("amount", "1");
 			map.put("appId", "PARK");
-			map.put("storeOrganId", proGatewayArea.getStoreId());
+			map.put("storeOrganId", storeId);
 			List<ProGetPayModel> list = new ArrayList<ProGetPayModel>();
 			list.add(new ProGetPayModel(1,productId));
 			map.put("products", list);
-			JSONObject jsonObject = JSONObject.parseObject(HttpUtils.postMofangJson(getMofangSessionId(),url, JSONObject.toJSONString(map))).getJSONObject("data").getJSONObject("orderNo");
+			String jsonObject = JSONObject.parseObject(HttpUtils.postMofangJson(getMofangSessionId(),url, JSONObject.toJSONString(map))).getJSONObject("data").getString("orderNo");
 			Map<String, Object> res = new HashMap<String,Object>();
 			res.put("order", jsonObject);
 			res.put("amount", "1");
@@ -169,5 +177,30 @@ public class GatewayOrderDataController extends BaseController{
 		
 		return resp;
 	}
+	
+	
+
+    private Double sendNotice(String mac,String companyId,String storeId,String productId){
+        try {
+            Map<String,String> map = new HashMap<String, String>();
+            map.put("magneticStripleId",mac);
+            map.put("status","EMPTY");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            map.put("occurrenceTimeString",sdf.format(new Date()));
+            map.put("companyOrganId",companyId);
+            map.put("storeOrganId",storeId);
+            map.put("eventId",mac+"_"+new Date().getTime());
+            String jsonStr = JSON.toJSONString(map);
+            HttpUtils.postMofangJson(getMofangSessionId(), "http://120.92.101.137:8083/magnetic_striple_event",jsonStr);
+        	String url = "http://120.92.101.137:8083/product?productId="+productId+"&storeOrganId="+storeId;
+			List<ProOrder> orders = JSONArray.parseArray(JSONObject.parseObject(HttpUtils.getMofang(getMofangSessionId(), url)).getJSONObject(BaseConstant.DATA).getString("products"),ProOrder.class);
+			ProOrder proOrder = orders.get(0);
+			return proOrder.getPrice();
+        }catch (Exception e){
+            log.error("error:{}",e);
+        }
+        return null;
+    }
+
 
 }
