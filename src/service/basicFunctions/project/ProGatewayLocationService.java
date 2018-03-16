@@ -22,4 +22,12 @@ public class ProGatewayLocationService {
 		return proGatewayLocationDao.getByAppId(appId);
 	}
 	
+	public ProGatewayLocation getSingleByAppId(String appId) {
+		List<ProGatewayLocation> list = proGatewayLocationDao.getByAppId(appId);
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0);
+		}
+		return null;
+	}
+	
 }

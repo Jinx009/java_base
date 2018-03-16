@@ -94,6 +94,6 @@ public class MD5Util {
     public static void main(String[] args){  
          System.out.println(toMD5("jinx007"));  
          System.out.println(MD5("jinx007"));  
-         System.out.println(md5("Id3=1212we&devid=1212sd&tick=121212&event=1&eventtime=2018-03-16 09:21:02BEARHUNTING"));  
+         System.out.println(md5("Id3=00163e0e0f3d&devid=0001180209000004&tick=1521179345863&event=1&eventtime=2018-03-16 13:49:05BEARHUNTING"));  
     }  
 }

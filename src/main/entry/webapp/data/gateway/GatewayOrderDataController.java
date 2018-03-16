@@ -1,5 +1,7 @@
 package main.entry.webapp.data.gateway;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +20,7 @@ import common.helper.StringUtil;
 import database.models.project.ProGatewayArea;
 import database.models.project.ProGatewayLocation;
 import database.models.project.ProOrder;
+import database.models.project.model.ProGetPayModel;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.project.ProGatewayAreaService;
 import service.basicFunctions.project.ProGatewayLocationService;
@@ -87,12 +90,13 @@ public class GatewayOrderDataController extends BaseController{
 		try {
 			String token = getString(data, BaseConstant.TOKEN);
 			String plateNumber = getString(data, "plateNumber");
-			log.warn("token:{},parkNo:{}",token,plateNumber);
+			String pageNum = getString(data, "pageNum");
+			log.warn("token:{},plateNumber:{},pageNum:{}",token,plateNumber,pageNum);
 			if(StringUtil.isBlank(token)||StringUtil.isBlank(plateNumber)){
 				resp.setMsg(RespData.PARAMS_ERROR);
 				return resp;
 			}
-			String url = "http://120.92.101.137:8083/product?plateNumber="+plateNumber;
+			String url = "http://120.92.101.137:8083/product?plateNumber="+plateNumber+"&pageNum="+pageNum;
 			JSONObject jsonObject = JSONObject.parseObject(HttpUtils.getMofang(getMofangSessionId(), url)).getJSONObject(BaseConstant.DATA);
 			return new Resp<>(jsonObject);
 		} catch (Exception e) {
@@ -101,4 +105,69 @@ public class GatewayOrderDataController extends BaseController{
 		
 		return resp;
 	}
+	
+	@RequestMapping(path = "/getPayInfo")
+	@ResponseBody
+	public Resp<?> getPay(@RequestBody Map<String, Object> data){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String token = getString(data, BaseConstant.TOKEN);
+			String productId = getString(data, "productId");
+			Integer areaId = getInt(data, "areaId");
+			log.warn("token:{},orderId:{},appId:{}",token,productId);
+			if(StringUtil.isBlank(token)||StringUtil.isBlank(productId)){
+				resp.setMsg(RespData.PARAMS_ERROR);
+				return resp;
+			}
+			String url = "http://120.92.101.137:8081/order";
+			ProGatewayArea proGatewayArea = proGatewayAreaService.getByAreaId(areaId);
+			Map<String, Object> map = new HashMap<String,Object>();
+			map.put("amount", "1");
+			map.put("appId", "PARK");
+			map.put("storeOrganId", proGatewayArea.getStoreId());
+			List<ProGetPayModel> list = new ArrayList<ProGetPayModel>();
+			list.add(new ProGetPayModel(1,productId));
+			map.put("products", list);
+			JSONObject jsonObject = JSONObject.parseObject(HttpUtils.postMofangJson(getMofangSessionId(),url, JSONObject.toJSONString(map))).getJSONObject("data").getJSONObject("orderNo");
+			Map<String, Object> res = new HashMap<String,Object>();
+			res.put("order", jsonObject);
+			res.put("amount", "1");
+			return new Resp<>(res);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		
+		return resp;
+	}
+
+	
+	@RequestMapping(path = "/pay")
+	@ResponseBody
+	public Resp<?> pay(@RequestBody Map<String, Object> data){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String token = getString(data, BaseConstant.TOKEN);
+			String orderNo = getString(data, "orderNo");
+			String amount = getString(data, "amount");
+			log.warn("token:{},orderId:{},appId:{}",token,orderNo);
+			if(StringUtil.isBlank(token)||StringUtil.isBlank(orderNo)){
+				resp.setMsg(RespData.PARAMS_ERROR);
+				return resp;
+			}
+			String url = "http://120.92.101.137:8081/payment/pay";
+			Map<String, Object> map = new HashMap<String,Object>();
+			map.put("amount", amount);
+			map.put("type", "bar_code");
+			map.put("orderNo", orderNo);
+			map.put("authCode", "");
+			map.put("action", "RECORD");
+			JSONObject jsonObject = JSONObject.parseObject(HttpUtils.postMofangJson(getMofangSessionId(), url, JSONObject.toJSONString(map))).getJSONObject("data");
+			return new Resp<>(jsonObject);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		
+		return resp;
+	}
+
 }
