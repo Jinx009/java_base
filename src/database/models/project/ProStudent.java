@@ -1,4 +1,4 @@
- package database.models.project;
+package database.models.project;
 
 import java.util.Date;
 
@@ -17,8 +17,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="pro_pic")
-public class ProPic {
+@Table(name="pro_student")
+public class ProStudent {
 
 	@Id
 	@Column(unique=true, nullable=false)
@@ -31,13 +31,9 @@ public class ProPic {
 	private Date createTime;
 	@Column(name = "name")
 	private String name;
-	@Column(name = "star")
-	private Integer star;
+	@Column(name = "level")
+	private Integer level;
 	@Column(name = "description")
 	private String desc;
-	@Column(name = "autor")
-	private String  autor;
-	@Column(name = "pic_path")
-	private String picPath;
 	
 }

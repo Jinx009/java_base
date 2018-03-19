@@ -17,8 +17,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="pro_user")
-public class ProUser {
+@Table(name="pro_organization")
+public class ProOrganization {
 
 	@Id
 	@Column(unique=true, nullable=false)
@@ -29,19 +29,15 @@ public class ProUser {
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name = "pwd")
-	private String pwd;
-	@Column(name = "current_points")
-	private Integer currentPoints;
-	@Column(name = "real_name")
-	private String realName;
-	@Column(name = "nick_name")
-	private String nickName;
-	@Column(name = "openid")
-	private String openid;
-	@Column(name = "address")
-	private String address;
-	@Column(name = "pic_path")
-	private String picPath;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "type")
+	private Integer type;
+	@Column(name = "remark_a")
+	private String remarkA;
+	@Column(name = "remark_b")
+	private String remarkB;
+	@Column(name = "remark_c")
+	private String remarkC;
 	
 }

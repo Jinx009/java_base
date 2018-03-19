@@ -1,4 +1,4 @@
-package database.models.project;
+ package database.models.project;
 
 import java.util.Date;
 
@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,22 +17,23 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="pro_materials")
-public class ProMaterials {
+@Table(name="pro_class")
+public class ProClass {
 
 	@Id
 	@Column(unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "type")
-	private Integer type;
-	@Column(name = "content")
-	private String content;
-	@Column(name = "order_num")
-	private Integer orderNum;
+	@Column(name = "name")
+	private String name;
 	@Column(name = "create_time")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name = "prop")
-	private Integer prop;
+	@Column(name = "time")
+	private String time;
+	@Column(name = "description")
+	private String desc;
+	@Column(name = "class_date")
+	private String classDate;
 	
 }

@@ -17,26 +17,27 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="pro_goods")
-public class ProGoods {
+@Table(name="pro_order")
+public class ProOrder {
 
 	@Id
 	@Column(unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "name")
-	private String name;
-	@Column(name = "description")
-	private String desc;
-	@Column(name = "points")
-	private Integer points;
-	@Column(name = "price")
-	private Double price;
+	@Column(name = "mobile_phone")
+	private String mobilePhone;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name = "pic_path")
-	private String picPath;
-	
+	@Column(name = "name")
+	private String name;
+	@Column(name = "type")
+	private Integer type;
+	@Column(name = "order_time")
+	private String orderTime;
+	@Column(name = "status")
+	private Integer status;
+	@Column(name = "order_date")
+	private String orderDate;
 	
 }
