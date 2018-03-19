@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+
 import database.models.project.ProToken;
 import service.basicFunctions.HttpService;
 import service.basicFunctions.project.ProTokenService;
@@ -40,10 +41,16 @@ public class BaseController {
 	public static  String MOFANG_STORE_ID = "";
 
 	public Integer getInt(Map<String, Object> data,String key){
+		if(data.get(key)==null){
+			return 0;
+		}
 		return Integer.valueOf(String.valueOf(data.get(key)));
 	}
 	
 	public String getString(Map<String, Object> data,String key){
+		if(data.get(key)==null){
+			return null;
+		}
 		return String.valueOf(data.get(key));
 	}
 	

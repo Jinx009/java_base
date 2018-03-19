@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.map.introspect.BasicClassIntrospector.GetterMethodFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,16 +43,18 @@ public class GatewayOrderDataController extends BaseController{
 	@Autowired
 	private ProGatewayLocationService proGatewayLocationService;
 	
-	@RequestMapping(path = "/getLastOrderByPlateNumber")
+	@RequestMapping(path = "/getLastOrder")
 	@ResponseBody
 	public Resp<?> getLastOrder(@RequestBody Map<String, Object> data){
 		Resp<?> resp = new Resp<>(false);
 		try {
 			String token = getString(data, BaseConstant.TOKEN);
 			String plateNumber = getString(data, "plateNumber");
+			String productId = getString(data, "productId");
+			String parkNumber = getString(data, "parkNumber");
 			Integer areaId = getInt(data, BaseConstant.AREA_ID_NAME);
 			log.warn("token:{},parkNo:{},areaId:{}",token,plateNumber,areaId);
-			if(StringUtil.isBlank(token)||StringUtil.isBlank(plateNumber)||areaId==null){
+			if(StringUtil.isBlank(token)||areaId==null){
 				resp.setMsg(RespData.PARAMS_ERROR);
 				return resp;
 			}
@@ -67,7 +68,18 @@ public class GatewayOrderDataController extends BaseController{
 				resp.setMsg(RespData.TOKEN_CHECK_ERROR);
 				return resp;
 			}
-			String url = "http://120.92.101.137:8083/product?plateNumber="+plateNumber+"&storeOrganId="+proGatewayArea.getStoreId();
+			String url = "http://120.92.101.137:8083/product?&storeOrganId="+proGatewayArea.getStoreId();
+			if(StringUtil.isNotBlank(parkNumber)){
+				String params = "http://120.92.101.137:8083/park_place?&storeOrganId="+proGatewayArea.getStoreId()+"&code="+parkNumber;
+				String parkPlaceId = JSONObject.parseObject(HttpUtils.getMofang(getMofangSessionId(),params)).getJSONObject("data").getJSONArray("parkPlaces").getJSONObject(0).getString("parkPlaceId");
+				url+= "&parkPlaceId="+parkPlaceId;
+			}
+			if(StringUtil.isNotBlank(productId)){
+				url+= "&productId="+productId;
+			}
+			if(StringUtil.isNotBlank(plateNumber)){
+				url+= "&plateNumber="+plateNumber;
+			}
 			List<ProOrder> orders = JSONArray.parseArray(JSONObject.parseObject(HttpUtils.getMofang(getMofangSessionId(), url)).getJSONObject(BaseConstant.DATA).getString("products"),ProOrder.class);
 			if(orders  ==null||orders.isEmpty()){
 				resp.setMsg(RespData.ORDER_NOT_EXITS);
