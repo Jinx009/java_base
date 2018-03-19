@@ -26,6 +26,8 @@ public class ProOrganization {
 	private Integer id;
 	@Column(name = "mobile_phone")
 	private String mobilePhone;
+	@Column(name = "user_name")
+	private String userName;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
@@ -39,5 +41,7 @@ public class ProOrganization {
 	private String remarkB;
 	@Column(name = "remark_c")
 	private String remarkC;
+	@Column(name = "pwd")
+	private String pwd;
 	
 }

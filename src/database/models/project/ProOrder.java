@@ -31,6 +31,8 @@ public class ProOrder {
 	private Date createTime;
 	@Column(name = "name")
 	private String name;
+	@Column(name = "user_type")
+	private String userType;
 	@Column(name = "type")
 	private Integer type;
 	@Column(name = "order_time")
@@ -39,5 +41,11 @@ public class ProOrder {
 	private Integer status;
 	@Column(name = "order_date")
 	private String orderDate;
+	@Column(name = "num")
+	private Integer num;
+	@Column(name = "real_num")
+	private Integer realNum;
+	@Column(name = "money")
+	private Double money;
 	
 }

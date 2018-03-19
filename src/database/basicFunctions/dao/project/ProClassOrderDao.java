@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import common.helper.StringUtil;
 import database.common.BaseDao;
 import database.common.PageDataList;
 import database.common.QueryParam;
@@ -14,8 +15,14 @@ import utils.BaseConstant;
 @Repository
 public class ProClassOrderDao extends BaseDao<ProClassOrder>{
 
-	public PageDataList<ProClassOrder> homeList(Integer p){
+	public PageDataList<ProClassOrder> homeList(Integer p,String classDate,String name){
 		QueryParam queryParam = QueryParam.getInstance();
+		if(StringUtil.isNotBlank(classDate)){
+			queryParam.addParam("classDate",classDate);
+		}
+		if(StringUtil.isNotBlank(name)){
+			queryParam.addParam("name",name);
+		}
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);

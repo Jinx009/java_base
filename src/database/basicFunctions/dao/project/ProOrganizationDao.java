@@ -13,10 +13,16 @@ import utils.BaseConstant;
 @Repository
 public class ProOrganizationDao extends BaseDao<ProOrganization>{
 
-	public ProOrganization login(String mobilePhone, String pwd) {
+	public ProOrganization login(String userName, String pwd) {
 		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addParam("mobilePhone", mobilePhone);
+		queryParam.addParam("userName", userName);
 		queryParam.addParam("pwd", MD5Util.md5(pwd));
+		return findByCriteriaForUnique(queryParam);
+	}
+	
+	public ProOrganization findByUserName(String userName) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("userName", userName);
 		return findByCriteriaForUnique(queryParam);
 	}
 
@@ -27,17 +33,5 @@ public class ProOrganizationDao extends BaseDao<ProOrganization>{
 		return findPageList(queryParam);
 	}
 
-	public ProOrganization findByMobile(String mobilePhone) {
-		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addParam("mobilePhone", mobilePhone);
-		return findByCriteriaForUnique(queryParam);
-	}
-
-	public ProOrganization login_m(String mobilePhone, String pwd) {
-		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addParam("mobilePhone", mobilePhone);
-		queryParam.addParam("pwd", pwd);
-		return findByCriteriaForUnique(queryParam);
-	}
 	
 }

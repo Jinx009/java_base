@@ -35,5 +35,13 @@ public class ProStudent {
 	private Integer level;
 	@Column(name = "description")
 	private String desc;
+	@Column(name = "remark_a")
+	private String remarkA;
+	@Column(name = "remark_b")
+	private String remarkB;
+	@Column(name = "remark_c")
+	private String remarkC;
+	@Column(name = "pwd")
+	private String pwd;
 	
 }
