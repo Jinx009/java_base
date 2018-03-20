@@ -7,6 +7,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
@@ -34,6 +35,27 @@ public class HttpUtils {
 		logger.warn("HttpUtils.postJson[info:{},{}]",url,jsonStr);
 		String result = "500";
         HttpPost post = new HttpPost(url);
+        post.addHeader("Content-type","application/json;charset=utf-8");
+        post.setHeader("Accept", "application/json");
+        post.setEntity(new StringEntity(jsonStr, Charset.forName("UTF-8")));
+        try {
+        	DefaultHttpClient httpClient = new DefaultHttpClient();
+        	HttpResponse response = httpClient.execute(post);
+			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			logger.warn("HttpUtils.postJson[res:{}]",result);
+		} catch (ParseException e) {
+			logger.error("HttpUtils.postJson[ParseException.error:{}]",e);
+		} catch (IOException e) {
+			logger.error("HttpUtils.postJson[IOException.error:{}]",e);
+		}
+        return result;
+	}
+	
+	@SuppressWarnings("resource")
+	public static String putJson(String url,String jsonStr){
+		logger.warn("HttpUtils.postJson[info:{},{}]",url,jsonStr);
+		String result = "500";
+        HttpPut post = new HttpPut(url);
         post.addHeader("Content-type","application/json;charset=utf-8");
         post.setHeader("Accept", "application/json");
         post.setEntity(new StringEntity(jsonStr, Charset.forName("UTF-8")));
