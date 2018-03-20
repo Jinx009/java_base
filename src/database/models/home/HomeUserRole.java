@@ -18,18 +18,18 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "HOME_USER_ROLE")
+@Table(name = "home_user_role")
 public class HomeUserRole implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name = "ID",unique=true, nullable=false)
+	@Column(name = "id",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "ROLE_ID")
+	@Column(name = "role_id")
 	private Integer roleId;
-	@Column(name = "USER_ID")
+	@Column(name = "user_id")
 	private Integer userId;
-	@Column(name = "CREATE_TIME")
+	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
 	

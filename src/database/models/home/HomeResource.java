@@ -21,26 +21,26 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "HOME_RESOURCE")
+@Table(name = "home_resource")
 public class HomeResource implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name = "ID",unique=true, nullable=false)
+	@Column(name = "id",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "NAME")
+	@Column(name = "name")
 	private String name;
-	@Column(name = "URI")
+	@Column(name = "uri")
 	private String uri;
-	@Column(name = "STATUS")
+	@Column(name = "status")
 	private Integer status;
-	@Column(name = "DESCRIPTION")
+	@Column(name = "description")
 	private String description;
-	@Column(name = "CREATE_TIME")
+	@Column(name = "create_time")
 	private Date createTime;
-	@Column(name = "PARENT_ID")
+	@Column(name = "parent_id")
 	private Integer parentId;
-	@Column(name = "TYPE")
+	@Column(name = "type")
 	private Integer type;
 	
 }

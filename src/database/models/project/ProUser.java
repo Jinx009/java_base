@@ -17,8 +17,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="pro_student")
-public class ProStudent {
+@Table(name="pro_user")
+public class ProUser {
 
 	@Id
 	@Column(unique=true, nullable=false)
@@ -31,8 +31,8 @@ public class ProStudent {
 	private Date createTime;
 	@Column(name = "name")
 	private String name;
-	@Column(name = "level")
-	private Integer level;
+	@Column(name = "type")
+	private Integer type;
 	@Column(name = "description")
 	private String desc;
 	@Column(name = "remark_a")

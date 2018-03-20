@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import database.models.home.HomeResource;
 import database.models.home.HomeUser;
-import database.models.project.ProOrganization;
+import database.models.project.ProUser;
 import utils.ip.IPUtil;
 import utils.model.HomeConfigConstant;
 
@@ -69,15 +69,15 @@ public class BaseController {
 		session.setAttribute(HomeConfigConstant.HOME_NAME,homeUser.getRealName());
 	}
 	
-	public void setSessionFront(HttpServletRequest request, ProOrganization proUser) {
+	public void setSessionFront(HttpServletRequest request, ProUser proUser) {
 		HttpSession session = request.getSession();
 		session.setAttribute(HomeConfigConstant.FRONT_USER, proUser);
 		logger.warn("[data:{} login]",proUser.getMobilePhone());
 	}
 	
-	public ProOrganization getSessionFrontUser(HttpServletRequest request) {
+	public ProUser getSessionFrontUser(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		ProOrganization proUser = (ProOrganization) session.getAttribute(HomeConfigConstant.FRONT_USER);
+		ProUser proUser = (ProUser) session.getAttribute(HomeConfigConstant.FRONT_USER);
 		return proUser;
 	}
 	
