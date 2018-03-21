@@ -25,7 +25,7 @@ public class NoticeController extends BaseController {
 
 	@RequestMapping(path = "/data")
 	@ResponseBody
-	public Resp<?> getNotice(@RequestBody Object o) {
+	public Resp<?> getNotice(@RequestBody String o) {
 		Resp<?> resp = new Resp<>(true);
 		log.warn("data:{}",o);
 		return resp;
