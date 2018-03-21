@@ -43,6 +43,34 @@ public class GatewayOrderDataController extends BaseController{
 	@Autowired
 	private ProGatewayLocationService proGatewayLocationService;
 	
+	@RequestMapping(path = "/getOrderByProductId")
+	@ResponseBody
+	public Resp<?> getOrderByProductId(@RequestBody Map<String, Object> data){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String token = getString(data, BaseConstant.TOKEN);
+			String productId = getString(data, "productId");
+			log.warn("token:{},productId:{}",token,productId);
+			if(StringUtil.isBlank(token)||StringUtil.isBlank(productId)){
+				resp.setMsg(RespData.PARAMS_ERROR);
+				return resp;
+			}
+			String url = "http://120.92.101.137:8083/product?&productId="+productId;
+			List<ProOrder> orders = JSONArray.parseArray(JSONObject.parseObject(HttpUtils.getMofang(getMofangSessionId(), url)).getJSONObject(BaseConstant.DATA).getString("products"),ProOrder.class);
+			if(orders  ==null||orders.isEmpty()){
+				resp.setMsg(RespData.ORDER_NOT_EXITS);
+				return resp;
+			}
+			ProOrder proOrder = orders.get(0);
+			return new Resp<>(proOrder);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		
+		return resp;
+	}
+	
+	
 	@RequestMapping(path = "/getLastOrder")
 	@ResponseBody
 	public Resp<?> getLastOrder(@RequestBody Map<String, Object> data){
@@ -50,7 +78,6 @@ public class GatewayOrderDataController extends BaseController{
 		try {
 			String token = getString(data, BaseConstant.TOKEN);
 			String plateNumber = getString(data, "plateNumber");
-			String productId = getString(data, "productId");
 			String parkNumber = getString(data, "parkNumber");
 			Integer areaId = getInt(data, BaseConstant.AREA_ID_NAME);
 			log.warn("token:{},parkNo:{},areaId:{}",token,plateNumber,areaId);
@@ -73,9 +100,6 @@ public class GatewayOrderDataController extends BaseController{
 				String params = "http://120.92.101.137:8083/park_place?&storeOrganId="+proGatewayArea.getStoreId()+"&code="+parkNumber;
 				String parkPlaceId = JSONObject.parseObject(HttpUtils.getMofang(getMofangSessionId(),params)).getJSONObject("data").getJSONArray("parkPlaces").getJSONObject(0).getString("parkPlaceId");
 				url+= "&parkPlaceId="+parkPlaceId;
-			}
-			if(StringUtil.isNotBlank(productId)){
-				url+= "&productId="+productId;
 			}
 			if(StringUtil.isNotBlank(plateNumber)){
 				url+= "&plateNumber="+plateNumber;
@@ -107,12 +131,16 @@ public class GatewayOrderDataController extends BaseController{
 			String token = getString(data, BaseConstant.TOKEN);
 			String plateNumber = getString(data, "plateNumber");
 			String pageNum = getString(data, "pageNum");
-			log.warn("token:{},plateNumber:{},pageNum:{}",token,plateNumber,pageNum);
+			String status = getString(data, "status");
+			log.warn("token:{},plateNumber:{},pageNum:{},status:{}",token,plateNumber,pageNum,status);
 			if(StringUtil.isBlank(token)||StringUtil.isBlank(plateNumber)){
 				resp.setMsg(RespData.PARAMS_ERROR);
 				return resp;
 			}
 			String url = "http://120.92.101.137:8083/product?plateNumber="+plateNumber+"&pageNum="+pageNum;
+			if(StringUtil.isNotBlank(status)){
+				url+= "&status="+status;
+			}
 			JSONObject jsonObject = JSONObject.parseObject(HttpUtils.getMofang(getMofangSessionId(), url)).getJSONObject(BaseConstant.DATA);
 			return new Resp<>(jsonObject);
 		} catch (Exception e) {
