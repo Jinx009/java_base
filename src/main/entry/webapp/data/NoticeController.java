@@ -1,15 +1,12 @@
 package main.entry.webapp.data;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,29 +23,12 @@ public class NoticeController extends BaseController {
 
 	private static final Logger log = LoggerFactory.getLogger(NoticeController.class);
 
-	@SuppressWarnings("rawtypes")
 	@RequestMapping(path = "/data")
 	@ResponseBody
-	public String getNotice(HttpServletRequest request) {
+	public Resp<?> getNotice(@RequestBody Object o) {
 		Resp<?> resp = new Resp<>(true);
-		Map<?, ?> map = request.getParameterMap();
-		Set<?> keSet = map.entrySet();
-		for (Iterator<?> itr = keSet.iterator(); itr.hasNext();) {
-			Map.Entry me = (Map.Entry) itr.next();
-			Object ok = me.getKey();
-			Object ov = me.getValue();
-			String[] value = new String[1];
-			if (ov instanceof String[]) {
-				value = (String[]) ov;
-			} else {
-				value[0] = ov.toString();
-			}
-
-			for (int k = 0; k < value.length; k++) {
-				log.warn(ok + "=" + value[k]);
-			}
-		}
-		return "Success";
+		log.warn("data:{}",o);
+		return resp;
 	}
 
 	public static void main(String[] args) {
