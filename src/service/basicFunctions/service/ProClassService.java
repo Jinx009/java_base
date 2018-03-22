@@ -16,15 +16,15 @@ public class ProClassService {
 	@Autowired
 	private ProClassDao proClassDao;
 	
-	public PageDataList<ProClass> homeList(String classDate,Integer type,Integer p){
-		return proClassDao.homeList(p, classDate, type);
+	public PageDataList<ProClass> homeList(String classDate,Integer p){
+		return proClassDao.homeList(p, classDate);
 	}
 	
 	public List<ProClass> frontList(String classDate){
 		return proClassDao.frontList(classDate);
 	}
 	
-	public void save(String classDate,String classTime,String name,String time,String desc){
+	public void save(String classDate,String name,String time,String desc){
 		ProClass proClass = new ProClass();
 		proClass.setClassDate(classDate);
 		proClass.setCreateTime(new Date());

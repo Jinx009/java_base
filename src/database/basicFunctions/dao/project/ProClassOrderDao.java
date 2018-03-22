@@ -15,24 +15,22 @@ import utils.BaseConstant;
 @Repository
 public class ProClassOrderDao extends BaseDao<ProClassOrder>{
 
-	public PageDataList<ProClassOrder> homeList(Integer p,String classDate,String name){
-		QueryParam queryParam = QueryParam.getInstance();
-		if(StringUtil.isNotBlank(classDate)){
-			queryParam.addParam("classDate",classDate);
-		}
-		if(StringUtil.isNotBlank(name)){
-			queryParam.addParam("name",name);
-		}
-		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
-		queryParam.addOrder(OrderType.DESC, "id");
-		return findPageList(queryParam);
-	}
 	
 	public List<ProClassOrder> findByMbilePhone(String mobilePhone){
 		QueryParam queryParam = QueryParam.getInstance();
 		queryParam.addParam("mobilePhone", mobilePhone);
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findByCriteria(queryParam);
+	}
+
+	public PageDataList<ProClassOrder> homeList(Integer p, String classDate) {
+		QueryParam queryParam = QueryParam.getInstance();
+		if(StringUtil.isNotBlank(classDate)){
+			queryParam.addParam("classDate",classDate);
+		}
+		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
+		queryParam.addOrder(OrderType.DESC, "id");
+		return findPageList(queryParam);
 	}
 	
 }

@@ -23,13 +23,10 @@ public class ProClassDao extends BaseDao<ProClass>{
 	}
 	
 
-	public PageDataList<ProClass> homeList(Integer p,String classDate,Integer type) {
+	public PageDataList<ProClass> homeList(Integer p,String classDate) {
 		QueryParam queryParam = QueryParam.getInstance();
 		if(StringUtil.isNotBlank(classDate)){
 			queryParam.addParam("classDate",classDate);
-		}
-		if(type!=null&&type!=0){
-			queryParam.addParam("type",type);
 		}
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		queryParam.addOrder(OrderType.DESC, "id");

@@ -20,4 +20,14 @@ public class HomePageController extends BaseController{
 		return "/home/pro_class";
 	}
 	
+	@RequestMapping(path = "/pro_class_order")
+	public String pro_class_order(){
+		return "/home/pro_class_order";
+	}
+	
+	@RequestMapping(path = "/pro_order")
+	public String pro_order(){
+		return "/home/pro_order";
+	}
+	
 }

@@ -47,5 +47,7 @@ public class ProOrder {
 	private Integer realNum;
 	@Column(name = "money")
 	private Double money;
+	@Column(name = "remark")
+	private String remark;
 	
 }

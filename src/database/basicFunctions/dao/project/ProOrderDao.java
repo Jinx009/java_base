@@ -14,13 +14,10 @@ import utils.BaseConstant;
 @Repository
 public class ProOrderDao extends  BaseDao<ProOrder>{
 
-	public PageDataList<ProOrder> homeList(Integer p,Integer type,String name,Integer status,String orderDate){
+	public PageDataList<ProOrder> homeList(Integer p,Integer type,String orderDate){
 		QueryParam queryParam = QueryParam.getInstance();
 		if(type!=null&&type!=0){
 			queryParam.addParam("type",type);
-		}
-		if(status!=null&&status!=0){
-			queryParam.addParam("status",status);
 		}
 		if(StringUtil.isNotBlank(orderDate)){
 			queryParam.addParam("orderDate",orderDate);

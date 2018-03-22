@@ -41,5 +41,7 @@ public class ProClassOrder {
 	private String classDate;
 	@Column(name = "status")
 	private Integer status;
+	@Column(name = "remark")
+	private String remark;
 	
 }

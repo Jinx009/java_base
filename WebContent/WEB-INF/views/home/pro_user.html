@@ -111,10 +111,10 @@
 												<button  v-if="4===item.type" class="btn btn-success btn-xs">企业</button>
 											</td>
 											<td>
-												<input type="text" class="form-control input-sm" style="width: 100px;" v-bind:id="'desc'+item.id" v-bind:value="item.desc" >
+												<input type="text" class="form-control input-sm" style="width: 100px;height: 25px;" v-bind:id="'desc'+item.id" v-bind:value="item.desc" >
 											</td>
 											<td>
-												<input type="text" class="form-control input-sm" style="width: 100px;" v-bind:id="'remarkA'+item.id" v-bind:value="item.remarkA" >
+												<input type="text" class="form-control input-sm" style="width: 100px;height: 25px;" v-bind:id="'remarkA'+item.id" v-bind:value="item.remarkA" >
 											</td>
 										<!-- 	<td>
 												<input type="text" class="form-control input-sm" style="width: 100px;" v-bind:id="'remarkB'+item.id" v-bind:value="item.reamrkB" >
@@ -124,7 +124,7 @@
 											</td> -->
 											<td v-text="item.createTime"></td>
 											<td>
-												<button  v-bind:id="'_remark'+item.id" onclick="_saveRemark(this);" class="btn btn-info btn-xs">保存备注</button>
+												<button  v-bind:id="'_remark'+item.id" onclick="_saveRemark(this);" class="btn btn-info btn-xs">保存</button>
 												<button  v-bind:id="'_reset'+item.id" onclick="_reset(this);" class="btn btn-warning btn-xs">重置密码</button>
 												<button   v-bind:id="'_type'+item.id" onclick="_changeType(this,2);"   v-if="1===item.type" class="btn btn-danger btn-xs">升学员</button>
 												<button   v-bind:id="'_type'+item.id" onclick="_changeType(this,1);"  v-if="2===item.type" class="btn btn-danger btn-xs">降游客</button>

@@ -26,7 +26,7 @@
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Course management </a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> Course Order management </a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
@@ -62,12 +62,7 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">课程列表</h3>
-								<div class="box-tools">
-				                <ul class="pagination pagination-sm no-margin pull-right">
-				                  <li><a onclick="_showNew();">新建Course</a></li>
-				                </ul>
-				              </div>
+								<h3 class="box-title">课程预约列表</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body table-responsive no-padding">
@@ -75,21 +70,40 @@
 									<thead>
 										<tr>
 											<th>编号</th>
-											<th>名称</th>
-											<th>描述</th>
-											<th>日期</th>
-											<th>时间段</th>
-											<th>添加时间</th>
+											<th>课程名称</th>
+											<th>预订者姓名</th>
+											<th>联系人手机</th>
+											<th>课程日期</th>
+											<th>课程时间</th>
+											<th>预约时间</th>
+											<th>状态</th>
+											<th>备注</th>
+											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr v-for="item in datas.list">
 											<td v-text="item.id"></td>
+											<td v-text="item.className"></td>
 											<td v-text="item.name"></td>
-											<td v-text="item.desc"></td>
+											<td v-text="item.mobilePhone"></td>
 											<td v-text="item.classDate"></td>
-											<td v-text="item.time"></td>
+											<td v-text="item.classTime"></td>
 											<td v-text="item.createTime"></td>
+											<th>
+												<button  v-if="0===item.status" class="btn btn-danger btn-xs">新建</button>
+												<button  v-if="1===item.status" class="btn btn-danger btn-xs">未到</button>
+												<button  v-if="2===item.status" class="btn btn-danger btn-xs">已到</button>
+												<button  v-if="3===item.status" class="btn btn-danger btn-xs">取消</button>
+											</th>
+											<td>
+												<input type="text" class="form-control input-sm" style="width: 100px;height: 25px;" v-bind:id="'remark'+item.id" v-bind:value="item.remark" >
+											</td>
+											<td>
+												<button  v-bind:id="'_remark'+item.id" onclick="_saveRemark(this);" class="btn btn-danger btn-xs">保存</button>
+												<button v-if="0===item.status"  v-bind:id="'_tao'+item.id" onclick="_tao(this);" class="btn btn-info btn-xs">未到</button>
+												<button v-if="0===item.status"  v-bind:id="'_dao'+item.id" onclick="_dao(this);" class="btn btn-success btn-xs">已到</button>
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -113,42 +127,9 @@
 				</div>
 			</section>
 		</div>
-		<div class="box box-primary fly-box none" id="newBox" >
-            <div class="box-header with-border">
-              <h3 class="box-title">新建Course</h3>
-              <div class="box-tools pull-right">
-	            <button type="button" class="btn btn-box-tool" onclick="_hideNew();"><i class="fa fa-remove"></i></button>
-	          </div>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form role="form" style="width: 90%;margin-left: 5%;" >
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="">名称</label>
-                  <input type="text" class="form-control" id="_name" placeholder="请输入课程名称">
-                </div>
-                <div class="form-group">
-                  <label for="">课程日期</label>
-                  <input type="text" id="_classDate" class="form-control" readonly="readonly" >
-                </div>
-                <div class="form-group">
-                  <label for="">上课时段</label>
-                 <input type="text" id="_time" class="form-control" readonly="readonly" >
-                </div>
-                <div class="form-group">
-                  <label for="">描述</label>
-                  <input type="text" class="form-control" id="_desc"  >
-                </div>
-              </div>
-              <div class="box-footer">
-                <button type="button" onclick="_save();" class="btn btn-primary">提交</button>
-              </div>
-            </form>
-          </div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_class.js?version=1.014"></script>
+	<script src="/themes/js/home/pro_class_order.js?version=1.14"></script>
 
 </body>
 </html>

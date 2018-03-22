@@ -15,7 +15,7 @@ function _getData(_type,_index){
 	}
 	if(_data.p!=-1){
 		$.ajax({
-			url:'/d//user/pageList?p='+_data.p+'&type='+type+'&name='+name,
+			url:'/d/user/pageList?p='+_data.p+'&type='+type+'&name='+name,
 			dataType:'json',
 			type:'post',
 			success:function(res){

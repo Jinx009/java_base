@@ -8,53 +8,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.entry.webapp.BaseController;
-import service.basicFunctions.service.ProClassService;
+import service.basicFunctions.service.ProClassOrderService;
 import utils.Resp;
 
 @Controller
-@RequestMapping(value = "/d/class")
-public class ProClassDataController extends BaseController{
+@RequestMapping(value = "/d/classOrder")
+public class ProClassOrderDataController extends BaseController{
 
-	private static final Logger log = LoggerFactory.getLogger(ProClassDataController.class);
+	private static final Logger log = LoggerFactory.getLogger(ProClassOrderDataController.class);
 	
 	@Autowired
-	private ProClassService proClassService;
+	private ProClassOrderService proClassOrderService;
 	
 	@RequestMapping(path = "/pageList")
 	@ResponseBody
 	public Resp<?> getClass(String classDate,Integer p){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(proClassService.homeList(classDate, p));
+			return new Resp<>(proClassOrderService.homeList(classDate, p));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
 		return resp;
 	}
 	
-	@RequestMapping(path = "/add")
+	@RequestMapping(path = "/saveRemark")
 	@ResponseBody
-	public Resp<?> addClass(String classDate,String name,String time,String desc){
+	public Resp<?> saveRemark(Integer id,String remark){
 		Resp<?> resp = new Resp<>(true);
 		try {
-			proClassService.save(classDate, name, time, desc);
+			proClassOrderService.saveRemark(id,remark);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
 		return resp;
 	}
 	
-	@RequestMapping(path = "del")
+	@RequestMapping(path = "/changeStatus")
 	@ResponseBody
-	public Resp<?> deleteClass(Integer id){
+	public Resp<?> changeType(Integer id,Integer status){
 		Resp<?> resp = new Resp<>(true);
 		try {
-			proClassService.delete(id);
+			proClassOrderService.changeStatus(id,status);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
 		return resp;
 	}
-	
 	
 }
