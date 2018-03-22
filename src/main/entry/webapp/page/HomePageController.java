@@ -11,53 +11,13 @@ import main.entry.webapp.BaseController;
 public class HomePageController extends BaseController{
 	
 	@RequestMapping(path = "/pro_user")
-	public String user(){
+	public String pro_user(){
 		return "/home/pro_user";
 	}
-	
-	@RequestMapping(path = "/pro_pic")
-	public String pic(){
-		return "/home/pro_pic";
-	}
-	
-	@RequestMapping(path = "/pro_pic_new")
-	public String picNew(){
-		return "/home/pro_pic_new";
-	}
-	
-	@RequestMapping(path = "/pro_book")
-	public String book(){
-		return "/home/pro_book";
-	}
-	
-	@RequestMapping(path = "/pro_book_new")
-	public String bookNew(){
-		return "/home/pro_book_new";
-	}
-	
-	@RequestMapping(path = "/pro_book_edit")
-	public String bookEdit(){
-		return "/home/pro_book_edit";
-	}
-	
-	@RequestMapping(path = "/pro_book_order")
-	public String bookOrder(){
-		return "/home/pro_book_order";
-	}
-	
-	@RequestMapping(path = "/pro_book_post")
-	public String post(){
-		return "/home/pro_book_post";
-	}
-	
-	@RequestMapping(path = "/pro_book_trans")
-	public String trans(){
-		return "/home/pro_book_post";
-	}
-	
-	@RequestMapping(path = "/pro_book_post_edit")
-	public String postEdit(){
-		return "/home/pro_book_post_edit";
-	}
 
+	@RequestMapping(path = "/pro_class")
+	public String pro_class(){
+		return "/home/pro_class";
+	}
+	
 }

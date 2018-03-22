@@ -1,9 +1,13 @@
 package service.basicFunctions.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import common.helper.MD5Util;
 import database.basicFunctions.dao.project.ProUserDao;
+import database.common.PageDataList;
 import database.models.project.ProUser;
 
 @Service
@@ -14,6 +18,44 @@ public class ProUserService {
 	
 	public ProUser login(String mobilePhone,String pwd){
 		return proUserDao.login(mobilePhone, pwd);
+	}
+	
+	public PageDataList<ProUser> homeList(Integer p,Integer type,String name){
+		return proUserDao.homeList(p, type, name);
+	}
+
+	public void save(String mobilePhone, Integer type, String name, String desc, String remarkA, String remarkB,
+			String remarkC, String pwd) {
+		ProUser proUser = new ProUser();
+		proUser.setCreateTime(new Date());
+		proUser.setDesc(desc);
+		proUser.setMobilePhone(mobilePhone);
+		proUser.setName(name);
+		proUser.setPwd(pwd);
+		proUser.setRemarkA(remarkA);
+		proUser.setRemarkB(remarkB);
+		proUser.setRemarkC(remarkC);
+		proUser.setType(type);
+		proUserDao.save(proUser);
+	}
+
+	public void resetPwd(Integer id) {
+		ProUser proUser = proUserDao.find(id);
+		proUser.setPwd(MD5Util.md5("123456"));
+		proUserDao.update(proUser);
+	}
+
+	public void updateType(Integer id, Integer type) {
+		ProUser proUser = proUserDao.find(id);
+		proUser.setType(type);
+		proUserDao.update(proUser);
+	}
+
+	public void updateRemark(Integer id, String desc, String remarkA) {
+		ProUser proUser = proUserDao.find(id);
+		proUser.setRemarkA(remarkA);
+		proUser.setDesc(desc);
+		proUserDao.update(proUser);
 	}
 	
 }
