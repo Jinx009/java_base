@@ -70,6 +70,32 @@ public class GatewayOrderDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/setPlateNumber")
+	@ResponseBody
+	public Resp<?> setPlateNumber(@RequestBody Map<String, Object> data){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String token = getString(data, BaseConstant.TOKEN);
+			String productId = getString(data, "productId");
+			String plateNumber = getString(data, "plateNumber");
+			log.warn("token:{},productId:{},plateNumber:{}",token,productId,plateNumber);
+			if(StringUtil.isBlank(token)||StringUtil.isBlank(productId)||StringUtil.isBlank(plateNumber)){
+				resp.setMsg(RespData.PARAMS_ERROR);
+				return resp;
+			}
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("plateNumber", plateNumber);
+			map.put("productId", productId);
+			String url = "http://120.92.101.137:8083/product/update";
+			HttpUtils.postMofangJson(getMofangSessionId(), url, JSONObject.toJSONString(map));
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		
+		return resp;
+	}
+	
 	
 	@RequestMapping(path = "/getLastOrder")
 	@ResponseBody
