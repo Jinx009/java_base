@@ -13,34 +13,9 @@ public class FrontPageController extends BaseController{
 		return "/front/login";
 	}
 	
-	@RequestMapping(value = "/f/p/book")
-	public String book(){
-		return "/front/book";
-	}
-	
-	@RequestMapping(value = "/f/p/pic")
-	public String pic(){
-		return "/front/pic";
-	}
-	
-	@RequestMapping(value = "/front/p/me")
-	public String me(){
-		return "/front/me";
-	}
-	
-	@RequestMapping(value = "/front/p/book_post")
-	public String book_post(){
-		return "/front/book_post";
-	}
-	
-	@RequestMapping(value = "/front/p/my_book_post")
-	public String my_book_post(){
-		return "/front/my_book_post";
-	}
-	
-	@RequestMapping(value = "/front/p/my_book")
-	public String my_book(){
-		return "/front/my_book";
+	@RequestMapping(value = "/f/p/pro_site")
+	public String pro_site(){
+		return "/front/pro_site";
 	}
 	
 }
