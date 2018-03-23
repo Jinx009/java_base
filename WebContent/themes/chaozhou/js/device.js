@@ -58,6 +58,6 @@ function goLog(_element){
     }else{
         var storage = window.localStorage;
         storage['_mac'] = $(_element).html();
-        location.href = '/themes/oufeiguang/logs.html';
+        location.href = '/themes/chaozhou/logs.html';
     }
 }
