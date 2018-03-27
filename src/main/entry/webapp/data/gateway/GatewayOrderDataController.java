@@ -170,7 +170,7 @@ public class GatewayOrderDataController extends BaseController{
 				url+= "&status="+status;
 			}
 			if(StringUtil.isNotBlank(date)){
-				url+= "&beginTime="+date+" 00:00:00&endTime="+date+" 23:59:59";
+				url+= "&beginTime="+date+"%2000:00:00&endTime="+date+"%2023:59:59";
 			}
 			JSONObject jsonObject = JSONObject.parseObject(HttpUtils.getMofang(getMofangSessionId(), url)).getJSONObject(BaseConstant.DATA);
 			return new Resp<>(jsonObject);
