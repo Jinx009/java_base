@@ -31,11 +31,19 @@ public class CommonDataController extends BaseController{
 			ProUser proUser = proUserService.login(userName, pwd);
 			if(proUser!=null){
 				setSessionFront(request, proUser);
-				return new Resp<>(true);
+				return new Resp<>(proUser);
+			}else{
+				proUser = proUserService.findByMobilePhone(userName);
+				if(proUser!=null){
+					resp.setMsg("账号密码错误！");
+				}else{
+					return new Resp<>(proUserService.register(userName,pwd));
+				}
 			}
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
+		resp.setMsg("账号密码错误！");
 		return resp;
 	}
 	

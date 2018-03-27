@@ -22,17 +22,20 @@ function login(){
 	  });
    }else{
 	   $.ajax({
-		   url:'/front/d/pro_user/login',
-		   data:'mobilePhone='+_mobilePhone+'&pwd='+_password,
+		   url:'/data/commom/login',
+		   data:'userName='+_mobilePhone+'&pwd='+_password,
 		   dataType:'json',
 		   type:'post',
 		   success:function(res){
 			   if('200'==res.code){
-				   if($('#check').is(':checked')) {
-					    setLocalStorage('_m',_mobilePhone);
-					    setLocalStorage('_p',hex_md5(_password));
-				   }
-				   _open('icon-settings-','/front/p/me');
+				   setLocalStorage('userId',res.data.id);
+				    setLocalStorage('type',res.data.type);
+				    var _url = getLocalStorage('_url');
+				    if(_url!=''){
+				    	location.href = _url;
+				    }else{
+				    	location.href = '/f/p/pro_class_room';
+				    }
 			   }else{
 				   layer.open({
 				    content: res.msg

@@ -31,6 +31,8 @@ public class ProOrder {
 	private Date createTime;
 	@Column(name = "name")
 	private String name;
+	@Column(name = "user_id")
+	private Integer userId;
 	@Column(name = "user_type")
 	private String userType;
 	@Column(name = "type")

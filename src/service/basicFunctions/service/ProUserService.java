@@ -57,5 +57,19 @@ public class ProUserService {
 		proUser.setDesc(desc);
 		proUserDao.update(proUser);
 	}
+
+	public ProUser findByMobilePhone(String userName) {
+		return proUserDao.findByMobilePhone(userName);
+	}
+
+	public Object register(String userName, String pwd) {
+		ProUser proUser = new ProUser();
+		proUser.setCreateTime(new Date());
+		proUser.setMobilePhone(userName);
+		proUser.setName("");
+		proUser.setPwd(MD5Util.md5(pwd));
+		proUser.setType(0);
+		return proUserDao.save(proUser);
+	}
 	
 }

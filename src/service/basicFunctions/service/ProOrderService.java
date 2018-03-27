@@ -1,8 +1,10 @@
 package service.basicFunctions.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import common.helper.StringUtil;
 import database.basicFunctions.dao.project.ProOrderDao;
 import database.common.PageDataList;
 import database.models.project.ProOrder;
@@ -22,6 +24,21 @@ public class ProOrderService {
 		proOrder.setRealNum(realNum);
 		proOrder.setRemark(remark);
 		proOrderDao.update(proOrder);
+	}
+
+	public Integer getStatus(String date, Integer type, String userId,String orderTime) {
+		if(StringUtil.isNotBlank(userId)){
+			ProOrder proOrder = proOrderDao.findByUserId(userId,date,orderTime,type);
+			if(proOrder!=null)
+				return 2;
+		}else{
+			if(type==1){
+				return proOrderDao.findRoomStatus(date, orderTime);
+			}else{
+				return proOrderDao.findPoolStatus(date, orderTime);
+			}
+		}
+		return 1;
 	}
 	
 	

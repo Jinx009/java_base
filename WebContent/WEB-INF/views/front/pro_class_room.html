@@ -1,34 +1,49 @@
 <#include "m_header.html">
 <header class="bar bar-nav">
-  <h1 class="title">Class Room</h1>
+	<h1 class="title">教室预定</h1>
 </header>
-<div data-toggle='date' id="my-input" style="margin-top: 2.2em" onclick="check();" ></div>
-<div class="content" style="margin-top: 280px;" >
-    <div class="content-block">
- 		 <p><a href="#" class="button button-dark">light button</a></p>
- 		 <p><a href="#" class="button disabled">disabled button</a></p>
- 		 <p><a href="#" class="button button-dark">light button</a></p>
+<div data-toggle='date' id="my-input" style="margin-top: 2.2em"
+	onclick="check();"></div>
+<div class="content" style="margin-top: 290px;">
+	<div class="content-block">
+		<p>
+			<a href="#" class="button button-danger" onclick="_save('1')"
+				id="time1">上午</a>
+		</p>
+		<p>
+			<a href="#" class="button disabled" onclick="_save('2')" id="time2">下午</a>
+		</p>
+		<p>
+			<a href="#" class="button button-danger" onclick="_save('3')"
+				id="time3">夜间</a>
+		</p>
+		<div class="list-block" >
+			<ul>
+				<li>
+					<div class="item-content">
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title label" style="font-size: 12px;"  >参与人数<font style="color: red;" >&nbsp;*</font></div>
+							<div class="item-input">
+								<input type="text"  style="font-size: 12px;" id="num"  placeholder="请输入随行人数">
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div style="height: 30px;" ></div>
 	</div>
 </div>
-<div class="card" style="position: absolute;bottom: 0;width: 100%;left: 0;margin: 0px;">
-    <div class="card-content">
-      <div class="card-content-inner" style="color: gray;font-size: 12px;" >
-		这是一个用纯文本的简单卡片。但卡片可以包含自己的页头，页脚，列表视图，图像，和里面的任何元素。
-      </div>
-    </div>
-  </div>
-<script>
-	$("#my-input").calendar({});
-	function check(){
-		var _year = $('.picker-calendar-day-selected').attr('data-year');
-		var _month = $('.picker-calendar-day-selected').attr('data-month');
-		var _day = $('.picker-calendar-day-selected').attr('data-day');
-		_month = parseInt(_month)+1;
-		if(_month<10){
-			_month = '0'+_month;
-		}
-		var _date = _year+'-'+_month+'-'+_day;
-		console.log(_date);
-	}
-</script>
+<div class="card"
+	style="position: absolute; bottom: 0; width: 100%; left: 0; margin: 0px;">
+	<div class="card-content">
+		<div class="card-content-inner" style="color: gray; font-size: 12px;">
+			上午：09:00-11:30 下午：13:00-17:50 夜间：18:30-21:50</div>
+	</div>
+</div>
+<script src="/themes/js/front/base.js?_v=0.03"></script>
+<script src="/themes/js/front/pro_class_room.js?_v=0.09"></script>
 <#include "m_footer.html">

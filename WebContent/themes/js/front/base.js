@@ -1,25 +1,4 @@
 /**
- * 打开一个链接
- * @param _class
- * @param _url
- */
-function _open(_class,_url){
-	setSessionStorage('_class',_class);
-	location.href = _url;
-}
-/**
- * 载入底部导航样式
- */
-function _loadClass(){
-	var _class = getSessionStorage('_class');
-	$('.tab-item').each(function(){
-		$(this).addClass('external');
-		$(this).removeClass('active');
-	})
-	$('.'+_class).addClass('active');
-	$('.'+_class).removeClass('external');
-}
-/**
  * 获取storage
  * @param _key
  * @returns
@@ -55,8 +34,12 @@ function setSessionStorage(_key,_value){
  * @returns
  */
 function getLocalStorage(_key){
+	var _d = '';
 	if(window.sessionStorage){     
-		return window.localStorage.getItem(_key);
+		_d = window.localStorage.getItem(_key);
+	}
+	if(_d!=''&&_d!=null){
+		return _d;
 	}
 	return '';
 }
@@ -77,4 +60,28 @@ function setLocalStorage(_key,_value){
 	}else{ 
 		return '';
 	}
+}
+function _newDate_1(){
+	var date = new Date();//获取当前时间  
+	date.setDate(date.getDate()-1);//设置天数 -1 天  
+	var time = date.Format("yyyy-MM-dd");  
+	return time;
+}
+//对Date的扩展，将 Date 转化为指定格式的String
+// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
+// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字) 
+Date.prototype.Format = function (fmt) { 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
 }

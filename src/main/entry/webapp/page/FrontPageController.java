@@ -13,9 +13,15 @@ public class FrontPageController extends BaseController{
 		return "/front/login";
 	}
 	
-	@RequestMapping(value = "/f/p/pro_site")
-	public String pro_site(){
-		return "/front/pro_site";
+	@RequestMapping(value = "/f/p/pro_swimming_pool")
+	public String pro_swimming_pool(){
+		return "/front/pro_swimming_pool";
 	}
+	
+	@RequestMapping(value = "/f/p/pro_class_room")
+	public String pro_class_room(){
+		return "/front/pro_class_room";
+	}
+	
 	
 }

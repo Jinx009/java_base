@@ -1,5 +1,8 @@
 package main.entry.webapp.data.project;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,25 @@ public class ProOrderDataController extends BaseController{
 		Resp<?> resp = new Resp<>(true);
 		try {
 			proOrderService.saveRemark(id,remark,realNum);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/getStatus")
+	@ResponseBody
+	public Resp<?> getStatus(String date,Integer type,String userId){
+		Resp<?> resp = new Resp<>(true);
+		try {
+			Integer a = proOrderService.getStatus(date,type,userId,"上午");
+			Integer b = proOrderService.getStatus(date,type,userId,"下午");
+			Integer c = proOrderService.getStatus(date,type,userId,"夜间");
+			Map<String, Integer> map = new HashMap<String,Integer>();
+			map.put("a",a);
+			map.put("b",b);
+			map.put("c",c);
+			return new Resp<>(map);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
