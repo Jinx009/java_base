@@ -28,6 +28,8 @@ public class ProClassOrder {
 	private String mobilePhone;
 	@Column(name = "name")
 	private String name;
+	@Column(name = "userId")
+	private Integer userId;
 	@Column(name = "class_name")
 	private String className;
 	@Column(name = "create_time")

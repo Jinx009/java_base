@@ -35,5 +35,7 @@ public class ProClass {
 	private String desc;
 	@Column(name = "class_date")
 	private String classDate;
+	@Column(name = "times")
+	private long times;
 	
 }

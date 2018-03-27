@@ -9,6 +9,7 @@ import database.common.BaseDao;
 import database.common.OrderFilter.OrderType;
 import database.common.PageDataList;
 import database.common.QueryParam;
+import database.common.SearchFilter.Operators;
 import database.models.project.ProClass;
 import utils.BaseConstant;
 
@@ -31,6 +32,14 @@ public class ProClassDao extends BaseDao<ProClass>{
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);
+	}
+
+
+	public List<ProClass> findByDate(long format) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("times",Operators.GTE, format);
+		queryParam.addOrder(OrderType.DESC, "classDate");
+		return findByCriteria(queryParam);
 	}
 	
 }

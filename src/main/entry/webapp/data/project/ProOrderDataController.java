@@ -47,6 +47,32 @@ public class ProOrderDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/save")
+	@ResponseBody
+	public Resp<?> save(String orderDate,Integer type,Integer userId,Integer orderType,Integer num){
+		Resp<?> resp = new Resp<>(true);
+		try {
+			proOrderService.save(orderDate, type,userId,orderType,num);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	
+	@RequestMapping(path = "/myOrder")
+	@ResponseBody
+	public Resp<?> myOrder(Integer userId){
+		Resp<?> resp = new Resp<>(true);
+		try {
+			return new Resp<>(proOrderService.myOrder(userId));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/getStatus")
 	@ResponseBody
 	public Resp<?> getStatus(String date,Integer type,String userId){

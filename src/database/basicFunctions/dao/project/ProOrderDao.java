@@ -67,5 +67,12 @@ public class ProOrderDao extends  BaseDao<ProOrder>{
 		}
 		return 1;
 	}
+
+	public List<ProOrder> myOrder(Integer userId) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("userId", userId);
+		queryParam.addOrder(OrderType.DESC, "id");
+		return findByCriteria(queryParam);
+	}
 	
 }

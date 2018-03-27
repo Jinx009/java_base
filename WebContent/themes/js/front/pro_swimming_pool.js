@@ -21,7 +21,7 @@ function _getData() {
 	var _userId = getLocalStorage('userId');
 	$.ajax({
 		url : '/d/order/getStatus',
-		data : 'date=' + _date + '&userId=' + _userId+'&type=1',
+		data : 'date=' + _date + '&userId=' + _userId+'&type=2',
 		type : 'post',
 		dataType : 'json',
 		success : function(res) {
@@ -65,7 +65,7 @@ function _save(_orderTime) {
 		location.href = '/f/p/login';
 	}else{
 		var _type = getLocalStorage('type');
-		if(_type!=2&&_type!=3){
+		if(1==2){
 			  layer.open({
 			    content: '只有企业或者教练才可以预定教室！'
 			    ,btn: '我知道了'
@@ -80,11 +80,11 @@ function _save(_orderTime) {
 				  });
 			}else{
 				layer.open({
-				    content: '您确定要预约此时段教室吗？'
+				    content: '您确定要预约此时段泳池吗？'
 				    ,btn: ['确定', '取消']
 				    ,skin: 'footer'
 				    ,yes: function(index){
-				       var _params = 'type=1&orderType='+_orderTime+'&userId='+_userId+'&num='+_num+'&orderDate='+_date;
+				       var _params = 'type=2&orderType='+_orderTime+'&userId='+_userId+'&num='+_num+'&orderDate='+_date;
 				       $.ajax({
 				    	   url:'/d/order/save',
 				    	   data:_params,
