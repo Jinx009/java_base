@@ -86,6 +86,7 @@ public class GatewayOrderDataController extends BaseController{
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("plateNumber", plateNumber);
 			map.put("productId", productId);
+			map.put("status", "UNPAY");
 			String url = "http://120.92.101.137:8083/product/update";
 			HttpUtils.postMofangJson(getMofangSessionId(), url, JSONObject.toJSONString(map));
 			return new Resp<>(true);
@@ -158,6 +159,7 @@ public class GatewayOrderDataController extends BaseController{
 			String plateNumber = getString(data, "plateNumber");
 			String pageNum = getString(data, "pageNum");
 			String status = getString(data, "status");
+			String date = getString(data, "date");
 			log.warn("token:{},plateNumber:{},pageNum:{},status:{}",token,plateNumber,pageNum,status);
 			if(StringUtil.isBlank(token)||StringUtil.isBlank(plateNumber)){
 				resp.setMsg(RespData.PARAMS_ERROR);
@@ -166,6 +168,9 @@ public class GatewayOrderDataController extends BaseController{
 			String url = "http://120.92.101.137:8083/product?plateNumber="+plateNumber+"&pageNum="+pageNum;
 			if(StringUtil.isNotBlank(status)){
 				url+= "&status="+status;
+			}
+			if(StringUtil.isNotBlank(date)){
+				url+= "&beginTime="+date+" 00:00:00&endTime="+date+" 23:59:59";
 			}
 			JSONObject jsonObject = JSONObject.parseObject(HttpUtils.getMofang(getMofangSessionId(), url)).getJSONObject(BaseConstant.DATA);
 			return new Resp<>(jsonObject);
