@@ -67,7 +67,7 @@ function _save(_orderTime) {
 		location.href = '/f/p/login';
 	}else{
 		var _type = getLocalStorage('type');
-		if(_type!=2&&_type!=3){
+		if(_type!=3&&_type!=4){
 			  layer.open({
 			    content: '只有企业或者教练才可以预定教室！'
 			    ,btn: '我知道了'

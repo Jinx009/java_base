@@ -30,7 +30,7 @@ function _save(_id){
 		location.href = '/f/p/login';
 	}else{
 		var _type = getLocalStorage('type');
-		if(1!=_type){
+		if(2!=_type){
 			layer.open({
 			    content: '只有学员才能预定课程！'
 			    ,btn: '我知道了'
