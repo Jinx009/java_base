@@ -2,7 +2,9 @@ $(function() {
 	$("#my-input").calendar({
 		minDate : _date
 	});
+	_date = _newDate();
 	_getData();
+	
 })
 
 var _date = _newDate_1();

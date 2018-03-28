@@ -1,84 +1,59 @@
 <#include "m_header.html">
+<style>
+body{
+	color:#eee;
+	background: #eeeeee;
+}
+.content-block{
+	padding: 0;
+	margin: 0;
+}
+</style>
 <header class="bar bar-nav">
 	<h1 class='title'>我的预约</h1>
 </header>
-<div class="content">
+<div class="content" style="background: #eeeeee;" >
 	<div class="buttons-tab">
 		<a href="#tab1" class="tab-link active button">泳池</a> <a href="#tab2"
 			class="tab-link button">教室</a> <a href="#tab3"
 			class="tab-link button">课程</a>
 	</div>
-	<div class="content-block">
+	<div></div>
+	<div class="content-block" >
 		<div class="tabs">
 			<div id="tab1" class="tab active">
-				<div class="content-block">
-					<div class="list-block"  style="margin-top: -35px;">
-						<ul id="s" >
-							<li class="item-content">
-								<div class="item-inner">
-									<div class="item-title">日期</div>
-									<div class="item-after">时间</div>
-									<div class="item-after">人数</div>
-								</div>
-							</li>
-							<li class="item-content" v-for="item in s" >
-								<div class="item-inner">
-									<div class="item-title" v-text="item.orderDate" ></div>
-									<div class="item-after" v-text="item.orderTime" ></div>
-									<div class="item-after" v-text="item.num" ></div>
-								</div>
-							</li>
-						</ul>
-					</div>
+				<div class="content-block" id="s" >
+					<div class="card"  v-for="item in s" style="width: 100%;margin:0;margin-top: 15px;" > 
+					  <div class="card-content">
+					      <div class="card-content-inner" v-html="item.orderDate+'&nbsp;&nbsp;&nbsp;&nbsp;'+item.orderTime" ></div>
+					    </div>
+					    <div class="card-footer" v-text="'人数：'+item.num" ></div>
+				  </div>
 				</div>
 			</div>
 			<div id="tab2" class="tab">
-				<div class="content-block">
-						<div class="list-block"  style="margin-top: -35px;">
-						<ul id="r">
-							<li class="item-content">
-								<div class="item-inner">
-									<div class="item-title">日期</div>
-									<div class="item-after">时间</div>
-									<div class="item-after">人数</div>
-								</div>
-							</li>
-							<li class="item-content" v-for="item in r" >
-								<div class="item-inner">
-									<div class="item-title" v-text="item.orderDate" ></div>
-									<div class="item-after" v-text="item.orderTime" ></div>
-									<div class="item-after" v-text="item.num" ></div>
-								</div>
-							</li>
-						</ul>
-					</div>
+				<div class="content-block" id="r" >
+					<div class="card"  v-for="item in r" style="width: 100%;margin:0;margin-top: 15px;" > 
+					  <div class="card-content">
+					      <div class="card-content-inner" v-html="item.orderDate+'&nbsp;&nbsp;&nbsp;&nbsp;'+item.orderTime" ></div>
+					    </div>
+					    <div class="card-footer" v-text="'人数：'+item.num" ></div>
+				  </div>
 				</div>
 			</div>
 			<div id="tab3" class="tab">
-				<div class="content-block">
-						<div class="list-block" style="margin-top: -35px;" >
-						<ul>
-							<li class="item-content">
-								<div class="item-inner">
-									<div class="item-title">日期</div>
-									<div class="item-after">时间</div>
-									<div class="item-after">状态/操作</div>
-								</div>
-							</li>
-							<li class="item-content">
-								<div class="item-inner">
-									<div class="item-title">型号</div>
-									<div class="item-after">极致超薄型</div>
-									<div class="item-after">极致超薄型</div>
-								</div>
-							</li>
-						</ul>
-					</div>
+					<div class="content-block" id="c" >
+					<div class="card"  v-for="item in c" style="width: 100%;margin:0;margin-top: 15px;" > 
+					  <div class="card-content">
+					      <div class="card-content-inner" v-text="item.className" ></div>
+					    </div>
+					    <div class="card-footer" v-html="item.classDate+'&nbsp;&nbsp;&nbsp;'+item.classTime" ></div>
+				  </div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <script src="/themes/js/front/base.js?_v=0.01" ></script>
-<script src="/themes/js/front/pro_order.js?_v=0.02" ></script>
+<script src="/themes/js/front/pro_order.js?_v=0.04" ></script>
 <#include "m_footer.html">

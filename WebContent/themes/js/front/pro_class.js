@@ -23,3 +23,42 @@ function _getData(){
 		}
 	})
 }
+function _save(_id){
+	var _userId = getLocalStorage('userId');
+	if(_userId==''){
+		setLocalStorage('_url','/f/p/pro_class');
+		location.href = '/f/p/login';
+	}else{
+		var _type = getLocalStorage('type');
+		if(1!=_type){
+			layer.open({
+			    content: '只有学员才能预定课程！'
+			    ,btn: '我知道了'
+			  });
+		}else{
+			var _params = 'userId='+_userId+'&classId='+_id;
+			$.ajax({
+				url:'/d/classOrder/save',
+				type:'post',
+				data:_params,
+				dataType:'json',
+				success:function(res){
+					if('200'==res.code){
+						layer.open({
+		   				    content: '恭喜您预约成功！'
+		   				    ,btn: '好',
+		   				    yes:function(index){
+		   				    	location.href = '/f/p/pro_order';
+		   				    }
+		   				  });
+					}else{
+						layer.open({
+						    content: res.msg
+						    ,btn: '我知道了'
+						  });
+					}
+				}
+			})
+		}
+	}
+}

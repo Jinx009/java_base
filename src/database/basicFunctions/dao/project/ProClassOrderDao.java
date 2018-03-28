@@ -39,5 +39,12 @@ public class ProClassOrderDao extends BaseDao<ProClassOrder>{
 		queryParam.addParam("classId",classId);
 		return findByCriteriaForUnique(queryParam);
 	}
+
+	public List<ProClassOrder> list(Integer userId) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("userId",userId);
+		queryParam.addOrder(OrderType.DESC,"classDate");
+		return findByCriteria(queryParam);
+	}
 	
 }

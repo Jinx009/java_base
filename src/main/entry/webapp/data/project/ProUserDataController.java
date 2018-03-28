@@ -102,5 +102,29 @@ public class ProUserDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/me")
+	@ResponseBody
+	public Resp<?> me(Integer userId){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(proUserService.findById(userId));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/update")
+	@ResponseBody
+	public Resp<?> update(Integer userId,String name,String pwd){
+		Resp<?> resp = new Resp<>(true);
+		try {
+			proUserService.updateN(userId,name,pwd);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	
 }

@@ -32,6 +32,30 @@ public class ProClassOrderDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/list")
+	@ResponseBody
+	public Resp<?> list(Integer userId){
+		Resp<?> resp = new Resp<>(true);
+		try {
+			return new Resp<>(proClassOrderService.list(userId));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/save")
+	@ResponseBody
+	public Resp<?> save(Integer userId,Integer classId){
+		Resp<?> resp = new Resp<>(true);
+		try {
+			proClassOrderService.save(userId, classId);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/saveRemark")
 	@ResponseBody
 	public Resp<?> saveRemark(Integer id,String remark){

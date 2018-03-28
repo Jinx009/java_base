@@ -1,0 +1,77 @@
+<#include "m_header.html">
+<header class="bar bar-nav">
+  <h1 class='title'>表单</h1>
+</header>
+<div class="content">
+  <div class="list-block">
+    <ul>
+      <!-- Text inputs -->
+      <li>
+        <div class="item-content">
+          <div class="item-media"><i class="icon icon-form-name"></i></div>
+          <div class="item-inner">
+            <div class="item-title label">姓名</div>
+            <div class="item-input">
+              <input type="text" id="name" v-bind:value="user.name" placeholder="请输入您的姓名">
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="item-content">
+          <div class="item-media"><i class="icon icon-form-password"></i></div>
+          <div class="item-inner">
+            <div class="item-title label">密码</div>
+            <div class="item-input">
+              <input type="password" id="pwd" placeholder="重新输入密码以重置" class="">
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="item-content">
+          <div class="item-media"><i class="icon icon-form-gender"></i></div>
+          <div class="item-inner">
+            <div class="item-title label">手机号码</div>
+             <div class="item-input">
+              <input type="text" v-bind:value="user.mobilePhone" readonly="readonly" class="">
+            </div>
+          </div>
+        </div>
+      </li>
+      <li  class="item-content item-link">
+        <div class="item-media"><i class="icon icon-f7"></i></div>
+        <div class="item-inner" onclick="javascript:location.href='/f/p/order';" >
+          <div class="item-title">我的预定</div>
+          <div class="item-after"></div>
+        </div>
+      </li>
+         <li  class="item-content item-link">
+        <div class="item-media"><i class="icon icon-f7"></i></div>
+        <div class="item-inner" onclick="javascript:location.href='/f/p/pro_class_room';" >
+          <div class="item-title">预定教室</div>
+          <div class="item-after"></div>
+        </div>
+      </li>
+         <li  class="item-content item-link">
+        <div class="item-media"><i class="icon icon-f7"></i></div>
+        <div class="item-inner" onclick="javascript:location.href='/f/p/pro_swimming_pool';" >
+          <div class="item-title">预定泳池</div>
+          <div class="item-after"></div>
+        </div>
+      </li>
+         <li  class="item-content item-link">
+        <div class="item-media"><i class="icon icon-f7"></i></div>
+        <div class="item-inner" onclick="javascript:location.href='/f/p/pro_class';" >
+          <div class="item-title">预定课程</div>
+          <div class="item-after"></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <p style="width: 96%;margin-left:2%;" ><a onclick="_save()" class="button">保存资料</a></p>
+   <p style="width: 96%;margin-left:2%;"><a onclick="_out()" class="button button-light">退出登录</a></p>
+</div>
+<script src="/themes/js/front/base.js?_v=1.01" ></script>
+<script src="/themes/js/front/me.js?_v=1.01" ></script>
+<#include "m_footer.html">

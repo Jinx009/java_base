@@ -36,5 +36,20 @@ function _getData(){
 				})
 			}
 		})
+		$.ajax({
+			url:'/d/classOrder/list?userId='+_userId,
+			type:'get',
+			dataType:'json',
+			success:function(res){
+				if('200'==res.code){
+					new Vue({
+						el:'#c',
+						data:{
+							c:res.data
+						}
+					})
+				}
+			}
+		})
 	}
 }

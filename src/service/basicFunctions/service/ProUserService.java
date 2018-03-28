@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import common.helper.MD5Util;
+import common.helper.StringUtil;
 import database.basicFunctions.dao.project.ProUserDao;
 import database.common.PageDataList;
 import database.models.project.ProUser;
@@ -70,6 +71,19 @@ public class ProUserService {
 		proUser.setPwd(MD5Util.md5(pwd));
 		proUser.setType(0);
 		return proUserDao.save(proUser);
+	}
+
+	public ProUser findById(Integer userId) {
+		return proUserDao.find(userId);
+	}
+
+	public void updateN(Integer userId, String name, String pwd) {
+		ProUser proUser = proUserDao.find(userId);
+		proUser.setName(name);
+		if(StringUtil.isNotBlank(pwd)){
+			proUser.setPwd(MD5Util.md5(pwd));
+		}
+		proUserDao.update(proUser);
 	}
 	
 }

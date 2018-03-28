@@ -23,6 +23,12 @@ public class FrontPageController extends BaseController{
 		return "/front/pro_class";
 	}
 	
+	@RequestMapping(value = "/f/p/me")
+	public String me(){
+		return "/front/me";
+	}
+	
+	
 	@RequestMapping(value = "/f/p/pro_swimming_pool")
 	public String pro_swimming_pool(){
 		return "/front/pro_swimming_pool";
