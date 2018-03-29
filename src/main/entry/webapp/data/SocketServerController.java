@@ -1,6 +1,8 @@
 package main.entry.webapp.data;
 
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -30,49 +32,56 @@ public class SocketServerController {
 		return serverSocket;
 	}
 
+	@SuppressWarnings("resource")
 	@RequestMapping(path = "/start")
 	@ResponseBody
 	public String start() {
-		realStart();
+		  try {    
+	            ServerSocket serverSocket = new ServerSocket(8888);   
+	            log.warn("server is comming ...");
+	            while (true) {    
+	            	log.warn("new client is comming ...");
+	                Socket client = serverSocket.accept();    
+	                new HandlerThread(client);    
+	            }    
+	        } catch (Exception e) {    
+	            log.error("Server exception: " + e.getMessage());    
+	        }   
 		return "success";
 	}
 
-	public void realStart() {
-		try {
-			Thread t = new Thread(new Runnable() {
-				public void run() {
-					try {
-						ServerSocket serverSocket = get();
-						while (true) {
-							Socket socket = null;
-							try {
-								socket = serverSocket.accept(); // 从连接请求队列中取出一个连接
-								System.out.println(
-										"New connection accepted " + socket.getInetAddress() + ":" + socket.getPort());
-								
-								// 接收和发送数据
-							} catch (IOException e) {
-								// 这只是与单个客户通信时遇到的异常，可能是由于客户端过早断开连接引起的
-								// 这种异常不应该中断整个while循环
-								e.printStackTrace();
-							} finally {
-								try {
-									if (socket != null)
-										socket.close(); // 与一个客户通信结束后，要关闭Socket
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-							}
-						}
-					} catch (Exception e) {
-						log.error("error:{}", e);
-					}
-				}
-			});
-			t.start();
-		} catch (Exception e) {
-			log.error("error:{}", e);
-		}
-	}
+	private class HandlerThread implements Runnable {    
+        private Socket socket;    
+        public HandlerThread(Socket client) {    
+            socket = client;    
+            new Thread(this).start();    
+        }    
+        public void run() {    
+            try {    
+                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));    
+                String clientInputStr = input.readLine(); 
+                log.warn("Client msg is:" + clientInputStr);    
+                PrintStream out = new PrintStream(socket.getOutputStream());    
+                if(clientInputStr.equals("123")){
+                	out.println("321");    
+                }else{
+                	out.println("456");   
+                }
+                out.close();    
+                input.close();    
+            } catch (Exception e) {    
+                log.error("Server run exception: " + e.getMessage());    
+            } finally {    
+                if (socket != null) {    
+                    try {    
+                        socket.close();    
+                    } catch (Exception e) {    
+                        socket = null;    
+                        System.out.println("Server finally exception:" + e.getMessage());    
+                    }    
+                }    
+            }   
+        }    
+    }    
 
 }
