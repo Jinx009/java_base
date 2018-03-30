@@ -69,7 +69,7 @@ public class ProUserService {
 		proUser.setMobilePhone(userName);
 		proUser.setName("");
 		proUser.setPwd(MD5Util.md5(pwd));
-		proUser.setType(0);
+		proUser.setType(1);
 		return proUserDao.save(proUser);
 	}
 
