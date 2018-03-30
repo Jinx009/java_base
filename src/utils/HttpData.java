@@ -42,8 +42,8 @@ public class HttpData {
 	
 	
 	private static final String POS_SERVER_IP = "http://120.92.101.137:8080";
-	private static final String baseOrganId = "200023";
-	private static final String organId = "200023";
+	private static final String baseOrganId = "20254";
+	private static final String organId = "20255";
 	private static final String  limit = "10";
 	
 	
