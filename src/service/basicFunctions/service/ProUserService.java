@@ -70,6 +70,7 @@ public class ProUserService {
 		proUser.setName("");
 		proUser.setPwd(MD5Util.md5(pwd));
 		proUser.setType(1);
+		
 		return proUserDao.save(proUser);
 	}
 
