@@ -1,19 +1,32 @@
 package main.entry.webapp.data;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import database.models.IotCloudLog;
+import database.models.vo.UnicomPushDataModel;
 import main.entry.webapp.BaseController;
+import service.IoTCloudDeviceService;
+import service.IoTCloudLogService;
 import utils.Base64Utils;
 import utils.HttpUtils;
 import utils.Resp;
@@ -25,9 +38,20 @@ public class UnicomNoticeController extends BaseController {
 	private static final Logger log = LoggerFactory.getLogger(UnicomNoticeController.class);
 
 	private static final String REGISTER_NOTICE_URL = "http://223.167.110.4:8000/m2m/applications/registration";
+	private static final String SEND_URL_ONE = "http://223.167.110.4:8000/m2m/endpoints/";
+	private static final String SEND_URL_TWO = "/downlinkMsg/0/data";
+	
+	@Autowired
+	private IoTCloudDeviceService ioTCloudDeviceService;
+	@Autowired
+	private IoTCloudLogService ioTCloudLogService;
+	
+	public static String getSendUrl(String imei){
+		return SEND_URL_ONE+imei+SEND_URL_TWO;
+	}
 	
 	/**
-	 * 电信数据上报
+	 * 联通数据上报
 	 * @param pushData
 	 * @return
 	 */
@@ -36,8 +60,61 @@ public class UnicomNoticeController extends BaseController {
 	public Resp<?> getNotice(@RequestBody String pushData) {
 		Resp<?> resp = new Resp<>(true);
 		log.warn("data:{}",pushData);
+		try {
+			List<UnicomPushDataModel> list = JSONArray.parseArray(JSONObject.parseObject(pushData).getString("reports"),UnicomPushDataModel.class);
+			if(list!=null&&!list.isEmpty()){
+				for(UnicomPushDataModel unicomPushDataModel : list){
+					IotCloudLog iotCloudLog = new IotCloudLog();
+					iotCloudLog.setData(unicomPushDataModel.getValue());
+					iotCloudLog.setFromSite("unicom");
+					iotCloudLog.setImei(unicomPushDataModel.getSerialNumber());
+					iotCloudLog.setType(0);
+					iotCloudLog.setMac(ioTCloudDeviceService.getByImei(unicomPushDataModel.getSerialNumber()));
+					ioTCloudLogService.save(iotCloudLog);
+					send(unicomPushDataModel.getValue());
+				}
+			}
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		
+		send(pushData);
 		return resp;
 	}
+	
+	
+	/**
+	 * 上行设置
+	 * @param account
+	 * @param password
+	 */
+	public void updatePushMsg(){
+		try {
+			String jsonStr = "{" +
+	                "  \"criteria\": {" +
+	                "    \"serialNumbers\": [" +
+	                "      \"863703031463248\"" +
+	                "    ]" +
+	                "  }," +
+	                "  \"deletionPolicy\": 0," +
+	                "  \"groupName\": \"DM.TEST.ZHANWAY\"," +
+	                "  \"resources\": [" +
+	                "    {" +
+	                "      \"conditions\": {" +
+	                "        \"pmin\": 0," +
+	                "        \"steps\": 0" +
+	                "      }," +
+	                "      \"resourcePath\": \"uplinkMsg/0/data\"" +
+	                "    }" +
+	                "  ]," +
+	                "  \"subscriptionType\": \"resources\"" +
+	                "}";
+			HttpUtils.putUnicomJson("http://223.167.110.4:8000/m2m/subscriptions?type=resources", jsonStr, "emhhbndheTpaaGFud2F5ITIz");
+		} catch (Exception e) {
+			System.out.println("error:{}"+e);
+		}
+	}
+	
 	
 	/**
 	 * 修改上报地址
