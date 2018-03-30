@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
+import utils.Constant;
+import utils.HttpsUtil;
+import utils.JsonUtil;
+import utils.StreamClosedHttpResponse;
 import utils.StringUtil;
 import utils.ip.IPUtil;
 
@@ -46,6 +51,23 @@ public class BaseController {
             send(data);
         }
 	}
+	
+    @SuppressWarnings("unchecked")
+	public static String login(HttpsUtil httpsUtil) throws Exception {
+        String appId = Constant.APPID;
+        String secret = Constant.SECRET;
+        String urlLogin = Constant.APP_AUTH;
+
+        Map<String, String> paramLogin = new HashMap<>();
+        paramLogin.put("appId", appId);
+        paramLogin.put("secret", secret);
+        StreamClosedHttpResponse responseLogin = httpsUtil.doPostFormUrlEncodedGetStatusLine(urlLogin, paramLogin);
+        log.warn("access-token:{},{}",responseLogin.getStatusLine(),responseLogin.getContent());
+
+        Map<String, String> data = new HashMap<>();
+        data = JsonUtil.jsonString2SimpleObj(responseLogin.getContent(), data.getClass());
+        return data.get("accessToken");
+    }
 	
 	/**
 	 * 获取客户端ip

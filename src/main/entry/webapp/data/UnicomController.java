@@ -1,11 +1,5 @@
 package main.entry.webapp.data;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +26,10 @@ import utils.HttpUtils;
 import utils.Resp;
 
 @Controller
-@RequestMapping(value = "/unicom/notice")
-public class UnicomNoticeController extends BaseController {
+@RequestMapping(value = "/unicom")
+public class UnicomController extends BaseController {
 
-	private static final Logger log = LoggerFactory.getLogger(UnicomNoticeController.class);
+	private static final Logger log = LoggerFactory.getLogger(UnicomController.class);
 
 	private static final String REGISTER_NOTICE_URL = "http://223.167.110.4:8000/m2m/applications/registration";
 	private static final String SEND_URL_ONE = "http://223.167.110.4:8000/m2m/endpoints/";

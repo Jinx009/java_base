@@ -29,5 +29,13 @@ public class IoTCloudDeviceService {
 		}
 		return null;
 	}
+
+	public IoTCloudDevice findByDeviceId(String deviceId) {
+		IoTCloudDevice ioTCloudDevice = ioTCloudDeviceDao.findByDeviceId(deviceId);
+		if(ioTCloudDevice!=null){
+			return ioTCloudDevice;
+		}
+		return null;
+	}
 	
 }

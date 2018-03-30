@@ -21,4 +21,10 @@ public class IoTCloudDeviceDao extends BaseDao<IoTCloudDevice>{
 		return findByCriteriaForUnique(queryParam);
 	}
 
+	public IoTCloudDevice findByDeviceId(String deviceId) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("deviceId",deviceId);
+		return findByCriteriaForUnique(queryParam);
+	}
+
 }
