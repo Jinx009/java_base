@@ -19,9 +19,9 @@ import javax.persistence.criteria.Root;
 
 import com.google.common.collect.Lists;
 
-import common.helper.StringUtil;
 import database.common.OrderFilter.OrderType;
 import database.common.SearchFilter.Operators;
+import utils.StringUtil;
 
 @SuppressWarnings({"rawtypes", "incomplete-switch", "unchecked"})
 public class QueryParam {

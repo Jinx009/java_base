@@ -29,8 +29,8 @@ import org.hibernate.transform.Transformers;
 
 import common.helper.ApplicationContextProvider;
 import common.helper.ReflectUtil;
-import common.helper.StringUtil;
 import common.helper.nbTransactionInterceptor;
+import utils.StringUtil;
 
 @Transactional
 public class BaseDao<T> {

@@ -12,6 +12,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import utils.StringUtil;
+
 /**
  * 反射帮助类
  * 
