@@ -11,4 +11,14 @@ public class PageController {
 		return "/404";
 	}
 	
+	@RequestMapping(value = "index")
+	public String index(){
+		return "/home/index";
+	}
+	
+	@RequestMapping(value = "/")
+	public String base(){
+		return "/home/index";
+	}
+	
 }

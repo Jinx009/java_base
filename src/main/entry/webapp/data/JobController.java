@@ -16,7 +16,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import database.models.IoTCloudDevice;
 import main.entry.webapp.BaseController;
-import service.IoTCloudDeviceService;
+import service.IotCloudDeviceService;
+import utils.BaseConstant;
 import utils.Constant;
 import utils.HttpUtils;
 import utils.HttpsUtil;
@@ -30,7 +31,7 @@ public class JobController extends BaseController{
 	private static final Logger log = LoggerFactory.getLogger(JobController.class);
 	
 	@Autowired
-	private IoTCloudDeviceService ioTCloudDeviceService;
+	private IotCloudDeviceService iotCloudDeviceService;
 	
 	@RequestMapping(path = "/send")
 	@ResponseBody
@@ -39,9 +40,9 @@ public class JobController extends BaseController{
 		try {
 			String mac = getString(data, "mac");
 			String data1 = getString(data, "data");
-			IoTCloudDevice ioTCloudDevice = ioTCloudDeviceService.findByMac(mac);
+			IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByMac(mac);
 			if(ioTCloudDevice.getType()==1){
-				String msg = HttpUtils.putUnicomJson(UnicomController.getSendUrl(ioTCloudDevice.getImei()), "{\"resourceValue\":\""+data1+"\"}\"","emhhbndheTpaaGFud2F5ITIz");
+				String msg = HttpUtils.putUnicomJson(BaseConstant.getSendUrl(ioTCloudDevice.getImei()), "{\"resourceValue\":\""+data1+"\"}\"","emhhbndheTpaaGFud2F5ITIz");
 				log.warn("msg:{}",msg);
 			}else if(ioTCloudDevice.getType()==2){
 				    HttpsUtil httpsUtil = new HttpsUtil();

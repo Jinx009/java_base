@@ -3,11 +3,14 @@ package database.dao;
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
+import database.common.OrderFilter.OrderType;
+import database.common.PageDataList;
 import database.common.QueryParam;
 import database.models.IoTCloudDevice;
+import utils.BaseConstant;
 
 @Repository
-public class IoTCloudDeviceDao extends BaseDao<IoTCloudDevice>{
+public class IotCloudDeviceDao extends BaseDao<IoTCloudDevice>{
 
 	public IoTCloudDevice findByImei(String imei) {
 		QueryParam queryParam = QueryParam.getInstance();
@@ -27,4 +30,12 @@ public class IoTCloudDeviceDao extends BaseDao<IoTCloudDevice>{
 		return findByCriteriaForUnique(queryParam);
 	}
 
+	public PageDataList<IoTCloudDevice> findAll(Integer p) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
+		queryParam.addOrder(OrderType.DESC, "id");
+		return findPageList(queryParam);
+	}
+
+	
 }

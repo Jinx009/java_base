@@ -26,6 +26,7 @@
     <context:component-scan base-package="main.*; database.*; service.*;"></context:component-scan>  
     <mvc:annotation-driven/>
     <context:annotation-config />
+    
       
     <!-- 配置SpringMVC的视图渲染器， 让其前缀为:/ 后缀为.html  将视图渲染到/page/<method返回值>.jsp中 -->  
 <!--     <beans:bean  

@@ -187,6 +187,11 @@
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
         </dependency>
+         <dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpmime</artifactId>
+		    <version>4.5.5</version>
+		</dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

@@ -34,7 +34,6 @@
         <property name="fileEncoding" value="utf-8"/> 
     </bean>
     
- 	<import resource="redis-context.xml"/> 
  	
  	<bean id="nbTransactionInterceptor" class="common.helper.nbTransactionInterceptor"/>
 	<!-- freemarker html视图渲染器 -->
@@ -82,6 +81,5 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"></property>
     </bean>
     
-    <context:component-scan base-package="database.*"/>
     
 </beans>

@@ -22,6 +22,12 @@ import common.helper.FreemarkerUtil;
  * @since 2014年1月28日
  */
 public class StringUtil extends StringUtils {
+	
+	
+	 public static boolean strIsNullOrEmpty(String s) {
+	        return (null == s || s.trim().length() < 1);
+	    }
+	
 	/**
 	 * 字符串空处理，去除首尾空格 如果str为null，返回"",否则返回str
 	 * 

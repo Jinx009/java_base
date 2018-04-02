@@ -29,8 +29,8 @@ import utils.JsonUtil;
 import utils.StreamClosedHttpResponse;
 
 import main.entry.webapp.BaseController;
-import service.IoTCloudDeviceService;
-import service.IoTCloudLogService;
+import service.IotCloudDeviceService;
+import service.IotCloudLogService;
 import utils.Resp;
 
 @Controller
@@ -40,9 +40,9 @@ public class TelcomCotroller extends BaseController{
 	private static final Logger log = LoggerFactory.getLogger(TelcomCotroller.class);
 
 	@Autowired
-	private IoTCloudDeviceService ioTCloudDeviceService;
+	private IotCloudDeviceService iotCloudDeviceService;
 	@Autowired
-	private IoTCloudLogService ioTCloudLogService;
+	private IotCloudLogService iotCloudLogService;
 	
 	
 	@RequestMapping(path = "/na/iocm/devNotify/v1.1.0/reportCmdExecResult",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -117,14 +117,14 @@ public class TelcomCotroller extends BaseController{
 				if(list!=null&&!list.isEmpty()){
 					for(PushModel pushModel : list){
 						TModel tModel = pushModel.getData();
-						IoTCloudDevice ioTCloudDevice = ioTCloudDeviceService.findByDeviceId(telcomPushDataModel.getDeviceId());
+						IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(telcomPushDataModel.getDeviceId());
 						IotCloudLog iotCloudLog = new IotCloudLog();
 						iotCloudLog.setData(tModel.getData());
 						iotCloudLog.setFromSite("unicom");
 						iotCloudLog.setImei(ioTCloudDevice.getImei());
 						iotCloudLog.setType(0);
 						iotCloudLog.setMac(ioTCloudDevice.getMac());
-						ioTCloudLogService.save(iotCloudLog);
+						iotCloudLogService.save(iotCloudLog);
 						send(tModel.getData());
 					}
 				}
@@ -197,7 +197,7 @@ public class TelcomCotroller extends BaseController{
 	        ioTCloudDevice.setMac(mac);
 	        ioTCloudDevice.setType(1);
 	        ioTCloudDevice.setDeviceId(deviceId);
-	        ioTCloudDeviceService.save(ioTCloudDevice);
+	        iotCloudDeviceService.save(ioTCloudDevice);
 	        return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}",e);

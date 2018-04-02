@@ -1,56 +1,50 @@
-var _menuIconList = ['fa fa-bell-slash-o','fa fa-bicycle','fa fa-binoculars','fa fa-birthday-cake','fa fa-bolt fa-bomb','fa fa-book','fa fa-bookmark','fa fa-briefcase'];
-var _menuParent = new Array();
-var _sonMenuList = new Array();
-var _menuIconIndex = 0;
-/**
- * 导航数据
- * @param _activeName
- */
-function getNav(_activeName){
-	$('#warningInput').val(new Date().Format("yyyy年MM月dd日"))
-	if(_activeName!=''){
-		$('.treeview').removeClass('active');
+function _getPage(_type,_index){
+	var _p = -1;
+	if(_type==0){
+		_p =  _index;
 	}
-	$.ajax({
-		url:'/home/d/menu?t='+getTimestamp(),
-		type:'post',
-		dataType:'json',
-		success:function(res){
-			if(res.data!=null){
-				for(var i in res.data){
-					if(0==res.data[i].type&&0==res.data[i].parentId){
-						var obj = {};
-						obj.icon = _menuIconList[_menuIconIndex];
-						obj.name = res.data[i].name;
-						obj.id = res.data[i].id;
-						obj.son = new Array();
-						_menuParent.push(obj);
-						_menuIconIndex++;
-					}else if(0==res.data[i].type&&0!=res.data[i].parentId){
-						_sonMenuList.push(res.data[i]);
-					}
-				}
-				if(_sonMenuList.length!=0){
-					for(var i in _sonMenuList){
-						for(var j in _menuParent){
-							if(_menuParent[j].id==_sonMenuList[i].parentId){
-								_menuParent[j].son.push(_sonMenuList[i]);
-							}
-						}
-					}
-				}
-				new Vue({
-	   				  el: '.sidebar-menu',
-	   				  data:{navs:_menuParent}
-	    		})
-				$('.treeview').each(function(){
-					if($(this).attr('data-info')==_activeName){
-						$(this).addClass('active');
-					}
-				})
-			}
-		}
-	})
+	if(_type==1&&_index==0){
+		_p =   (_nowPage - 1);
+	}
+	if(_type==1&&_index==1){
+		_p = (_nowPage + 1);
+	}
+	if(parseInt(_p)<=0||(_max!=0&&_p>_max)){
+		return -1;
+	}
+	if(_p===_nowPage){
+		return -1;
+	}
+	_nowPage = _p;
+	return _p;
+}
+
+/**
+ * 隐藏新建弹框
+ */
+function _hideNew(){
+	$('#newBox').hide();
+	$('.content').css('opacity',1);
+}
+/**
+ * 显示新建弹框
+ */
+function _showNew(){
+	$('#newBox').show();
+	$('.content').css('opacity',0.3);
+}
+
+function _getAllPage(_e){
+	var _p = $(_e).val();
+	if(_p!=_nowPage&&_p>0&&_p<_max){
+		_getData(0,parseInt(_p));
+	}else{
+		$(_e).val('当前第'+_nowPage+'页，共'+_max+'页');
+	}
+}
+function _getNowPage(_e){
+	$(_e).val('');
+	$(_e).attr('placeholder',_nowPage);
 }
 /**
  * 获取时间戳

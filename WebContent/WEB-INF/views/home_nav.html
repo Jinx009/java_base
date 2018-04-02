@@ -45,21 +45,9 @@
     <ul class="sidebar-menu">
       <li class="header">MAIN  MENUS</li>
       <li class="treeview active">
-        <a href="/home/page/index">
-          <i class="fa fa-bank"></i><span>欢迎页</span>
+        <a href="/home/device">
+          <i class="fa fa-bank"></i><span>设备管理</span>
         </a>
-      </li>
-      <li class="treeview" v-for="nav in navs" data-info="{{nav.name}}" >
-        <a href="#">
-          <i class="{{nav.icon}}"></i>
-          <span v-text="nav.name" ></span>
-          <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-           </span>
-        </a>
-        <ul class="treeview-menu">
-          <li v-for="son in nav.son" ><a style="padding: 10px 5px 10px 15px" v-bind:href="son.uri"><i class="fa fa-windows"></i>{{son.name}}</a></li>
-        </ul>
       </li>
     </ul>
   </section>

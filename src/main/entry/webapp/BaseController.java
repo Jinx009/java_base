@@ -4,9 +4,7 @@ package main.entry.webapp;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +49,7 @@ public class BaseController {
             send(data);
         }
 	}
+	
 	
     @SuppressWarnings("unchecked")
 	public static String login(HttpsUtil httpsUtil) throws Exception {

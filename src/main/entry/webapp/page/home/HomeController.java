@@ -23,6 +23,16 @@ public class HomeController {
 	}
 	
 	/**
+	 * 登录页
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(path = "/device")
+	public String device(HttpServletRequest request){
+		return "/home/device";
+	}
+	
+	/**
 	 * 登录后首页
 	 * @param request
 	 * @return

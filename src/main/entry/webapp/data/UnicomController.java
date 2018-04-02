@@ -19,9 +19,10 @@ import com.alibaba.fastjson.JSONObject;
 import database.models.IotCloudLog;
 import database.models.vo.UnicomPushDataModel;
 import main.entry.webapp.BaseController;
-import service.IoTCloudDeviceService;
-import service.IoTCloudLogService;
+import service.IotCloudDeviceService;
+import service.IotCloudLogService;
 import utils.Base64Utils;
+import utils.BaseConstant;
 import utils.HttpUtils;
 import utils.Resp;
 
@@ -30,20 +31,12 @@ import utils.Resp;
 public class UnicomController extends BaseController {
 
 	private static final Logger log = LoggerFactory.getLogger(UnicomController.class);
+	
+	@Autowired(required=false)
+	private IotCloudDeviceService iotCloudDeviceService;
+	@Autowired(required=false)
+	private IotCloudLogService iotCloudLogService;
 
-	private static final String REGISTER_NOTICE_URL = "http://223.167.110.4:8000/m2m/applications/registration";
-	private static final String SEND_URL_ONE = "http://223.167.110.4:8000/m2m/endpoints/";
-	private static final String SEND_URL_TWO = "/downlinkMsg/0/data";
-	
-	@Autowired
-	private IoTCloudDeviceService ioTCloudDeviceService;
-	@Autowired
-	private IoTCloudLogService ioTCloudLogService;
-	
-	public static String getSendUrl(String imei){
-		return SEND_URL_ONE+imei+SEND_URL_TWO;
-	}
-	
 	/**
 	 * 联通数据上报
 	 * @param pushData
@@ -63,8 +56,8 @@ public class UnicomController extends BaseController {
 					iotCloudLog.setFromSite("unicom");
 					iotCloudLog.setImei(unicomPushDataModel.getSerialNumber());
 					iotCloudLog.setType(0);
-					iotCloudLog.setMac(ioTCloudDeviceService.getByImei(unicomPushDataModel.getSerialNumber()));
-					ioTCloudLogService.save(iotCloudLog);
+					iotCloudLog.setMac(iotCloudDeviceService.getByImei(unicomPushDataModel.getSerialNumber()));
+					iotCloudLogService.save(iotCloudLog);
 					send(unicomPushDataModel.getValue());
 				}
 			}
@@ -128,7 +121,7 @@ public class UnicomController extends BaseController {
 			data.put("authorization", "Basic " + Base64Utils.getEncodedBase64(account+":"+password));
 			map.put("headers", data1);
 			map.put("url",url);
-			String msg = HttpUtils.putJson(REGISTER_NOTICE_URL, JSONObject.toJSONString(map));
+			String msg = HttpUtils.putJson(BaseConstant.REGISTER_NOTICE_URL, JSONObject.toJSONString(map));
 			return new Resp<>(JSON.parseObject(msg));
 		} catch (Exception e) {
 			log.error("error:{}",e);
