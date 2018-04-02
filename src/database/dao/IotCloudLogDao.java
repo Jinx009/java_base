@@ -12,8 +12,9 @@ import utils.BaseConstant;
 @Repository
 public class IotCloudLogDao extends BaseDao<IotCloudLog>{
 
-	public PageDataList<IotCloudLog> findAll(Integer p) {
+	public PageDataList<IotCloudLog> findAll(Integer p, Integer type) {
 		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("type",type);
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);

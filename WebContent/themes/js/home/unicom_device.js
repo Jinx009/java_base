@@ -8,7 +8,7 @@ function _getData(_type,_index){
 	_data.p = _getPage(_type,_index);
 	if(_data.p!=-1){
 		$.ajax({
-			url:'/iot/device/list?p='+_data.p,
+			url:'/iot/device/list?p='+_data.p+'&type=2',
 			dataType:'json',
 			type:'post',
 			success:function(res){

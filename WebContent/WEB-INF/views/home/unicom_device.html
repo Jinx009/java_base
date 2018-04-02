@@ -49,38 +49,18 @@
 										<tr>
 											<th>编号</th>
 											<th>MAC</th>
-											<th>电压</th>
-											<th>车位号</th>
-											<th>ParentMac</th>
-											<th>RouterMac</th>
-											<th>Location</th>
-											<th>Area</th>
-											<th>有车</th>
-											<th>上次通信时间</th>
-											<th>操作</th>
+											<th>2530地址</th>
+											<th>imei</th>
+											<th>deviceId</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr v-for="item in datas.list">
 											<td v-text="item.id"></td>
 											<td v-text="item.mac" class="mac" ></td>
-											<td v-text="item.batteryVoltage"></td>
-											<td v-text="item.desc"></td>
-											<td v-text="item.parentMac"></td>
-											<td v-text="item.routerMac"></td>
-											<td v-text="item.locationName"></td>
-											<td v-text="item.areaName"></td>
-											<td>
-												<a v-if="1===item.available"
-													class='btn btn-success btn-xs' v-text="'有'" ></a>
-												<a v-if="0===item.available"
-													class='btn btn-danger btn-xs'  v-text="'无'"  ></a>
-											</td>
-											<td v-text="item.lastSeenTime"></td>
-											<td>
-												<button class='btn btn-info btn-xs' v-bind:id="'_d'+item.mac" onclick="_goDetail(this);" v-text="'详情'" ></button>
-												<button class='btn btn-info btn-xs' v-bind:id="'_j'+item.mac" onclick="_goJob(this);"  v-text="'运行指令'"  ></button>
-											</td>
+											<td v-text="item.localIp"></td>
+											<td v-text="item.imei"></td>
+											<td v-text="item.deviceId"></td>
 										</tr>
 									</tbody>
 								</table>

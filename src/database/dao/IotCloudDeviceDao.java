@@ -30,8 +30,9 @@ public class IotCloudDeviceDao extends BaseDao<IoTCloudDevice>{
 		return findByCriteriaForUnique(queryParam);
 	}
 
-	public PageDataList<IoTCloudDevice> findAll(Integer p) {
+	public PageDataList<IoTCloudDevice> findAll(Integer p, Integer type) {
 		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("type",type);
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);

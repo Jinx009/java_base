@@ -41,8 +41,8 @@ public class IotCloudDeviceService {
 		return null;
 	}
 	
-	public PageDataList<IoTCloudDevice> pageList(Integer p){
-		return iotCloudDeviceDao.findAll(p);
+	public PageDataList<IoTCloudDevice> pageList(Integer p, Integer type){
+		return iotCloudDeviceDao.findAll(p,type);
 	}
 	
 }

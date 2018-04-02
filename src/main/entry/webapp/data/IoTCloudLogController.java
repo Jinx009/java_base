@@ -22,10 +22,10 @@ public class IoTCloudLogController extends BaseController{
 	
 	@RequestMapping(path = "/list")
 	@ResponseBody
-	public Resp<?> list(Integer p){
+	public Resp<?> list(Integer p,Integer type){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(iotCloudLogService.pageList(p));
+			return new Resp<>(iotCloudLogService.pageList(p,type));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

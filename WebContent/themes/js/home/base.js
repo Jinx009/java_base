@@ -1,3 +1,6 @@
+$(function(){
+	getNav();
+})
 function _getPage(_type,_index){
 	var _p = -1;
 	if(_type==0){
@@ -18,6 +21,24 @@ function _getPage(_type,_index){
 	_nowPage = _p;
 	return _p;
 }
+
+function _openC(_class,_url){
+	setSessionStorage('_class',_class);
+	location.href = _url;
+}
+
+/**
+ * 导航数据
+ */
+function getNav(){
+	var _class = getSessionStorage('_class');
+	$('.treeview').each(function(){
+		$(this).removeClass('active');
+	})
+	$('.'+_class).addClass('active');
+	$('#warningInput').val(new Date().Format("yyyy年MM月dd日"));
+}
+
 
 /**
  * 隐藏新建弹框
