@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.entry.webapp.BaseController;
-import service.IotCloudDeviceService;
+import service.basicFunctions.IotCloudDeviceService;
 import utils.Resp;
 
 @Controller

@@ -42,13 +42,29 @@
              </span>
         </div>
       </form>
-    <ul class="sidebar-menu">
-      <li class="header">MAIN  MENUS</li>
-      <li class="treeview active">
-        <a href="/home/device">
-          <i class="fa fa-bank"></i><span>设备管理</span>
-        </a>
-      </li>
-    </ul>
+  		<ul class="sidebar-menu">
+			<li class="header">MAIN MENUS</li>
+			<li class="treeview l1 active" onclick="_openC('l1','/home/unicom/device')" ><a> <i class="fa fa-edit"></i>
+					<span>联通设备管理</span> <span class="pull-right-container"> <i
+						class="fa fa-angle-left "></i>
+				</span>
+			</a></li>
+			<li class="treeview l2"  onclick="_openC('l2','/home/telecom/device')" ><a> <i
+					class="fa fa-birthday-cake"></i> <span>电信设备管理</span> <span
+					class="pull-right-container"> <i
+						class="fa fa-angle-left"></i>
+				</span>
+			</a></li>
+			<li class="treeview l3"  onclick="_openC('l3','/home/telcom/log')" ><a> <i class="fa fa-bolt"></i>
+					<span>电信设备日志</span> <span class="pull-right-container"> <i
+						class="fa fa-angle-left"></i>
+				</span>
+			</a></li>
+				<li class="treeview l4"  onclick="_openC('l4','/home/unicom/log')" ><a> <i class="fa fa-bicycle"></i>
+					<span>联通设备日志</span> <span class="pull-right-container"> <i
+						class="fa fa-angle-left"></i>
+				</span>
+			</a></li>
+		</ul>
   </section>
 </aside>

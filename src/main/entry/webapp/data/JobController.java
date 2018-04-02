@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import database.models.IoTCloudDevice;
 import main.entry.webapp.BaseController;
-import service.IotCloudDeviceService;
+import service.basicFunctions.IotCloudDeviceService;
 import utils.BaseConstant;
 import utils.Constant;
 import utils.HttpUtils;

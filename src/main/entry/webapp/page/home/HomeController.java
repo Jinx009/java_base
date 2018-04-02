@@ -22,26 +22,26 @@ public class HomeController {
 		return "/home/index";
 	}
 	
-	/**
-	 * 登录页
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(path = "/device")
-	public String device(HttpServletRequest request){
-		return "/home/device";
+	@RequestMapping(path = "/unicom/device")
+	public String unicom_device(HttpServletRequest request){
+		return "/home/unicom_device";
 	}
 	
-	/**
-	 * 登录后首页
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(path = "/page/index")
-	public String page(HttpServletRequest request){
-		return "/home/main";
+	@RequestMapping(path = "/telcom/device")
+	public String telcom_device(HttpServletRequest request){
+		return "/home/telcom_device";
 	}
-
+	
+	@RequestMapping(path = "/telcom/log")
+	public String telcom_log(HttpServletRequest request){
+		return "/home/telcom_log";
+	}
+	
+	@RequestMapping(path = "/unicom/log")
+	public String unicom_log(HttpServletRequest request){
+		return "/home/unicom_log";
+	}
+	
 	/**
 	 * 错误页
 	 * @param request

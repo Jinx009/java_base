@@ -1,5 +1,5 @@
 $(function(){
-	_getLocation()
+	_getData(0,1)
 })
 var _d = '';
 var  _nowPage = 0,_max = 0;

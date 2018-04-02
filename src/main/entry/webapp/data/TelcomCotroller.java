@@ -29,8 +29,8 @@ import utils.JsonUtil;
 import utils.StreamClosedHttpResponse;
 
 import main.entry.webapp.BaseController;
-import service.IotCloudDeviceService;
-import service.IotCloudLogService;
+import service.basicFunctions.IotCloudDeviceService;
+import service.basicFunctions.IotCloudLogService;
 import utils.Resp;
 
 @Controller
