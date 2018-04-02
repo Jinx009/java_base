@@ -22,6 +22,7 @@ public enum AppInfo {
 	SHENZHEN_OUFEIGUANG("oufeiguang","cde17d8e-dd84-4cb3-b5ee-8c24deb58261","深圳欧菲光"),
 	CHAOZHOU_ZHIXIN("chaozhouzhixin","ee9c78ec-d226-474d-8c95-11da6d54456f","潮州智信"),
 	BEAR_HUNTING("bearhunting","c344ea67-6652-42d2-8d1f-3cb33f9b18b2","周浦猎熊座"),
+	SITI_HUAWEI("siti_huawei","b066dd31-48fb-4240-8893-305e71669658","华为产业技术研究院"),
 	SHANGHAI_FIRE_CONTROL("shanghai_fire_control","d1d3337f-90f2-49cf-8c0c-c3ec4f105218","上海消防")
 	;
 	
