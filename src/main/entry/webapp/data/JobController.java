@@ -1,5 +1,6 @@
 package main.entry.webapp.data;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,6 +55,7 @@ public class JobController extends BaseController {
 				iotCloudLog.setImei(ioTCloudDevice.getImei());
 				iotCloudLog.setMac(ioTCloudDevice.getMac());
 				iotCloudLog.setType(1);
+				iotCloudLog.setCreateTime(new Date());
 				iotCloudLogService.save(iotCloudLog);
 				log.warn("msg:{}", msg);
 			} else if (ioTCloudDevice.getType() == 2) {
@@ -82,6 +84,7 @@ public class JobController extends BaseController {
 				IotCloudLog iotCloudLog = new IotCloudLog();
 				iotCloudLog.setData(data1);
 				iotCloudLog.setFromSite("telcom");
+				iotCloudLog.setCreateTime(new Date());
 				iotCloudLog.setImei(ioTCloudDevice.getImei());
 				iotCloudLog.setMac(ioTCloudDevice.getMac());
 				iotCloudLog.setType(1);

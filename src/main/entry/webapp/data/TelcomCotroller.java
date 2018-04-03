@@ -121,6 +121,7 @@ public class TelcomCotroller extends BaseController{
 						IotCloudLog iotCloudLog = new IotCloudLog();
 						iotCloudLog.setData(tModel.getData());
 						iotCloudLog.setFromSite("telcom");
+						iotCloudLog.setCreateTime(new Date());
 						iotCloudLog.setImei(ioTCloudDevice.getImei());
 						iotCloudLog.setType(0);
 						iotCloudLog.setMac(ioTCloudDevice.getMac());

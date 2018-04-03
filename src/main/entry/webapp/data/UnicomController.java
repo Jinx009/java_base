@@ -1,5 +1,6 @@
 package main.entry.webapp.data;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,7 @@ public class UnicomController extends BaseController {
 					iotCloudLog.setFromSite("unicom");
 					iotCloudLog.setImei(unicomPushDataModel.getSerialNumber());
 					iotCloudLog.setType(0);
+					iotCloudLog.setCreateTime(new Date());
 					iotCloudLog.setMac(iotCloudDeviceService.getByImei(unicomPushDataModel.getSerialNumber()));
 					iotCloudLogService.save(iotCloudLog);
 					send(unicomPushDataModel.getValue());
