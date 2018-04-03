@@ -36,14 +36,18 @@ public class BaseController {
 	public static void send(String data){
 		try {
             Socket socket = new Socket("localhost",8888);
-            OutputStream ots = socket.getOutputStream();
-            PrintWriter pw = new PrintWriter(ots);
-            pw.write(data);
-            pw.flush();
-            socket.shutdownOutput();
-            pw.close();
-            ots.close();
-            socket.close();
+            if(socket!=null&&socket.isConnected()){
+            	OutputStream ots = socket.getOutputStream();
+                PrintWriter pw = new PrintWriter(ots);
+                pw.write(data);
+                pw.flush();
+                socket.shutdownOutput();
+                pw.close();
+                ots.close();
+                socket.close();
+            }else{
+            	log.error("socket is not connection");
+            }
         } catch (Exception e) {
             log.error("error:{}",e);
             send(data);

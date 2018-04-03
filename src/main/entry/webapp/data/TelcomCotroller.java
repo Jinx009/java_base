@@ -105,7 +105,7 @@ public class TelcomCotroller extends BaseController{
 	 * @param r
 	 * @return
 	 */
-	@RequestMapping(path = "/notice/na/iocm/devNotify/v1.1.0/updateDeviceDatas",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/na/iocm/devNotify/v1.1.0/updateDeviceDatas")
 	@ResponseBody
 	public Resp<?> notice(@RequestBody String r){
 		Resp<?> resp = new Resp<>(false);
@@ -120,12 +120,12 @@ public class TelcomCotroller extends BaseController{
 						IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(telcomPushDataModel.getDeviceId());
 						IotCloudLog iotCloudLog = new IotCloudLog();
 						iotCloudLog.setData(tModel.getData());
-						iotCloudLog.setFromSite("unicom");
+						iotCloudLog.setFromSite("telcom");
 						iotCloudLog.setImei(ioTCloudDevice.getImei());
 						iotCloudLog.setType(0);
 						iotCloudLog.setMac(ioTCloudDevice.getMac());
 						iotCloudLogService.save(iotCloudLog);
-						send(tModel.getData());
+//						send(tModel.getData());
 					}
 				}
 			}
