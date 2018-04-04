@@ -1,18 +1,28 @@
 package main.entry.webapp;
 
 
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import database.models.IoTCloudDevice;
+import database.models.IotCloudLog;
+import service.basicFunctions.IotCloudDeviceService;
+import service.basicFunctions.IotCloudLogService;
 import utils.Constant;
 import utils.HttpsUtil;
 import utils.JsonUtil;
@@ -25,6 +35,11 @@ public class BaseController {
 
 	private static final Logger log = LoggerFactory.getLogger(BaseController.class);
 	
+	@Autowired
+	private IotCloudLogService iotCloudLogService;
+	@Autowired
+	private IotCloudDeviceService iotCloudDeviceService;
+	
 	public String getString(Map<String,Object> data, String key){
 		String value = String.valueOf(data.get(key));
 		if(StringUtil.isBlank(value)){
@@ -33,26 +48,37 @@ public class BaseController {
 		return value;
 	}
 	
+	private final static int PORT = 8888;
+	private static final String HOSTNAME = "139.196.205.157";
+	    
+	
 	public static void send(String data){
-		try {
-            Socket socket = new Socket("localhost",8888);
-            if(socket!=null&&socket.isConnected()){
-            	OutputStream ots = socket.getOutputStream();
-                PrintWriter pw = new PrintWriter(ots);
-                pw.write(data);
-                pw.flush();
-                socket.shutdownOutput();
-                pw.close();
-                ots.close();
-                socket.close();
-            }else{
-            	log.error("socket is not connection");
-            }
-        } catch (Exception e) {
-            log.error("error:{}",e);
-            send(data);
-        }
+		  try (DatagramSocket socket = new DatagramSocket(0)) {
+	            socket.setSoTimeout(10000);
+	            InetAddress host = InetAddress.getByName(HOSTNAME);
+	            byte[] buf = toBytes(data);
+	            DatagramPacket packet = new DatagramPacket(buf, buf.length,host, PORT);
+//	            socket.receive(packet);
+	            socket.send(packet);
+	            socket.close();
+	            log.warn("send alreay");
+	        } catch (IOException e) {
+	            log.error("error:{}",e);
+	        }
 	}
+	
+
+    public static byte[] toBytes(String str) {
+        if(str == null || str.trim().equals("")) {
+            return new byte[0];
+        }
+        byte[] bytes = new byte[str.length() / 2];
+        for(int i = 0; i < str.length() / 2; i++) {
+            String subStr = str.substring(i * 2, i * 2 + 2);
+            bytes[i] = (byte) Integer.parseInt(subStr, 16);
+        }
+        return bytes;
+    }
 	
 	
     @SuppressWarnings("unchecked")
