@@ -5,24 +5,15 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import database.models.IoTCloudDevice;
-import database.models.IotCloudLog;
-import service.basicFunctions.IotCloudDeviceService;
-import service.basicFunctions.IotCloudLogService;
 import utils.Constant;
 import utils.HttpsUtil;
 import utils.JsonUtil;
@@ -34,11 +25,6 @@ import utils.ip.IPUtil;
 public class BaseController {
 
 	private static final Logger log = LoggerFactory.getLogger(BaseController.class);
-	
-	@Autowired
-	private IotCloudLogService iotCloudLogService;
-	@Autowired
-	private IotCloudDeviceService iotCloudDeviceService;
 	
 	public String getString(Map<String,Object> data, String key){
 		String value = String.valueOf(data.get(key));
