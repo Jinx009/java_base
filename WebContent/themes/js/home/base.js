@@ -38,7 +38,37 @@ function getNav(){
 	$('.'+_class).addClass('active');
 	$('#warningInput').val(new Date().Format("yyyy年MM月dd日"));
 }
-
+function _open(_index,_href){
+	setSessionStorage('_index',_index);
+	setSessionStorage('_href',_href);
+	location.href = _href;
+}
+function _open_(_index,_href,_href_){
+	setSessionStorage('_index',_index);
+	setSessionStorage('_href',_href);
+	location.href = _href_;
+}
+/**
+ * 操作sessionStorage
+ * @param _key
+ */
+function getSessionStorage(_key){
+	if(window.sessionStorage){     
+		return window.sessionStorage.getItem(_key);
+	}
+}
+function setSessionStorage(_key,_value){
+	if(window.sessionStorage){     
+		var _r = window.sessionStorage.setItem(_key,_value);
+		if(_r!=null&&_r!=''&&_r!=undefined){
+			return _r;
+		}else{
+			return '';
+		}
+	}else{ 
+		return '';
+	}
+}
 
 /**
  * 隐藏新建弹框

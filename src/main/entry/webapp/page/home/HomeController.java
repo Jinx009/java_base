@@ -32,14 +32,14 @@ public class HomeController {
 		return "/home/telcom_device";
 	}
 	
-	@RequestMapping(path = "/telcom/log")
+	@RequestMapping(path = "/up/log")
 	public String telcom_log(HttpServletRequest request){
-		return "/home/telcom_log";
+		return "/home/up_log";
 	}
 	
-	@RequestMapping(path = "/unicom/log")
+	@RequestMapping(path = "/down/log")
 	public String unicom_log(HttpServletRequest request){
-		return "/home/unicom_log";
+		return "/home/down_log";
 	}
 	
 	/**
