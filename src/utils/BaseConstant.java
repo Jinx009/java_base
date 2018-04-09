@@ -21,9 +21,9 @@ public class BaseConstant {
 	public static final String APP_ID = "appId";
 	public static final String MSG = "msg";
 	
-	public static final Integer AREA_ID = 30;
-	public static final Integer LOCATION_ID = 28;
-	public static final String APP_ID_NOW = AppInfo.RFID.getAppId();
+	public static final Integer AREA_ID = 32;
+	public static final Integer LOCATION_ID = 30;
+	public static final String APP_ID_NOW = AppInfo.CHAOZHOU.getAppId();
 	public static final String DATA = "data";
 	public static final String SESSION_ID = "sessionId";
 	public static final String USER = "user";
