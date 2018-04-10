@@ -20,7 +20,7 @@ public class GatewayAccessControlDataController extends BaseController{
 	@Autowired
 	private ProAccessControlLogService proAccessControlLogService;
 	
-	@RequestMapping(path = "")
+	@RequestMapping(path = "/PushOpenDoorMsg")
 	@ResponseBody
 	public String post(ProAccessControlLog proAccessControlLog){
 		try {
