@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="PRO_SIGN")
+@Table(name="pro_sign")
 public class ProSign {
 
 	@Id

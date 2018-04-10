@@ -24,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="PRO_TOKEN")
+@Table(name="pro_token")
 public class ProToken {
 
 	@Id

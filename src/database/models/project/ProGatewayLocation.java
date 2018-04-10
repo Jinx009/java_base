@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="PRO_GATEWAY_Location")
+@Table(name="pro_gateway_location")
 public class ProGatewayLocation{
 
 	@Id
