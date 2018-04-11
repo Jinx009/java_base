@@ -27,7 +27,7 @@ public class ProAccessControlLog {
 	@Column(name = "DeviceID")
 	private Integer DeviceID;
 	@Column(name = "DeviceLocalDirectory")
-	private Integer DeviceLocalDirectory;
+	private String DeviceLocalDirectory;
 	@Column(name = "DeviceName")
 	private String DeviceName;
 	@Column(name = "PersonnelName")
@@ -55,7 +55,7 @@ public class ProAccessControlLog {
 	@Column(name = "OpenDoorVideoList")
 	private String OpenDoorVideoList ;
 	@Column(name = "Timestamp")
-	private Integer Timestamp ;
+	private String Timestamp ;
 	@Column(name = "Sign")
 	private String Sign ;
 	
