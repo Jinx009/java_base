@@ -32,6 +32,11 @@ function _getData(_type,_index){
 							}else{
 								_d.data[i].endTime = '';
 							}
+							if(_d.data[i].payTime!=null&&_d.data[i].payTime!=''){
+								_d.data[i].payTime = toDateTime(parseInt(_d.data[i].payTime));
+							}else{
+								_d.data[i].payTime = '';
+							}
 						}
 						_d.currentPage = page;
 						_d.max = _max;
