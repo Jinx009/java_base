@@ -51,6 +51,7 @@
 											<th>uuid</th>
 											<th>车进车出</th>
 											<th>上报时间</th>
+											<th>信号</th>
 											<th>MAC</th>
 										</tr>
 									</thead>
@@ -64,6 +65,7 @@
 												<button v-if="0===item.status" class='btn btn-danger btn-xs'>车出</button>
 											</td>
 											<td v-text="item.reportTime"></td>
+											<td v-text="item.signalValue"></td>
 											<td v-text="item.mac"></td>
 										</tr>
 									</tbody>
