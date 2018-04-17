@@ -18,6 +18,7 @@ import database.models.project.ProOrder;
 import database.models.project.ProSign;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.HttpService;
+import service.basicFunctions.project.ProGatewayAccessControlOldLogService;
 import service.basicFunctions.project.ProIoTOrderService;
 import service.basicFunctions.project.ProOrderService;
 import service.basicFunctions.project.ProSignService;
@@ -38,6 +39,14 @@ public class JobTask extends BaseController{
 		private HttpService httpService;
 		@Autowired
 		private ProIoTOrderService proIoTOrderService;
+		@Autowired
+		private ProGatewayAccessControlOldLogService proGatewayAccessControlOldLogService;
+		
+		
+		@Scheduled(fixedRate = 1000 * 120,initialDelay = 20000)
+		public void accessControl(){
+			proGatewayAccessControlOldLogService.random();
+	     }
 		
 		
 //		@Scheduled(fixedRate = 1000 * 120,initialDelay = 1000)

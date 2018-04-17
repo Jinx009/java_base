@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import database.models.project.ProGatewayAccessControlLog;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.project.ProGatewayAccessControlLogService;
-import service.basicFunctions.project.ProGatewayAccessControlPersonService;
 import utils.Resp;
 
 @Controller
@@ -21,8 +20,6 @@ public class GatewayAccessControlDataController extends BaseController{
 	
 	@Autowired
 	private ProGatewayAccessControlLogService proGatewayAccessControlLogService;
-	@Autowired
-	private ProGatewayAccessControlPersonService proGatewayAccessControlPersonService;
 	
 	@RequestMapping(path = "/PushOpenDoorMsg")
 	@ResponseBody
@@ -36,11 +33,11 @@ public class GatewayAccessControlDataController extends BaseController{
 		return "400";
 	}
 	
-	@RequestMapping(path = "/get")
+	@RequestMapping(path = "/log")
 	@ResponseBody
-	public Resp<?> get(ProGatewayAccessControlLog proAccessControlLog){
+	public Resp<?> get(Integer p ){
 		try {
-			proGatewayAccessControlPersonService.init();
+			return new Resp<>(proGatewayAccessControlLogService.pageList(p));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
