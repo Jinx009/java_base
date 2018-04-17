@@ -43,7 +43,7 @@ public class JobTask extends BaseController{
 		private ProGatewayAccessControlOldLogService proGatewayAccessControlOldLogService;
 		
 		
-		@Scheduled(fixedRate = 1000 * 120,initialDelay = 20000)
+		@Scheduled(fixedRate = 1000 * 120,initialDelay = 200000)
 		public void accessControl(){
 			proGatewayAccessControlOldLogService.random();
 	     }
