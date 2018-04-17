@@ -29,7 +29,7 @@ public class AccessControlDataController extends BaseController{
 	public Resp<?> list(Integer p){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String result = httpService.get("http://139.196.197.183:8090/gtw/rest/accessControl/log?p="+p);
+			String result = httpService.get("http://106.14.94.245:8090/gtw/rest/accessControl/log?p="+p);
 			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,JSONArray.parse(JSON.parseObject(result).getString("data")));
 			return resp;
 		} catch (Exception e) {

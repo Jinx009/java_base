@@ -9,22 +9,22 @@
 	    <tbody>
 	      <tr>
 	        <th width="200px;" ><b>刷卡人</b></th>
-	        <td width="200px;" >清江阁</td>
+	        <td width="200px;" id="name" ></td>
 	        <td width="250px;"  rowspan="4" >
-	        	<img width="100%;" style="max-width: 350px;" alt="" src="http://120.77.53.170:18008/picture/T440106000000001/1-12-1/20170628/A201706280333281.jpg">
+	        	<img width="100%;" style="max-width: 350px;" alt="" id="img" >
 	        </td>
 	      </tr>
 	       <tr>
 	        <th><b>刷卡类型</b></th>
-	        <td>门禁卡</td>
+	        <td id="way" ></td>
 	      </tr>
 	       <tr>
 	        <th><b>区域</b></th>
-	        <td>天喔茶庄B号楼前门</td>
+	        <td id="deviceName" ></td>
 	      </tr>
 	       <tr>
 	        <th><b>刷卡时间</b></th>
-	        <td>2018-07-01 00:00:00</td>
+	        <td id="time" ></td>
 	      </tr>
 	    </tbody>
 	  </table>
@@ -46,141 +46,58 @@
 		    <tr>
 		      <th>刷卡人</th>
 		      <th>刷卡类型</th>
+		      <th>进出类型</th>
 		      <th>刷卡时间</th>
-		       <th>刷卡时间</th>
+		      <th>刷卡地点</th>
 		    </tr> 
 		  </thead>
 		  <tbody id="log" >
 		    <tr v-for="item in logs" >
-		      <td v-text="item.PersonnelName" ></td>
-		      <td></td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
-		    </tr>
-		     <tr>
-		      <td>曾刚回</td>
-		      <td>APP</td>
-		      <td>2016-11-29 17:00:00</td>
-		      <td>深圳震声1栋1单元门</td>
+		      <td v-text="item.personnelName" ></td>
+		      <td>
+		      	<font v-if="1===item.accessWay" >通话开锁</font>
+		      	<font v-if="2===item.accessWay" >监视开锁</font>
+		      	<font v-if="3===item.accessWay" >刷卡开锁</font>
+		      	<font v-if="4===item.accessWay" >密码开锁</font>
+		      	<font v-if="5===item.accessWay" >通知开锁</font>
+		      	<font v-if="6===item.accessWay" >中心机通话开锁</font>
+		      	<font v-if="7===item.accessWay" >室内机通话开锁</font>
+		      	<font v-if="8===item.accessWay" >移动App通话开锁</font>
+		      	<font v-if="9===item.accessWay" >手机通话开锁</font>
+		      	<font v-if="10===item.accessWay" >固定电话通话开锁</font>
+		      	<font v-if="11===item.accessWay" >网关通话开锁</font>
+		      	<font v-if="12===item.accessWay" >中心监视开锁</font>
+		      	<font v-if="13===item.accessWay" >室内机监视开锁</font>
+		      	<font v-if="14===item.accessWay" >IC/ID卡刷卡开锁</font>
+		      	<font v-if="15===item.accessWay" >身份证刷卡开锁</font>
+		      	<font v-if="16===item.accessWay" >居住证刷卡开锁</font>
+		      	<font v-if="17===item.accessWay" >市民卡刷卡开锁</font>
+		      	<font v-if="18===item.accessWay" >二维码刷卡开锁</font>
+		      	<font v-if="19===item.accessWay" >公共密码开锁</font>
+		      	<font v-if="20===item.accessWay" >私有密码开锁</font>
+		      	<font v-if="21===item.accessWay" >胁迫密码开锁</font>
+		      	<font v-if="22===item.accessWay" >移动APP钥匙包开锁</font>
+		      	<font v-if="23===item.accessWay" >门内开锁</font>
+		      	<font v-if="24===item.accessWay" >其他开锁</font>
+		      	<font v-if="25===item.accessWay" >临时密码开锁</font>
+		      	<font v-if="26===item.accessWay" >蓝牙开锁</font>
+		      	<font v-if="27===item.accessWay" >人脸识别开锁</font>
+		      	<font v-if="28===item.accessWay" >指纹识别开锁</font>
+		      </td>
+		      <td>
+		      	<font v-if="1===item.direction" >进门</font>
+		      	<font v-if="2===item.direction" >出门</font>
+		      </td>
+		      <td v-text="item.createTime"></td>
+		      <td v-text="item.deviceName" ></td>
 		    </tr>
 		  </tbody>
 		</table>
-		 <div id="page"><div class="layui-box layui-laypage layui-laypage-molv" id="layui-laypage-3"><a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">上一页</a><span class="layui-laypage-curr"><em class="layui-laypage-em" style="background-color:#1E9FFF;"></em><em>1</em></span><a href="javascript:;" data-page="2">2</a><a href="javascript:;" data-page="3">3</a><a href="javascript:;" data-page="4">4</a><a href="javascript:;" data-page="5">5</a><span class="layui-laypage-spr">…</span><a href="javascript:;" class="layui-laypage-last" title="尾页" data-page="10">10</a><a href="javascript:;" class="layui-laypage-next" data-page="2">下一页</a></div></div>
+		 <div id="page"><div class="layui-box layui-laypage layui-laypage-molv" id="layui-laypage-3">
+		 	<a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">上一页</a>
+		 	<span class="layui-laypage-curr"><em class="layui-laypage-em" style="background-color:#1E9FFF;"></em><em>1</em></span>
+		 <a href="javascript:;" class="layui-laypage-next" data-page="2">下一页</a></div></div>
 	</div>
 </div>
-<<script src="/themes/js/cloud/accessControl.js?_v=1.01"></script>
+<<script src="/themes/js/cloud/accessControl.js?_v=1.03"></script>
 <#include "cloud_footer.html">
