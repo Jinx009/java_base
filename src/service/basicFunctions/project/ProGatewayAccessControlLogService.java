@@ -1,5 +1,7 @@
 package service.basicFunctions.project;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ public class ProGatewayAccessControlLogService {
 	private ProGatewayAccessControlLogDao proGatewayAccessControlLogDao;
 	
 	public void save(ProGatewayAccessControlLog proAccessControlLog){
+		proAccessControlLog.setCreateTime(new Date());
 		proGatewayAccessControlLogDao.save(proAccessControlLog);
 	}
 	
