@@ -11,18 +11,19 @@ $(function(){
  */
 function getNav(){
 	var _index = getSessionStorage('_index');
-	var _href = getSessionStorage('_href');
-	if(_index!=''){
-		$('.l'+_index).addClass('active');
-		$('.u'+_index).css('display','block');
-		$('.u'+_index+' li').each(function(){
-			var _onclick = $(this).attr('onclick');
-			if(_onclick.indexOf(_href)>-1){
-				$(this).addClass('active');
-			}
-		})
+	if(_index==''||_index==null){
+		_index = 'l1_d1';
 	}
-	$('#warningInput').val(new Date().Format("yyyy年MM月dd日"));
+	var _l = _index.split('_')[0];
+	var _d = _index.split('_')[1];
+	$('li').each(function(){
+		$(this).removeClass('layui-nav-itemed');
+	})
+	$('dd').each(function(){
+		$(this).removeClass('layui-this');
+	})
+	$('#'+_l).addClass('layui-nav-itemed');
+	$('#'+_d).addClass('layui-this');
 }
 /**
  * 打开菜单链接

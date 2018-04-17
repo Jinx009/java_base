@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/themes/layui/css/layui.css">
   <script src="/themes/js/jquery-1.7.2.min.js"></script>
   <script src="/themes/js/vue.min.js"></script>
-   <script src="/themes/js/cloud/nav.js"></script>
+   <script src="/themes/js/cloud/nav.js?_v=1.03"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -25,11 +25,11 @@
   <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
       <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-        <li class="layui-nav-item layui-nav-itemed">
+        <li class="layui-nav-item layui-nav-itemed" id="l1" >
           <a class="" href="javascript:;">智能门禁</a>
           <dl class="layui-nav-child">
-            <dd class="layui-this" ><a href="javascript:;">进出记录</a></dd>
-            <dd><a href="javascript:;">社区信息</a></dd>
+            <dd id="d1" class="layui-this" ><a  onclick="_open('l1_d1','/home/c/accessControl')" >进出记录</a></dd>
+            <dd id="d2" ><a  onclick="_open('l1_d2','/home/c/community')" >社区信息</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item">

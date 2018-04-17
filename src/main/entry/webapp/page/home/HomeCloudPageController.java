@@ -15,4 +15,9 @@ public class HomeCloudPageController extends BaseController{
 		return "/cloud/accessControl";
 	}
 	
+	@RequestMapping(path = "/community")
+	public String community(){
+		return "/cloud/community";
+	}
+	
 }

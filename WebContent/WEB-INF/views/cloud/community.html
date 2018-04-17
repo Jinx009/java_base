@@ -1,0 +1,58 @@
+<#include "cloud_nav.html">
+<div class="layui-body">
+	<fieldset class="layui-elem-field layui-field-title"
+		style="margin-top: 30px;">
+		<legend>金领之都园区</legend>
+	</fieldset>
+
+	<blockquote class="layui-elem-quote layui-quote-nm">
+			<span class="layui-badge">金领之都园区1号楼前门</span> &nbsp;&nbsp;
+			<span class="layui-badge">金领之都园区2号楼前门</span> &nbsp;&nbsp;
+			<span class="layui-badge">金领之都园区3号楼前门</span> <br><br>
+			<span class="layui-badge">金领之都园区4号楼前门</span> &nbsp;&nbsp;
+			<span class="layui-badge">金领之都园区5号楼前门</span> &nbsp;&nbsp;
+			<span class="layui-badge">金领之都园区6号楼前门</span> <br><br>
+			<span class="layui-badge">金领之都园区7号楼前门</span> 
+	</blockquote>
+
+	<fieldset class="layui-elem-field layui-field-title"
+		style="margin-top: 30px;">
+		<legend>人员列表</legend>
+	</fieldset>
+	<div style="margin-left: 10px;">
+		<table class="layui-table" lay-size="sm">
+			<colgroup>
+				<col width="150">
+				<col width="200">
+				<col width="200">
+				<col>
+			</colgroup>
+			<thead>
+				<tr>
+					<th>编号</th>
+					<th>姓名</th>
+					<th>区域</th>
+				</tr>
+			</thead>
+			<tbody id="log">
+				<tr v-for="item in logs">
+					<td v-text="item.personnelName"></td>
+					<td v-text="item.createTime"></td>
+					<td v-text="item.deviceName"></td>
+				</tr>
+			</tbody>
+		</table>
+		<div id="page">
+			<div class="layui-box layui-laypage layui-laypage-molv"
+				id="layui-laypage-3">
+				<a href="javascript:;" class="layui-laypage-prev layui-disabled"
+					data-page="0">上一页</a> <span class="layui-laypage-curr"><em
+					class="layui-laypage-em" style="background-color: #1E9FFF;"></em><em>1</em></span>
+				<a href="javascript:;" class="layui-laypage-next" data-page="2">下一页</a>
+			</div>
+		</div>
+	</div>
+</div>
+<
+<script src="/themes/js/cloud/accessControl.js?_v=1.03"></script>
+<#include "cloud_footer.html">
