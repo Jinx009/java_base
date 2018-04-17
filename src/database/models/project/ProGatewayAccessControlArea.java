@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="pro_gateway_access_control")
+@Table(name="pro_gateway_access_control_area")
 public class ProGatewayAccessControlArea {
 
 	@Id

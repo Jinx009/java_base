@@ -45,6 +45,7 @@ public class ProGatewayAccessControlOldLogService {
 		proAccessControlLog.setSign(proAccessControlOldLog.getSign());
 		proAccessControlLog.setTenantCode(proAccessControlOldLog.getTenantCode());
 		proAccessControlLog.setTimestamp(proAccessControlOldLog.getTimestamp());
+		proAccessControlLog.setCreateTime(new Date());
 		proGatewayAccessControlLogDao.save(proAccessControlLog);
 		proGatewayAccessControlPerson.setUpdateTime(new Date());
 		proGatewayAccessControlPersonDao.update(proGatewayAccessControlPerson);
