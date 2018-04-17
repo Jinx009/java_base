@@ -39,4 +39,18 @@ public class AccessControlDataController extends BaseController{
 	}
 	
 	
+	@RequestMapping(path = "/person")
+	@ResponseBody
+	public Resp<?> person(Integer p){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String result = httpService.get("http://106.14.94.245:8090/gtw/rest/accessControl/person?p="+p);
+			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,JSONArray.parse(JSON.parseObject(result).getString("data")));
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 }
