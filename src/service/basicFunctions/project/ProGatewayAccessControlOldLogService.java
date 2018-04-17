@@ -3,22 +3,22 @@ package service.basicFunctions.project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import database.basicFunctions.dao.project.ProAccessControlLogDao;
-import database.basicFunctions.dao.project.ProAccessControlOldLogDao;
-import database.models.project.ProAccessControlLog;
-import database.models.project.ProAccessControlOldLog;
+import database.basicFunctions.dao.project.ProGatewayAccessControlLogDao;
+import database.basicFunctions.dao.project.ProGatewayAccessControlOldLogDao;
+import database.models.project.ProGatewayAccessControlLog;
+import database.models.project.ProGatewayAccessControlOldLog;
 
 @Service
-public class ProAccessControlOldLogService {
+public class ProGatewayAccessControlOldLogService {
 
 	@Autowired
-	private ProAccessControlOldLogDao proAccessControlOldLogDao;
+	private ProGatewayAccessControlOldLogDao proGatewayAccessControlOldLogDao;
 	@Autowired
-	private ProAccessControlLogDao proAccessControlLogDao;
+	private ProGatewayAccessControlLogDao proGatewayAccessControlLogDao;
 	
-	public ProAccessControlLog random(){
-		ProAccessControlOldLog proAccessControlOldLog = proAccessControlOldLogDao.random();
-		ProAccessControlLog proAccessControlLog = new ProAccessControlLog();
+	public ProGatewayAccessControlLog random(){
+		ProGatewayAccessControlOldLog proAccessControlOldLog = proGatewayAccessControlOldLogDao.random();
+		ProGatewayAccessControlLog proAccessControlLog = new ProGatewayAccessControlLog();
 		proAccessControlLog.setAccessResult(proAccessControlOldLog.getAccessResult());
 		proAccessControlLog.setAccessWay(proAccessControlOldLog.getAccessWay());
 		proAccessControlLog.setCardSerialNumber(proAccessControlOldLog.getCardSerialNumber());
@@ -38,7 +38,7 @@ public class ProAccessControlOldLogService {
 		proAccessControlLog.setSign(proAccessControlOldLog.getSign());
 		proAccessControlLog.setTenantCode(proAccessControlOldLog.getTenantCode());
 		proAccessControlLog.setTimestamp(proAccessControlOldLog.getTimestamp());
-		proAccessControlLogDao.save(proAccessControlLog);
+		proGatewayAccessControlLogDao.save(proAccessControlLog);
 		return proAccessControlLog;
 	}
 	

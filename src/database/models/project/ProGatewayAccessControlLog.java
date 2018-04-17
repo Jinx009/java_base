@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name="pro_gateway_access_control")
-public class ProAccessControlLog {
+public class ProGatewayAccessControlLog {
 
 	@Id
 	@Column(unique=true, nullable=false)
