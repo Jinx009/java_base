@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import database.basicFunctions.dao.project.ProGatewayAccessControlAreaDao;
 import database.basicFunctions.dao.project.ProGatewayAccessControlPersonDao;
+import database.common.PageDataList;
 import database.models.project.ProGatewayAccessControlArea;
 import database.models.project.ProGatewayAccessControlPerson;
 
@@ -32,6 +33,10 @@ public class ProGatewayAccessControlPersonService {
 			proGatewayAccessControlPerson.setUpdateTime(new Date());
 			proGatewayAccessControlPersonDao.update(proGatewayAccessControlPerson);
 		}
+	}
+	
+	public PageDataList<ProGatewayAccessControlPerson> pageList(Integer p){
+		return proGatewayAccessControlPersonDao.pageList(p);
 	}
 	
 }

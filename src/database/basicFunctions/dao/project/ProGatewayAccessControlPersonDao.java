@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
+import database.common.PageDataList;
 import database.common.OrderFilter.OrderType;
 import database.common.QueryParam;
 import database.models.project.ProGatewayAccessControlPerson;
@@ -21,6 +22,13 @@ public class ProGatewayAccessControlPersonDao extends BaseDao<ProGatewayAccessCo
 			return list.get(0);
 		}
 		return null;
+	}
+	
+	public PageDataList<ProGatewayAccessControlPerson> pageList(Integer p){
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addPage(p, 25);
+		queryParam.addOrder(OrderType.DESC, "id");
+		return findPageList(queryParam);
 	}
 	
 }
