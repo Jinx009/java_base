@@ -6,13 +6,13 @@
 	</fieldset>
 
 	<blockquote class="layui-elem-quote layui-quote-nm">
-			<span class="layui-badge">金领之都园区1号楼前门</span> &nbsp;&nbsp;
-			<span class="layui-badge">金领之都园区2号楼前门</span> &nbsp;&nbsp;
-			<span class="layui-badge">金领之都园区3号楼前门</span> <br><br>
-			<span class="layui-badge">金领之都园区4号楼前门</span> &nbsp;&nbsp;
-			<span class="layui-badge">金领之都园区5号楼前门</span> &nbsp;&nbsp;
-			<span class="layui-badge">金领之都园区6号楼前门</span> <br><br>
-			<span class="layui-badge">金领之都园区7号楼前门</span> 
+			<span class="layui-badge">金领之都园区1号楼</span> &nbsp;&nbsp;
+			<span class="layui-badge">金领之都园区2号楼</span> &nbsp;&nbsp;
+			<span class="layui-badge">金领之都园区3号楼</span> <br><br>
+			<span class="layui-badge">金领之都园区4号楼</span> &nbsp;&nbsp;
+			<span class="layui-badge">金领之都园区5号楼</span> &nbsp;&nbsp;
+			<span class="layui-badge">金领之都园区6号楼</span> <br><br>
+			<span class="layui-badge">金领之都园区7号楼</span> 
 	</blockquote>
 
 	<fieldset class="layui-elem-field layui-field-title"
@@ -36,9 +36,9 @@
 			</thead>
 			<tbody id="log">
 				<tr v-for="item in persons">
-					<td v-text="item.personnelName"></td>
-					<td v-text="item.createTime"></td>
-					<td v-text="item.deviceName"></td>
+					<td v-text="item.id"></td>
+					<td v-text="item.name"></td>
+					<td v-text="item.areaName"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -54,5 +54,5 @@
 	</div>
 </div>
 <
-<script src="/themes/js/cloud/community.js?_v=1.05"></script>
+<script src="/themes/js/cloud/community.js?_v=1.06"></script>
 <#include "cloud_footer.html">

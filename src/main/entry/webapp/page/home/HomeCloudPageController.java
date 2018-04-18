@@ -20,4 +20,14 @@ public class HomeCloudPageController extends BaseController{
 		return "/cloud/community";
 	}
 	
+	@RequestMapping(path = "/fireData")
+	public String fireData(){
+		return "/cloud/fireData";
+	}
+	
+	@RequestMapping(path = "/fireList")
+	public String fireList(){
+		return "/cloud/fireList";
+	}
+	
 }

@@ -3,17 +3,21 @@ $(function(){
 })
 function _getData(){
 	$.ajax({
-		url:'/home/cloud/accessControl/person?p=1',
+		url:'/home/cloud/fireControl/data',
 		dataType:'json',
 		type:'post',
 		success:function(res){
-			for(var i in res.data.list){
-				res.data.list[i].areaName = res.data.list[i].areaName.split('前门')[0];
+			var _num = 0;
+			for(var i in res.data){
+				if(res.data[i].status==1){
+					_num++;
+				}
 			}
+			$('#num').html(_num);
 			new Vue({
 				el:'#log',
 				data:{
-					persons:res.data.list
+					datas:res.data
 				}
 			})
 		}

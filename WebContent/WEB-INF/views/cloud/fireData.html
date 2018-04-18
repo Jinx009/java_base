@@ -1,0 +1,63 @@
+<#include "cloud_nav.html">
+<div class="layui-body">
+	<fieldset class="layui-elem-field layui-field-title"
+		style="margin-top: 30px;">
+		<legend>总览</legend>
+	</fieldset>
+	<div class="layui-form" style="margin-left: 10px;width: 650px;">
+	  <table class="layui-table" >
+	    <tbody>
+	      <tr>
+	        <th width="200px;" ><b>区域</b></th>
+	        <td width="200px;" >周浦猎熊座</td>
+	      </tr>
+	       <tr>
+	        <th><b>通道占位</b></th>
+	        <td>10</td>
+	      </tr>
+	       <tr>
+	        <th><b>当前非法占用个数</b></th>
+	        <td>
+	        	 <span class="layui-badge" id="num" ></span>
+	        </td>
+	      </tr>
+	    </tbody>
+	  </table>
+	</div>
+
+	<fieldset class="layui-elem-field layui-field-title"
+		style="margin-top: 30px;">
+		<legend>当前状态</legend>
+	</fieldset>
+    <div style="margin-left: 10px;">
+		<table class="layui-table" lay-size="sm">
+		  <colgroup>
+		    <col width="150">
+		    <col width="200">
+		    <col width="200">
+		    <col>
+		  </colgroup>
+		  <thead>
+		    <tr>
+		      <th>设备电压</th>
+		      <th>设备mac</th>
+		      <th>当前状态</th>
+		      <th>更新时间</th>
+		    </tr> 
+		  </thead>
+		  <tbody id="log" >
+		    <tr v-for="item in datas" >
+		      <td v-text="item.batteryVoltage" ></td>
+		      <td v-text="item.mac" ></td>
+		      <td>
+		      	 <span v-if="1===item.status"  class="layui-badge" >被占用</span>
+		      	 <span v-if="0===item.status"  class="layui-badge layui-bg-green">正常</span>
+		      </td>
+		      <td v-text="item.happenTime" ></td>
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+</div>
+<script src="/themes/js/cloud/fireData.js?_v=1.05"></script>
+<#include "cloud_footer.html">
