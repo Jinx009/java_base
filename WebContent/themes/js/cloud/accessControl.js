@@ -87,7 +87,7 @@ function _openLayer(_e){
 		  area: ['700px', '400px'],
 		  shadeClose: true,
 		  skin: 'yourclass',
-		  content: '<fieldset class="layui-elem-field layui-field-title"style="margin-top: 30px;"><legend>最新记录</legend></fieldset><div class="layui-form" style="margin-left: 10px;width: 650px;"><table class="layui-table" >'+
+		  content: '<fieldset class="layui-elem-field layui-field-title"style="margin-top: 30px;"><legend>记录详情</legend></fieldset><div class="layui-form" style="margin-left: 10px;width: 650px;"><table class="layui-table" >'+
     '<tbody><tr><th width="200px;" ><b>刷卡人</b></th><td width="200px;"  >'+_f.personnelName+'</td><td width="250px;"  rowspan="4" >'+
         	'<img width="100%;" style="max-width: 350px;" alt="" src="'+_f.pic+'"  >'+
         '</td></tr><tr><th><b>刷卡类型</b></th><td >'+_f.type+'</td></tr><tr><th><b>区域</b></th><td >'+_f.deviceName+'</td></tr><tr>'+
@@ -100,7 +100,6 @@ function _getData1(){
 		dataType:'json',
 		type:'post',
 		success:function(res){
-			_max = res.data.page.pages;
 			for(var i in res.data.list){
 				res.data.list[i].createTime = toDateTime(res.data.list[i].createTime);
 			}
