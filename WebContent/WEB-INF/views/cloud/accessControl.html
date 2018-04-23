@@ -47,7 +47,7 @@
 		      <th>刷卡人</th>
 		      <th>刷卡类型</th>
 		      <th>进出类型</th>
-		      <th>刷卡时间</th>
+		      <th>刷卡结果</th>
 		      <th>刷卡地点</th>
 		    </tr> 
 		  </thead>
@@ -88,7 +88,7 @@
 		      	<font v-if="1===item.direction" >进门</font>
 		      	<font v-if="2===item.direction" >出门</font>
 		      </td>
-		      <td v-text="item.createTime"></td>
+		      <td v-text="item.accessResult"></td>
 		      <td v-text="item.deviceName" ></td>
 		    </tr>
 		  </tbody>
@@ -99,5 +99,5 @@
 		 <a href="javascript:;" class="layui-laypage-next" data-page="2">下一页</a></div></div>
 	</div>
 </div>
-<<script src="/themes/js/cloud/accessControl.js?_v=1.03"></script>
+<<script src="/themes/js/cloud/accessControl.js?_v=1.04"></script>
 <#include "cloud_footer.html">

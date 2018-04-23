@@ -10,7 +10,11 @@ function _getData(){
 			for(var i in res.data.list){
 				res.data.list[i].createTime = toDateTime(res.data.list[i].createTime);
 			}
-			$('#img').attr('src','http://'+res.data.list[0].photoHost+'/'+res.data.list[0].openDoorPhotoList);
+			if(res.data.list[0].openDoorPhotoList.indexOf(',') >= 0){
+				$('#img').attr('src','http://'+res.data.list[0].photoHost+'/'+res.data.list[0].openDoorPhotoList.split(',')[0]);
+			}else{
+				$('#img').attr('src','http://'+res.data.list[0].photoHost+'/'+res.data.list[0].openDoorPhotoList);
+			}
 			$('#name').html(res.data.list[0].personnelName);
 			var type = '进门';
 			if(res.data.list[0].direction==2){
