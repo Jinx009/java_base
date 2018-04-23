@@ -28,7 +28,9 @@ public class GatewayAccessControlDataController extends BaseController{
 	@ResponseBody
 	public String post(ProGatewayAccessControlLog proAccessControlLog){
 		try {
-			proGatewayAccessControlLogService.save(proAccessControlLog);
+			if(proAccessControlLog.getDeviceName().equals("上海展为1栋1单元门口机")){
+				proGatewayAccessControlLogService.save(proAccessControlLog);
+			}
 			return "200";
 		} catch (Exception e) {
 			log.error("error:{}",e);
