@@ -6,6 +6,28 @@ var _locationId = 14;
 $(function(){
 	getNav();
 })
+
+function _getPage(_type,_index){
+	var _p = -1;
+	if(_type==0){
+		_p =  _index;
+	}
+	if(_type==1&&_index==0){
+		_p =   (_nowPage - 1);
+	}
+	if(_type==1&&_index==1){
+		_p = (_nowPage + 1);
+	}
+	if(parseInt(_p)<=0||(_max!=0&&_p>_max)){
+		return -1;
+	}
+	if(_p===_nowPage){
+		return -1;
+	}
+	_nowPage = _p;
+	return _p;
+}
+
 /**
  * 导航数据
  */

@@ -52,38 +52,9 @@
 		    </tr> 
 		  </thead>
 		  <tbody id="log" >
-		    <tr v-for="item in logs" >
+		    <tr onclick="_openLayer(this)" v-bind:num="item.num" v-for="item in logs" >
 		      <td v-text="item.personnelName" ></td>
-		      <td>
-		      	<font v-if="1===item.accessWay" >通话开锁</font>
-		      	<font v-if="2===item.accessWay" >监视开锁</font>
-		      	<font v-if="3===item.accessWay" >刷卡开锁</font>
-		      	<font v-if="4===item.accessWay" >密码开锁</font>
-		      	<font v-if="5===item.accessWay" >通知开锁</font>
-		      	<font v-if="6===item.accessWay" >中心机通话开锁</font>
-		      	<font v-if="7===item.accessWay" >室内机通话开锁</font>
-		      	<font v-if="8===item.accessWay" >移动App通话开锁</font>
-		      	<font v-if="9===item.accessWay" >手机通话开锁</font>
-		      	<font v-if="10===item.accessWay" >固定电话通话开锁</font>
-		      	<font v-if="11===item.accessWay" >网关通话开锁</font>
-		      	<font v-if="12===item.accessWay" >中心监视开锁</font>
-		      	<font v-if="13===item.accessWay" >室内机监视开锁</font>
-		      	<font v-if="14===item.accessWay" >IC/ID卡刷卡开锁</font>
-		      	<font v-if="15===item.accessWay" >身份证刷卡开锁</font>
-		      	<font v-if="16===item.accessWay" >居住证刷卡开锁</font>
-		      	<font v-if="17===item.accessWay" >市民卡刷卡开锁</font>
-		      	<font v-if="18===item.accessWay" >二维码刷卡开锁</font>
-		      	<font v-if="19===item.accessWay" >公共密码开锁</font>
-		      	<font v-if="20===item.accessWay" >私有密码开锁</font>
-		      	<font v-if="21===item.accessWay" >胁迫密码开锁</font>
-		      	<font v-if="22===item.accessWay" >移动APP钥匙包开锁</font>
-		      	<font v-if="23===item.accessWay" >门内开锁</font>
-		      	<font v-if="24===item.accessWay" >其他开锁</font>
-		      	<font v-if="25===item.accessWay" >临时密码开锁</font>
-		      	<font v-if="26===item.accessWay" >蓝牙开锁</font>
-		      	<font v-if="27===item.accessWay" >人脸识别开锁</font>
-		      	<font v-if="28===item.accessWay" >指纹识别开锁</font>
-		      </td>
+		      <td v-text="item.type" ></td>
 		      <td>
 		      	<font v-if="1===item.direction" >进门</font>
 		      	<font v-if="2===item.direction" >出门</font>
@@ -94,10 +65,10 @@
 		  </tbody>
 		</table>
 		 <div id="page"><div class="layui-box layui-laypage layui-laypage-molv" id="layui-laypage-3">
-		 	<a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">上一页</a>
-		 	<span class="layui-laypage-curr"><em class="layui-laypage-em" style="background-color:#1E9FFF;"></em><em>1</em></span>
-		 <a href="javascript:;" class="layui-laypage-next" data-page="2">下一页</a></div></div>
+		 	<a href="javascript:;"  onclick="_getData(1,0);" class="layui-laypage-prev " data-page="0">上一页</a>
+		 	<span class="layui-laypage-curr"><em class="layui-laypage-em" style="background-color:#1E9FFF;"></em><em id="nnn"></em></span>
+		 <a href="javascript:;" class="layui-laypage-next" onclick="_getData(1,1);" data-page="2">下一页</a></div></div>
 	</div>
 </div>
-<<script src="/themes/js/cloud/accessControl.js?_v=1.04"></script>
+<<script src="/themes/js/cloud/accessControl.js?_v=1.31"></script>
 <#include "cloud_footer.html">
