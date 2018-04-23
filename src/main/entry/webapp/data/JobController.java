@@ -92,6 +92,17 @@ public class JobController extends BaseController {
 				HttpResponse responsePostAsynCmd = httpsUtil.doPostJson(urlPostAsynCmd, header, jsonRequest);
 				String responseBody = httpsUtil.getHttpResponseBody(responsePostAsynCmd);
 				log.warn("msg:{}", responseBody);
+			}else if (ioTCloudDevice.getType() == 3) {//loraWan
+				String  msg = HttpUtils.get("https://api-smg.iot.cn/thingpark/lrc/rest/downlink?DevEUI="+mac+"&FPort=1&Payload="+data1+"&FCntDn=1234");
+				IotCloudLog iotCloudLog = new IotCloudLog();
+				iotCloudLog.setData(data1);
+				iotCloudLog.setFromSite("lorawan");
+				iotCloudLog.setImei("");
+				iotCloudLog.setMac(ioTCloudDevice.getMac());
+				iotCloudLog.setType(1);
+				iotCloudLog.setCreateTime(new Date());
+				iotCloudLogService.save(iotCloudLog);
+				log.warn("msg:{}", msg);
 			}
 			return new Resp<>(true);
 		} catch (Exception e) {
