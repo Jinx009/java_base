@@ -20,10 +20,12 @@ function _getData(_type,_index){
 					res.data.list[i].createTime = toDateTime(res.data.list[i].createTime);
 					res.data.list[i].type = testType(res.data.list[i].accessWay);
 					res.data.list[i].num = i;
-					if(res.data.list[i].openDoorPhotoList.indexOf(',') >= 0){
-						res.data.list[i].pic = 'http://'+res.data.list[i].photoHost+'/'+res.data.list[i].openDoorPhotoList.split(',')[0];
-					}else{
-						res.data.list[i].pic = 'http://'+res.data.list[i].photoHost+'/'+res.data.list[i].openDoorPhotoList;
+					if(res.data.list[i].openDoorPhotoList!=null&&res.data.list[i].openDoorPhotoList!=''){
+						if(res.data.list[i].openDoorPhotoList.indexOf(',') >= 0){
+							res.data.list[i].pic = 'http://'+res.data.list[i].photoHost+'/'+res.data.list[i].openDoorPhotoList.split(',')[0];
+						}else{
+							res.data.list[i].pic = 'http://'+res.data.list[i].photoHost+'/'+res.data.list[i].openDoorPhotoList;
+						}
 					}
 				}
 				_haha = res.data.list;
