@@ -48,7 +48,7 @@ public class JobController extends BaseController {
 			IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByMac(mac);
 			if (ioTCloudDevice.getType() == 1) {
 				String msg = HttpUtils.putUnicomJson(BaseConstant.getSendUrl(ioTCloudDevice.getImei()),
-						"{\"resourceValue\":\"" + data1 + "\"}\"", "emhhbndheTpaaGFud2F5ITIz");
+						"{\"resourceValue\":\"" + data1 + "\"}", "emhhbndheTpaaGFud2F5ITIz");
 				IotCloudLog iotCloudLog = new IotCloudLog();
 				iotCloudLog.setData(data1);
 				iotCloudLog.setFromSite("unicom");

@@ -43,7 +43,7 @@ public class UnicomController extends BaseController {
 	 * @param pushData
 	 * @return
 	 */
-	@RequestMapping(path = "/data")
+	@RequestMapping(path = "/notice/data")
 	@ResponseBody
 	public Resp<?> getNotice(@RequestBody String pushData) {
 		Resp<?> resp = new Resp<>(true);
