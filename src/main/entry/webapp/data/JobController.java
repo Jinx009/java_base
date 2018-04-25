@@ -77,6 +77,10 @@ public class JobController extends BaseController {
 				paramPostAsynCmd.put("deviceId", deviceId);
 				paramPostAsynCmd.put("command", paramCommand);
 				paramPostAsynCmd.put("callbackUrl", callbackUrl);
+				String type =  getString(data, "type");
+				if("0".equals(type)){
+					paramPostAsynCmd.put("expireTime", 0);
+				}
 				String jsonRequest = JsonUtil.jsonObj2Sting(paramPostAsynCmd);
 				Map<String, String> header = new HashMap<>();
 				header.put(Constant.HEADER_APP_KEY, appId);

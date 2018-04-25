@@ -32,6 +32,7 @@ public class LoraWanController extends BaseController{
 	@ResponseBody
 	public Resp<?> push(@RequestBody String r){
 		Resp<?> resp = new Resp<>(false);
+		log.warn("msg:{}",r);
 		try {
 			LoraWanBaseModel loraWanBaseModel = JSONObject.parseObject(r,LoraWanBaseModel.class);
 			if(loraWanBaseModel!=null){

@@ -66,8 +66,6 @@ public class UnicomController extends BaseController {
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
-		
-		send(pushData);
 		return resp;
 	}
 	
