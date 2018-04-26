@@ -36,7 +36,7 @@ function goJob(_element) {
 						success : function(resp) {
 							if ('200' == resp.code) {
 								layer.alert('正在校准中...', function() {
-									location.href = '/themes/shangcheng/job.html';
+									location.href = '/themes/sc/job.html';
 								})
 							} else {
 								layer.alert(resp.msg);
