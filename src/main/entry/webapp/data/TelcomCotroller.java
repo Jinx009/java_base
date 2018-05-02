@@ -147,6 +147,7 @@ public class TelcomCotroller extends BaseController{
 			TelcomPushDataModel telcomPushDataModel = JSONObject.parseObject(r,TelcomPushDataModel.class);
 			if(telcomPushDataModel!=null){
 				List<PushModel> list = telcomPushDataModel.getServices();
+				PushModel pushModel2 = telcomPushDataModel.getService();
 				if(list!=null&&!list.isEmpty()){
 					for(PushModel pushModel : list){
 						TModel tModel = pushModel.getData();
@@ -161,6 +162,19 @@ public class TelcomCotroller extends BaseController{
 						iotCloudLogService.save(iotCloudLog);
 						send(tModel.getData());
 					}
+				}
+				if(pushModel2!=null){
+					TModel tModel = pushModel2.getData();
+					IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(telcomPushDataModel.getDeviceId());
+					IotCloudLog iotCloudLog = new IotCloudLog();
+					iotCloudLog.setData(tModel.getData());
+					iotCloudLog.setFromSite("telcom");
+					iotCloudLog.setCreateTime(new Date());
+					iotCloudLog.setImei(ioTCloudDevice.getImei());
+					iotCloudLog.setType(0);
+					iotCloudLog.setMac(ioTCloudDevice.getMac());
+					iotCloudLogService.save(iotCloudLog);
+					send(tModel.getData());
 				}
 			}
 			return new Resp<>(true);

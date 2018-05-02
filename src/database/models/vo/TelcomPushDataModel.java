@@ -13,6 +13,7 @@ public class TelcomPushDataModel {
 	private String gatewayId;
 	private String notifyType;
 	private List<PushModel> services;
+	private PushModel service;
 
 	
 }
