@@ -36,6 +36,33 @@
 			</section>
 			<!-- 主内容 -->
 			<section class="content" id="datas">
+				<div class="box box-default">
+					<div class="box-header with-border">
+						<h3 class="box-title">筛选条件</h3>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool"
+								data-widget="collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+						</div>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Mac</label> 
+									<input type="text" id="mac" class="form-control" placeholder="请输入设备mac号" >
+								</div>
+							</div>
+								<div class="col-md-3">
+								<div class="form-group">
+									<label>操作</label> 
+									<input type="button" class="btn btn-default btn-xs form-control" onclick="_getData(0,1)" value="查询" >
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="box">
@@ -85,7 +112,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/up_log.js?_v=1.29"></script>
+	<script src="/themes/js/home/up_log.js?_v=1.33"></script>
 	<script src="/themes/js/home/base.js?version=1.26"></script>
 
 </body>

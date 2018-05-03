@@ -17,8 +17,8 @@ public class IotCloudLogService {
 		ioTCloudLogDao.save(iotCloudLog);
 	}
 	
-	public PageDataList<IotCloudLog> pageList(Integer p, Integer type){
-		return ioTCloudLogDao.findAll(p,type);
+	public PageDataList<IotCloudLog> pageList(Integer p, Integer type, String mac){
+		return ioTCloudLogDao.findAll(p,type,mac);
 	}
 	
 	
