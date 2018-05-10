@@ -14,7 +14,7 @@ public class ProTokenDao extends BaseDao<ProToken>{
 
 	@SuppressWarnings("unchecked")
 	public ProToken getByAppId(String appId){
-		String hql = " FROM ProToken WHERE baseId= '"+appId+"' ORDER BY createTime DESC ";
+		String hql = " FROM ProToken WHERE baseId= '"+appId+"' ORDER BY id DESC ";
 		Query query = em.createQuery(hql);
 		List<ProToken> list = query.getResultList();
 		if(list!=null&&!list.isEmpty()){
