@@ -38,7 +38,7 @@ public class DeviceSensorDao extends BaseDao<DeviceSensor>{
 			queryParam.addOrFilter(filter,filter2);
 		}
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
-		queryParam.addOrder(OrderType.DESC, "createTime");
+		queryParam.addOrder(OrderType.ASC, "mac");
 		return findPageList(queryParam);
 	}
 
