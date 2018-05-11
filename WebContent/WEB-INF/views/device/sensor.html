@@ -108,7 +108,7 @@
 									<tbody>
 										<tr v-for="item in datas.list">
 											<td v-text="item.id"></td>
-											<td v-text="item.mac" class="mac" ></td>
+											<td style="color: blue;" v-text="item.mac" class="mac" v-bind:mac="item.mac" onclick="showLog(this)" ></td>
 											<td v-text="item.batteryVoltage"></td>
 											<td v-text="item.desc"></td>
 											<td v-text="item.parentMac"></td>
@@ -151,6 +151,22 @@
 		<#include "_footer.html">
 	</div>
 	<script src="/themes/js/home/device/sensor.js?version=1.25"></script>
-
+	<script type="text/javascript">
+	function showLog(_e){
+		var mac = $(_e).attr('mac');
+		var myDate = new Date();
+		var _day = myDate.getDate();
+		if(_day.length<2){
+			_day = '0'+_day;
+		}
+		var _month = myDate.getMonth(); 
+		_month = parseInt(_month)+1;
+		if(_month<10){
+			_month = '0'+_month;
+		}
+		window.open('http://139.196.205.157/heart_log_'+_month+_day+'_'+mac+'.txt');
+		/* window.open('http://39.108.12.220:801/heart_log/heart_log_'+_month+_day+'_'+mac+'.txt'); */
+	}
+	</script>
 </body>
 </html>
