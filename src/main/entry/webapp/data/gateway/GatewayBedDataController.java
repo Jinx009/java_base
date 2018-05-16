@@ -33,7 +33,7 @@ public class GatewayBedDataController extends BaseController{
 	public Resp<?> push(@RequestBody String s){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			log.warn("data:{}",s);
+//			log.warn("data:{}",s);
 			ProGatewayBedModel proGatewayBedModel = JSONObject.parseObject(s,ProGatewayBedModel.class);
 			ProGatewayBed proGatewayBed = proGatewayBedModel.getData();
 			proGatewayBed.setCreateTime(new Date());

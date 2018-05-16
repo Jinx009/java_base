@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import database.basicFunctions.dao.project.ProGatewaySmokeDataDao;
+import database.common.PageDataList;
 import database.models.project.ProGatewaySmokeData;
 
 @Service
@@ -19,6 +20,10 @@ public class ProGatewaySmokeDataService {
 		proGatewaySmokeData.setMac(s[1]);
 		proGatewaySmokeData.setStatus(Integer.valueOf(s[2]));
 		return proGatewaySmokeDataDao.save(proGatewaySmokeData);
+	}
+
+	public PageDataList<ProGatewaySmokeData> pageList(Integer p) {
+		return proGatewaySmokeDataDao.PageList(p);
 	}
 	
 }

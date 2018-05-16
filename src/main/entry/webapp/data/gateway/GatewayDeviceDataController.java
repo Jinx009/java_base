@@ -34,6 +34,7 @@ public class GatewayDeviceDataController extends BaseController{
 			InputStream in = req.getInputStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String data =br.readLine();
+			log.warn("data:{}",data);
 			proGatewaySmokeDataService.save(data);
 			return new Resp<>(true);
 		} catch (Exception e) {
@@ -42,4 +43,4 @@ public class GatewayDeviceDataController extends BaseController{
 		return resp;
 	}
 	
-}
+} 
