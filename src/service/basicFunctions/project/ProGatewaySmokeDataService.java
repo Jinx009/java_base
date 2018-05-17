@@ -1,5 +1,7 @@
 package service.basicFunctions.project;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class ProGatewaySmokeDataService {
 		proGatewaySmokeData.setData(data);
 		proGatewaySmokeData.setMac(s[1]);
 		proGatewaySmokeData.setStatus(Integer.valueOf(s[2]));
+		proGatewaySmokeData.setCreateTime(new Date());
 		return proGatewaySmokeDataDao.save(proGatewaySmokeData);
 	}
 
