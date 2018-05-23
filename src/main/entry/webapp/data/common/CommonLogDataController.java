@@ -48,6 +48,24 @@ public class CommonLogDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/log")
+	@ResponseBody
+	public Resp<?> getLog(String d){
+		Resp<?> resp = new Resp<>(BaseConstant.HTTP_ERROR_CODE,"无内容！",null);
+		try {
+			String pathname = "/root/"+d;
+//			String pathname = "/Users/jinx/Downloads/"+d;
+			File fileName = new File(pathname);
+			if (fileName.exists()) {
+				String str = getCarLog(fileName);
+				return new Resp<>(str);
+			} 
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/file")
 	@ResponseBody
 	public Resp<?> getFile(String d){
@@ -80,6 +98,35 @@ public class CommonLogDataController extends BaseController{
 		if(list!=null&&!list.isEmpty()){
 			for(int i = list.size()-1;i>=0;i--){
 				result.append(list.get(i));
+			}
+		}
+		return result.toString();
+	} catch (IOException e) {
+		log.error("error:{}",e);
+	}
+	return null;
+}
+	
+	private static String getCarLog(File fileName){
+	try {
+		InputStreamReader reader = new InputStreamReader(new FileInputStream(fileName));
+		BufferedReader br = new BufferedReader(reader);
+		StringBuilder result = new StringBuilder();
+		String s = null;
+		List<String> list = new ArrayList<String>();
+		while ((s = br.readLine()) != null) {
+			list.add(System.lineSeparator() + s);
+		}
+		br.close();
+		if(list!=null&&!list.isEmpty()){
+			if(list.size()>2000){
+				for(int i = list.size()-1;i>(list.size()-2000);i--){
+					result.append(list.get(i));
+				}
+			}else{
+				for(int i = list.size()-1;i>0;i--){
+					result.append(list.get(i));
+				}
 			}
 		}
 		return result.toString();
