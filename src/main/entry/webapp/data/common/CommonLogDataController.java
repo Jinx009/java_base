@@ -48,6 +48,47 @@ public class CommonLogDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/chaozhouLogs")
+	@ResponseBody
+	public Resp<?> chaozhouLogs(){
+		Resp<?> resp = new Resp<>(BaseConstant.HTTP_ERROR_CODE,"你所访问的资源不存在！",null);
+		try {
+			File file=new File("/root/nb/heart_log/");
+//			File file=new File("/Users/jinx/Downloads/"+d);
+			if(file.isDirectory()&&file.exists()){
+				List<String> list = new ArrayList<String>();
+				for(File temp:file.listFiles()){
+		            if(temp.isFile()){
+		                list.add(temp.toString().split("/root/nb/heart_log/heart_log")[1]);
+		            }
+		        }
+				Collections.sort(list);
+				return new Resp<>(list);
+			}
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/chaozhouFile")
+	@ResponseBody
+	public Resp<?> chaozhou(String d){
+		Resp<?> resp = new Resp<>(BaseConstant.HTTP_ERROR_CODE,"无内容！",null);
+		try {
+			String pathname = "/root/nb/heart_log/heart_log"+d;
+//			String pathname = "/Users/jinx/Downloads/"+d;
+			File fileName = new File(pathname);
+			if (fileName.exists()) {
+				String str = getLog(fileName);
+				return new Resp<>(str);
+			} 
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/log")
 	@ResponseBody
 	public Resp<?> getLog(String d){
