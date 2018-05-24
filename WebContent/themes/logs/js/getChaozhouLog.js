@@ -7,16 +7,16 @@ $(function(){
 function _getData(){
 	var _path = _getQueryString('d');
 	$.ajax({
-		url:'/common/log/files?d='+_path,
+		url:'/common/log/chaozhouLogs?d='+_path,
 		type:'get',
 		dataType:'json',
 		success:function(res){
 			if(res.data!=null){
 				var _htmlStr = '<a href="#" class="list-group-item active">链接列表</a>';
 				for(var i in res.data){
-					res.data[i] = res.data[i].split('/')[1];
-					var _fileName = '/'+_path+'/'+res.data[i];
-					_htmlStr += '<a  onclick=_getFile("'+_fileName+'") id="'+_fileName+'" class="list-group-item file-list" style="color:red;cursor:pointer;" >'+res.data[i]+'</a>';
+//					res.data[i] = res.data[i].split('/')[1];
+//					var _fileName = '/'+_path+'/'+res.data[i];
+					_htmlStr += '<a  onclick=_getFile("'+res.data[i]+'") id="'+res.data[i]+'" class="list-group-item file-list" style="color:red;cursor:pointer;" >'+res.data[i]+'</a>';
 				}
 				$('#files').html(_htmlStr);
 				_getFile('/'+_path+'/'+res.data[0]);
