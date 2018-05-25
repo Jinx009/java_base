@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	min-width: 1280px;
+	text-align: center;
+}
+
+.bg {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+}
+
+.left-div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 30%;
+	height: 100%;
+}
+
+.left-min-div {
+	width: 100%;
+}
+
+.left-img {
+	position: absolute;
+	left: 10%;
+	width: 80%;
+	top: 55px;
+	z-index: 1;
+}
+
+.left-info {
+	position: absolute;
+	z-index: 2;
+	top: 55px;
+	left: 10%;
+	width: 82%;
+}
+
+.left-img-1 {
+	position: absolute;
+	left: 10%;
+	width: 80%;
+	top: 55%;
+	z-index: 1;
+}
+
+.left-info-1 {
+	position: absolute;
+	z-index: 2;
+	top: 55%;
+	left: 10%;
+	width: 82%;
+}
+
+.right-div {
+	position: absolute;
+	top: 0;
+	left: 70%;
+	width: 30%;
+	height: 100%;
+}
+
+.right-min-div {
+	width: 100%;
+}
+
+.right-img {
+	position: absolute;
+	right: 10%;
+	width: 80%;
+	top: 55px;
+	z-index: 1;
+}
+
+.right-info {
+	position: absolute;
+	z-index: 2;
+	top: 55px;
+	right: 10%;
+	width: 82%;
+}
+
+.right-img-1 {
+	position: absolute;
+	right: 10%;
+	width: 80%;
+	top: 55%;
+	z-index: 1;
+}
+
+.right-info-1 {
+	position: absolute;
+	z-index: 2;
+	top: 55%;
+	right: 10%;
+	width: 82%;
+}
+
+.min-div {
+	position: absolute;
+	width: 40%;
+	top: 0;
+	left: 30%;
+	height: 100%;
+}
+
+.min-min-div {
+	width: 100%;
+	margin-top: 15px;
+}
+
+table td {
+	line-height: 44px;
+	height: 44px;
+	font-size: 18px;
+	color: white;
+	text-align: center;
+}
+
+.nav_table td {
+	width: 16%;
+	height: 38px;
+	line-height: 38px;
+}
+
+.nav_table td img {
+	width: 100%;
+}
+
+.min-img {
+	position: absolute;
+	top: 70%;
+	left:0;
+	width: 100%;
+}
+
+.min-info {
+	position: absolute;
+	top: 70%;
+	left: 0;
+	width: 100%;
+}
+</style>
+</head>
+<body>
+	<img class="bg" src="images/background.jpg">
+	<div class="left-div">
+		<div class="left-min-div">
+			<img class="left-img" src="images/bg_1.png">
+			<div class="left-info">
+				<img src="images/shequ.png" style="margin-top: 10px">
+				<table width="100%" style="margin-top: 15px;">
+					<tr>
+						<td>出入口人脸识别</td>
+						<td>总记录数</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;条</td>
+					</tr>
+					<tr>
+						<td>门禁记录和照片</td>
+						<td>总记录数</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;条</td>
+					</tr>
+					<tr>
+						<td>消防通道占用</td>
+						<td>占用次数</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>电梯运行状态监测</td>
+						<td>异常记录</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>电动车管理</td>
+						<td>总记录数</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;条</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="left-min-div">
+			<img class="left-img-1" src="images/bg_1.png">
+			<div class="left-info-1">
+				<img src="images/shequ.png" style="margin-top: 10px">
+				<table width="100%" style="margin-top: 15px;">
+					<tr>
+						<td>PM2.5</td>
+						<td>超标</td>
+						<td><font style="color: rgb(0, 254, 228);">8</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>噪声</td>
+						<td>45分贝以上</td>
+						<td><font style="color: rgb(0, 254, 228);">7</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>工地扬尘</td>
+						<td>超标</td>
+						<td><font style="color: rgb(0, 254, 228);">101</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>道路扬尘</td>
+						<td>超标</td>
+						<td><font style="color: rgb(0, 254, 228);">3</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>污水排放</td>
+						<td>高浓度警报</td>
+						<td><font style="color: rgb(0, 254, 228);">3</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>高空抛物</td>
+						<td>总记录数</td>
+						<td><font style="color: rgb(0, 254, 228);">12</font>&nbsp;次</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="min-div">
+		<div class="min-min-div">
+			<h1 style="color: rgb(13, 251, 229); font-size: 30px;">慈馨社区精细化管理运营平台</h1>
+			<table width="100%" class="nav_table">
+				<tr>
+					<td><img src="images/nav_1.png"></td>
+					<td><img src="images/nav_2.png"></td>
+					<td><img src="images/nav_3.png"></td>
+					<td><img src="images/nav_4.png"></td>
+					<td><img src="images/nav_5.png"></td>
+					<td><img src="images/nav_6.png"></td>
+				</tr>
+			</table>
+			<img style="width: 100%; " src="images/map.png">
+			<img style="width: 100%; margin-top: 5px;"
+				src="images/footer.png"> <img src="images/bg_2.png"
+				class="min-img">
+			<div class="min-info">
+				<img src="images/shequ.png" style="margin-top: 10px">
+				<table width="100%" style="margin-top: 15px;">
+					<tr>
+						<td>PM2.5</td>
+						<td>超标</td>
+						<td><font style="color: rgb(0, 254, 228);">8</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>噪声</td>
+						<td>45分贝以上</td>
+						<td><font style="color: rgb(0, 254, 228);">7</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>工地扬尘</td>
+						<td>超标</td>
+						<td><font style="color: rgb(0, 254, 228);">101</font>&nbsp;次</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="right-div">
+		<div class="right-min-div">
+			<img class="right-img" src="images/bg_1.png">
+			<div class="right-info">
+				<img src="images/shequ.png" style="margin-top: 10px">
+				<table width="100%" style="margin-top: 15px;">
+					<tr>
+						<td>出入口人脸识别</td>
+						<td>总记录数</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;条</td>
+					</tr>
+					<tr>
+						<td>门禁记录和照片</td>
+						<td>总记录数</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;条</td>
+					</tr>
+					<tr>
+						<td>消防通道占用</td>
+						<td>占用次数</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>电梯运行状态监测</td>
+						<td>异常记录</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>电动车管理</td>
+						<td>总记录数</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;条</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="right-min-div">
+			<img class="right-img-1" src="images/bg_1.png">
+			<div class="right-info-1">
+				<img src="images/shequ.png" style="margin-top: 10px">
+				<table width="100%" style="margin-top: 15px;">
+					<tr>
+						<td>出入口人脸识别</td>
+						<td>总记录数</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;条</td>
+					</tr>
+					<tr>
+						<td>门禁记录和照片</td>
+						<td>总记录数</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;条</td>
+					</tr>
+					<tr>
+						<td>消防通道占用</td>
+						<td>占用次数</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>电梯运行状态监测</td>
+						<td>异常记录</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;次</td>
+					</tr>
+					<tr>
+						<td>电动车管理</td>
+						<td>总记录数</td>
+						<td><font style="color: rgb(0, 254, 228);">30002</font>&nbsp;条</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
