@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 
 import database.models.IotCloudLog;
-import database.models.vo.lorawan.LoraWanBaseModel;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.IotCloudLogService;
 import utils.Resp;
@@ -34,18 +33,17 @@ public class LoraWanController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		log.warn("msg:{}",r);
 		try {
-			LoraWanBaseModel loraWanBaseModel = JSONObject.parseObject(r,LoraWanBaseModel.class);
-			if(loraWanBaseModel!=null){
-					IotCloudLog iotCloudLog = new IotCloudLog();
-					iotCloudLog.setData(loraWanBaseModel.getDevEUI_uplink().getCustomerData().getAlr().getPro());
-					iotCloudLog.setFromSite("lorawan");
-					iotCloudLog.setCreateTime(new Date());
-					iotCloudLog.setImei(loraWanBaseModel.getDevEUI_uplink().getDevEUI());
-					iotCloudLog.setType(0);
-					iotCloudLog.setMac(loraWanBaseModel.getDevEUI_uplink().getDevEUI());
-					iotCloudLogService.save(iotCloudLog);
-					send(loraWanBaseModel.getDevEUI_uplink().getCustomerData().getAlr().getPro());
-			}
+			JSONObject jsonObject = JSONObject.parseObject(r);
+			IotCloudLog iotCloudLog = new IotCloudLog();
+			iotCloudLog.setData(JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("DevEUI")+JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("payload_hex"));
+			iotCloudLog.setFromSite("lorawan");
+			iotCloudLog.setCreateTime(new Date());
+			iotCloudLog.setImei(JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("DevEUI"));
+			iotCloudLog.setType(0);
+			iotCloudLog.setMac(JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("DevEUI"));
+			iotCloudLogService.save(iotCloudLog);
+			send(JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("DevEUI")+JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("payload_hex"));
+			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
