@@ -1,6 +1,10 @@
 package utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.Charset;
 
 import org.apache.http.HttpResponse;
@@ -171,5 +175,42 @@ public class HttpUtils {
 		}
 		return result;
     }
+    
+    protected final String retrieveResponseFromServer(final URL validationUrl,  
+            final String ticket) {  
+        HttpURLConnection connection = null;  
+        try {  
+            connection = (HttpURLConnection) validationUrl.openConnection();  
+            final BufferedReader in = new BufferedReader(new InputStreamReader(  
+                    connection.getInputStream()));  
+  
+            String line;  
+            final StringBuffer stringBuffer = new StringBuffer(255);  
+  
+            synchronized (stringBuffer) {  
+                while ((line = in.readLine()) != null) {  
+                    stringBuffer.append(line);  
+                    stringBuffer.append("\n");  
+                }  
+                return stringBuffer.toString();  
+            }  
+  
+        } catch (final IOException e) {  
+        	logger.error("error:{}",e);  
+            return null;  
+        } catch (final Exception e1){  
+        	logger.error("error:{}",e1);  
+            return null;  
+        }finally {  
+            if (connection != null) {  
+                connection.disconnect();  
+            }  
+        }  
+    }  
+    
+    
+    public static void main(String[] args) {
+		postParams("https://api.opg-iot.cn/thingpark/lrc/rest/downlink?DevEUI=00:95:69:00:00:00:06:DD&FPort=1&Payload=480032025200&FCntDn=1234");
+	}
 	
 }

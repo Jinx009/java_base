@@ -106,16 +106,16 @@ public class OpenApiDataController extends BaseController{
 	
 	@RequestMapping(value = "/mofang/notice")
 	@ResponseBody
-	 public String sendNotice(){
+	 public String sendNotice(String status){
 	        try {
 	            Map<String,String> map = new HashMap<String, String>();
-	            map.put("magneticStripleId","0001171116000006");
-	            map.put("status","EMPTY");
+	            map.put("magneticStripleId","000117122800001E");
+	            map.put("status",status);
 	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	            map.put("occurrenceTimeString",sdf.format(new Date()));
 	            map.put("companyOrganId","10039");
 	            map.put("storeOrganId","10040");
-	            map.put("eventId","0001171116000026000006");
+	            map.put("eventId","000117122800001E1");
 	            String jsonStr = JSON.toJSONString(map);
 	            return HttpUtils.postMofangJson(getMofangSessionId(), NOTICE_URL,jsonStr);
 	        }catch (Exception e){
