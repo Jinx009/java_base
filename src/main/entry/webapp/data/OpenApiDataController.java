@@ -25,46 +25,46 @@ import utils.Resp;
 
 @Controller
 @RequestMapping(value = "/openApi")
-public class OpenApiDataController extends BaseController{
-	
+public class OpenApiDataController extends BaseController {
+
 	private static final Logger log = LoggerFactory.getLogger(OpenApiDataController.class);
 
 	private static final String NOTICE_URL = "http://120.92.101.137:8083/magnetic_striple_event";
-	
+
 	@Autowired
 	private ProIoTOrderService proIoTOrderService;
 	@Autowired
 	private ProUserService proUserService;
-	
+
 	@RequestMapping(path = "/rfid/push")
 	@ResponseBody
-	public Resp<?> setCarNum(String mac,String card){
+	public Resp<?> setCarNum(String mac, String card) {
 		Resp<?> resp = new Resp<>(true);
 		try {
-			log.warn("mac:{},card:{}",mac,card);
+			log.warn("mac:{},card:{}", mac, card);
 			ProIoTOrder proIoTOrder = proIoTOrderService.findByMacNear(mac);
-			if(proIoTOrder!=null&&proIoTOrder.getEndTime()==null){
+			if (proIoTOrder != null && proIoTOrder.getEndTime() == null) {
 				ProUser proUser = proUserService.findByCard(card);
-				if(proUser!=null){
+				if (proUser != null) {
 					proIoTOrder.setCarNum(proUser.getCarNum());
 					proIoTOrderService.update(proIoTOrder);
 				}
 			}
 		} catch (Exception e) {
-			log.error("error:{}",e);
+			log.error("error:{}", e);
 		}
 		return resp;
 	}
-	
+
 	@RequestMapping(path = "/status/push")
 	@ResponseBody
-	public Resp<?> getOrder(String mac,String logId,String changeTime,Integer status,String desc){
+	public Resp<?> getOrder(String mac, String logId, String changeTime, Integer status, String desc) {
 		Resp<?> resp = new Resp<>(true);
 		try {
-			log.warn("mac:{},logId:{},status:{},changeTime:{},desc:{}",mac,logId,status,changeTime,desc);
+			log.warn("mac:{},logId:{},status:{},changeTime:{},desc:{}", mac, logId, status, changeTime, desc);
 			Long time = Long.valueOf(changeTime);
-			String uuid = StringUtil.add(mac,"_",logId);
-			if(1==status){
+			String uuid = StringUtil.add(mac, "_", logId);
+			if (1 == status) {
 				ProIoTOrder proIoTOrder = new ProIoTOrder();
 				proIoTOrder.setCreateTime(new Date());
 				proIoTOrder.setDescription(desc);
@@ -74,14 +74,14 @@ public class OpenApiDataController extends BaseController{
 				proIoTOrder.setStartUuid(uuid);
 				proIoTOrder.setStatus("0");
 				proIoTOrderService.save(proIoTOrder);
-			}else if(0==status){
+			} else if (0 == status) {
 				ProIoTOrder proIoTOrder = proIoTOrderService.findByMacNear(mac);
-				if(proIoTOrder!=null&&proIoTOrder.getEndTime()==null){
+				if (proIoTOrder != null && proIoTOrder.getEndTime() == null) {
 					proIoTOrder.setEndUuid(uuid);
 					proIoTOrder.setEndTime(new Date(time));
 					proIoTOrder.setStatus("1");
 					proIoTOrderService.update(proIoTOrder);
-				}else{
+				} else {
 					proIoTOrder = new ProIoTOrder();
 					proIoTOrder.setCreateTime(new Date());
 					proIoTOrder.setDescription(desc);
@@ -93,45 +93,42 @@ public class OpenApiDataController extends BaseController{
 					proIoTOrderService.save(proIoTOrder);
 				}
 			}
-			
+
 		} catch (Exception e) {
-			log.error("error:{}",e);
+			log.error("error:{}", e);
 		}
 		return resp;
 	}
 
 	@RequestMapping(path = "/mofang/session")
 	@ResponseBody
-	public String getSession(){
+	public String getSession() {
 		try {
 			String sessionId = getMofangSessionId();
 			return sessionId;
 		} catch (Exception e) {
-			log.error("error:{}",e);
+			log.error("error:{}", e);
 		}
 		return null;
 	}
-	
-	@RequestMapping(path = "/mofang/notice")
+
+	@RequestMapping(value = "/mofang/notice")
 	@ResponseBody
-	 public String sendNotice(String status,String eventId){
-	        try {
-	            Map<String,String> map = new HashMap<String, String>();
-//	            map.put("magneticStripleId","000117082900000F");
-	            map.put("magneticStripleId","000117082900000F");
-	            map.put("status",status);
-	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	            map.put("occurrenceTimeString",sdf.format(new Date()));
-//	            map.put("companyOrganId","10071");
-//	            map.put("storeOrganId","10072");
-	            map.put("eventId",eventId);
-	            map.put("companyOrganId","10071");
-	            map.put("storeOrganId","10072");
-	            String jsonStr = JSON.toJSONString(map);
-	            return HttpUtils.postMofangJson(getMofangSessionId(), NOTICE_URL,jsonStr);
-	        }catch (Exception e){
-	            log.error("error:{}",e);
-	        }
-	        return null;
-	    }
+	public String sendNotice(String status) {
+		try {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("magneticStripleId", "000117122800001E");
+			map.put("status", status);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			map.put("occurrenceTimeString", sdf.format(new Date()));
+			map.put("companyOrganId", "10039");
+			map.put("storeOrganId", "10040");
+			map.put("eventId", "000117122800001E1");
+			String jsonStr = JSON.toJSONString(map);
+			return HttpUtils.postMofangJson(getMofangSessionId(), NOTICE_URL, jsonStr);
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return null;
+	}
 }
