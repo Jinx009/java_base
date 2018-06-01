@@ -172,4 +172,8 @@ public class HttpUtils {
 		return result;
     }
 	
+    public static void main(String[] args) {
+		postParams("https://api.opg-iot.cn/thingpark/lrc/rest/downlink?DevEUI=00956900000006DD&FPort=1&Payload=480032025200&FCntDn=1234");
+	}
+    
 }

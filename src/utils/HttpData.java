@@ -4,6 +4,7 @@ package utils;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -564,7 +565,8 @@ public class HttpData {
 	
 
 	public static void main(String[] args) {
-		mofang_login();
+		addPark("USI_321b0766-26fd-4cf6-9eb0-ee270b193ef0", "0001171228000031", "A002");
+//		mofang_login();
 	}
 
 	
