@@ -71,6 +71,34 @@ public class CommonLogDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/unicomFile")
+	@ResponseBody
+	public Resp<?> uicomLog(){
+		Resp<?> resp = new Resp<>(BaseConstant.HTTP_ERROR_CODE,"无内容！",null);
+		try {
+			String pathname = "/root/nb/sensor_nb_info.txt";
+			File fileName = new File(pathname);
+			if (fileName.exists()) {
+				try {
+					InputStreamReader reader = new InputStreamReader(new FileInputStream(fileName));
+					BufferedReader br = new BufferedReader(reader);
+					String s = null;
+					List<String> list = new ArrayList<String>();
+					while ((s = br.readLine()) != null) {
+						list.add(System.lineSeparator() + s);
+					}
+					br.close();
+					return new Resp<>(list);
+				} catch (IOException e) {
+					log.error("error:{}",e);
+				}
+			} 
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/chaozhouFile")
 	@ResponseBody
 	public Resp<?> chaozhou(String d){
