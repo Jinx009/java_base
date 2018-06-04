@@ -23,5 +23,17 @@ public class IotCloudLogDao extends BaseDao<IotCloudLog>{
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);
 	}
+
+	public Object findAll(Integer p, Integer type, String mac, String fromSite) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("type",type);
+		queryParam.addParam("fromSite",fromSite);
+		if(StringUtil.isNotBlank(mac)){
+			queryParam.addParam("mac",mac);
+		}
+		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
+		queryParam.addOrder(OrderType.DESC, "id");
+		return findPageList(queryParam);
+	}
 	
 }

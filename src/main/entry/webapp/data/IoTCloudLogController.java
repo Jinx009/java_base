@@ -32,4 +32,16 @@ public class IoTCloudLogController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/typeList")
+	@ResponseBody
+	public Resp<?> typeList(Integer p,Integer type,String mac,String fromSite){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(iotCloudLogService.pageList(p,type,mac,fromSite));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 }

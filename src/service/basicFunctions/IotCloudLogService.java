@@ -20,6 +20,10 @@ public class IotCloudLogService {
 	public PageDataList<IotCloudLog> pageList(Integer p, Integer type, String mac){
 		return ioTCloudLogDao.findAll(p,type,mac);
 	}
+
+	public Object pageList(Integer p, Integer type, String mac, String fromSite) {
+		return ioTCloudLogDao.findAll(p,type,mac,fromSite);
+	}
 	
 	
 }
