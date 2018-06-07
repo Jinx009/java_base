@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>主页</title>
     <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -82,12 +82,12 @@
                 <tr>
                     <td style="text-align: left;">门禁记录和照片</td>
                     <td style="text-align: center;">总记录数</td>
-                    <td style="text-align: right;"><font style="color: rgb(0, 254, 228);">334</font>&nbsp;条</td>
+                    <td style="text-align: right;"><font style="color: rgb(0, 254, 228);" id="doorNum" ></font>&nbsp;条</td>
                 </tr>
                 <tr>
-                    <td style="text-align: left;">消防通道占用</td>
-                    <td style="text-align: center;">占用次数</td>
-                    <td style="text-align: right;"><font style="color: rgb(0, 254, 228);">11</font>&nbsp;次</td>
+                    <td style="text-align: left;">当前消防通道占用</td>
+                    <td style="text-align: center;">占用个数</td>
+                    <td style="text-align: right;"><font style="color: rgb(0, 254, 228);" id="sensorNum" ></font>&nbsp;个</td>
                 </tr>
                 <tr>
                     <td style="text-align: left;">电梯运行状态监测</td>
@@ -296,5 +296,6 @@
     </div>
     <div style="float: left;position: relative;min-height: 1px;width: 38px;height:1001px;padding: 0 "></div>
 </div>
+<script src="js/home.js?_v=1.06"></script>
 </body>
 </html>
