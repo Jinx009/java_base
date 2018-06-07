@@ -156,7 +156,8 @@
 		var mac = $(_e).attr('mac');
 		var myDate = new Date();
 		var _day = myDate.getDate();
-		if(_day.length<2){
+		_day = parseInt(_day);
+		if(_day<10){
 			_day = '0'+_day;
 		}
 		var _month = myDate.getMonth(); 
