@@ -28,4 +28,8 @@ public class Base64Utils {
         }
         return decoded;
     }
+    
+    public static void main(String[] args) {
+		System.out.println(getEncodedBase64("zwadmin:Zw#021"));
+	}
 }

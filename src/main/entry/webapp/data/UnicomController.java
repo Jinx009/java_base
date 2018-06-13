@@ -38,6 +38,7 @@ public class UnicomController extends BaseController {
 	@Autowired(required=false)
 	private IotCloudLogService iotCloudLogService;
 
+	
 	/**
 	 * 联通数据上报
 	 * @param pushData
