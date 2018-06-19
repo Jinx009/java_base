@@ -194,7 +194,7 @@ public class TelcomCotroller extends BaseController{
 	 */
 	@RequestMapping(path = "/register")
 	@ResponseBody
-	public Resp<?> register(String imei,String mac,String ipLocal){
+	public Resp<?> register(String imei,String mac,String ipLocal,String name){
 		Resp<?> resp = new Resp<>(false);
 		try {
 	        HttpsUtil httpsUtil = new HttpsUtil();
@@ -231,6 +231,7 @@ public class TelcomCotroller extends BaseController{
 	        paramModifyDeviceInfo.put("manufacturerName", manufacturerName);
 	        paramModifyDeviceInfo.put("deviceType", deviceType);
 	        paramModifyDeviceInfo.put("model", model);
+	        paramModifyDeviceInfo.put("name", name+"_"+imei);
 	        paramModifyDeviceInfo.put("protocolType", protocolType);
 	        String jsonRequest2 = JsonUtil.jsonObj2Sting(paramModifyDeviceInfo);
 	        Map<String, String> header2 = new HashMap<>();
