@@ -1,6 +1,6 @@
 $(function() {
 	$.ajax({
-		url : '/interface/chengdu/device',
+		url : '/interface/boken/device',
 		type : 'get',
 		dataType : 'json',
 		success : function(res) {
@@ -20,7 +20,7 @@ function goJob(_element) {
 		btn : [ '确定', '取消' ]
 	}, function() {
 		$.ajax({
-			url : '/common/job/find?serviceName=chengdu',
+			url : '/common/job/find?serviceName=boken',
 			type : 'get',
 			dataType : 'json',
 			success : function(res) {
@@ -31,12 +31,12 @@ function goJob(_element) {
 						url : '/common/job/save/cfgsensor',
 						type : 'post',
 						data : 'target=' + _target + '&mac=' + _mac
-								+ '&serviceName=chengdu',
+								+ '&serviceName=boken',
 						dataType : 'json',
 						success : function(resp) {
 							if ('200' == resp.code) {
 								layer.alert('正在校准中...', function() {
-									location.href = '/themes/chengdu/job.html';
+									location.href = '/themes/boken/job.html';
 								})
 							} else {
 								layer.alert(resp.msg);
