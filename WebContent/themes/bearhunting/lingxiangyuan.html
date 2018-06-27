@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>菱翔苑智慧安防社区平台</title>
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: url("images/background.jpg");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+            overflow-y:auto;
+        }
+
+        .row {
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
+        }
+
+        .col-md-6 {
+            margin: 0;
+            padding: 0;
+        }
+
+        table td {
+            color: white;
+        }
+    </style>
+    <script>
+        function mytime() {
+            var a = new Date();
+            var _h = a.getHours();
+            if(_h<10){
+                _h = '0'+_h;
+            }
+            var _m = a.getMinutes();
+            if(_m<10){
+                _m = '0'+_m;
+            }
+            var _s = a.getSeconds();
+            if(_s<10){
+                _s = '0'+_s;
+            }
+            $('#affiche').html(a.getFullYear() + '年' + (a.getMonth() + 1) + '月' + a.getDate() +
+                    '日' + '&nbsp;&nbsp;' + _h+ ':' +_m+ ':' +_s+
+                    '&nbsp;&nbsp;星期' + getWeek(a.getDay()));
+        }
+        $(function () {
+            mytime();
+        })
+        function getWeek(_i) {
+            if (0 == _i) {
+                return '日';
+            }
+            if (1 == _i) {
+                return '一';
+            }
+            if (2 == _i) {
+                return '二';
+            }
+            if (3 == _i) {
+                return '三';
+            }
+            if (4 == _i) {
+                return '四';
+            }
+            if (5 == _i) {
+                return '五';
+            }
+            if (6 == _i) {
+                return '六';
+            }
+        }
+        setInterval(function () {
+            mytime()
+        }, 1000);
+    </script>
+</head>
+<body>
+<div style="height: 79px;width: 100%;">
+    <h1 style="height: 79px;line-height: 79px;font-size: 36px;color: rgb(0, 254, 228);letter-spacing: 2px;">
+        菱翔苑智慧安防社区平台</h1>
+</div>
+<p style="color: orangered;font-size: 18px;margin-top: 10px;text-align: center;width: 100%;" id="affiche"></p>
+<div class="row" style="margin-top: 40px;">
+    <div class="col-md-6">
+        <table class="table" style="margin-left: 10%;width: 80%;border: 0">
+            <tr>
+                <td style="border-top:0px;font-size: 18px;">车位总数</td>
+                <td style="border-top:0px;font-size: 18px;">占用个数</td>
+                <td style="border-top:0px;font-size: 18px;">空闲个数</td>
+            </tr>
+            <tr>
+                <td style="height: 50px;line-height: 50px;font-size: 32px;color: #337ab7;">15</td>
+                <td style="height: 50px;line-height: 50px;font-size: 32px;color: #d9534f;">3</td>
+                <td style="height: 50px;line-height: 50px;font-size: 32px;color:#777; ">12</td>
+            </tr>
+        </table>
+        <table class="table table-bordered" style="margin-left: 10%;width: 80%;margin-top: 25px;">
+            <tr>
+                <td>车检器编号</td>
+                <td>车位号</td>
+                <td>车位状态</td>
+                <td>电压</td>
+                <td>更新时间</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td>10001</td>
+                <td><span class="label label-danger">有车</span></td>
+                <td>10001</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td>10001</td>
+                <td><span class="label label-default">无车</span></td>
+                <td>10001</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td>10001</td>
+                <td><span class="label label-default">无车</span></td>
+                <td>10001</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td>10001</td>
+                <td><span class="label label-default">无车</span></td>
+                <td>10001</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td>10001</td>
+                <td><span class="label label-default">无车</span></td>
+                <td>10001</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td>10001</td>
+                <td><span class="label label-default">无车</span></td>
+                <td>10001</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td>10001</td>
+                <td><span class="label label-default">无车</span></td>
+                <td>10001</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td>10001</td>
+                <td><span class="label label-default">无车</span></td>
+                <td>10001</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td>10001</td>
+                <td><span class="label label-default">无车</span></td>
+                <td>10001</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td>10001</td>
+                <td><span class="label label-default">无车</span></td>
+                <td>10001</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <table class="table" style="margin-left: 10%;width: 80%;border: 0">
+            <tr>
+                <td style="border-top:0px;font-size: 18px;">设备总数</td>
+                <td style="border-top:0px;font-size: 18px;">总报警数</td>
+            </tr>
+            <tr>
+                <td style="height: 50px;line-height: 50px;font-size: 32px;color: white;">50</td>
+                <td style="height: 50px;line-height: 50px;font-size: 32px;color: #d9534f;">123</td>
+            </tr>
+        </table>
+        <table class="table table-bordered" style="margin-left: 10%;width: 80%;margin-top: 25px;">
+            <tr>
+                <td>设备编号</td>
+                <td>数据类型</td>
+                <td>信号值</td>
+                <td>电压</td>
+                <td>更新时间</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td><span class="label label-danger">报警</span></td>
+                <td>-78</td>
+                <td>3.81</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td><span class="label label-success">心跳</span></td>
+                <td>-78</td>
+                <td>3.81</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td><span class="label label-danger">报警</span></td>
+                <td>-78</td>
+                <td>3.81</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td><span class="label label-success">心跳</span></td>
+                <td>-78</td>
+                <td>3.81</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td><span class="label label-danger">报警</span></td>
+                <td>-78</td>
+                <td>3.81</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td><span class="label label-success">心跳</span></td>
+                <td>-78</td>
+                <td>3.81</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td><span class="label label-danger">报警</span></td>
+                <td>-78</td>
+                <td>3.81</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td><span class="label label-success">心跳</span></td>
+                <td>-78</td>
+                <td>3.81</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td><span class="label label-danger">报警</span></td>
+                <td>-78</td>
+                <td>3.81</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+            <tr>
+                <td>0001171027000001</td>
+                <td><span class="label label-danger">报警</span></td>
+                <td>-78</td>
+                <td>3.81</td>
+                <td>2018-03-13 17:03:09</td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
