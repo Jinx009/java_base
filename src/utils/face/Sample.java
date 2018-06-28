@@ -57,7 +57,7 @@ public class Sample {
         options.put("liveness_control", "LOW");
         options.put("max_user_num", "3");
         
-        String image = imageToBase64ByLocal("/Users/jinx/Downloads/test/test003.jpg");
+        String image = imageToBase64ByLocal("/Users/jinx/Downloads/test/test009.jpg");
         String imageType = "BASE64";
         String groupIdList = "cixin";
         
