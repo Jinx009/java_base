@@ -7,6 +7,7 @@ import utils.enums.AppInfo;
  * @author jinx
  */
 public class BaseConstant {
+	
 
 	/**
 	 * http部分
