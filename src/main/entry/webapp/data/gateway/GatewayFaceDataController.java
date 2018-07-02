@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import database.models.face.FaceGatewayUser;
 import main.entry.webapp.BaseController;
+import service.basicFunctions.face.FaceGatewayCompareService;
 import service.basicFunctions.face.FaceGatewayUserService;
 import utils.Resp;
 import utils.UUIDUtils;
@@ -38,12 +39,16 @@ public class GatewayFaceDataController extends BaseController{
 	
 	@Autowired
 	private FaceGatewayUserService faceGatewayUserService;
+	@Autowired
+	private FaceGatewayCompareService faceGatewayCompareService;
 	
 	/**
 	 * 获取人脸库列表
 	 * @param p
 	 * @return
 	 */
+	@RequestMapping(path = "/users")
+	@ResponseBody
 	public Resp<?> pageList(Integer p){
 		return new Resp<>(faceGatewayUserService.pageList(p));
 	}
@@ -57,6 +62,8 @@ public class GatewayFaceDataController extends BaseController{
 	 * @param uid
 	 * @return
 	 */
+	@RequestMapping(path = "/addUser")
+	@ResponseBody
 	public Resp<?> faceRegister(String imagePath,String name,String address,String mobilePhone,String uid){
 		Resp<?> resp = new Resp<>(false);
 		try {
@@ -92,6 +99,17 @@ public class GatewayFaceDataController extends BaseController{
 		}
 		log.warn("data:{}",resp);
 		return resp;
+	}
+	
+	/**
+	 * 人脸识别对比列表
+	 * @param p
+	 * @return
+	 */
+	@RequestMapping(path = "/compares")
+	@ResponseBody
+	public Resp<?> compareList(int p){
+		return new Resp<>(faceGatewayCompareService.pageList(p));
 	}
 	
 	/**
