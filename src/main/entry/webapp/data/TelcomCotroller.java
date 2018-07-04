@@ -24,8 +24,10 @@ import database.models.vo.PushModel;
 import database.models.vo.TModel;
 import database.models.vo.TelcomPushDataModel;
 import utils.Constant;
+import utils.HttpUtils;
 import utils.HttpsUtil;
 import utils.JsonUtil;
+import utils.MD5Util;
 import utils.StreamClosedHttpResponse;
 
 import main.entry.webapp.BaseController;
@@ -160,7 +162,12 @@ public class TelcomCotroller extends BaseController{
 						iotCloudLog.setType(0);
 						iotCloudLog.setMac(ioTCloudDevice.getMac());
 						iotCloudLogService.save(iotCloudLog);
-						send(tModel.getData());
+						if(ioTCloudDevice.getLocalIp()!=null&&ioTCloudDevice.getLocalIp().equals("SM_CZ")){
+							String _s = "content="+tModel.getData()+"&key=gdzxxxkjgfyxgs9981n";
+							HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="+MD5Util.toMD5(_s).toLowerCase()+"&"+_s);
+						}else{
+							send(tModel.getData());
+						}
 					}
 				}
 				if(pushModel2!=null){
@@ -174,7 +181,12 @@ public class TelcomCotroller extends BaseController{
 					iotCloudLog.setType(0);
 					iotCloudLog.setMac(ioTCloudDevice.getMac());
 					iotCloudLogService.save(iotCloudLog);
-					send(tModel.getData());
+					if(ioTCloudDevice.getLocalIp()!=null&&ioTCloudDevice.getLocalIp().equals("SM_CZ")){
+						String _s = "content="+tModel.getData()+"&key=gdzxxxkjgfyxgs9981n";
+						HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="+MD5Util.toMD5(_s).toLowerCase()+"&"+_s);
+					}else{
+						send(tModel.getData());
+					}
 				}
 			}
 			return new Resp<>(true);
