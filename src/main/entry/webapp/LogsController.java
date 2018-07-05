@@ -22,14 +22,14 @@ public class LogsController extends BaseController{
 	@Autowired
 	private LogSensorHeartService logSensorDeviceService;
 	
-	@RequestMapping(path = "/deviceAlive",produces = {"text/html"})
+	@RequestMapping(path = "/deviceAlive",produces = {"text/html;charset=UTF-8"})
 	@ResponseBody
 	public String deviceAlive(){
 		try {
 			String res = "<html><body>";
 			List<String> list = logSensorDeviceService.findAlive();
 			if(list!=null&&!list.isEmpty()){
-				res += "<h1>today alive total："+list.size()+" sensors</h1>";
+				res += "<h2>当日激活地磁个数："+list.size()+" 个</h2>";
 				for(String  s :list){
 					res+= "<p style=\"font-size:16px;\">"+s+"</p>";
 				}

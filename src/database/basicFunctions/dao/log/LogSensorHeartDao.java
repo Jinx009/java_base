@@ -19,7 +19,7 @@ public class LogSensorHeartDao extends BaseDao<LogSensorHeart>{
 	public List<String> findAlive(){
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
-		String sql = " select distinct mac from tbl_sensor_devicelog where create_time>'"+sdf.format(date)+"' order by mac  ";
+		String sql = " select distinct mac from tbl_sensor_devicelog where create_time>'"+sdf.format(date)+"' and mac like'0001180614%'  order by mac  ";
 		Query query = em.createNativeQuery(sql);
 		List<Object> list = query.getResultList();
 		if(list!=null){
@@ -36,7 +36,7 @@ public class LogSensorHeartDao extends BaseDao<LogSensorHeart>{
 	@SuppressWarnings("unchecked")
 	public List<LogSensorHeart> findByMacAndDate(String mac, String dateStr) {
 		String hql = " FROM LogSensorHeart  "+
-		"where createTime>='"+dateStr+" 00:00:00' and createTime<='"+dateStr+" 23:59:59' and mac like'%"+mac+"%' and  dif is not null order by id desc  ";
+		"where createTime>='"+dateStr+" 00:00:00' and createTime<='"+dateStr+" 23:59:59'  and mac like'%"+mac+"%' and  dif is not null order by id desc  ";
 		Query query = em.createQuery(hql);
 		List<LogSensorHeart> list = query.getResultList();
 		if(list!=null&&!list.isEmpty()){

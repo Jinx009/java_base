@@ -5,7 +5,7 @@ $(function(){
 	});
 	_getData();
 })
-
+ var _d = '';
 function _getData(){
 	var dateStr = $('#datepicker').val();
 	var mac = $('#mac').val();
@@ -22,12 +22,17 @@ function _getData(){
 			for(var i in res.data){
 				res.data[i].createTime = toDateTime(res.data[i].createTime);
 			}
-			new Vue({
-				el:'#data',
-				data:{
-					datas:res.data
-				}
-			})
+			if(_d==''){
+				_d = new Vue({
+					el:'#data',
+					data:{
+						datas:res.data
+					}
+				})
+			}else{
+				_d.datas = res.data;
+			}
+			
 		}
 	})
 }
