@@ -10,10 +10,10 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
-import database.models.log.LogSensorDevice;
+import database.models.log.LogSensorHeart;
 
 @Repository
-public class LogSensorDeviceDao extends BaseDao<LogSensorDevice>{
+public class LogSensorHeartDao extends BaseDao<LogSensorHeart>{
 
 	@SuppressWarnings("unchecked")
 	public List<String> findAlive(){
@@ -28,6 +28,19 @@ public class LogSensorDeviceDao extends BaseDao<LogSensorDevice>{
 				list_.add(obj.toString());
 			}
 			return list_;
+		}
+		return null;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<LogSensorHeart> findByMacAndDate(String mac, String dateStr) {
+		String hql = " FROM LogSensorHeart  "+
+		"where createTime>='"+dateStr+" 00:00:00' and createTime<='"+dateStr+" 23:59:59' and mac like'%"+mac+"%' and  dif is not null order by id desc  ";
+		Query query = em.createQuery(hql);
+		List<LogSensorHeart> list = query.getResultList();
+		if(list!=null&&!list.isEmpty()){
+			return list;
 		}
 		return null;
 	}

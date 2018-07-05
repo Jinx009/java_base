@@ -46,6 +46,7 @@ public class BaseConstant {
 	public static final String APP_SECRET = "appSecret";
 	public static final String DESCRIPTION = "description";
 	public static final String APP_ID_IS_EXITS = "appId已经存在！";
+	public static final String DATE_STR = "dateStr";
 	
 	
 }

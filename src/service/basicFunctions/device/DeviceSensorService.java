@@ -89,6 +89,7 @@ public class DeviceSensorService extends BaseService{
 		}
 		return resp;
 	}
+
 	
 	/**
 	 * 地磁列表

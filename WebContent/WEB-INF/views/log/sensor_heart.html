@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>展为智能</title>
+<meta name="viewport"
+	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<link rel="shortcut icon" href="/themes/img/favicon.ico"
+	type="image/x-icon" />
+<link rel="stylesheet" href="/themes/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="/themes/awe/dist/css/AdminLTE.min.css">
+<link rel="stylesheet"
+	href="/themes/awe/dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="/themes/css/home/main.css?_v=1">
+<link rel="shortcut icon" href="/themes/img/favicon.ico"
+	type="image/x-icon">
+</head>
+<body>
+<body class="hold-transition skin-blue fixed sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+		<#include "_nav.html">
+		<!-- 路径导航 -->
+		<div class="content-wrapper" style="background-color: white;">
+			<section class="content-header" style="height: 50px;">
+				<h1></h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> Sensor
+							heart管理 </a></li>
+				</ol>
+			</section>
+			<!-- 主内容 -->
+			<section class="content">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-header">
+								<h3 class="box-title">Sensor heart列表</h3>
+							</div>
+							<!-- /.box-header -->
+							<div class="box-body table-responsive no-padding">
+								<div class="col-md-12">
+									<form class="form-inline">
+										<div class="form-group">
+											<label class="sr-only">MAC</label> <input type="text"
+												style="width: 220px;" class="form-control"
+												placeholder="支持模糊查询" id="mac">
+										</div>
+										<div class="form-group">
+											<label class="sr-only">选择日期</label> <input type="text"
+												style="width: 220px;" class="form-control"
+												readonly="readonly" id="datepicker">
+										</div>
+										<button type="button" class="btn btn-info"
+											onclick="_getData();">&nbsp;查&nbsp;询&nbsp;</button>
+									</form>
+									<div class="panel panel-default" style="margin-top: 20px;">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>Mac地址</th>
+													<th>dif</th>
+													<th>state</th>
+													<th>mod</th>
+													<th>ver</th>
+													<th>vol</th>
+													<th>lt</th>
+													<th>ht</th>
+													<th>wlt</th>
+													<th>wht</th>
+													<th>at</th>
+													<th>wt</th>
+													<th>sdi</th>
+													<th>sdo</th>
+													<th>fdi</th>
+													<th>rssi</th>
+													<th>rsrp</th>
+													<th>snr</th>
+													<th>pci</th>
+													<th>时间</th>
+												</tr>
+											</thead>
+											<tbody id="data">
+												<tr v-for="item in datas">
+													<td v-text="item.mac"></td>
+													<td v-text="item.dif"></td>
+													<td v-text="item.state"></td>
+													<td v-text="item.mod"></td>
+													<td v-text="item.ver"></td>
+													<td v-text="item.vol"></td>
+													<td v-text="item.lt"></td>
+													<td v-text="item.ht"></td>
+													<td v-text="item.wlt"></td>
+													<td v-text="item.wht"></td>
+													<td v-text="item.at"></td>
+													<td v-text="item.wt"></td>
+													<td v-text="item.sdi"></td>
+													<td v-text="item.sdo"></td>
+													<td v-text="item.fdi"></td>
+													<td v-text="item.rssi"></td>
+													<td v-text="item.rsrp"></td>
+													<td v-text="item.snr"></td>
+													<td v-text="item.pci"></td>
+													<td v-text="item.createTime"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<#include "_footer.html">
+	</div>
+	<script src="/themes/awe/plugins/datepicker/bootstrap-datepicker.js"></script>
+	<script src="/themes/js/home/log/sensor_heart.js?version=1.27"></script>
+
+</body>
+</html>

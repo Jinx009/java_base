@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "tbl_sensor_devicelog")
-public class LogSensorDevice {
+public class LogSensorHeart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
