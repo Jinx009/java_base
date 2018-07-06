@@ -27,6 +27,7 @@ public enum PageCode {
 	 DEVICE_SENSOR_DETAIL(      "device_sensor_detail",       "/device/sensor_detail",         true),
 	 
 	 LOG_SENSOR_HEART(         	"log_sensor_heart",           "/log/sensor_heart",            true),
+	 LOG_SENSOR_STATUS(         "log_sensor_status",           "/log/sensor_status",            true),
 	 
 	 DEVICE_CROSS_SENSOR_LIST(  "device_cross_sensor_list",   "/device/cross_sensor" ,         true),
 	 DEVICE_CROSS_SENSOR_JOB(   "device_cross_sensor_job",    "/device/cross_sensor_job" ,     true),

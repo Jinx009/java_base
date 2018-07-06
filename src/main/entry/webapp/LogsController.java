@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.entry.webapp.BaseController;
-import service.basicFunctions.log.LogSensorHeartService;
+import service.basicFunctions.log.LogSensorLogService;
 
 @Controller
 @RequestMapping(value = "/common/log")
@@ -20,7 +20,7 @@ public class LogsController extends BaseController{
 	private static final Logger log = LoggerFactory.getLogger(LogsController.class);
 	
 	@Autowired
-	private LogSensorHeartService logSensorDeviceService;
+	private LogSensorLogService logSensorDeviceService;
 	
 	@RequestMapping(path = "/deviceAlive",produces = {"text/html;charset=UTF-8"})
 	@ResponseBody
