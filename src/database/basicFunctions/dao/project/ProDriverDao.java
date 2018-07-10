@@ -1,5 +1,7 @@
 package database.basicFunctions.dao.project;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import common.helper.StringUtil;
@@ -37,6 +39,10 @@ public class ProDriverDao extends BaseDao<ProDriver>{
 		QueryParam queryParam = QueryParam.getInstance();
 		queryParam.addParam("mobilePhone", mobilePhone);
 		return findByCriteriaForUnique(queryParam);
+	}
+
+	public List<ProDriver> selectList() {
+		return findAll();
 	}
 	
 }

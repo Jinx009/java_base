@@ -23,69 +23,77 @@
 		<#include "home_nav.html">
 		<!-- 路径导航 -->
 		<div class="content-wrapper" style="background-color: white;">
+			</section>
+			<!-- 主内容 -->
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> 新增作品 </a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> 新增Task </a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
-		  <section class="content" >
-			    <div class="row">
+			<section class="content" id="datas">
+				 <div class="row">
 			      <div class="col-md-3"></div>
 			      <div class="col-md-6">
 			      	<div class="box box-primary">
 			            <form role="form">
 			              <div class="box-body">
 			                <div class="form-group">
-			                  <label>作品名称</label>
-			                  <input type="text" class="form-control" id="name" placeholder="请输入作品名称">
+			                  <label>Name</label>
+			                  <input type="text" class="form-control" id="name" placeholder="">
+			                </div>
+			                 <div class="form-group">
+			                  <label>Number</label>
+			                  <input type="text" style="margin-top: 20px;" class="form-control" id="mobilePhone" placeholder="">
 			                </div>
 			                <div class="form-group">
-			                  <label>作者</label>
-			                  <input type="text" style="margin-top: 20px;" class="form-control" id="autor" placeholder="请输入作品作者">
+			                  <label>MobilePhone</label>
+			                  <input type="text" style="margin-top: 20px;" class="form-control" id="mobilePhone" placeholder="">
 			                </div>
 			                 <div class="form-group">
-			                  <label>作者电话</label>
-			                  <input type="text" class="form-control" id="mobilePhone" placeholder="请输入作者联系方式">
-			                </div>
-			                 <div class="form-group">
-			                  <label>描述内容</label>
-			                  <input type="text" class="form-control" id="desc" placeholder="请输入描述内容">
+			                  <label>Dep</label>
+			                  <input type="text" class="form-control" id="dep" placeholder="">
 			                </div>
 			                  <div class="form-group">
-			                	<label>作品内容</label>
-				                <div class="input-group">
-				                	<input type="text" id="fileShow" readonly="readonly" class="form-control">
-				                    <span class="input-group-btn">
-				                      <button type="button" onclick="_showUpload();" class="btn btn-info btn-flat"> 上 传 </button>
-				                    </span>
-				               </div>
-			               </div>
+			                  <label>Description</label>
+			                  <input type="text" class="form-control" id="description" placeholder="">
+			                </div>
+			                  <div class="form-group">
+			                  <label>Date</label>
+			                  <input type="text" class="form-control" id="pickDate" readonly="readonly" placeholder="">
+			                </div>
+			                  <div class="form-group">
+			                  <label>Time</label>
+			                  <input type="text" class="form-control" id="pickTime" readonly="readonly" placeholder="">
+			                </div>
 			                <div class="form-group">
-			                   <img alt="" id="img"  src="" >
+			                  <label>Flight</label>
+			                  <input type="text" class="form-control" id="flight" placeholder="">
+			                </div>
+			                <div class="form-group">
+			                  <label>Driver</label>
+			                  <select  class="form-control" id="driver" >
+			                  		<option v-for="item in drivers" v-bind:value="item.mobilePhone" v-text="item.name"  ></option>
+			                  </select>
 			                </div>
 			                <div class="form-group">
 			                  <span class="badge bg-red" id="errorMsg" ></span>
 			                </div>
 			              </div>
 			              <div class="box-footer">
-			                <button type="button" class="btn btn-primary submit-btn">保存</button>
+			                <button type="button" onclick="_save()" class="btn btn-primary submit-btn">确定</button>
 			              </div>
 			            </form>
-			              <form id="form" action="/base/uploadImg" enctype="multipart/form-data"  method="post" style="display: none;" >
-		                    <input type="file"  id="file" name="file" >
-		                  </form>
 			            </div>
 		            </div>
 		          </div>
-		    </section>
+			</section>
 		</div>
 		<#include "home_footer.html">
 	</div>
 	<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
-	<script src="/themes/js/ajaxUpload.js?version=1.43"></script>
-	<script src="/themes/js/home/pro_pic_add.js?version=1.014"></script>
-
+	<script src="/themes/js/home/pro_task_new.js?version=1.14"></script>
+	<script src="/themes/laydate/laydate.js?version=1.14"></script>
 </body>
 </html>

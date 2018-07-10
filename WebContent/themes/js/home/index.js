@@ -65,7 +65,7 @@ function login() {
 				data : params,
 				success : function(res) {
 					if ('200' == res.code && '访问成功' == res.msg) {
-						_open('l1','/home/p/pro_user');
+						_open('l1','/home/p/pro_driver');
 					} else {
 						$('#errorMsg').html(res.msg)
 					}

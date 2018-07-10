@@ -93,6 +93,7 @@ public class ProTaskHomeDataController extends BaseController{
 		sheet.setColumnWidth(6, 256*20);
 		sheet.setColumnWidth(7, 256*20);
 		sheet.setColumnWidth(8, 256*20);
+		sheet.setColumnWidth(9, 256*20);
 		
 		HSSFRow row = sheet.createRow((int) 0);
 		HSSFCellStyle style = wb.createCellStyle();
@@ -130,6 +131,9 @@ public class ProTaskHomeDataController extends BaseController{
 		cell = row.createCell((short) 8);
 		cell.setCellValue("PickedTime");
 		cell.setCellStyle(style);
+		cell = row.createCell((short) 9);
+		cell.setCellValue("Status");
+		cell.setCellStyle(style);
 
 		for (int i = 0; i < tasks.size(); i++) {
 			row = sheet.createRow((int) i + 1);
@@ -160,6 +164,13 @@ public class ProTaskHomeDataController extends BaseController{
 			cell.setCellStyle(style);
 			cell=row.createCell((short) 8);
 			cell.setCellValue(task.getPickedTime());
+			cell.setCellStyle(style);
+			cell=row.createCell((short) 9);
+			if(1==task.getStatus()){
+				cell.setCellValue("Picked");
+			}else{
+				cell.setCellValue("Picking");
+			}
 			cell.setCellStyle(style);
 		}
 		// 输出数据流

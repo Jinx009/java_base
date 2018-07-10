@@ -11,53 +11,24 @@ import main.entry.webapp.BaseController;
 public class HomePageController extends BaseController{
 	
 	@RequestMapping(path = "/pro_driver")
-	public String user(){
+	public String driver(){
 		return "/home/pro_driver";
 	}
 	
-	@RequestMapping(path = "/pro_pic")
-	public String pic(){
-		return "/home/pro_pic";
+	@RequestMapping(path = "/pro_driver_new")
+	public String driver_new(){
+		return "/home/pro_driver_new";
 	}
 	
-	@RequestMapping(path = "/pro_pic_new")
-	public String picNew(){
-		return "/home/pro_pic_new";
+	@RequestMapping(path = "/pro_task_new")
+	public String task_new(){
+		return "/home/pro_task_new";
 	}
 	
-	@RequestMapping(path = "/pro_book")
-	public String book(){
-		return "/home/pro_book";
+	@RequestMapping(path = "/pro_task")
+	public String task(){
+		return "/home/pro_task";
 	}
 	
-	@RequestMapping(path = "/pro_book_new")
-	public String bookNew(){
-		return "/home/pro_book_new";
-	}
 	
-	@RequestMapping(path = "/pro_book_edit")
-	public String bookEdit(){
-		return "/home/pro_book_edit";
-	}
-	
-	@RequestMapping(path = "/pro_book_order")
-	public String bookOrder(){
-		return "/home/pro_book_order";
-	}
-	
-	@RequestMapping(path = "/pro_book_post")
-	public String post(){
-		return "/home/pro_book_post";
-	}
-	
-	@RequestMapping(path = "/pro_book_trans")
-	public String trans(){
-		return "/home/pro_book_post";
-	}
-	
-	@RequestMapping(path = "/pro_book_post_edit")
-	public String postEdit(){
-		return "/home/pro_book_post_edit";
-	}
-
 }

@@ -1,11 +1,13 @@
 package service.basicFunctions.project;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import common.helper.MD5Util;
+import common.helper.StringUtil;
 import database.basicFunctions.dao.project.ProDriverDao;
 import database.common.PageDataList;
 import database.models.project.ProDriver;
@@ -57,7 +59,13 @@ public class ProDriverService {
 		proDriver.setMobilePhone(mobilePhone);
 		proDriver.setName(name);
 		proDriver.setPlateNumber(plateNumber);
-		proDriver.setPwd(MD5Util.md5(pwd));
+		if(StringUtil.isNotBlank(pwd)){
+			proDriver.setPwd(MD5Util.md5(pwd));
+		}
 		proDriverDao.update(proDriver);
+	}
+
+	public List<ProDriver> selectList() {
+		return proDriverDao.selectList();
 	}
 }

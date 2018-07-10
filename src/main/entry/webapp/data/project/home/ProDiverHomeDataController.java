@@ -1,5 +1,7 @@
 package main.entry.webapp.data.project.home;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +38,30 @@ public class ProDiverHomeDataController extends BaseController{
 	}
 	
 	
+	@RequestMapping(path = "selectList")
+	@ResponseBody
+	public Resp<?> selectList(){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<ProDriver> list = proDriverService.selectList();
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	
 	@RequestMapping(path = "save")
 	@ResponseBody
 	public Resp<?> save(String mobilePhone,String name,String pwd,String plateNumber){
 		Resp<?> resp = new Resp<>(false);
 		try {
+			ProDriver proDriver = proDriverService.findByMobilePhone(mobilePhone);
+			if(proDriver!=null){
+				resp.setMsg("该手机号已经存在！");
+				return resp;
+			}
 			proDriverService.save(mobilePhone,name,pwd,plateNumber);
 			return new Resp<>(true);
 		} catch (Exception e) {
