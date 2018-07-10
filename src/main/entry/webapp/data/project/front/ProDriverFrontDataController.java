@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import common.helper.MD5Util;
 import common.helper.StringUtil;
-import database.models.project.ProUser;
+import database.models.project.ProDriver;
 import main.entry.webapp.BaseController;
-import service.basicFunctions.project.ProUserService;
+import service.basicFunctions.project.ProDriverService;
 import utils.Resp;
 import utils.RespData;
 
 @Controller
-@RequestMapping(value = "/front/d/pro_user")
-public class ProUserFrontDataController extends BaseController{
+@RequestMapping(value = "/front/d/pro_driver")
+public class ProDriverFrontDataController extends BaseController{
 
-	private static final Logger log = LoggerFactory.getLogger(ProUserFrontDataController.class);
+	private static final Logger log = LoggerFactory.getLogger(ProDriverFrontDataController.class);
 	
 	@Autowired
-	private ProUserService proUserService;
+	private ProDriverService proDriverService;
 	
 	@RequestMapping(path = "/login")
 	@ResponseBody
@@ -37,18 +37,14 @@ public class ProUserFrontDataController extends BaseController{
 			}else if(StringUtil.isBlank(pwd)){
 				return new Resp<>(RespData.ERROR_CODE,"密码不能为空！",null);
 			}
-			ProUser proUser = proUserService.login(mobilePhone, pwd);
-			if(proUser!=null){
-				setSessionFront(request, proUser);
+			ProDriver proDriver = proDriverService.login(mobilePhone, pwd);
+			if(proDriver!=null){
+				setSessionFront(request, proDriver);
 				return new Resp<>(RespData.OK_CODE,RespData.OK_MSG,MD5Util.md5(pwd));
 			}
-			proUser = proUserService.findByMobilePhone(mobilePhone);
-			if(proUser!=null){
+			proDriver = proDriverService.findByMobilePhone(mobilePhone);
+			if(proDriver!=null){
 				return new Resp<>(RespData.ERROR_CODE,"账号或密码有误！",null);
-			}else{
-				proUser = proUserService.saveNew(mobilePhone, pwd, "", "");
-				setSessionFront(request, proUser);
-				return new Resp<>(RespData.OK_CODE,RespData.OK_MSG,MD5Util.md5(pwd));
 			}
 		} catch (Exception e) {
 			log.error("error:{}",e);
@@ -66,51 +62,17 @@ public class ProUserFrontDataController extends BaseController{
 			}else if(StringUtil.isBlank(pwd)){
 				return new Resp<>(RespData.ERROR_CODE,"密码不能为空！",null);
 			}
-			ProUser proUser = proUserService.login_m(mobilePhone, pwd);
-			if(proUser!=null){
-				setSessionFront(request, proUser);
+			ProDriver proDriver = proDriverService.login_m(mobilePhone, pwd);
+			if(proDriver!=null){
+				setSessionFront(request, proDriver);
 				return new Resp<>(RespData.OK_CODE,RespData.OK_MSG,MD5Util.md5(pwd));
 			}
-			proUser = proUserService.findByMobilePhone(mobilePhone);
-			if(proUser!=null){
+			proDriver = proDriverService.findByMobilePhone(mobilePhone);
+			if(proDriver!=null){
 				return new Resp<>(RespData.ERROR_CODE,"账号或密码有误！",null);
 			}else{
 				return new Resp<>(RespData.ERROR_CODE,"账户不存在！",null);
 			}
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return resp;
-	}
-	
-	@RequestMapping(path = "/update")
-	@ResponseBody
-	public Resp<?> update(String mobilePhone,String name,String address,String nickName,String pwd,HttpServletRequest request){
-		Resp<?> resp = new Resp<>(false);
-		try {
-			ProUser proUser = getSessionFrontUser(request);
-			proUser.setAddress(address);
-			proUser.setNickName(nickName);
-			proUser.setRealName(name);
-			if(StringUtil.isNotBlank(pwd)){
-				proUser.setPwd(MD5Util.md5(pwd));
-			}
-			setSessionFront(request, proUser);
-			proUserService.update(proUser);
-			return new Resp<>(true);
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return resp;
-	}
-	
-	@RequestMapping(path = "/me")
-	@ResponseBody
-	public Resp<?> me(String mobilePhone,String pwd,HttpServletRequest request){
-		Resp<?> resp = new Resp<>(false);
-		try {
-			ProUser proUser = getSessionFrontUser(request);
-			return new Resp<>(proUser);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

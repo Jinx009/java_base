@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import database.models.project.ProUser;
+import database.models.project.ProDriver;
 import utils.BaseConstant;
 
 public class FrontPageFilter implements Filter {
@@ -34,9 +34,9 @@ public class FrontPageFilter implements Filter {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		HttpSession session = httpServletRequest.getSession();
-		ProUser proUser = (ProUser)session.getAttribute(BaseConstant.FRONT_USER);
+		ProDriver proDriver = (ProDriver)session.getAttribute(BaseConstant.FRONT_USER);
 		// 通过检查session中的变量，过虑请求
-		if(proUser==null){
+		if(proDriver==null){
 			httpServletResponse.sendRedirect("/f/p/login");
 			return;
 		}

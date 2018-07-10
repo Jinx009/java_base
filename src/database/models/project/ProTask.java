@@ -17,8 +17,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="pro_book_post")
-public class ProBookPost {
+@Table(name="pro_task")
+public class ProTask {
 
 	@Id
 	@Column(unique=true, nullable=false)
@@ -26,20 +26,32 @@ public class ProBookPost {
 	private Integer id;
 	@Column(name = "mobile_phone")
 	private String mobilePhone;
+	@Column(name = "dep")
+	private String dep;
+	@Column(name = "description")
+	private String description;
+	@Column(name = "name")
+	private String name;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name = "post_num")
-	private String postNum;
-	@Column(name = "remark")
-	private String remark;
-	@Column(name = "points")
-	private Integer points;
-	@Column(name = "points_remark")
-	private String pointsRemark;
+	@Column(name = "number")
+	private String number;
+	@Column(name = "pick_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date pickTime;
+	@Column(name = "picked_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date pickedTime;
+	@Column(name = "flight")
+	private String flight;
+	@Column(name = "driver_mobile")
+	private String diverMobile;
 	@Column(name = "status")
 	private Integer status;
-	@Column(name = "sell_points")
-	private Integer sellPoints;
+	@Column(name = "driver_name")
+	private String driverName;
+	
+	
 	
 }
