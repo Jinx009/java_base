@@ -46,7 +46,7 @@ public class ProTask {
 	@Column(name = "flight")
 	private String flight;
 	@Column(name = "driver_mobile")
-	private String diverMobile;
+	private String driverMobile;
 	@Column(name = "status")
 	private Integer status;
 	@Column(name = "driver_name")

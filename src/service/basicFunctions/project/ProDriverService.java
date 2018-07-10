@@ -1,5 +1,7 @@
 package service.basicFunctions.project;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +39,25 @@ public class ProDriverService {
 
 	public ProDriver findByMobilePhone(String mobilePhone) {
 		return proDriverDao.findByMobilePhone(mobilePhone);
+	}
+
+	public void save(String mobilePhone, String name, String pwd, String plateNumber) {
+		ProDriver proDriver = new ProDriver();
+		proDriver.setCreateTime(new Date());
+		proDriver.setMobilePhone(mobilePhone);
+		proDriver.setName(name);
+		proDriver.setPlateNumber(plateNumber);
+		proDriver.setPwd(MD5Util.md5(pwd));
+		proDriverDao.save(proDriver);
+	}
+
+	public void update(String mobilePhone, String name, String pwd, String plateNumber, Integer id) {
+		ProDriver proDriver = proDriverDao.find(id);
+		proDriver.setCreateTime(new Date());
+		proDriver.setMobilePhone(mobilePhone);
+		proDriver.setName(name);
+		proDriver.setPlateNumber(plateNumber);
+		proDriver.setPwd(MD5Util.md5(pwd));
+		proDriverDao.update(proDriver);
 	}
 }
