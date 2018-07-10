@@ -171,5 +171,30 @@ public class HttpUtils {
 		}
 		return result;
     }
+
+	@SuppressWarnings("resource")
+	public static String postText(String url, String data) {
+		logger.warn("HttpUtils.postJson[info:{},{}]",url,data);
+		String result = "500";
+        HttpPost post = new HttpPost(url);
+        post.addHeader("Content-type","text;charset=utf-8");
+        post.setHeader("Accept", "application/json");
+        post.setEntity(new StringEntity(data, Charset.forName("UTF-8")));
+        try {
+        	DefaultHttpClient httpClient = new DefaultHttpClient();
+        	HttpResponse response = httpClient.execute(post);
+			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			logger.warn("HttpUtils.postJson[res:{}]",result);
+		} catch (ParseException e) {
+			logger.error("HttpUtils.postJson[ParseException.error:{}]",e);
+		} catch (IOException e) {
+			logger.error("HttpUtils.postJson[IOException.error:{}]",e);
+		}
+        return result;
+	}
+	
+	public static void main(String[] args) {
+		postText("http://58.247.128.138:8800/api/smoke/add", "3C755B01048637030319341409040EAD1827DF923E");
+	}
 	
 }

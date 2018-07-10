@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.entry.webapp.BaseController;
 import service.basicFunctions.project.ProGatewaySmokeDataService;
+import utils.HttpUtils;
 import utils.Resp;
 
 @Controller
@@ -35,6 +36,7 @@ public class GatewayDeviceDataController extends BaseController{
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String data =br.readLine();
 			log.warn("data:{}",data);
+			HttpUtils.postText("http://58.247.128.138:8800/api/smoke/add",data);
 			proGatewaySmokeDataService.save(data);
 			return new Resp<>(true);
 		} catch (Exception e) {

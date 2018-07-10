@@ -17,10 +17,7 @@ public class ProGatewaySmokeDataService {
 	
 	public ProGatewaySmokeData save(String data){
 		ProGatewaySmokeData proGatewaySmokeData = new ProGatewaySmokeData();
-		String[] s = data.split("-");
 		proGatewaySmokeData.setData(data);
-		proGatewaySmokeData.setMac(s[1]);
-		proGatewaySmokeData.setStatus(Integer.valueOf(s[2]));
 		proGatewaySmokeData.setCreateTime(new Date());
 		return proGatewaySmokeDataDao.save(proGatewaySmokeData);
 	}
