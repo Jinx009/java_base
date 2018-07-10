@@ -1,5 +1,7 @@
 package main.entry.webapp.page;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,34 +15,21 @@ public class FrontPageController extends BaseController{
 		return "/front/login";
 	}
 	
-	@RequestMapping(value = "/f/p/book")
-	public String book(){
-		return "/front/book";
+	@RequestMapping(value = "/front/p/detail")
+	public String detail(HttpServletRequest req,Integer id){
+		req.setAttribute("_id", id);
+		return "/front/detail";
 	}
 	
-	@RequestMapping(value = "/f/p/pic")
-	public String pic(){
-		return "/front/pic";
+	
+	@RequestMapping(value = "/front/p/wait")
+	public String wait1(){
+		return "/front/wait";
 	}
 	
-	@RequestMapping(value = "/front/p/me")
-	public String me(){
-		return "/front/me";
+	@RequestMapping(value = "/front/p/done")
+	public String done(){
+		return "/front/done";
 	}
-	
-	@RequestMapping(value = "/front/p/book_post")
-	public String book_post(){
-		return "/front/book_post";
-	}
-	
-	@RequestMapping(value = "/front/p/my_book_post")
-	public String my_book_post(){
-		return "/front/my_book_post";
-	}
-	
-	@RequestMapping(value = "/front/p/my_book")
-	public String my_book(){
-		return "/front/my_book";
-	}
-	
+
 }

@@ -40,6 +40,7 @@ public class ProTaskService {
 	public void changeStatus(Integer id){
 		ProTask proTask = proTaskDao.find(id);
 		proTask.setStatus(1);
+		proTask.setPickedTime(new Date());
 		proTaskDao.update(proTask);
 	}
 
@@ -87,6 +88,10 @@ public class ProTaskService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public ProTask find(Integer id) {
+		return proTaskDao.find(id);
 	}
 	
 }

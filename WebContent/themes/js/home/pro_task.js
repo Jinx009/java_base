@@ -22,7 +22,7 @@ function _getSelect(){
 		type:'post',
 		dataType:'json',
 		success:function(res){
-			_drivers = res.data;
+			drivers = res.data;
 		}
 	})
 }
@@ -119,7 +119,7 @@ function _update(){
 			dataType:'json',
 			success:function(res){
 				if('200'==res.code){
-					layer.alert('添加成功！',function(){
+					layer.alert('更新成功！',function(){
 						_open('l1','/home/p/pro_task');
 					})
 				}else{

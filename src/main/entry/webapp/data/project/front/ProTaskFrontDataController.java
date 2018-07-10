@@ -55,6 +55,18 @@ public class ProTaskFrontDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/detail")
+	@ResponseBody
+	public Resp<?> detail(Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(proTaskService.find(id));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	
 	@RequestMapping(path = "/changeStatus")
 	@ResponseBody

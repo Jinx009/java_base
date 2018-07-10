@@ -22,7 +22,7 @@ function login(){
 	  });
    }else{
 	   $.ajax({
-		   url:'/front/d/pro_user/login',
+		   url:'/front/d/pro_driver/login',
 		   data:'mobilePhone='+_mobilePhone+'&pwd='+_password,
 		   dataType:'json',
 		   type:'post',
@@ -32,7 +32,7 @@ function login(){
 					    setLocalStorage('_m',_mobilePhone);
 					    setLocalStorage('_p',hex_md5(_password));
 				   }
-				   _open('icon-settings-','/front/p/me');
+				   _open('icon-settings-','/front/p/wait');
 			   }else{
 				   layer.open({
 				    content: res.msg
@@ -51,7 +51,7 @@ function _login(_m,_p){
 		dataType:'json',
 		success:function(res){
 			if('200'==res.code){
-				_open('icon-settings-','/front/p/me');
+				_open('icon-settings-','/front/p/wait');
 			}
 		}
 	})
