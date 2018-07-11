@@ -34,5 +34,9 @@ public class IoTCloudDevice {
 	private Integer type; //1电信 2 联通
 	@Column(name = "device_id")
 	private String deviceId;
+	@Column(name = "udp_ip")
+	private String udpIp;
+	@Column(name = "udp_port")
+	private Integer udpPort;
 	
 }

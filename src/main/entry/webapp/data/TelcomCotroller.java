@@ -166,7 +166,7 @@ public class TelcomCotroller extends BaseController{
 							String _s = "content="+tModel.getData()+"&key=gdzxxxkjgfyxgs9981n";
 							HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="+MD5Util.toMD5(_s).toLowerCase()+"&"+_s);
 						}else{
-							send(tModel.getData());
+							send(tModel.getData(),ioTCloudDevice.getUdpIp(),ioTCloudDevice.getUdpPort());
 						}
 					}
 				}
@@ -185,7 +185,7 @@ public class TelcomCotroller extends BaseController{
 						String _s = "content="+tModel.getData()+"&key=gdzxxxkjgfyxgs9981n";
 						HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="+MD5Util.toMD5(_s).toLowerCase()+"&"+_s);
 					}else{
-						send(tModel.getData());
+						send(tModel.getData(),ioTCloudDevice.getUdpIp(),ioTCloudDevice.getUdpPort());
 					}
 				}
 			}

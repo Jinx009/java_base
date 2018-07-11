@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
+import database.models.IoTCloudDevice;
 import database.models.IotCloudLog;
 import main.entry.webapp.BaseController;
+import service.basicFunctions.IotCloudDeviceService;
 import service.basicFunctions.IotCloudLogService;
 import utils.Resp;
 
@@ -23,6 +25,8 @@ public class LoraWanController extends BaseController{
 	
 	@Autowired
 	private IotCloudLogService iotCloudLogService;
+	@Autowired
+	private IotCloudDeviceService iotCloudDeviceService;
 	
 	private static final Logger log = LoggerFactory.getLogger(LoraWanController.class);
 	
@@ -35,14 +39,15 @@ public class LoraWanController extends BaseController{
 		try {
 			JSONObject jsonObject = JSONObject.parseObject(r);
 			IotCloudLog iotCloudLog = new IotCloudLog();
+			IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByMac(JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("DevEUI"));
 			iotCloudLog.setData(JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("DevEUI")+JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("payload_hex"));
 			iotCloudLog.setFromSite("lorawan");
 			iotCloudLog.setCreateTime(new Date());
-			iotCloudLog.setImei(JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("DevEUI"));
+			iotCloudLog.setImei(ioTCloudDevice.getImei());
 			iotCloudLog.setType(0);
-			iotCloudLog.setMac(JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("DevEUI"));
+			iotCloudLog.setMac(ioTCloudDevice.getMac());
 			iotCloudLogService.save(iotCloudLog);
-			send(JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("DevEUI")+JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("payload_hex"));
+			send(JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("DevEUI")+JSONObject.parseObject(jsonObject.getString("DevEUI_uplink")).getString("payload_hex"),ioTCloudDevice.getUdpIp(),ioTCloudDevice.getUdpPort());
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}",e);

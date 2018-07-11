@@ -34,16 +34,16 @@ public class BaseController {
 		return value;
 	}
 	
-	private final static int PORT = 8888;
-	private static final String HOSTNAME = "139.196.205.157";
+//	private final static int PORT = 8888;
+//	private static final String HOSTNAME = "139.196.205.157";
 	    
 	
-	public static void send(String data){
+	public static void send(String data,String udpIp,int udpPort){
 		  try (DatagramSocket socket = new DatagramSocket(0)) {
 	            socket.setSoTimeout(10000);
-	            InetAddress host = InetAddress.getByName(HOSTNAME);
+	            InetAddress host = InetAddress.getByName(udpIp);
 	            byte[] buf = toBytes(data);
-	            DatagramPacket packet = new DatagramPacket(buf, buf.length,host, PORT);
+	            DatagramPacket packet = new DatagramPacket(buf, buf.length,host, udpPort);
 //	            socket.receive(packet);
 	            socket.send(packet);
 	            socket.close();

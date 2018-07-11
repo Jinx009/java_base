@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import database.models.IoTCloudDevice;
 import database.models.IotCloudLog;
 import database.models.vo.UnicomPushDataModel;
 import main.entry.webapp.BaseController;
@@ -53,15 +54,16 @@ public class UnicomController extends BaseController {
 			List<UnicomPushDataModel> list = JSONArray.parseArray(JSONObject.parseObject(pushData).getString("reports"),UnicomPushDataModel.class);
 			if(list!=null&&!list.isEmpty()){
 				for(UnicomPushDataModel unicomPushDataModel : list){
+					IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByMac(iotCloudDeviceService.getByImei(unicomPushDataModel.getSerialNumber()));
 					IotCloudLog iotCloudLog = new IotCloudLog();
 					iotCloudLog.setData(unicomPushDataModel.getValue());
 					iotCloudLog.setFromSite("unicom");
-					iotCloudLog.setImei(unicomPushDataModel.getSerialNumber());
+					iotCloudLog.setImei(ioTCloudDevice.getImei());
 					iotCloudLog.setType(0);
 					iotCloudLog.setCreateTime(new Date());
-					iotCloudLog.setMac(iotCloudDeviceService.getByImei(unicomPushDataModel.getSerialNumber()));
+					iotCloudLog.setMac(ioTCloudDevice.getMac());
 					iotCloudLogService.save(iotCloudLog);
-					send(unicomPushDataModel.getValue());
+					send(unicomPushDataModel.getValue(),ioTCloudDevice.getUdpIp(),ioTCloudDevice.getUdpPort());
 				}
 			}
 		} catch (Exception e) {
