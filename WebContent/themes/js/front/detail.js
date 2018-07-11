@@ -9,7 +9,11 @@ function _getData(){
 		dataType:'json',
 		success:function(res){
 			res.data.pickTime = toDateTime(res.data.pickTime);
-			res.data.pickedTime = toDateTime(res.data.pickedTime);
+			if(res.data.pickedTime!=null&&res.data.pickedTime!=''){
+				res.data.pickedTime = toDateTime(res.data.pickedTime);
+			}else{
+				res.data.pickedTime = '';
+			}
 			new Vue({
 				el:'body',
 				data:{

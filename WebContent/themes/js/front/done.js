@@ -15,6 +15,11 @@ function _getData() {
 						var htmlStr = '';
 						for ( var i in res.data.list) {
 							res.data.list[i].pickTime = toDateTime(res.data.list[i].pickTime);
+							if(res.data.list[i].pickedTime!=null&&res.data.list[i].pickedTime!=''){
+								res.data.list[i].pickedTime = toDateTime(res.data.list[i].pickedTime);
+							}else{
+								res.data.list[i].pickedTime = '';
+							}
 							var obj = res.data.list[i];
 							htmlStr += '<div class="content-block-title"></div>'
 									+ '<div class="list-block" onclick="_go(this);" id="'
