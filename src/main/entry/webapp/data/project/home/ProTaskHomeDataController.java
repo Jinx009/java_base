@@ -1,6 +1,7 @@
 package main.entry.webapp.data.project.home;
 
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -100,8 +100,6 @@ public class ProTaskHomeDataController extends BaseController{
 		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
 		HSSFCellStyle dateFormatCellStyle = wb.createCellStyle();
-		HSSFDataFormat format = wb.createDataFormat();
-		dateFormatCellStyle.setDataFormat(format.getFormat("yyyy年MM月dd日  HH点mm分ss秒"));
 		dateFormatCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
 		HSSFCell cell = row.createCell((short) 0);
@@ -129,12 +127,9 @@ public class ProTaskHomeDataController extends BaseController{
 		cell.setCellValue("Description");
 		cell.setCellStyle(style);
 		cell = row.createCell((short) 8);
-		cell.setCellValue("PickedTime");
-		cell.setCellStyle(style);
-		cell = row.createCell((short) 9);
 		cell.setCellValue("Status");
 		cell.setCellStyle(style);
-
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (int i = 0; i < tasks.size(); i++) {
 			row = sheet.createRow((int) i + 1);
 			ProTask task = tasks.get(i);
@@ -148,7 +143,7 @@ public class ProTaskHomeDataController extends BaseController{
 			cell.setCellValue(task.getMobilePhone());
 			cell.setCellStyle(dateFormatCellStyle);
 			cell=row.createCell((short) 3);
-			cell.setCellValue(task.getPickTime());
+			cell.setCellValue(sdf.format(task.getPickTime()));
 			cell.setCellStyle(style);
 			cell=row.createCell((short) 4);
 			cell.setCellValue(task.getDriverName());
@@ -163,9 +158,6 @@ public class ProTaskHomeDataController extends BaseController{
 			cell.setCellValue(task.getDescription());
 			cell.setCellStyle(style);
 			cell=row.createCell((short) 8);
-			cell.setCellValue(task.getPickedTime());
-			cell.setCellStyle(style);
-			cell=row.createCell((short) 9);
 			if(1==task.getStatus()){
 				cell.setCellValue("Picked");
 			}else{

@@ -45,7 +45,7 @@ function login(){
 }
 function _login(_m,_p){
 	$.ajax({
-		url:'/front/d/pro_user/login_m',
+		url:'/front/d/pro_driver/login_m',
 		data:'mobilePhone='+_m+'&pwd='+_p,
 		type:'post',
 		dataType:'json',

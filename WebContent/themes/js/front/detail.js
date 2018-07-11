@@ -8,6 +8,8 @@ function _getData(){
 		type:'get',
 		dataType:'json',
 		success:function(res){
+			res.data.pickTime = toDateTime(res.data.pickTime);
+			res.data.pickedTime = toDateTime(res.data.pickedTime);
 			new Vue({
 				el:'body',
 				data:{
@@ -18,26 +20,20 @@ function _getData(){
 	})
 }
 function GetUrlParam(paraName) {
-　　　　var url = document.location.toString();
-　　　　var arrObj = url.split("?");
-
-　　　　if (arrObj.length > 1) {
-　　　　　　var arrPara = arrObj[1].split("&");
-　　　　　　var arr;
-
-　　　　　　for (var i = 0; i < arrPara.length; i++) {
-　　　　　　　　arr = arrPara[i].split("=");
-
-　　　　　　　　if (arr != null && arr[0] == paraName) {
-　　　　　　　　　　return arr[1];
-　　　　　　　　}
-　　　　　　}
-　　　　　　return "";
-　　　　}
-　　　　else {
-　　　　　　return "";
-　　　　}
-　　}
+	var url = document.location.toString();
+	var arrObj = url.split('?');
+if(arrObj.length>1){
+	  var arrPara = arrObj[1].split('&');
+	  var arr;
+	  for(var i in arrPara){
+		  arr = arrPara[i].split('=');
+		  if(arr!=null&&arr[0]==paraName){
+			  return arr[1];
+		  }
+	  }
+}
+  return '';
+}
 
 
 function _edit(){

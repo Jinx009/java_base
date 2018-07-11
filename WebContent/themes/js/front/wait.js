@@ -9,6 +9,9 @@ function _getData(){
 		type:'get',
 		dataType:'json',
 		success:function(res){
+			for(var i in res.data){
+				res.data[i].pickTime = toDateTime(res.data[i].pickTime);
+			}
 			new Vue({
 				el:'body',
 				data:{
