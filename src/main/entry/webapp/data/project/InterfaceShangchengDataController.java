@@ -89,6 +89,7 @@ public class InterfaceShangchengDataController extends BaseController{
 			while ((s = br.readLine()) != null) {
 				result.append(System.lineSeparator() + s);
 			}
+			
 			br.close();
 			return result.toString();
 		} catch (IOException e) {
