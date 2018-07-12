@@ -5,6 +5,11 @@ import utils.enums.AppInfo;
 import utils.pos.CallUtils;
 
 public class HttpData {
+	
+	public static final String FACE_BASE_URL = "http://106.14.94.245:8090/gtw";
+	public static final String FACE_FACTORY_ADD_USER_URL = "/rest/face/addUser";
+	public static final String FACE_FACTORY_ADD_IMAGE_URL = "/rest/face/uploadImg";
+	public static final String FACE_FACTORY_USERS_URL = "/rest/face/users";
 
 	public static final String BASE_URL = "http://wx.zhanway.com/gtw";
 	public static final String GET_TOKEN_URL = "/rest/token";
@@ -257,6 +262,18 @@ public class HttpData {
 	public static String moneyUrl(String dateStr, Integer areaId,String token, Integer type) {
 		String url = BASE_URL+MONEY_URL+"?areaId="+areaId+"&dateStr="+dateStr+"&token="+token+"&type="+type;
 		return url;
+	}
+
+	public static String getFaceUpLoadUrl() {
+		return FACE_BASE_URL+FACE_FACTORY_ADD_IMAGE_URL;
+	}
+
+	public static String getCreateFaceFactoryUrl(String imagePath, String name, String address, String mobilePhone,String uid){
+		return FACE_BASE_URL + FACE_FACTORY_ADD_USER_URL+"?imagePath="+imagePath+"&name="+name+"address="+address+"&mobilePhone="+mobilePhone+"&uid="+uid;
+	}
+	
+	public static String getFaceFactoryUsersUrl(){
+		return FACE_BASE_URL + FACE_FACTORY_USERS_URL;
 	}
 
 	
