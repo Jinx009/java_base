@@ -135,5 +135,22 @@ public class FaceDataController extends BaseController{
 		return resp;
 	}
 	
+	/**
+	 * 获取已经对比的人脸结果
+	 * @return
+	 */
+	@RequestMapping(path = "/compareUsers")
+	@ResponseBody
+	public Resp<?> compareUsers(){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			resp = JSONObject.parseObject(httpService.get(HttpData.getCompareUsersUrl()),Resp.class);
+			return resp;
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	
 }

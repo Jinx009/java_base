@@ -10,6 +10,7 @@ public class HttpData {
 	public static final String FACE_FACTORY_ADD_USER_URL = "/rest/face/addUser";
 	public static final String FACE_FACTORY_ADD_IMAGE_URL = "/rest/face/uploadImg";
 	public static final String FACE_FACTORY_USERS_URL = "/rest/face/users";
+	public static final String COMPARE_USERS_URL = "/rest/face/compares";
 
 	public static final String BASE_URL = "http://wx.zhanway.com/gtw";
 	public static final String GET_TOKEN_URL = "/rest/token";
@@ -274,6 +275,10 @@ public class HttpData {
 	
 	public static String getFaceFactoryUsersUrl(){
 		return FACE_BASE_URL + FACE_FACTORY_USERS_URL;
+	}
+
+	public static String getCompareUsersUrl() {
+		return FACE_BASE_URL + COMPARE_USERS_URL;
 	}
 
 	
