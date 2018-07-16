@@ -32,9 +32,9 @@ public class FaceGatewayUser {
 	private Date updateTime;
 	@Column(name = "face_token")
 	private String faceToken;
-	@Column(name = "top")
+	@Column(name = "top_value")
 	private String top;
-	@Column(name = "left")
+	@Column(name = "left_value")
 	private String left;
 	@Column(name = "rotation")
 	private String rotation;
