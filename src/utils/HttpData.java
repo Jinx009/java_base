@@ -265,8 +265,8 @@ public class HttpData {
 		return url;
 	}
 
-	public static String getFaceUpLoadUrl() {
-		return FACE_BASE_URL+FACE_FACTORY_ADD_IMAGE_URL;
+	public static String getFaceUpLoadUrl(String data) {
+		return FACE_BASE_URL+FACE_FACTORY_ADD_IMAGE_URL+"?base64_content="+data;
 	}
 
 	public static String getCreateFaceFactoryUrl(String imagePath, String name, String address, String mobilePhone,String uid){
