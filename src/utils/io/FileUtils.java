@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
+import utils.encode.Base64;
+
 public class FileUtils {
 
 	public static final String DEFAULT_CHARSET = "UTF-8";
@@ -462,6 +464,28 @@ public class FileUtils {
 			return new RandomAccessFile(file, mode);
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
+		}
+	}
+	
+	public static boolean generateImage(String imgStr,String fileName) { // 对字节数组字符串进行Base64解码并生成图片
+		if (imgStr == null) // 图像数据为空
+			return false;
+		try {
+			// Base64解码
+			byte[] b = Base64.decode(imgStr);
+			for (int i = 0; i < b.length; ++i) {
+				if (b[i] < 0) {// 调整异常数据
+					b[i] += 256;
+				}
+			}
+			// 生成jpeg图片
+			OutputStream out = new FileOutputStream(fileName);
+			out.write(b);
+			out.flush();
+			out.close();
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 

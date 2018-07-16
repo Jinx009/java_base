@@ -2,8 +2,6 @@ package main.entry.webapp.data.face;
 
 import java.io.InputStream;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,15 +40,11 @@ public class FaceDataController extends BaseController{
 	/**
 	 * 人脸库上传照片
 	 * @param file
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(path = "/uploadImg")
 	@ResponseBody
-	public Resp<?> postFile(@RequestParam("file") MultipartFile file, 
-			HttpServletRequest request,
-			HttpServletResponse response) {  
+	public Resp<?> postFile(@RequestParam("file") MultipartFile file) {  
 		Resp<?> resp = new Resp<>(false);
         try {  
         	InputStream in = null;

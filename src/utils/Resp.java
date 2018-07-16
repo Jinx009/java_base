@@ -13,6 +13,9 @@ public class Resp<T> {
 	private String msg;
 	private T data;
 	
+	public Resp(){
+	}
+	
 	public Resp(String code,String msg,T t){
 		this.code = code;
 		this.msg = msg;
