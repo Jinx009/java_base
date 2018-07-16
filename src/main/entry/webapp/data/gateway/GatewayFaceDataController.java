@@ -1,13 +1,6 @@
 package main.entry.webapp.data.gateway;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,9 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import database.models.face.FaceGatewayUser;
 import main.entry.webapp.BaseController;
@@ -121,69 +112,19 @@ public class GatewayFaceDataController extends BaseController{
 	 */
 	@RequestMapping(value = "/uploadImg")
 	@ResponseBody
-	public Resp<?> uploadFileHandler(@RequestParam("file") MultipartFile file, 
-												HttpServletRequest request,
-												HttpServletResponse response)  {
+	public Resp<?> uploadFileHandler(String base64_content, HttpServletRequest request,HttpServletResponse response)  {
 		Resp<?> resp = new Resp<>(false);
-		resp.setMsg("图片格式不合法");
-		InputStream in = null;
-		OutputStream out = null;
 		try {
-			if (!file.isEmpty()) {
-				if(!isImage(file)){
-					return resp;
-				}
-				String uuid = UUIDUtils.random();
-				File dir = new File(Contants.UPLODAD_IMG_PATH);
-				if (!dir.exists())
-					dir.mkdirs();
-		        String suffix = file.getOriginalFilename().split("\\.")[1]; 
-				String filePath = new Date().getTime()+"_"+ uuid+"_."+ suffix;
-				File serverFile = new File(dir.getAbsolutePath()+File.separator +filePath);
-				in = file.getInputStream();
-				out = new FileOutputStream(serverFile);
-				byte[] b = new byte[1024];
-				int len = 0;
-				while ((len = in.read(b)) > 0) {
-					out.write(b, 0, len);
-				}
-				out.close();
-				in.close();
-				resp = new Resp<>(filePath);
-				resp.setMsg("上传成功！");
-			}else {
-				resp.setMsg("未找到文件！");
-			}
+			String uuid = UUIDUtils.random();
+			long num = new Date().getTime();
+			Contants.GenerateImage(base64_content, Contants.UPLODAD_IMG_PATH+uuid+"_"+num+".jpg");
+			return new Resp<>(uuid+"_"+num+".jpg");
 		} catch (Exception e) {
-			log.error("upload error:{}",e);
-		} finally {
-			try {
-				if(in!=null){
-					in.close();
-					in = null;
-				}
-				if(out!=null){
-					out.close();
-					out = null;
-				}
-			} catch (IOException e) {
-				log.error("close error:{}",e);
-			}
+			log.error("error:{}",e);
 		}
 		return resp;
 	}
 	
-	/**
-	 * 校验是否为图片
-	 * @param imageFile
-	 * @return
-	 */
-    private boolean isImage(MultipartFile file) {  
-    	String reg = ".+(.JPEG|.jpeg|.JPG|.jpg|.BMP|.bmp|.PNG|.png)$";
-        String imgp = file.getOriginalFilename();
-        Pattern pattern = Pattern.compile(reg);
-        Matcher matcher = pattern.matcher(imgp.toLowerCase());
-        return matcher.find();
-    }   
+	
 	
 }
