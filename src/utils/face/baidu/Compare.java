@@ -57,7 +57,7 @@ public class Compare {
     }
     
     public static void main(String[] args) {
-		compare("/Users/jinx/Downloads/test/test0002.jpg");
+		compare("/Users/jinx/Downloads/face_3.jpg");
 	}
 	
 }

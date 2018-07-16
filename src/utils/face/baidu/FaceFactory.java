@@ -153,8 +153,8 @@ public class FaceFactory {
 	}
 
 	public static void main(String[] args) {
-		String image =  Contants.imageToBase64ByLocal("/Users/jinx/Downloads/test/test001.jpg");
-		registerOrUpdate("Jinx", "台湾台北", "18217700275", null, image);
+//		getList(1);
+		getImage("user_17717072531");
 	}
 	
 }

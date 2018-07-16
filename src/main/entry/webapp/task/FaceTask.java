@@ -39,8 +39,7 @@ public class FaceTask extends BaseController {
 					for(File temp:file.listFiles()){
 			            if(temp.isFile()&&temp.toString().indexOf("人脸")>-1&&temp.toString().indexOf("fail")>-1){
 			                realCompare(temp.toString());
-			            }else{
-			            	temp.delete();
+			                return;
 			            }
 			        }
 				}
@@ -87,6 +86,7 @@ public class FaceTask extends BaseController {
 				faceGatewayCompare.setName(faceGatewayUser.getName());
 				faceGatewayCompare.setUserImgPath(faceGatewayUser.getImagePath());
 				faceGatewayCompareService.save(faceGatewayCompare);
+				file.renameTo(new File(Contants.COMPARE_IMG_PATH+"人脸_"+new Date().getTime()+"_success.jpg"));
 			}else{
 				file.renameTo(new File(Contants.COMPARE_IMG_PATH+"人脸_"+new Date().getTime()+"_fail.jpg"));
 			}

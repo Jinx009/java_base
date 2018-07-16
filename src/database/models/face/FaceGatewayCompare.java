@@ -39,6 +39,7 @@ public class FaceGatewayCompare {
 	private String base64Content;
 	@Column(name = "user_img_path")
 	private String userImgPath;
-	
+	@Column(name = "compare_img_path")
+	private String compareImgPath;
 	
 }
