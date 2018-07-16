@@ -124,10 +124,10 @@ public class FaceDataController extends BaseController{
 	 */
 	@RequestMapping(path = "/faceFactoryUsers")
 	@ResponseBody
-	public Resp<?> users(){
+	public Resp<?> users(Integer p){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			resp = JSONObject.parseObject(httpService.get(HttpData.getFaceFactoryUsersUrl()),Resp.class);
+			resp = JSONObject.parseObject(httpService.get(HttpData.getFaceFactoryUsersUrl(p)),Resp.class);
 			return resp;
 		} catch (Exception e) {
 			log.error("error:{}",e);

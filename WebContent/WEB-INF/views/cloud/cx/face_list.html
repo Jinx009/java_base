@@ -1,10 +1,74 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<#include "cloud_nav.html">
+<div class="layui-body">
+	<fieldset class="layui-elem-field layui-field-title"
+		style="margin-top: 30px;">
+		<legend>最新记录</legend>
+	</fieldset>
+	<div class="layui-form" style="margin-left: 10px;width: 650px;">
+	  <table class="layui-table" >
+	    <tbody>
+	      <tr>
+	        <th width="200px;" ><b>刷卡人</b></th>
+	        <td width="200px;" id="name" ></td>
+	        <td width="250px;"  rowspan="4" >
+	        	<img width="100%;" style="max-width: 350px;" alt="" id="img" >
+	        </td>
+	      </tr>
+	       <tr>
+	        <th><b>刷卡类型</b></th>
+	        <td id="way" ></td>
+	      </tr>
+	       <tr>
+	        <th><b>区域</b></th>
+	        <td id="deviceName" ></td>
+	      </tr>
+	       <tr>
+	        <th><b>刷卡时间</b></th>
+	        <td id="time" ></td>
+	      </tr>
+	    </tbody>
+	  </table>
+	</div>
 
-</body>
-</html>
+	<fieldset class="layui-elem-field layui-field-title"
+		style="margin-top: 30px;">
+		<legend>所有记录</legend>
+	</fieldset>
+    <div style="margin-left: 10px;">
+		<table class="layui-table" lay-size="sm">
+		  <colgroup>
+		    <col width="150">
+		    <col width="200">
+		    <col width="200">
+		    <col>
+		  </colgroup>
+		  <thead>
+		    <tr>
+		      <th>刷卡人</th>
+		      <th>刷卡类型</th>
+		      <th>进出类型</th>
+		      <th>刷卡结果</th>
+		      <th>刷卡地点</th>
+		    </tr> 
+		  </thead>
+		  <tbody id="log" >
+		    <tr onclick="_openLayer(this)" v-bind:num="item.num" v-for="item in logs" >
+		      <td v-text="item.personnelName" ></td>
+		      <td v-text="item.type" ></td>
+		      <td>
+		      	<font v-if="1===item.direction" >进门</font>
+		      	<font v-if="2===item.direction" >出门</font>
+		      </td>
+		      <td v-text="item.accessResult"></td>
+		      <td v-text="item.deviceName" ></td>
+		    </tr>
+		  </tbody>
+		</table>
+		 <div id="page"><div class="layui-box layui-laypage layui-laypage-molv" id="layui-laypage-3">
+		 	<a href="javascript:;"  onclick="_getData(1,0);" class="layui-laypage-prev " data-page="0">上一页</a>
+		 	<span class="layui-laypage-curr"><em class="layui-laypage-em" style="background-color:#1E9FFF;"></em><em id="nnn"></em></span>
+		 <a href="javascript:;" class="layui-laypage-next" onclick="_getData(1,1);" data-page="2">下一页</a></div></div>
+	</div>
+</div>
+<<script src="/themes/js/cloud/cx/face_list.js?_v=1.33"></script>
+<#include "cloud_footer.html">

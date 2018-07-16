@@ -273,8 +273,8 @@ public class HttpData {
 		return FACE_BASE_URL + FACE_FACTORY_ADD_USER_URL+"?imagePath="+imagePath+"&name="+name+"address="+address+"&mobilePhone="+mobilePhone+"&uid="+uid;
 	}
 	
-	public static String getFaceFactoryUsersUrl(){
-		return FACE_BASE_URL + FACE_FACTORY_USERS_URL;
+	public static String getFaceFactoryUsersUrl(Integer p){
+		return FACE_BASE_URL + FACE_FACTORY_USERS_URL+"?p="+p;
 	}
 
 	public static String getCompareUsersUrl() {

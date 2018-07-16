@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>智慧社区管理平台</title>
+  <link rel="stylesheet" href="/themes/layui/css/layui.css">
+  <script src="/themes/js/jquery-1.7.2.min.js"></script>
+  <script src="/themes/js/vue.min.js"></script>
+   <script src="/themes/js/cloud/nav.js?_v=1.03"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">Zhanway  智慧社区</div>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+         欢迎您：<font color="red;" >Admin</font>
+        </a>
+      </li>
+      <li class="layui-nav-item"><a href="">登出</a></li>
+    </ul>
+  </div>
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed" id="l1" >
+          <a class="" href="javascript:;">智能监控</a>
+          <dl class="layui-nav-child">
+            <dd id="d11" class="layui-this" ><a  onclick="_open('l1_d11','/home/c/cx/face_;ist')" >人脸库</a></dd>
+            <dd id="d12" ><a  onclick="_open('l1_d12','/home/c/community')" >社区信息</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">智能烟感</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;">设备分布</a></dd>
+            <dd><a href="javascript:;">烟感记录</a></dd>
+          </dl>
+        </li>
+          <li class="layui-nav-item"  id="l3" >
+          <a href="javascript:;">消防通道</a>
+          <dl class="layui-nav-child">
+            <dd id="d31" ><a  onclick="_open('l3_d31','/home/c/fireData')" >设备状态</a></dd>
+            <dd id="d32" ><a  onclick="_open('l3_d32','/home/c/fireList')" >检测记录</a></dd>
+          </dl>
+        </li>
+          <li class="layui-nav-item">
+          <a href="javascript:;">小区监控</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;">设备分布</a></dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+  </div>
