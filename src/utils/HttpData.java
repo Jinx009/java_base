@@ -277,8 +277,8 @@ public class HttpData {
 		return FACE_BASE_URL + FACE_FACTORY_USERS_URL+"?p="+p;
 	}
 
-	public static String getCompareUsersUrl() {
-		return FACE_BASE_URL + COMPARE_USERS_URL;
+	public static String getCompareUsersUrl(Integer p) {
+		return FACE_BASE_URL + COMPARE_USERS_URL+"?p="+p;
 	}
 
 	

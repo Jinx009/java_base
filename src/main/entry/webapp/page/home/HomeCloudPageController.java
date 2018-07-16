@@ -2,7 +2,6 @@ package main.entry.webapp.page.home;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.entry.webapp.BaseController;
 
@@ -30,11 +29,18 @@ public class HomeCloudPageController extends BaseController{
 	public String fireList(){
 		return "/cloud/fireList";
 	}
-	
-	@RequestMapping(path = "/cx/face_list")
-	@ResponseBody
+	/**
+	 * 慈馨社区
+	 * @return
+	 */
+	@RequestMapping(path = "/cx/faceList")
 	public String face_list(){
-		return "/cloud/cx/face_list";
+		return "/cloud/cx/face_user_list";
+	}
+	
+	@RequestMapping(path = "/cx/compareList")
+	public String face_compare_list(){
+		return "/cloud/cx/face_compare_list";
 	}
 	
 }

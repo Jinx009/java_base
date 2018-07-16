@@ -106,10 +106,10 @@ public class FaceDataController extends BaseController{
 	 */
 	@RequestMapping(path = "/compareUsers")
 	@ResponseBody
-	public Resp<?> compareUsers(){
+	public Resp<?> compareUsers(Integer p){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			resp = JSONObject.parseObject(httpService.get(HttpData.getCompareUsersUrl()),Resp.class);
+			resp = JSONObject.parseObject(httpService.get(HttpData.getCompareUsersUrl(p)),Resp.class);
 			return resp;
 		} catch (Exception e) {
 			log.error("error:{}",e);
