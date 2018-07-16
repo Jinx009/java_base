@@ -2,9 +2,6 @@ package main.entry.webapp.data.gateway;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,13 +109,15 @@ public class GatewayFaceDataController extends BaseController{
 	 */
 	@RequestMapping(value = "/uploadImg")
 	@ResponseBody
-	public Resp<?> uploadFileHandler(String base64_content, HttpServletRequest request,HttpServletResponse response)  {
+	public Resp<?> uploadFileHandler(String picPath)  {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			String uuid = UUIDUtils.random();
 			long num = new Date().getTime();
-			Contants.GenerateImage(base64_content, Contants.UPLODAD_IMG_PATH+uuid+"_"+num+".jpg");
-			return new Resp<>(uuid+"_"+num+".jpg");
+			String imgName = uuid+"_"+num+".jpg";
+			String base64 = Contants.ImageToBase64ByOnline(picPath);
+			Contants.generateImage(base64, Contants.UPLODAD_IMG_PATH+imgName);
+			return new Resp<>(imgName);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
