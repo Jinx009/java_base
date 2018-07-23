@@ -116,10 +116,10 @@ public class ProUserDataController extends BaseController{
 	
 	@RequestMapping(path = "/update")
 	@ResponseBody
-	public Resp<?> update(Integer userId,String name,String pwd){
+	public Resp<?> update(Integer userId,String name,String pwd,String remarkB){
 		Resp<?> resp = new Resp<>(true);
 		try {
-			proUserService.updateN(userId,name,pwd);
+			proUserService.updateN(userId,name,pwd,remarkB);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

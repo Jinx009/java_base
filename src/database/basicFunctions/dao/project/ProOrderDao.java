@@ -38,6 +38,23 @@ public class ProOrderDao extends  BaseDao<ProOrder>{
 		return findByCriteriaForUnique(queryParam);
 	}
 	
+	public Integer findDivingStatus(String date, String orderTime) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("orderTime", orderTime);
+		queryParam.addParam("type", 1);
+		queryParam.addParam("status", 0);
+		queryParam.addParam("orderDate", date);
+		List<ProOrder> list = findByCriteria(queryParam);
+		int num = 0;
+		for(ProOrder proOrder : list){
+			num += proOrder.getNum();
+		}
+		if(num>15){
+			return 0;
+		}
+		return (15-num);
+	}
+	
 	public Integer findPoolStatus(String date, String orderTime) {
 		QueryParam queryParam = QueryParam.getInstance();
 		queryParam.addParam("orderTime", orderTime);
@@ -52,20 +69,25 @@ public class ProOrderDao extends  BaseDao<ProOrder>{
 		if(num>15){
 			return 0;
 		}
-		return 1;
+		return (15-num);
 	}
 	
 	public Integer findRoomStatus( String date, String orderTime) {
 		QueryParam queryParam = QueryParam.getInstance();
 		queryParam.addParam("orderTime", orderTime);
-		queryParam.addParam("type", 1);
+		queryParam.addParam("type", 3);
 		queryParam.addParam("status", 0);
 		queryParam.addParam("orderDate", date);
 		List<ProOrder> list = findByCriteria(queryParam);
-		if(list!=null&&list.size()>=3){
-			return 0;
+		int num = 0;
+		if(list!=null){
+			if(list.size()>=3){
+				return 0;
+			}else{
+				num = list.size();
+			}
 		}
-		return 1;
+		return (3-num);
 	}
 
 	public List<ProOrder> myOrder(Integer userId) {

@@ -1,9 +1,19 @@
 <#include "m_header.html">
-<header class="bar bar-nav">
-  <h1 class='title'>表单</h1>
-</header>
+<!-- <header class="bar bar-nav">
+  <h1 class='title'>我的</h1>
+</header> -->
 <div class="content">
-  <div class="list-block">
+  <div class="card" style="background: #eeeeee;">
+	<div class="card-content">
+		<div class="card-content-inner" style="color: red; font-size: 12px;">
+			潜水教练可以预约潜水池和教室。<br>
+			游泳教练和俱乐部只可预约游泳池。<br>
+			俱乐部可以预约泳池和潜水池。<br>
+			拥有正规的潜水证书编号的账户，后台可审核成为会员，会员可以预约潜水池。
+		</div>
+	</div>
+</div>
+  <div class="list-block" style="margin: 0px;">
     <ul>
       <!-- Text inputs -->
       <li>
@@ -19,7 +29,7 @@
       </li>
       <li>
         <div class="item-content">
-          <div class="item-media"><i class="icon icon-form-password"></i></div>
+          <div class="item-media"><i class="icon icon-form-name"></i></div>
           <div class="item-inner">
             <div class="item-title label">密码</div>
             <div class="item-input">
@@ -30,7 +40,7 @@
       </li>
       <li>
         <div class="item-content">
-          <div class="item-media"><i class="icon icon-form-gender"></i></div>
+          <div class="item-media"><i class="icon icon-form-name"></i></div>
           <div class="item-inner">
             <div class="item-title label">手机号码</div>
              <div class="item-input">
@@ -39,31 +49,57 @@
           </div>
         </div>
       </li>
+      <li>
+        <div class="item-content">
+          <div class="item-media"><i class="icon icon-form-name"></i></div>
+          <div class="item-inner">
+            <div class="item-title label">会员等级</div>
+             <div class="item-input">
+                <input type="text" v-if="1===user.type" value="普通账户" readonly="readonly" class="">
+                <input type="text" v-if="2===user.type" value="会员" readonly="readonly" class="">
+                <input type="text" v-if="3===user.type" value="俱乐部" readonly="readonly" class="">
+                <input type="text" v-if="4===user.type" value="游泳教练" readonly="readonly" class="">
+                <input type="text" v-if="5===user.type" value="潜水教练" readonly="readonly" class="">
+            </div>
+          </div>
+        </div>
+      </li>
+        <li>
+        <div class="item-content">
+          <div class="item-media"><i class="icon icon-form-name"></i></div>
+          <div class="item-inner">
+            <div class="item-title label">潜水证书编号</div>
+             <div class="item-input">
+              <input type="text" v-bind:value="user.remarkB"  class="">
+            </div>
+          </div>
+        </div>
+      </li>
       <li  class="item-content item-link">
         <div class="item-media"><i class="icon icon-f7"></i></div>
         <div class="item-inner" onclick="javascript:location.href='/f/p/pro_order';" >
-          <div class="item-title">我的预定</div>
+          <div class="item-title">我的预约</div>
           <div class="item-after"></div>
         </div>
       </li>
-         <li  class="item-content item-link" v-if="5===item.type" >
+         <li  class="item-content item-link" >
         <div class="item-media"><i class="icon icon-f7"></i></div>
         <div class="item-inner" onclick="javascript:location.href='/f/p/pro_class_room';" >
-          <div class="item-title">预定教室</div>
+          <div class="item-title">预约教室</div>
           <div class="item-after"></div>
         </div>
       </li>
-         <li  class="item-content item-link"  v-if="2===item.type||5===item.type">
+         <li  class="item-content item-link" >
+        <div class="item-media"><i class="icon icon-f7"></i></div>
+        <div class="item-inner" onclick="javascript:location.href='/f/p/pro_diving';" >
+          <div class="item-title">预约潜水池</div>
+          <div class="item-after"></div>
+        </div>
+      </li>
+         <li  class="item-content item-link" >
         <div class="item-media"><i class="icon icon-f7"></i></div>
         <div class="item-inner" onclick="javascript:location.href='/f/p/pro_swimming_pool';" >
-          <div class="item-title">预定潜水池</div>
-          <div class="item-after"></div>
-        </div>
-      </li>
-         <li  class="item-content item-link" v-if="2===item.type||5===item.type">
-        <div class="item-media"><i class="icon icon-f7"></i></div>
-        <div class="item-inner" onclick="javascript:location.href='/f/p/pro_class';" >
-          <div class="item-title">预定泳池</div>
+          <div class="item-title">预约泳池</div>
           <div class="item-after"></div>
         </div>
       </li>
@@ -73,5 +109,5 @@
    <p style="width: 96%;margin-left:2%;"><a onclick="_out()" class="button button-light">退出登录</a></p>
 </div>
 <script src="/themes/js/front/base.js?_v=1.01" ></script>
-<script src="/themes/js/front/me.js?_v=1.01" ></script>
+<script src="/themes/js/front/me.js?_v=1.15" ></script>
 <#include "m_footer.html">

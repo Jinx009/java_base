@@ -37,12 +37,14 @@ public class ProOrderService {
 		if(StringUtil.isNotBlank(userId)){
 			ProOrder proOrder = proOrderDao.findByUserId(userId,date,orderTime,type);
 			if(proOrder!=null)
-				return 2;
+				return 1000;
 		}else{
 			if(type==1){
-				return proOrderDao.findRoomStatus(date, orderTime);
-			}else{
+				return proOrderDao.findDivingStatus(date, orderTime);
+			}else if(type==2){
 				return proOrderDao.findPoolStatus(date, orderTime);
+			}else{
+				return proOrderDao.findRoomStatus(date, orderTime);
 			}
 		}
 		return 1;
@@ -50,22 +52,55 @@ public class ProOrderService {
 
 	public void save(String orderDate, Integer type, Integer userId, Integer orderType, Integer num) {
 		String orderTime = "上午";
-		if(orderType == 2){
-			orderTime = "下午";
+		if(type!=2){
+			if(orderType == 2){
+				orderTime = "下午";
+			}
+			if(orderType==3){
+				orderTime = "夜间";
+			}
+		}else{
+			if(orderType == 1){
+				orderTime = "09:00:00~10:30:00";
+			}
+			if(orderType==2){
+				orderTime = "10:30:00~12:00:00";
+			}
+			if(orderType == 3){
+				orderTime = "12:00:00~13:30:00";
+			}
+			if(orderType==4){
+				orderTime = "13:30:00~15:00:00";
+			}
+			if(orderType == 5){
+				orderTime = "15:00:00~16:30:00";
+			}
+			if(orderType==6){
+				orderTime = "16:30:00~18:00:00";
+			}
+			if(orderType == 7){
+				orderTime = "18:00:00~19:30:00";
+			}
+			if(orderType==8){
+				orderTime = "19:30:00~21:00:00";
+			}
 		}
-		if(orderType==3){
-			orderTime = "夜间";
-		}
-		String userType = "游客";
+		String userType = "普通账户";
 		ProUser proUser = proUserDao.find(userId);
 		if(proUser.getType()==1){
-			userType = "游客";
+			userType = "普通账户";
 		}
 		if(proUser.getType()==2){
-			userType = "教练";
+			userType = "会员";
 		}
 		if(proUser.getType()==3){
-			userType = "企业";
+			userType = "俱乐部";
+		}
+		if(proUser.getType()==4){
+			userType = "游泳教练";
+		}
+		if(proUser.getType()==5){
+			userType = "潜水教练";
 		}
 		
 		ProOrder proOrder = new ProOrder();

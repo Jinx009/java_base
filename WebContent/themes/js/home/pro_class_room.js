@@ -10,7 +10,7 @@ var _orderDate = '',_type = 0;
 function _getData(_type,_index){
 	var _data = {};
 	_data.p = _getPage(_type,_index);
-	var orderDate = $('#orderDate').val();
+	var orderDate = 2;
 	var type = $('#type').val();
 	if(orderDate!=_orderDate||_type!=type){
 		_data.p = 1;

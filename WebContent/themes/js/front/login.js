@@ -28,13 +28,15 @@ function login(){
 		   type:'post',
 		   success:function(res){
 			   if('200'==res.code){
-				   setLocalStorage('userId',res.data.id);
+				    setLocalStorage('userId',res.data.id);
 				    setLocalStorage('type',res.data.type);
+				    setLocalStorage('_m',_mobilePhone);
+				    setLocalStorage('_p',_password);
 				    var _url = getLocalStorage('_url');
 				    if(_url!=''){
 				    	location.href = _url;
 				    }else{
-				    	location.href = '/f/p/pro_class_room';
+				    	location.href = '/f/p/me';
 				    }
 			   }else{
 				   layer.open({
@@ -48,12 +50,14 @@ function login(){
 }
 function _login(_m,_p){
 	$.ajax({
-		url:'/front/d/pro_user/login_m',
-		data:'mobilePhone='+_m+'&pwd='+_p,
+		url:'/data/commom/login',
+		data:'userName='+_m+'&pwd='+_p,
 		type:'post',
 		dataType:'json',
 		success:function(res){
 			if('200'==res.code){
+				 setLocalStorage('userId',res.data.id);
+				 setLocalStorage('type',res.data.type);
 				_open('icon-settings-','/front/p/me');
 			}
 		}

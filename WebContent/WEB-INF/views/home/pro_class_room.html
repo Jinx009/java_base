@@ -26,7 +26,7 @@
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Course Order management </a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> 教室预定</a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
@@ -45,8 +45,8 @@
 						<div class="row">
 							<div class="col-md-3">
 								<div class="form-group">
-									<label>课程日期</label> 
-									<input type="text" id="classDate" class="form-control" readonly="readonly" >
+									<label>预约日期</label> 
+									<input type="text" id="orderDate" class="form-control" readonly="readonly" >
 								</div>
 							</div>
 							<div class="col-md-3">
@@ -62,7 +62,7 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">课程预约列表</h3>
+								<h3 class="box-title">场地预约列表</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body table-responsive no-padding">
@@ -70,13 +70,13 @@
 									<thead>
 										<tr>
 											<th>编号</th>
-											<th>课程名称</th>
+											<th>用户类型</th>
 											<th>预订者姓名</th>
 											<th>联系人手机</th>
-											<th>课程日期</th>
-											<th>课程时间</th>
-											<th>预约时间</th>
-											<th>状态</th>
+											<th>预定日期</th>
+											<th>预定时间</th>
+											<th>上报人数</th>
+											<th>实到人数</th>
 											<th>备注</th>
 											<th>操作</th>
 										</tr>
@@ -84,25 +84,20 @@
 									<tbody>
 										<tr v-for="item in datas.list">
 											<td v-text="item.id"></td>
-											<td v-text="item.className"></td>
+											<td v-text="item.userType"></td>
 											<td v-text="item.name"></td>
 											<td v-text="item.mobilePhone"></td>
-											<td v-text="item.classDate"></td>
-											<td v-text="item.classTime"></td>
-											<td v-text="item.createTime"></td>
+											<td v-text="item.orderDate"></td>
+											<td v-text="item.orderTime"></td>
+											<td v-text="item.num"></td>
 											<th>
-												<button  v-if="0===item.status" class="btn btn-danger btn-xs">新建</button>
-												<button  v-if="1===item.status" class="btn btn-danger btn-xs">未到</button>
-												<button  v-if="2===item.status" class="btn btn-danger btn-xs">已到</button>
-												<button  v-if="3===item.status" class="btn btn-danger btn-xs">取消</button>
+												<input type="text" class="form-control input-sm" style="width: 100px;height: 25px;" v-bind:id="'realNum'+item.id" v-bind:value="item.realNum" >
 											</th>
 											<td>
 												<input type="text" class="form-control input-sm" style="width: 100px;height: 25px;" v-bind:id="'remark'+item.id" v-bind:value="item.remark" >
 											</td>
 											<td>
 												<button  v-bind:id="'_remark'+item.id" onclick="_saveRemark(this);" class="btn btn-danger btn-xs">保存</button>
-												<button v-if="0===item.status"  v-bind:id="'_tao'+item.id" onclick="_tao(this);" class="btn btn-info btn-xs">未到</button>
-												<button v-if="0===item.status"  v-bind:id="'_dao'+item.id" onclick="_dao(this);" class="btn btn-success btn-xs">已到</button>
 											</td>
 										</tr>
 									</tbody>
@@ -129,7 +124,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_class_order.js?version=1.14"></script>
+	<script src="/themes/js/home/pro_class_room.js?version=1.14"></script>
 
 </body>
 </html>

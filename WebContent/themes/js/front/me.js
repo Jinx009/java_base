@@ -24,7 +24,7 @@ function _getData(){
 	})
 }
 function _save(){
-	var _params = 'userId='+_userId+'&name='+$('#name').val()+'&pwd='+$('#pwd').val();
+	var _params = 'userId='+_userId+'&name='+$('#name').val()+'&pwd='+$('#pwd').val()+'&remarkB='+$('#remarkB').val();
 	$.ajax({
 		url:'/d/user/update',
 		data:_params,
@@ -46,6 +46,8 @@ function _save(){
 function _out(){
 	setLocalStorage('userId','');
 	setLocalStorage('type','');
+	setLocalStorage('_m','');
+	setLocalStorage('_p','');
 	setLocalStorage('_url','/f/p/me');
-	location.href = '/f/p/login';
+	location.href = '/f/p/pro_diving';
 }

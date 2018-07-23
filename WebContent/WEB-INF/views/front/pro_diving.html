@@ -1,19 +1,22 @@
 <#include "m_header.html">
 <header class="bar bar-nav">
-	<h1 class="title">泳池预定</h1>
+	<h1 class="title">潜水池预定</h1>
 </header>
 <div data-toggle='date' id="my-input" style="margin-top: 2.2em"
 	onclick="check();"></div>
 <div class="content" style="margin-top: 290px;">
 	<div class="content-block">
-		<p><a href="#" class="button button-danger" onclick="_save('1')" id="time1">09:00:00~10:30:00</a></p>
-		<p><a href="#" class="button disabled" 		onclick="_save('2')" id="time2"></a></p>
-		<p><a href="#" class="button button-danger" onclick="_save('3')" id="time3"></a></p>
-		<p><a href="#" class="button button-danger" onclick="_save('4')" id="time4"></a></p>
-		<p><a href="#" class="button button-danger" onclick="_save('5')" id="time5"></a></p>
-		<p><a href="#" class="button button-danger" onclick="_save('6')" id="time6"></a></p>
-		<p><a href="#" class="button button-danger" onclick="_save('7')" id="time7"></a></p>
-		<p><a href="#" class="button button-danger" onclick="_save('8')" id="time8"></a></p>
+		<p>
+			<a href="#" class="button button-danger" onclick="_save('1')"
+				id="time1">上午</a>
+		</p>
+		<p>
+			<a href="#" class="button disabled" onclick="_save('2')" id="time2">下午</a>
+		</p>
+		<p>
+			<a href="#" class="button button-danger" onclick="_save('3')"
+				id="time3">夜间</a>
+		</p>
 		<div class="list-block" >
 			<ul>
 				<li>
@@ -34,6 +37,13 @@
 		<div style="height: 30px;" ></div>
 	</div>
 </div>
+<div class="card"
+	style="position: absolute; bottom: 0; width: 100%; left: 0; margin: 0px;">
+	<div class="card-content">
+		<div class="card-content-inner" style="color: gray; font-size: 12px;">
+			上午：09:00-11:30 下午：13:00-17:50 夜间：18:30-21:50</div>
+	</div>
+</div>
 <script src="/themes/js/front/base.js?_v=0.04"></script>
-<script src="/themes/js/front/pro_swimming_pool.js?_v=1.36"></script>
+<script src="/themes/js/front/pro_diving.js?_v=1.13"></script>
 <#include "m_footer.html">

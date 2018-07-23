@@ -92,4 +92,33 @@ public class ProOrderDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/getSwimmingStatus")
+	@ResponseBody
+	public Resp<?> getSwimmingStatus(String date,Integer type,String userId){
+		Resp<?> resp = new Resp<>(true);
+		try {
+			Integer a = proOrderService.getStatus(date,type,userId,"09:00:00~10:30:00");
+			Integer b = proOrderService.getStatus(date,type,userId,"10:30:00~12:00:00");
+			Integer c = proOrderService.getStatus(date,type,userId,"12:00:00~13:30:00");
+			Integer d = proOrderService.getStatus(date,type,userId,"13:30:00~15:00:00");
+			Integer e = proOrderService.getStatus(date,type,userId,"15:00:00~16:30:00");
+			Integer f = proOrderService.getStatus(date,type,userId,"16:30:00~18:00:00");
+			Integer g = proOrderService.getStatus(date,type,userId,"18:00:00~19:30:00");
+			Integer h = proOrderService.getStatus(date,type,userId,"19:30:00~21:00:00");
+			Map<String, Integer> map = new HashMap<String,Integer>();
+			map.put("a",a);
+			map.put("b",b);
+			map.put("c",c);
+			map.put("d",d);
+			map.put("e",e);
+			map.put("f",f);
+			map.put("g",g);
+			map.put("h",h);
+			return new Resp<>(map);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 }

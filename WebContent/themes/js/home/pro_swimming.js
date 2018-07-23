@@ -1,23 +1,25 @@
 $(function(){
 	laydate.render({
-	  elem: '#classDate'
+	  elem: '#orderDate'
 	});
 	_getData(0,1);
 })
 var _d = '';
 var  _nowPage = 0,_max = 0;
-var _classDate = '';
+var _orderDate = '',_type = 0;
 function _getData(_type,_index){
 	var _data = {};
 	_data.p = _getPage(_type,_index);
-	var classDate = $('#classDate').val();
-	if(classDate!=_classDate){
+	var orderDate = 1;
+	var type = $('#type').val();
+	if(orderDate!=_orderDate||_type!=type){
 		_data.p = 1;
-		_classDate = classDate;
+		_orderDate = orderDate;
+		_type = type;
 	}
 	if(_data.p!=-1){
 		$.ajax({
-			url:'/d/classOrder/pageList?p='+_data.p+'&classDate='+classDate,
+			url:'/d/order/pageList?p='+_data.p+'&orderDate='+orderDate+'&type='+type,
 			dataType:'json',
 			type:'post',
 			success:function(res){
@@ -45,9 +47,10 @@ function _getData(_type,_index){
 function _saveRemark(_e){
 	var _id = $(_e).attr('id').split('_remark')[1];
 	var _remark = $('#remark'+_id).val();
-	var _params = 'id='+_id+'&remark='+_remark;
+	var _realNum = $('#realNum'+_id).val();
+	var _params = 'id='+_id+'&remark='+_remark+'&realNum='+_realNum;
 	$.ajax({
-		url:'/d/classOrder/saveRemark',
+		url:'/d/order/saveRemark',
 		type:'post',
 		data:_params,
 		dataType:'json',
@@ -61,43 +64,4 @@ function _saveRemark(_e){
 			}
 		}
 		})
-}
-function _dao(_e){
-	var _id = $(_e).attr('id').split('_dao')[1];
-	var _params = 'id='+_id+'&status=2';
-	$.ajax({
-		url:'/d/classOrder/changeStatus',
-		type:'post',
-		data:_params,
-		dataType:'json',
-		success:function(res){
-			if('200'==res.code){
-				layer.alert('操作成功！',function(){
-					location.reload();
-				})
-			}else{
-				layer.alert(res.msg);
-			}
-		}
-	})
-}
-
-function _tao(_e){
-	var _id = $(_e).attr('id').split('_tao')[1];
-	var _params = 'id='+_id+'&status=1';
-	$.ajax({
-		url:'/d/classOrder/changeStatus',
-		type:'post',
-		data:_params,
-		dataType:'json',
-		success:function(res){
-			if('200'==res.code){
-				layer.alert('操作成功！',function(){
-					location.reload();
-				})
-			}else{
-				layer.alert(res.msg);
-			}
-		}
-	})
 }

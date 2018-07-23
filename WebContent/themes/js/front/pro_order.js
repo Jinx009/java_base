@@ -14,41 +14,34 @@ function _getData(){
 			dataType:'json',
 			type:'post',
 			success:function(res){
-				var _sA = [],_sR =[];
+				var _diving = [],_swimming =[],_class_room = [];
 				for(var i in res.data){
 					if(res.data[i].type==1){
-						_sR.push(res.data[i]);
-					}else{
-						_sA.push(res.data[i]);
+						_diving.push(res.data[i]);
+					}else if(res.data[i].type==2){
+						_swimming.push(res.data[i]);
+					}else if(res.data[i].type==3){
+						_class_room.push(res.data[i]);
 					}
 				}
 				new Vue({
-					el:'#s',
+					el:'#diving',
 					data:{
-						s:_sA
+						diving:_diving
 					}
 				})
 				new Vue({
-					el:'#r',
+					el:'#swimming',
 					data:{
-						r:_sR
+						swimming:_swimming
 					}
 				})
-			}
-		})
-		$.ajax({
-			url:'/d/classOrder/list?userId='+_userId,
-			type:'get',
-			dataType:'json',
-			success:function(res){
-				if('200'==res.code){
-					new Vue({
-						el:'#c',
-						data:{
-							c:res.data
-						}
-					})
-				}
+				new Vue({
+					el:'#class_room',
+					data:{
+						class_room:_class_room
+					}
+				})
 			}
 		})
 	}

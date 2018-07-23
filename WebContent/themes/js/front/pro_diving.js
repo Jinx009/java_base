@@ -18,6 +18,7 @@ function check() {
 	_date = _year + '-' + _month + '-' + _day;
 	_getData();
 }
+var _a ,_b ,_c;
 function _getData() {
 	var _userId = getLocalStorage('userId');
 	$.ajax({
@@ -26,44 +27,60 @@ function _getData() {
 		type : 'post',
 		dataType : 'json',
 		success : function(res) {
-			var _a = res.data.a;
-			var _b = res.data.b;
-			var _c = res.data.c;
+			_a = res.data.a;
+		    _b = res.data.b;
+			_c = res.data.c;
 			if (_a == 0) {
-				$('#time1').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('上午 剩余教室：0 [已满]');
+				$('#time1').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('上午 剩余名额：0 [已满]');
 			}else if (_a == 1000) {
 				$('#time1').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('上午 [您已经预约过该时间段]');
 			}else{
-				$('#time1').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(1)').html('上午 剩余教室：'+_a+' [点击预约]');
+				$('#time1').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(1)').html('上午 剩余名额：'+_a+' [点击预约]');
 			}
 			if (_b == 0) {
-				$('#time2').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('下午 剩余教室：0 [已满]');
+				$('#time2').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('下午 剩余名额：0 [已满]');
 			}else if (_b == 1000) {
 				$('#time2').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('下午 [您已经预约过该时间段]');
 			}else{
-				$('#time2').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(2)').html('下午 剩余教室：'+_b+' [点击预约]');
+				$('#time2').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(2)').html('下午 剩余名额：'+_b+' [点击预约]');
 			}
 			if (_c == 0) {
-				$('#time3').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('夜间 剩余教室：0 [已满]');
+				$('#time3').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('夜间 剩余名额：0 [已满]');
 			}else if (_c == 1000) {
 				$('#time3').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('夜间 [您已经预约过该时间段]');
 			}else{
-				$('#time3').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(3)').html('夜间 剩余教室：'+_c+' [点击预约]');
+				$('#time3').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(3)').html('夜间 剩余名额：'+_c+' [点击预约]');
 			}
 		}
 	})
 }
 function _save(_orderTime) {
 	var _num = $('#num').val();
+	var _num_ = 0;
+	var _time = parseInt(_orderTime);
+	if(_time = 1 ){
+		_num_ = parseInt(_a) - _num_;
+	}
+	if(_time = 2 ){
+		_num_ = parseInt(_b) - _num_;
+	}
+	if(_time = 3 ){
+		_num_ = parseInt(_c) - _num_;
+	}
 	var _userId = getLocalStorage('userId');
 	if(_userId==''){
-		setLocalStorage('_url','/f/p/pro_class_room');
+		setLocalStorage('_url','/f/p/pro_diving');
 		location.href = '/f/p/login';
 	}else{
 		var _type = getLocalStorage('type');
-		if(_type!=5){
+		if(_type!=2&&_type!=3&&_type!=5){
 			  layer.open({
-			    content: '只有潜水教练才可以预约教室！'
+			    content: '只有会员、俱乐部、潜水教练才可以预约潜水池！'
+			    ,btn: '我知道了'
+			  });
+		}else if(_num_<0){
+			layer.open({
+			    content: '随行人数不应大于剩余名额！'
 			    ,btn: '我知道了'
 			  });
 		}else{
@@ -75,11 +92,11 @@ function _save(_orderTime) {
 				  });
 			}else{
 				layer.open({
-				    content: '您确定要预约此时段教室吗？'
+				    content: '您确定要预约此时段潜水池吗？'
 				    ,btn: ['确定', '取消']
 				    ,skin: 'footer'
 				    ,yes: function(index){
-				       var _params = 'type=3&orderType='+_orderTime+'&userId='+_userId+'&num='+_num+'&orderDate='+_date;
+				       var _params = 'type=1&orderType='+_orderTime+'&userId='+_userId+'&num='+_num+'&orderDate='+_date;
 				       $.ajax({
 				    	   url:'/d/order/save',
 				    	   data:_params,

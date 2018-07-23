@@ -23,6 +23,13 @@ public class CommonDataController extends BaseController{
 	@Autowired
 	private ProUserService proUserService;
 	
+	/**
+	 * 登录
+	 * @param userName
+	 * @param pwd
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(path = "/login")
 	@ResponseBody
 	public Resp<?> login(String userName,String pwd,HttpServletRequest request){
@@ -33,17 +40,37 @@ public class CommonDataController extends BaseController{
 				setSessionFront(request, proUser);
 				return new Resp<>(proUser);
 			}else{
-				proUser = proUserService.findByMobilePhone(userName);
-				if(proUser!=null){
-					resp.setMsg("账号密码错误！");
-				}else{
-					return new Resp<>(proUserService.register(userName,pwd));
-				}
+				resp.setMsg("账号密码错误！");
+				return resp;
 			}
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
-		resp.setMsg("账号密码错误！");
+		return resp;
+	}
+	
+	/**
+	 * 注册
+	 * @param userName
+	 * @param pwd
+	 * @param remarkB
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping(path = "/register")
+	@ResponseBody
+	public Resp<?> register(String userName,String pwd,String remarkB,String name){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			ProUser proUser = proUserService.findByMobilePhone(userName);
+			if(proUser!=null){
+				resp.setMsg("账号已经存在！");
+			}else{
+				return new Resp<>(proUserService.register(userName,pwd,remarkB,name));
+			}
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
 		return resp;
 	}
 	

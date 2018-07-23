@@ -78,13 +78,26 @@ public class ProUserService {
 		return proUserDao.find(userId);
 	}
 
-	public void updateN(Integer userId, String name, String pwd) {
+	public void updateN(Integer userId, String name, String pwd, String remarkB) {
 		ProUser proUser = proUserDao.find(userId);
 		proUser.setName(name);
 		if(StringUtil.isNotBlank(pwd)){
 			proUser.setPwd(MD5Util.md5(pwd));
 		}
+		proUser.setRemarkB(remarkB);
 		proUserDao.update(proUser);
+	}
+
+	public ProUser register(String userName, String pwd, String remarkB, String name) {
+		ProUser proUser = new ProUser();
+		proUser.setCreateTime(new Date());
+		proUser.setMobilePhone(userName);
+		proUser.setName(name);
+		proUser.setRemarkB(remarkB);
+		proUser.setPwd(MD5Util.md5(pwd));
+		proUser.setType(1);
+		
+		return proUserDao.save(proUser);
 	}
 	
 }
