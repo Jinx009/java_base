@@ -23,7 +23,7 @@ function _getData() {
 	var _userId = getLocalStorage('userId');
 	$.ajax({
 		url : '/d/order/getSwimmingStatus',
-		data : 'date=' + _date + '&userId=' + _userId+'&type=1',
+		data : 'date=' + _date + '&userId=' + _userId+'&type=2',
 		type : 'post',
 		dataType : 'json',
 		success : function(res) {
@@ -125,7 +125,7 @@ function _save(_orderTime) {
 	var _userId = getLocalStorage('userId');
 	if(_userId==''){
 		setLocalStorage('_url','/f/p/pro_swimming_pool');
-		location.href = '/f/p/login';
+		location.href = '/f/p/register';
 	}else{
 		var _type = getLocalStorage('type');
 		if(_type!=2&&_type!=3&&_type!=5){

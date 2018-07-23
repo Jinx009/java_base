@@ -6,20 +6,18 @@ $(function(){
 })
 var _d = '';
 var  _nowPage = 0,_max = 0;
-var _orderDate = '',_type = 0;
+var _orderDate = '';
 function _getData(_type,_index){
 	var _data = {};
 	_data.p = _getPage(_type,_index);
-	var orderDate = 1;
-	var type = $('#type').val();
-	if(orderDate!=_orderDate||_type!=type){
+	var orderDate = $('#orderDate').val();
+	if(orderDate!=_orderDate){
 		_data.p = 3;
 		_orderDate = orderDate;
-		_type = type;
 	}
 	if(_data.p!=-1){
 		$.ajax({
-			url:'/d/order/pageList?p='+_data.p+'&orderDate='+orderDate+'&type='+type,
+			url:'/d/order/pageList?p='+_data.p+'&orderDate='+orderDate+'&type=1',
 			dataType:'json',
 			type:'post',
 			success:function(res){

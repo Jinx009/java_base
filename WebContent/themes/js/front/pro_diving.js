@@ -70,7 +70,7 @@ function _save(_orderTime) {
 	var _userId = getLocalStorage('userId');
 	if(_userId==''){
 		setLocalStorage('_url','/f/p/pro_diving');
-		location.href = '/f/p/login';
+		location.href = '/f/p/register';
 	}else{
 		var _type = getLocalStorage('type');
 		if(_type!=2&&_type!=3&&_type!=5){

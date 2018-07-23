@@ -38,16 +38,14 @@ public class ProOrderService {
 			ProOrder proOrder = proOrderDao.findByUserId(userId,date,orderTime,type);
 			if(proOrder!=null)
 				return 1000;
-		}else{
-			if(type==1){
-				return proOrderDao.findDivingStatus(date, orderTime);
-			}else if(type==2){
-				return proOrderDao.findPoolStatus(date, orderTime);
-			}else{
-				return proOrderDao.findRoomStatus(date, orderTime);
-			}
 		}
-		return 1;
+		if(type==1){
+			return proOrderDao.findDivingStatus(date, orderTime);
+		}else if(type==2){
+			return proOrderDao.findPoolStatus(date, orderTime);
+		}else{
+			return proOrderDao.findRoomStatus(date, orderTime);
+		}
 	}
 
 	public void save(String orderDate, Integer type, Integer userId, Integer orderType, Integer num) {

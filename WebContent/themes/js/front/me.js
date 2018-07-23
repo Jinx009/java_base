@@ -2,7 +2,7 @@ $(function(){
 	_userId = getLocalStorage('userId');
 	if(_userId==''){
 		setLocalStorage('_url','/f/p/me');
-		location.href = '/f/p/login';
+		location.href = '/f/p/register';
 	}else{
 		_getData();
 	}

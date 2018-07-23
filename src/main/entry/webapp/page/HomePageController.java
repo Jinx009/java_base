@@ -25,4 +25,9 @@ public class HomePageController extends BaseController{
 		return "/home/pro_diving";
 	}
 	
+	@RequestMapping(path = "/pro_class_room")
+	public String pro_class_room(){
+		return "/home/pro_class_room";
+	}
+	
 }

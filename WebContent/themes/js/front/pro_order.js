@@ -6,7 +6,7 @@ function _getData(){
 	var _userId = getLocalStorage('userId');
 	if(''==_userId){
 		setLocalStorage('_url','/f/p/pro_order');
-		location.href = '/f/p/logon';
+		location.href = '/f/p/register';
 	}else{
 		$.ajax({
 			url:'/d/order/myOrder',
