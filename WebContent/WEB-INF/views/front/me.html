@@ -46,24 +46,24 @@
           <div class="item-after"></div>
         </div>
       </li>
-         <li  class="item-content item-link">
+         <li  class="item-content item-link" v-if="5===item.type" >
         <div class="item-media"><i class="icon icon-f7"></i></div>
         <div class="item-inner" onclick="javascript:location.href='/f/p/pro_class_room';" >
           <div class="item-title">预定教室</div>
           <div class="item-after"></div>
         </div>
       </li>
-         <li  class="item-content item-link">
+         <li  class="item-content item-link"  v-if="2===item.type||5===item.type">
         <div class="item-media"><i class="icon icon-f7"></i></div>
         <div class="item-inner" onclick="javascript:location.href='/f/p/pro_swimming_pool';" >
-          <div class="item-title">预定泳池</div>
+          <div class="item-title">预定潜水池</div>
           <div class="item-after"></div>
         </div>
       </li>
-         <li  class="item-content item-link">
+         <li  class="item-content item-link" v-if="2===item.type||5===item.type">
         <div class="item-media"><i class="icon icon-f7"></i></div>
         <div class="item-inner" onclick="javascript:location.href='/f/p/pro_class';" >
-          <div class="item-title">预定课程</div>
+          <div class="item-title">预定泳池</div>
           <div class="item-after"></div>
         </div>
       </li>

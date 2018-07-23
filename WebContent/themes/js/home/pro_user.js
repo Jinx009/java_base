@@ -45,9 +45,9 @@ function _save(){
 		_type = $('#_type').val(),
 		_name = $('#_name').val(),
 		_pwd = $('#_pwd').val(),
-		_remarkA = $('#_remarkA').val(),
+//		_remarkA = $('#_remarkA').val(),
 		_remarkB = $('#_remarkB').val(),
-		_remarkC = $('#_remarkC').val(),
+//		_remarkC = $('#_remarkC').val(),
 		_desc = $('#_desc').val();
 	if(_mobilePhone==''||_name==''||_pwd==''){
 		layer.alert('手机号，密码，名称为必填项！');

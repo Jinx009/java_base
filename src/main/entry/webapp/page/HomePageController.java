@@ -15,19 +15,14 @@ public class HomePageController extends BaseController{
 		return "/home/pro_user";
 	}
 
-	@RequestMapping(path = "/pro_class")
-	public String pro_class(){
-		return "/home/pro_class";
+	@RequestMapping(path = "/pro_swimming")
+	public String pro_swimming(){
+		return "/home/pro_swimming";
 	}
 	
-	@RequestMapping(path = "/pro_class_order")
-	public String pro_class_order(){
-		return "/home/pro_class_order";
-	}
-	
-	@RequestMapping(path = "/pro_order")
-	public String pro_order(){
-		return "/home/pro_order";
+	@RequestMapping(path = "/pro_diving")
+	public String pro_diving(){
+		return "/home/pro_diving";
 	}
 	
 }

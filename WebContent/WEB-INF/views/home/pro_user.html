@@ -55,10 +55,11 @@
 										class="form-control select2 select2-hidden-accessible" "
 										style="width: 100%;" tabindex="-1" aria-hidden="true">
 										<option value="0" >全部类型</option>
-										<option value="1" >游客</option>
-										<option value="2" >学员</option>
-										<option value="3" >企业</option>
-										<option value="4" >教练</option>
+										<option value="1" >普通账户</option>
+										<option value="2" >会员</option>
+										<option value="3" >俱乐部</option>
+										<option value="4" >游泳教练</option>
+										<option value="5" >潜水教练</option>
 									</select>
 								</div>
 							</div>
@@ -91,8 +92,9 @@
 											<th>手机号码</th>
 											<th>名称</th>
 											<th>类型</th>
+											<th>证书编号</th>
 											<th>描述</th>
-											<th>备注1</th>
+										<!-- 	<th>备注1</th> -->
 									<!-- 		<th>备注2</th>
 											<th>备注3</th> -->
 											<th>注册时间</th>
@@ -105,17 +107,19 @@
 											<td v-text="item.mobilePhone"></td>
 											<td v-text="item.name"></td>
 											<td>
-												<button  v-if="1===item.type" class="btn btn-success btn-xs">游客</button>
-												<button  v-if="2===item.type" class="btn btn-success btn-xs">学员</button>
-												<button  v-if="3===item.type" class="btn btn-success btn-xs">教练</button>
-												<button  v-if="4===item.type" class="btn btn-success btn-xs">企业</button>
+												<button  v-if="1===item.type" class="btn btn-success btn-xs">普通账户</button>
+												<button  v-if="2===item.type" class="btn btn-success btn-xs">会员</button>
+												<button  v-if="3===item.type" class="btn btn-success btn-xs">俱乐部</button>
+												<button  v-if="4===item.type" class="btn btn-success btn-xs">游泳教练</button>
+												<button  v-if="5===item.type" class="btn btn-success btn-xs">潜水教练</button>
 											</td>
+											<td v-text="item.remarkB"></td>
 											<td>
 												<input type="text" class="form-control input-sm" style="width: 100px;height: 25px;" v-bind:id="'desc'+item.id" v-bind:value="item.desc" >
 											</td>
-											<td>
+											<!-- <td>
 												<input type="text" class="form-control input-sm" style="width: 100px;height: 25px;" v-bind:id="'remarkA'+item.id" v-bind:value="item.remarkA" >
-											</td>
+											</td> -->
 										<!-- 	<td>
 												<input type="text" class="form-control input-sm" style="width: 100px;" v-bind:id="'remarkB'+item.id" v-bind:value="item.reamrkB" >
 											</td>
@@ -124,10 +128,10 @@
 											</td> -->
 											<td v-text="item.createTime"></td>
 											<td>
-												<button  v-bind:id="'_remark'+item.id" onclick="_saveRemark(this);" class="btn btn-info btn-xs">保存</button>
+											<!-- 	<button  v-bind:id="'_remark'+item.id" onclick="_saveRemark(this);" class="btn btn-info btn-xs">保存</button> -->
 												<button  v-bind:id="'_reset'+item.id" onclick="_reset(this);" class="btn btn-warning btn-xs">重置密码</button>
-												<button   v-bind:id="'_type'+item.id" onclick="_changeType(this,2);"   v-if="1===item.type" class="btn btn-danger btn-xs">升学员</button>
-												<button   v-bind:id="'_type'+item.id" onclick="_changeType(this,1);"  v-if="2===item.type" class="btn btn-danger btn-xs">降游客</button>
+												<button   v-bind:id="'_type'+item.id" onclick="_changeType(this,2);"   v-if="1===item.type" class="btn btn-danger btn-xs">升会员</button>
+												<button   v-bind:id="'_type'+item.id" onclick="_changeType(this,1);"  v-if="2===item.type" class="btn btn-danger btn-xs">降普通会员</button>
 											</td>
 										</tr>
 									</tbody>
@@ -170,10 +174,11 @@
                 <div class="form-group">
                   <label for="">用户类型</label>
                   <select class="form-control" id="_type" >
-                  		<option value="1" >游客</option>
-						<option value="2" >学员</option>
-						<option value="3" >企业</option>
-						<option value="4" >教练</option>
+                  		<option value="1" >普通账户</option>
+						<option value="2" >会员</option>
+						<option value="3" >俱乐部</option>
+						<option value="4" >游泳教练</option>
+						<option value="5" >潜水教练</option>
                   </select>
                 </div>
                 <div class="form-group">
@@ -183,6 +188,10 @@
                   <div class="form-group">
                   <label for="">名称</label>
                   <input type="text" class="form-control" id="_name"  >
+                </div>
+                  <div class="form-group">
+                  <label for="">潜水证书编号</label>
+                  <input type="text" class="form-control" id="_remarkB"  >
                 </div>
                 <div class="form-group">
                   <label for="">描述</label>
@@ -196,7 +205,7 @@
           </div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_user.js?version=1.014"></script>
+	<script src="/themes/js/home/pro_user.js?version=1.12"></script>
 
 </body>
 </html>
