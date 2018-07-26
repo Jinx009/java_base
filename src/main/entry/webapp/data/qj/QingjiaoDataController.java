@@ -48,11 +48,6 @@ public class QingjiaoDataController extends BaseController {
 					i++;
 				}
 			}
-			for(int j = 0;j<dataArray.length;j++){
-				if(dataArray[j]!=null&&!"".equals(dataArray[j])){
-					System.out.println("i "+j+";d :"+dataArray[j]);
-				}
-			}
 			String type = dataArray[0] + dataArray[1];
 			if (type.equals("68")) {
 				type = "报警";
