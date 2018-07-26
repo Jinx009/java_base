@@ -59,8 +59,7 @@ public class QingjiaoDataController extends BaseController {
 			} else {
 				type = "心跳";
 			}
-			String sn = dataArray[2] + dataArray[3] + dataArray[4] + dataArray[5] + dataArray[6] + dataArray[7]
-					+ dataArray[8]+ dataArray[9];
+			String sn = String.valueOf(Integer.parseInt(dataArray[2] + dataArray[3] + dataArray[4] + dataArray[5] + dataArray[6] + dataArray[7]+ dataArray[8]+ dataArray[9], 16));
 			QjDevice qjDevice = qjDeviceService.findBySn(sn);
 			if (qjDevice == null) {
 				qjDevice = new QjDevice();
@@ -120,7 +119,7 @@ public class QingjiaoDataController extends BaseController {
 			}
 			e = (Integer.parseInt(c, 2) + 1) * -1;
 		}else{
-			e = Integer.valueOf(String.valueOf(Integer.parseInt(_d, 16)));
+			e = Integer.parseInt(_d, 16);
 		}
 		String result = String.valueOf(Double.valueOf(e)/1000);
 		log.warn("result:{}",result);
