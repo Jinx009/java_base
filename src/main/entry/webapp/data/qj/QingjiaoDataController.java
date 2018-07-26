@@ -39,7 +39,20 @@ public class QingjiaoDataController extends BaseController {
 	@ResponseBody
 	public Resp<?> push(String data) {
 		try {
-			String[] dataArray = data.split("");
+			String[] dataArray2 = data.split("");
+			String[] dataArray = new String[100];
+			int i = 0;
+			for(String s:dataArray2){
+				if(s!=null&&!"".equals(s)){
+					dataArray[i] = s;
+					i++;
+				}
+			}
+			for(int j = 0;j<dataArray.length;j++){
+				if(dataArray[j]!=null&&!"".equals(dataArray[j])){
+					System.out.println("i "+j+";d :"+dataArray[j]);
+				}
+			}
 			String type = dataArray[0] + dataArray[1];
 			if (type.equals("68")) {
 				type = "报警";
@@ -60,6 +73,7 @@ public class QingjiaoDataController extends BaseController {
 				qjDevice.setYValue(getData(dataArray[18], dataArray[18] + dataArray[19] + dataArray[20] + dataArray[21]));
 				qjDevice.setVoltage(getData(dataArray[22], dataArray[22] + dataArray[23] + dataArray[24] + dataArray[25]));
 				qjDeviceService.save(qjDevice);
+				
 			}else{
 				qjDevice.setSnValue(sn);
 				qjDevice.setType(type);
@@ -83,21 +97,33 @@ public class QingjiaoDataController extends BaseController {
 		int _index = Integer.parseInt(index,16);
 		Integer a = Integer.valueOf(_d, 16);
 		String b = Integer.toBinaryString(a);
-		String[] arr = b.split("");
+		String[] arrs = b.split("");
+		String[] arr = new String[16]; 
+		int i = 0;
+		for(String s:arrs){
+			if(s!=null&&!"".equals(s)){
+				arr[i] = s;
+				i++;
+			}
+		}
 		String c = "";
 		Integer e = Integer.parseInt(b, 2);
 		if (_index>8) {
 			for (String d : arr) {
-				if (d.equals("1")) {
-					c += "0";
-				} else {
-					c += "1";
+				if(d!=null&&!"".equals(d)){
+					if (d.equals("1")) {
+						c += "0";
+					} else {
+						c += "1";
+					}
 				}
 			}
 			e = (Integer.parseInt(c, 2) + 1) * -1;
 		}else{
 			e = Integer.valueOf(String.valueOf(Integer.parseInt(_d, 16)));
 		}
-		return String.valueOf(Double.valueOf(e)/1000);
+		String result = String.valueOf(Double.valueOf(e)/1000);
+		log.warn("result:{}",result);
+		return result;
 	}
 }
