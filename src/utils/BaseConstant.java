@@ -19,4 +19,5 @@ public class BaseConstant {
 	public static final String APP_ID = "appId";
 	public static final String MSG = "msg";
 	public static final String WEB_USER = "web_user";
+	public static final int PAGE_SIZE = 0;
 }
