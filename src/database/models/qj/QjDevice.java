@@ -42,5 +42,19 @@ public class QjDevice {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time")
     private Date createTime;
+    @Column(name = "base_x")
+    private String baseX;
+    @Column(name = "base_y")
+    private String baseY;
+    @Column(name = "mobile_phone")
+    private String mobilePhone;
+    @Column(name = "notice_type")
+    private Integer noticeType;
+    @Column(name = "company")
+    private String company;
+    @Column(name = "business_type")
+    private Integer businessType;
+    @Column(name = "doneType")
+    private Integer doneType;
 	
 }

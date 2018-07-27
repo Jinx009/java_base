@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>山体滑坡检测</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+    <style>
+        html,body{
+            width:100%;
+            height:100%;
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+        body{
+            font-family: "华文细黑";
+            background:url("img/timg.jpeg") no-repeat;
+            background-size: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div style="background: green;width: 30px;height: 30px;border-radius: 30px;position: absolute;top: 430px;left: 100px;" ></div>
+    <div style="background: green;width: 30px;height: 30px;border-radius: 30px;position: absolute;top: 440px;left: 420px;" ></div>
+    <div id="test" data-container="body" data-toggle="popover" data-trigger="" data-placement="top" data-content=""
+    style="background: green;width: 30px;height: 30px;border-radius: 30px;position: absolute;top: 440px;left: 920px;" ></div>
+    <div style="background: green;width: 30px;height: 30px;border-radius: 30px;position: absolute;top: 540px;left: 1220px;" ></div>
+    <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+    	_getData();
+    	/* setInterval(function() {
+    		_getData();
+    	}, 10000); */
+    })
+    function _getData(){
+    	$.ajax({
+    		url:'/home/cloud/qj/list',
+    		type:'get',
+    		dataType:'json',
+    		success:function(res){
+    			if('报警'==res.data[0].type&&0==res.data[0].doneType){
+    				$('#test').css('background','red');
+    			}else{
+    				$('#test').css('background','green');
+    			}
+    			var _htmlStr = "设备编号:"+res.data[0].snValue+'<br>';
+    			_htmlStr += "x轴角度变动值:"+res.data[0].xtype+'<br>';
+    			_htmlStr += "y轴角度变动值:"+res.data[0].ytype+'<br>';
+    			_htmlStr += "电压:"+res.data[0].voltage+'V<br>';
+    			_htmlStr += "x警告值:"+res.data[0].xtype+'<br>';
+    			_htmlStr += "y警告值:"+res.data[0].ytype+'<br>';
+    			_htmlStr += "推送手机:"+res.data[0].mobilePhone+'<br>';
+    			_htmlStr += "推送类型:"+res.data[0].noticeType+'<br>';
+    			$('#test').attr('data-content',_htmlStr);
+    			$("[data-toggle='popover']").popover({html: true});
+    			$('#test').popover('show')
+    		}
+    	})
+    }
+    function jsDateTime(unixtime)  {  
+		 var date = new Date(unixtime);
+		 return  date.Format("yyyy-MM-dd hh:mm:ss"); 
+	}  
+	Date.prototype.Format = function(fmt) { // author: meizz
+		var o = {
+			"M+" : this.getMonth() + 1, // 月份
+			"d+" : this.getDate(), // 日
+			"h+" : this.getHours(), // 小时
+			"m+" : this.getMinutes(), // 分
+			"s+" : this.getSeconds(), // 秒
+			"q+" : Math.floor((this.getMonth() + 3) / 3), // 季度
+			"S" : this.getMilliseconds()
+		// 毫秒
+		};
+		if (/(y+)/.test(fmt))
+			fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "")
+					.substr(4 - RegExp.$1.length));
+		for ( var k in o)
+			if (new RegExp("(" + k + ")").test(fmt))
+				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k])
+						: (("00" + o[k]).substr(("" + o[k]).length)));
+		return fmt;
+	};
+    </script>
+</body>
+</html>

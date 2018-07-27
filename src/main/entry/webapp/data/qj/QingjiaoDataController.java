@@ -9,10 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import common.helper.StringUtil;
 import database.models.qj.QjDevice;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.qj.QjDeviceService;
+import utils.BaseConstant;
 import utils.Resp;
+import utils.msg.AlimsgUtils;
 
 @Controller
 @RequestMapping(value = "/home/cloud/qj")
@@ -29,6 +32,33 @@ public class QingjiaoDataController extends BaseController {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			return new Resp<>(qjDeviceService.findList());
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/update")
+	@ResponseBody
+	public Resp<?> update(String sn,String mobilePhone,Integer businessType,Integer  noticeType,Integer doneType){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			QjDevice qjDevice = qjDeviceService.findBySn(sn);
+			if(qjDevice!=null){
+				if(StringUtil.isNotBlank(mobilePhone)){
+					qjDevice.setMobilePhone(mobilePhone);
+				}
+				if(businessType!=null){
+					qjDevice.setBusinessType(businessType);
+				}
+				if(noticeType!=null){
+					qjDevice.setNoticeType(noticeType);
+				}
+				if(doneType!=null){
+					qjDevice.setDoneType(doneType);
+				}
+				qjDeviceService.update(qjDevice);
+			}
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
@@ -62,10 +92,13 @@ public class QingjiaoDataController extends BaseController {
 				qjDevice.setType(type);
 				qjDevice.setCreateTime(new Date());
 				qjDevice.setXType(Integer.valueOf(dataArray[10] + dataArray[11]));
+				qjDevice.setBaseX(getData(dataArray[12], dataArray[12] + dataArray[13] + dataArray[14] + dataArray[15]));
 				qjDevice.setXValue(getData(dataArray[12], dataArray[12] + dataArray[13] + dataArray[14] + dataArray[15]));
 				qjDevice.setYType(Integer.valueOf(dataArray[16] + dataArray[17]));
 				qjDevice.setYValue(getData(dataArray[18], dataArray[18] + dataArray[19] + dataArray[20] + dataArray[21]));
+				qjDevice.setBaseY(getData(dataArray[18], dataArray[18] + dataArray[19] + dataArray[20] + dataArray[21]));
 				qjDevice.setVoltage(getData(dataArray[22], dataArray[22] + dataArray[23] + dataArray[24] + dataArray[25]));
+				qjDevice.setDoneType(0);
 				qjDeviceService.save(qjDevice);
 				
 			}else{
@@ -74,14 +107,27 @@ public class QingjiaoDataController extends BaseController {
 				qjDevice.setCreateTime(new Date());
 				qjDevice.setXType(Integer.valueOf(dataArray[10] + dataArray[11]));
 				String xValue = getData(dataArray[12], dataArray[12] + dataArray[13] + dataArray[14] + dataArray[15]);
+				qjDevice.setBaseX(getData(dataArray[12], dataArray[12] + dataArray[13] + dataArray[14] + dataArray[15]));
 				double _x = Double.valueOf(xValue)-Double.valueOf(qjDevice.getXValue());
 				qjDevice.setXValue(String.valueOf(_x));
 				qjDevice.setYType(Integer.valueOf(dataArray[16] + dataArray[17]));
 				String yValue = getData(dataArray[18], dataArray[18] + dataArray[19] + dataArray[20] + dataArray[21]);
+				qjDevice.setBaseY(yValue);
 				double _y = Double.valueOf(yValue)-Double.valueOf(qjDevice.getYValue());
 				qjDevice.setYValue(String.valueOf(_y));
 				qjDevice.setVoltage(getData(dataArray[22], dataArray[22] + dataArray[23] + dataArray[24] + dataArray[25]));
 				qjDeviceService.update(qjDevice);
+				qjDevice.setDoneType(0);
+				if(qjDevice.getMobilePhone()!=null&&!"".equals(qjDevice.getMobilePhone())&&qjDevice.getNoticeType()!=null&&qjDevice.getNoticeType()==1){
+					if(qjDevice.getBusinessType()==0){
+						AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_MOUNTAIN_TEMPLATE, BaseConstant.MESSAGE_SIGN);
+						AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_ROAD_TEMPLATE, BaseConstant.MESSAGE_SIGN);
+					}else if(qjDevice.getBusinessType() == 1){
+						AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_MOUNTAIN_TEMPLATE, BaseConstant.MESSAGE_SIGN);
+					}else if(qjDevice.getBusinessType() == 1){
+						AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_ROAD_TEMPLATE, BaseConstant.MESSAGE_SIGN);
+					}
+				}
 			}
 			
 		} catch (Exception e) {

@@ -11,7 +11,7 @@ import database.models.qj.QjDevice;
 @Repository
 public class QjDeviceDao extends BaseDao<QjDevice>{
 
-	public List<QjDevice> findAll() {
+	public List<QjDevice> findAllList() {
 		return findAll();
 	}
 	

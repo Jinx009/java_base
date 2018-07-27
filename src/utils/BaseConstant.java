@@ -20,4 +20,9 @@ public class BaseConstant {
 	public static final String MSG = "msg";
 	public static final String WEB_USER = "web_user";
 	public static final int PAGE_SIZE = 0;
+	
+	public static final String MESSAGE_SIGN = "展为";
+	public static final String MESSAGE_QJ_ROAD_TEMPLATE = "SMS_140735042";
+	public static final String MESSAGE_QJ_MOUNTAIN_TEMPLATE = "SMS_140725030";
+	
 }
