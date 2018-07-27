@@ -116,8 +116,8 @@ public class QingjiaoDataController extends BaseController {
 				double _y = Double.valueOf(yValue)-Double.valueOf(qjDevice.getYValue());
 				qjDevice.setYValue(String.valueOf(_y));
 				qjDevice.setVoltage(getData(dataArray[22], dataArray[22] + dataArray[23] + dataArray[24] + dataArray[25]));
-				qjDeviceService.update(qjDevice);
 				qjDevice.setDoneType(0);
+				qjDeviceService.update(qjDevice);
 				if(qjDevice.getMobilePhone()!=null&&!"".equals(qjDevice.getMobilePhone())&&qjDevice.getNoticeType()!=null&&qjDevice.getNoticeType()==1){
 					if(qjDevice.getBusinessType()==0){
 						AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_MOUNTAIN_TEMPLATE, BaseConstant.MESSAGE_SIGN);
