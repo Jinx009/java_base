@@ -134,7 +134,7 @@ public class QingjiaoDataController extends BaseController {
 				}
 				QjDeviceLog qjDeviceLog = new QjDeviceLog();
 				qjDeviceLog.setBaseX(qjDevice.getBaseX());
-				qjDeviceLog.setBaseY(qjDevice.getYValue());
+				qjDeviceLog.setBaseY(qjDevice.getBaseY());
 				qjDeviceLog.setSnValue(qjDevice.getSnValue());
 				qjDeviceLog.setType(qjDevice.getType());
 				qjDeviceLog.setVoltage(qjDevice.getVoltage());
