@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import common.helper.StringUtil;
 import database.models.qj.QjDevice;
+import database.models.qj.QjDeviceLog;
 import main.entry.webapp.BaseController;
+import service.basicFunctions.qj.QjDeviceLogService;
 import service.basicFunctions.qj.QjDeviceService;
 import utils.BaseConstant;
 import utils.Resp;
@@ -25,6 +27,8 @@ public class QingjiaoDataController extends BaseController {
 
 	@Autowired
 	private QjDeviceService qjDeviceService;
+	@Autowired
+	private QjDeviceLogService qjDeviceLogService;
 
 	@RequestMapping(path = "/list")
 	@ResponseBody
@@ -128,6 +132,15 @@ public class QingjiaoDataController extends BaseController {
 						AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_ROAD_TEMPLATE, BaseConstant.MESSAGE_SIGN);
 					}
 				}
+				QjDeviceLog qjDeviceLog = new QjDeviceLog();
+				qjDeviceLog.setBaseX(qjDevice.getBaseX());
+				qjDeviceLog.setBaseY(qjDevice.getYValue());
+				qjDeviceLog.setSnValue(qjDevice.getSnValue());
+				qjDeviceLog.setType(qjDevice.getType());
+				qjDeviceLog.setVoltage(qjDevice.getVoltage());
+				qjDeviceLog.setXType(qjDevice.getXType());
+				qjDeviceLog.setYType(qjDevice.getYType());
+				qjDeviceLogService.save(qjDeviceLog);
 			}
 			
 		} catch (Exception e) {
