@@ -40,6 +40,7 @@
     		type:'get',
     		dataType:'json',
     		success:function(res){
+    			res.data[0].createTime = jsDateTime(res.data[0].createTime);
     			if('报警'==res.data[0].type&&0==res.data[0].doneType){
     				$('#test').css('background','red');
     			}else{
@@ -49,8 +50,9 @@
     			_htmlStr += "x轴角度变动值:"+res.data[0].xtype+'<br>';
     			_htmlStr += "y轴角度变动值:"+res.data[0].ytype+'<br>';
     			_htmlStr += "电压:"+res.data[0].voltage+'V<br>';
-    			_htmlStr += "x警告值:"+res.data[0].xtype+'<br>';
-    			_htmlStr += "y警告值:"+res.data[0].ytype+'<br>';
+    			_htmlStr += "更新时间:"+res.data[0].createTime+'<br>';
+ /*    			_htmlStr += "x警告值:"+res.data[0].xtype+'<br>';
+    			_htmlStr += "y警告值:"+res.data[0].ytype+'<br>'; */
     			_htmlStr += "推送手机:"+res.data[0].mobilePhone+'<br>';
     			_htmlStr += "推送类型:"+res.data[0].noticeType+'<br>';
     			$('#test').attr('data-content',_htmlStr);
