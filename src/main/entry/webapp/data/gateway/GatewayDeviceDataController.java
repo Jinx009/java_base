@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import lombok.Getter;
 import lombok.Setter;
 import main.entry.webapp.BaseController;
@@ -30,6 +31,8 @@ public class GatewayDeviceDataController extends BaseController{
 	
 	@Autowired
 	private ProGatewaySmokeDataService proGatewaySmokeDataService;
+	
+
 	
 	@RequestMapping(path = "/push")
 	@ResponseBody
