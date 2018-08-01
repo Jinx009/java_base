@@ -53,9 +53,9 @@ public class JobTask extends BaseController{
 		@Scheduled(cron = "0 59 23 * * ?")//每天凌晨0点0分
 		public void init(){
 			logger.warn("start job job... ... ");
-			getOrder(1);
-			getLog(1);
-			getBaseOrder();
+//			getOrder(1);
+//			getLog(1);
+//			getBaseOrder();
 	     }
 		
 		/**

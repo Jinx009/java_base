@@ -3,6 +3,8 @@ package main.entry.webapp.data.gateway;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.Getter;
+import lombok.Setter;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.project.ProGatewaySmokeDataService;
 import utils.HttpUtils;
@@ -36,8 +40,10 @@ public class GatewayDeviceDataController extends BaseController{
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String data =br.readLine();
 			log.warn("data:{}",data);
-			HttpUtils.postText("http://58.247.128.138:8800/api/smoke/add",data);
 			proGatewaySmokeDataService.save(data);
+			ExecutorService executorService = Executors.newCachedThreadPool();
+			executorService.execute(new SendThread(data));
+			executorService.shutdown();
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}",e);
@@ -45,4 +51,29 @@ public class GatewayDeviceDataController extends BaseController{
 		return resp;
 	}
 	
+	
+	
 } 
+@Getter
+@Setter
+class SendThread implements Runnable{
+	
+	private String data;
+	
+	public SendThread(String data){
+		this.data = data;
+	}
+
+	public void run() {
+		try {
+			HttpUtils.postText("http://58.247.128.138:8800/api/smoke/add",data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(!Thread.currentThread().isInterrupted()){
+				Thread.currentThread().interrupt();
+			}
+		}
+	}
+	
+}
