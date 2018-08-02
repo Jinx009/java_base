@@ -122,16 +122,6 @@ public class QingjiaoDataController extends BaseController {
 				qjDevice.setVoltage(getData(dataArray[22], dataArray[22] + dataArray[23] + dataArray[24] + dataArray[25]));
 				qjDevice.setDoneType(0);
 				qjDeviceService.update(qjDevice);
-				if(qjDevice.getMobilePhone()!=null&&!"".equals(qjDevice.getMobilePhone())&&qjDevice.getNoticeType()!=null&&qjDevice.getNoticeType()==1){
-					if(qjDevice.getBusinessType()==0){
-						AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_MOUNTAIN_TEMPLATE, BaseConstant.MESSAGE_SIGN);
-						AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_ROAD_TEMPLATE, BaseConstant.MESSAGE_SIGN);
-					}else if(qjDevice.getBusinessType() == 1){
-						AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_MOUNTAIN_TEMPLATE, BaseConstant.MESSAGE_SIGN);
-					}else if(qjDevice.getBusinessType() == 1){
-						AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_ROAD_TEMPLATE, BaseConstant.MESSAGE_SIGN);
-					}
-				}
 				QjDeviceLog qjDeviceLog = new QjDeviceLog();
 				qjDeviceLog.setBaseX(qjDevice.getBaseX());
 				qjDeviceLog.setBaseY(qjDevice.getBaseY());
@@ -140,6 +130,19 @@ public class QingjiaoDataController extends BaseController {
 				qjDeviceLog.setVoltage(qjDevice.getVoltage());
 				qjDeviceLog.setXType(qjDevice.getXType());
 				qjDeviceLog.setYType(qjDevice.getYType());
+				QjDeviceLog qjDeviceLog2 = qjDeviceLogService.getNearBySn(sn);
+				if((qjDeviceLog2!=null&&!qjDeviceLog2.getBaseX().equals(qjDeviceLog.getBaseX())&&!qjDeviceLog2.getBaseY().equals(qjDeviceLog.getBaseY()))||qjDeviceLog2==null){
+					if(qjDevice.getMobilePhone()!=null&&!"".equals(qjDevice.getMobilePhone())&&qjDevice.getNoticeType()!=null&&qjDevice.getNoticeType()==1){
+						if(qjDevice.getBusinessType()==0){
+							AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_MOUNTAIN_TEMPLATE, BaseConstant.MESSAGE_SIGN);
+							AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_ROAD_TEMPLATE, BaseConstant.MESSAGE_SIGN);
+						}else if(qjDevice.getBusinessType() == 1){
+							AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_MOUNTAIN_TEMPLATE, BaseConstant.MESSAGE_SIGN);
+						}else if(qjDevice.getBusinessType() == 1){
+							AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_ROAD_TEMPLATE, BaseConstant.MESSAGE_SIGN);
+						}
+					}
+				}
 				qjDeviceLogService.save(qjDeviceLog);
 			}
 			

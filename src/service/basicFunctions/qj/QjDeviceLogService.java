@@ -19,4 +19,9 @@ public class QjDeviceLogService {
 		qjDeviceLogDao.save(q);
 	}
 	
+	
+	public QjDeviceLog getNearBySn(String sn){
+		return qjDeviceLogDao.getNearBySn(sn);
+	}
+	
 }
