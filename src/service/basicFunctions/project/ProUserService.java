@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import database.basicFunctions.dao.project.ProUserDao;
+import database.common.PageDataList;
 import database.models.project.ProUser;
 
 @Service
@@ -41,6 +42,10 @@ public class ProUserService {
 		proUser.setStatus(1);
 		proUser.setCreateTime(new Date());
 		proUserDao.save(proUser);
+	}
+
+	public PageDataList<ProUser> pageList(Integer p) {
+		return proUserDao.pageList(p);
 	}
 	
 	

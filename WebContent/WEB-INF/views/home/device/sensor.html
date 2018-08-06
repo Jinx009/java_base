@@ -53,7 +53,7 @@
 												<th>车位号</th>
 												<th>电量</th>
 												<th>有车</th>
-												<th>RouterMac</th>
+												<th>长租卡</th>
 												<th>上次通信时间</th>
 												<th>操作</th>
 											</tr>
@@ -69,7 +69,7 @@
 													class="badge bg-red">有车</span> <span
 													v-if="0===device.available" class="badge bg-green">无车</span>
 												</td>
-												<td v-text="device.routerMac"></td>
+												<td v-text="device.bluetooth"></td>
 												<td v-text="device.lastSeenTime"></td>
 												<td>
 													<button class='btn btn-info btn-xs'

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
 import database.common.QueryParam;
+import database.common.OrderFilter.OrderType;
+import database.common.PageDataList;
 import database.models.project.ProUser;
 
 @Repository
@@ -22,6 +24,13 @@ public class ProUserDao extends BaseDao<ProUser>{
 		QueryParam queryParam = QueryParam.getInstance();
 		queryParam.addParam("status",1);
 		return findByCriteria(queryParam);
+	}
+
+	public PageDataList<ProUser> pageList(Integer p) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addPage(p, 25);
+		queryParam.addOrder(OrderType.DESC, "id");
+		return findPageList(queryParam);
 	}
 	
 }

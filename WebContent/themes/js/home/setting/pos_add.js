@@ -6,7 +6,7 @@ $(function() {
 })
 function _getArea() {
 	$.ajax({
-		url : '/home/d/area/list?id=28',
+		url : '/home/d/area/list?id=22',
 		type : 'get',
 		dataType : 'json',
 		success : function(res) {

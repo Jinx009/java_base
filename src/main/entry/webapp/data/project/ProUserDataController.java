@@ -23,10 +23,10 @@ public class ProUserDataController extends BaseController{
 	
 	@RequestMapping(path = "/proUser_list")
 	@ResponseBody
-	public Resp<?> list(){
+	public Resp<?> list(Integer p){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(proUserService.findAll());
+			return new Resp<>(proUserService.pageList(p));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

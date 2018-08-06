@@ -565,7 +565,10 @@ public class HttpData {
 	
 
 	public static void main(String[] args) {
-		addPark("USI_321b0766-26fd-4cf6-9eb0-ee270b193ef0", "0001171228000031", "A002");
+		//USI_08ec9cc4-8a4f-4461-8b1d-b89814948390
+//		mofang_add_company_organ("USI_08ec9cc4-8a4f-4461-8b1d-b89814948390", "", "浦东");
+		mofang_add_store_organ("USI_08ec9cc4-8a4f-4461-8b1d-b89814948390", "10521", "浦东");
+//		addPark("USI_321b0766-26fd-4cf6-9eb0-ee270b193ef0", "0001171228000031", "A002");
 //		mofang_login();
 	}
 
