@@ -22,7 +22,7 @@
 <body>
     <div style="background: green;width: 30px;height: 30px;border-radius: 30px;position: absolute;top: 430px;left: 100px;" ></div>
     <div style="background: green;width: 30px;height: 30px;border-radius: 30px;position: absolute;top: 440px;left: 420px;" ></div>
-    <div id="test" data-container="body" data-toggle="popover" data-trigger="" data-placement="top" data-content="" style="background: green;width: 30px;height: 30px;border-radius: 30px;position: absolute;top: 540px;left: 1220px;" ></div>
+    <div id="test" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="" style="background: green;width: 30px;height: 30px;border-radius: 30px;position: absolute;top: 540px;left: 1220px;" ></div>
     <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
 	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="js/base.js"></script>
@@ -59,7 +59,7 @@
     			_htmlStr += "推送类型:"+res.data[0].noticeType+'<br>'; */
     			$('#test').attr('data-content',_htmlStr);
     			$("[data-toggle='popover']").popover({html: true});
-    			$('#test').popover('show')
+    		/* 	$('#test').popover('show') */
     		}
     	})
     }
