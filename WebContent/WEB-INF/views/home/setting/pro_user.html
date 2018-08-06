@@ -23,7 +23,7 @@
 	type="image/x-icon">
 </head>
 <body>
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body id="account" class="hold-transition skin-blue fixed sidebar-mini">
 	<!-- Site wrapper -->
 	<div class="wrapper">
 		<#include "home_nav.html">
@@ -36,7 +36,7 @@
 				</ol>
 			</section>
 			<!-- 主内容 -->
-			<section class="content">
+			<section class="content" >
 				<div class="row">
 					<div class="row">
 						<div class="col-xs-12">
@@ -56,14 +56,14 @@
 											<tr>
 												<th>手机号码</th>
 												<th>姓名</th>
-												<th>rfid</th>
+												<th>长租卡</th>
 												<th>车牌</th>
 												<th>创建时间</th>
 												<th>操作</th>
 											</tr>
 										</thead>
-										<tbody id="account">
-											<tr v-for="account in accounts">
+										<tbody >
+											<tr v-for="account in accounts.data">
 												<td v-text="account.mobilePhone"></td>
 												<td v-text="account.name"></td>
 												<td v-text="account.card"></td>
@@ -85,7 +85,7 @@
 									<span class="input-group-addon" onclick="_getData(1,0);">‹</span>
 									<input type="text" style="text-align: center;"
 										onfocus="_getNowPage(this)" onblur="_getAllPage(this)"
-										v-bind:value="'当前第'+orders.currentPage+'页，共'+orders.max+'页'"
+										v-bind:value="'当前第'+accounts.currentPage+'页，共'+accounts.max+'页'"
 										class="form-control"> <span class="input-group-addon"
 										onclick="_getData(1,1);">›</span> <span
 										class="input-group-addon" id="_end">»</span>
