@@ -56,5 +56,11 @@ public class QjDevice {
     private Integer businessType;
     @Column(name = "doneType")
     private Integer doneType;
+    @Column(name = "address")
+    private String address;
+    @Column(name = "longitude")
+    private String longitude;
+    @Column(name = "latitude")
+    private String latitude;
 	
 }

@@ -42,9 +42,21 @@ public class QingjiaoDataController extends BaseController {
 		return resp;
 	}
 	
+	@RequestMapping(path = "/logs")
+	@ResponseBody
+	public Resp<?> logs(){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(qjDeviceLogService.nearList());
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/update")
 	@ResponseBody
-	public Resp<?> update(String sn,String mobilePhone,Integer businessType,Integer  noticeType,Integer doneType){
+	public Resp<?> update(String sn,String mobilePhone,Integer businessType,Integer  noticeType,Integer doneType,String longitude,String latitude,String address){
 		Resp<?> resp = new Resp<>(false);
 		try {
 			QjDevice qjDevice = qjDeviceService.findBySn(sn);
@@ -61,7 +73,17 @@ public class QingjiaoDataController extends BaseController {
 				if(doneType!=null){
 					qjDevice.setDoneType(doneType);
 				}
+				if(StringUtil.isNotBlank(latitude)){
+					qjDevice.setLatitude(latitude);
+				}
+				if(StringUtil.isNotBlank(longitude)){
+					qjDevice.setLongitude(longitude);
+				}
+				if(StringUtil.isNotBlank(address)){
+					qjDevice.setAddress(address);
+				}
 				qjDeviceService.update(qjDevice);
+				return new Resp<>(true);
 			}
 		} catch (Exception e) {
 			log.error("error:{}",e);

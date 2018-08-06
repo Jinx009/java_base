@@ -20,8 +20,8 @@ public class JobTask {
 		
 		@Scheduled(fixedRate = 1000 * 120,initialDelay = 1000)
 		public void init(){
-			logger.warn("start job job... ... ");
-			commonJobService.update();
+//			logger.warn("start job job... ... ");
+//			commonJobService.update();
 	     }
 		
 	

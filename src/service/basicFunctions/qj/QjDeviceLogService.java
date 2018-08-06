@@ -1,6 +1,7 @@
 package service.basicFunctions.qj;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,11 @@ public class QjDeviceLogService {
 	
 	public QjDeviceLog getNearBySn(String sn){
 		return qjDeviceLogDao.getNearBySn(sn);
+	}
+
+
+	public List<QjDeviceLog> nearList() {
+		return qjDeviceLogDao.nearList();
 	}
 	
 }
