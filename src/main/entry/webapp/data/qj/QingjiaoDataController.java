@@ -133,13 +133,13 @@ public class QingjiaoDataController extends BaseController {
 				qjDevice.setCreateTime(new Date());
 				qjDevice.setXType(Integer.valueOf(dataArray[10] + dataArray[11]));
 				String xValue = getData(dataArray[12], dataArray[12] + dataArray[13] + dataArray[14] + dataArray[15]);
-				qjDevice.setBaseX(getData(dataArray[12], dataArray[12] + dataArray[13] + dataArray[14] + dataArray[15]));
-				double _x = Double.valueOf(xValue)-Double.valueOf(qjDevice.getXValue());
+				double _x = Double.valueOf(xValue)-Double.valueOf(qjDevice.getBaseX());
+				qjDevice.setBaseX(xValue);
 				qjDevice.setXValue(String.valueOf(_x));
 				qjDevice.setYType(Integer.valueOf(dataArray[16] + dataArray[17]));
 				String yValue = getData(dataArray[18], dataArray[18] + dataArray[19] + dataArray[20] + dataArray[21]);
+				double _y = Double.valueOf(yValue)-Double.valueOf(qjDevice.getBaseY());
 				qjDevice.setBaseY(yValue);
-				double _y = Double.valueOf(yValue)-Double.valueOf(qjDevice.getYValue());
 				qjDevice.setYValue(String.valueOf(_y));
 				qjDevice.setVoltage(getData(dataArray[22], dataArray[22] + dataArray[23] + dataArray[24] + dataArray[25]));
 				qjDevice.setDoneType(0);
