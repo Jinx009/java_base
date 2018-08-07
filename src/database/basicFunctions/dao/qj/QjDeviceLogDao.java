@@ -18,7 +18,7 @@ public class QjDeviceLogDao extends BaseDao<QjDeviceLog>{
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
 			String dateStr = sdf.format(date);
-			String hql = " from QjDeviceLog where snValue='"+sn+"'  createTime >='"+dateStr+" 00:00:00' and createTime <= '"+dateStr+" 23:59:59' order by id desc ";
+			String hql = " from QjDeviceLog where snValue='"+sn+"' and  createTime >='"+dateStr+" 00:00:00' and createTime <= '"+dateStr+" 23:59:59' order by id desc ";
 			List<QjDeviceLog> list = em.createQuery(hql).getResultList();
 			if(list!=null&&!list.isEmpty()){
 				return list.get(0);
