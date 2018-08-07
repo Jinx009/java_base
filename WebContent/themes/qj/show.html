@@ -30,6 +30,17 @@
 		text-align: center;
 		background: white;
 	}
+	.con-big{
+		width: 134px;
+		height: 24px;
+		line-height:24px;
+		border: 2px blue solid;
+		border-radius: 3px;
+		color: blue;
+		font-size:14px;
+		text-align: center;
+		background: white;
+	}
 	.con-ret{
 		border: 7px solid transparent;
 		border-bottom-color:blue; 
@@ -37,7 +48,7 @@
 		left: 10px;
 		top:-6px;
 	}
-	#test{
+	.device{
 		cursor: pointer;
 	}
 	</style>    
@@ -72,7 +83,7 @@
 		  <a href="#" class="list-group-item active">
 		    基本信息
 		  </a>
-		  <a href="#" class="list-group-item">设备总数：<font style="color: rgb(35,159,171);" >6</font></a>
+		  <a href="#" class="list-group-item">设备总数：<font style="color: rgb(35,159,171);" >7</font></a>
 		  <a href="#" class="list-group-item">报警个数：<font style="color: rgb(35,159,171);" id="leftLot" >0</font></a>
 		</div>
     </div>
@@ -82,10 +93,15 @@
 				<div class="con-ret"></div>
 				<div class="con">1807206003</div>
 			</div>
-			<div id="test" class="box" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="" 
+			<div id="1807206001" class="box device" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="" 
 			style="width: 30px;height: 30px;position: absolute;top: 170px;left: 400px;">
-				<div class="con-ret" id="test_1"></div>
-				<div class="con" id="test_2">1807206001</div>
+				<div class="con-ret" id="1807206001_1"></div>
+				<div class="con" id="1807206001_2">1807206001</div>
+			</div>
+			<div id="0001171228000003" class="box device" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="" 
+			style="width: 30px;height: 30px;position: absolute;top: 180px;left: 590px;">
+				<div class="con-ret" id="0001171228000003_1"></div>
+				<div class="con-big" id="0001171228000003_2">0001171228000003</div>
 			</div>
 			<div class="box" style="width: 30px;height: 30px;position: absolute;top: 145px;left: 600px;">
 				<div class="con-ret"></div>
@@ -117,7 +133,6 @@
  <script type="text/javascript">
     $(function(){
     	_getData();
-    /* 	$('[data-toggle="tooltip"]').tooltip('show') */
     	setInterval(function() {
     		_getData();
     	}, 5000); 
@@ -128,33 +143,31 @@
     		type:'get',
     		dataType:'json',
     		success:function(res){
-    			res.data[0].createTime = jsDateTime(res.data[0].createTime);
-    			if('报警'==res.data[0].type&&0==res.data[0].doneType){
-    				$('#test_1').css('border-bottom-color','red');
-    				$('#test_2').css('color','red');
-    				$('#test_2').css('border-color','red');
-    				$('#leftLot').html('1');
-    			}else{
-    				$('#test_1').css('border-bottom-color','blue');
-    				$('#test_2').css('color','blue');
-    				$('#test_2').css('border-color','blue');
-    				$('#leftLot').html('0');
+    			var _num = 0;
+    			for(var i in res.data){
+    				res.data[i].createTime = jsDateTime(res.data[i].createTime);
+    				var _sn = res.data[i].snValue;
+    				if('报警'==res.data[i].type&&0==res.data[i].doneType){
+        				$('#'+_sn+'_1').css('border-bottom-color','red');
+        				$('#'+_sn+'_2').css('color','red');
+        				$('#'+_sn+'_2').css('border-color','red');
+        				_num++;
+        				
+        			}else{
+        				$('#'+_sn+'_1').css('border-bottom-color','blue');
+        				$('#'+_sn+'_2').css('color','blue');
+        				$('#'+_sn+'_2').css('border-color','blue');
+        			}
+        			var _htmlStr = "设备编号："+res.data[i].snValue+'<br>';
+        			_htmlStr += "电压："+res.data[i].voltage+'V<br>';
+        			_htmlStr += "经度："+res.data[i].longitude+'<br>';
+        			_htmlStr += "纬度："+res.data[i].latitude+'<br>';
+        			_htmlStr += "位置："+res.data[i].address+'<br>';
+        			_htmlStr += "更新时间："+res.data[i].createTime+'<br>';
+        			$('#'+_sn).attr('data-content',_htmlStr);
+        			$("[data-toggle='popover']").popover({html: true});
     			}
-    			var _htmlStr = "设备编号："+res.data[0].snValue+'<br>';
-    			/* _htmlStr += "x轴角度:"+res.data[0].baseX+'<br>';
-    			_htmlStr += "y轴角度:"+res.data[0].baseY+'<br>'; */
-    			_htmlStr += "电压："+res.data[0].voltage+'V<br>';
-    			_htmlStr += "经度："+res.data[0].longitude+'<br>';
-    			_htmlStr += "纬度："+res.data[0].latitude+'<br>';
-    			_htmlStr += "位置："+res.data[0].address+'<br>';
-    			_htmlStr += "更新时间："+res.data[0].createTime+'<br>';
-    		/* 	_htmlStr += "x警告值:"+res.data[0].xtype+'<br>';
-    			_htmlStr += "y警告值:"+res.data[0].ytype+'<br>';  */
-    	/* 		_htmlStr += "推送手机:"+res.data[0].mobilePhone+'<br>';
-    			_htmlStr += "推送类型:"+res.data[0].noticeType+'<br>'; */
-    			$('#test').attr('data-content',_htmlStr);
-    			$("[data-toggle='popover']").popover({html: true});
-    		/* 	$('#test').popover('show') */
+    			$('#leftLot').html(_num);
     		}
     	})
     }
