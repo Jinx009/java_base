@@ -188,6 +188,8 @@ public class TelcomCotroller extends BaseController{
 						HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="+MD5Util.toMD5(_s).toLowerCase()+"&"+_s);
 					}else if(ioTCloudDevice.getLocalIp()!=null&&ioTCloudDevice.getLocalIp().equals("QJ")){
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/push?data="+tModel.getData());
+					}else if(ioTCloudDevice.getLocalIp()!=null&&ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")){
+						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data="+tModel.getData());
 					}else{
 						send(tModel.getData(),ioTCloudDevice.getUdpIp(),ioTCloudDevice.getUdpPort());
 					}
