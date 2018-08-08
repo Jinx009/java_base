@@ -31,7 +31,7 @@ public class LogsController extends BaseController{
 			if(list!=null&&!list.isEmpty()){
 				res += "<h2>当日激活地磁个数："+list.size()+" 个</h2>";
 				for(String  s :list){
-					res+= "<p style=\"font-size:16px;\">"+s+"</p>";
+					res+= "<p style=\"font-size:16px;\">MAC："+s+"；时间："+logSensorDeviceService.findDate(s)+"</p>";
 				}
 			}
 			return res+"</body></html>";

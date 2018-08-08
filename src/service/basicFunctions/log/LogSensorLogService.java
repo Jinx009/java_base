@@ -1,5 +1,7 @@
 package service.basicFunctions.log;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import database.basicFunctions.dao.log.LogSensorHeartDao;
 import database.basicFunctions.dao.log.LogSensorStatusDao;
+import database.models.log.LogSensorHeart;
 import service.basicFunctions.BaseService;
 import utils.model.BaseConstant;
 import utils.model.Resp;
@@ -27,6 +30,21 @@ public class LogSensorLogService extends BaseService{
 	
 	public List<String> findAlive(){
 		return logSensorHeartDao.findAlive();
+	}
+	
+	public String findDate(String mac){
+		try {
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+			List<LogSensorHeart> list = logSensorHeartDao.findByMacAndDate(mac,sdf.format(date));
+			if(list!=null&&!list.isEmpty()){
+				return sdf2.format(list.get(0).getCreateTime());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	/**
