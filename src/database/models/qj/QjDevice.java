@@ -46,6 +46,18 @@ public class QjDevice {
     private String baseX;
     @Column(name = "base_y")
     private String baseY;
+    @Column(name = "base_acce_x")
+    private String baseAcceX;
+    @Column(name = "base_acce_y")
+    private String baseAcceY;
+    @Column(name = "base_acce_z")
+    private String baseAcceZ;
+    @Column(name = "acce_x_type")
+    private Integer acceXType;
+    @Column(name = "acce_y_type")
+    private Integer acceYType;
+    @Column(name = "acce_z_type")
+    private Integer acceZType;
     @Column(name = "mobile_phone")
     private String mobilePhone;
     @Column(name = "notice_type")

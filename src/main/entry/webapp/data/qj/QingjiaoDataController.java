@@ -91,6 +91,95 @@ public class QingjiaoDataController extends BaseController {
 		return resp;
 	}
 	
+	@RequestMapping(path = "/zhanway/push")
+	@ResponseBody
+	public Resp<?> pushZhanway(String data) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String sn = data.substring(0,16);
+			String type = data.substring(16, 18);
+			if (type.equals("68")) {
+				type = "报警";
+			} else {
+				type = "心跳";
+			}
+			QjDevice qjDevice = qjDeviceService.findBySn(sn);
+			if (qjDevice == null) {
+				qjDevice = new QjDevice();
+				qjDevice.setSnValue(sn);
+				qjDevice.setType(type);
+				qjDevice.setCreateTime(new Date());
+				qjDevice.setBaseAcceX(getData(data.substring(18, 19), data.substring(18, 22)));
+				qjDevice.setAcceXType(Integer.valueOf(data.substring(22, 24)));
+				qjDevice.setBaseAcceY(getData(data.substring(24, 25), data.substring(24, 28)));
+				qjDevice.setAcceYType(Integer.valueOf(data.substring(28, 30)));
+				qjDevice.setBaseAcceZ(getData(data.substring(30, 31), data.substring(30, 34)));
+				qjDevice.setAcceZType(Integer.valueOf(data.substring(34, 36)));
+				qjDevice.setBaseX(getData(data.substring(36, 37), data.substring(36, 40)));
+				qjDevice.setXValue(getData(data.substring(36, 37), data.substring(36, 40)));
+				qjDevice.setBaseY(getData(data.substring(42, 43), data.substring(42, 46)));
+				qjDevice.setYValue(getData(data.substring(42, 43), data.substring(42, 46)));
+				qjDevice.setXType(Integer.valueOf(data.substring(40, 42)));
+				qjDevice.setYType(Integer.valueOf(data.substring(46, 48)));
+				qjDevice.setVoltage(getData(data.substring(48, 49), data.substring(48, 52)));
+				qjDevice.setDoneType(1);
+				qjDeviceService.save(qjDevice);
+				
+			}else{
+				qjDevice.setType(type);
+				qjDevice.setBaseAcceX(getData(data.substring(18, 19), data.substring(18, 22)));
+				qjDevice.setAcceXType(Integer.valueOf(data.substring(22, 24)));
+				qjDevice.setBaseAcceY(getData(data.substring(24, 25), data.substring(24, 28)));
+				qjDevice.setAcceYType(Integer.valueOf(data.substring(28, 30)));
+				qjDevice.setBaseAcceZ(getData(data.substring(30, 31), data.substring(30, 34)));
+				qjDevice.setAcceZType(Integer.valueOf(data.substring(34, 36)));
+				qjDevice.setXValue(String.valueOf(Double.valueOf(getData(data.substring(36, 37), data.substring(36, 40)))-Double.valueOf(qjDevice.getBaseX())));
+				qjDevice.setBaseX(getData(data.substring(36, 37), data.substring(36, 40)));
+				qjDevice.setYValue(String.valueOf(Double.valueOf(getData(data.substring(42,43), data.substring(42, 46)))-Double.valueOf(qjDevice.getBaseY())));
+				qjDevice.setBaseY(getData(data.substring(42, 43), data.substring(42, 46)));
+				qjDevice.setYValue(getData(data.substring(42, 43), data.substring(42, 46)));
+				qjDevice.setXType(Integer.valueOf(data.substring(40, 42)));
+				qjDevice.setYType(Integer.valueOf(data.substring(46, 48)));
+				qjDevice.setVoltage(getData(data.substring(48, 49), data.substring(48, 52)));
+				qjDevice.setDoneType(0);
+				qjDeviceService.update(qjDevice);
+				QjDeviceLog qjDeviceLog = new QjDeviceLog();
+				qjDeviceLog.setBaseX(qjDevice.getBaseX());
+				qjDeviceLog.setBaseY(qjDevice.getBaseY());
+				qjDeviceLog.setSnValue(qjDevice.getSnValue());
+				qjDeviceLog.setType(qjDevice.getType());
+				qjDeviceLog.setVoltage(qjDevice.getVoltage());
+				qjDeviceLog.setXType(qjDevice.getXType());
+				qjDeviceLog.setYType(qjDevice.getYType());
+				qjDeviceLog.setAcceXType(qjDevice.getAcceXType());
+				qjDeviceLog.setAcceYType(qjDevice.getAcceYType());
+				qjDeviceLog.setAcceZType(qjDevice.getAcceZType());
+				qjDeviceLog.setBaseAcceX(qjDevice.getBaseAcceX());
+				qjDeviceLog.setBaseAcceY(qjDevice.getBaseAcceY());
+				qjDeviceLog.setBaseAcceZ(qjDevice.getBaseAcceZ());
+				QjDeviceLog qjDeviceLog2 = qjDeviceLogService.getNearBySn(sn);
+				if("报警".equals(qjDevice.getType())){
+				if((qjDeviceLog2!=null&&!qjDeviceLog2.getBaseX().equals(qjDeviceLog.getBaseX())&&!qjDeviceLog2.getBaseY().equals(qjDeviceLog.getBaseY()))||qjDeviceLog2==null){
+					if(qjDevice.getMobilePhone()!=null&&!"".equals(qjDevice.getMobilePhone())&&qjDevice.getNoticeType()!=null&&qjDevice.getNoticeType()==1){
+						if(qjDevice.getBusinessType()==0){
+							AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_MOUNTAIN_TEMPLATE, BaseConstant.MESSAGE_SIGN);
+							AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_ROAD_TEMPLATE, BaseConstant.MESSAGE_SIGN);
+						}else if(qjDevice.getBusinessType() == 1){
+							AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_MOUNTAIN_TEMPLATE, BaseConstant.MESSAGE_SIGN);
+						}else if(qjDevice.getBusinessType() == 1){
+							AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_ROAD_TEMPLATE, BaseConstant.MESSAGE_SIGN);
+						}
+					}
+				}
+				}
+				qjDeviceLogService.save(qjDeviceLog);
+			}
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/push")
 	@ResponseBody
 	public Resp<?> push(String data) {
@@ -124,13 +213,11 @@ public class QingjiaoDataController extends BaseController {
 				qjDevice.setYValue(getData(dataArray[18], dataArray[18] + dataArray[19] + dataArray[20] + dataArray[21]));
 				qjDevice.setBaseY(getData(dataArray[18], dataArray[18] + dataArray[19] + dataArray[20] + dataArray[21]));
 				qjDevice.setVoltage(getData(dataArray[22], dataArray[22] + dataArray[23] + dataArray[24] + dataArray[25]));
-				qjDevice.setDoneType(0);
+				qjDevice.setDoneType(1);
 				qjDeviceService.save(qjDevice);
 				
 			}else{
-				qjDevice.setSnValue(sn);
 				qjDevice.setType(type);
-				qjDevice.setCreateTime(new Date());
 				qjDevice.setXType(Integer.valueOf(dataArray[10] + dataArray[11]));
 				String xValue = getData(dataArray[12], dataArray[12] + dataArray[13] + dataArray[14] + dataArray[15]);
 				double _x = Double.valueOf(xValue)-Double.valueOf(qjDevice.getBaseX());
@@ -152,7 +239,14 @@ public class QingjiaoDataController extends BaseController {
 				qjDeviceLog.setVoltage(qjDevice.getVoltage());
 				qjDeviceLog.setXType(qjDevice.getXType());
 				qjDeviceLog.setYType(qjDevice.getYType());
+				qjDeviceLog.setAcceXType(0);
+				qjDeviceLog.setAcceYType(0);
+				qjDeviceLog.setAcceZType(0);
+				qjDeviceLog.setBaseAcceX("");
+				qjDeviceLog.setBaseAcceY("");
+				qjDeviceLog.setBaseAcceZ("");
 				QjDeviceLog qjDeviceLog2 = qjDeviceLogService.getNearBySn(sn);
+				if("报警".equals(qjDevice.getType())){
 				if((qjDeviceLog2!=null&&!qjDeviceLog2.getBaseX().equals(qjDeviceLog.getBaseX())&&!qjDeviceLog2.getBaseY().equals(qjDeviceLog.getBaseY()))||qjDeviceLog2==null){
 					if(qjDevice.getMobilePhone()!=null&&!"".equals(qjDevice.getMobilePhone())&&qjDevice.getNoticeType()!=null&&qjDevice.getNoticeType()==1){
 						if(qjDevice.getBusinessType()==0){
@@ -164,6 +258,7 @@ public class QingjiaoDataController extends BaseController {
 							AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_ROAD_TEMPLATE, BaseConstant.MESSAGE_SIGN);
 						}
 					}
+				}
 				}
 				qjDeviceLogService.save(qjDeviceLog);
 			}

@@ -65,34 +65,55 @@
 									<th>y偏移值</th>
 									<td v-text="item.yvalue"></td>
 									<th>x轴报警</th>
-									<td><font v-if="1===item.xtype" style="color: red;">是</font><font
+									<td><font v-if="0!==item.xtype" style="color: red;">是</font><font
 										v-if="0===item.xtype">否</font></td>
 									<th>y轴报警</th>
-									<td><font v-if="1===item.ytype" style="color: red;">是</font><font
+									<td><font v-if="0!==item.ytype" style="color: red;">是</font><font
 										v-if="0===item.ytype">否</font></td>
 								</tr>
+									<tr>
+									<th>x加速度</th>
+									<td v-text="item.baseAcceX"></td>
+									<th>x加速度报警</th>
+									<td><font v-if="0!==item.acceXType" style="color: red;">是</font><font
+										v-if="0===item.acceXType">否</font></td>
+									<th>y加速度</th>
+									<td v-text="item.acceYType"></td>
+									<th>y加速度报警</th>
+									<td><font v-if="0!==item.acceYType" style="color: red;">是</font><font
+										v-if="0===item.acceYType">否</font></td>
+								</tr>
 								<tr>
+									<th>z加速度</th>
+									<td v-text="item.acceZType"></td>
+									<th>z加速度报警</th>
+									<td><font v-if="0!==item.acceZType" style="color: red;">是</font><font
+										v-if="0===item.acceZType">否</font></td>
 									<th>推送手机号</th>
 									<td><input type="text" v-bind:id="'_m'+item.snValue"
 										class="form-control" v-bind:value="item.mobilePhone">
 									</td>
+									<th>位置</th>
+									<td><input type="text" v-bind:id="'_a'+item.snValue"
+										class="form-control" v-bind:value="item.address"></td>
+								</tr>
+								<tr>
 									<th>经度</th>
 									<td><input type="text" v-bind:id="'_j'+item.snValue"
 										class="form-control" v-bind:value="item.longitude"></td>
 									<th>纬度</th>
 									<td><input type="text" v-bind:id="'_w'+item.snValue"
 										class="form-control" v-bind:value="item.latitude"></td>
-									<th>位置</th>
-									<td><input type="text" v-bind:id="'_a'+item.snValue"
-										class="form-control" v-bind:value="item.address"></td>
-								</tr>
-								<tr>
 									<th>发送短信</th>
 									<td><font v-if="1===item.noticeType" style="color: red;">是</font><font
 										v-if="0===item.noticeType">否</font></td>
 									<th>更新时间</th><td v-text="item.createTime"></td>
-									<th>操作</th>
-									<td colspan="5"><span class="label label-info"
+								</tr>
+								<tr>
+										<th>电压</th>
+										<td v-text="item.voltage"></td>
+										<th>操作</th>
+										<td colspan="5"><span class="label label-info"
 										v-bind:idx="item.snValue" onclick="_save(this)">保存</span>&nbsp;&nbsp;
 										<span v-if="1===item.noticeType" class="label label-danger"
 										v-bind:idx="item.snValue" onclick="_cacleMsg(this)">取消短信</span>

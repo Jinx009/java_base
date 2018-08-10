@@ -48,25 +48,37 @@
 					<div style="margin-bottom: 10px; width: 96%; margin-left: 2%;">
 						<table class="table table-bordered">
 							<thead>
-								<th>编号</th>
 								<th>SN</th>
+								<th>电压</th>
 								<th>x值</th>
 								<th>y值</th>
 								<th>创建时间</th>
 								<th>类型</th>
 								<th>x报警值</th>
 								<th>y报警值</th>
+								<th>x加速度</th>
+								<th>y加速度</th>
+								<th>z加速度</th>
+								<th>x加速度报警</th>
+								<th>y加速度报警</th>
+								<th>z加速度报警</th>
 							</thead>
 							<tbody>
 								<tr v-for="item in datas">
-									<td v-text="item.id"></td>
 									<td v-text="item.snValue"></td>
+									<td v-text="item.voltage"></td>
 									<td v-text="item.baseX"></td>
 									<td v-text="item.baseY"></td>
 									<td v-text="item.createTime"></td>
 									<td v-text="item.type"></td>
 									<td v-text="item.xtype"></td>
 									<td v-text="item.ytype"></td>
+									<td v-text="item.baseAcceX"></td>
+									<td v-text="item.baseAcceY"></td>
+									<td v-text="item.baseAcceZ"></td>
+									<td v-text="item.acceXType"></td>
+									<td v-text="item.acceYType"></td>
+									<td v-text="item.acceZType"></td>
 								</tr>
 							</tbody>
 						</table>
