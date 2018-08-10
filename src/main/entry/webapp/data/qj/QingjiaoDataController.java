@@ -94,7 +94,6 @@ public class QingjiaoDataController extends BaseController {
 	@RequestMapping(path = "/zhanway/push")
 	@ResponseBody
 	public Resp<?> pushZhanway(String data) {
-		Resp<?> resp = new Resp<>(false);
 		try {
 			String sn = data.substring(0,16);
 			String type = data.substring(16, 18);
@@ -177,7 +176,7 @@ public class QingjiaoDataController extends BaseController {
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
-		return resp;
+		return new Resp<>(true);
 	}
 	
 	@RequestMapping(path = "/push")
