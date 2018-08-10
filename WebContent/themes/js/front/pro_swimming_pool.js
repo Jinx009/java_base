@@ -37,56 +37,56 @@ function _getData() {
 			_h = res.data.h;
 			if (_a == 0) {
 				$('#time1').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('09:00:00~10:30:00 剩余名额：0 ');
-			}else if (_a == 2) {
+			}else if (_a == 1000) {
 				$('#time1').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('09:00:00~10:30:00 [已预约]');
 			}else{
 				$('#time1').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(1)').html('09:00:00~10:30:00 剩余名额：'+_a+' [点击预约]');
 			}
 			if (_b == 0) {
 				$('#time2').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('10:30:00~12:00:00 剩余名额：0 ');
-			}else if (_b == 2) {
+			}else if (_b == 1000) {
 				$('#time2').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('10:30:00~12:00:00 [已预约]');
 			}else{
 				$('#time2').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(1)').html('10:30:00~12:00:00 剩余名额：'+_b+' [点击预约]');
 			}
 			if (_c == 0) {
 				$('#time3').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('12:00:00~13:30:00 剩余名额：0 ');
-			}else if (_c == 2) {
+			}else if (_c == 1000) {
 				$('#time3').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('12:00:00~13:30:00 [已预约]');
 			}else{
 				$('#time3').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(1)').html('12:00:00~13:30:00 剩余名额：'+_c+' [点击预约]');
 			}
 			if (_d == 0) {
 				$('#time4').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('13:30:00~15:00:00 剩余名额：0 ');
-			}else if (_d == 2) {
+			}else if (_d == 1000) {
 				$('#time4').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('13:30:00~15:00:00 [已预约]');
 			}else{
 				$('#time4').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(1)').html('13:30:00~15:00:00 剩余名额：'+_d+' [点击预约]');
 			}
 			if (_e == 0) {
 				$('#time5').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('15:00:00~16:30:00 剩余名额：0 ');
-			}else if (_e == 2) {
+			}else if (_e == 1000) {
 				$('#time5').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('15:00:00~16:30:00 [已预约]');
 			}else{
 				$('#time5').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(1)').html('15:00:00~16:30:00 剩余名额：'+_e+' [点击预约]');
 			}
 			if (_f == 0) {
 				$('#time6').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('16:30:00~18:00:00 剩余名额：0 ');
-			}else if (_f == 2) {
+			}else if (_f == 1000) {
 				$('#time6').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('16:30:00~18:00:00 [已预约]');
 			}else{
 				$('#time6').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(1)').html('16:30:00~18:00:00 剩余名额：'+_f+' [点击预约]');
 			}
 			if (_g == 0) {
 				$('#time7').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('18:00:00~19:30:00 剩余名额：0 ');
-			}else if (_g == 2) {
+			}else if (_g == 1000) {
 				$('#time7').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('18:00:00~19:30:00 [已预约]');
 			}else{
 				$('#time7').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(1)').html('18:00:00~19:30:00 剩余名额：'+_g+' [点击预约]');
 			}
 			if (_h == 0) {
 				$('#time8').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('19:30:00~21:00:00 剩余名额：0 ');
-			}else if (_h == 2) {
+			}else if (_h == 1000) {
 				$('#time8').removeClass('button-danger').addClass('disabled').attr('onclick', '').html('19:30:00~21:00:00 [已预约]');
 			}else{
 				$('#time8').removeClass('disabled').addClass('button-danger').attr('onclick', '_save(1)').html('19:30:00~21:00:00 剩余名额：'+_h+' [点击预约]');
@@ -151,7 +151,7 @@ function _save(_orderTime) {
 				    ,btn: ['确定', '取消']
 				    ,skin: 'footer'
 				    ,yes: function(index){
-				       var _params = 'type=1&orderType='+_orderTime+'&userId='+_userId+'&num='+_num+'&orderDate='+_date;
+				       var _params = 'type=2&orderType='+_orderTime+'&userId='+_userId+'&num='+_num+'&orderDate='+_date;
 				       $.ajax({
 				    	   url:'/d/order/save',
 				    	   data:_params,

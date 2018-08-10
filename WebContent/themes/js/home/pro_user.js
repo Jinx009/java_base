@@ -72,9 +72,9 @@ function _save(){
 	}
 }
 
-function _changeType(_e,_type){
+function _changeType(_e){
 	var _id = $(_e).attr('id').split('_type')[1];
-	var _params = 'id='+_id+'&type='+_type;
+	var _params = 'id='+_id+'&type='+$('#type_'+_id).val();
 	$.ajax({
 		url:'/d/user/updateType',
 		type:'post',
