@@ -28,10 +28,10 @@ function login(){
 		   type:'post',
 		   success:function(res){
 			   if('200'==res.code){
-				   if($('#check').is(':checked')) {
+//				   if($('#check').is(':checked')) {
 					    setLocalStorage('_m',_mobilePhone);
 					    setLocalStorage('_p',hex_md5(_password));
-				   }
+//				   }
 				   _open('icon-settings-','/front/p/wait');
 			   }else{
 				   layer.open({
@@ -45,7 +45,7 @@ function login(){
 }
 function _login(_m,_p){
 	$.ajax({
-		url:'/front/d/pro_driver/login_m',
+		url:'/front/d/pro_user/login_m',
 		data:'mobilePhone='+_m+'&pwd='+_p,
 		type:'post',
 		dataType:'json',

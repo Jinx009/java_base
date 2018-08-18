@@ -30,7 +30,7 @@ public class ProDriverFrontDataController extends BaseController{
 	@RequestMapping(path = "/login")
 	@ResponseBody
 	public Resp<?> login(String mobilePhone,String pwd,HttpServletRequest request){
-		Resp<?> resp = new Resp<>(false);
+		Resp<?> resp = new Resp<>(RespData.ERROR_CODE,"账号或密码有误！",null);
 		try {
 			if(StringUtil.isBlank(mobilePhone)){
 				return new Resp<>(RespData.ERROR_CODE,"手机号码不能为空！",null);
@@ -46,6 +46,28 @@ public class ProDriverFrontDataController extends BaseController{
 			if(proDriver!=null){
 				return new Resp<>(RespData.ERROR_CODE,"账号或密码有误！",null);
 			}
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/register")
+	@ResponseBody
+	public Resp<?> register(String mobilePhone,String pwd,String name,String plateNumber,HttpServletRequest request){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			if(StringUtil.isBlank(mobilePhone)){
+				return new Resp<>(RespData.ERROR_CODE,"手机号码不能为空！",null);
+			}else if(StringUtil.isBlank(pwd)){
+				return new Resp<>(RespData.ERROR_CODE,"密码不能为空！",null);
+			}
+			ProDriver proDriver = proDriverService.findByMobilePhone(mobilePhone);
+			if(proDriver!=null){
+				return new Resp<>(RespData.ERROR_CODE,"该号码已经注册！","");
+			}
+			proDriverService.save(mobilePhone, name, pwd, plateNumber);
+			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

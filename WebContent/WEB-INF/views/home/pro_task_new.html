@@ -40,16 +40,12 @@
 			            <form role="form">
 			              <div class="box-body">
 			                <div class="form-group">
-			                  <label>Name</label>
-			                  <input type="text" class="form-control" id="name" placeholder="">
+			                  <label>No.</label>
+			                  <input type="text" class="form-control" id="noId" placeholder="">
 			                </div>
 			                 <div class="form-group">
-			                  <label>Number</label>
-			                  <input type="text" style="margin-top: 20px;" class="form-control" id="number" placeholder="">
-			                </div>
-			                <div class="form-group">
-			                  <label>MobilePhone</label>
-			                  <input type="text" style="margin-top: 20px;" class="form-control" id="mobilePhone" placeholder="">
+			                  <label>Name</label>
+			                  <input type="text" style="margin-top: 20px;" class="form-control" id="name" placeholder="">
 			                </div>
 			                 <div class="form-group">
 			                  <label>Dep</label>
@@ -59,17 +55,27 @@
 			                  <label>Description</label>
 			                  <input type="text" class="form-control" id="description" placeholder="">
 			                </div>
-			                  <div class="form-group">
-			                  <label>Date</label>
-			                  <input type="text" class="form-control" id="pickDate" readonly="readonly" placeholder="">
-			                </div>
-			                  <div class="form-group">
-			                  <label>Time</label>
-			                  <input type="text" class="form-control" id="pickTime" readonly="readonly" placeholder="">
-			                </div>
-			                <div class="form-group">
+			                 <div class="form-group">
 			                  <label>Flight</label>
 			                  <input type="text" class="form-control" id="flight" placeholder="">
+			                </div>
+			                  <div class="form-group">
+			                  <label>F/T,SHG(参考）</label>
+			                  <input type="text" class="form-control" id="pickTime" placeholder="">
+			                </div>
+			                  <div class="form-group">
+			                  <label>pick up time</label>
+			                  <input type="text" class="form-control" id="pickedTime" placeholder="">
+			                </div>
+			                  <div class="form-group">
+			                  <label>日期</label>
+			                  <input type="text" class="form-control" id="dateStr" placeholder="">
+			                </div>
+			                  <div class="form-group">
+			                  <label>Title</label>
+			                  <select  class="form-control" id="taskTitle" >
+			                  		<option v-for="item in titles" v-bind:value="item.id" v-text="item.name"  ></option>
+			                  </select>
 			                </div>
 			                <div class="form-group">
 			                  <label>Driver</label>
@@ -93,7 +99,7 @@
 		<#include "home_footer.html">
 	</div>
 	<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
-	<script src="/themes/js/home/pro_task_new.js?version=1.14"></script>
+	<script src="/themes/js/home/pro_task_new.js?version=1.26"></script>
 	<script src="/themes/laydate/laydate.js?version=1.14"></script>
 </body>
 </html>

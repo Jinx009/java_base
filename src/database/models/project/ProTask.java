@@ -24,34 +24,37 @@ public class ProTask {
 	@Column(unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "mobile_phone")
-	private String mobilePhone;
+	@Column(name = "no_id")
+	private String noId;
+	@Column(name = "name")
+	private String name;
 	@Column(name = "dep")
 	private String dep;
 	@Column(name = "description")
 	private String description;
-	@Column(name = "name")
-	private String name;
+	@Column(name = "flight")
+	private String flight;
+	@Column(name = "pick_time")
+	private String pickTime;
+	@Column(name = "picked_time")
+	private String pickedTime;
+	@Column(name = "mail_time")
+	private String mailTime;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name = "number")
-	private String number;
-	@Column(name = "pick_time")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date pickTime;
-	@Column(name = "picked_time")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date pickedTime;
-	@Column(name = "flight")
-	private String flight;
 	@Column(name = "driver_mobile")
 	private String driverMobile;
 	@Column(name = "status")
 	private Integer status;
 	@Column(name = "driver_name")
 	private String driverName;
-	
+	@Column(name = "task_title")
+	private String taskTitle;
+	@Column(name = "date_str")
+	private String dateStr;
+	@Column(name = "task_title_id")
+	private Integer taskTitleId;
 	
 	
 }

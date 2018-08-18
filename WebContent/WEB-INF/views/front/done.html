@@ -2,8 +2,47 @@
 <header class="bar bar-nav">
 	<h1 class='title'>已完成</h1>
 </header>
-<div class="content  pull-to-refresh-content" data-ptr-distance="55" style="background: #eeeeee;" id="data" >
-	
+<div class="content" style="background: #eeeeee;" id="data" >
+		<div v-for="item in datas.list"  class="list-block" onclick="_go(this);" v-bind:id="item.id"  >
+			<ul>
+				<li class="item-content">
+					<div class="item-media">
+						<i class="icon icon-f7"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title">Name</div>
+						<div class="item-after" v-text="item.name" ></div>
+					</div>
+				</li>
+				<li class="item-content">
+					<div class="item-media">
+						<i class="icon icon-f7"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title">F/T,SHG(参考）</div>
+						<div class="item-after" v-text="item.pickTime" ></div>
+					</div>
+				</li>
+				<li class="item-content">
+					<div class="item-media">
+						<i class="icon icon-f7"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title">Descriptation</div>
+						<div class="item-after" v-text="item.description" ></div>
+					</div>
+				</li>
+					<li class="item-content">
+					<div class="item-media">
+						<i class="icon icon-f7"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title">pick up time</div>
+						<div class="item-after" v-text="item.pickedTime" ></div>
+					</div>
+				</li>
+			</ul>
+		</div>
 </div>
-<script src="/themes/js/front/done.js?_v=1.39"></script>
+<script src="/themes/js/front/done.js?_v=1.41"></script>
 <#include "m_footer.html">

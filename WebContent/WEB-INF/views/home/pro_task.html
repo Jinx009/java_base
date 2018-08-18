@@ -34,7 +34,7 @@
 				</ol>
 			</section>
 			<!-- 主内容 -->
-			<section class="content" id="data">
+			<section class="content" >
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="box">
@@ -69,14 +69,10 @@
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
-												<label>start date</label> <input id="fromDate"
-													class="form-control" type="text" readonly="readonly" />
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>end date</label> <input id="endDate"
-													class="form-control" type="text" readonly="readonly" />
+												<label>TaskTitle</label> <select class="form-control" id="taskTitle">
+													<option value="0">全部</option>
+													<option v-for="item in titles" v-html="item.name" v-bind:value="item.id" style="height: 50px;overflow: scroll;" ></option>
+												</select>
 											</div>
 										</div>
 										<div class="col-md-4">
@@ -98,47 +94,39 @@
 							</div>
 
 							<!-- /.box-header -->
-							<div class="box-body table-responsive no-padding">
+							<div class="box-body table-responsive no-padding"  id="data">
 								<table class="table table-hover table-bordered">
 									<thead>
 										<tr>
-											<th>Id</th>
-											<th>MobilePhone</th>
+											<th>No.</th>
 											<th>Name</th>
-											<th>Number</th>
-											<th>PickUpTime</th>
-											<th>Flight</th>
 											<th>Dep</th>
 											<th>Description</th>
+											<th>Flight</th>
+											<th>F/T,SHG(参考）</th>
+											<th>pick up time</th>
+											<th>mail time</th>
 											<th>DriverName</th>
-											<th>DriverMobile</th>
-											<th>PickedTime</th>
-											<th>Status</th>
-											<th>Op</th>
+											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr v-for="item in datas.list">
-											<td v-text="item.id"></td>
-											<td v-text="item.mobilePhone"></td>
-											<td v-text="item.name"></td>
-											<td v-text="item.number"></td>
-											<td v-text="item.pickTime"></td>
-											<td v-text="item.flight"></td>
+											<td v-text="item.noId"></td>
+											<td v-html="item.name"></td>
 											<td v-text="item.dep"></td>
 											<td v-text="item.description"></td>
-											<td v-text="item.driverName"></td>
-											<td v-text="item.driverMobile"></td>
+											<td v-text="item.flight"></td>
+											<td v-text="item.pickTime"></td>
 											<td v-text="item.pickedTime"></td>
-											<td><font v-if="1===item.status">picked</font> <font
-												v-if="0===item.status">picking</font></td>
+											<td v-text="item.mailTime"></td>
+											<td v-text="item.driverName"></td>
 											<td><a class='btn btn-info btn-xs' v-bind:id="item.id"
 												v-bind:index="item.index" onclick="_edit(this)">编辑</a></td>
 										</tr>
 									</tbody>
 								</table>
-							</div>
-							<div class="box-footer clearfix"
+								<div class="box-footer clearfix"
 								style="width: 320px; float: right;">
 								<div class="input-group">
 									<span class="input-group-addon" onclick="_getData(0,1);">«</span>
@@ -150,6 +138,7 @@
 										onclick="_getData(1,1);">›</span> <span
 										class="input-group-addon" id="_end">»</span>
 								</div>
+							</div>
 							</div>
 						</div>
 					</div>
@@ -172,36 +161,36 @@
 			<form role="form" style="width: 90%; margin-left: 5%;">
 				<div class="box-body">
 					<div class="form-group">
-						<label for="">Name</label> <input type="text" class="form-control"
-							id="name">
+						<label for="">No.</label> <input type="text" class="form-control" readonly="readonly"
+							id="noId">
 					</div>
 					<div class="form-group">
-						<label for="">Number</label> <input type="text"
-							class="form-control" id="number">
+						<label for="">Name</label> <input type="text" readonly="readonly"
+							class="form-control" id="name">
 					</div>
 					<div class="form-group">
-						<label for="">MobilePhone</label> <input type="text"
-							class="form-control" id="mobilePhone">
+						<label for="">Dep</label> <input type="text" readonly="readonly"
+							class="form-control" id="dep">
 					</div>
 					<div class="form-group">
-						<label for="">Flight</label> <input type="text"
-							class="form-control" id="flight">
-					</div>
-					<div class="form-group">
-						<label for="">Dep</label> <input type="text" class="form-control"
-							id="dep">
-					</div>
-					<div class="form-group">
-						<label for="">Description</label> <input type="text"
+						<label for="">Description</label> <input type="text" readonly="readonly"
 							class="form-control" id="description">
 					</div>
 					<div class="form-group">
-						<label>Date</label> <input type="text" class="form-control"
-							id="pickDate" readonly="readonly" placeholder="">
+						<label for="">Flight</label> <input type="text" readonly="readonly"
+							class="form-control" id="flight">
 					</div>
 					<div class="form-group">
-						<label>Time</label> <input type="text" class="form-control"
-							id="pickTime" readonly="readonly" placeholder="">
+						<label for="">F/T,SHG(参考）</label> <input type="text" class="form-control" readonly="readonly"
+							id="pickTime">
+					</div>
+					<div class="form-group">
+						<label>pick up time</label> <input type="text" class="form-control" 
+							id="pickedDate" readonly="readonly" placeholder="">
+					</div>
+					<div class="form-group">
+						<label for="">mail time</label> <input type="text"
+							class="form-control" id="mailTime">
 					</div>
 					<div class="form-group">
 						<label>Driver</label> <select class="form-control" id="driver">
@@ -216,7 +205,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_task.js?version=1.34"></script>
+	<script src="/themes/js/home/pro_task.js?version=1.58"></script>
 	<script src="/themes/laydate/laydate.js?version=1.14"></script>
 </body>
 </html>

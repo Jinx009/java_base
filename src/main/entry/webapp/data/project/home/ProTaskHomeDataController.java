@@ -1,7 +1,6 @@
 package main.entry.webapp.data.project.home;
 
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -10,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -37,10 +37,10 @@ public class ProTaskHomeDataController extends BaseController{
 	
 	@RequestMapping(path = "/list")
 	@ResponseBody
-	public Resp<?> list(Integer p,Integer status,String driverName,String fromDate,String endDate){
+	public Resp<?> list(Integer p,Integer status,String driverName,Integer taskTitleId){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			PageDataList<ProTask> list = proTaskService.homeList(p, status, driverName, fromDate, endDate);
+			PageDataList<ProTask> list = proTaskService.homeList(p, status, driverName, taskTitleId);
 			return new Resp<>(list);
 		} catch (Exception e) {
 			log.error("error:{}",e);
@@ -50,11 +50,11 @@ public class ProTaskHomeDataController extends BaseController{
 	
 	@RequestMapping(path = "/save")
 	@ResponseBody
-	public Resp<?> save(String mobilePhone,String dep,String description,String name,String number,
-			String pickDate,String pickTime,String flight,String driverName,String driverMobile){
+	public Resp<?> save(String noId,String name,String dep,String description,String flight,
+			String pickTime,String driverName,String driverMobile,Integer taskTitleId,String dateStr){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			proTaskService.save(mobilePhone,dep,description,name,number,pickDate,pickTime,flight,driverName,driverMobile);
+			proTaskService.save(noId,name,dep,description,flight,pickTime,driverName,driverMobile,taskTitleId,dateStr);
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}",e);
@@ -100,6 +100,8 @@ public class ProTaskHomeDataController extends BaseController{
 		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
 		HSSFCellStyle dateFormatCellStyle = wb.createCellStyle();
+		HSSFDataFormat format = wb.createDataFormat();
+		dateFormatCellStyle.setDataFormat(format.getFormat("yyyy年MM月dd日  HH点mm分ss秒"));
 		dateFormatCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
 		HSSFCell cell = row.createCell((short) 0);
@@ -127,9 +129,12 @@ public class ProTaskHomeDataController extends BaseController{
 		cell.setCellValue("Description");
 		cell.setCellStyle(style);
 		cell = row.createCell((short) 8);
+		cell.setCellValue("PickedTime");
+		cell.setCellStyle(style);
+		cell = row.createCell((short) 9);
 		cell.setCellValue("Status");
 		cell.setCellStyle(style);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 		for (int i = 0; i < tasks.size(); i++) {
 			row = sheet.createRow((int) i + 1);
 			ProTask task = tasks.get(i);
@@ -137,13 +142,13 @@ public class ProTaskHomeDataController extends BaseController{
 			cell.setCellValue(task.getName());
 			cell.setCellStyle(style);
 			cell=row.createCell((short) 1);
-			cell.setCellValue(task.getNumber());
+			cell.setCellValue("");
 			cell.setCellStyle(style);
 			cell = row.createCell((short) 2);
-			cell.setCellValue(task.getMobilePhone());
+			cell.setCellValue("");
 			cell.setCellStyle(dateFormatCellStyle);
 			cell=row.createCell((short) 3);
-			cell.setCellValue(sdf.format(task.getPickTime()));
+			cell.setCellValue(task.getPickTime());
 			cell.setCellStyle(style);
 			cell=row.createCell((short) 4);
 			cell.setCellValue(task.getDriverName());
@@ -158,6 +163,9 @@ public class ProTaskHomeDataController extends BaseController{
 			cell.setCellValue(task.getDescription());
 			cell.setCellStyle(style);
 			cell=row.createCell((short) 8);
+			cell.setCellValue(task.getPickedTime());
+			cell.setCellStyle(style);
+			cell=row.createCell((short) 9);
 			if(1==task.getStatus()){
 				cell.setCellValue("Picked");
 			}else{

@@ -15,6 +15,11 @@ public class FrontPageController extends BaseController{
 		return "/front/login";
 	}
 	
+	@RequestMapping(value = "/f/p/register")
+	public String register(){
+		return "/front/register";
+	}
+	
 	@RequestMapping(value = "/front/p/detail")
 	public String detail(HttpServletRequest req,Integer id){
 		req.setAttribute("_id", id);

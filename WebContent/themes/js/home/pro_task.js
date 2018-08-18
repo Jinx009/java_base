@@ -1,17 +1,4 @@
 $(function(){
-	laydate.render({
-	  elem: '#pickDate'
-	});
-	laydate.render({
-	  elem: '#fromDate'
-	});
-	laydate.render({
-	  elem: '#endDate'
-	});
-	laydate.render({
-	  elem: '#pickTime'
-	  ,type: 'time'
-	});
 	_getSelect();
 	_getData(0,1);
 })
@@ -23,39 +10,59 @@ function _getSelect(){
 		dataType:'json',
 		success:function(res){
 			drivers = res.data;
+			var obj = {};
+			obj.id = 0;
+			obj.name = '抢单模式';
+			obj.mobilePhone = '0';
+			drivers.push(obj);
+		}
+	})
+	$.ajax({
+		url:'/home/d/pro_task_title/selectList',
+		type:'post',
+		dataType:'json',
+		success:function(res){
+			new Vue({
+				el:'#taskTitle',
+				data:{
+					titles:res.data
+				}
+			})
 		}
 	})
 }
 function _go(){
-	var _fromDate = $('#fromDate').val();
-	var _endDate = $('#endDate').val();
+	var _taskTitle = $('#taskTitle').val();
 	var _status = $('#status').val();
-	window.open('/home/d/pro_task/excel?fromDate='+_fromDate+'&endDate='+_endDate+'&status='+_status,'_self');
+	window.open('/home/d/pro_task/excel?taskTitleId='+_taskTitle+'&status='+_status,'_self');
 }
 var _d = '';
 var  _nowPage = 0,_max = 0;
 var _bd = [];
+var _taskTitleId = 0,_typeId = 2;
 function _getData(_type,_index){
 	var _data = {};
-	var _fromDate = $('#fromDate').val();
-	var _endDate = $('#endDate').val();
+	var _taskTitle = $('#taskTitle').val();
 	var _status = $('#status').val();
 	_data.p = _getPage(_type,_index);
+	if(_taskTitleId!=_taskTitle||_status!=_typeId){
+		_data.p = 1;
+	}
 	if(_data.p!=-1){
 		$.ajax({
-			url:'/home/d/pro_task/list?p='+_data.p+'&fromDate='+_fromDate+'&endDate='+_endDate+'&status='+_status,
+			url:'/home/d/pro_task/list',
 			dataType:'json',
+			data:'p='+_data.p+'&taskTitleId='+_taskTitle+'&status='+_status,
 			type:'post',
 			success:function(res){
 				$('#_end').bind('click',function(){
 					_getData(0,res.data.page.pages);
 				})
-				_max = res.data.page.pages;
-				_bd = res.data.list;
 				for(var i in res.data.list){
-					res.data.list[i].pickTime = toDateTime(res.data.list[i].pickTime);
 					res.data.list[i].index = i;
 				}
+				_max = res.data.page.pages;
+				_bd = res.data.list;
 				if(''==_d){
 					_d = new Vue({
 						el:'#data',
@@ -77,13 +84,13 @@ function _edit(_e){
 	_editId = _id;
 	var _d = _bd[_index];
 	$('#name').val(_d.name);
-	$('#mobilePhone').val(_d.mobilePhone);
+	$('#noId').val(_d.noId);
 	$('#dep').val(_d.dep);
 	$('#description').val(_d.description);
-	$('#number').val(_d.number);
+	$('#pickedTime').val(_d.pickedTime);
+	$('#mailTime').val(_d.mailTime);
 	$('#flight').val(_d.flight);
 	$('#pickTime').val(_d.pickTime.split(' ')[1]);
-	$('#pickDate').val(_d.pickTime.split(' ')[0]);
 	var _htmlStr = '';
 	for(var i in drivers){
 		if(drivers[i].mobilePhone==_d.driverMobile){
@@ -98,17 +105,17 @@ function _edit(_e){
 
 function _update(){
 	var _name = $('#name').val();
-	var _mobilePhone = $('#mobilePhone').val();
-	var _number = $('#number').val();
+	var _noId = $('#noId').val();
+	var _mailTime = $('#mailTime').val();
 	var _dep = $('#dep').val();
 	var _flight = $('#flight').val();
 	var _description = $('#description').val();
 	var _driverMobile = $('#driver').val();
 	var _driverName=$("#driver").find("option:selected").text();
-	var _pickDate = $('#pickDate').val();
+	var _pickedTime = $('#pickedTime').val();
 	var _pickTime = $('#pickTime').val();
-	var _params = 'name='+_name+'&mobilePhone='+_mobilePhone+'&dep='+_dep+'&number='+_number+'&description='+_description+'&flight='+
-	_flight+'&driverMobile='+_driverMobile+'&driverName='+_driverName+'&pickDate='+_pickDate+'&pickTime='+_pickTime+'&id='+_editId;
+	var _params = 'name='+_name+'&noId='+_noId+'&dep='+_dep+'&pickedTime='+_pickedTime+'&description='+_description+'&flight='+
+	_flight+'&driverMobile='+_driverMobile+'&driverName='+_driverName+'&maeilTime='+_mailTime+'&pickTime='+_pickTime+'&id='+_editId;
 	if(_name==''){
 		layer.alert('待接人员姓名不能为空！');
 	}else{

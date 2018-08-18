@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import database.basicFunctions.dao.project.ProTaskDao;
+import database.basicFunctions.dao.project.ProTaskTitleDao;
 import database.common.PageDataList;
 import database.models.project.ProTask;
 
@@ -16,9 +17,11 @@ public class ProTaskService {
 
 	@Autowired
 	private ProTaskDao proTaskDao;
+	@Autowired
+	private ProTaskTitleDao proTaskTitleDao;
 	
-	public PageDataList<ProTask> homeList(Integer p,Integer status,String driverName,String fromDate,String endDate) {
-		return proTaskDao.homeList(p, status, driverName, fromDate, endDate);
+	public PageDataList<ProTask> homeList(Integer p,Integer status,String driverName,Integer taskTitleId) {
+		return proTaskDao.homeList(p, status, driverName,taskTitleId);
 	}
 	
 	public List<ProTask> excelList(Integer status,String driverName,String fromDate,String endDate){
@@ -40,27 +43,28 @@ public class ProTaskService {
 	public void changeStatus(Integer id){
 		ProTask proTask = proTaskDao.find(id);
 		proTask.setStatus(1);
-		proTask.setPickedTime(new Date());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		proTask.setPickedTime(sdf.format(new Date()));
 		proTaskDao.update(proTask);
 	}
 
-	public void save(String mobilePhone, String dep, String description, String name, String number, String pickDate,
-			String pickTime, String flight, String driverName, String driverMobile) {
-		String date = pickDate+" "+pickTime;
+	public void save(String noId,String name,String dep,String description,String flight,String pickTime,String driverName,String driverMobile,Integer taskTitleId, String dateStr) {
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date d = sdf.parse(date);
 			ProTask proTask = new ProTask();
-			proTask.setCreateTime(new Date());
+			proTask.setNoId(noId);
+			proTask.setName(name);
 			proTask.setDep(dep);
 			proTask.setDescription(description);
-			proTask.setDriverName(driverName);
-			proTask.setDriverMobile(driverMobile);
 			proTask.setFlight(flight);
-			proTask.setMobilePhone(mobilePhone);
-			proTask.setName(name);
-			proTask.setNumber(number);
-			proTask.setPickTime(d);
+			proTask.setPickTime(pickTime);
+			proTask.setPickedTime("");
+			proTask.setDriverMobile(driverMobile);
+			proTask.setDriverName(driverName);
+			proTask.setMailTime("");
+			proTask.setTaskTitle(proTaskTitleDao.find(taskTitleId).getName());
+			proTask.setTaskTitleId(taskTitleId);
+			proTask.setDateStr(dateStr);
+			proTask.setCreateTime(new Date());
 			proTask.setStatus(0);
 			proTaskDao.save(proTask);
 		} catch (Exception e) {
@@ -68,22 +72,19 @@ public class ProTaskService {
 		}
 	}
 	
-	public void update(String mobilePhone, String dep, String description, String name, String number, String pickDate,
+	public void update(String mailTime, String dep, String description, String name, String number, String pickedTime,
 			String pickTime, String flight, String driverName, String driverMobile,Integer id) {
-		String date = pickDate+" "+pickTime;
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date d = sdf.parse(date);
 			ProTask proTask = proTaskDao.find(id);
 			proTask.setDep(dep);
 			proTask.setDescription(description);
+			proTask.setMailTime(mailTime);
+			proTask.setPickedTime(pickedTime);
+			proTask.setPickTime(pickTime);
 			proTask.setDriverName(driverName);
 			proTask.setDriverMobile(driverMobile);
 			proTask.setFlight(flight);
-			proTask.setMobilePhone(mobilePhone);
 			proTask.setName(name);
-			proTask.setNumber(number);
-			proTask.setPickTime(d);
 			proTaskDao.update(proTask);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -47,7 +47,7 @@ public class ProTaskFrontDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			ProDriver proDriver = getSessionFrontUser(request);
-			PageDataList<ProTask> list = proTaskService.homeList(p, 1, proDriver.getName(), null, null);
+			PageDataList<ProTask> list = proTaskService.homeList(p, 1, proDriver.getName(), 0);
 			return new Resp<>(list);
 		} catch (Exception e) {
 			log.error("error:{}",e);
