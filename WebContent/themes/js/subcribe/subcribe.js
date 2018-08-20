@@ -1,4 +1,5 @@
 $(function() {
+	_loadClass();
 	$("#my-input").calendar({
 		minDate : _date
 	});

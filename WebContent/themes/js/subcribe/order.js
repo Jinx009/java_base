@@ -1,4 +1,5 @@
 $(function(){
+	_loadClass();
 	_getData();
 })
 
