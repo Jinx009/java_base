@@ -1,0 +1,126 @@
+<#include "subcribe_nav.html">
+<header class="bar bar-nav">
+	<h1 class="title">预约</h1>
+</header>
+<div data-toggle='date' id="my-input" style="margin-top: 2.2em"
+	onclick="check();"></div>
+<div class="content" style="margin-top: 290px;">
+	<div class="content-block">
+		<div class="list-block">
+			<ul>
+				<li>
+					<div class="item-content">
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title label" style="font-size: 12px;">
+								停车场<font style="color: red;">&nbsp;*</font>
+							</div>
+							<div class="item-input">
+								<select style="font-size: 12px;" id="parkId" onchange="_getData()" >
+									<option v-for="item in parks" v-bind:value="item.id" v-text="item.name" ></option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="item-content">
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title label" style="font-size: 12px;">
+								进场时间<font style="color: red;">&nbsp;*</font>
+							</div>
+							<div class="item-input">
+								<select style="font-size: 12px;" id="startHour" onchange="_getHour()" >
+									<option value="0">00:00:00</option>
+									<option value="1">01:00:00</option>
+									<option value="2">02:00:00</option>
+									<option value="3">03:00:00</option>
+									<option value="4">04:00:00</option>
+									<option value="5">05:00:00</option>
+									<option value="6">06:00:00</option>
+									<option value="7">07:00:00</option>
+									<option value="8">08:00:00</option>
+									<option value="9">09:00:00</option>
+									<option value="10">10:00:00</option>
+									<option value="11">11:00:00</option>
+									<option value="12">12:00:00</option>
+									<option value="13">13:00:00</option>
+									<option value="14">14:00:00</option>
+									<option value="15">15:00:00</option>
+									<option value="16">16:00:00</option>
+									<option value="17">17:00:00</option>
+									<option value="18">18:00:00</option>
+									<option value="19">19:00:00</option>
+									<option value="20">20:00:00</option>
+									<option value="21">21:00:00</option>
+									<option value="22">22:00:00</option>
+									<option value="23">23:00:00</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</li>
+					<li>
+					<div class="item-content">
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title label" style="font-size: 12px;">
+								停车时长<font style="color: red;">&nbsp;*</font>
+							</div>
+							<div class="item-input">
+								<select style="font-size: 12px;" id="hours" onchange="_getData()" >
+									
+								</select>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="item-content">
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title label" style="font-size: 12px;">
+								车牌号<font style="color: red;">&nbsp;*</font>
+							</div>
+							<div class="item-input">
+								<input type="text" style="font-size: 12px;" id="plateNumber"
+									placeholder="请输入车牌号">
+							</div>
+						</div>
+					</div>
+				</li>
+					<li>
+					<div class="item-content">
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title label" style="font-size: 12px;">
+								所选时段概况<font style="color: red;">&nbsp;*</font>
+							</div>
+							<div class="item-input">
+								<input type="text" style="font-size: 12px;" id="desc"
+									readonly="readonly" >
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			  <div class="content-block">
+			    <p><a  onclick="_save()" class="button button-fill button-danger">确认预约</a></p>
+			  </div>
+		</div>
+		<div style="height: 30px;"></div>
+	</div>
+</div>
+<script src="/themes/js/subcribe/subcribe.js?_v=1.32"></script>
+<#include "subcribe_footer.html">
