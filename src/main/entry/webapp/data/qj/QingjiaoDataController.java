@@ -126,6 +126,7 @@ public class QingjiaoDataController extends BaseController {
 				
 			}else{
 				qjDevice.setType(type);
+				qjDevice.setCreateTime(new Date());
 				qjDevice.setBaseAcceX(getData(data.substring(18, 19), data.substring(18, 22)));
 				qjDevice.setAcceXType(Integer.valueOf(data.substring(22, 24)));
 				qjDevice.setBaseAcceY(getData(data.substring(24, 25), data.substring(24, 28)));
@@ -217,6 +218,7 @@ public class QingjiaoDataController extends BaseController {
 				
 			}else{
 				qjDevice.setType(type);
+				qjDevice.setCreateTime(new Date());
 				qjDevice.setXType(Integer.valueOf(dataArray[10] + dataArray[11]));
 				String xValue = getData(dataArray[12], dataArray[12] + dataArray[13] + dataArray[14] + dataArray[15]);
 				double _x = Double.valueOf(xValue)-Double.valueOf(qjDevice.getBaseX());
