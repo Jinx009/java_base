@@ -13,13 +13,13 @@
 		</a>
 		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
-				<li class="dropdown user user-menu"><a href="/home/page/notice"
+				<li class="dropdown user user-menu"><a 
 					class="dropdown-toggle" data-toggle="dropdown"
 					aria-expanded="false"> <i class="fa fa-bell-o"></i> <span
 						class="label label-warning" id="warningNum"></span>
 				</a></li>
 				<li class="dropdown user user-menu"><a class="dropdown-toggle"
-					data-toggle="dropdown"> <span class="hidden-xs">欢迎您：${homeUserName}</span>
+					data-toggle="dropdown"> <span class="hidden-xs">Welcome：${paperUserRealName}</span>
 				</a></li>
 				<li><a onclick="loginOut();"><i class="fa fa-sign-out"></i></a>
 				</li>
@@ -43,27 +43,9 @@
 		</form>
 		<ul class="sidebar-menu">
 			<li class="header">MAIN MENUS</li>
-			<li class="treeview l1 active" onclick="_openC('l1','/home/p/pro_driver')" ><a> <i class="fa fa-edit"></i>
-					<span>司机管理</span> <span class="pull-right-container"> <i
+			<li class="treeview l1 active"  ><a href="/paper/p/paper"> <i class="fa fa-edit"></i>
+					<span>My Paper</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left "></i>
-				</span>
-			</a></li>
-			<li class="treeview l2"  onclick="_openC('l2','/home/p/pro_task')" ><a> <i
-					class="fa fa-briefcase"></i> <span>订单管理</span> <span
-					class="pull-right-container"> <i
-						class="fa fa-angle-left"></i>
-				</span>
-			</a></li>
-			<li class="treeview l3"  onclick="_openC('l3','/home/p/pro_task_new')" ><a> <i
-					class="fa fa-bolt fa-bomb"></i> <span>新建订单</span> <span
-					class="pull-right-container"> <i
-						class="fa fa-angle-left"></i>
-				</span>
-			</a></li>
-			<li class="treeview l4"  onclick="_openC('l4','/home/p/pro_driver_new')" ><a> <i
-					class="fa fa-bookmark"></i> <span>新建司机</span> <span
-					class="pull-right-container"> <i
-						class="fa fa-angle-left"></i>
 				</span>
 			</a></li>
 		</ul>

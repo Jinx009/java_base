@@ -68,6 +68,19 @@ public class HomeUserController extends BaseController {
 		}
 		return resp;
 	}
+	
+	@RequestMapping(path = "/loginOut", method = RequestMethod.POST)
+	@ResponseBody
+	public Resp<?> loginOut(HttpServletRequest request) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			setSessionHomeUser(request, null);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			logger.error("[error:{}] ", e);
+		}
+		return resp;
+	}
 
 	
 }

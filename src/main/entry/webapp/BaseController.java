@@ -27,8 +27,10 @@ public class BaseController {
 	public void setSessionHomeUser(HttpServletRequest request,HomeUser homeUser){
 		HttpSession session = request.getSession();
 		session.setAttribute("paperUser", homeUser);
-		logger.warn("[data:{}]",homeUser.getRealName());
-		session.setAttribute("paperUserRealName",homeUser.getRealName());
+		if(homeUser!=null){
+			logger.warn("[data:{}]",homeUser.getRealName());
+			session.setAttribute("paperUserRealName",homeUser.getRealName());
+		}
 	}
 	
 	

@@ -4,12 +4,13 @@ $(function() {
 /**
  * 初始加载表单
  */
+var _file = '';
 function loadForms() {
 	$('#form').ajaxForm({
 		dataType:'json',
 		success : function(res) {
 			if ('200' == res.code) {
-				$('#img').attr('src',res.data);
+				_file = res.data;
 			}else{
 				layer.alert(res.msg);
 			}

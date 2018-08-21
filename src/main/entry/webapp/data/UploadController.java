@@ -35,7 +35,7 @@ public class UploadController extends BaseController{
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/base/uploadImg")
+	@RequestMapping(value = "/base/upload")
 	@ResponseBody
 	public Resp<?> uploadFileHandler(@RequestParam("file") MultipartFile file, 
 												HttpServletRequest request,
@@ -52,6 +52,10 @@ public class UploadController extends BaseController{
 				if (!dir.exists())
 					dir.mkdirs();
 		        String suffix = file.getOriginalFilename().split("\\.")[1]; 
+		        if(suffix.indexOf("doc")<0&&suffix.indexOf("docx")<0&&suffix.indexOf("txt")<0){
+		        	resp.setMsg(" Only allow .doc , .docx ,.txt !");
+		        	return resp;
+		        }
 				String filePath = new Date().getTime() + uuid+"_."+ suffix;
 				File serverFile = new File(dir.getAbsolutePath() + File.separator +filePath);
 				in = file.getInputStream();

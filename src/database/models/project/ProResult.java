@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="pro_task_title")
+@Table(name="pro_result")
 public class ProResult {
 
 	@Id

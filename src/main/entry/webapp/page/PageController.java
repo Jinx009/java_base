@@ -28,6 +28,14 @@ public class PageController extends BaseController{
 		return "/home/register";
 	}
 	
+	@RequestMapping(value = "/p/paper_new")
+	public String paper_new(HttpServletRequest req){
+		if(getSessionHomeUser(req)==null){
+			return "/home/index";
+		}
+		return "/home/paper_new";
+	}
+	
 	@RequestMapping(value = "/p/paper")
 	public String paper(HttpServletRequest req){
 		if(getSessionHomeUser(req)==null){
