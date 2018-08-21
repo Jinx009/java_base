@@ -47,11 +47,17 @@
 						<i class="icon icon-f7"></i>
 					</div>
 					<div class="item-inner">
-						<p style="width: 100%;"><a v-bind:id="item.id" onclick="_del(this)" style="float: right;" class="button button-dark">取消预约</a></p>
+						<p style="width: 100%;">
+							<a v-if="0===item.noticeType&&1==item.status" v-bind:_id="item.id" onclick="_notice(this,1)" style="float: left;" class="button button-success">设置提醒</a>
+							<a v-if="1===item.noticeType&&1==item.status" v-bind:_id="item.id" onclick="_notice(this,0)" style="float: left;" class="button button-success">取消提醒</a>
+							<a v-if="2===item.noticeType"  style="float: left;" class="button button-dark">已提醒</a>
+							<a v-bind:id="item.id" v-if="1==item.status" onclick="_del(this)" style="float: right;" class="button button-dark">取消预约</a>
+							<a  v-if="0==item.status" style="float: right;" class="button disabled">已取消</a>
+						</p>
 					</div>
 				</li>
 			</ul>
 		</div>
 </div>
-<script src="/themes/js/subcribe/order.js?_v=1.42"></script>
+<script src="/themes/js/subcribe/order.js?_v=1.55"></script>
 <#include "subcribe_footer.html">

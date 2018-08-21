@@ -1,5 +1,6 @@
 package service.basicFunctions.subcribe;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import database.basicFunctions.dao.subcribe.SubcribeOrderDao;
 import database.basicFunctions.dao.subcribe.SubcribeParkPlaceDao;
+import database.common.QueryParam;
 import database.models.subcribe.SubcribeOrder;
 import database.models.subcribe.SubcribeParkPlace;
 import utils.msg.AlimsgUtils;
@@ -30,9 +32,19 @@ public class SubcribeOrderService {
 		SubcribeParkPlace subcribeParkPlace = subcribeParkPlaceDao.find(parkId);
 		subcribeOrder.setParkName(subcribeParkPlace.getName());
 		subcribeOrder.setPlateNumber(plateNumber);
+		subcribeOrder.setStatus(1);
+		subcribeOrder.setNoticeType(0);
 		subcribeOrder.setStartHour(startHour);
-		AlimsgUtils.sendSubcibe(mobilePhone, "SMS_142615214", "展为",subcribeParkPlace.getName(),dateStr+" "+subcribeOrder.getStartHour()+"时~"+subcribeOrder.getEndHour());
 		subcribeOrderDao.save(subcribeOrder);
+	}
+	
+	public List<SubcribeOrder> needSend(){
+		QueryParam queryParam = QueryParam.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		queryParam.addParam("dateStr", sdf.format(date));
+		queryParam.addParam("noticeType", 1);
+		return subcribeOrderDao.findByCriteria(queryParam);
 	}
 	
 	public int left(Integer parkId,String dateStr,Integer startHour,Integer endHour){
@@ -51,8 +63,15 @@ public class SubcribeOrderService {
 
 	public void del(Integer id) {
 		SubcribeOrder subcribeOrder = subcribeOrderDao.find(id);
-		AlimsgUtils.sendSubcibe(subcribeOrder.getMobilePhone(), "SMS_142615216", "展为",subcribeOrder.getParkName(),subcribeOrder.getDateStr()+" "+subcribeOrder.getStartHour()+"时~"+subcribeOrder.getEndHour());
-		subcribeOrderDao.delete(id);
+		AlimsgUtils.sendSubcibe(subcribeOrder.getMobilePhone(), "SMS_142615216", "展为",subcribeOrder.getParkName(),subcribeOrder.getDateStr()+" "+subcribeOrder.getStartHour()+"时~"+subcribeOrder.getEndHour()+"时");
+		subcribeOrder.setStatus(0);
+		subcribeOrderDao.update(subcribeOrder);
+	}
+	
+	public void notice(Integer id,Integer type) {
+		SubcribeOrder subcribeOrder = subcribeOrderDao.find(id);
+		subcribeOrder.setNoticeType(type);
+		subcribeOrderDao.update(subcribeOrder);
 	}
 
 	public SubcribeOrder get(Integer id) {

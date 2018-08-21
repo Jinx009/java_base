@@ -41,5 +41,9 @@ public class SubcribeOrder {
 	private Integer parkId;
 	@Column(name = "date_str")
 	private String dateStr;
+	@Column(name = "status")
+	private Integer status;
+	@Column(name = "notcie_type")
+	private Integer noticeType;
 	
 }

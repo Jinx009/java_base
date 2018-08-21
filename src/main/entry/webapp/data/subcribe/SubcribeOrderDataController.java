@@ -80,6 +80,19 @@ public class SubcribeOrderDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "notice")
+	@ResponseBody
+	public Resp<?> notice(Integer id,Integer type){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			subcribeOrderService.notice(id,type);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "list")
 	@ResponseBody
 	public Resp<?> list(HttpServletRequest request){
