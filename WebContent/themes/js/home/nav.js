@@ -1,109 +1,4 @@
-var _menuIconList = ['fa fa-bell-slash-o','fa fa-bicycle','fa fa-binoculars','fa fa-birthday-cake','fa fa-bolt fa-bomb','fa fa-book','fa fa-bookmark','fa fa-briefcase'];
-var _menuParent = new Array();
-var _sonMenuList = new Array();
-var _menuIconIndex = 0;
-var _locationId = 14;
-$(function(){
-	getNav();
-})
-/**
- * 隐藏新建弹框
- */
-function _hideNew(){
-	$('#newBox').hide();
-	$('.content').css('opacity',1);
-}
-/**
- * 显示新建弹框
- */
-function _showNew(){
-	$('#newBox').show();
-	$('.content').css('opacity',0.3);
-}
-function _getPage(_type,_index){
-	var _p = -1;
-	if(_type==0){
-		_p =  _index;
-	}
-	if(_type==1&&_index==0){
-		_p =   (_nowPage - 1);
-	}
-	if(_type==1&&_index==1){
-		_p = (_nowPage + 1);
-	}
-	if(parseInt(_p)<=0||(_max!=0&&_p>_max)){
-		return -1;
-	}
-	if(_p===_nowPage){
-		return -1;
-	}
-	_nowPage = _p;
-	return _p;
-}
-function _getAllPage(_e){
-	var _p = $(_e).val();
-	if(_p!=_nowPage&&_p>0&&_p<_max){
-		_getData(0,parseInt(_p));
-	}else{
-		$(_e).val('当前第'+_nowPage+'页，共'+_max+'页');
-	}
-}
-function _getNowPage(_e){
-	$(_e).val('');
-	$(_e).attr('placeholder',_nowPage);
-}
-function _openC(_class,_url){
-	setSessionStorage('_class',_class);
-	location.href = _url;
-}
 
-/**
- * 导航数据
- */
-function getNav(){
-	var _class = getSessionStorage('_class');
-	$('.treeview').each(function(){
-		$(this).removeClass('active');
-	})
-	$('.'+_class).addClass('active');
-	$('#warningInput').val(new Date().Format("yyyy年MM月dd日"));
-}
-/**
- * 打开菜单链接
- * @param _index
- * @param _href
- */
-function _open(_index,_href){
-	setSessionStorage('_index',_index);
-	setSessionStorage('_href',_href);
-	location.href = _href;
-}
-function _open_(_index,_href,_href_){
-	setSessionStorage('_index',_index);
-	setSessionStorage('_href',_href);
-	location.href = _href_;
-}
-/**
- * 操作sessionStorage
- * @param _key
- */
-function getSessionStorage(_key){
-	if(window.sessionStorage){     
-		return window.sessionStorage.getItem(_key);
-	}
-}
-function setSessionStorage(_key,_value){
-	if(window.sessionStorage){     
-		var _r = window.sessionStorage.setItem(_key,_value);
-		if(_r!=null&&_r!=''&&_r!=undefined){
-			return _r;
-		}else{
-			return '';
-		}
-	}else{ 
-		return '';
-	}
-}
 /**
  * 数据加载动画
  * @returns
@@ -122,18 +17,36 @@ function closeLoad(index){
 function getTimestamp(){
 	return Date.parse(new Date());
 }  
+
+function getUrlParam(paraName) {
+	var url = document.location.toString();
+	var arrObj = url.split("?");
+	if (arrObj.length > 1) {
+		var arrPara = arrObj[1].split('&');
+		var arr;
+		for (var i = 0; i < arrPara.length; i++) {
+			arr = arrPara[i].split('=');
+			if (arr != null && arr[0] == paraName) {
+				return arr[1];
+			}
+		}
+		return '';
+	}
+	return '';
+}
+
 /**
  * 登出
  */
 function loginOut(){
 	$.ajax({
-		url:'/home/config/loginOut',
+		url:'/paper/d/homeUser/loginOut',
 		dataType:'json',
 		type:'post',
 		success:function(res){
 			if('200'==res.code){
 				layer.alert('账号退出成功！',function(){
-					location.href = '/book/home/index';
+					location.href = '/paper/p/index';
 				})
 			}
 		}

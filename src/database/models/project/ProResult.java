@@ -17,25 +17,31 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="pro_driver")
-public class ProDriver {
+@Table(name="pro_task_title")
+public class ProResult {
 
 	@Id
 	@Column(unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "mobile_phone")
-	private String mobilePhone;
-	@Column(name = "pwd")
-	private String pwd;
-	@Column(name = "openid")
-	private String openid;
-	@Column(name = "name")
-	private String name;
+	@Column(name = "paper_id")
+	private Integer paperId;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name = "plate_number")
-	private String plateNumber;
+	@Column(name = "language_type")
+	private Integer languageType;
+	@Column(name = "content")
+	private String content;
+	@Column(name = "status")
+	private Integer status;
+	@Column(name = "score")
+	private Double score;
+	@Column(name = "remark_a")
+	private String remarkA;
+	@Column(name = "remark_b")
+	private String remarkB;
+	@Column(name = "remark_c")
+	private String remarkC;
 	
 }

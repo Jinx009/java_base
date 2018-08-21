@@ -8,24 +8,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.entry.webapp.BaseController;
-import service.basicFunctions.project.ProTaskTitleService;
+import service.basicFunctions.project.ProResultService;
 import utils.Resp;
 
 @Controller
-@RequestMapping(value = "/home/d/pro_task_title")
+@RequestMapping(value = "/d/result")
 public class ProTaskTitleHomeDataController extends BaseController{
 
 	private static final Logger log =  LoggerFactory.getLogger(ProTaskTitleHomeDataController.class);
 	
 	@Autowired
-	private ProTaskTitleService proTaskTitleService;
+	private ProResultService proResultService;
 	
-	@RequestMapping(path = "/selectList")
+	@RequestMapping(path = "/save")
 	@ResponseBody
-	public Resp<?> selectList(){
+	public Resp<?> selectList(String test){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(proTaskTitleService.list());
+			
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

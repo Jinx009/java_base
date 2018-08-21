@@ -5,8 +5,62 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import main.entry.webapp.BaseController;
+
 @Controller
-public class PageController {
+public class PageController extends BaseController{
+	
+	/**
+	 * 跳转至首页
+	 * @return
+	 */
+	@RequestMapping(value = "/p/index")
+	public String login(){
+		return "/home/index";
+	}
+	
+	/**
+	 * 跳转至首页
+	 * @return
+	 */
+	@RequestMapping(value = "/p/register")
+	public String register(){
+		return "/home/register";
+	}
+	
+	@RequestMapping(value = "/p/paper")
+	public String paper(HttpServletRequest req){
+		if(getSessionHomeUser(req)==null){
+			return "/home/index";
+		}
+		return "/home/paper";
+	}
+	
+	@RequestMapping(value = "/p/result")
+	public String result(HttpServletRequest req){
+		if(getSessionHomeUser(req)==null){
+			return "/home/index";
+		}
+		return "/home/result";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * 跳转至首页
@@ -26,25 +80,6 @@ public class PageController {
 		return "/DevMgmt/DiscoveryTree";
 	}
 
-	/**
-	 * 跳转至首页
-	 * @return
-	 */
-	@RequestMapping(value = "/index")
-	public String index(){
-		return "/home/index";
-	}
-	
-	/**
-	 * 跳转至首页
-	 * @return
-	 */
-	@RequestMapping(value = "/home/index")
-	public String homeIndex(){
-		return "/home/index";
-	}
-	
-	
 	/**
 	 * 错误页
 	 * @param request

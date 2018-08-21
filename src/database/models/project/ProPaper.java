@@ -1,6 +1,5 @@
-package database.models.home;
+package database.models.project;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,26 +14,26 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @Entity
-@Table(name = "HOME_ROLE")
-public class HomeRole implements Serializable{
-	private static final long serialVersionUID = 1L;
+@Table(name="pro_paper")
+public class ProPaper {
+
 	@Id
-	@Column(name = "ID",unique=true, nullable=false)
+	@Column(unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "STATUS")
-	private Integer status;
-	@Column(name = "NAME")
-	private String name;
-	@Column(name = "LEVEL")
-	private Integer level;
+	@Column(name = "title")
+	private String title;
+	@Column(name = "abstract_content")
+	private String abstractContent;
+	@Column(name = "user_id")
+	private Integer userId;
+	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATE_TIME")
 	private Date createTime;
-	@Column(name = "DESCRIPTION")
-	private String description;
+	@Column(name = "file_path")
+	private String filePath;
 	
 }

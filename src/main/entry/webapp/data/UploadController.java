@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import main.entry.webapp.BaseController;
 import utils.Resp;
 import utils.UUIDUtils;
-import utils.encode.Base64;
-import utils.io.FileUtils;
 
 @Controller
 public class UploadController extends BaseController{
@@ -45,15 +41,11 @@ public class UploadController extends BaseController{
 												HttpServletRequest request,
 												HttpServletResponse response)  {
 		Resp<?> resp = new Resp<>(false);
-		resp.setMsg("图片格式不合法");
 		InputStream in = null;
 		OutputStream out = null;
 		try {
 			
 			if (!file.isEmpty()) {
-				if(!isImage(file)){
-					return resp;
-				}
 				String uuid = UUIDUtils.random();
 				String rootPath = request.getSession().getServletContext().getRealPath("");
 				File dir = new File(rootPath + File.separator + "themes/upload_files");
@@ -72,9 +64,9 @@ public class UploadController extends BaseController{
 				out.close();
 				in.close();
 				resp = new Resp<>("/themes/upload_files/"+filePath);
-				resp.setMsg("上传成功！");
+				resp.setMsg("upload success！");
 			}else {
-				resp.setMsg("未找到文件！");
+				resp.setMsg("file not found！");
 			}
 		} catch (Exception e) {
 			logger.error("upload error:{}",e);
@@ -95,39 +87,6 @@ public class UploadController extends BaseController{
 		return resp;
 	}
 	
-	/**
-	 * 校验是否为图片
-	 * @param imageFile
-	 * @return
-	 */
-    private boolean isImage(MultipartFile file) {  
-    	String reg = ".+(.JPEG|.jpeg|.JPG|.jpg|.GIF|.gif|.BMP|.bmp|.PNG|.png)$";
-        String imgp = file.getOriginalFilename();
-        Pattern pattern = Pattern.compile(reg);
-        Matcher matcher = pattern.matcher(imgp.toLowerCase());
-        return matcher.find();
-    }   
 	
-	/**
-	 * 将base64图片保存
-	 * @param picContent
-	 * @return
-	 */
-	public Resp<?> saveFile(String picContent,String picName,HttpServletRequest req){
-		Resp<?> resp = new Resp<>(false);
-		try {
-			String rootPath = req.getSession().getServletContext().getRealPath("");
-			File dir = new File(rootPath + File.separator + "themes/upload_files/base64");
-			byte[] decodedPicBytes = Base64.decode(picContent);
-			String uuid = UUIDUtils.random();
-			String savePath = dir + uuid + picName;
-			FileUtils.saveBytesAsFile(savePath, decodedPicBytes);
-			resp = new Resp<>("/themes/upload_files/base64/"+uuid+picName);
-			return resp;
-		} catch (Exception e) {
-			logger.error(" error:{}",e);
-		}
-		return resp;
-	}
 	
 }

@@ -1,7 +1,4 @@
 $(function() {
-	setSessionStorage('_class','l1');
-	setSessionStorage('_href','/home/p/pro_user');
-	changeWidth();
 	$('.login-btn').bind('click', function() {
 		login()
 	});
@@ -9,27 +6,6 @@ $(function() {
 		$('#errorMsg').html('')
 	})
 });
-/**
- * 操作sessionStorage
- * @param _key
- */
-function getSessionStorage(_key){
-	if(window.sessionStorage){     
-		window.sessionStorage.getItem(_key);
-	}
-}
-function setSessionStorage(_key,_value){ 
-	if(window.sessionStorage){     
-		var _r = window.sessionStorage.setItem(_key,_value);
-		if(_r!=null&&_r!=''&&_r!=undefined){
-			return _r;
-		}else{
-			return '';
-		}
-	}else{ 
-		return '';
-	}
-}
 document.onkeydown = function(e) {
 	if (!e) {
 		e = window.event;
@@ -37,13 +13,6 @@ document.onkeydown = function(e) {
 	if ((e.keyCode || e.which) == 13) {
 		login();
 	}
-}
-window.onresize = function() {
-	changeWidth()
-};
-function changeWidth() {
-	var _width = $(window).width();
-	$('.bg-table').css('margin-left', (_width - 500) / 2)
 }
 /**
  * 登录
@@ -60,12 +29,12 @@ function login() {
 			$('#errorMsg').html('密码不能为空！')
 		} else {
 			$.ajax({
-				url : '/home/config/login',
+				url : '/paper/d/homeUser/login',
 				type : 'post',
 				data : params,
 				success : function(res) {
 					if ('200' == res.code && '访问成功' == res.msg) {
-						_open('l1','/home/p/pro_driver');
+						location.href = '/paper/p/paper';
 					} else {
 						$('#errorMsg').html(res.msg)
 					}
