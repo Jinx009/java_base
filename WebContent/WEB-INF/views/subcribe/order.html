@@ -15,6 +15,15 @@
 						<div class="item-after" v-text="item.dateStr" ></div>
 					</div>
 				</li>
+					<li class="item-content">
+					<div class="item-media">
+						<i class="icon icon-f7"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title">停车场</div>
+						<div class="item-after" v-text="item.parkName" ></div>
+					</div>
+				</li>
 				<li class="item-content">
 					<div class="item-media">
 						<i class="icon icon-f7"></i>
@@ -33,8 +42,16 @@
 						<div class="item-after" v-text="item.startHour+'时~'+item.endHour+'时'" ></div>
 					</div>
 				</li>
+				<li class="item-content">
+					<div class="item-media">
+						<i class="icon icon-f7"></i>
+					</div>
+					<div class="item-inner">
+						<p style="width: 100%;"><a v-bind:id="item.id" onclick="_del(this)" style="float: right;" class="button button-dark">取消预约</a></p>
+					</div>
+				</li>
 			</ul>
 		</div>
 </div>
-<script src="/themes/js/subcribe/order.js?_v=1.41"></script>
+<script src="/themes/js/subcribe/order.js?_v=1.42"></script>
 <#include "subcribe_footer.html">

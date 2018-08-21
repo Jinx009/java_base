@@ -67,6 +67,19 @@ public class SubcribeOrderDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "del")
+	@ResponseBody
+	public Resp<?> save(Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			subcribeOrderService.del(id);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "list")
 	@ResponseBody
 	public Resp<?> list(HttpServletRequest request){

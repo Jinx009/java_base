@@ -10,6 +10,7 @@ import database.basicFunctions.dao.subcribe.SubcribeOrderDao;
 import database.basicFunctions.dao.subcribe.SubcribeParkPlaceDao;
 import database.models.subcribe.SubcribeOrder;
 import database.models.subcribe.SubcribeParkPlace;
+import utils.msg.AlimsgUtils;
 
 @Service
 public class SubcribeOrderService {
@@ -30,6 +31,7 @@ public class SubcribeOrderService {
 		subcribeOrder.setParkName(subcribeParkPlace.getName());
 		subcribeOrder.setPlateNumber(plateNumber);
 		subcribeOrder.setStartHour(startHour);
+		AlimsgUtils.sendSubcibe(mobilePhone, "SMS_142615214", "展为",subcribeParkPlace.getName(),dateStr+" "+subcribeOrder.getStartHour()+"时~"+subcribeOrder.getEndHour());
 		subcribeOrderDao.save(subcribeOrder);
 	}
 	
@@ -45,6 +47,16 @@ public class SubcribeOrderService {
 	
 	public int getUseByPlateNumber(Integer parkId,String dateStr,Integer startHour,Integer endHour,String plateNumber){
 		return subcribeOrderDao.getUseByPlateNumber(parkId, startHour, endHour, dateStr, plateNumber);
+	}
+
+	public void del(Integer id) {
+		SubcribeOrder subcribeOrder = subcribeOrderDao.find(id);
+		AlimsgUtils.sendSubcibe(subcribeOrder.getMobilePhone(), "SMS_142615216", "展为",subcribeOrder.getParkName(),subcribeOrder.getDateStr()+" "+subcribeOrder.getStartHour()+"时~"+subcribeOrder.getEndHour());
+		subcribeOrderDao.delete(id);
+	}
+
+	public SubcribeOrder get(Integer id) {
+		return subcribeOrderDao.find(id);
 	}
 	
 }
