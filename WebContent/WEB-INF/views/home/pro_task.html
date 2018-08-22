@@ -34,7 +34,7 @@
 				</ol>
 			</section>
 			<!-- 主内容 -->
-			<section class="content" >
+			<section class="content">
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="box">
@@ -69,9 +69,12 @@
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
-												<label>TaskTitle</label> <select class="form-control" id="taskTitle">
+												<label>TaskTitle</label> <select class="form-control"
+													id="taskTitle">
 													<option value="0">全部</option>
-													<option v-for="item in titles" v-html="item.name" v-bind:value="item.id" style="height: 50px;overflow: scroll;" ></option>
+													<option v-for="item in titles" v-html="item.name"
+														v-bind:value="item.id"
+														style="height: 50px; overflow: scroll;"></option>
 												</select>
 											</div>
 										</div>
@@ -92,53 +95,74 @@
 									</div>
 								</div>
 							</div>
-
+							<form id="form" action="/home/d/pro_task/uploadExcel"
+								enctype="multipart/form-data" method="post"
+								style="display: none;">
+								<input type="file" id="file" name="file"
+									/>
+							</form>
 							<!-- /.box-header -->
-							<div class="box-body table-responsive no-padding"  id="data">
-								<table class="table table-hover table-bordered">
-									<thead>
-										<tr>
-											<th>No.</th>
-											<th>Name</th>
-											<th>Dep</th>
-											<th>Description</th>
-											<th>Flight</th>
-											<th>F/T,SHG(参考）</th>
-											<th>pick up time</th>
-											<th>mail time</th>
-											<th>DriverName</th>
-											<th>操作</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr v-for="item in datas.list">
-											<td v-text="item.noId"></td>
-											<td v-html="item.name"></td>
-											<td v-text="item.dep"></td>
-											<td v-text="item.description"></td>
-											<td v-text="item.flight"></td>
-											<td v-text="item.pickTime"></td>
-											<td v-text="item.pickedTime"></td>
-											<td v-text="item.mailTime"></td>
-											<td v-text="item.driverName"></td>
-											<td><a class='btn btn-info btn-xs' v-bind:id="item.id"
-												v-bind:index="item.index" onclick="_edit(this)">编辑</a></td>
-										</tr>
-									</tbody>
-								</table>
-								<div class="box-footer clearfix"
-								style="width: 320px; float: right;">
-								<div class="input-group">
-									<span class="input-group-addon" onclick="_getData(0,1);">«</span>
-									<span class="input-group-addon" onclick="_getData(1,0);">‹</span>
-									<input type="text" style="text-align: center;"
-										onfocus="_getNowPage(this)" onblur="_getAllPage(this)"
-										v-bind:value="'当前第'+datas.page.currentPage+'页，共'+datas.page.pages+'页'"
-										class="form-control"> <span class="input-group-addon"
-										onclick="_getData(1,1);">›</span> <span
-										class="input-group-addon" id="_end">»</span>
+							<div class="box box-primary">
+								<div class="box-header" style="padding-bottom: 15px;">
+									<h3 class="box-title">Paper List</h3>
+									<div class="box-tools">
+										<div class="form-group" style="margin-right: 2%;width:200px;float: right;margin-bottom: 5px;">
+											<div class="input-group">
+												<input type="text"  readonly="readonly" value="Only allow .xls,.xslx"
+													class="form-control"> <span class="input-group-btn">
+													<button type="button" onclick="_showUpload();"
+														class="btn btn-info btn-flat">导入</button>
+												</span>
+											</div>
+										</div>
+									</div>
 								</div>
-							</div>
+								<div class="box-body table-responsive no-padding" id="data">
+									<table class="table table-hover table-bordered">
+										<thead>
+											<tr>
+												<th>No.</th>
+												<th>Name</th>
+												<th>Dep</th>
+												<th>Description</th>
+												<th>Flight</th>
+												<th>F/T,SHG(参考）</th>
+												<th>pick up time</th>
+												<th>mail time</th>
+												<th>DriverName</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="item in datas.list">
+												<td v-text="item.noId"></td>
+												<td v-html="item.name"></td>
+												<td v-text="item.dep"></td>
+												<td v-text="item.description"></td>
+												<td v-text="item.flight"></td>
+												<td v-text="item.pickTime"></td>
+												<td v-text="item.pickedTime"></td>
+												<td v-text="item.mailTime"></td>
+												<td v-text="item.driverName"></td>
+												<td><a class='btn btn-info btn-xs' v-bind:id="item.id"
+													v-bind:index="item.index" onclick="_edit(this)">编辑</a></td>
+											</tr>
+										</tbody>
+									</table>
+									<div class="box-footer clearfix"
+										style="width: 320px; float: right;">
+										<div class="input-group">
+											<span class="input-group-addon" onclick="_getData(0,1);">«</span>
+											<span class="input-group-addon" onclick="_getData(1,0);">‹</span>
+											<input type="text" style="text-align: center;"
+												onfocus="_getNowPage(this)" onblur="_getAllPage(this)"
+												v-bind:value="'当前第'+datas.page.currentPage+'页，共'+datas.page.pages+'页'"
+												class="form-control"> <span
+												class="input-group-addon" onclick="_getData(1,1);">›</span>
+											<span class="input-group-addon" id="_end">»</span>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -161,8 +185,8 @@
 			<form role="form" style="width: 90%; margin-left: 5%;">
 				<div class="box-body">
 					<div class="form-group">
-						<label for="">No.</label> <input type="text" class="form-control" readonly="readonly"
-							id="noId">
+						<label for="">No.</label> <input type="text" class="form-control"
+							readonly="readonly" id="noId">
 					</div>
 					<div class="form-group">
 						<label for="">Name</label> <input type="text" readonly="readonly"
@@ -173,20 +197,21 @@
 							class="form-control" id="dep">
 					</div>
 					<div class="form-group">
-						<label for="">Description</label> <input type="text" readonly="readonly"
-							class="form-control" id="description">
+						<label for="">Description</label> <input type="text"
+							readonly="readonly" class="form-control" id="description">
 					</div>
 					<div class="form-group">
-						<label for="">Flight</label> <input type="text" readonly="readonly"
-							class="form-control" id="flight">
+						<label for="">Flight</label> <input type="text"
+							readonly="readonly" class="form-control" id="flight">
 					</div>
 					<div class="form-group">
-						<label for="">F/T,SHG(参考）</label> <input type="text" class="form-control" readonly="readonly"
-							id="pickTime">
+						<label for="">F/T,SHG(参考）</label> <input type="text"
+							class="form-control" readonly="readonly" id="pickTime">
 					</div>
 					<div class="form-group">
-						<label>pick up time</label> <input type="text" class="form-control" 
-							id="pickedDate" readonly="readonly" placeholder="">
+						<label>pick up time</label> <input type="text"
+							class="form-control" id="pickedDate" readonly="readonly"
+							placeholder="">
 					</div>
 					<div class="form-group">
 						<label for="">mail time</label> <input type="text"
@@ -194,7 +219,7 @@
 					</div>
 					<div class="form-group">
 						<label>Driver</label> <select class="form-control" id="driver">
-							
+
 						</select>
 					</div>
 				</div>
@@ -205,6 +230,8 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
+	<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+	<script src="/themes/js/ajaxUpload.js?version=1.73"></script>
 	<script src="/themes/js/home/pro_task.js?version=1.58"></script>
 	<script src="/themes/laydate/laydate.js?version=1.14"></script>
 </body>

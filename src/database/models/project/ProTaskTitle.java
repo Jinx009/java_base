@@ -26,6 +26,8 @@ public class ProTaskTitle {
 	private Integer id;
 	@Column(name = "name")
 	private String name;
+	@Column(name = "title")
+	private String title;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;

@@ -17,5 +17,9 @@ public class ProTaskTitleService {
 	public List<ProTaskTitle> list(){
 		return proTaskTitleDao.findAll();
 	}
+
+	public ProTaskTitle save(ProTaskTitle proTaskTitle) {
+		return proTaskTitleDao.save(proTaskTitle);
+	}
 	
 }

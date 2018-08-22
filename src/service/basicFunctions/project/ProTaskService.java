@@ -43,7 +43,7 @@ public class ProTaskService {
 	public void changeStatus(Integer id){
 		ProTask proTask = proTaskDao.find(id);
 		proTask.setStatus(1);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		proTask.setPickedTime(sdf.format(new Date()));
 		proTaskDao.update(proTask);
 	}

@@ -108,13 +108,7 @@ function setSessionStorage(_key,_value){
  * 数据加载动画
  * @returns
  */
-function showLoad(){  
-    return layer.msg('努力加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false,offset: '200px', time:100000}) ;  
-}  
-function closeLoad(index){  
-	_i = -1;
-    layer.close(index);  
-} 
+
 /**
  * 获取时间戳
  * @returns
