@@ -74,7 +74,8 @@ public class ProPaperDataController extends BaseController {
 		try {
 			HomeUser homeUser = getSessionHomeUser(req);
 			ProPaper proPaper = proPaperService.save(title, abstractContent, filePath, homeUser.getId());
-			String content = readContent("/Users/jinx/Documents/jobs/git_mine/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/java_base/" + filePath);
+//			String content = readContent("/Users/jinx/Documents/jobs/git_mine/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/java_base/" + filePath);
+			String content = readContent("/project/server-book/webapps/paper/" + filePath);
 			proResultService.save(content, 1, proPaper.getId());
 			String res = translate(content);
 			if(StringUtil.isNotBlank(res)){ //翻译

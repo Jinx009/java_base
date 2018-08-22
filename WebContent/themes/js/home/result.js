@@ -21,7 +21,7 @@ function GetUrlParam(paraName) {
 function _getData(){
 	var _id = GetUrlParam('id');
 	$.ajax({
-		url:'/paper/d/result/list?id='+_id,
+		url:'/paper/d/result/list?paperId='+_id,
 		type:'post',
 		dataType:'json',
 		success:function(res){
