@@ -21,5 +21,9 @@ public class ProTaskTitleService {
 	public ProTaskTitle save(ProTaskTitle proTaskTitle) {
 		return proTaskTitleDao.save(proTaskTitle);
 	}
+
+	public ProTaskTitle findById(Integer titleId) {
+		return proTaskTitleDao.find(titleId);
+	}
 	
 }

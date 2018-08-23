@@ -14,14 +14,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -260,103 +265,142 @@ public class ProTaskHomeDataController extends BaseController {
 		return "success";
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings("resource")
 	@RequestMapping(value = "/excel")
-	public void excel(HttpServletRequest request, HttpServletResponse response, Integer status, String driverName,
-			String fromDate, String endDate) {
-		List<ProTask> tasks = proTaskService.excelList(status, driverName, fromDate, endDate);
-		String fileName = fromDate + "_" + endDate;
-		String sheetName = fromDate + "_" + endDate;
+	public void excel(HttpServletRequest request, HttpServletResponse response, Integer titleId) {
+		ProTaskTitle taskTitle = proTaskTitleService.findById(titleId);
+		List<ProTask> list = proTaskService.excelList(titleId);
+		String fileName = taskTitle.getName();
 		HSSFWorkbook wb = new HSSFWorkbook();
-		HSSFSheet sheet = wb.createSheet(sheetName);
-		sheet.setColumnWidth(0, 256 * 20);
-		sheet.setColumnWidth(1, 256 * 20);
-		sheet.setColumnWidth(2, 256 * 40);
-		sheet.setColumnWidth(3, 256 * 20);
-		sheet.setColumnWidth(4, 256 * 20);
-		sheet.setColumnWidth(5, 256 * 20);
-		sheet.setColumnWidth(6, 256 * 20);
-		sheet.setColumnWidth(7, 256 * 20);
-		sheet.setColumnWidth(8, 256 * 20);
-		sheet.setColumnWidth(9, 256 * 20);
-
-		HSSFRow row = sheet.createRow((int) 0);
+		HSSFSheet sheet = wb.createSheet("Sheet1");
 		HSSFCellStyle style = wb.createCellStyle();
 		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-
-		HSSFCellStyle dateFormatCellStyle = wb.createCellStyle();
-		HSSFDataFormat format = wb.createDataFormat();
-		dateFormatCellStyle.setDataFormat(format.getFormat("yyyy年MM月dd日  HH点mm分ss秒"));
-		dateFormatCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-
-		HSSFCell cell = row.createCell((short) 0);
-		cell.setCellValue("Name");
-		cell.setCellStyle(style);
-		cell = row.createCell((short) 1);
-		cell.setCellValue("Number");
-		cell.setCellStyle(style);
-		cell = row.createCell((short) 2);
-		cell.setCellValue("MobilePhone");
-		cell.setCellStyle(style);
-		cell = row.createCell((short) 3);
-		cell.setCellValue("PickUpTime");
-		cell.setCellStyle(style);
-		cell = row.createCell((short) 4);
-		cell.setCellValue("DriverName");
-		cell.setCellStyle(style);
-		cell = row.createCell((short) 5);
-		cell.setCellValue("Flight");
-		cell.setCellStyle(style);
-		cell = row.createCell((short) 6);
-		cell.setCellValue("Dep");
-		cell.setCellStyle(style);
-		cell = row.createCell((short) 7);
-		cell.setCellValue("Description");
-		cell.setCellStyle(style);
-		cell = row.createCell((short) 8);
-		cell.setCellValue("PickedTime");
-		cell.setCellStyle(style);
-		cell = row.createCell((short) 9);
-		cell.setCellValue("Status");
-		cell.setCellStyle(style);
-
-		for (int i = 0; i < tasks.size(); i++) {
-			row = sheet.createRow((int) i + 1);
-			ProTask task = tasks.get(i);
-			cell = row.createCell((short) 0);
-			cell.setCellValue(task.getName());
-			cell.setCellStyle(style);
-			cell = row.createCell((short) 1);
-			cell.setCellValue("");
-			cell.setCellStyle(style);
-			cell = row.createCell((short) 2);
-			cell.setCellValue("");
-			cell.setCellStyle(dateFormatCellStyle);
-			cell = row.createCell((short) 3);
-			cell.setCellValue(task.getPickTime());
-			cell.setCellStyle(style);
-			cell = row.createCell((short) 4);
-			cell.setCellValue(task.getDriverName());
-			cell.setCellStyle(style);
-			cell = row.createCell((short) 5);
-			cell.setCellValue(task.getFlight());
-			cell.setCellStyle(style);
-			cell = row.createCell((short) 6);
-			cell.setCellValue(task.getDep());
-			cell.setCellStyle(style);
-			cell = row.createCell((short) 7);
-			cell.setCellValue(task.getDescription());
-			cell.setCellStyle(style);
-			cell = row.createCell((short) 8);
-			cell.setCellValue(task.getPickedTime());
-			cell.setCellStyle(style);
-			cell = row.createCell((short) 9);
-			if (1 == task.getStatus()) {
-				cell.setCellValue("Picked");
-			} else {
-				cell.setCellValue("Picking");
+		HSSFFont font = wb.createFont();
+		font.setFontName("宋体");// 设置字体名称
+		font.setFontHeightInPoints((short) 9);// 设置字号
+		font.setColor(HSSFColor.BLACK.index);// 设置字体颜色
+		style.setFont(font);
+		sheet.setDefaultRowHeight((short) 280);
+		sheet.setColumnWidth(0, 640);
+		sheet.setColumnWidth(1, 1109);
+		sheet.setColumnWidth(2, 7082);
+		sheet.setColumnWidth(3, 3157);
+		sheet.setColumnWidth(4, 4394);
+		sheet.setColumnWidth(5, 1706);
+		sheet.setColumnWidth(6, 3797);
+		sheet.setColumnWidth(7, 3114);
+		sheet.setColumnWidth(8, 4608);
+		sheet.setColumnWidth(9, 554);
+		sheet.setColumnWidth(10, 2901);
+		HSSFRow row = null;
+		HSSFCell cell = null;
+		for(int i = 0;i<list.size()+20;i++){
+			row = sheet.createRow(i);
+			row.setRowStyle(style);
+			for(int j = 0;j<=10;j++){
+				cell = row.createCell(j);
+				cell.setCellStyle(style);
 			}
+		}
+		CellRangeAddress region = new CellRangeAddress(1, 1, 1, 8);
+		sheet.addMergedRegion(region);
+		//黑标题
+		for (int i = 1; i < 9; i++) {
+			cell = row.getCell(i);
+			style = wb.createCellStyle();
+			style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+			style.setBorderBottom((short) 2);
+			style.setBorderLeft((short) 2);
+			style.setBorderTop((short) 2);
+			style.setBorderRight((short) 2);
+			style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 			cell.setCellStyle(style);
+		}
+		style = wb.createCellStyle();
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		font = wb.createFont();
+		font.setFontName("Arial");// 设置字体名称
+		font.setFontHeightInPoints((short) 11);// 设置字号
+		font.setColor(HSSFColor.BLACK.index);// 设置字体颜色
+		font.setBoldweight(Font.BOLDWEIGHT_BOLD);//粗体
+		style.setFont(font);
+		style.setWrapText(true);
+		style.setVerticalAlignment( HSSFCellStyle.VERTICAL_JUSTIFY);
+		row = sheet.getRow(1);
+		row.setHeight((short) 870);
+		cell = row.getCell(1);
+		cell.setCellValue(taskTitle.getTitle());
+		
+		//正文开始
+		String num = null;
+		int numStart = 0;
+		String dateStr = null;
+		int rowNum = 2;
+		int status = 0;
+		int start = 0;
+		for(int j = 0;j<list.size();j++){
+			rowNum = rowNum + j;
+			if(status==0){
+				row = sheet.createRow(rowNum);
+				style = wb.createCellStyle();
+				font = wb.createFont();
+				font.setBoldweight(Font.BOLDWEIGHT_BOLD);//粗体
+				style.setFont(font);
+				cell = row.getCell(2);
+				dateStr = list.get(j).getDateStr();
+				cell.setCellValue(dateStr);
+				cell.setCellStyle(style);
+				num = list.get(j).getNoId();
+				status = 1;
+			}else if(status == 1){
+				start = rowNum; //计算边框开始时间
+				row = sheet.createRow(rowNum);
+				style = wb.createCellStyle();
+				font = wb.createFont();
+				font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+				font.setFontName("Arial");
+				font.setFontHeightInPoints((short) 11);
+				style.setFont(font);
+				for(int i = 0;i<9;i++){
+					row.getCell(i).setCellStyle(style);
+				}
+				row.getCell(1).setCellValue("No.");
+				row.getCell(2).setCellValue("Name");
+				row.getCell(3).setCellValue("Dep");
+				row.getCell(4).setCellValue("Descriptation");
+				row.getCell(5).setCellValue("Flight");
+				row.getCell(6).setCellValue("F/T,SHG(参考）");
+				row.getCell(7).setCellValue("pick up time");
+				row.getCell(8).setCellValue("mail time");
+			}else{
+				row = sheet.getRow(rowNum);
+				ProTask proTask = list.get(j);
+				if(num==null){
+					num = proTask.getNoId();
+				}
+				cell = row.getCell(2);
+				cell.setCellValue(proTask.getName());
+				cell.setCellType(Cell.CELL_TYPE_STRING);
+				cell = row.getCell(3);
+				cell.setCellValue(proTask.getDep());
+				cell.setCellType(Cell.CELL_TYPE_STRING);
+				cell = row.getCell(4);
+				cell.setCellValue(proTask.getDescription());
+				cell.setCellType(Cell.CELL_TYPE_STRING);
+				cell = row.getCell(5);
+				cell.setCellValue(proTask.getFlight());
+				cell.setCellType(Cell.CELL_TYPE_STRING);
+				String pickTime = proTask.getPickTime();
+				cell = row.getCell(6);
+				cell.setCellValue(pickTime);
+				cell.setCellType(Cell.CELL_TYPE_STRING);
+				cell = row.getCell(7);
+				cell.setCellValue(proTask.getPickedTime());
+				cell.setCellType(Cell.CELL_TYPE_STRING);
+				cell = row.getCell(8);
+				cell.setCellValue(proTask.getPickedTime());
+				cell.setCellType(Cell.CELL_TYPE_STRING);
+			}
 		}
 		// 输出数据流
 		try {

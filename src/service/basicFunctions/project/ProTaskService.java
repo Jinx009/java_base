@@ -24,8 +24,8 @@ public class ProTaskService {
 		return proTaskDao.homeList(p, status, driverName,taskTitleId);
 	}
 	
-	public List<ProTask> excelList(Integer status,String driverName,String fromDate,String endDate){
-		return proTaskDao.excelList(status, driverName, fromDate, endDate);
+	public List<ProTask> excelList(Integer titleId){
+		return proTaskDao.excelList(titleId);
 	}
 	
 	public void save(ProTask proTask){

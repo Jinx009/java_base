@@ -14,33 +14,103 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
+
+import com.alibaba.fastjson.JSONObject;
 
 import common.helper.StringUtil;
 
 public class ExcelTest {
 
 	public static void main(String[] args) throws Exception {
-		// excel();
-		putIn();
+		 excel1();
+//		putIn();
 	}
 
 	public static void putIn() throws Exception {
-		String filePath = "/Users/jinx/Downloads/NCL_TRANSPORTATION_222.xlsx";// 文件路径
+		String filePath = "/Users/jinx/Downloads/NCL TRANSPORTATION_222.xlsx";// 文件路径
 		InputStream in = new FileInputStream(filePath);
 		Workbook work = getWorkbook(in);
 		if (null == work) {
 			throw new Exception("xx");
 		}
 		Sheet sheet = work.getSheetAt(0);
-		System.out.println(sheet.getRow(84).getCell(7).getCellStyle().getDataFormatString()+"_"+sheet.getRow(84).getCell(7).getCellType()+"_"+getCellValue(sheet.getRow(84).getCell(7)));
-		System.out.println(getCellValue(sheet.getRow(5).getCell(1)));
+		System.out.println(sheet.getRow(1).getHeight());
 //		for(int i = 0;i<sheet.getLastRowNum();i++){
 //			
 //		}
+	}
+	
+	public static void  excel1() throws Exception{
+		String filePath = "/Users/jinx/Downloads/222.xls";// 文件路径
+		FileOutputStream out = new FileOutputStream(filePath);
+
+		HSSFWorkbook wb = new HSSFWorkbook();
+		HSSFSheet sheet = wb.createSheet("NCL TRANSPORTATION");
+		HSSFCellStyle style = wb.createCellStyle();
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		HSSFFont font = wb.createFont();
+		font.setFontName("宋体");// 设置字体名称
+		font.setFontHeightInPoints((short) 9);// 设置字号
+		font.setColor(HSSFColor.BLACK.index);// 设置字体颜色
+		style.setFont(font);
+		sheet.setDefaultRowHeight((short) 280);
+		sheet.setColumnWidth(0, 640);
+		sheet.setColumnWidth(1, 1109);
+		sheet.setColumnWidth(2, 7082);
+		sheet.setColumnWidth(3, 3157);
+		sheet.setColumnWidth(4, 4394);
+		sheet.setColumnWidth(5, 1706);
+		sheet.setColumnWidth(6, 3797);
+		sheet.setColumnWidth(7, 3114);
+		sheet.setColumnWidth(8, 4608);
+		sheet.setColumnWidth(9, 554);
+		sheet.setColumnWidth(10, 2901);
+		HSSFRow row = null;
+		HSSFCell cell = null;
+		for(int i = 0;i<10;i++){
+			row = sheet.createRow(i);
+			row.setRowStyle(style);
+			for(int j = 0;j<=10;j++){
+				cell = row.createCell(j);
+				cell.setCellStyle(style);
+			}
+		}
+		CellRangeAddress region = new CellRangeAddress(1, 1, 1, 8);
+		sheet.addMergedRegion(region);
+		//黑标题
+		for (int i = 1; i < 9; i++) {
+			cell = row.getCell(i);
+			style = wb.createCellStyle();
+			style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+			style.setBorderBottom((short) 2);
+			style.setBorderLeft((short) 2);
+			style.setBorderTop((short) 2);
+			style.setBorderRight((short) 2);
+			style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+			cell.setCellStyle(style);
+		}
+		style = wb.createCellStyle();
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		font = wb.createFont();
+		font.setFontName("Arial");// 设置字体名称
+		font.setFontHeightInPoints((short) 11);// 设置字号
+		font.setColor(HSSFColor.BLACK.index);// 设置字体颜色
+		font.setBoldweight(Font.BOLDWEIGHT_BOLD);//粗体
+		style.setFont(font);
+		style.setWrapText(true);
+		style.setVerticalAlignment( HSSFCellStyle.VERTICAL_JUSTIFY);
+		row = sheet.getRow(1);
+		row.setHeight((short) 870);
+		cell = row.getCell(1);
+		cell.setCellValue("M/V:  NORWEGIAN JOY       靠港： 吴淞邮轮码头       EM CREW MT LIST FROM :2018-07-06 15:25\n"
+				+ "                DEM CREW MT LIST FROM :2018-07-06 14:58\n" + "2018.7.9");
+		wb.write(out);
+		out.close();
 	}
 	
 	private static String getCellValue(Cell cell) {
@@ -90,7 +160,7 @@ public class ExcelTest {
 
 	@SuppressWarnings("resource")
 	public static void excel() throws Exception {
-		String filePath = "/Users/jinx/Downloads/NCL TRANSPORTATION.xls";// 文件路径
+		String filePath = "/Users/jinx/Downloads/NCL_TRANSPORTATION_222.xlsx";// 文件路径
 		FileOutputStream out = new FileOutputStream(filePath);
 
 		HSSFWorkbook wb = new HSSFWorkbook();
