@@ -33,8 +33,11 @@ function _getSelect(){
 }
 function _go(){
 	var _taskTitle = $('#taskTitle').val();
-	var _status = $('#status').val();
-	window.open('/home/d/pro_task/excel?taskTitleId='+_taskTitle+'&status='+_status,'_self');
+	if(_taskTitle=='0'){
+		layer.alert('您必须选择一个TaskTitle!');
+	}else{
+		window.open('/home/d/pro_task/excel?titleId='+_taskTitle,'_self');
+	}
 }
 var _d = '';
 var  _nowPage = 0,_max = 0;

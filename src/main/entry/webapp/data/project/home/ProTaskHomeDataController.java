@@ -13,14 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -116,7 +114,7 @@ public class ProTaskHomeDataController extends BaseController {
 				}
 				in = file.getInputStream();
 				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-				String res = inputExcel(in, fileName.split("\\.")[0]+"_"+sd.format(new Date())+suffix);
+				String res = inputExcel(in, fileName.split("\\.")[0] + "_" + sd.format(new Date()));
 				if (!"success".equals(res)) {
 					resp.setMsg(res);
 					return resp;
@@ -185,6 +183,13 @@ public class ProTaskHomeDataController extends BaseController {
 
 	}
 
+	/**
+	 * 导入
+	 * 
+	 * @param in
+	 * @param fileName
+	 * @return
+	 */
 	private String inputExcel(InputStream in, String fileName) {
 		try {
 			Workbook work = getWorkbook(in);
@@ -212,7 +217,8 @@ public class ProTaskHomeDataController extends BaseController {
 						Cell cell = row.getCell(1);
 						Cell cell2 = row.getCell(2);
 						Cell cell3 = row.getCell(3);
-						if (StringUtil.isBlank(getCellValue(cell))&& StringUtil.isNotBlank(getCellValue(cell2))&&StringUtil.isBlank(getCellValue(cell3))) {
+						if (StringUtil.isBlank(getCellValue(cell)) && StringUtil.isNotBlank(getCellValue(cell2))
+								&& StringUtil.isBlank(getCellValue(cell3))) {
 							currentDate = getCellValue(cell2);
 							currentStatus = 0;
 						} else {
@@ -258,9 +264,9 @@ public class ProTaskHomeDataController extends BaseController {
 				}
 			}
 		} catch (Exception e) {
-			log.error("erro:{}",e);
+			log.error("erro:{}", e);
 		}
-//		System.out.println(sheet.getRow(2).getCell(2).getStringCellValue());
+		// System.out.println(sheet.getRow(2).getCell(2).getStringCellValue());
 
 		return "success";
 	}
@@ -294,17 +300,18 @@ public class ProTaskHomeDataController extends BaseController {
 		sheet.setColumnWidth(10, 2901);
 		HSSFRow row = null;
 		HSSFCell cell = null;
-		for(int i = 0;i<list.size()+20;i++){
+		for (int i = 0; i < list.size() + 20; i++) {
 			row = sheet.createRow(i);
 			row.setRowStyle(style);
-			for(int j = 0;j<=10;j++){
+			for (int j = 0; j <= 10; j++) {
 				cell = row.createCell(j);
 				cell.setCellStyle(style);
 			}
 		}
 		CellRangeAddress region = new CellRangeAddress(1, 1, 1, 8);
 		sheet.addMergedRegion(region);
-		//黑标题
+		// 黑标题
+		row = sheet.getRow(1);
 		for (int i = 1; i < 9; i++) {
 			cell = row.getCell(i);
 			style = wb.createCellStyle();
@@ -322,84 +329,191 @@ public class ProTaskHomeDataController extends BaseController {
 		font.setFontName("Arial");// 设置字体名称
 		font.setFontHeightInPoints((short) 11);// 设置字号
 		font.setColor(HSSFColor.BLACK.index);// 设置字体颜色
-		font.setBoldweight(Font.BOLDWEIGHT_BOLD);//粗体
+		font.setBoldweight(Font.BOLDWEIGHT_BOLD);// 粗体
 		style.setFont(font);
 		style.setWrapText(true);
-		style.setVerticalAlignment( HSSFCellStyle.VERTICAL_JUSTIFY);
+		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_JUSTIFY);
 		row = sheet.getRow(1);
 		row.setHeight((short) 870);
 		cell = row.getCell(1);
 		cell.setCellValue(taskTitle.getTitle());
-		
-		//正文开始
+		// 正文开始
 		String num = null;
 		int numStart = 0;
 		String dateStr = null;
-		int rowNum = 2;
+		int rowNum = 1;
 		int status = 0;
 		int start = 0;
-		for(int j = 0;j<list.size();j++){
-			rowNum = rowNum + j;
-			if(status==0){
-				row = sheet.createRow(rowNum);
+		for (int j = 0; j < list.size(); j++) {
+			rowNum++;
+			if (status == 0) {
+				row = sheet.getRow(rowNum);
 				style = wb.createCellStyle();
 				font = wb.createFont();
-				font.setBoldweight(Font.BOLDWEIGHT_BOLD);//粗体
+				font.setBoldweight(Font.BOLDWEIGHT_BOLD);// 粗体
 				style.setFont(font);
 				cell = row.getCell(2);
 				dateStr = list.get(j).getDateStr();
 				cell.setCellValue(dateStr);
 				cell.setCellStyle(style);
-				num = list.get(j).getNoId();
 				status = 1;
-			}else if(status == 1){
-				start = rowNum; //计算边框开始时间
-				row = sheet.createRow(rowNum);
+				rowNum++;
+				start = rowNum; // 计算边框开始时间
+
+				row = sheet.getRow(rowNum);
 				style = wb.createCellStyle();
+				style.setBorderTop((short) 2);
 				font = wb.createFont();
 				font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+				style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 				font.setFontName("Arial");
 				font.setFontHeightInPoints((short) 11);
 				style.setFont(font);
-				for(int i = 0;i<9;i++){
+				for (int i = 1; i < 9; i++) {
 					row.getCell(i).setCellStyle(style);
 				}
+
+				style = wb.createCellStyle();
+				style.setBorderTop((short) 2);
+				style.setBorderLeft((short) 2);
+				font = wb.createFont();
+				font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+				style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+				font.setFontName("Arial");
+				font.setFontHeightInPoints((short) 11);
+				style.setFont(font);
 				row.getCell(1).setCellValue("No.");
+				row.getCell(1).setCellStyle(style);
+
 				row.getCell(2).setCellValue("Name");
 				row.getCell(3).setCellValue("Dep");
 				row.getCell(4).setCellValue("Descriptation");
 				row.getCell(5).setCellValue("Flight");
 				row.getCell(6).setCellValue("F/T,SHG(参考）");
 				row.getCell(7).setCellValue("pick up time");
+
+				style = wb.createCellStyle();
+				style.setBorderTop((short) 2);
+				style.setBorderRight((short) 2);
+				style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+				font = wb.createFont();
+				font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+				font.setFontName("Arial");
+				font.setFontHeightInPoints((short) 11);
+				style.setFont(font);
 				row.getCell(8).setCellValue("mail time");
-			}else{
-				row = sheet.getRow(rowNum);
-				ProTask proTask = list.get(j);
-				if(num==null){
-					num = proTask.getNoId();
+				row.getCell(8).setCellStyle(style);
+
+				status = 1;
+				rowNum++;
+			}
+			ProTask proTask = list.get(j);
+			if (j <= list.size() - 1) {
+				if (j == list.size() - 1 || !list.get(j + 1).getDateStr().equals(dateStr)) {// 末尾或者换新日期
+					status = 0;
+					for (int k = start + 1; k <= rowNum - 1; k++) {
+						row = sheet.getRow(k);
+
+						style = wb.createCellStyle();
+						style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+						font = wb.createFont();
+						font.setFontName("宋体");// 设置字体名称
+						font.setFontHeightInPoints((short) 9);// 设置字号
+						font.setColor(HSSFColor.BLACK.index);// 设置字体颜色
+						style.setFont(font);
+						style.setBorderLeft((short) 2);
+						cell = row.getCell(1);
+						cell.setCellStyle(style);
+
+						style = wb.createCellStyle();
+						style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+						font = wb.createFont();
+						font.setFontName("宋体");// 设置字体名称
+						font.setFontHeightInPoints((short) 9);// 设置字号
+						font.setColor(HSSFColor.BLACK.index);// 设置字体颜色
+						style.setFont(font);
+						style.setBorderRight((short) 2);
+						cell = row.getCell(8);
+						cell.setCellStyle(style);
+					}
+					row = sheet.getRow(rowNum);
+					for (int l = 1; l <= 8; l++) {
+						style = wb.createCellStyle();
+						style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+						font = wb.createFont();
+						font.setFontName("宋体");// 设置字体名称
+						font.setFontHeightInPoints((short) 9);// 设置字号
+						font.setColor(HSSFColor.BLACK.index);// 设置字体颜色
+						style.setFont(font);
+						style.setBorderBottom((short) 2);
+						if (l == 1) {
+							style.setBorderLeft((short) 2);
+						}
+						if (l == 8) {
+							style.setBorderRight((short) 2);
+						}
+						cell = row.getCell(l);
+						cell.setCellStyle(style);
+					}
 				}
-				cell = row.getCell(2);
-				cell.setCellValue(proTask.getName());
-				cell.setCellType(Cell.CELL_TYPE_STRING);
-				cell = row.getCell(3);
-				cell.setCellValue(proTask.getDep());
-				cell.setCellType(Cell.CELL_TYPE_STRING);
-				cell = row.getCell(4);
-				cell.setCellValue(proTask.getDescription());
-				cell.setCellType(Cell.CELL_TYPE_STRING);
-				cell = row.getCell(5);
-				cell.setCellValue(proTask.getFlight());
-				cell.setCellType(Cell.CELL_TYPE_STRING);
-				String pickTime = proTask.getPickTime();
-				cell = row.getCell(6);
-				cell.setCellValue(pickTime);
-				cell.setCellType(Cell.CELL_TYPE_STRING);
-				cell = row.getCell(7);
-				cell.setCellValue(proTask.getPickedTime());
-				cell.setCellType(Cell.CELL_TYPE_STRING);
-				cell = row.getCell(8);
-				cell.setCellValue(proTask.getPickedTime());
-				cell.setCellType(Cell.CELL_TYPE_STRING);
+			}
+
+			style = wb.createCellStyle();
+			style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+			font = wb.createFont();
+			font.setFontName("宋体");// 设置字体名称
+			font.setFontHeightInPoints((short) 9);// 设置字号
+			font.setColor(HSSFColor.BLACK.index);// 设置字体颜色
+			style.setFont(font);
+
+			row = sheet.getRow(rowNum);
+			cell = row.getCell(1);
+			if (cell != null) {
+				cell.setCellValue(proTask.getNoId());
+			}
+			cell = row.getCell(2);
+			cell.setCellValue(proTask.getName());
+			cell = row.getCell(3);
+			cell.setCellValue(proTask.getDep());
+			cell = row.getCell(4);
+			cell.setCellValue(proTask.getDescription());
+			cell = row.getCell(5);
+			cell.setCellValue(proTask.getFlight());
+			cell = row.getCell(6);
+			cell.setCellValue(proTask.getPickTime());
+			cell = row.getCell(7);
+			cell.setCellValue(proTask.getPickedTime());
+			cell = row.getCell(8);
+			cell.setCellValue(proTask.getMailTime());
+			if (status != 0) {
+				for (int i = 1; i <= 8; i++) {
+					cell = row.getCell(i);
+					cell.setCellStyle(style);
+				}
+			}
+
+			// 序号处理
+			if (num == null) {
+				numStart = rowNum;
+				num = proTask.getNoId();
+			} else if (!num.equals(proTask.getNoId()) && status != 0) {
+				CellRangeAddress region2 = new CellRangeAddress(numStart, rowNum - 1, 1, 1);
+				sheet.addMergedRegion(region2);
+				row = sheet.getRow(numStart);
+				cell = row.getCell(1);
+				cell.setCellValue(num);
+				numStart = rowNum;
+				num = proTask.getNoId();
+			} else if (num.equals(proTask.getNoId()) && status == 0) {// No相同且是末尾
+				CellRangeAddress region2 = new CellRangeAddress(numStart, rowNum, 1, 1);
+				sheet.addMergedRegion(region2);
+				row = sheet.getRow(numStart);
+				cell = row.getCell(1);
+				cell.setCellValue(num);
+				numStart = rowNum;
+				num = null;
+			} else if (!num.equals(proTask.getNoId()) && status == 0) {// No相同且是末尾
+				num = null;
 			}
 		}
 		// 输出数据流
