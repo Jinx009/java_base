@@ -32,6 +32,11 @@ public class HomeController {
 		return "/home/telcom_device";
 	}
 	
+	@RequestMapping(path = "/lora/device")
+	public String lora_device(HttpServletRequest request){
+		return "/home/lora_device";
+	}
+	
 	@RequestMapping(path = "/up/log")
 	public String telcom_log(HttpServletRequest request){
 		return "/home/up_log";
