@@ -40,9 +40,10 @@ public class ProTaskService {
 		return proTaskDao.findWait(driverMobile);
 	}
 	
-	public void changeStatus(Integer id){
+	public void changeStatus(Integer id,String name){
 		ProTask proTask = proTaskDao.find(id);
 		proTask.setStatus(1);
+		proTask.setDriverName(name);
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		proTask.setPickedTime(sdf.format(new Date()));
 		proTaskDao.update(proTask);

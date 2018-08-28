@@ -70,10 +70,11 @@ public class ProTaskFrontDataController extends BaseController{
 	
 	@RequestMapping(path = "/changeStatus")
 	@ResponseBody
-	public Resp<?> changeStatus(Integer id){
+	public Resp<?> changeStatus(Integer id,HttpServletRequest request){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			proTaskService.changeStatus(id);
+			ProDriver proDriver = getSessionFrontUser(request);
+			proTaskService.changeStatus(id,proDriver.getName());
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}",e);
