@@ -108,13 +108,12 @@ public class ProTaskHomeDataController extends BaseController {
 
 			if (!file.isEmpty()) {
 				String fileName = file.getOriginalFilename();
-				String suffix = fileName.split("\\.")[1];
-				if (suffix.indexOf("xls") < 0 && suffix.indexOf("xlsx") < 0) {
+				if (fileName.indexOf("xls") < 0 && fileName.indexOf("xlsx") < 0) {
 					return resp;
 				}
 				in = file.getInputStream();
 				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-				String res = inputExcel(in, fileName.split("\\.")[0] + "_" + sd.format(new Date()));
+				String res = inputExcel(in, fileName + "_" + sd.format(new Date()));
 				if (!"success".equals(res)) {
 					resp.setMsg(res);
 					return resp;
