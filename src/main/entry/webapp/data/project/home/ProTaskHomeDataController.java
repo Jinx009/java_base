@@ -39,6 +39,7 @@ import database.common.PageDataList;
 import database.models.project.ProTask;
 import database.models.project.ProTaskTitle;
 import main.entry.webapp.BaseController;
+import service.basicFunctions.project.ProLogService;
 import service.basicFunctions.project.ProTaskService;
 import service.basicFunctions.project.ProTaskTitleService;
 import utils.Resp;
@@ -53,13 +54,16 @@ public class ProTaskHomeDataController extends BaseController {
 	private ProTaskService proTaskService;
 	@Autowired
 	private ProTaskTitleService proTaskTitleService;
+	@Autowired
+	private ProLogService proLogService;
 
 	@RequestMapping(path = "/list")
 	@ResponseBody
-	public Resp<?> list(Integer p, Integer status, String driverName, Integer taskTitleId) {
+	public Resp<?> list(Integer p, Integer status, String driverName, Integer taskTitleId,HttpServletRequest req) {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			PageDataList<ProTask> list = proTaskService.homeList(p, status, driverName, taskTitleId);
+			proLogService.saveLog(getSessionHomeUser(req).getRealName(), "查询Task列表");
 			return new Resp<>(list);
 		} catch (Exception e) {
 			log.error("error:{}", e);
@@ -70,11 +74,12 @@ public class ProTaskHomeDataController extends BaseController {
 	@RequestMapping(path = "/save")
 	@ResponseBody
 	public Resp<?> save(String noId, String name, String dep, String description, String flight, String pickTime,
-			String driverName, String driverMobile, Integer taskTitleId, String dateStr) {
+			String driverName, String driverMobile, Integer taskTitleId, String dateStr,HttpServletRequest req) {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			proTaskService.save(noId, name, dep, description, flight, pickTime, driverName, driverMobile, taskTitleId,
 					dateStr);
+			proLogService.saveLog(getSessionHomeUser(req).getRealName(), "新建Task"+noId+","+name);
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}", e);
@@ -84,12 +89,13 @@ public class ProTaskHomeDataController extends BaseController {
 
 	@RequestMapping(path = "/update")
 	@ResponseBody
-	public Resp<?> update(String mobilePhone, String dep, String description, String name, String number,
-			String pickDate, String pickTime, String flight, String driverName, String driverMobile, Integer id) {
+	public Resp<?> update(String mailTime, String dep, String description, String name, String number,
+			String pickDate, String pickTime, String flight, String driverName, String driverMobile,Integer id,HttpServletRequest req) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			proTaskService.update(mobilePhone, dep, description, name, number, pickDate, pickTime, flight, driverName,
+			proTaskService.update(mailTime, dep, description, name, number, pickDate, pickTime, flight, driverName,
 					driverMobile, id);
+			proLogService.saveLog(getSessionHomeUser(req).getRealName(), "更新Task"+id+","+mailTime+","+driverMobile);
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}", e);
@@ -113,13 +119,15 @@ public class ProTaskHomeDataController extends BaseController {
 				}
 				in = file.getInputStream();
 				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-				String res = inputExcel(in, fileName + "_" + sd.format(new Date()));
+				String dateStr = sd.format(new Date());
+				String res = inputExcel(in, fileName + "_" + dateStr);
 				if (!"success".equals(res)) {
 					resp.setMsg(res);
 					return resp;
 				}
 				in.close();
 				resp = new Resp<>(true);
+				proLogService.saveLog(getSessionHomeUser(request).getRealName(), "导入Excel:"+fileName + "_" + dateStr);
 				resp.setMsg("导入成功！");
 			}
 		} catch (Exception e) {
@@ -240,7 +248,7 @@ public class ProTaskHomeDataController extends BaseController {
 								proTask.setTaskTitleId(proTaskTitle.getId());
 								proTask.setTaskTitle(proTaskTitle.getName());
 								proTask.setDriverMobile("0");
-								proTask.setDriverName("抢单模式");
+								proTask.setDriverName("Driver Info");
 								if (StringUtil.isNotBlank(cell_1)) {
 									noId = cell_1;
 								} else {
@@ -522,6 +530,7 @@ public class ProTaskHomeDataController extends BaseController {
 			response.setHeader("Content-Disposition",
 					"attachment;filename=" + new String(fileName.getBytes("gbk"), "iso8859-1") + ".xls");
 			ServletOutputStream out = response.getOutputStream();
+			proLogService.saveLog(getSessionHomeUser(request).getRealName(), "导出Excel:"+fileName+".xls");
 			wb.write(out);
 			out.flush();
 			out.close();

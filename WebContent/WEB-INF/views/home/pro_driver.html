@@ -41,8 +41,10 @@
 							<div class="box-header">
 								<h3 class="box-title">司机列表</h3>
 								<div class="box-tools">
-									<ul class="pagination pagination-sm no-margin pull-right">
+									<ul class="pagination pagination-sm no-margin pull-right" id="_status" >
 										<li><a onclick="_open('l1','/home/p/pro_driver_new')">新增司机</a></li>
+										<li id="_r1" style="display: none;" ><a class="btn btn-warning" onclick="_changeStatus('register','0')">关闭注册</a></li>
+										<li id="_r0" style="display: none;"><a class="btn btn-success" onclick="_changeStatus('register','1')">开启注册</a></li>
 									</ul>
 								</div>
 							</div>
@@ -66,8 +68,10 @@
 											<td v-text="item.name"></td>
 											<td v-text="item.plateNumber"></td>
 											<td v-text="item.createTime"></td>
-											<td><a class='btn btn-info btn-xs' v-bind:id="item.id" v-bind:index="item.index"
-												onclick="_edit(this)">编辑</a></td>
+											<td>
+												<a class='btn btn-info btn-xs' v-bind:id="item.id" v-bind:index="item.index" onclick="_edit(this)">编辑</a>
+												<a class='btn btn-success btn-xs' v-bind:_id="item.id"  onclick="_del(this)">删除</a>
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -129,7 +133,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_driver.js?version=1.22"></script>
+	<script src="/themes/js/home/pro_driver.js?version=1.31"></script>
 
 </body>
 </html>

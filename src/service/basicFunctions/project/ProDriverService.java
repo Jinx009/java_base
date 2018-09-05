@@ -68,4 +68,8 @@ public class ProDriverService {
 	public List<ProDriver> selectList() {
 		return proDriverDao.selectList();
 	}
+
+	public void del(Integer id) {
+		proDriverDao.delete(id);
+	}
 }

@@ -9,7 +9,7 @@ function _getData(_type,_index){
 	_data.p = _getPage(_type,_index);
 	if(_data.p!=-1){
 		$.ajax({
-			url:'/front/d/pro_task/frontDoneList?p='+_data.p,
+			url:'/home/d/pro_log/homeList?p='+_data.p,
 			dataType:'json',
 			type:'post',
 			success:function(res){
@@ -35,3 +35,4 @@ function _getData(_type,_index){
 		})
 	}
 }
+

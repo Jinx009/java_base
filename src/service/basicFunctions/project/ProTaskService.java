@@ -40,10 +40,11 @@ public class ProTaskService {
 		return proTaskDao.findWait(driverMobile);
 	}
 	
-	public void changeStatus(Integer id,String name){
+	public void changeStatus(Integer id,String name,String driverMobile){
 		ProTask proTask = proTaskDao.find(id);
 		proTask.setStatus(1);
 		proTask.setDriverName(name);
+		proTask.setDriverMobile(driverMobile);
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		proTask.setPickedTime(sdf.format(new Date()));
 		proTaskDao.update(proTask);
@@ -74,7 +75,7 @@ public class ProTaskService {
 	}
 	
 	public void update(String mailTime, String dep, String description, String name, String number, String pickedTime,
-			String pickTime, String flight, String driverName, String driverMobile,Integer id) {
+			String pickTime, String flight, String driverName, String driverMobile, Integer id) {
 		try {
 			ProTask proTask = proTaskDao.find(id);
 			proTask.setDep(dep);
@@ -94,6 +95,14 @@ public class ProTaskService {
 
 	public ProTask find(Integer id) {
 		return proTaskDao.find(id);
+	}
+
+	public PageDataList<ProTask> frontWaitList(String mobilePhone, Integer p) {
+		return proTaskDao.frontWaitList(p,mobilePhone);
+	}
+
+	public PageDataList<ProTask> frontDoneList(String mobilePhone, Integer p) {
+		return proTaskDao.frontDoneList(p,mobilePhone);
 	}
 	
 }

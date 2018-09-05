@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import common.helper.MD5Util;
 import common.helper.StringUtil;
 import database.models.project.ProDriver;
+import database.models.project.ProSetting;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.project.ProDriverService;
+import service.basicFunctions.project.ProSettingService;
 import utils.Resp;
 import utils.RespData;
 
@@ -26,6 +28,8 @@ public class ProDriverFrontDataController extends BaseController{
 	
 	@Autowired
 	private ProDriverService proDriverService;
+	@Autowired
+	private ProSettingService proSettingService;
 	
 	@RequestMapping(path = "/login")
 	@ResponseBody
@@ -57,6 +61,10 @@ public class ProDriverFrontDataController extends BaseController{
 	public Resp<?> register(String mobilePhone,String pwd,String name,String plateNumber,HttpServletRequest request){
 		Resp<?> resp = new Resp<>(false);
 		try {
+			ProSetting proSetting = proSettingService.findByName("register");
+			if(proSetting!=null&&0==proSetting.getStatus()) {
+				return new Resp<>(RespData.ERROR_CODE,"注册通道已经关闭！",null);
+			}
 			if(StringUtil.isBlank(mobilePhone)){
 				return new Resp<>(RespData.ERROR_CODE,"手机号码不能为空！",null);
 			}else if(StringUtil.isBlank(pwd)){

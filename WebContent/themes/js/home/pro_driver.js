@@ -1,4 +1,5 @@
 $(function(){
+	_getStatus();
 	_getData(0,1);
 })
 var _d = '';
@@ -36,6 +37,35 @@ function _getData(_type,_index){
 		})
 	}
 }
+
+function _changeStatus(_name,_status){
+	$.ajax({
+		url:'/home/d/pro_setting/change?name=register&status='+_status,
+		type:'post',
+		dataType:'json',
+		success:function(res){
+			if('200'==res.code){
+				layer.alert('操作成功！',function(){
+					location.reload();
+				})
+			}else{
+				layer.alert(res.msg);
+			}
+		}
+	})
+}
+
+function _getStatus(){
+	$.ajax({
+		url:'/home/d/pro_setting/get?name=register',
+		type:'post',
+		dataType:'json',
+		success:function(res){
+			$('#_r'+res.data.status).show();
+		}
+	})
+}
+
 var _editId = '';
 function _edit(_e){
 	var _id = $(_e).attr('id');
@@ -45,6 +75,24 @@ function _edit(_e){
 	$('#_mobilePhone').val(_bd[_index].mobilePhone);
 	$('#_plateNumber').val(_bd[_index].plateNumber);
 	_showNew();
+}
+
+function _del(_e){
+	var _id = $(_e).attr('_id');
+	$.ajax({
+		url:'/home/d/pro_driver/del?id='+_id,
+		type:'post',
+		dataType:'json',
+		success:function(res){
+			if('200'==res.code){
+				layer.alert('删除成功！',function(){
+					location.reload();
+				})
+			}else{
+				layer.alert(res.msg);
+			}
+		}
+	})
 }
 
 function _update(){

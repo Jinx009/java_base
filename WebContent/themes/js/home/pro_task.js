@@ -12,7 +12,7 @@ function _getSelect(){
 			drivers = res.data;
 			var obj = {};
 			obj.id = 0;
-			obj.name = '抢单模式';
+			obj.name = 'Driver Info';
 			obj.mobilePhone = '0';
 			drivers.push(obj);
 		}
