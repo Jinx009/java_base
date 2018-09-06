@@ -87,6 +87,10 @@ public class LogSensorLogService extends BaseService{
 			log.error("error:{]",e);
 		}
 		return resp;
+	}
+
+	public LogSensorHeart findByInfoMac(String mac) {
+		return logSensorHeartDao.findNewByMac(mac);
 	}	
 	
 }

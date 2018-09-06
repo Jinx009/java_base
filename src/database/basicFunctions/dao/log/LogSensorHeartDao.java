@@ -44,5 +44,20 @@ public class LogSensorHeartDao extends BaseDao<LogSensorHeart>{
 		}
 		return null;
 	}
+
+
+	@SuppressWarnings("unchecked")
+	public LogSensorHeart findNewByMac(String mac) {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+		String hql = " FROM LogSensorHeart  "+
+		"where createTime>='"+sdf.format(date)+" 00:00:00' and mac = '"+mac+"' and dif is not null order by id desc ";
+		Query query = em.createQuery(hql);
+		List<LogSensorHeart> list = query.getResultList();
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0);
+		}
+		return null;
+	}
 	
 }
