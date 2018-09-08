@@ -91,6 +91,10 @@ public class LogSensorLogService extends BaseService{
 
 	public LogSensorHeart findByInfoMac(String mac) {
 		return logSensorHeartDao.findNewByMac(mac);
+	}
+
+	public List<LogSensorHeart> findList(String mac, String date1, String date2, String time1, String time2) {
+		return logSensorHeartDao.findList(mac,date1,date2,time1,time2);
 	}	
 	
 }

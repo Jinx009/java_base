@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>设备管理</title>
+    <link href="/themes/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/themes/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"  target="_blank"  href="http://www.zhanway.com"><img height="50px;" style="margin-top: -15px;" src="img/logo.png"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="device.html">设备信息</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a  target="_blank"  href="http://www.zhanway.com">走进展为</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="row" style="width: 98%;margin-left: 1%;" >
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">基本信息</div>
+            <div class="panel-body">
+         		<form class="form-inline">
+				  <div class="form-group">
+				    <label for="exampleInputName2">选择mac</label>
+				    <input type="text" class="form-control" id="mac" placeholder="请输入mac号">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputEmail2">选择街道</label>
+				    <select class="form-control" id="address" >
+				    	<option value="镇宁路（万航渡路-镇宁路466）JAZ-036" >镇宁路（万航渡路-镇宁路466）JAZ-036</option>
+				    	<option value="大沽路-（石门一路-成都北路）JAZ-038">大沽路-（石门一路-成都北路）JAZ-038</option>
+				    	<option value="新闸路（万航渡路-镇宁路）JAZ-054">新闸路（万航渡路-镇宁路）JAZ-054</option>
+				    	<option value="巨鹿路（富民路-常熟路）JAZ-032">巨鹿路（富民路-常熟路）JAZ-032</option>
+				    	<option value="泰州路-昌平路JAZ-026">泰州路-昌平路JAZ-026</option>
+				    	<option value="陕西北路（南京西路-奉贤路）JAZ-044">陕西北路（南京西路-奉贤路）JAZ-044</option>
+				    	<option value="愚园路（铜仁路-常德路）JAZ-008">愚园路（铜仁路-常德路）JAZ-008</option>
+				    	<option value="安义路（铜仁路-常德路）JAZ-011">安义路（铜仁路-常德路）JAZ-011</option>
+				    	<option value="南阳路（陕西北路-西康路）JAZ-030">南阳路（陕西北路-西康路）JAZ-030</option>
+				    	<option value="威海路（陕西北路-延安路）JAZ-050">威海路（陕西北路-延安路）JAZ-050</option>
+				    	<option value="襄阳北路（长乐路-巨鹿路）JAZ-004">襄阳北路（长乐路-巨鹿路）JAZ-004</option>
+				    	<option value="南汇路（南京西路-北京西路）JAZ-002">南汇路（南京西路-北京西路）JAZ-002</option>
+				    	<option value="句容路（海防路桥以北）东侧JAZ-041">句容路（海防路桥以北）东侧JAZ-041</option>
+				    	<option value="陕西北路（安远路-昌平路）JAZ-031">陕西北路（安远路-昌平路）JAZ-031</option>
+				    	<option value="武定路（石门二路-泰兴路）JAZ-014">武定路（石门二路-泰兴路）JAZ-014</option>
+				    	<option value="新丰路（陕西北路-常德路）JAZ-029">新丰路（陕西北路-常德路）JAZ-029</option>
+				    	<option value="泰州路（435号-449号）JAZ-049">泰州路（435号-449号）JAZ-049</option>
+				    	<option value="昌平路（泰州路-康定路）JAZ-024">昌平路（泰州路-康定路）JAZ-024</option>
+				    	<option value="余姚路（730号-798号）北侧JAZ-039">余姚路（730号-798号）北侧JAZ-039</option>
+				    	<option value="淮安路(江宁路-昌化路）JAZ-051">淮安路(江宁路-昌化路）JAZ-051</option>
+				    	<option value="康定路（万航渡路-余姚路）JAZ-052">康定路（万航渡路-余姚路）JAZ-052</option>
+				    	<option value="人和街（人和街65号-海防路）JAZ-043">人和街（人和街65号-海防路）JAZ-043</option>
+				    	<option value="延平路（昌平路-康定路）JAZ-028">延平路（昌平路-康定路）JAZ-028</option>
+				    	<option value="昌平路（791号-993号）JAZ-040">昌平路（791号-993号）JAZ-040</option>
+				    	<option value="昌平路（胶州路-延平路）JAZ-023">昌平路（胶州路-延平路）JAZ-023</option>
+				    	<option value="永源路（南京西路-镇宁路）JAZ-033">永源路（南京西路-镇宁路）JAZ-033</option>
+				    	<option value="昌化路（20号南40米-46号）P牌  JAZ-003">昌化路（20号南40米-46号）P牌  JAZ-003</option>
+				    </select>
+				  </div>
+				  <a class="btn btn-default" onclick="_getData()" >查询</a>
+				</form>
+          </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mac地址</th>
+                        <th>车位号</th>
+                        <th>是否有车</th>
+                        <th>电压</th>
+                        <th>上次通讯时间</th>
+                        <th>最后一次心跳时间</th>
+                        <th>信号</th>
+                    </tr>
+                </thead>
+                <tbody id="data" >
+                    <tr v-for="item in datas" >
+                        <td v-text="item.mac" ></td>
+                        <td v-text="item.baseEnergy" ></td>
+                        <td>
+                        	<span v-if="1===item.available" class="label label-success">是</span>
+                        	<span v-if="0===item.available" class="label label-danger">否</span>
+                        </td>
+                        <td v-text="item.batteryVoltage" ></td>
+                        <td v-text="item.lastSeenTime" ></td>
+                     	<td v-text="item.createTime" ></td>
+                     	<td v-text="item.desc" ></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="control-sidebar-bg"></div>
+<script src="/themes/js/jquery-1.7.2.min.js"></script>
+<script src="/themes/dist/js/bootstrap.min.js"></script>
+<script src="/themes/js/vue.min.js"></script>
+<script src="js/device.js?_v=3.32"></script>
+</body>
+</html>

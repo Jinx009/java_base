@@ -207,5 +207,9 @@ public class DeviceSensorService extends BaseService{
 		}
 		return resp;
 	}
+
+	public DeviceSensor findByMac(String mac) {
+		return deviceSensorDao.findByMac(mac);
+	}
 	
 }
