@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import database.models.device.DeviceSensor;
 import database.models.device.DeviceSensorInfo;
+import database.models.device.vo.DeviceSensorInfoModel;
 import database.models.log.LogSensorHeart;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.device.DeviceSensorInfoService;
@@ -86,22 +87,32 @@ public class LogsController extends BaseController{
 	 */
 	@RequestMapping(path = "hearts")
 	@ResponseBody
-	public List<DeviceSensorInfo> list(String date1,String time1,String date2,String time2){
+	public List<DeviceSensorInfoModel> list(String date1,String time1,String date2,String time2){
+		List<DeviceSensorInfoModel> models = new ArrayList<DeviceSensorInfoModel>();
 		List<DeviceSensorInfo> list = deviceSesnorInfoService.find();
 		for(DeviceSensorInfo device : list) {
+			DeviceSensorInfoModel model = new DeviceSensorInfoModel();
+			model.setMac("mac:"+device.getMac());
+			model.setAddress(device.getAddress());
+			model.setParkNumber(device.getParkNumber());
+			model.setNum("0");
 			if(StringUtil.isNotBlank(device.getMac())) {
 				List<LogSensorHeart> list2 = logSensorDeviceService.findList(device.getMac(),date1,date2,time1,time2);
 				if(list2!=null&&!list2.isEmpty()) {
-					device.setMac("mac："+device.getMac());
-					device.setId(list2.size());
-				}else {
-					device.setMac("mac："+device.getMac());
-					device.setId(0);
+					LogSensorHeart log = list2.get(0);
+					model.setNum(String.valueOf(list2.size()));
+					model.setDif(log.getDif());
+					model.setPci(log.getPci());
+					model.setRsrp(log.getRsrp());
+					model.setRssi(log.getRssi());
+					model.setSnr(log.getSnr());
+					model.setState(log.getState());
+					model.setVol(log.getVol());
 				}
 			}
-			
+			models.add(model);
 		}
-		return list;
+		return models;
 	}
 	
 	@RequestMapping(path = "sensors")
