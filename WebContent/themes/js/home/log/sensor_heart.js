@@ -3,7 +3,7 @@ $(function(){
 	laydate.render({
 		elem : '#datepicker',
 	});
-	_getData();
+//	_getData();
 })
  var _d = '';
 function _getData(){
