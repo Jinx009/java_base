@@ -50,6 +50,8 @@ function _getData(_type,_index){
 	_data.p = _getPage(_type,_index);
 	if(_taskTitleId!=_taskTitle||_status!=_typeId){
 		_data.p = 1;
+		_taskTitleId = _taskTitle;
+		_typeId = _status;
 	}
 	if(_data.p!=-1){
 		$.ajax({
