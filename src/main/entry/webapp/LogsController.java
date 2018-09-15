@@ -126,4 +126,25 @@ public class LogsController extends BaseController{
 		return sensors;
 	}
 	
+	@RequestMapping(path = "devices")
+	@ResponseBody
+	public List<DeviceSensor> devices(String mac,String address){
+		List<DeviceSensorInfo> list = deviceSesnorInfoService.findByMacAndAddress(mac,address);
+		List<DeviceSensor> sensors = new ArrayList<DeviceSensor>();
+		for(DeviceSensorInfo device : list) {
+			if(StringUtil.isNotBlank(device.getMac())) {
+				DeviceSensor deviceSensor = deviceSensorService.findByMac(device.getMac());
+				deviceSensor.setBaseEnergy(device.getParkNumber());
+				if(deviceSensor!=null) {
+					deviceSensor.setCreateTime(deviceSensor.getLastSeenTime());
+//					deviceSensor.setDesc(logSensorHeart.getRssi());
+				}
+				sensors.add(deviceSensor);
+			}
+			
+			
+		}
+		return sensors;
+	}
+	
 }

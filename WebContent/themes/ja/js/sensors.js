@@ -5,7 +5,7 @@ var _d = '';
 function _getData(){
 	var _mac = $('#mac').val(),_address = $('#address').val();
 	$.ajax({
-		url:'/common/log/devices',
+		url:'/common/log/sensors',
 		data:'mac='+_mac+'&address='+_address,
 		type:'post',
 		dataType:'json',

@@ -43,7 +43,6 @@
 				  <div class="form-group">
 				    <label for="exampleInputEmail2">选择街道</label>
 				    <select class="form-control" id="address" >
-				    
 				    	<option value="昌平路（常德路-胶州路）JAZ-022">昌平路（常德路-胶州路）JAZ-022</option>
 				    	<option value="西苏州路（淮安路西南侧）JAZ-046">西苏州路（淮安路西南侧）JAZ-046</option>
 				    	<option value="昌平路（常德路-西康路）JAZ-021">昌平路（常德路-西康路）JAZ-021</option>
@@ -90,8 +89,6 @@
                         <th>是否有车</th>
                         <th>电压</th>
                         <th>上次车检时间</th>
-                        <th>最后一次心跳时间</th>
-                        <th>信号</th>
                     </tr>
                 </thead>
                 <tbody id="data" >
@@ -104,8 +101,6 @@
                         </td>
                         <td v-text="item.batteryVoltage" ></td>
                         <td v-text="item.lastSeenTime" ></td>
-                     	<td v-text="item.createTime" ></td>
-                     	<td v-text="item.desc" ></td>
                     </tr>
                 </tbody>
             </table>
@@ -116,6 +111,6 @@
 <script src="js/jquery.min.js"></script>
 <script src="/themes/dist/js/bootstrap.min.js"></script>
 <script src="/themes/js/vue.min.js"></script>
-<script src="js/sensors.js?_v=3.32"></script>
+<script src="js/device.js?_v=3.52"></script>
 </body>
 </html>
