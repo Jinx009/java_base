@@ -17,7 +17,7 @@ public class DeviceSensorInfoDao extends BaseDao<DeviceSensorInfo>{
 	public List<DeviceSensorInfo> findByMacAndAddress(String mac, String address) {
 		String hql = "  from DeviceSensorInfo where address = '"+address+"'  ";
 		if(StringUtil.isNotBlank(mac)) {
-			hql = "  from DeviceSensorInfo where address = '"+address+"' and mac like '%"+mac+"%'  ";;
+			hql = "  from DeviceSensorInfo where mac like '%"+mac+"%'  ";;
 		}
 		hql += " order by parkNumber";
 		List<DeviceSensorInfo> list = em.createQuery(hql).getResultList();
