@@ -30,5 +30,10 @@ public class HomePageController extends BaseController{
 		return "/home/pro_task";
 	}
 	
+	@RequestMapping(path = "/pro_log")
+	public String log(){
+		return "/home/pro_log";
+	}
+	
 	
 }

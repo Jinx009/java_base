@@ -41,6 +41,34 @@ public class ProTaskFrontDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/frontWaitList")
+	@ResponseBody
+	public Resp<?> frontList(HttpServletRequest request,Integer p){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			ProDriver proDriver = getSessionFrontUser(request);
+			PageDataList<ProTask> list = proTaskService.frontWaitList(proDriver.getMobilePhone(),p);
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/frontDoneList")
+	@ResponseBody
+	public Resp<?> frontDoneList(HttpServletRequest request,Integer p){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			ProDriver proDriver = getSessionFrontUser(request);
+			PageDataList<ProTask> list = proTaskService.frontDoneList(proDriver.getMobilePhone(),p);
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/doneList")
 	@ResponseBody
 	public Resp<?> doneList(HttpServletRequest request,Integer p){
@@ -74,7 +102,7 @@ public class ProTaskFrontDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			ProDriver proDriver = getSessionFrontUser(request);
-			proTaskService.changeStatus(id,proDriver.getName());
+			proTaskService.changeStatus(id,proDriver.getName(),proDriver.getMobilePhone());
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}",e);

@@ -9,7 +9,7 @@ function _getSelect(){
 		success:function(res){
 			var obj = {};
 			obj.id = 0;
-			obj.name = '抢单模式';
+			obj.name = 'Driver Info';
 			obj.mobilePhone = '0';
 			res.data.push(obj);
 			new Vue({

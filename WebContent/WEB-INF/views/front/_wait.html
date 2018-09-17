@@ -1,0 +1,57 @@
+<#include "m_header.html">
+<header class="bar bar-nav">
+	<h1 class='title'>待处理</h1>
+</header>
+<style>
+.button.button-fill.button-big {
+    line-height: 1.4rem;
+}
+.button.button-big {
+    font-size: .85rem;
+    height: 1.4rem;
+}
+</style>
+<div class="content" style="background: #eeeeee;" id="data" >
+		<div v-for="item in datas"  class="list-block" onclick="_go(this);" v-bind:id="item.id"  >
+			<ul>
+				<li class="item-content">
+					<div class="item-media">
+						<i class="icon icon-f7"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title">Name</div>
+						<div class="item-after" v-text="item.name" ></div>
+					</div>
+				</li>
+				<li class="item-content">
+					<div class="item-media">
+						<i class="icon icon-f7"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title">F/T,SHG(参考）</div>
+						<div class="item-after" v-text="item.pickTime" ></div>
+					</div>
+				</li>
+				<li class="item-content">
+					<div class="item-media">
+						<i class="icon icon-f7"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title">Date</div>
+						<div class="item-after" v-text="item.dateStr" ></div>
+					</div>
+				</li>
+				<li class="item-content">
+					<div class="item-media">
+						<i class="icon icon-f7"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title">Descriptation</div>
+						<div class="item-after" v-text="item.description" ></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+</div>
+<script src="/themes/js/front/wait.js?_v=1.36"></script>
+<#include "m_footer.html">
