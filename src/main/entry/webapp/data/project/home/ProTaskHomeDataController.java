@@ -86,6 +86,20 @@ public class ProTaskHomeDataController extends BaseController {
 		}
 		return resp;
 	}
+	
+	@RequestMapping(path = "/delete")
+	@ResponseBody
+	public Resp<?> delete(Integer id,HttpServletRequest req) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			proTaskService.changeSingleShowStatus(id);
+			proLogService.saveLog(getSessionHomeUser(req).getRealName(), "删除Task"+id);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return resp;
+	}
 
 	@RequestMapping(path = "/update")
 	@ResponseBody
@@ -245,6 +259,9 @@ public class ProTaskHomeDataController extends BaseController {
 								proTask.setCreateTime(new Date());
 								proTask.setDateStr(currentDate);
 								proTask.setStatus(0);
+								if(!"*".equals(cell_7)){
+									proTask.setStatus(1);
+								}
 								proTask.setTaskTitleId(proTaskTitle.getId());
 								proTask.setTaskTitle(proTaskTitle.getName());
 								proTask.setDriverMobile("0");

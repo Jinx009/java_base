@@ -107,6 +107,23 @@ function _edit(_e){
 	$('#driver').html(_htmlStr);
 	_showNew();
 }
+function _delete(_e){
+	var _id = $(_e).attr('index');
+	$.ajax({
+		url:'/home/d/pro_task/delete?id='+_id,
+		type:'post',
+		dataType:'json',
+		success:function(res){
+			if('200'==res.code){
+				layer.alert('删除成功!',function(){
+					location.reload();
+				})
+			}else{
+				layer.alert(res.msg);
+			}
+		}
+	})
+}
 
 function _update(){
 	var _name = $('#name').val();

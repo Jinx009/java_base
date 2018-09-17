@@ -15,7 +15,7 @@ public class ProTaskTitleService {
 	private ProTaskTitleDao proTaskTitleDao;
 	
 	public List<ProTaskTitle> list(){
-		return proTaskTitleDao.findAll();
+		return proTaskTitleDao.findAllList();
 	}
 
 	public ProTaskTitle save(ProTaskTitle proTaskTitle) {
@@ -24,6 +24,16 @@ public class ProTaskTitleService {
 
 	public ProTaskTitle findById(Integer titleId) {
 		return proTaskTitleDao.find(titleId);
+	}
+	
+	public void update(Integer titleId) {
+		ProTaskTitle proTaskTitle = proTaskTitleDao.find(titleId);
+		proTaskTitle.setStatus(0);
+		proTaskTitleDao.update(proTaskTitle);
+	}
+
+	public Object homeList(Integer p) {
+		return proTaskTitleDao.homeList(p);
 	}
 	
 }

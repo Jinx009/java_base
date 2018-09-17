@@ -18,6 +18,7 @@ public class ProTaskDao extends BaseDao<ProTask> {
 
 	public PageDataList<ProTask> homeList(Integer p, Integer status, String driverName, Integer taskTitleId) {
 		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("showStatus", 1);
 		if (StringUtil.isNotBlank(driverName)) {
 			queryParam.addParam("driverName", driverName);
 		}
@@ -47,7 +48,7 @@ public class ProTaskDao extends BaseDao<ProTask> {
 	@SuppressWarnings("unchecked")
 	public List<ProTask> findWait(String driverMobile) {
 		String hql = " from ProTask where status = 0 and (driverMobile = 0 or driverMobile = '" + driverMobile
-				+ "') order by pickTime asc,dateStr asc ";
+				+ "') and showStatus = 1 order by pickTime asc,dateStr asc ";
 		List<ProTask> list = em.createQuery(hql).getResultList();
 		if (list != null && !list.isEmpty()) {
 			return list;
@@ -73,6 +74,12 @@ public class ProTaskDao extends BaseDao<ProTask> {
 		queryParam.addOrder(OrderType.DESC, "id");
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		return findPageList(queryParam);
+	}
+
+	public List<ProTask> findByTitleId(Integer titleId) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("taskTitleId", titleId);
+		return findByCriteria(queryParam);
 	}
 
 }

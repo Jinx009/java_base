@@ -32,6 +32,22 @@ public class ProTaskService {
 		proTaskDao.save(proTask);
 	}
 	
+	public void changeSingleShowStatus(Integer id){
+		ProTask proTask = proTaskDao.find(id);
+		proTask.setShowStatus(0);
+		proTaskDao.update(proTask);
+	}
+	
+	public void changeShowStatus(Integer titleId){
+		List<ProTask> list = proTaskDao.findByTitleId(titleId);
+		if(list!=null&&!list.isEmpty()){
+			for(ProTask proTask:list){
+				proTask.setShowStatus(0);
+				proTaskDao.update(proTask);
+			}
+		}
+	}
+	
 	public void update(ProTask proTask){
 		proTaskDao.update(proTask);
 	}
@@ -68,6 +84,7 @@ public class ProTaskService {
 			proTask.setDateStr(dateStr);
 			proTask.setCreateTime(new Date());
 			proTask.setStatus(0);
+			proTask.setShowStatus(1);
 			proTaskDao.save(proTask);
 		} catch (Exception e) {
 			e.printStackTrace();
