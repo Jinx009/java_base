@@ -55,6 +55,8 @@ public class ProTask {
 	private String dateStr;
 	@Column(name = "task_title_id")
 	private Integer taskTitleId;
+	@Column(name = "show_status")
+	private Integer showStatus;
 	
 	
 }

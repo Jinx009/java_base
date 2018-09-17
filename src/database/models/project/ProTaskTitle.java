@@ -31,5 +31,6 @@ public class ProTaskTitle {
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	
+	@Column(name = "status")
+	private Integer status;
 }
