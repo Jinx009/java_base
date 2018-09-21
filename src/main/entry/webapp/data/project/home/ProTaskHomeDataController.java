@@ -132,7 +132,7 @@ public class ProTaskHomeDataController extends BaseController {
 					return resp;
 				}
 				in = file.getInputStream();
-				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String dateStr = sd.format(new Date());
 				String res = inputExcel(in, fileName + "_" + dateStr);
 				if (!"success".equals(res)) {
@@ -230,6 +230,7 @@ public class ProTaskHomeDataController extends BaseController {
 						Cell cell = row.getCell(1);
 						proTaskTitle.setCreateTime(new Date());
 						proTaskTitle.setName(fileName);
+						proTaskTitle.setStatus(1);
 						if (cell != null && cell.getStringCellValue() != null) {
 							proTaskTitle.setTitle(cell.getStringCellValue());
 						}
@@ -262,6 +263,7 @@ public class ProTaskHomeDataController extends BaseController {
 								if(!"*".equals(cell_7)){
 									proTask.setStatus(1);
 								}
+								proTask.setShowStatus(1);
 								proTask.setTaskTitleId(proTaskTitle.getId());
 								proTask.setTaskTitle(proTaskTitle.getName());
 								proTask.setDriverMobile("0");

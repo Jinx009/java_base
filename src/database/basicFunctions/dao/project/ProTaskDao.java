@@ -62,6 +62,7 @@ public class ProTaskDao extends BaseDao<ProTask> {
 		SearchFilter searchFilter2 = new SearchFilter("driverMobile", mobilePhone);
 		queryParam.addOrFilter(searchFilter,searchFilter2);
 		queryParam.addParam("status", 0);
+		queryParam.addParam("showStatus", 1);
 		queryParam.addOrder(OrderType.DESC, "id");
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		return findPageList(queryParam);

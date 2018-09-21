@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -27,19 +28,21 @@ import common.helper.StringUtil;
 public class ExcelTest {
 
 	public static void main(String[] args) throws Exception {
-		 excel1();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.println(sdf.format(new Date()).substring(11, 16));
 //		putIn();
 	}
 
 	public static void putIn() throws Exception {
-		String filePath = "/Users/jinx/Downloads/NCL TRANSPORTATION_222.xlsx";// 文件路径
-		InputStream in = new FileInputStream(filePath);
-		Workbook work = getWorkbook(in);
-		if (null == work) {
-			throw new Exception("xx");
-		}
-		Sheet sheet = work.getSheetAt(0);
-		System.out.println(sheet.getRow(1).getHeight());
+	
+//		String filePath = "/Users/jinx/Downloads/NCL TRANSPORTATION_222.xlsx";// 文件路径
+//		InputStream in = new FileInputStream(filePath);
+//		Workbook work = getWorkbook(in);
+//		if (null == work) {
+//			throw new Exception("xx");
+//		}
+//		Sheet sheet = work.getSheetAt(0);
+//		System.out.println(sheet.getRow(1).getHeight());
 //		for(int i = 0;i<sheet.getLastRowNum();i++){
 //			
 //		}

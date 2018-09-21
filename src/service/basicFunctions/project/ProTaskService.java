@@ -61,8 +61,8 @@ public class ProTaskService {
 		proTask.setStatus(1);
 		proTask.setDriverName(name);
 		proTask.setDriverMobile(driverMobile);
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-		proTask.setPickedTime(sdf.format(new Date()));
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		proTask.setPickedTime(sdf.format(new Date()).substring(11, 16));
 		proTaskDao.update(proTask);
 	}
 

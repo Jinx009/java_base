@@ -137,7 +137,7 @@ function _update(){
 	var _pickedTime = $('#pickedTime').val();
 	var _pickTime = $('#pickTime').val();
 	var _params = 'name='+_name+'&noId='+_noId+'&dep='+_dep+'&pickedTime='+_pickedTime+'&description='+_description+'&flight='+
-	_flight+'&driverMobile='+_driverMobile+'&driverName='+_driverName+'&maeilTime='+_mailTime+'&pickTime='+_pickTime+'&id='+_editId;
+	_flight+'&driverMobile='+_driverMobile+'&driverName='+_driverName+'&mailTime='+_mailTime+'&pickTime='+_pickTime+'&id='+_editId;
 	if(_name==''){
 		layer.alert('待接人员姓名不能为空！');
 	}else{
