@@ -31,8 +31,10 @@ function login() {
 				url : '/paper/d/homeUser/login',
 				type : 'post',
 				data : params,
+				dataType:'json',
 				success : function(res) {
 					if ('200' == res.code ) {
+						setSessionStorage('_userType',res.data.role);
 						location.href = '/paper/p/paper';
 					} else {
 						$('#errorMsg').html(res.msg)

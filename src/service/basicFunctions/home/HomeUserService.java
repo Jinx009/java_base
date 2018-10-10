@@ -36,6 +36,7 @@ public class HomeUserService {
 		homeUser.setPwd(MD5Util.md5(pwd));
 		homeUser.setRealName(realName);
 		homeUser.setUserName(userName);
+		homeUser.setRole(2);
 		homeUserDao.save(homeUser);
 	}
 

@@ -10,6 +10,14 @@ function closeLoad(index){
 	_i = -1;
     layer.close(index);  
 } 
+$(function(){
+	var _type = getSessionStorage('_userType');
+	if('1'==_type){
+		$('#nav_body').append('<li class="treeview l1 "  ><a href="/paper/p/loginLog"> <i class="fa fa-binoculars"></i>'+
+				'<span>Login Log</span> <span class="pull-right-container"> <i class="fa fa-angle-left "></i>'+
+		'</span></a></li>');
+	}
+})
 /**
  * 获取时间戳
  * @returns
@@ -17,6 +25,28 @@ function closeLoad(index){
 function getTimestamp(){
 	return Date.parse(new Date());
 }  
+
+/**
+ * 操作sessionStorage
+ * @param _key
+ */
+function getSessionStorage(_key){
+	if(window.sessionStorage){     
+		return window.sessionStorage.getItem(_key);
+	}
+}
+function setSessionStorage(_key,_value){
+	if(window.sessionStorage){     
+		var _r = window.sessionStorage.setItem(_key,_value);
+		if(_r!=null&&_r!=''&&_r!=undefined){
+			return _r;
+		}else{
+			return '';
+		}
+	}else{ 
+		return '';
+	}
+}
 
 function getUrlParam(paraName) {
 	var url = document.location.toString();

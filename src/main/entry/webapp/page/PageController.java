@@ -44,6 +44,16 @@ public class PageController extends BaseController{
 		return "/home/paper";
 	}
 	
+	
+	@RequestMapping(value = "/p/loginLog")
+	public String loginLog(HttpServletRequest req){
+		if(getSessionHomeUser(req)==null){
+			return "/home/index";
+		}
+		return "/home/loginLog";
+	}
+	
+	
 	@RequestMapping(value = "/p/result")
 	public String result(HttpServletRequest req){
 		if(getSessionHomeUser(req)==null){

@@ -16,25 +16,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "home_user")
+@Table(name = "home_user_loginlog")
 @Getter
 @Setter
-public class HomeUser implements Serializable{
+public class HomeUserLoginLog implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@Column(name = "id",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(name = "user_name")
 	private String userName;
-	@Column(name = "pwd")
-	private String pwd;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
 	@Column(name = "real_name")
 	private String realName;
-	@Column(name = "role")
-	private Integer role;
 	
 }

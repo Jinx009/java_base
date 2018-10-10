@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import database.models.home.HomeUser;
 import main.entry.webapp.BaseController;
+import service.basicFunctions.home.HomeUserLoginLogService;
 import service.basicFunctions.home.HomeUserService;
 import utils.Resp;
 
@@ -24,6 +25,8 @@ public class HomeUserController extends BaseController {
 
 	@Autowired
 	private HomeUserService homeUserService;
+	@Autowired
+	private HomeUserLoginLogService homeUserLoginLogService;
 
 	/**
 	 * 用户登录
@@ -39,7 +42,8 @@ public class HomeUserController extends BaseController {
 			HomeUser homeUser = homeUserService.login(userName, pwd);
 			if(homeUser!=null){
 				setSessionHomeUser(request, homeUser);
-				return new Resp<>(true);
+				homeUserLoginLogService.save(homeUser.getUserName(), homeUser.getRealName());
+				return new Resp<>(homeUser);
 			}else{
 				resp.setMsg("Your user name or password is not correct ！");
 				return resp;
