@@ -44,24 +44,19 @@
 	              <thead>
 	                <tr>
 	                  <th>编号</th>
-	                  <th>车位号</th>
 	                  <th>车位显示号</th>
 	                  <th>对应Mac</th>
-	                  <th>备注</th>
-	                  <th>当前状态</th>
-	                  <th>车进时间</th>
+	                  <th>经度</th>
+	                  <th>纬度</th>
 	                </tr>
 	                </thead>
 	               <tbody id="place" >
 	               		<tr v-for="place in places" >
 	               			<td v-text="place.id" ></td>
-	               			<td v-text="place.parkPlaceId" ></td>
-	               			<td v-text="place.code" ></td>
-	               			<td v-text="place.magneticStripeId" ></td>
-	               			<td v-text="place.remark" ></td>
-	               			<td v-text="place.status" ></td>
-	               			<td v-if="'FULL'===place.status" v-text="place.curProduct.beginTimeStr" ></td>
-	               			<td v-if="'EMPTY'===place.status"  ></td>
+	               			<td v-text="place.parkNumber" ></td>
+	               			<td v-text="place.mac" ></td>
+	               			<td v-text="place.lat" ></td>
+	               			<td v-text="place.lng" ></td>
 	               		</tr>
 	              </tbody>
 	              </table>
@@ -74,7 +69,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/pro/place.js?version=1.181"></script>
+<script src="/themes/js/home/pro/place.js?version=1.21"></script>
 
 </body>
 </html>

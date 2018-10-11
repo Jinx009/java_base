@@ -15,29 +15,26 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="PARKING_NOTICE")
+@Table(name="parking_pos_device")
 @Setter
 @Getter
-public class ParkingNotice {
+public class ParkingPosDevice {
 
+	
 	@Id
 	@Column(name = "ID",unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "NAME")
-	private String name;
-	@Column(name = "CONTENT")
-	private String content;
-	@Column(name = "CREATE_TIME")
+	@Column(name = "base_organ_name")
+	private String baseOrganName;
+	@Column(name = "identifier")
+	private String identifier;
+	@Column(name = "status")
+	private Integer status;
+	@Column(name = "mac")
+	private String mac;
+	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name = "STATUS")
-	private Integer status;
-	@Column(name = "SHOW_STATUS")
-	private Integer showStatus;
-	@Column(name = "start_time")
-	private String startTime;
-	@Column(name = "end_time")
-	private String endTime;
 	
 }

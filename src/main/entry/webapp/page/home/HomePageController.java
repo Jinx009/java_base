@@ -250,11 +250,12 @@ public class HomePageController extends BaseController{
 	}
 	
 	/**
-	 * 新增推送
+	 * 新增推送诱导牌
 	 * @return
 	 */
 	@RequestMapping(value = "/sendAdd")
-	public String sendAdd(){
+	public String sendAdd(HttpServletRequest req,Integer id){
+		req.setAttribute("id", id);
 		return "/home/pro/sendAdd";
 	}
 	

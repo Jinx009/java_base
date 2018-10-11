@@ -31,34 +31,6 @@
     </section>
     <!-- 主内容 -->
     <section class="content" >
-     <div class="box box-default">
-        <div class="box-header with-border">
-          <h3 class="box-title">筛选条件</h3>
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-          </div>
-        </div>
-        <div class="box-body">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>选择地区</label>
-                <select class="form-control select2 select2-hidden-accessible" id="area" onchange="_getStreet();" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                 	 <option  v-for="item in areas" v-bind:value="item.id" v-text="item.name" ></option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>选择街道</label>
-                <select class="form-control select2 select2-hidden-accessible" id="street" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                 	 <option  v-for="item in streets" v-bind:value="item.id" v-text="item.name" ></option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 	  <div class="row">
 	     <div class="row">
 	        <div class="col-xs-12">
@@ -74,7 +46,7 @@
 	                  <th>组织名称</th>
 	                  <th>识别码</th>
 	                  <th>状态</th>
-	                  <th>MAC</th>
+	                  <th>操作</th>
 	                </tr>
 	                </thead>
 	               <tbody id="device" >
@@ -82,7 +54,10 @@
 	               			<td v-text="device.baseOrganName" ></td>
 	               			<td v-text="device.identifier" ></td>
 	               			<td v-text="device.status" ></td>
-	               			<td v-text="device.mac" ></td>
+	               			<td>
+	               				<a onclick="_update(this,0)" v-bind:id="device.id" class="btn btn-info btn-xs" v-if="1===device.status" >禁用</a>
+	               				<a onclick="_update(this,1)" v-bind:id="device.id"  class="btn btn-success btn-xs" v-if="0===device.status" >启用</a>
+	               			</td>
 	               		</tr>
 	              </tbody>
 	              </table>
@@ -95,7 +70,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/pro/pos.js?version=1.11"></script>
+ <script src="/themes/js/home/pro/pos.js?version=1.11"></script> 
 
 </body>
 </html>

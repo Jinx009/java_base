@@ -34,18 +34,35 @@
     <!-- 主内容 -->
     <section class="content" >
 	     <div class="row">
-	      <div class="col-md-3"></div>
+	      <div class="col-md-3">
+	      	<input type="hidden" id="_id" value="${id}" >
+	      </div>
 	      <div class="col-md-6">
 	      	<div class="box box-primary">
 	            <form role="form">
 	              <div class="box-body">
 	                <div class="form-group">
-	                  <label>推送名称</label>
+	                  <label>街道名称</label>
 		              <input id="name" class="form-control" />
 	                </div>
 	                 <div class="form-group">
+	                   <label>推送类型</label>
+		               <select id="status" class="form-control" >
+		               		<option value="1" >正常推送</option>
+		               		<option value="2" >活动推送</option>
+		               </select>
+	                </div>
+	                 <div class="form-group">
+	                  <label>早高峰时段</label>
+		              <input id="startTime" class="form-control" placeholder="格式:00:00~23:59" />
+	                </div>
+	                 <div class="form-group">
+	                  <label>晚高峰时段</label>
+		              <input id="endTime" class="form-control" placeholder="格式:00:00~23:59" />
+	                </div>
+	                 <div class="form-group">
 	                   <label>推送内容</label>
-		               <textarea rows="" id="content" class="form-control" cols=""></textarea>
+		               <textarea rows="" id="content" value="正常推送" class="form-control" cols=""></textarea>
 	                </div>
 	                <div class="form-group">
 	                  <span class="badge bg-red" id="errorMsg" ></span>
@@ -62,6 +79,6 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/pro/sendAdd.js?version=1.41"></script>
+<script src="/themes/js/home/pro/sendAdd.js?version=1.44"></script>
 </body>
 </html>

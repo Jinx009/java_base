@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 
 import database.models.parking.ParkingNotice;
 import main.entry.webapp.BaseController;
@@ -31,13 +30,16 @@ public class ParkingNotcieDataController extends BaseController{
 	 * @param parkingNotice
 	 * @return
 	 */
-	@RequestMapping(path = "/saveNotice")
+	@RequestMapping(path = "/noticeUpdate")
 	@ResponseBody
-	public Resp<?> save(ParkingNotice parkingNotice){
+	public Resp<?> save(String name,Integer id,String startTime,String endTime,String content,Integer status){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			logger.warn("save data:{}",JSON.toJSONString(parkingNotice));
-			parkingNoticeService.save(parkingNotice);
+			if(0==id){
+				parkingNoticeService.save(name,content,startTime,endTime,status);
+			}else{
+				parkingNoticeService.update(name,content,startTime,endTime,id,status);
+			}
 			resp = new Resp<>("");
 			return resp;
 		} catch (Exception e) {
@@ -58,6 +60,20 @@ public class ParkingNotcieDataController extends BaseController{
 			List<ParkingNotice> list = parkingNoticeService.findAll();
 			logger.warn("list data:{}",list);
 			resp = new Resp<>(list);
+			return resp;
+		} catch (Exception e) {
+			logger.error("list error:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/singleNotice")
+	@ResponseBody
+	public Resp<?> singleNotice(Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			ParkingNotice parkingNotice = parkingNoticeService.findById(id);
+			resp = new Resp<>(parkingNotice);
 			return resp;
 		} catch (Exception e) {
 			logger.error("list error:{}",e);

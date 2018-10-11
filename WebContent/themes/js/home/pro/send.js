@@ -34,19 +34,10 @@ function getData(){
 		}
 	})
 }
-function _change(_id,_status){
-	var _params = 'id='+_id+'&status='+_status;
-	$.ajax({
-		url:'/home/d/updateNotice',
-		data:_params,
-		type:'post',
-		dataType:'json',
-		success:function(res){
-			if('200'==res.code){
-				layer.alert('操作成功!',function(){
-					location.reload();
-				})
-			}
-		}
-	})
+function _goNew(_type,_e){
+	var _id = 0;
+	if(_type==1){
+		_id = $(_e).attr('id');
+	}
+	_open_('7','/home/p/send','/home/p/sendAdd?id='+_id);
 }

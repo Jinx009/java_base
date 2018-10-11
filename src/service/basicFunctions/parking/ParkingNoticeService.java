@@ -15,11 +15,28 @@ public class ParkingNoticeService {
 	@Autowired
 	private ParkingNoticeDao parkingNoticeDao;
 	
-	public ParkingNotice save(ParkingNotice parkingNotice){
+	public void save(String name,String content,String startTime,String endTime,Integer status){
+		ParkingNotice parkingNotice = new ParkingNotice();
+		parkingNotice.setContent(content);
+		parkingNotice.setEndTime(endTime);
+		parkingNotice.setName(name);
+		parkingNotice.setStartTime(startTime);
 		parkingNotice.setCreateTime(new Date());
-		parkingNotice.setStatus(0);
+		parkingNotice.setStatus(status);
 		parkingNotice.setShowStatus(1);
-		return parkingNoticeDao.save(parkingNotice);
+		parkingNoticeDao.save(parkingNotice);
+	}
+	
+	public void update(String name,String content,String startTime,String endTime,Integer id,Integer status){
+		ParkingNotice parkingNotice = parkingNoticeDao.find(id);
+		parkingNotice.setContent(content);
+		parkingNotice.setEndTime(endTime);
+		parkingNotice.setName(name);
+		parkingNotice.setStartTime(startTime);
+		parkingNotice.setCreateTime(new Date());
+		parkingNotice.setStatus(status);
+		parkingNotice.setShowStatus(1);
+		parkingNoticeDao.update(parkingNotice);
 	}
 
 	public List<ParkingNotice> findAll(){
@@ -30,6 +47,10 @@ public class ParkingNoticeService {
 		ParkingNotice parkingNotice = parkingNoticeDao.find(id);
 		parkingNotice.setStatus(status);
 		parkingNoticeDao.update(parkingNotice);
+	}
+
+	public ParkingNotice findById(Integer id) {
+		return parkingNoticeDao.find(id);
 	}
 	
 }

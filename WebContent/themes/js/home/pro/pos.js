@@ -1,6 +1,5 @@
 $(function(){
 	_i = showLoad();
-	_getArea();
 	_getData();
 })
 var _i = -1;
@@ -9,7 +8,7 @@ function _getData(){
 		_i = showLoad();
 	}
 	$.ajax({
-		url:'/home/d/pos',
+		url:'/home/d/posDevice/list',
 		type:'post',
 		dataType:'json',
 		success:function(res){
@@ -18,7 +17,7 @@ function _getData(){
 				if(res.data!=null){
 					new Vue({
 		   				  el: '#device',
-		   				  data:{devices:res.data.resultData.devices}
+		   				  data:{devices:res.data}
 		    		})
 				}else{
 					layer.alert('暂无数据！');
@@ -31,48 +30,19 @@ function _getData(){
 		}
 	})
 }
-function _getArea(){
+function _update(_e,_status){
+	var _id = $(_e).attr('id');
+	var _params = 'id='+_id+'&status='+_status;
 	$.ajax({
-		url:'/home/d/area',
-		type:'get',
+		url:'/home/d/posDevice/updateStatus',
+		type:'post',
+		data:_params,
 		dataType:'json',
 		success:function(res){
 			if('200'==res.code){
-				if(res.data!=null){
-					new Vue({
-		   				  el: '#area',
-		   				  data:{areas:res.data}
-		    		})
-				}else{
-					layer.alert('暂无数据！');
-				}
-			}else if('8001'==res.code){
-				layer.alert('您无权限操作此项！');
-			}else{
-				layer.alert(res.msg);
-			}
-		}
-	})
-}
-function _getStreet(){
-	var _area = $('#area').val();
-	$.ajax({
-		url:'/home/d/streetByAreaId',
-		type:'get',
-		data:'areaId='+_area,
-		dataType:'json',
-		success:function(res){
-			if('200'==res.code){
-				if(res.data!=null){
-					new Vue({
-		   				  el: '#street',
-		   				  data:{streets:res.data}
-		    		})
-				}else{
-					layer.alert('暂无数据！');
-				}
-			}else if('8001'==res.code){
-				layer.alert('您无权限操作此项！');
+				layer.alert('操作成功！',function(){
+					location.reload();
+				})
 			}else{
 				layer.alert(res.msg);
 			}

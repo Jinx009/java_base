@@ -8,7 +8,7 @@ function getData(){
 		_i = showLoad();
 	}
 	$.ajax({
-		url:'/home/d/place',
+		url:'/home/d/sensorInfoList',
 		type:'post',
 		dataType:'json',
 		success:function(res){
@@ -16,7 +16,7 @@ function getData(){
 			if(res.data!=null){
 				new Vue({
 	   				  el: '#place',
-	   				  data:{places:res.data.resultData.parkPlaceList}
+	   				  data:{places:res.data}
 	    		})
 			}else{
 				layer.alert('暂无数据！');
