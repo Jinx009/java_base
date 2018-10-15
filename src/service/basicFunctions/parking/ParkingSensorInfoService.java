@@ -15,7 +15,7 @@ public class ParkingSensorInfoService {
 	private ParkingSensorInfoDao parkingSensorInfoDao;
 	
 	public List<ParkingSensorInfo> list(){
-		return parkingSensorInfoDao.findAll();
+		return parkingSensorInfoDao.findAllSensor();
 	}
 	
 }

@@ -51,6 +51,7 @@ public class ParkingStreetService {
 		parkingStreet.setDesc(desc);
 		parkingStreet.setName(name);
 		parkingStreet.setStatus(1);
+		parkingStreet.setShowStatus(1);
 		
 		parkingStreetDao.save(parkingStreet);
 		

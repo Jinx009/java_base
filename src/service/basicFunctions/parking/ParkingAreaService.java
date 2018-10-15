@@ -45,6 +45,7 @@ public class ParkingAreaService {
 		parkingArea.setCreateTime(new Date());
 		parkingArea.setDesc(desc);
 		parkingArea.setName(name);
+		parkingArea.setShowStatus(1);
 		parkingArea.setStatus(1);
 		
 		parkingAreaDao.save(parkingArea);
