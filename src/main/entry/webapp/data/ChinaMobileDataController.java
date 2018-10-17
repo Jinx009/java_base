@@ -20,7 +20,6 @@ import database.models.vo.ChinaMobilePushDataModel;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.IotCloudDeviceService;
 import service.basicFunctions.IotCloudLogService;
-import utils.Resp;
 
 @Controller
 @RequestMapping(value = "/china_mobile")
