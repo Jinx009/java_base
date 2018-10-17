@@ -27,6 +27,11 @@ public class HomeController {
 		return "/home/unicom_device";
 	}
 	
+	@RequestMapping(path = "/mobile/device")
+	public String mobile_device(HttpServletRequest request){
+		return "/home/mobile_device";
+	}
+	
 	@RequestMapping(path = "/telcom/device")
 	public String telcom_device(HttpServletRequest request){
 		return "/home/telcom_device";
