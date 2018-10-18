@@ -34,3 +34,18 @@ function _getData(){
 		}
 	})
 }
+function _check(_e){
+	var _id = $(_e).attr('id');
+	$.ajax({
+		url:'/paper/d/result/compare?id='+_id,
+		type:'get',
+		dataType:'json',
+		success:function(res){
+			if('200'==res.code){
+				location.reload();
+			}else{
+				layer.alert(res.msg);
+			}
+		}
+	})
+}

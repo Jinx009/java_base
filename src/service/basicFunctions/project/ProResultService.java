@@ -32,5 +32,13 @@ public class ProResultService {
 		proResult.setScore(0.00);
 		proResultDao.save(proResult);
 	}
+
+	public ProResult find(Integer id) {
+		return proResultDao.find(id);
+	}
+
+	public void update(ProResult proResult) {
+		proResultDao.update(proResult);
+	}
 	
 }

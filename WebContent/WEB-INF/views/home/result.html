@@ -63,26 +63,14 @@
 									<tr>
 										<th>La</th>
 										<td><span v-if="1===item.languageType">English</span> <span
-											v-if="2===item.languageType">Chinese</span></td>
-											<th>Score</th>
-										<td v-html="item.score"></td>
+											v-if="2===item.languageType">Chinese</span>
+										</td>
 										<th>A</th>
 										<td v-text="item.remarkA"></td>
-									</tr>
-									<tr>
-										<th>B</th>
-										<td v-text="item.remarkB"></td>
-										<th>State</th>
-										<td><span v-if="1===item.status">Checked</span> <span
-											v-if="0===item.status">Unchecked</span></td>
-											<th>C</th>
-										<td v-text="item.remarkC"></td>
-									</tr>
-									<tr>
 										<th>Op</th>
-										<td colspan="5">
+										<td>
 											<button v-if="0===item.status" class='btn btn-info btn-xs'
-												onclick="_check(this)" v-bind:_id="item.id">Check</button>
+												onclick="_check(this)" v-bind:id="item.id">Check</button>
 										</td>
 									</tr>
 								</tbody>
