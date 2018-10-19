@@ -48,7 +48,7 @@ public class CheckUtils {
 				return "fail";
 			}
 			ProcessOptions scanOptions = new ProcessOptions();
-			scanOptions.setSandboxMode(true);
+//			scanOptions.setSandboxMode(true);
 			ResultRecord[] results;
 			CopyleaksProcess createdProcess;
 			if (!"".equals(urlPath)) {
@@ -70,8 +70,19 @@ public class CheckUtils {
 				return "fail1";
 			} else {
 				String res = "";
-				for (int i = 0; i < results.length; ++i) {
-					res+= "similar words:"+results[i].getNumberOfCopiedWords()+";identical:" + results[i].getPercents()+"%;detail: "+results[i].getEmbededComparison()+"\n\r";
+				int k = 3;
+				if(results.length<3){
+					k = results.length;
+				}
+				for (int i = 0; i < k; ++i){
+					res += "{\n<br>";
+					res += "	numberOfCopiedWords:"+results[i].getNumberOfCopiedWords()+",\n<br>";
+					res += "	percents:"+results[i].getPercents()+",\n<br>";
+					res += "	title:"+results[i].getTitle()+",\n<br>";
+					res += "	report:<a target=\"_blank\" href=\""+results[i].getEmbededComparison()+"\">"+results[i].getEmbededComparison()+",</a>\n<br>";
+					res += "	Url:"+results[i].getURL()+",\n<br>";
+					res += "	introduction:"+results[i].getIntroduction()+",<br>\n}\n<br>";
+					
 				}
 				return res;
 			}

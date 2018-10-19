@@ -58,15 +58,14 @@
 									<tr style="border-top: 2px solid red ;">
 										<th>Content</th>
 										<td v-html="item.content" colspan="5"></td>
-
 									</tr>
 									<tr>
 										<th>La</th>
 										<td><span v-if="1===item.languageType">English</span> <span
 											v-if="2===item.languageType">Chinese</span>
 										</td>
-										<th>A</th>
-										<td v-text="item.remarkA"></td>
+										<th>Result</th>
+										<td v-html="item.remarkA"></td>
 										<th>Op</th>
 										<td>
 											<button v-if="0===item.status" class='btn btn-info btn-xs'
