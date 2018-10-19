@@ -19,7 +19,7 @@ public class CheckUtils {
 	private static final Logger log = LoggerFactory.getLogger(CheckUtils.class);
 	
 	private final static String ARG_EMAIL_VALUE = "albert_1111@126.com";
-	private final static String ARG_APIKEY_VALUE = "CAE70852-576E-4015-855D-519394CF2D19";
+	private final static String ARG_APIKEY_VALUE = "582A7CAA-1E2E-4FAE-BA20-9ED0D2CC1626";
 
 
 	static String DisplayBar(int i) {
@@ -36,7 +36,7 @@ public class CheckUtils {
 	public static String compare(String urlPath,String filePath) {
 
 		try {
-			CopyleaksCloud copyleaks = new CopyleaksCloud(eProduct.Businesses);
+			CopyleaksCloud copyleaks = new CopyleaksCloud(eProduct.Academic);
 			log.warn("Login to Copyleaks cloud...");
 			copyleaks.Login(ARG_EMAIL_VALUE,ARG_APIKEY_VALUE);
 			log.warn("Login Done...{}");
@@ -86,7 +86,7 @@ public class CheckUtils {
 	}
 	
 	public static void main(String[] args) throws IOException, CommandFailedException {
-//		compare("", "/Users/jinx/Downloads/q.txt");
+		compare("", "/Users/jinx/Downloads/q.txt");
 		System.out.println();
 	}
 }
