@@ -70,20 +70,14 @@ public class CheckUtils {
 				return "fail1";
 			} else {
 				String res = "";
-				int k = 3;
-				if(results.length<3){
-					k = results.length;
-				}
-				for (int i = 0; i < k; ++i){
-					res += "{\n<br>";
-					res += "	numberOfCopiedWords:"+results[i].getNumberOfCopiedWords()+",\n<br>";
-					res += "	percents:"+results[i].getPercents()+",\n<br>";
-					res += "	title:"+results[i].getTitle()+",\n<br>";
-					res += "	report:<a target=\"_blank\" href=\""+results[i].getEmbededComparison()+"\">"+results[i].getEmbededComparison()+",</a>\n<br>";
-					res += "	Url:"+results[i].getURL()+",\n<br>";
-					res += "	introduction:"+results[i].getIntroduction()+",<br>\n}\n<br>";
+				res += "<br>";
+				res += "&nbsp;&nbsp;	numberOfCopiedWords:"+results[0].getNumberOfCopiedWords()+",\n<br>";
+				res += "&nbsp;&nbsp;	percents:"+results[0].getPercents()+",\n<br>";
+				res += "&nbsp;&nbsp;	title:"+results[0].getTitle()+",\n<br>";
+				res += "&nbsp;&nbsp;	report:<a target=\"_blank\" href=\""+results[0].getEmbededComparison()+"\">"+results[0].getEmbededComparison()+",</a>\n<br>";
+				res += "&nbsp;&nbsp;	Url:"+results[0].getURL()+",\n<br>";
+				res += "&nbsp;&nbsp;	introduction:"+results[0].getIntroduction()+",<br><br>";
 					
-				}
 				return res;
 			}
 		} catch (CommandFailedException copyleaksException) {
