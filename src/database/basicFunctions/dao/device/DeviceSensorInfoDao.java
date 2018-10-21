@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
+import database.common.OrderFilter.OrderType;
+import database.common.QueryParam;
 import database.models.device.DeviceSensorInfo;
 import utils.StringUtil;
 
@@ -15,11 +17,17 @@ public class DeviceSensorInfoDao extends BaseDao<DeviceSensorInfo>{
 	public List<DeviceSensorInfo> findByMacAndAddress(String mac, String address) {
 		String hql = "  from DeviceSensorInfo where address = '"+address+"'  ";
 		if(StringUtil.isNotBlank(mac)) {
-			hql+= " and mac like '%"+mac+"%' ";
+			hql = "  from DeviceSensorInfo where mac like '%"+mac+"%'  ";;
 		}
 		hql += " order by parkNumber";
 		List<DeviceSensorInfo> list = em.createQuery(hql).getResultList();
 		return list;
+	}
+
+	public List<DeviceSensorInfo> findAllDevice() {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addOrder(OrderType.ASC, "parkNumber");
+		return findByCriteria(queryParam);
 	}
 
 	

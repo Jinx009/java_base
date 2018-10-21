@@ -1,3 +1,4 @@
+
 $(function(){
 	_getData();
 })
@@ -46,11 +47,8 @@ Date.prototype.Format = function (fmt) { //author: meizz
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 };
-/**
- * 时间戳转换标准时间
- * @param unixtime
- * @returns
- */
+
+
 function toDateTime(unixtime)  {  
 	 var date = new Date(unixtime);
 	 return  date.Format("yyyy-MM-dd hh:mm:ss"); 

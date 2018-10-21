@@ -18,7 +18,7 @@ public class DeviceSensorInfoService {
 	
 	public List<DeviceSensorInfo> find(){
 		List<DeviceSensorInfo> list = new ArrayList<DeviceSensorInfo>();
-		List<DeviceSensorInfo> list2 = deviceSensorInfoDao.findAll();
+		List<DeviceSensorInfo> list2 = deviceSensorInfoDao.findAllDevice();
 		for(DeviceSensorInfo sesnorInfo:list2) {
 			if(StringUtil.isNotBlank(sesnorInfo.getMac())) {
 				list.add(sesnorInfo);
