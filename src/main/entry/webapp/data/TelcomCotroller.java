@@ -193,6 +193,7 @@ public class TelcomCotroller extends BaseController{
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/push?data="+tModel.getData());
 					}else if(ioTCloudDevice.getLocalIp()!=null&&ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")){
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data="+tModel.getData());
+						sendWuhanQj(ioTCloudDevice, iotCloudLog);
 					}else{
 						send(tModel.getData(),ioTCloudDevice.getUdpIp(),ioTCloudDevice.getUdpPort());
 					}
@@ -298,11 +299,12 @@ public class TelcomCotroller extends BaseController{
 			map.put("JCDB19A070", Integer.valueOf(data.substring(34, 36)));
 			map.put("JCDB19A090", Double.valueOf(getData(data.substring(36, 37), data.substring(36, 40))));
 			map.put("JCDB19A100", Double.valueOf(getData(data.substring(42,43), data.substring(42, 46))));
-			map.put("JCDB19A110 ",Integer.valueOf(data.substring(40, 42)));
+			map.put("JCDB19A110",Integer.valueOf(data.substring(40, 42)));
 			map.put("JCDB19A120", Integer.valueOf(data.substring(46, 48)));
 			String json = JSONObject.toJSONString(map);
-			String url = "http://"+device.getUdpIp()+":"+device.getUdpPort()+"/DzhZXJC/Sjcj/AddJCDB19A?json="+json+"&appID=DZH_ZXJC_SJCJ";
-			HttpUtils.postParams(url);
+			String url = "http://"+device.getUdpIp()+":"+device.getUdpPort()+"/DzhZXJC/Sjcj/AddJCDB19A";
+			String res = HttpUtils.sendPost(url,"json="+json+"&appID=DZH_ZXJC_SJCJ");
+			log.warn("res:{}",res);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
