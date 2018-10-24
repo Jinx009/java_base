@@ -137,7 +137,6 @@ public class QingjiaoDataController extends BaseController {
 				qjDevice.setBaseX(getData(data.substring(36, 37), data.substring(36, 40)));
 				qjDevice.setYValue(String.valueOf(Double.valueOf(getData(data.substring(42,43), data.substring(42, 46)))-Double.valueOf(qjDevice.getBaseY())));
 				qjDevice.setBaseY(getData(data.substring(42, 43), data.substring(42, 46)));
-				qjDevice.setYValue(getData(data.substring(42, 43), data.substring(42, 46)));
 				qjDevice.setXType(Integer.valueOf(data.substring(40, 42)));
 				qjDevice.setYType(Integer.valueOf(data.substring(46, 48)));
 				qjDevice.setVoltage(getData(data.substring(48, 49), data.substring(48, 52)));
