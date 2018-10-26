@@ -302,9 +302,11 @@ public class TelcomCotroller extends BaseController{
 			map.put("JCDB19A110",Integer.valueOf(data.substring(40, 42)));
 			map.put("JCDB19A120", Integer.valueOf(data.substring(46, 48)));
 			String json = JSONObject.toJSONString(map);
+			log.warn("send qj-----------------------\n:{}\n---------------------------------",json);
 			String url = "http://"+device.getUdpIp()+":"+device.getUdpPort()+"/DzhZXJC/Sjcj/AddJCDB19A";
+			log.warn("send url-----------------------\n:{}\n---------------------------------",url);
 			String res = HttpUtils.sendPost(url,"json="+json+"&appID=DZH_ZXJC_SJCJ");
-			log.warn("res:{}",res);
+			log.warn("send res-----------------------\n:{}\n---------------------------------",res);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
