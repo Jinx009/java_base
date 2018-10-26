@@ -15,11 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import database.models.project.ProGatewaySmokeDevice;
 import lombok.Getter;
 import lombok.Setter;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.project.ProGatewaySmokeDataService;
+import service.basicFunctions.project.ProGatewaySmokeDeviceService;
 import utils.HttpUtils;
 import utils.Resp;
 
@@ -31,6 +32,8 @@ public class GatewayDeviceDataController extends BaseController{
 	
 	@Autowired
 	private ProGatewaySmokeDataService proGatewaySmokeDataService;
+	@Autowired
+	private ProGatewaySmokeDeviceService proGatewaySmokeDeviceService;
 	
 
 	
@@ -44,10 +47,17 @@ public class GatewayDeviceDataController extends BaseController{
 			String data =br.readLine();
 			log.warn("data:{}",data);
 			proGatewaySmokeDataService.save(data);
-			ExecutorService executorService = Executors.newCachedThreadPool();
-			executorService.execute(new SendThread(data));
-			executorService.shutdown();
-			return new Resp<>(true);
+			ProGatewaySmokeDevice proGatewaySmokeDevice = proGatewaySmokeDeviceService.findByMac(data.substring(10,25));
+			if(proGatewaySmokeDevice!=null){
+				if(proGatewaySmokeDevice.getSendUrl()!=null&&!"".equals(proGatewaySmokeDevice.getSendUrl())){
+					ExecutorService executorService = Executors.newCachedThreadPool();
+					executorService.execute(new SendThread(data,proGatewaySmokeDevice.getSendUrl()));
+					executorService.shutdown();
+					return new Resp<>(true);
+				}
+			}else{
+				proGatewaySmokeDeviceService.save(data.substring(10,25));
+			}
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
@@ -61,15 +71,20 @@ public class GatewayDeviceDataController extends BaseController{
 @Setter
 class SendThread implements Runnable{
 	
-	private String data;
+	private static final Logger log = LoggerFactory.getLogger(SendThread.class);
 	
-	public SendThread(String data){
+	private String data;
+	private String url;
+	
+	public SendThread(String data,String url){
 		this.data = data;
+		this.url = url;
 	}
 
 	public void run() {
 		try {
-			HttpUtils.postText("http://58.247.128.138:8800/api/smoke/add",data);
+			log.warn("smoke data:{}",data);
+			HttpUtils.postText(url,data);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
