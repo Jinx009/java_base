@@ -19,6 +19,10 @@ public class HttpData {
 	public static final String GET_LOCATION_URL = "/rest/locations";
 	public static final String GET_AREA_URL = "/rest/areas";
 	
+	public static final String MOFANG_AK = "430834bc0f044a69b3f5127c577035ea";
+	public static final String MOFANG_SK = "6GlpuxgsVbMabMTX";
+	public static final String MOFANG_URL = "http://api.pos.bizcube.com.cn";
+	
 	private static final String LOCATION_STATUS_URL = "/rest/parking/locationStatus";
 	private static final String LOCATION_RUSH_URL = "/rest/parking/locationRush";
 	private static final String DEVICE_URL = "/rest/parking/device";

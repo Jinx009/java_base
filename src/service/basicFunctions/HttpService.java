@@ -1,6 +1,7 @@
 package service.basicFunctions;
 
 
+
 import org.springframework.stereotype.Service;
 
 import utils.HttpUtils;
@@ -32,6 +33,6 @@ public class HttpService {
 	public String postMofangJson(String sessionId,String url,String jsonStr){
 		return HttpUtils.postMofangJson(sessionId,url, jsonStr);
 	}
-	
+
 	
 }

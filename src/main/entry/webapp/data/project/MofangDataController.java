@@ -1,5 +1,7 @@
 package main.entry.webapp.data.project;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +21,10 @@ import main.entry.webapp.BaseController;
 import service.basicFunctions.HttpService;
 import utils.BaseConstant;
 import utils.HttpData;
+import utils.HttpUtils;
+import utils.MofangSignUtils;
 import utils.Resp;
+import utils.UUIDUtils;
 
 @RequestMapping(value = "/home/d")
 @Controller
@@ -41,18 +46,85 @@ public class MofangDataController extends BaseController{
 	 */
 	@RequestMapping(path = "/mofang/organ")
 	@ResponseBody
-	public Resp<?> getOrgan(String status,String type,String companyOrganId,String name){
+	public Resp<?> getOrgan(){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			if(StringUtil.isBlank(companyOrganId)){
-				companyOrganId = BaseConstant.BASE_COMPANY_ID;
-			}
-			return new Resp<>(JSON.parseObject(httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_organ(status,type,companyOrganId,name))));
+			Map<String, String> map = new HashMap<String,String>();
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			map.put("path", "/core/organ");
+			map.put("X-POS-REQUEST-ID",uuid);
+			map.put("X-POS-REQUEST-TIME", sdf.format(date));
+			map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+			map.put("X-POS-REQUEST-SIGN", sign);
+			return new Resp<>(JSON.parseObject(HttpUtils.getMofangV2("/core/organ",map)));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
 		return resp;
 	}
+	
+	
+	/**
+	 * 获取POS设备列表
+	 * @param companyId
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(path = "/mofang/pos")
+	@ResponseBody
+	public Resp<?> pos(String companyId){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			Map<String, String> map = new HashMap<String,String>();
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			map.put("path", "/core/device");
+			map.put("X-POS-REQUEST-ID",uuid);
+			map.put("X-POS-REQUEST-TIME", sdf.format(date));
+			map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			map.put("companyOrganId","10001");
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+			map.put("X-POS-REQUEST-SIGN", sign);
+			return new Resp<>(JSON.parseObject(HttpUtils.getMofangV2("/core/device?companyOrganId=10001",map)));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	
+	/**
+	 * POS机操作员列表
+	 * @param companyOrganId
+	 * @return
+	 */
+	@RequestMapping(path = "/mofang/user")
+	@ResponseBody
+	public Resp<?> getUser(String companyOrganId){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			Map<String, String> map = new HashMap<String,String>();
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			map.put("path", "/core/user");
+			map.put("X-POS-REQUEST-ID",uuid);
+			map.put("X-POS-REQUEST-TIME", sdf.format(date));
+			map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			map.put("companyOrganId","10001");
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+			map.put("X-POS-REQUEST-SIGN", sign);
+			return new Resp<>(JSON.parseObject(HttpUtils.getMofangV2("/core/user?companyOrganId=10001",map)));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	
 	/**
 	 * 更新POS机操作员
@@ -72,36 +144,36 @@ public class MofangDataController extends BaseController{
 	public Resp<?> updateUser(String storeOrganId,String mobile,String sex,String email,String status,String userId,String name,String birthday,String password){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			if(StringUtil.isBlank(storeOrganId)){
-				storeOrganId = BaseConstant.BASE_STORE_ID;
+			Map<String, String> data = new HashMap<String,String>();
+			data.put("storeOrganId", BaseConstant.STORE_ID);
+			if(StringUtil.isNotBlank(password)){
+				data.put("password",password);
 			}
-			return new Resp<>(HttpData.mofang_update_user(getMofangSessionId(),name,storeOrganId,password,mobile,birthday,sex,email,userId,status));
+			data.put("name",name);
+			data.put("mobile", mobile);
+			data.put("birthday", birthday);
+			data.put("sex", sex);
+			data.put("email", email);
+			data.put("status", status);
+			data.put("userId", userId);
+			String jsonStr = JSONObject.toJSONString(data);
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			data.put("path", "/core/user/update");
+			data.put("X-POS-REQUEST-ID",uuid);
+			data.put("X-POS-REQUEST-TIME", sdf.format(date));
+			data.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(data));
+			data.put("X-POS-REQUEST-SIGN", sign);
+			return new Resp<>(JSON.parseObject(HttpUtils.postJsonMofangV2("/core/user/update",data,jsonStr)));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
 		return resp;
 	}
 	
-	/**
-	 * POS机操作员列表
-	 * @param companyOrganId
-	 * @return
-	 */
-	@RequestMapping(path = "/mofang/user")
-	@ResponseBody
-	public Resp<?> getUser(String companyOrganId){
-		Resp<?> resp = new Resp<>(false);
-		try {
-			if(StringUtil.isBlank(companyOrganId)){
-				companyOrganId = BaseConstant.BASE_COMPANY_ID;
-			}
-			return new Resp<>(JSON.parseObject(httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_user(companyOrganId))));
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return resp;
-	}
-	
+
 	/**
 	 * 增加POS机操作员
 	 * @param name
@@ -118,10 +190,26 @@ public class MofangDataController extends BaseController{
 	public Resp<?> addUser(String name,String storeOrganId,String password,String mobilePhone,String birthday,String sex,String email){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			if(StringUtil.isBlank(storeOrganId)){
-				storeOrganId = BaseConstant.BASE_STORE_ID;
-			}
-			return new Resp<>(HttpData.mofang_add_user(getMofangSessionId(), name, storeOrganId, password, mobilePhone, birthday,sex,email));
+			Map<String, String> data = new HashMap<String,String>();
+			data.put("storeOrganId", BaseConstant.STORE_ID);
+			data.put("companyOrganId",BaseConstant.BASE_COMPANY_ID);
+			data.put("password",password);
+			data.put("name",name);
+			data.put("mobile", mobilePhone);
+			data.put("birthday", birthday);
+			data.put("sex", sex);
+			data.put("email", email);
+			String jsonStr = JSONObject.toJSONString(data);
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			data.put("path", "/core/user");
+			data.put("X-POS-REQUEST-ID",uuid);
+			data.put("X-POS-REQUEST-TIME", sdf.format(date));
+			data.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(data));
+			data.put("X-POS-REQUEST-SIGN", sign);
+			return new Resp<>(JSON.parseObject(HttpUtils.postJsonMofangV2("/core/user",data,jsonStr)));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
@@ -276,26 +364,7 @@ public class MofangDataController extends BaseController{
 	}
 	
 	
-	/**
-	 * 获取POS设备列表
-	 * @param companyId
-	 * @param page
-	 * @return
-	 */
-	@RequestMapping(path = "/mofang/pos")
-	@ResponseBody
-	public Resp<?> pos(String companyId){
-		Resp<?> resp = new Resp<>(false);
-		try {
-			if(StringUtil.isBlank(companyId)){
-				companyId = BaseConstant.BASE_COMPANY_ID;
-			}
-			return new Resp<>(HttpData.mofang_get_device(getMofangSessionId(), companyId));
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return resp;
-	}
+
 	
 	/**
 	 * 订单分析接口
