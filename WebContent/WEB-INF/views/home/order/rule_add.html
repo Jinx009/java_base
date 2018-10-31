@@ -76,6 +76,45 @@
 											</td>
 										</tr>
 										<tr>
+											<th>收费类型</th>
+											<td>
+												<select class="form-control" >
+													<option value="IMMEDIATELY" >一口价(唯一)</option>
+													<option value="ACCUMULATIVE" >累加</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<th>计费开始时间秒数</th>
+											<td>
+												<input id="beginTime" type="text" class="form-control" placeholder="一天内的起⽌止秒数 00:00:00 为0 type= ACCUMULATIVE时有效" >
+											</td>
+										</tr>
+										<tr>
+											<th>不完整周期金额</th>
+											<td>
+												<input id="endTime" type="text" class="form-control" placeholder="一天内的起止秒数 00:00:00 为0 type= ACCUMULATIVE时有效" >
+											</td>
+										</tr>
+										<tr>
+											<th>不计费时</th>
+											<td>
+												<input id="freeMoneyAmountPeriod" type="text" class="form-control" placeholder="不不计费时间 " >
+											</td>
+										</tr>
+										<tr>
+											<th>最⾼高计费时⻓长</th>
+											<td>
+												<input id="maxAmountOfMoney" type="text" class="form-control" placeholder="最⾼高计费时⻓长 " >
+											</td>
+										</tr>
+										<tr>
+											<th>最高收费金额</th>
+											<td>
+												<input id="chargingRuleGroup" type="text" class="form-control" placeholder="”DAY”金额，相同组使⽤用同⼀一个最大金额 " >
+											</td>
+										</tr>
+										<tr>
 											<th >
 												<button class="btn btn-danger btn-xs" style="width: 40%;margin-left:2%;"  onclick="_save();"  >确定新增</button>
 											</th>

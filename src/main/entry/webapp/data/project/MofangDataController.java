@@ -380,6 +380,39 @@ public class MofangDataController extends BaseController{
 	
 	
 	/**
+	 * 获取收费规则列表
+	 * @param companyId
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(path = "/mofang/rule")
+	@ResponseBody
+	public Resp<?> ruleList(String companyId){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			Map<String, String> map = new HashMap<String,String>();
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			String url = "/park/charging_rule?companyOrganId="+BaseConstant.BASE_COMPANY_ID+"&storeOrganId="+BaseConstant.STORE_ID;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			map.put("storeOrganId",BaseConstant.STORE_ID);
+			map.put("companyOrganId",BaseConstant.BASE_COMPANY_ID);
+			map.put("path", "/park/charging_rule");
+			map.put("X-POS-REQUEST-ID",uuid);
+			map.put("X-POS-REQUEST-TIME", sdf.format(date));
+			map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+			map.put("X-POS-REQUEST-SIGN", sign);
+			return new Resp<>(JSON.parseObject(HttpUtils.getMofangV2(url,map)));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	
+	
+	/**
 	 * 增加收费规则
 	 * @param period
 	 * @param amountOfMoney
@@ -390,16 +423,42 @@ public class MofangDataController extends BaseController{
 	 */
 	@RequestMapping(path = "/mofang/add_rule")
 	@ResponseBody
-	public Resp<?> addRole(String period,String amountOfMoney,String amountOfMoneyForNotEnough,String storeOrganId,String companyOrganId){
+	public Resp<?> addRole(String period,String amountOfMoneyForNotEnough,String beginTime,String endTime,String freeMoneyAmountPeriod,
+			String chargingRuleGroup,String maxAmountOfMoney,String amountOfMoney,String type){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			if(StringUtil.isBlank(storeOrganId)){
-				storeOrganId = BaseConstant.BASE_STORE_ID;
-			}
-			if(StringUtil.isBlank(companyOrganId)){
-				companyOrganId = BaseConstant.BASE_COMPANY_ID;
-			}
-			return new Resp<>(HttpData.mofang_add_rule(getMofangSessionId(), companyOrganId, storeOrganId, period, amountOfMoney, amountOfMoneyForNotEnough));
+//			"period":900, // 计费周期 
+//			"amountOfMoney":"0.02", // 每个周期金额
+//			"amountOfMoneyForNotEnough":"0.01", // 不满足整个周期金额 
+//			“type":"IMMEDIATELY", //IMMEDIATELY ⼀一⼝口价只能存在⼀一个 ACCUMULATIVE 累计
+//			"beginTime":0, // ⼀一天内的起⽌止秒数 00:00:00 为0 0 <= beginTime < endTime <= 86400 type= ACCUMULATIVE时有效
+//			"endTime":0 // 一天内的起止秒数 00:00:00 为0 0 <= beginTime < endTime <= 86400 type= ACCUMULATIVE时有效，
+//			“freeMoneyAmountPeriod":0,//不不计费时间 
+//			“maxAmountOfMoney”:0, //最⾼高计费时⻓长
+//			“chargingRuleGroup”:”DAY”⾦金金额，相同组使⽤用同⼀一个最⼤大⾦金金额
+			Map<String, String> data = new HashMap<String,String>();
+			data.put("storeOrganId", BaseConstant.STORE_ID);
+			data.put("companyOrganId",BaseConstant.BASE_COMPANY_ID);
+			data.put("period",period);
+			data.put("type",type);
+			data.put("amountOfMoney",amountOfMoney);
+			data.put("amountOfMoneyForNotEnough",amountOfMoneyForNotEnough);
+			data.put("beginTime", beginTime);
+			data.put("endTime", endTime);
+			data.put("freeMoneyAmountPeriod",freeMoneyAmountPeriod);
+			data.put("maxAmountOfMoney", maxAmountOfMoney);
+			data.put("chargingRuleGroup", chargingRuleGroup);
+			String jsonStr = JSONObject.toJSONString(data);
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			data.put("path", "/park/charging_rule");
+			data.put("X-POS-REQUEST-ID",uuid);
+			data.put("X-POS-REQUEST-TIME", sdf.format(date));
+			data.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(data));
+			data.put("X-POS-REQUEST-SIGN", sign);
+			return new Resp<>(JSON.parseObject(HttpUtils.postJsonMofangV2("/park/charging_rule",data,jsonStr)));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
@@ -418,10 +477,34 @@ public class MofangDataController extends BaseController{
 	 */
 	@RequestMapping(path = "/mofang/update_rule")
 	@ResponseBody
-	public Resp<?> updateRole(String period,String amountOfMoney,String amountOfMoneyForNotEnough,String ruleId){
+	public Resp<?> updateRole(String period,String amountOfMoneyForNotEnough,String beginTime,String endTime,String freeMoneyAmountPeriod,
+			String chargingRuleGroup,String maxAmountOfMoney,String amountOfMoney,String ruleId,String type){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(HttpData.mofang_update_rule(getMofangSessionId(),period, amountOfMoney, amountOfMoneyForNotEnough,ruleId));
+			Map<String, String> data = new HashMap<String,String>();
+			data.put("storeOrganId", BaseConstant.STORE_ID);
+			data.put("companyOrganId",BaseConstant.BASE_COMPANY_ID);
+			data.put("ruleId",ruleId);
+			data.put("period",period);
+			data.put("type",type);
+			data.put("amountOfMoney",amountOfMoney);
+			data.put("amountOfMoneyForNotEnough",amountOfMoneyForNotEnough);
+			data.put("beginTime", beginTime);
+			data.put("endTime", endTime);
+			data.put("maxAmountOfMoney", maxAmountOfMoney);
+			data.put("freeMoneyAmountPeriod",freeMoneyAmountPeriod);
+			data.put("chargingRuleGroup", chargingRuleGroup);
+			String jsonStr = JSONObject.toJSONString(data);
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			data.put("path", "/park/charging_rule/update");
+			data.put("X-POS-REQUEST-ID",uuid);
+			data.put("X-POS-REQUEST-TIME", sdf.format(date));
+			data.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(data));
+			data.put("X-POS-REQUEST-SIGN", sign);
+			return new Resp<>(JSON.parseObject(HttpUtils.postJsonMofangV2("/park/charging_rule/update",data,jsonStr)));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
@@ -465,24 +548,7 @@ public class MofangDataController extends BaseController{
 	}
 	
 
-	/**
-	 * 获取收费规则列表
-	 * @param companyId
-	 * @param page
-	 * @return
-	 */
-	@RequestMapping(path = "/mofang/rule")
-	@ResponseBody
-	public Resp<?> ruleList(String companyId){
-		Resp<?> resp = new Resp<>(false);
-		try {
-			return new Resp<>(HttpData.mofang_get_rule(getMofangSessionId(), BaseConstant.BASE_COMPANY_ID));
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return resp;
-	}
-	
+
 	
 
 	
