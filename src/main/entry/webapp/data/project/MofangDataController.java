@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +17,6 @@ import com.alibaba.fastjson.JSONObject;
 import common.helper.StringUtil;
 import database.models.project.model.ProOrderStatisticsModel;
 import main.entry.webapp.BaseController;
-import service.basicFunctions.HttpService;
 import utils.BaseConstant;
 import utils.HttpData;
 import utils.HttpUtils;
@@ -32,8 +30,6 @@ public class MofangDataController extends BaseController{
 	
 	private static final Logger log = LoggerFactory.getLogger(MofangDataController.class);
 	
-	@Autowired
-	private HttpService httpService;
 	
 	
 	/**
@@ -229,18 +225,159 @@ public class MofangDataController extends BaseController{
 	public Resp<?> signLog(String userId,String companyOrganId,String storeOrganId,Integer page){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			if(StringUtil.isBlank(storeOrganId)){
-				storeOrganId = BaseConstant.BASE_STORE_ID;
+			Map<String, String> map = new HashMap<String,String>();
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			String url = "/core/operation_log?pageSize=25&pageNum="+page+"&storeOrganId="+BaseConstant.STORE_ID+"&companyOrganId="+BaseConstant.BASE_COMPANY_ID;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			if(StringUtil.isBlank(userId)){
+				map.put("userId",userId);
+				url+= "&userId="+userId;
 			}
-			if(StringUtil.isBlank(companyOrganId)){
-				companyOrganId = BaseConstant.BASE_COMPANY_ID;
-			}
-			return new Resp<>(HttpData.mofang_get_sign(getMofangSessionId(), companyOrganId, storeOrganId, userId,page));
+			map.put("pageNum",String.valueOf(page));
+			map.put("pageSize","25");
+			map.put("storeOrganId", BaseConstant.STORE_ID);
+			map.put("companyOrganId",BaseConstant.BASE_COMPANY_ID);
+			map.put("path", "/core/operation_log");
+			map.put("X-POS-REQUEST-ID",uuid);
+			map.put("X-POS-REQUEST-TIME", sdf.format(date));
+			map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+			map.put("X-POS-REQUEST-SIGN", sign);
+			return new Resp<>(JSON.parseObject(HttpUtils.getMofangV2(url,map)));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
 		return resp;
 	}
+	
+	
+	/**
+	 * 订单分析接口
+	 * @param beginTime
+	 * @param endTime
+	 * @param storeOrganId
+	 * @return
+	 */
+	@RequestMapping(path = "/mofang/order/statistics")
+	@ResponseBody
+	public Resp<?> orderStatistics(String beginTime,String endTime,String storeOrganId){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			Map<String, String> map = new HashMap<String,String>();
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			String url = "/park/product/statistics?beginTime="+beginTime+"&storeOrganId="+BaseConstant.STORE_ID+"&endTime="+endTime+"&status=UNPAY";
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			map.put("storeOrganId", BaseConstant.STORE_ID);
+			map.put("beginTime", beginTime);
+			map.put("endTime", endTime);
+			map.put("status", "UNPAY");
+			map.put("path", "/park/product/statistics");
+			map.put("X-POS-REQUEST-ID",uuid);
+			map.put("X-POS-REQUEST-TIME", sdf.format(date));
+			map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+			map.put("X-POS-REQUEST-SIGN", sign);
+			JSONObject unpayJson =  JSONObject.parseObject(HttpUtils.getMofangV2(url, map));
+			ProOrderStatisticsModel unpay = unpayJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
+			map = new HashMap<String,String>();
+			uuid = UUIDUtils.random();
+			date = new Date();
+			url = "/park/product/statistics?beginTime="+beginTime+"&storeOrganId="+BaseConstant.STORE_ID+"&endTime="+endTime+"&status=PAYED";
+			map.put("storeOrganId", BaseConstant.STORE_ID);
+			map.put("beginTime", beginTime);
+			map.put("endTime", endTime);
+			map.put("status", "PAYED");
+			map.put("path", "/park/product/statistics");
+			map.put("X-POS-REQUEST-ID",uuid);
+			map.put("X-POS-REQUEST-TIME", sdf.format(date));
+			map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+			map.put("X-POS-REQUEST-SIGN", sign);
+			JSONObject payedJson =  JSONObject.parseObject(HttpUtils.getMofangV2(url, map));
+			ProOrderStatisticsModel payed = payedJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
+			map = new HashMap<String,String>();
+			uuid = UUIDUtils.random();
+			date = new Date();
+			url = "/park/product/statistics?beginTime="+beginTime+"&storeOrganId="+BaseConstant.STORE_ID+"&endTime="+endTime+"&status=NOT_PAY";
+			map.put("storeOrganId", BaseConstant.STORE_ID);
+			map.put("beginTime", beginTime);
+			map.put("endTime", endTime);
+			map.put("status", "NOT_PAY");
+			map.put("path", "/park/product/statistics");
+			map.put("X-POS-REQUEST-ID",uuid);
+			map.put("X-POS-REQUEST-TIME", sdf.format(date));
+			map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+			map.put("X-POS-REQUEST-SIGN", sign);
+			JSONObject notPayJson =  JSONObject.parseObject(HttpUtils.getMofangV2(url, map));
+			ProOrderStatisticsModel notPay = notPayJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
+			map = new HashMap<String,String>();
+			uuid = UUIDUtils.random();
+			date = new Date();
+			url = "/park/product/statistics?beginTime="+beginTime+"&storeOrganId="+BaseConstant.STORE_ID+"&endTime="+endTime+"&status=IN_PARK";
+			map.put("storeOrganId", BaseConstant.STORE_ID);
+			map.put("beginTime", beginTime);
+			map.put("endTime", endTime);
+			map.put("status", "IN_PARK");
+			map.put("path", "/park/product/statistics");
+			map.put("X-POS-REQUEST-ID",uuid);
+			map.put("X-POS-REQUEST-TIME", sdf.format(date));
+			map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+			map.put("X-POS-REQUEST-SIGN", sign);
+			JSONObject inParkJson = JSONObject.parseObject(HttpUtils.getMofangV2(url, map));
+			ProOrderStatisticsModel inPark = inParkJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
+			Map<String, ProOrderStatisticsModel> data = new HashMap<String, ProOrderStatisticsModel>();
+			data.put("unpay", unpay);
+			data.put("payed", payed);
+			data.put("notPay", notPay);
+			data.put("inpark", inPark);
+			ProOrderStatisticsModel pModel = new ProOrderStatisticsModel();
+			pModel.setCountAmount(unpay.getCountAmount()+payed.getCountAmount()+inPark.getCountAmount()+notPay.getCountAmount());
+			pModel.setMinuteAmount(unpay.getMinuteAmount()+notPay.getMinuteAmount()+inPark.getMinuteAmount()+payed.getMinuteAmount());
+			pModel.setPriceAmount(unpay.getPriceAmount()+notPay.getPriceAmount()+inPark.getPriceAmount()+payed.getPriceAmount());
+			data.put("total", pModel);
+			return new Resp<>(map);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 获取订单列表
+	 * @param companyId
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(path = "/mofang/order")
+	@ResponseBody
+	public Resp<?> order(String companyId,Integer page){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			Map<String, String> map = new HashMap<String,String>();
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			String url = "/park/product?pageSize=25&pageNum="+page+"&companyOrganId="+BaseConstant.BASE_COMPANY_ID;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			map.put("pageNum",String.valueOf(page));
+			map.put("pageSize","25");
+			map.put("companyOrganId",BaseConstant.BASE_COMPANY_ID);
+			map.put("path", "/park/product");
+			map.put("X-POS-REQUEST-ID",uuid);
+			map.put("X-POS-REQUEST-TIME", sdf.format(date));
+			map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+			map.put("X-POS-REQUEST-SIGN", sign);
+			return new Resp<>(JSON.parseObject(HttpUtils.getMofangV2(url,map)));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	
 	/**
 	 * 增加收费规则
@@ -327,24 +464,7 @@ public class MofangDataController extends BaseController{
 		return resp;
 	}
 	
-	/**
-	 * 获取订单列表
-	 * @param companyId
-	 * @param page
-	 * @return
-	 */
-	@RequestMapping(path = "/mofang/order")
-	@ResponseBody
-	public Resp<?> order(String companyId,Integer page){
-		Resp<?> resp = new Resp<>(false);
-		try {
-			return new Resp<>(JSON.parseObject(httpService.getMofang(getMofangSessionId(),HttpData.mofang_get_order(companyId,page,""))));
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return resp;
-	}
-	
+
 	/**
 	 * 获取收费规则列表
 	 * @param companyId
@@ -366,45 +486,7 @@ public class MofangDataController extends BaseController{
 	
 
 	
-	/**
-	 * 订单分析接口
-	 * @param beginTime
-	 * @param endTime
-	 * @param storeOrganId
-	 * @return
-	 */
-	@RequestMapping(path = "/mofang/order/statistics")
-	@ResponseBody
-	public Resp<?> orderStatistics(String beginTime,String endTime,String storeOrganId){
-		Resp<?> resp = new Resp<>(false);
-		try {
-			if(StringUtil.isBlank(storeOrganId)){
-				storeOrganId = BaseConstant.BASE_STORE_ID;
-			}
-			JSONObject unpayJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "UNPAY",storeOrganId);
-			ProOrderStatisticsModel unpay = unpayJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
-			JSONObject payedJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "PAYED",storeOrganId);
-			ProOrderStatisticsModel payed = payedJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
-			JSONObject notPayJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "NOT_PAY",storeOrganId);
-			ProOrderStatisticsModel notPay = notPayJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
-			JSONObject inParkJson =  HttpData.getOrderStatistics(getMofangSessionId(), beginTime, endTime, "IN_PARK",storeOrganId);
-			ProOrderStatisticsModel inPark = inParkJson.getJSONObject("data").getObject("statisticsProduct", ProOrderStatisticsModel.class);
-			Map<String, ProOrderStatisticsModel> map = new HashMap<String, ProOrderStatisticsModel>();
-			map.put("unpay", unpay);
-			map.put("payed", payed);
-			map.put("notPay", notPay);
-			map.put("inpark", inPark);
-			ProOrderStatisticsModel pModel = new ProOrderStatisticsModel();
-			pModel.setCountAmount(unpay.getCountAmount()+payed.getCountAmount()+inPark.getCountAmount()+notPay.getCountAmount());
-			pModel.setMinuteAmount(unpay.getMinuteAmount()+notPay.getMinuteAmount()+inPark.getMinuteAmount()+payed.getMinuteAmount());
-			pModel.setPriceAmount(unpay.getPriceAmount()+notPay.getPriceAmount()+inPark.getPriceAmount()+payed.getPriceAmount());
-			map.put("total", pModel);
-			return new Resp<>(map);
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return resp;
-	}
+	
 	
 	
 }

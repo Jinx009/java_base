@@ -18,15 +18,17 @@ import common.helper.StringUtil;
 import database.models.project.ProIoTOrder;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.project.ProIoTOrderService;
+import utils.HttpData;
 import utils.HttpUtils;
+import utils.MofangSignUtils;
 import utils.Resp;
+import utils.UUIDUtils;
 
 @Controller
 public class OpenApiDataController extends BaseController{
 	
 	private static final Logger log = LoggerFactory.getLogger(OpenApiDataController.class);
 
-	private static final String NOTICE_URL = "http://120.92.101.137:8083/magnetic_striple_event";
 	
 	@Autowired
 	private ProIoTOrderService proIoTOrderService;
@@ -85,39 +87,36 @@ public class OpenApiDataController extends BaseController{
 					proIoTOrderService.save(proIoTOrder);
 				}
 			}
-			
+			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
 		return resp;
 	}
 
-	@RequestMapping(value = "/mofang/session")
-	@ResponseBody
-	public String getSession(){
-		try {
-			String sessionId = getMofangSessionId();
-			return sessionId;
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return null;
-	}
 	
 	@RequestMapping(value = "/mofang/notice")
 	@ResponseBody
-	 public String sendNotice(String status){
+	 public String sendNotice(String status,String mac,String companyOrganId,String storeOrganId){
 	        try {
+	        	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        	Date date = new Date();
+	        	String uuid = UUIDUtils.random();
 	            Map<String,String> map = new HashMap<String, String>();
-	            map.put("magneticStripleId","000117122800001E");
+	            map.put("magneticStripleId",mac);
 	            map.put("status",status);
-	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	            map.put("occurrenceTimeString",sdf.format(new Date()));
-	            map.put("companyOrganId","10039");
-	            map.put("storeOrganId","10040");
-	            map.put("eventId","000117122800001E1");
+	            map.put("occurrenceTimeString",sdf.format(date));
+	            map.put("companyOrganId",companyOrganId);
+	            map.put("storeOrganId",storeOrganId);
+	            map.put("eventId",String.valueOf(date.getTime()/1000));
 	            String jsonStr = JSON.toJSONString(map);
-	            return HttpUtils.postMofangJson(getMofangSessionId(), NOTICE_URL,jsonStr);
+	            map.put("path", "/park/magnetic_striple_event");
+				map.put("X-POS-REQUEST-ID",uuid);
+				map.put("X-POS-REQUEST-TIME", sdf.format(date));
+				map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+				String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+				map.put("X-POS-REQUEST-SIGN", sign);
+	            return HttpUtils.postJsonMofangV2("/park/magnetic_striple_event", map, jsonStr);
 	        }catch (Exception e){
 	            log.error("error:{}",e);
 	        }
