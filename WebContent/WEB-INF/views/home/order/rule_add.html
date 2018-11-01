@@ -78,8 +78,9 @@
 										<tr>
 											<th>收费类型</th>
 											<td>
-												<select class="form-control" >
+												<select class="form-control" id="type" >
 													<option value="IMMEDIATELY" >一口价(唯一)</option>
+													<option value="PRECEDENCE" >先计费规则</option>
 													<option value="ACCUMULATIVE" >累加</option>
 												</select>
 											</td>
@@ -91,7 +92,7 @@
 											</td>
 										</tr>
 										<tr>
-											<th>不完整周期金额</th>
+											<th>计费结束时间秒数</th>
 											<td>
 												<input id="endTime" type="text" class="form-control" placeholder="一天内的起止秒数 00:00:00 为0 type= ACCUMULATIVE时有效" >
 											</td>
@@ -103,7 +104,7 @@
 											</td>
 										</tr>
 										<tr>
-											<th>最⾼高计费时⻓长</th>
+											<th>最高计费时⻓</th>
 											<td>
 												<input id="maxAmountOfMoney" type="text" class="form-control" placeholder="最⾼高计费时⻓长 " >
 											</td>
@@ -129,7 +130,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/order/rule_add.js?version=1.30"></script>
+	<script src="/themes/js/home/order/rule_add.js?version=1.31"></script>
 
 </body>
 </html>

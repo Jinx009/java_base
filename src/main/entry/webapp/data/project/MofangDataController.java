@@ -437,7 +437,7 @@ public class MofangDataController extends BaseController{
 //			“maxAmountOfMoney”:0, //最⾼高计费时⻓长
 //			“chargingRuleGroup”:”DAY”⾦金金额，相同组使⽤用同⼀一个最⼤大⾦金金额
 			Map<String, String> data = new HashMap<String,String>();
-			data.put("storeOrganId", BaseConstant.STORE_ID);
+			data.put("storeOrganId", BaseConstant.BASE_STORE_ID);
 			data.put("companyOrganId",BaseConstant.BASE_COMPANY_ID);
 			data.put("period",period);
 			data.put("type",type);

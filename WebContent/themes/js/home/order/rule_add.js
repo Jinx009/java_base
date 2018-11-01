@@ -27,11 +27,19 @@ function _getArea() {
 function _save(){
     var period = $('#period').val(),
     amountOfMoney = $('#amountOfMoney').val(),
-    amountOfMoneyForNotEnough = $('#amountOfMoneyForNotEnough').val();
+    amountOfMoneyForNotEnough = $('#amountOfMoneyForNotEnough').val(),
+    type = $('#type').val(),
+    beginTime = $('#beginTime').val(),
+    endTime = $('#endTime').val(),
+    freeMoneyAmountPeriod = $('#freeMoneyAmountPeriod').val(),
+    maxAmountOfMoney = $('#maxAmountOfMoney').val(),
+    chargingRuleGroup = $('#chargingRuleGroup').val();
 	if(period==null||period==''||amountOfMoney==null||amountOfMoney==''||amountOfMoneyForNotEnough==null||amountOfMoneyForNotEnough==''){
 		layer.alert('请完善收费规则！');
 	}else{
-		var params = 'period='+period+'&amountOfMoney='+amountOfMoney+'&amountOfMoneyForNotEnough='+amountOfMoneyForNotEnough;
+		var params = 'period='+period+'&amountOfMoney='+amountOfMoney+'&amountOfMoneyForNotEnough='+amountOfMoneyForNotEnough+'&type='+type+
+		'&beginTime='+beginTime+'&endTime='+endTime+"&freeMoneyAmountPeriod="+freeMoneyAmountPeriod+'&maxAmountOfMoney='+maxAmountOfMoney+
+		'&chargingRuleGroup='+chargingRuleGroup;
 		$.ajax({
 			url:'/home/d/mofang/add_rule',
 			type:'post',
