@@ -84,14 +84,26 @@ public class PosDataController extends BaseController{
 	 */
 	@RequestMapping(path = "/order")
 	@ResponseBody
-	public Resp<?> order(){
+	public Resp<?> order(Integer page){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String result = HttpData.order();
-			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,JSON.parse(result));
-			return resp;
+			Map<String, String> map = new HashMap<String,String>();
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			String url = "/park/product?pageSize=100&pageNum=1&companyOrganId="+BaseConstant.BASE_COMPANY_ID;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			map.put("pageNum","1");
+			map.put("pageSize","100");
+			map.put("companyOrganId",BaseConstant.BASE_COMPANY_ID);
+			map.put("path", "/park/product");
+			map.put("X-POS-REQUEST-ID",uuid);
+			map.put("X-POS-REQUEST-TIME", sdf.format(date));
+			map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+			map.put("X-POS-REQUEST-SIGN", sign);
+			return new Resp<>(JSON.parseObject(HttpUtils.getMofangV2(url,map)));
 		} catch (Exception e) {
-			logger.error("error:{}", e);
+			logger.error("error:{}",e);
 		}
 		return resp;
 	}

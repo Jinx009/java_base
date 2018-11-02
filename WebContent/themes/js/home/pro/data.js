@@ -40,7 +40,7 @@ function getData(){
                 }
             }
             if(resData.length==0){
-            	layer.alert('暂无数据，预演示模拟数据！');
+//            	layer.alert('暂无数据，预演示模拟数据！');
             	resData = _model;
             	changeData();
             }else{
