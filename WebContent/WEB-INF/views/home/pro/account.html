@@ -44,7 +44,7 @@
               <div class="form-group">
                 <label>选择地区</label>
                 <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                 	 <option selected="selected">静安NB</option>
+                 	 <option selected="selected">展为</option>
                 </select>
               </div>
             </div>
@@ -52,7 +52,7 @@
               <div class="form-group">
                 <label>选择街道</label>
                 <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                 	 <option selected="selected">昌平路A段</option>
+                 	 <option selected="selected">园区</option>
                 </select>
               </div>
             </div>
@@ -72,17 +72,15 @@
 	              <thead>
 	                <tr>
 	                  <th>手机号码</th>
-	                  <th>组织id</th>
 	                  <th>邮箱</th>
-	                  <th>组织名称</th>
+	                  <th>性别</th>
 	                </tr>
 	                </thead>
 	               <tbody id="account" >
 	               		<tr v-for="account in accounts" >
-	               			<td v-text="account.mobilePhoneNo" ></td>
-	               			<td v-text="account.organId" ></td>
+	               			<td v-text="account.mobile" ></td>
 	               			<td v-text="account.email" ></td>
-	               			<td v-text="account.organName" ></td>
+	               			<td v-text="account.sex" ></td>
 	               		</tr>
 	              </tbody>
 	              </table>
@@ -95,7 +93,7 @@
   </div>
   <#include "home_footer.html">
 </div>
-<script src="/themes/js/home/pro/account.js?version=1.181"></script>
+<script src="/themes/js/home/pro/account.js?version=1.21"></script>
 
 </body>
 </html>

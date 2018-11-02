@@ -11,6 +11,12 @@ public class HttpData {
 	public static final String FACE_FACTORY_ADD_IMAGE_URL = "/rest/face/uploadImg";
 	public static final String FACE_FACTORY_USERS_URL = "/rest/face/users";
 	public static final String COMPARE_USERS_URL = "/rest/face/compares";
+	
+	
+	public static final String MOFANG_AK = "430834bc0f044a69b3f5127c577035ea";
+	public static final String MOFANG_SK = "6GlpuxgsVbMabMTX";
+	public static final String MOFANG_URL = "http://api.pos.bizcube.com.cn";
+	
 
 	public static final String BASE_URL = "http://wx.zhanway.com/gtw";
 	public static final String GET_TOKEN_URL = "/rest/token";

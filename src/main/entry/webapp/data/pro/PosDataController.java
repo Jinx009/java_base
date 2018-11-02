@@ -1,5 +1,10 @@
 package main.entry.webapp.data.pro;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +19,10 @@ import main.entry.webapp.BaseController;
 import service.basicFunctions.HttpService;
 import utils.BaseConstant;
 import utils.HttpData;
+import utils.HttpUtils;
+import utils.MofangSignUtils;
 import utils.Resp;
+import utils.UUIDUtils;
 
 @Controller
 @RequestMapping(value = "/home/d")
@@ -52,11 +60,20 @@ public class PosDataController extends BaseController{
 	public Resp<?> account(){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String result = httpService.get(HttpData.accountUrl());
-			resp = new Resp<>(BaseConstant.HTTP_OK_CODE,BaseConstant.HTTP_OK_MSG,JSON.parse(result));
-			return resp;
+			Map<String, String> map = new HashMap<String,String>();
+			String uuid = UUIDUtils.random();
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			map.put("path", "/core/user");
+			map.put("X-POS-REQUEST-ID",uuid);
+			map.put("X-POS-REQUEST-TIME", sdf.format(date));
+			map.put("X-POS-ACCESS-KEY", HttpData.MOFANG_AK);
+			map.put("companyOrganId","10001");
+			String sign = MofangSignUtils.encrypt(HttpData.MOFANG_SK, MofangSignUtils.getDataString(map));
+			map.put("X-POS-REQUEST-SIGN", sign);
+			return new Resp<>(JSON.parseObject(HttpUtils.getMofangV2("/core/user?companyOrganId=10001",map)));
 		} catch (Exception e) {
-			logger.error("error:{}", e);
+			logger.error("error:{}",e);
 		}
 		return resp;
 	}

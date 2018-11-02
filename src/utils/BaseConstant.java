@@ -25,4 +25,7 @@ public class BaseConstant {
 	public static final String MESSAGE_QJ_ROAD_TEMPLATE = "SMS_140735042";
 	public static final String MESSAGE_QJ_MOUNTAIN_TEMPLATE = "SMS_140725030";
 	
+	public static final String BASE_COMPANY_ID = "10001";
+	public static final String BASE_STORE_ID = "10002";
+	
 }

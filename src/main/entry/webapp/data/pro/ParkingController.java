@@ -56,7 +56,7 @@ public class ParkingController extends BaseController{
 	public Resp<?> device(){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String token  = getToken(AppInfo.COMPANY_TEST.getAppId());
+			String token  = getToken(AppInfo.NB_JINGAN.getAppId());
 			if(token!=null){
 				String result = httpService.get(HttpData.deviceUrl(token));
 				JSONObject jsonObject = JSONObject.parseObject(result);
