@@ -222,21 +222,17 @@ public class MofangDataController extends BaseController{
 	 */
 	@RequestMapping(path = "/mofang/sign_log")
 	@ResponseBody
-	public Resp<?> signLog(String userId,String companyOrganId,String storeOrganId,Integer page){
+	public Resp<?> signLog(String companyOrganId,String storeOrganId,Integer page){
 		Resp<?> resp = new Resp<>(false);
 		try {
 			Map<String, String> map = new HashMap<String,String>();
 			String uuid = UUIDUtils.random();
 			Date date = new Date();
-			String url = "/core/operation_log?pageSize=25&pageNum="+page+"&storeOrganId="+BaseConstant.STORE_ID+"&companyOrganId="+BaseConstant.BASE_COMPANY_ID;
+			String url = "/core/operation_log?pageSize=25&pageNum="+page+"&storeOrganId="+BaseConstant.BASE_STORE_ID+"&companyOrganId="+BaseConstant.BASE_COMPANY_ID;
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			if(StringUtil.isBlank(userId)){
-				map.put("userId",userId);
-				url+= "&userId="+userId;
-			}
 			map.put("pageNum",String.valueOf(page));
 			map.put("pageSize","25");
-			map.put("storeOrganId", BaseConstant.STORE_ID);
+			map.put("storeOrganId", BaseConstant.BASE_STORE_ID);
 			map.put("companyOrganId",BaseConstant.BASE_COMPANY_ID);
 			map.put("path", "/core/operation_log");
 			map.put("X-POS-REQUEST-ID",uuid);
@@ -267,9 +263,9 @@ public class MofangDataController extends BaseController{
 			Map<String, String> map = new HashMap<String,String>();
 			String uuid = UUIDUtils.random();
 			Date date = new Date();
-			String url = "/park/product/statistics?beginTime="+beginTime+"&storeOrganId="+BaseConstant.STORE_ID+"&endTime="+endTime+"&status=UNPAY";
+			String url = "/park/product/statistics?beginTime="+beginTime+"&storeOrganId="+BaseConstant.BASE_STORE_ID+"&endTime="+endTime+"&status=UNPAY";
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			map.put("storeOrganId", BaseConstant.STORE_ID);
+			map.put("storeOrganId", BaseConstant.BASE_STORE_ID);
 			map.put("beginTime", beginTime);
 			map.put("endTime", endTime);
 			map.put("status", "UNPAY");
@@ -284,8 +280,8 @@ public class MofangDataController extends BaseController{
 			map = new HashMap<String,String>();
 			uuid = UUIDUtils.random();
 			date = new Date();
-			url = "/park/product/statistics?beginTime="+beginTime+"&storeOrganId="+BaseConstant.STORE_ID+"&endTime="+endTime+"&status=PAYED";
-			map.put("storeOrganId", BaseConstant.STORE_ID);
+			url = "/park/product/statistics?beginTime="+beginTime+"&storeOrganId="+BaseConstant.BASE_STORE_ID+"&endTime="+endTime+"&status=PAYED";
+			map.put("storeOrganId", BaseConstant.BASE_STORE_ID);
 			map.put("beginTime", beginTime);
 			map.put("endTime", endTime);
 			map.put("status", "PAYED");
@@ -300,8 +296,8 @@ public class MofangDataController extends BaseController{
 			map = new HashMap<String,String>();
 			uuid = UUIDUtils.random();
 			date = new Date();
-			url = "/park/product/statistics?beginTime="+beginTime+"&storeOrganId="+BaseConstant.STORE_ID+"&endTime="+endTime+"&status=NOT_PAY";
-			map.put("storeOrganId", BaseConstant.STORE_ID);
+			url = "/park/product/statistics?beginTime="+beginTime+"&storeOrganId="+BaseConstant.BASE_STORE_ID+"&endTime="+endTime+"&status=NOT_PAY";
+			map.put("storeOrganId", BaseConstant.BASE_STORE_ID);
 			map.put("beginTime", beginTime);
 			map.put("endTime", endTime);
 			map.put("status", "NOT_PAY");
@@ -316,8 +312,8 @@ public class MofangDataController extends BaseController{
 			map = new HashMap<String,String>();
 			uuid = UUIDUtils.random();
 			date = new Date();
-			url = "/park/product/statistics?beginTime="+beginTime+"&storeOrganId="+BaseConstant.STORE_ID+"&endTime="+endTime+"&status=IN_PARK";
-			map.put("storeOrganId", BaseConstant.STORE_ID);
+			url = "/park/product/statistics?beginTime="+beginTime+"&storeOrganId="+BaseConstant.BASE_STORE_ID+"&endTime="+endTime+"&status=IN_PARK";
+			map.put("storeOrganId", BaseConstant.BASE_STORE_ID);
 			map.put("beginTime", beginTime);
 			map.put("endTime", endTime);
 			map.put("status", "IN_PARK");
@@ -339,7 +335,7 @@ public class MofangDataController extends BaseController{
 			pModel.setMinuteAmount(unpay.getMinuteAmount()+notPay.getMinuteAmount()+inPark.getMinuteAmount()+payed.getMinuteAmount());
 			pModel.setPriceAmount(unpay.getPriceAmount()+notPay.getPriceAmount()+inPark.getPriceAmount()+payed.getPriceAmount());
 			data.put("total", pModel);
-			return new Resp<>(map);
+			return new Resp<>(data);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
@@ -393,9 +389,9 @@ public class MofangDataController extends BaseController{
 			Map<String, String> map = new HashMap<String,String>();
 			String uuid = UUIDUtils.random();
 			Date date = new Date();
-			String url = "/park/charging_rule?companyOrganId="+BaseConstant.BASE_COMPANY_ID+"&storeOrganId="+BaseConstant.STORE_ID;
+			String url = "/park/charging_rule?companyOrganId="+BaseConstant.BASE_COMPANY_ID+"&storeOrganId="+BaseConstant.BASE_STORE_ID;
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			map.put("storeOrganId",BaseConstant.STORE_ID);
+			map.put("storeOrganId",BaseConstant.BASE_STORE_ID);
 			map.put("companyOrganId",BaseConstant.BASE_COMPANY_ID);
 			map.put("path", "/park/charging_rule");
 			map.put("X-POS-REQUEST-ID",uuid);
@@ -482,7 +478,7 @@ public class MofangDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			Map<String, String> data = new HashMap<String,String>();
-			data.put("storeOrganId", BaseConstant.STORE_ID);
+			data.put("storeOrganId", BaseConstant.BASE_STORE_ID);
 			data.put("companyOrganId",BaseConstant.BASE_COMPANY_ID);
 			data.put("ruleId",ruleId);
 			data.put("period",period);

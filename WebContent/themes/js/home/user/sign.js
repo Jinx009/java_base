@@ -15,7 +15,7 @@ function _getData(_type,_index){
 	}
 	if(page!=-1){
 		$.ajax({
-			url:'/home/d/mofang/sign_log?companyId=10039&page='+page+'&storeOrganId=10040&userId='+userId,
+			url:'/home/d/mofang/sign_log?companyId=10001&page='+page+'&storeOrganId=10002&userId='+userId,
 			type:'post',
 			dataType:'json',
 			success:function(res){
@@ -69,7 +69,7 @@ function _getName(_userId){
 var _userArr = [];
 function _getUser(){
 	$.ajax({
-		url:'/home/d/mofang/user?companyOrganId=10039',
+		url:'/home/d/mofang/user?companyOrganId=10002',
 		type:'post',
 		dataType:'json',
 		success:function(res){
