@@ -24,7 +24,7 @@ import utils.MofangSignUtils;
 import utils.Resp;
 import utils.UUIDUtils;
 
-@RequestMapping(value = "/home/d")
+@RequestMapping(value = "/home/c")
 @Controller
 public class MofangDataController extends BaseController{
 	
