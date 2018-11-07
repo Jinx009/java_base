@@ -39,10 +39,13 @@ public class UDPServerThread extends Thread {
 			DatagramPacket packet = new DatagramPacket(data, data.length);
 			try {
 				socket.receive(packet);// 接受到数据之前该方法处于阻塞状态
-				String info = new String(data, 0, packet.getLength());
+//				String info = new String(data, 0, packet.getLength());
+//				log.warn("client info:{}", info);
+				String info = bytesToHexString(data,packet.getLength());
 				log.warn("client info:{}", info);
 				String mac = info.substring(0, 16);
-				log.warn("client info:{}", mac);
+				log.warn("client length:{}",packet.getLength());
+				log.warn("client mac:{}", mac);
 				IotCloudDeviceService iotCloudDeviceService = ((IotCloudDeviceService) ApplicationContextProvider
 						.getBeanByName("iotCloudDeviceService"));
 				IotCloudLogService iotCloudLogService = ((IotCloudLogService) ApplicationContextProvider
@@ -150,4 +153,20 @@ public class UDPServerThread extends Thread {
 		st.start();
 
 	}
+	
+    private static String bytesToHexString(byte[] src,int length){   
+        StringBuilder stringBuilder = new StringBuilder("");   
+        if (src == null || length <= 0) {   
+            return null;   
+        }   
+        for (int i = 0; i < length; i++) {   
+            int v = src[i] & 0xFF;   
+            String hv = Integer.toHexString(v); 
+            if (hv.length() < 2) {   
+                stringBuilder.append(0);   
+            }   
+            stringBuilder.append(hv.toUpperCase());   
+        }   
+        return stringBuilder.toString();   
+    }   
 }
