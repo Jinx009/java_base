@@ -72,7 +72,6 @@ public class UnicomController extends BaseController {
 		return resp;
 	}
 	
-	
 	/**
 	 * 上行设置
 	 * @param account
@@ -132,5 +131,7 @@ public class UnicomController extends BaseController {
 		return resp;
 	}
 	
-
+	public static void main(String[] args) {
+		System.out.println(Base64Utils.getEncodedBase64("zhanway:Zhanway!23"));
+	}
 }

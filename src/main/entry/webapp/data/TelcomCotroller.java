@@ -1,5 +1,6 @@
 package main.entry.webapp.data;
 
+import java.net.DatagramSocket;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,123 +38,122 @@ import utils.Resp;
 
 @Controller
 @RequestMapping(value = "/telcom")
-public class TelcomCotroller extends BaseController{
-	
+public class TelcomCotroller extends BaseController {
+
 	private static final Logger log = LoggerFactory.getLogger(TelcomCotroller.class);
 
 	@Autowired
 	private IotCloudDeviceService iotCloudDeviceService;
 	@Autowired
 	private IotCloudLogService iotCloudLogService;
-	
-	
-	@RequestMapping(path = "/na/iocm/devNotify/v1.1.0/reportCmdExecResult",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@RequestMapping(path = "/na/iocm/devNotify/v1.1.0/reportCmdExecResult", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Resp<?> cmd(@RequestBody String r){
+	public Resp<?> cmd(@RequestBody String r) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			log.warn("notice msg:{}",r);
+			log.warn("notice msg:{}", r);
 			return new Resp<>(true);
 		} catch (Exception e) {
-			log.error("erroe:{}",e);
+			log.error("erroe:{}", e);
 		}
 		return resp;
-		
+
 	}
-	
+
 	/**
 	 * 设置上报地址
+	 * 
 	 * @return
 	 */
-	@RequestMapping(path = "/setCallbakUrl",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/setCallbakUrl", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Resp<?> setCallUrl(){
+	public Resp<?> setCallUrl() {
 		Resp<?> resp = new Resp<>(false);
 		try {
-	        HttpsUtil httpsUtil = new HttpsUtil();
-	        httpsUtil.initSSLConfigForTwoWay();
-	        String accessToken = login(httpsUtil);
-	        String appId = Constant.APPID;
-	        String urlSubscribe = Constant.SUBSCRIBE_NOTIFYCATION;
-	        
-	        String callbackurl_deviceDataChanged = Constant.DEVICE_DATA_CHANGED_CALLBACK_URL;
-	        String notifyType_deviceDataChanged = Constant.DEVICE_DATA_CHANGED;
+			HttpsUtil httpsUtil = new HttpsUtil();
+			httpsUtil.initSSLConfigForTwoWay();
+			String accessToken = login(httpsUtil);
+			String appId = Constant.APPID;
+			String urlSubscribe = Constant.SUBSCRIBE_NOTIFYCATION;
 
-	        Map<String, Object> paramSubscribe_deviceDataChanged = new HashMap<>();
-	        paramSubscribe_deviceDataChanged.put("notifyType", notifyType_deviceDataChanged);
-	        paramSubscribe_deviceDataChanged.put("callbackurl", callbackurl_deviceDataChanged);
+			String callbackurl_deviceDataChanged = Constant.DEVICE_DATA_CHANGED_CALLBACK_URL;
+			String notifyType_deviceDataChanged = Constant.DEVICE_DATA_CHANGED;
 
-	        String jsonRequest_deviceDataChanged = JsonUtil.jsonObj2Sting(paramSubscribe_deviceDataChanged);
+			Map<String, Object> paramSubscribe_deviceDataChanged = new HashMap<>();
+			paramSubscribe_deviceDataChanged.put("notifyType", notifyType_deviceDataChanged);
+			paramSubscribe_deviceDataChanged.put("callbackurl", callbackurl_deviceDataChanged);
 
-	        Map<String, String> header_deviceDataChanged = new HashMap<>();
-	        header_deviceDataChanged.put(Constant.HEADER_APP_KEY, appId);
-	        header_deviceDataChanged.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
+			String jsonRequest_deviceDataChanged = JsonUtil.jsonObj2Sting(paramSubscribe_deviceDataChanged);
 
-	        HttpResponse httpResponse_deviceDataChanged = httpsUtil.doPostJson(urlSubscribe, header_deviceDataChanged, jsonRequest_deviceDataChanged);
+			Map<String, String> header_deviceDataChanged = new HashMap<>();
+			header_deviceDataChanged.put(Constant.HEADER_APP_KEY, appId);
+			header_deviceDataChanged.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
 
-	        String bodySubscribe_deviceDataChanged = httpsUtil.getHttpResponseBody(httpResponse_deviceDataChanged);
-	        log.warn("msg:{}",bodySubscribe_deviceDataChanged);
-	        
+			HttpResponse httpResponse_deviceDataChanged = httpsUtil.doPostJson(urlSubscribe, header_deviceDataChanged,
+					jsonRequest_deviceDataChanged);
+
+			String bodySubscribe_deviceDataChanged = httpsUtil.getHttpResponseBody(httpResponse_deviceDataChanged);
+			log.warn("msg:{}", bodySubscribe_deviceDataChanged);
+
 			return new Resp<>(true);
 		} catch (Exception e) {
-			log.error("erroe:{}",e);
+			log.error("erroe:{}", e);
 		}
 		return resp;
-		
+
 	}
 
 	/**
 	 * 电信上报数据
+	 * 
 	 * @param r
 	 * @return
 	 */
 	@RequestMapping(path = "/na/iocm/devNotify/v1.1.0/updateDeviceDatas")
 	@ResponseBody
-	public Resp<?> notice(@RequestBody String r){
+	public Resp<?> notice(@RequestBody String r) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			log.warn("notice test msg:{}",r);
-//			TelcomPushDataModel telcomPushDataModel = JSONObject.parseObject(r,TelcomPushDataModel.class);
-//			if(telcomPushDataModel!=null){
-//				List<PushModel> list = telcomPushDataModel.getServices();
-//				if(list!=null&&!list.isEmpty()){
-//					for(PushModel pushModel : list){
-//						TModel tModel = pushModel.getData();
-//						IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(telcomPushDataModel.getDeviceId());
-//						IotCloudLog iotCloudLog = new IotCloudLog();
-//						iotCloudLog.setData(tModel.getData());
-//						iotCloudLog.setFromSite("telcom");
-//						iotCloudLog.setCreateTime(new Date());
-//						iotCloudLog.setImei(ioTCloudDevice.getImei());
-//						iotCloudLog.setType(0);
-//						iotCloudLog.setMac(ioTCloudDevice.getMac());
-//						iotCloudLogService.save(iotCloudLog);
-//						send(tModel.getData());
-//					}
-//				}
-//			}
+			log.warn("notice test msg:{}", r);
 			return new Resp<>(true);
 		} catch (Exception e) {
-			log.error("erroe:{}",e);
+			log.error("erroe:{}", e);
 		}
 		return resp;
-		
+
 	}
+
+	@RequestMapping(path = "/udpServer")
+	@ResponseBody
+	public Resp<?> udpServer() {
+		try {
+			DatagramSocket socket = new DatagramSocket(7777);
+            UDPServerThread st = new UDPServerThread(socket);
+            st.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return null;
+	}
+
+	
 	
 	@RequestMapping(path = "/notice/na/iocm/devNotify/v1.1.0/updateDeviceDatas")
 	@ResponseBody
-	public Resp<?> noticeN(@RequestBody String r){
+	public Resp<?> noticeN(@RequestBody String r) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			log.warn("notice msg:{}",r);
-			TelcomPushDataModel telcomPushDataModel = JSONObject.parseObject(r,TelcomPushDataModel.class);
-			if(telcomPushDataModel!=null){
+			log.warn("notice msg:{}", r);
+			TelcomPushDataModel telcomPushDataModel = JSONObject.parseObject(r, TelcomPushDataModel.class);
+			if (telcomPushDataModel != null) {
 				List<PushModel> list = telcomPushDataModel.getServices();
 				PushModel pushModel2 = telcomPushDataModel.getService();
-				if(list!=null&&!list.isEmpty()){
-					for(PushModel pushModel : list){
+				if (list != null && !list.isEmpty()) {
+					for (PushModel pushModel : list) {
 						TModel tModel = pushModel.getData();
-						IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(telcomPushDataModel.getDeviceId());
+						IoTCloudDevice ioTCloudDevice = iotCloudDeviceService
+								.findByDeviceId(telcomPushDataModel.getDeviceId());
 						IotCloudLog iotCloudLog = new IotCloudLog();
 						iotCloudLog.setData(tModel.getData());
 						iotCloudLog.setFromSite("telcom");
@@ -162,22 +162,25 @@ public class TelcomCotroller extends BaseController{
 						iotCloudLog.setType(0);
 						iotCloudLog.setMac(ioTCloudDevice.getMac());
 						iotCloudLogService.save(iotCloudLog);
-						if(ioTCloudDevice.getLocalIp()!=null&&ioTCloudDevice.getLocalIp().equals("SM_CZ")){
-							String _s = "content="+tModel.getData()+"&key=gdzxxxkjgfyxgs9981n";
-							HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="+MD5Util.toMD5(_s).toLowerCase()+"&"+_s);
-						}else if(ioTCloudDevice.getLocalIp()!=null&&ioTCloudDevice.getLocalIp().equals("QJ")){
-							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/push?data="+tModel.getData());
-						}else if(ioTCloudDevice.getLocalIp()!=null&&ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")){
-							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data="+tModel.getData());
-							sendWuhanQj(ioTCloudDevice,iotCloudLog);
-						}else{
-							send(tModel.getData(),ioTCloudDevice.getUdpIp(),ioTCloudDevice.getUdpPort());
+						if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("SM_CZ")) {
+							String _s = "content=" + tModel.getData() + "&key=gdzxxxkjgfyxgs9981n";
+							HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="
+									+ MD5Util.toMD5(_s).toLowerCase() + "&" + _s);
+						} else if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("QJ")) {
+							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/push?data=" + tModel.getData());
+						} else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")) {
+							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
+							sendWuhanQj(ioTCloudDevice, iotCloudLog);
+						} else {
+							send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 						}
 					}
 				}
-				if(pushModel2!=null){
+				if (pushModel2 != null) {
 					TModel tModel = pushModel2.getData();
-					IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(telcomPushDataModel.getDeviceId());
+					IoTCloudDevice ioTCloudDevice = iotCloudDeviceService
+							.findByDeviceId(telcomPushDataModel.getDeviceId());
 					IotCloudLog iotCloudLog = new IotCloudLog();
 					iotCloudLog.setData(tModel.getData());
 					iotCloudLog.setFromSite("telcom");
@@ -186,29 +189,32 @@ public class TelcomCotroller extends BaseController{
 					iotCloudLog.setType(0);
 					iotCloudLog.setMac(ioTCloudDevice.getMac());
 					iotCloudLogService.save(iotCloudLog);
-					if(ioTCloudDevice.getLocalIp()!=null&&ioTCloudDevice.getLocalIp().equals("SM_CZ")){
-						String _s = "content="+tModel.getData()+"&key=gdzxxxkjgfyxgs9981n";
-						HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="+MD5Util.toMD5(_s).toLowerCase()+"&"+_s);
-					}else if(ioTCloudDevice.getLocalIp()!=null&&ioTCloudDevice.getLocalIp().equals("QJ")){
-						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/push?data="+tModel.getData());
-					}else if(ioTCloudDevice.getLocalIp()!=null&&ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")){
-						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data="+tModel.getData());
+					if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("SM_CZ")) {
+						String _s = "content=" + tModel.getData() + "&key=gdzxxxkjgfyxgs9981n";
+						HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="
+								+ MD5Util.toMD5(_s).toLowerCase() + "&" + _s);
+					} else if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("QJ")) {
+						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/push?data=" + tModel.getData());
+					} else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")) {
+						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 						sendWuhanQj(ioTCloudDevice, iotCloudLog);
-					}else{
-						send(tModel.getData(),ioTCloudDevice.getUdpIp(),ioTCloudDevice.getUdpPort());
+					} else {
+						send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 					}
 				}
 			}
 			return new Resp<>(true);
 		} catch (Exception e) {
-			log.error("erroe:{}",e);
+			log.error("erroe:{}", e);
 		}
 		return resp;
-		
+
 	}
-	
+
 	/**
 	 * 设备注册
+	 * 
 	 * @param imei
 	 * @param mac
 	 * @param ipLocal
@@ -216,71 +222,71 @@ public class TelcomCotroller extends BaseController{
 	 */
 	@RequestMapping(path = "/register")
 	@ResponseBody
-	public Resp<?> register(String imei,String mac,String ipLocal,String name){
+	public Resp<?> register(String imei, String mac, String ipLocal, String name) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-	        HttpsUtil httpsUtil = new HttpsUtil();
-	        httpsUtil.initSSLConfigForTwoWay();
-	        String accessToken = login(httpsUtil);
+			HttpsUtil httpsUtil = new HttpsUtil();
+			httpsUtil.initSSLConfigForTwoWay();
+			String accessToken = login(httpsUtil);
 			String appId = Constant.APPID;
 			String urlReg = Constant.REGISTER_DEVICE;
-	        String verifyCode = imei;   
+			String verifyCode = imei;
 			String nodeId = verifyCode;
-	        Integer timeout = 0;
-	        Map<String, Object> paramReg = new HashMap<>();
-	        paramReg.put("verifyCode", verifyCode.toUpperCase());
-	        paramReg.put("nodeId", nodeId.toUpperCase());
-	        paramReg.put("timeout", timeout);
-	        String jsonRequest = JsonUtil.jsonObj2Sting(paramReg);
-	        Map<String, String> header = new HashMap<>();
-	        header.put(Constant.HEADER_APP_KEY, appId);
-	        header.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
-	        StreamClosedHttpResponse responseReg = httpsUtil.doPostJsonGetStatusLine(urlReg, header, jsonRequest);
-	        JSONObject jsonObject = JSONObject.parseObject(responseReg.getContent());
-	        log.warn("msg:{}",jsonObject);
-	        String deviceId = jsonObject.getString("deviceId");
-	        httpsUtil = new HttpsUtil();
-	        httpsUtil.initSSLConfigForTwoWay();
-	        accessToken = login(httpsUtil);
-	        String urlModifyDeviceInfo = Constant.MODIFY_DEVICE_INFO + "/" + deviceId;
-	        String manufacturerId= "Zhanway";
-	        String manufacturerName = "Zhanway";
-	        String deviceType = "SmartDevice";
-	        String model = "ZWMNB01";
-	        String protocolType = "CoAP";
-	        Map<String, Object> paramModifyDeviceInfo = new HashMap<>();
-	        paramModifyDeviceInfo.put("manufacturerId", manufacturerId);
-	        paramModifyDeviceInfo.put("manufacturerName", manufacturerName);
-	        paramModifyDeviceInfo.put("deviceType", deviceType);
-	        paramModifyDeviceInfo.put("model", model);
-	        paramModifyDeviceInfo.put("name", name+"_"+imei);
-	        paramModifyDeviceInfo.put("protocolType", protocolType);
-	        String jsonRequest2 = JsonUtil.jsonObj2Sting(paramModifyDeviceInfo);
-	        Map<String, String> header2 = new HashMap<>();
-	        header.put(Constant.HEADER_APP_KEY, appId);
-	        header.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
-	        StreamClosedHttpResponse responseModifyDeviceInfo = httpsUtil.doPutJsonGetStatusLine(urlModifyDeviceInfo, header2, jsonRequest2);
-	        log.warn("msg:{}",responseModifyDeviceInfo.getContent());
-	        IoTCloudDevice ioTCloudDevice = new IoTCloudDevice();
-	        ioTCloudDevice.setCreateTime(new Date());
-	        ioTCloudDevice.setImei(imei);
-	        ioTCloudDevice.setLocalIp(ipLocal);
-	        ioTCloudDevice.setMac(mac);
-	        ioTCloudDevice.setType(1);
-	        ioTCloudDevice.setDeviceId(deviceId);
-	        iotCloudDeviceService.save(ioTCloudDevice);
-	        return new Resp<>(true);
+			Integer timeout = 0;
+			Map<String, Object> paramReg = new HashMap<>();
+			paramReg.put("verifyCode", verifyCode.toUpperCase());
+			paramReg.put("nodeId", nodeId.toUpperCase());
+			paramReg.put("timeout", timeout);
+			String jsonRequest = JsonUtil.jsonObj2Sting(paramReg);
+			Map<String, String> header = new HashMap<>();
+			header.put(Constant.HEADER_APP_KEY, appId);
+			header.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
+			StreamClosedHttpResponse responseReg = httpsUtil.doPostJsonGetStatusLine(urlReg, header, jsonRequest);
+			JSONObject jsonObject = JSONObject.parseObject(responseReg.getContent());
+			log.warn("msg:{}", jsonObject);
+			String deviceId = jsonObject.getString("deviceId");
+			httpsUtil = new HttpsUtil();
+			httpsUtil.initSSLConfigForTwoWay();
+			accessToken = login(httpsUtil);
+			String urlModifyDeviceInfo = Constant.MODIFY_DEVICE_INFO + "/" + deviceId;
+			String manufacturerId = "Zhanway";
+			String manufacturerName = "Zhanway";
+			String deviceType = "SmartDevice";
+			String model = "ZWMNB01";
+			String protocolType = "CoAP";
+			Map<String, Object> paramModifyDeviceInfo = new HashMap<>();
+			paramModifyDeviceInfo.put("manufacturerId", manufacturerId);
+			paramModifyDeviceInfo.put("manufacturerName", manufacturerName);
+			paramModifyDeviceInfo.put("deviceType", deviceType);
+			paramModifyDeviceInfo.put("model", model);
+			paramModifyDeviceInfo.put("name", name + "_" + imei);
+			paramModifyDeviceInfo.put("protocolType", protocolType);
+			String jsonRequest2 = JsonUtil.jsonObj2Sting(paramModifyDeviceInfo);
+			Map<String, String> header2 = new HashMap<>();
+			header.put(Constant.HEADER_APP_KEY, appId);
+			header.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
+			StreamClosedHttpResponse responseModifyDeviceInfo = httpsUtil.doPutJsonGetStatusLine(urlModifyDeviceInfo,
+					header2, jsonRequest2);
+			log.warn("msg:{}", responseModifyDeviceInfo.getContent());
+			IoTCloudDevice ioTCloudDevice = new IoTCloudDevice();
+			ioTCloudDevice.setCreateTime(new Date());
+			ioTCloudDevice.setImei(imei);
+			ioTCloudDevice.setLocalIp(ipLocal);
+			ioTCloudDevice.setMac(mac);
+			ioTCloudDevice.setType(1);
+			ioTCloudDevice.setDeviceId(deviceId);
+			iotCloudDeviceService.save(ioTCloudDevice);
+			return new Resp<>(true);
 		} catch (Exception e) {
-			log.error("error:{}",e);
+			log.error("error:{}", e);
 		}
 		return resp;
 	}
-	
-	
-	private void sendWuhanQj(IoTCloudDevice device,IotCloudLog iotCloudLog){
-		Map<String, Object> map = new HashMap<String,Object>();
+
+	private void sendWuhanQj(IoTCloudDevice device, IotCloudLog iotCloudLog) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		String data = iotCloudLog.getData();
-		String sn = data.substring(0,16);
+		String sn = data.substring(0, 16);
 		map.put("JCDB19A080", sn);
 		String type = data.substring(16, 18);
 		if (type.equals("68")) {
@@ -298,41 +304,40 @@ public class TelcomCotroller extends BaseController{
 			map.put("JCDB19A060", Integer.valueOf(data.substring(28, 30)));
 			map.put("JCDB19A070", Integer.valueOf(data.substring(34, 36)));
 			map.put("JCDB19A090", Double.valueOf(getData(data.substring(36, 37), data.substring(36, 40))));
-			map.put("JCDB19A100", Double.valueOf(getData(data.substring(42,43), data.substring(42, 46))));
-			map.put("JCDB19A110",Integer.valueOf(data.substring(40, 42)));
+			map.put("JCDB19A100", Double.valueOf(getData(data.substring(42, 43), data.substring(42, 46))));
+			map.put("JCDB19A110", Integer.valueOf(data.substring(40, 42)));
 			map.put("JCDB19A120", Integer.valueOf(data.substring(46, 48)));
 			String json = JSONObject.toJSONString(map);
-			log.warn("send qj-----------------------\n:{}\n---------------------------------",json);
-			String url = "http://"+device.getUdpIp()+":"+device.getUdpPort()+"/DzhZXJC/Sjcj/AddJCDB19A";
-			log.warn("send url-----------------------\n:{}\n---------------------------------",url);
-			String res = HttpUtils.sendPost(url,"json="+json+"&appID=DZH_ZXJC_SJCJ");
-			log.warn("send res-----------------------\n:{}\n---------------------------------",res);
+			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
+			String url = "http://" + device.getUdpIp() + ":" + device.getUdpPort() + "/DzhZXJC/Sjcj/AddJCDB19A";
+			log.warn("send url-----------------------\n:{}\n---------------------------------", url);
+			String res = HttpUtils.sendPost(url, "json=" + json + "&appID=DZH_ZXJC_SJCJ");
+			log.warn("send res-----------------------\n:{}\n---------------------------------", res);
 		} catch (Exception e) {
-			log.error("error:{}",e);
+			log.error("error:{}", e);
 		}
 
-		
 	}
-	
-	private String getData(String index, String _d) throws Exception{
-		log.warn("index:{},data:{}",index,_d);
-		int _index = Integer.parseInt(index,16);
+
+	private String getData(String index, String _d) throws Exception {
+		log.warn("index:{},data:{}", index, _d);
+		int _index = Integer.parseInt(index, 16);
 		Integer a = Integer.valueOf(_d, 16);
 		String b = Integer.toBinaryString(a);
 		String[] arrs = b.split("");
-		String[] arr = new String[16]; 
+		String[] arr = new String[16];
 		int i = 0;
-		for(String s:arrs){
-			if(s!=null&&!"".equals(s)){
+		for (String s : arrs) {
+			if (s != null && !"".equals(s)) {
 				arr[i] = s;
 				i++;
 			}
 		}
 		String c = "";
 		Integer e = Integer.parseInt(b, 2);
-		if (_index>8) {
+		if (_index > 8) {
 			for (String d : arr) {
-				if(d!=null&&!"".equals(d)){
+				if (d != null && !"".equals(d)) {
 					if (d.equals("1")) {
 						c += "0";
 					} else {
@@ -341,11 +346,13 @@ public class TelcomCotroller extends BaseController{
 				}
 			}
 			e = (Integer.parseInt(c, 2) + 1) * -1;
-		}else{
+		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		String result = String.valueOf(Double.valueOf(e)/1000);
-		log.warn("result:{}",result);
+		String result = String.valueOf(Double.valueOf(e) / 1000);
+		log.warn("result:{}", result);
 		return result;
 	}
+	
+	
 }
