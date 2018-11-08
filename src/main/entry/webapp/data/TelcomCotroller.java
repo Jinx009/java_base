@@ -172,7 +172,10 @@ public class TelcomCotroller extends BaseController {
 								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")) {
 							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 							sendWuhanQj(ioTCloudDevice, iotCloudLog);
-						} else {
+						}else if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
+							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
+							sendBeijingQj(ioTCloudDevice, iotCloudLog);
+						}else {
 							send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 						}
 					}
@@ -211,76 +214,38 @@ public class TelcomCotroller extends BaseController {
 		return resp;
 
 	}
-
-	/**
-	 * 设备注册
-	 * 
-	 * @param imei
-	 * @param mac
-	 * @param ipLocal
-	 * @return
-	 */
-	@RequestMapping(path = "/register")
-	@ResponseBody
-	public Resp<?> register(String imei, String mac, String ipLocal, String name) {
-		Resp<?> resp = new Resp<>(false);
-		try {
-			HttpsUtil httpsUtil = new HttpsUtil();
-			httpsUtil.initSSLConfigForTwoWay();
-			String accessToken = login(httpsUtil);
-			String appId = Constant.APPID;
-			String urlReg = Constant.REGISTER_DEVICE;
-			String verifyCode = imei;
-			String nodeId = verifyCode;
-			Integer timeout = 0;
-			Map<String, Object> paramReg = new HashMap<>();
-			paramReg.put("verifyCode", verifyCode.toUpperCase());
-			paramReg.put("nodeId", nodeId.toUpperCase());
-			paramReg.put("timeout", timeout);
-			String jsonRequest = JsonUtil.jsonObj2Sting(paramReg);
-			Map<String, String> header = new HashMap<>();
-			header.put(Constant.HEADER_APP_KEY, appId);
-			header.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
-			StreamClosedHttpResponse responseReg = httpsUtil.doPostJsonGetStatusLine(urlReg, header, jsonRequest);
-			JSONObject jsonObject = JSONObject.parseObject(responseReg.getContent());
-			log.warn("msg:{}", jsonObject);
-			String deviceId = jsonObject.getString("deviceId");
-			httpsUtil = new HttpsUtil();
-			httpsUtil.initSSLConfigForTwoWay();
-			accessToken = login(httpsUtil);
-			String urlModifyDeviceInfo = Constant.MODIFY_DEVICE_INFO + "/" + deviceId;
-			String manufacturerId = "Zhanway";
-			String manufacturerName = "Zhanway";
-			String deviceType = "SmartDevice";
-			String model = "ZWMNB01";
-			String protocolType = "CoAP";
-			Map<String, Object> paramModifyDeviceInfo = new HashMap<>();
-			paramModifyDeviceInfo.put("manufacturerId", manufacturerId);
-			paramModifyDeviceInfo.put("manufacturerName", manufacturerName);
-			paramModifyDeviceInfo.put("deviceType", deviceType);
-			paramModifyDeviceInfo.put("model", model);
-			paramModifyDeviceInfo.put("name", name + "_" + imei);
-			paramModifyDeviceInfo.put("protocolType", protocolType);
-			String jsonRequest2 = JsonUtil.jsonObj2Sting(paramModifyDeviceInfo);
-			Map<String, String> header2 = new HashMap<>();
-			header.put(Constant.HEADER_APP_KEY, appId);
-			header.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
-			StreamClosedHttpResponse responseModifyDeviceInfo = httpsUtil.doPutJsonGetStatusLine(urlModifyDeviceInfo,
-					header2, jsonRequest2);
-			log.warn("msg:{}", responseModifyDeviceInfo.getContent());
-			IoTCloudDevice ioTCloudDevice = new IoTCloudDevice();
-			ioTCloudDevice.setCreateTime(new Date());
-			ioTCloudDevice.setImei(imei);
-			ioTCloudDevice.setLocalIp(ipLocal);
-			ioTCloudDevice.setMac(mac);
-			ioTCloudDevice.setType(1);
-			ioTCloudDevice.setDeviceId(deviceId);
-			iotCloudDeviceService.save(ioTCloudDevice);
-			return new Resp<>(true);
-		} catch (Exception e) {
-			log.error("error:{}", e);
-		}
-		return resp;
+	
+	private void sendBeijingQj(IoTCloudDevice device, IotCloudLog iotCloudLog){
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> warning = new HashMap<String, Object>();
+		Map<String, Object> monitoring = new HashMap<String, Object>();
+		String data = iotCloudLog.getData();
+		String type = data.substring(16, 18);
+		if (type.equals("68")) {
+			try {
+				map.put("voltage", getData(data.substring(48, 49), data.substring(48, 52)));
+				warning.put("acc_x_type", Integer.valueOf(data.substring(22, 24)));
+				warning.put("acc_y_type", Integer.valueOf(data.substring(28, 30)));
+				warning.put("acc_z_type", Integer.valueOf(data.substring(34, 36)));
+				warning.put("x_type", Integer.valueOf(data.substring(40, 42)));
+				warning.put("y_type", Integer.valueOf(data.substring(46, 48)));
+				monitoring.put("x", getData(data.substring(36, 37), data.substring(36, 40)));
+				monitoring.put("y", getData(data.substring(42, 43), data.substring(42, 46)));
+				monitoring.put("acc_x", getData(data.substring(18, 19), data.substring(18, 22)));
+				monitoring.put("acc_y", getData(data.substring(24, 25), data.substring(24, 28)));
+				monitoring.put("acc_z", getData(data.substring(30, 31), data.substring(30, 34)));
+				map.put("warning", warning);
+				map.put("monitoring", monitoring);
+				String json = JSONObject.toJSONString(map);
+				log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
+				String url = "http://" + device.getUdpIp()+ device.getSimCard().split("_")[0] + "/datapoints?type=3";
+				log.warn("send url-----------------------\n:{}\n---------------------------------", url);
+				String res = HttpUtils.postBeijingQjJson(url, json, device.getSimCard().split("_")[1] );
+				log.warn("send res-----------------------\n:{}\n---------------------------------", res);
+			} catch (Exception e) {
+				log.error("error:{}", e);
+			}
+		} 
 	}
 
 	private void sendWuhanQj(IoTCloudDevice device, IotCloudLog iotCloudLog) {
@@ -354,5 +319,76 @@ public class TelcomCotroller extends BaseController {
 		return result;
 	}
 	
-	
+
+	/**
+	 * 设备注册
+	 * 
+	 * @param imei
+	 * @param mac
+	 * @param ipLocal
+	 * @return
+	 */
+	@RequestMapping(path = "/register")
+	@ResponseBody
+	public Resp<?> register(String imei, String mac, String ipLocal, String name) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			HttpsUtil httpsUtil = new HttpsUtil();
+			httpsUtil.initSSLConfigForTwoWay();
+			String accessToken = login(httpsUtil);
+			String appId = Constant.APPID;
+			String urlReg = Constant.REGISTER_DEVICE;
+			String verifyCode = imei;
+			String nodeId = verifyCode;
+			Integer timeout = 0;
+			Map<String, Object> paramReg = new HashMap<>();
+			paramReg.put("verifyCode", verifyCode.toUpperCase());
+			paramReg.put("nodeId", nodeId.toUpperCase());
+			paramReg.put("timeout", timeout);
+			String jsonRequest = JsonUtil.jsonObj2Sting(paramReg);
+			Map<String, String> header = new HashMap<>();
+			header.put(Constant.HEADER_APP_KEY, appId);
+			header.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
+			StreamClosedHttpResponse responseReg = httpsUtil.doPostJsonGetStatusLine(urlReg, header, jsonRequest);
+			JSONObject jsonObject = JSONObject.parseObject(responseReg.getContent());
+			log.warn("msg:{}", jsonObject);
+			String deviceId = jsonObject.getString("deviceId");
+			httpsUtil = new HttpsUtil();
+			httpsUtil.initSSLConfigForTwoWay();
+			accessToken = login(httpsUtil);
+			String urlModifyDeviceInfo = Constant.MODIFY_DEVICE_INFO + "/" + deviceId;
+			String manufacturerId = "Zhanway";
+			String manufacturerName = "Zhanway";
+			String deviceType = "SmartDevice";
+			String model = "ZWMNB01";
+			String protocolType = "CoAP";
+			Map<String, Object> paramModifyDeviceInfo = new HashMap<>();
+			paramModifyDeviceInfo.put("manufacturerId", manufacturerId);
+			paramModifyDeviceInfo.put("manufacturerName", manufacturerName);
+			paramModifyDeviceInfo.put("deviceType", deviceType);
+			paramModifyDeviceInfo.put("model", model);
+			paramModifyDeviceInfo.put("name", name + "_" + imei);
+			paramModifyDeviceInfo.put("protocolType", protocolType);
+			String jsonRequest2 = JsonUtil.jsonObj2Sting(paramModifyDeviceInfo);
+			Map<String, String> header2 = new HashMap<>();
+			header.put(Constant.HEADER_APP_KEY, appId);
+			header.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
+			StreamClosedHttpResponse responseModifyDeviceInfo = httpsUtil.doPutJsonGetStatusLine(urlModifyDeviceInfo,
+					header2, jsonRequest2);
+			log.warn("msg:{}", responseModifyDeviceInfo.getContent());
+			IoTCloudDevice ioTCloudDevice = new IoTCloudDevice();
+			ioTCloudDevice.setCreateTime(new Date());
+			ioTCloudDevice.setImei(imei);
+			ioTCloudDevice.setLocalIp(ipLocal);
+			ioTCloudDevice.setMac(mac);
+			ioTCloudDevice.setType(1);
+			ioTCloudDevice.setDeviceId(deviceId);
+			iotCloudDeviceService.save(ioTCloudDevice);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return resp;
+	}
+
 }

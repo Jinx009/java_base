@@ -38,5 +38,7 @@ public class IoTCloudDevice {
 	private String udpIp;
 	@Column(name = "udp_port")
 	private Integer udpPort;
+	@Column(name = "sim_card")
+	private String simCard;
 	
 }

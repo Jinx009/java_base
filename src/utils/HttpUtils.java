@@ -78,6 +78,28 @@ public class HttpUtils {
         return result;
 	}
 	
+	@SuppressWarnings("resource")
+	public static String postBeijingQjJson(String url,String jsonStr,String apikey){
+		logger.warn("HttpUtils.postJson[info:{},{}]",url,jsonStr);
+		String result = "500";
+        HttpPost post = new HttpPost(url);
+        post.addHeader("Content-type","application/json;charset=utf-8");
+        post.addHeader("apikey",apikey);
+        post.setHeader("Accept", "application/json");
+        post.setEntity(new StringEntity(jsonStr, Charset.forName("UTF-8")));
+        try {
+        	DefaultHttpClient httpClient = new DefaultHttpClient();
+        	HttpResponse response = httpClient.execute(post);
+			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			logger.warn("HttpUtils.postJson[res:{}]",result);
+		} catch (ParseException e) {
+			logger.error("HttpUtils.postJson[ParseException.error:{}]",e);
+		} catch (IOException e) {
+			logger.error("HttpUtils.postJson[IOException.error:{}]",e);
+		}
+        return result;
+	}
+	
 	
 	@SuppressWarnings("resource")
 	public static String putJson(String url,String jsonStr){

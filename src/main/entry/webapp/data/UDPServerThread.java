@@ -63,6 +63,10 @@ public class UDPServerThread extends Thread {
 					HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + info);
 					sendWuhanQj(ioTCloudDevice, iotCloudLog);
 				}
+				if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
+					HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + info);
+					sendBeijingQj(ioTCloudDevice, iotCloudLog);
+				}
 				InetAddress address = packet.getAddress();
 				int port = packet.getPort();
 				byte[] data2 = "ok".getBytes();
@@ -73,6 +77,8 @@ public class UDPServerThread extends Thread {
 			}
 		}
 	}
+	
+	
 
 	private String getData(String index, String _d) throws Exception {
 		log.warn("index:{},data:{}", index, _d);
@@ -108,6 +114,40 @@ public class UDPServerThread extends Thread {
 		log.warn("result:{}", result);
 		return result;
 	}
+	
+	private void sendBeijingQj(IoTCloudDevice device, IotCloudLog iotCloudLog){
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> warning = new HashMap<String, Object>();
+		Map<String, Object> monitoring = new HashMap<String, Object>();
+		String data = iotCloudLog.getData();
+		String type = data.substring(16, 18);
+		if (type.equals("68")) {
+			try {
+				map.put("voltage", getData(data.substring(48, 49), data.substring(48, 52)));
+				warning.put("acc_x_type", Integer.valueOf(data.substring(22, 24)));
+				warning.put("acc_y_type", Integer.valueOf(data.substring(28, 30)));
+				warning.put("acc_z_type", Integer.valueOf(data.substring(34, 36)));
+				warning.put("x_type", Integer.valueOf(data.substring(40, 42)));
+				warning.put("y_type", Integer.valueOf(data.substring(46, 48)));
+				monitoring.put("x", getData(data.substring(36, 37), data.substring(36, 40)));
+				monitoring.put("y", getData(data.substring(42, 43), data.substring(42, 46)));
+				monitoring.put("acc_x", getData(data.substring(18, 19), data.substring(18, 22)));
+				monitoring.put("acc_y", getData(data.substring(24, 25), data.substring(24, 28)));
+				monitoring.put("acc_z", getData(data.substring(30, 31), data.substring(30, 34)));
+				map.put("warning", warning);
+				map.put("monitoring", monitoring);
+				String json = JSONObject.toJSONString(map);
+				log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
+				String url = "http://" + device.getUdpIp()+ device.getSimCard().split("_")[0] + "/datapoints?type=3";
+				log.warn("send url-----------------------\n:{}\n---------------------------------", url);
+				String res = HttpUtils.postBeijingQjJson(url, json, device.getSimCard().split("_")[1] );
+				log.warn("send res-----------------------\n:{}\n---------------------------------", res);
+			} catch (Exception e) {
+				log.error("error:{}", e);
+			}
+		} 
+	}
+
 
 	private void sendWuhanQj(IoTCloudDevice device, IotCloudLog iotCloudLog) {
 		Map<String, Object> map = new HashMap<String, Object>();
