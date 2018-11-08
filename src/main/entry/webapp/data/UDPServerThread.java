@@ -3,7 +3,6 @@ package main.entry.webapp.data;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,11 +66,11 @@ public class UDPServerThread extends Thread {
 					HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + info);
 					sendBeijingQj(ioTCloudDevice, iotCloudLog);
 				}
-				InetAddress address = packet.getAddress();
-				int port = packet.getPort();
-				byte[] data2 = "ok".getBytes();
-				DatagramPacket packet2 = new DatagramPacket(data2, data2.length, address, port);
-				socket.send(packet2);
+//				InetAddress address = packet.getAddress();
+//				int port = packet.getPort();
+//				byte[] data2 = "ok".getBytes();
+//				DatagramPacket packet2 = new DatagramPacket(data2, data2.length, address, port);
+//				socket.send(packet2);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -129,11 +128,11 @@ public class UDPServerThread extends Thread {
 				warning.put("acc_z_type", Integer.valueOf(data.substring(34, 36)));
 				warning.put("x_type", Integer.valueOf(data.substring(40, 42)));
 				warning.put("y_type", Integer.valueOf(data.substring(46, 48)));
-				monitoring.put("x", getData(data.substring(36, 37), data.substring(36, 40)));
-				monitoring.put("y", getData(data.substring(42, 43), data.substring(42, 46)));
-				monitoring.put("acc_x", getData(data.substring(18, 19), data.substring(18, 22)));
-				monitoring.put("acc_y", getData(data.substring(24, 25), data.substring(24, 28)));
-				monitoring.put("acc_z", getData(data.substring(30, 31), data.substring(30, 34)));
+				monitoring.put("x", Double.valueOf(getData(data.substring(36, 37), data.substring(36, 40))));
+				monitoring.put("y", Double.valueOf(getData(data.substring(42, 43), data.substring(42, 46))));
+				monitoring.put("acc_x", Double.valueOf(getData(data.substring(18, 19), data.substring(18, 22))));
+				monitoring.put("acc_y", Double.valueOf(getData(data.substring(24, 25), data.substring(24, 28))));
+				monitoring.put("acc_z", Double.valueOf(getData(data.substring(30, 31), data.substring(30, 34))));
 				map.put("warning", warning);
 				map.put("monitoring", monitoring);
 				String json = JSONObject.toJSONString(map);

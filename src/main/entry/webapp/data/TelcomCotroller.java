@@ -202,6 +202,10 @@ public class TelcomCotroller extends BaseController {
 							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 						sendWuhanQj(ioTCloudDevice, iotCloudLog);
+					} else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
+						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
+						sendBeijingQj(ioTCloudDevice, iotCloudLog);
 					} else {
 						send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 					}
@@ -229,11 +233,11 @@ public class TelcomCotroller extends BaseController {
 				warning.put("acc_z_type", Integer.valueOf(data.substring(34, 36)));
 				warning.put("x_type", Integer.valueOf(data.substring(40, 42)));
 				warning.put("y_type", Integer.valueOf(data.substring(46, 48)));
-				monitoring.put("x", getData(data.substring(36, 37), data.substring(36, 40)));
-				monitoring.put("y", getData(data.substring(42, 43), data.substring(42, 46)));
-				monitoring.put("acc_x", getData(data.substring(18, 19), data.substring(18, 22)));
-				monitoring.put("acc_y", getData(data.substring(24, 25), data.substring(24, 28)));
-				monitoring.put("acc_z", getData(data.substring(30, 31), data.substring(30, 34)));
+				monitoring.put("x", Double.valueOf(getData(data.substring(36, 37), data.substring(36, 40))));
+				monitoring.put("y", Double.valueOf(getData(data.substring(42, 43), data.substring(42, 46))));
+				monitoring.put("acc_x", Double.valueOf(getData(data.substring(18, 19), data.substring(18, 22))));
+				monitoring.put("acc_y", Double.valueOf(getData(data.substring(24, 25), data.substring(24, 28))));
+				monitoring.put("acc_z", Double.valueOf(getData(data.substring(30, 31), data.substring(30, 34))));
 				map.put("warning", warning);
 				map.put("monitoring", monitoring);
 				String json = JSONObject.toJSONString(map);
