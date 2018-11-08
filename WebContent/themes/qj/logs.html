@@ -59,9 +59,13 @@
 								<th>x加速度</th>
 								<th>y加速度</th>
 								<th>z加速度</th>
-								<th>x加速度报警</th>
-								<th>y加速度报警</th>
-								<th>z加速度报警</th>
+								<th>acc_x</th>
+								<th>acc_y</th>
+								<th>acc_z</th>
+								<th>rsrp</th>
+								<th>rssi</th>
+								<th>pci</th>
+								<th>snr</th>
 							</thead>
 							<tbody>
 								<tr v-for="item in datas">
@@ -79,6 +83,10 @@
 									<td v-text="item.acceXType"></td>
 									<td v-text="item.acceYType"></td>
 									<td v-text="item.acceZType"></td>
+									<td v-text="item.rsrp"></td>
+									<td v-text="item.rssi"></td>
+									<td v-text="item.pci"></td>
+									<td v-text="item.snr"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -113,6 +121,18 @@
 			success : function(res) {
 				for(var i in res.data){
 					res.data[i].createTime = jsDateTime(res.data[i].createTime);
+					  if( res.data[i].rsrp!=null&& res.data[i].rsrp!=''){
+					        res.data[i].rsrp = parseInt(res.data[i].rsrp);
+					    }
+					    if( res.data[i].rssi!=null&& res.data[i].rssi!=''){
+					        res.data[i].rssi = parseInt(res.data[i].rssi);
+					    }
+					    if( res.data[i].pci!=null&& res.data[i].pci!=''){
+					        res.data[i].pci = parseInt(res.data[i].pci);
+					    }
+					    if( res.data[i].snr!=null&& res.data[i].snr!=''){
+					        res.data[i].snr = parseInt(res.data[i].snr);
+					    }
 				}
 				new Vue({
 					el : '#data',

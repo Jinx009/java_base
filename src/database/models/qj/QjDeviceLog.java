@@ -53,5 +53,12 @@ public class QjDeviceLog {
     private Integer acceYType;
     @Column(name = "acce_z_type")
     private Integer acceZType;
-	
+    @Column(name = "rsrp")
+    private String rsrp;
+    @Column(name = "rssi")
+    private String rssi;
+    @Column(name = "pci")
+    private String pci;
+    @Column(name = "snr")
+    private String snr;
 }
