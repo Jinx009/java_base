@@ -156,10 +156,12 @@ public class QingjiaoDataController extends BaseController {
 				qjDeviceLog.setBaseAcceX(qjDevice.getBaseAcceX());
 				qjDeviceLog.setBaseAcceY(qjDevice.getBaseAcceY());
 				qjDeviceLog.setBaseAcceZ(qjDevice.getBaseAcceZ());
-				qjDeviceLog.setRssi(data.substring(52, 54));
-				qjDeviceLog.setPci(String.valueOf(Double.valueOf(getData(data.substring(62, 63), data.substring(62, 66)))*1000));
-				qjDeviceLog.setRsrp(String.valueOf(Double.valueOf(getData(data.substring(54, 55), data.substring(54, 58)))*1000));
-				qjDeviceLog.setSnr(String.valueOf(Double.valueOf(getData(data.substring(58, 59), data.substring(58, 62)))*1000));
+				if(data.length()>52){
+					qjDeviceLog.setRssi(data.substring(52, 54));
+					qjDeviceLog.setPci(String.valueOf(Double.valueOf(getData(data.substring(62, 63), data.substring(62, 66)))*1000));
+					qjDeviceLog.setRsrp(String.valueOf(Double.valueOf(getData(data.substring(54, 55), data.substring(54, 58)))*1000));
+					qjDeviceLog.setSnr(String.valueOf(Double.valueOf(getData(data.substring(58, 59), data.substring(58, 62)))*1000));
+				}
 				QjDeviceLog qjDeviceLog2 = qjDeviceLogService.getNearBySn(sn);
 				if("报警".equals(qjDevice.getType())){
 				if((qjDeviceLog2!=null&&!qjDeviceLog2.getBaseX().equals(qjDeviceLog.getBaseX())&&!qjDeviceLog2.getBaseY().equals(qjDeviceLog.getBaseY()))||qjDeviceLog2==null){
