@@ -108,11 +108,11 @@ public class QingjiaoDataController extends BaseController {
 				qjDevice.setSnValue(sn);
 				qjDevice.setType(type);
 				qjDevice.setCreateTime(new Date());
-				qjDevice.setBaseAcceX(getData10000(data.substring(18, 19), data.substring(18, 22)));
+				qjDevice.setBaseAcceX(getDataBase(data.substring(18, 19), data.substring(18, 22))+"/10000");
 				qjDevice.setAcceXType(Integer.valueOf(data.substring(22, 24)));
-				qjDevice.setBaseAcceY(getData10000(data.substring(24, 25), data.substring(24, 28)));
+				qjDevice.setBaseAcceY(getDataBase(data.substring(24, 25), data.substring(24, 28))+"/10000");
 				qjDevice.setAcceYType(Integer.valueOf(data.substring(28, 30)));
-				qjDevice.setBaseAcceZ(getData10000(data.substring(30, 31), data.substring(30, 34)));
+				qjDevice.setBaseAcceZ(getDataBase(data.substring(30, 31), data.substring(30, 34))+"/10000");
 				qjDevice.setAcceZType(Integer.valueOf(data.substring(34, 36)));
 				qjDevice.setBaseX(getData100(data.substring(36, 37), data.substring(36, 40)));
 				qjDevice.setXValue(getData100(data.substring(36, 37), data.substring(36, 40)));
@@ -127,11 +127,11 @@ public class QingjiaoDataController extends BaseController {
 			}else{
 				qjDevice.setType(type);
 				qjDevice.setCreateTime(new Date());
-				qjDevice.setBaseAcceX(getData10000(data.substring(18, 19), data.substring(18, 22)));
+				qjDevice.setBaseAcceX(getDataBase(data.substring(18, 19), data.substring(18, 22))+"/10000");
 				qjDevice.setAcceXType(Integer.valueOf(data.substring(22, 24)));
-				qjDevice.setBaseAcceY(getData10000(data.substring(24, 25), data.substring(24, 28)));
+				qjDevice.setBaseAcceY(getDataBase(data.substring(24, 25), data.substring(24, 28))+"/10000");
 				qjDevice.setAcceYType(Integer.valueOf(data.substring(28, 30)));
-				qjDevice.setBaseAcceZ(getData10000(data.substring(30, 31), data.substring(30, 34)));
+				qjDevice.setBaseAcceZ(getDataBase(data.substring(30, 31), data.substring(30, 34))+"/10000");
 				qjDevice.setAcceZType(Integer.valueOf(data.substring(34, 36)));
 				qjDevice.setXValue(String.valueOf(Double.valueOf(getData100(data.substring(36, 37), data.substring(36, 40)))-Double.valueOf(qjDevice.getBaseX())));
 				qjDevice.setBaseX(getData100(data.substring(36, 37), data.substring(36, 40)));
@@ -372,7 +372,7 @@ public class QingjiaoDataController extends BaseController {
 		return new Resp<>(true);
 	}
 	
-	private String getData10000(String index, String _d) throws Exception{
+	private String getDataBase(String index, String _d) throws Exception{
 		log.warn("index:{},data:{}",index,_d);
 		int _index = Integer.parseInt(index,16);
 		Integer a = Integer.valueOf(_d, 16);
@@ -402,7 +402,7 @@ public class QingjiaoDataController extends BaseController {
 		}else{
 			e = Integer.parseInt(_d, 16);
 		}
-		String result = String.valueOf(Double.valueOf(e)/10000);
+		String result = String.valueOf(Double.valueOf(e));
 		log.warn("result:{}",result);
 		return result;
 	}
