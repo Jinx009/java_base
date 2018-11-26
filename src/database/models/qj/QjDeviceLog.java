@@ -61,4 +61,6 @@ public class QjDeviceLog {
     private String pci;
     @Column(name = "snr")
     private String snr;
+    @Column(name = "tem")
+    private String tem;
 }

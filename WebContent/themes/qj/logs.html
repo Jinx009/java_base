@@ -66,6 +66,7 @@
 								<th>rssi</th>
 								<th>pci</th>
 								<th>snr</th>
+								<th>温度</th>
 							</thead>
 							<tbody>
 								<tr v-for="item in datas">
@@ -87,6 +88,7 @@
 									<td v-text="item.rssi"></td>
 									<td v-text="item.pci"></td>
 									<td v-text="item.snr"></td>
+									<td v-text="item.tem"></td>
 								</tr>
 							</tbody>
 						</table>
