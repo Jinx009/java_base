@@ -157,7 +157,11 @@ public class QingjiaoDataController extends BaseController {
 				qjDeviceLog.setBaseAcceY(qjDevice.getBaseAcceY());
 				qjDeviceLog.setBaseAcceZ(qjDevice.getBaseAcceZ());
 				if(data.length()>52){
-					qjDeviceLog.setTem(getData100(data.substring(52, 53), data.substring(52, 56)));
+					if("心跳".equals(qjDevice.getType())){
+						qjDeviceLog.setTem(getData100(data.substring(52, 53), data.substring(52, 56)));
+					}else{
+						qjDeviceLog.setTem("");
+					}
 					qjDeviceLog.setRssi(data.substring(56, 58));
 					qjDeviceLog.setPci(String.valueOf(Double.valueOf(getData(data.substring(58, 59), data.substring(58, 62)))*1000));
 					qjDeviceLog.setRsrp(String.valueOf(Double.valueOf(getData(data.substring(62, 63), data.substring(62, 66)))*1000));
