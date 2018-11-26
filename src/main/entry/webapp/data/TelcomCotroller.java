@@ -208,7 +208,10 @@ public class TelcomCotroller extends BaseController {
 							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 						sendBeijingQj(ioTCloudDevice, iotCloudLog);
-					} else {
+					}else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0")) {
+						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
+					}  else {
 						send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 					}
 				}
