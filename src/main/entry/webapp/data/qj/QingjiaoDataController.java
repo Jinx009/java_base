@@ -122,6 +122,7 @@ public class QingjiaoDataController extends BaseController {
 				qjDevice.setYType(Integer.valueOf(data.substring(46, 48)));
 				qjDevice.setVoltage(getData(data.substring(48, 49), data.substring(48, 52)));
 				qjDevice.setDoneType(1);
+				qjDevice.setNoticeType(0);
 				qjDeviceService.save(qjDevice);
 				
 			}else{
@@ -222,6 +223,7 @@ public class QingjiaoDataController extends BaseController {
 				qjDevice.setYType(Integer.valueOf(data.substring(46, 48)));
 				qjDevice.setVoltage(getData(data.substring(48, 49), data.substring(48, 52)));
 				qjDevice.setDoneType(1);
+				qjDevice.setNoticeType(0);
 				qjDeviceService.save(qjDevice);
 				
 			}else{
@@ -320,6 +322,7 @@ public class QingjiaoDataController extends BaseController {
 				qjDevice.setBaseY(getData(dataArray[18], dataArray[18] + dataArray[19] + dataArray[20] + dataArray[21]));
 				qjDevice.setVoltage(getData(dataArray[22], dataArray[22] + dataArray[23] + dataArray[24] + dataArray[25]));
 				qjDevice.setDoneType(1);
+				qjDevice.setNoticeType(0);
 				qjDeviceService.save(qjDevice);
 				
 			}else{
