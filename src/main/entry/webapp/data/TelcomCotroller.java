@@ -174,10 +174,12 @@ public class TelcomCotroller extends BaseController {
 								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
 							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 							sendBeijingQj(ioTCloudDevice, iotCloudLog);
-						}else if (ioTCloudDevice.getLocalIp() != null
-								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0")) {
-							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
-						}  else {
+						} else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
+							HttpUtils.get(
+									"http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
+							sendChaozhou(iotCloudLog.getData());
+						} else {
 							send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 						}
 					}
@@ -208,10 +210,11 @@ public class TelcomCotroller extends BaseController {
 							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 						sendBeijingQj(ioTCloudDevice, iotCloudLog);
-					}else if (ioTCloudDevice.getLocalIp() != null
-							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0")) {
+					} else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
-					}  else {
+						sendChaozhou(iotCloudLog.getData());
+					} else {
 						send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 					}
 				}
@@ -252,6 +255,117 @@ public class TelcomCotroller extends BaseController {
 		} catch (Exception e) {
 			log.error("error:{}", e);
 		}
+	}
+
+	private void sendChaozhou(String data) {
+		String type = data.substring(16, 18);
+		if (type.equals("68")) {
+			type = "报警";
+		} else {
+			type = "心跳";
+		}
+		try {
+			String acc_x = getDataBase(data.substring(18, 19), data.substring(18, 22)) + "/10000";
+			String acc_y = getDataBase(data.substring(24, 25), data.substring(24, 28)) + "/10000";
+			String acc_z = getDataBase(data.substring(30, 31), data.substring(30, 34)) + "/10000";
+			Integer acc_x_type = Integer.valueOf(data.substring(22, 24));
+			Integer acc_y_type = Integer.valueOf(data.substring(28, 30));
+			Integer acc_z_type = Integer.valueOf(data.substring(34, 36));
+			String sn = data.substring(0, 16);
+			String x = getData100(data.substring(36, 37), data.substring(36, 40));
+			String y = getData100(data.substring(42, 43), data.substring(42, 46));
+			Integer x_type = Integer.valueOf(data.substring(40, 42));
+			Integer y_type = Integer.valueOf(data.substring(46, 48));
+			String bat = getData(data.substring(48, 49), data.substring(48, 52));
+			String sign = "gdzxxxkjgfyxgs9981n";
+			String tem = "";
+			if ("心跳".equals(type)) {
+				tem = getData100(data.substring(52, 53), data.substring(52, 56));
+			}
+			String rssi = data.substring(56, 58);
+			String params = "type="+type+"&acc_x="+acc_x+"&acc_y="+acc_y+"&acc_z="+acc_z+"&acc_x_type="+acc_x_type+"&acc_y_type="+acc_y_type+"&acc_z_type="+acc_z_type+
+					"&sn="+sn+"&x="+x+"&y="+y+"&x_type="+x_type+"&y_type="+y_type+"&bat="+bat+"&tem="+tem+"&rssi="+rssi;
+			String SIGN = MD5Util.toMD5(params+sign);
+			params = params+"&sign="+SIGN;
+			HttpUtils.sendPost("http://zhxftest.gdzxkj.net/tiltSensor", params);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+
+	}
+	
+	public static void main(String[] args) {
+		new TelcomCotroller().sendChaozhou("000118112100000969000D00FFDB00FFE6000006000015000BE707D61FFDF500D800CF");
+	}
+
+	private String getDataBase(String index, String _d) throws Exception {
+		log.warn("index:{},data:{}", index, _d);
+		int _index = Integer.parseInt(index, 16);
+		Integer a = Integer.valueOf(_d, 16);
+		String b = Integer.toBinaryString(a);
+		String[] arrs = b.split("");
+		String[] arr = new String[16];
+		int i = 0;
+		for (String s : arrs) {
+			if (s != null && !"".equals(s)) {
+				arr[i] = s;
+				i++;
+			}
+		}
+		String c = "";
+		Integer e = Integer.parseInt(b, 2);
+		if (_index > 8) {
+			for (String d : arr) {
+				if (d != null && !"".equals(d)) {
+					if (d.equals("1")) {
+						c += "0";
+					} else {
+						c += "1";
+					}
+				}
+			}
+			e = (Integer.parseInt(c, 2) + 1) * -1;
+		} else {
+			e = Integer.parseInt(_d, 16);
+		}
+		String result = String.valueOf(Double.valueOf(e));
+		log.warn("result:{}", result);
+		return result;
+	}
+
+	private String getData100(String index, String _d) throws Exception {
+		log.warn("index:{},data:{}", index, _d);
+		int _index = Integer.parseInt(index, 16);
+		Integer a = Integer.valueOf(_d, 16);
+		String b = Integer.toBinaryString(a);
+		String[] arrs = b.split("");
+		String[] arr = new String[16];
+		int i = 0;
+		for (String s : arrs) {
+			if (s != null && !"".equals(s)) {
+				arr[i] = s;
+				i++;
+			}
+		}
+		String c = "";
+		Integer e = Integer.parseInt(b, 2);
+		if (_index > 8) {
+			for (String d : arr) {
+				if (d != null && !"".equals(d)) {
+					if (d.equals("1")) {
+						c += "0";
+					} else {
+						c += "1";
+					}
+				}
+			}
+			e = (Integer.parseInt(c, 2) + 1) * -1;
+		} else {
+			e = Integer.parseInt(_d, 16);
+		}
+		String result = String.valueOf(Double.valueOf(e) / 100);
+		log.warn("result:{}", result);
+		return result;
 	}
 
 	private void sendWuhanQj(IoTCloudDevice device, IotCloudLog iotCloudLog) {
