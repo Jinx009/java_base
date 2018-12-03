@@ -43,7 +43,6 @@ public class IotCloudLogDao extends BaseDao<IotCloudLog>{
 	@SuppressWarnings("unchecked")
 	public List<IotCloudLog> findByMacLike(String mac) {
 		String sql = " select *  from pro_log  where mac like  '%"+mac.toUpperCase()+"%'  order by id desc ";
-		System.out.println("sql:"+sql);
 		Query query = em.createNativeQuery(sql, IotCloudLog.class);
 		List<IotCloudLog> list = query.getResultList();
 		return list;

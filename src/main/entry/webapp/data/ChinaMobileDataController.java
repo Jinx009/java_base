@@ -41,7 +41,6 @@ public class ChinaMobileDataController extends BaseController {
 		for(Test test : list){
 			String mac = test.getMac().substring(8, 12);
 			List<IotCloudLog> logs = iotCloudLogService.findByMacLike(mac);
-			System.out.println("size:"+logs.size());
 			Test t = new Test();
 			t.setMac(test.getMac());
 			t.setA("");
