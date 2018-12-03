@@ -1,5 +1,6 @@
 package main.entry.webapp.data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,35 +24,58 @@ import service.basicFunctions.IotCloudLogService;
 
 @Controller
 @RequestMapping(value = "/china_mobile")
-public class ChinaMobileDataController extends BaseController{
+public class ChinaMobileDataController extends BaseController {
 
 	private static final Logger log = LoggerFactory.getLogger(ChinaMobileDataController.class);
-	
+
 	@Autowired
 	private IotCloudDeviceService iotCloudDeviceService;
 	@Autowired
 	private IotCloudLogService iotCloudLogService;
-	
+
+	@RequestMapping(path = "/test") 
+	@ResponseBody 
+	public List<Test> test(@RequestBody String data){
+		List<Test> list = JSONArray.parseArray(data, Test.class);
+		List<Test> tests = new ArrayList<Test>();
+		for(Test test : list){
+			String mac = test.getMac().substring(8, 12);
+			List<IotCloudLog> logs = iotCloudLogService.findByMacLike(mac);
+			System.out.println("size:"+logs.size());
+			Test t = new Test();
+			t.setMac(test.getMac());
+			t.setA("");
+			if(logs!=null&&!logs.isEmpty()){
+				t.setA("时间："+logs.get(0).getCreateTime().toString());
+			}
+			tests.add(t);
+		}
+		return tests;
+	}
+
 	/**
 	 * 中国移动数据推送
+	 * 
 	 * @param data
 	 * @return
 	 */
-	@RequestMapping(path = "/notice/push")
-	@ResponseBody
-	public String push(@RequestBody String data){//msg=xxx&nonce=xxx&signature=xxx 
+	@RequestMapping(path = "/notice/push") 
+	@ResponseBody 
+	public String push(@RequestBody String data) {// msg=xxx&nonce=xxx&signature=xxx
 		try {
-			//log.warn("msg:{},nonce:{},signature:{}",msg,nonce,signature);
-			log.warn("mobile_data:{}",data);
+			// log.warn("msg:{},nonce:{},signature:{}",msg,nonce,signature);
+			log.warn("mobile_data:{}", data);
 			JSONObject jsonObject = JSONObject.parseObject(data);
-			if(isJsonArray(data)){
+			if (isJsonArray(data)) {
 				JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("msg"));
 				JSONObject jsonObject2 = jsonArray.getJSONObject(0);
-				if(1==jsonObject2.getIntValue("type")){
-					List<ChinaMobilePushDataModel> list = JSONArray.parseArray(jsonObject.getString("msg"), ChinaMobilePushDataModel.class);
-					for(ChinaMobilePushDataModel model:list){
-						IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(String.valueOf(model.getDev_id()));
-						if(ioTCloudDevice!=null){
+				if (1 == jsonObject2.getIntValue("type")) {
+					List<ChinaMobilePushDataModel> list = JSONArray.parseArray(jsonObject.getString("msg"),
+							ChinaMobilePushDataModel.class);
+					for (ChinaMobilePushDataModel model : list) {
+						IoTCloudDevice ioTCloudDevice = iotCloudDeviceService
+								.findByDeviceId(String.valueOf(model.getDev_id()));
+						if (ioTCloudDevice != null) {
 							IotCloudLog iotCloudLog = new IotCloudLog();
 							iotCloudLog.setCreateTime(new Date());
 							iotCloudLog.setData(model.getValue());
@@ -64,11 +88,13 @@ public class ChinaMobileDataController extends BaseController{
 						}
 					}
 				}
-			}else{
+			} else {
 				log.warn("mobile_data:signle");
-				ChinaMobilePushDataModel chinaMobilePushDataModel = JSONObject.parseObject(jsonObject.getString("msg"), ChinaMobilePushDataModel.class);
-				if(1==chinaMobilePushDataModel.getType()){
-					IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(String.valueOf(chinaMobilePushDataModel.getDev_id()));
+				ChinaMobilePushDataModel chinaMobilePushDataModel = JSONObject.parseObject(jsonObject.getString("msg"),
+						ChinaMobilePushDataModel.class);
+				if (1 == chinaMobilePushDataModel.getType()) {
+					IoTCloudDevice ioTCloudDevice = iotCloudDeviceService
+							.findByDeviceId(String.valueOf(chinaMobilePushDataModel.getDev_id()));
 					IotCloudLog iotCloudLog = new IotCloudLog();
 					iotCloudLog.setCreateTime(new Date());
 					iotCloudLog.setData(chinaMobilePushDataModel.getValue());
@@ -81,13 +107,13 @@ public class ChinaMobileDataController extends BaseController{
 				}
 			}
 		} catch (Exception e) {
-			log.error("error:{}",e);
+			log.error("error:{}", e);
 			return e.toString();
 		}
 		return "success";
 	}
-	
-	private static boolean isJsonArray(String content){
+
+	private static boolean isJsonArray(String content) {
 		try {
 			JSONArray.parseArray(content);
 			return true;
@@ -95,5 +121,23 @@ public class ChinaMobileDataController extends BaseController{
 			return false;
 		}
 	}
-	
+
+}
+
+class Test {
+	private String mac;
+	private String a;
+	public String getMac() {
+		return mac;
+	}
+	public void setMac(String mac) {
+		this.mac = mac;
+	}
+	public String getA() {
+		return a;
+	}
+	public void setA(String a) {
+		this.a = a;
+	}
+
 }
