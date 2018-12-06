@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>本地生成mac号码</title>
+<script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+	function _new(){
+		var _front = $('#front').val(),_min = $('#min').val(),_max = $('#max').val();
+		_min = parseInt(_min);
+		_max = parseInt(_max);
+		var _htmlStr = '';
+		var _l = _front.length;
+		var _left = 16-_l;
+		for(var i =_min;i<=_max;i++){
+			var _t = i.toString(16);
+			var _temp = '';
+			if(_t.length<_left){
+				for(var j = 0;j<_left-_t.length;j++){
+					_temp+= '0';
+				}
+			}
+			_temp+= _t;
+			_htmlStr+= '<tr><td>'+(_front+_temp).toUpperCase()+'</td></tr>';
+		}
+		$('#data').html(_htmlStr);
+	}
+
+</script>
+</head>
+
+<body>
+<form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">前缀</label>
+    <input type="text" class="form-control" id="front" placeholder="输入前缀如：0001180614000">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">开始10进制</label>
+    <input type="text" class="form-control" id="min" placeholder="最小Macx序号：10进制数">
+  </div>
+   <div class="form-group">
+    <label for="exampleInputPassword1">生成个数</label>
+    <input type="text" class="form-control" id="max" placeholder="要生成个数">
+  </div>
+  <button type="button" onclick="_new()" class="btn btn-default" >生成</button>
+</form>
+<table  class="table">
+	<thread>
+		<tr>
+			<th>
+				Mac号码
+			</th>
+		</tr>
+
+	</thread>
+	<tbody id="data" ></tbody>
+</table>
+
+</body>
+</html>
