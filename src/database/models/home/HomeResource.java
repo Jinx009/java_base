@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "HOME_RESOURCE")
+@Table(name = "home_resource")
 public class HomeResource implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id

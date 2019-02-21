@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "HOME_RESOURCE_ROLE")
+@Table(name = "home_resource_role")
 public class HomeResourceRole implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id

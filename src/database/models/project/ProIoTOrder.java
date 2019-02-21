@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="PRO_IOT_ORDER")
+@Table(name="pro_iot_order")
 public class ProIoTOrder {
 
 	@Id

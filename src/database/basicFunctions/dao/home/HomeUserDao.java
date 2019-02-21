@@ -18,7 +18,7 @@ public class HomeUserDao extends BaseDao<HomeUser>{
 
 	@SuppressWarnings("unchecked")
 	public List<HomeUserVo> getHomeUser() throws ParseException {
-		String sql = "SELECT a.USER_NAME,a.ID,b.NAME,a.CREATE_TIME,b.LEVEL,a.STATUS,a.REAL_NAME FROM HOME_USER a,HOME_ROLE b,HOME_USER_ROLE c WHERE a.status = 1 AND a.ID!=1 AND a.ID = c.USER_ID AND c.ROLE_ID = b.ID";
+		String sql = "SELECT a.USER_NAME,a.ID,b.NAME,a.CREATE_TIME,b.LEVEL,a.STATUS,a.REAL_NAME FROM home_user a,home_role b,home_user_role c WHERE a.status = 1 AND a.ID!=1 AND a.ID = c.USER_ID AND c.ROLE_ID = b.ID";
 		Query query = em.createNativeQuery(sql);
 		List<Object> rows = query.getResultList();
 		List<HomeUserVo> list = new ArrayList<HomeUserVo>();

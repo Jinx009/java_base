@@ -17,7 +17,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "HOME_LOG")
+@Table(name = "home_log")
 @Getter
 @Setter
 public class HomeLog implements Serializable{
