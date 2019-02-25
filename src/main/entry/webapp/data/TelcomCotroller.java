@@ -136,6 +136,18 @@ public class TelcomCotroller extends BaseController {
 		}
 		return null;
 	}
+	
+	@RequestMapping(path = "/test")
+	@ResponseBody
+	public Resp<?> test() {
+		try {
+			IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByMac("0001181121000009");
+			sendChaozhou("000118112100000969000D00FFDB00FFE6000006000015000BE707D61FFDF500D800CF",ioTCloudDevice);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@RequestMapping(path = "/notice/na/iocm/devNotify/v1.1.0/updateDeviceDatas")
 	@ResponseBody
@@ -178,7 +190,7 @@ public class TelcomCotroller extends BaseController {
 								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
 							HttpUtils.get(
 									"http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
-							sendChaozhou(iotCloudLog.getData());
+							sendChaozhou(iotCloudLog.getData(),ioTCloudDevice);
 						} else {
 							send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 						}
@@ -213,7 +225,7 @@ public class TelcomCotroller extends BaseController {
 					} else if (ioTCloudDevice.getLocalIp() != null
 							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
-						sendChaozhou(iotCloudLog.getData());
+						sendChaozhou(iotCloudLog.getData(),ioTCloudDevice);
 					} else {
 						send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 					}
@@ -257,7 +269,7 @@ public class TelcomCotroller extends BaseController {
 		}
 	}
 
-	private void sendChaozhou(String data) {
+	private void sendChaozhou(String data,IoTCloudDevice ioTCloudDevice) {
 		String type = data.substring(16, 18);
 		if (type.equals("68")) {
 			type = "报警";
@@ -287,7 +299,7 @@ public class TelcomCotroller extends BaseController {
 					"&sn="+sn+"&x="+x+"&y="+y+"&x_type="+x_type+"&y_type="+y_type+"&bat="+bat+"&tem="+tem+"&rssi="+rssi;
 			String SIGN = MD5Util.toMD5(params+sign);
 			params = params+"&sign="+SIGN;
-			HttpUtils.sendPost("http://zhxftest.gdzxkj.net/tiltSensor", params);
+			HttpUtils.sendPost(ioTCloudDevice.getUdpIp(), params);
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
@@ -295,7 +307,7 @@ public class TelcomCotroller extends BaseController {
 	}
 	
 	public static void main(String[] args) {
-		new TelcomCotroller().sendChaozhou("000118112100000969000D00FFDB00FFE6000006000015000BE707D61FFDF500D800CF");
+		new TelcomCotroller().sendChaozhou("000118112100000969000D00FFDB00FFE6000006000015000BE707D61FFDF500D800CF",null);
 	}
 
 	private String getDataBase(String index, String _d) throws Exception {
