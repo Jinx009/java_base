@@ -95,11 +95,11 @@
 											<th>编号</th>
 											<th>MAC</th>
 											<th>电压</th>
-											<th>车位号</th>
+										<!-- 	<th>车位号</th> -->
 											<th>ParentMac</th>
 											<th>RouterMac</th>
 											<th>Area</th>
-											<th>RFID</th>
+								<!-- 			<th>RFID</th> -->
 											<th>有车</th>
 											<th>上次通信时间</th>
 											<th>操作</th>
@@ -110,11 +110,11 @@
 											<td v-text="item.id"></td>
 											<td style="color: blue;" v-text="item.mac" class="mac" v-bind:uid="item.lotNo" v-bind:mac="item.mac" onclick="showLog(this)" ></td>
 											<td v-text="item.batteryVoltage"></td>
-											<td v-text="item.desc"></td>
+										<!-- 	<td v-text="item.desc"></td> -->
 											<td v-text="item.parentMac"></td>
 											<td v-text="item.routerMac"></td>
 											<td v-text="item.areaName"></td>
-											<td v-text="item.bluetooth"></td>
+								<!-- 			<td v-text="item.bluetooth"></td> -->
 											<td>
 												<a v-if="1===item.available"
 													class='btn btn-success btn-xs' v-text="'有'" ></a>
@@ -124,7 +124,7 @@
 											<td v-text="item.lastSeenTime"></td>
 											<td>
 												<button class='btn btn-info btn-xs' v-bind:id="'_d'+item.mac" onclick="_goDetail(this);" v-text="'详情'" ></button>
-												<button class='btn btn-info btn-xs' v-bind:id="'_j'+item.mac" onclick="_goJob(this);"  v-text="'运行指令'"  ></button>
+											<!-- 	<button class='btn btn-info btn-xs' v-bind:id="'_j'+item.mac" onclick="_goJob(this);"  v-text="'运行指令'"  ></button> -->
 											</td>
 										</tr>
 									</tbody>
@@ -153,30 +153,7 @@
 	<script src="/themes/js/home/device/sensor.js?version=1.25"></script>
 	<script type="text/javascript">
 	function showLog(_e){
-		var mac = $(_e).attr('mac');
-		var myDate = new Date();
-		var _day = myDate.getDate();
-		_day = parseInt(_day);
-		if(_day<10){
-			_day = '0'+_day;
-		}
-		var _month = myDate.getMonth(); 
-		_month = parseInt(_month)+1;
-		if(_month<10){
-			_month = '0'+_month;
-		}
-		var _uid = $(_e).attr('uid');
-		if(_uid==1){
-			window.open('http://139.196.205.157/nb/heart_log/heart_log_'+_month+_day+'_'+mac+'.txt');
-		}else if(_uid==2){
-			window.open('http://139.196.205.157/nb/nb_coap/heart_log/heart_log_'+_month+_day+'_'+mac+'.txt');
-		}else if(_uid==3){
-			window.open('http://139.196.205.157/claa/heart_log/heart_log_'+_month+_day+'_'+mac+'.txt');
-		}else{
-			layer.alert('传统地磁不支持在线查看心跳！');
-		}
 		
-		/* window.open('http://39.108.12.220:801/heart_log/heart_log_'+_month+_day+'_'+mac+'.txt'); */
 	}
 	</script>
 </body>

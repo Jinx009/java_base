@@ -29,6 +29,8 @@ public class BusinessArea {
 	private Integer locationId;
 	@Column(name = "description")
 	private String description;
+	@Column(name = "send_url")
+	private String sendUrl;
 	@Column(name = "rec_st")
 	private Integer recSt;
 	@Column(name = "create_time")

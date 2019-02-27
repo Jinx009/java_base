@@ -35,7 +35,7 @@
     </bean>
     
  	<import resource="redis-context.xml"/> 
- 	
+ 	<context:property-placeholder file-encoding="UTF-8" />
  	<bean id="nbTransactionInterceptor" class="common.helper.nbTransactionInterceptor"/>
 	<!-- freemarker html视图渲染器 -->
 	<bean id="freemarkerConfig"
@@ -54,10 +54,10 @@
     </bean>
     <!-- dataSource -->
   	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-	    <property name="driverClassName" value="${jdbc.driverClassName}" />  
-	    <property name="url" value="${jdbc.url}" />  
-	    <property name="username" value="${jdbc.username}" />  
-        <property name="password" value="${jdbc.password}" />
+	    <property name="driverClassName" value="${jdbc.driverClassName}" />
+		 <property name="url" value="#{systemEnvironment['iot_hosting_rds_zhanwaydb_mysqlUrl']}" />
+		<property name="username" value="zhanway" />
+		<property name="password" value="Zhanway2017" />
          <property name="defaultAutoCommit" value="true" />
 	</bean>  
 	<!-- jpa -->

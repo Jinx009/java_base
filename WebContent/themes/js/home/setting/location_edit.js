@@ -33,8 +33,8 @@ function _edit(){
 	var _id = $('#id').text();
 	var _name = $('#name').val();
 	var _description = $('#description').val();
-	var _appInfoId = $('#appInfoId').val();
-	var _noticeType = $('#noticeType').val();
+	var _appInfoId = '';
+	var _noticeType = 0;
 	var _data = {};
 	_data.id = _id;
 	_data.description = _description;

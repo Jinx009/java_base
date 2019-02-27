@@ -55,9 +55,9 @@
 											<th>编号</th>
 											<th>名称</th>
 											<th>描述</th>
-											<th>appInfoId</th>
+									<!-- 		<th>appInfoId</th>
 											<th>appInfo描述</th>
-											<th>通知类型</th>
+											<th>通知类型</th> -->
 											<th>操作</th>
 										</tr>
 									</thead>
@@ -66,14 +66,14 @@
 											<td v-text="item.id"></td>
 											<td v-text="item.name"></td>
 											<td v-text="item.description"></td>
-											<td v-text="item.appInfoId"></td>
+								<!-- 			<td v-text="item.appInfoId"></td>
 											<td v-text="item.appInfoDesc"></td>
 											<td>
 												<button v-if="1===item.noticeType" class='btn btn-success btn-xs'>状态推送</button>
 												<button v-if="2===item.noticeType" class='btn btn-success btn-xs'>心跳推送</button>
 												<button v-if="3===item.noticeType" class='btn btn-success btn-xs'>双管道推送</button>
 												<button v-if="0===item.noticeType" class='btn btn-danger btn-xs'>不通知</button>
-											</td>
+											</td> -->
 											<td>
 												<button  class='btn btn-info btn-xs' v-bind:id="'_edit'+item.id" onclick="_edit(this);" >编辑</button>
 												<button  class='btn btn-info btn-xs'  v-bind:id="'_delete'+item.id" onclick="_delete(this);" >删除</button>

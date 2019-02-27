@@ -14,7 +14,7 @@ function _getData(){
 		success:function(res){
 			res.data.lastSeenTime = toDateTime(res.data.lastSeenTime);
 			res.data.createTime = toDateTime(res.data.createTime);
-			_getLocation();
+			//_getLocation();
 			new Vue({
 				el:'#data',
 				data:{
@@ -47,7 +47,7 @@ function _getLocation(){
 
 function _edit(){
 	var _mac = $('#mac').text();
-	var _locationId = $('#locationId').val();
+	var _locationId = '';
 	var _note = $('#note').val();
 	var _data = {};
 	_data.mac = _mac;

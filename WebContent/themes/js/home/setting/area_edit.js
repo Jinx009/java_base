@@ -32,8 +32,10 @@ function _edit(){
 	var _name = $('#name').val();
 	var _description = $('#description').val();
 	var _locationId = $('#locationId').val();
+	var _sendUrl = $('#sendUrl').val();
 	var _data = {};
 	_data.id = _id;
+	_data.sendUrl = _sendUrl;
 	_data.locationId = _locationId;
 	_data.description = _description;
 	_data.recSt = 1;
