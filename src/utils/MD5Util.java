@@ -61,6 +61,6 @@ public class MD5Util {
 	
       
     public static void main(String[] args){  
-         System.out.println(toMD5("zhanway_017").toLowerCase());  
+         System.out.println(toMD5("mac=0001170829000003&status=1&sign=zhanway_guozhi").toLowerCase());  
     }  
 }

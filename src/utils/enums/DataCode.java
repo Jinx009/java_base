@@ -26,8 +26,8 @@ public enum DataCode {
 	 DEVICE_SENSOR_SET_AREAL(    "device_sensor_setArea_1_0",          "deviceSensorService",      "setArea",     "sensor  设置区域",        true),
 	 DEVICE_SENSOR_SET_UPDATE(   "device_sensor_setUpdate_1_0",        "deviceSensorService",      "setUpdate",   "sensor  参数更新",        true),
 	 
-	 LOG_SENSOR_HEART(   		 "log_sensor_heart_1_0",        	   "logSensorLogService",      "heart",      "sensor  心跳日志",        true),
-	 LOG_SENSOR_STATUS(   		 "log_sensor_status_1_0",        	   "logSensorLogService",      "status",      "sensor 车检日志",        true),
+	 LOG_SENSOR_HEART(   		 "log_sensor_heart_1_0",        	   "logSensorLogService",      "heart",      "sensor  心跳日志",        false),
+	 LOG_SENSOR_STATUS(   		 "log_sensor_status_1_0",        	   "logSensorLogService",      "status",      "sensor 车检日志",        false),
 	 
 	 DEVICE_CROSS_SENSOR_LIST(   "device_cross_sensor_list_1_0",       "deviceCrossSensorService",  "list",        "cross_sensor page列表",  true),
 	 DEVICE_CROSS_SENSOR_DETAIL( "device_cross_sensor_detail_1_0",     "deviceCrossSensorService",  "detail",      "cross_sensor 详情",      true),
