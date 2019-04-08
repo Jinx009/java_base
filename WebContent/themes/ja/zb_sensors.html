@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>设备管理</title>
+    <link href="/themes/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/themes/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"  target="_blank"  href="http://www.zhanway.com"><img height="50px;" style="margin-top: -15px;" src="img/logo.png"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="device.html">设备信息</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a  target="_blank"  href="http://www.zhanway.com">走进展为</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="row" style="width: 98%;margin-left: 1%;" >
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">基本信息</div>
+            <div class="panel-body">
+         		<form class="form-inline">
+				  <div class="form-group">
+				    <label for="exampleInputName2">选择mac</label>
+				    <input type="text" class="form-control" id="mac" placeholder="请输入mac号">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputEmail2">选择街道</label>
+				    <select class="form-control" id="address" >
+					    <option value="共和路-（梅园路-华康路）ZB-031-1">共和路-（梅园路-华康路）ZB-031-1</option>
+					    <option value="共和路-（华康路-华盛路）ZB-031-2">共和路-（华康路-华盛路）ZB-031-2</option>
+					    <option value="华盛路-（恒通路-汉中路）ZB-032" >华盛路-（恒通路-汉中路）ZB-032</option>
+				    	<option value="光复路-（西藏北路-乌镇路）ZB-002">光复路-（西藏北路-乌镇路）ZB-002</option>
+				    	<option value="恒丰路路-（光复路-恒丰路桥北侧）ZB-026">恒丰路路-（光复路-恒丰路桥北侧）ZB-026</option>
+				    	<option value="光复路-（恒丰路桥下）ZBL-028">光复路-（恒丰路桥下）ZBL-028</option>
+				    	<option value="新疆路-（国庆路-乌镇路）ZB-035">新疆路-（国庆路-乌镇路）ZB-035</option>
+				    	<option value="新路-（虬江路-京江路）ZB-014">新路-（虬江路-京江路）ZB-014</option>
+				    	<option value="交通路-（虬江路-交通路）ZB-001">交通路-（虬江路-交通路）ZB-001</option>
+				    	<option value="运城路-（广中西路-灵石路）ZBW-010">运城路-（广中西路-灵石路）ZBW-010</option>
+				    
+				    	<option value="运城路-（宜川路-大宁路）ZBW-020" >运城路-（宜川路-大宁路）ZBW-020</option>
+				    	<option value="老沪太路-（运城路-沪太路）ZBW-014">老沪太路-（运城路-沪太路）ZBW-014</option>
+				    	<option value="会文路-（虬江路-永兴路）ZB-016">会文路-（虬江路-永兴路）ZB-016</option>
+				    	<option value="天通庵路-（宝昌路-通阁路）ZBL-001">天通庵路-（宝昌路-通阁路）ZBL-001</option>
+				    	<option value="中华新路-（西藏北路-断头路）ZB-020">中华新路-（西藏北路-断头路）ZB-020</option>
+				    	<option value="洛川东路-（600号-880号）ZBW-003">洛川东路-（600号-880号）ZBW-003</option>
+				    	<option value="大统路地道东侧便道-（天目西路-秣陵路）ZB-011">大统路地道东侧便道-（天目西路-秣陵路）ZB-011</option>
+				    	<option value="汉中路-（长安路-光复路）ZB-027">汉中路-（长安路-光复路）ZB-027</option>
+				    	<option value="沪太路-（150号-普善路）ZB-044">沪太路-（150号-普善路）ZB-044</option>
+				    	<option value="长安路-（梅园路-轨交1号线汉中路站出口）ZB-048">长安路-（梅园路-轨交1号线汉中路站出口）ZB-048</option>
+				    	<option value="芷江中路-（宝昌路-通阁路）JAZ-017">芷江中路-（宝昌路-通阁路）JAZ-017</option>
+				    	<option value="新马路-（新路-育婴堂路）JAZ-042">新马路-（新路-育婴堂路）JAZ-042</option>
+				    	<option value="8号线西藏北路3号口-（中山北路-上海地铁第四运营公司门口）">8号线西藏北路3号口-（中山北路-上海地铁第四运营公司门口）</option>
+				    	<option value="晋城路-（原平路-断头路路）ZBW-044">晋城路-（原平路-断头路路）ZBW-044</option>
+				    	<option value="临汾路-（长临路-断头路）ZBW-002">临汾路-（长临路-断头路）ZBW-002</option>
+				    	<option value="高平路-（阳城路-晋城路）ZBL-021">高平路-（阳城路-晋城路）ZBL-021</option>
+				    </select>
+				  </div>
+				  <a class="btn btn-default" onclick="_getData()" >查询</a>
+				</form>
+          </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mac地址</th>
+                        <th>车位号</th>
+                        <th>是否有车</th>
+                        <th>电压</th>
+                         <th>信号</th>
+                        <th>上次车检时间</th>
+                    </tr>
+                </thead>
+                <tbody id="data" >
+                    <tr v-for="item in datas" >
+                        <td v-text="item.mac" ></td>
+                        <td v-text="item.baseEnergy" ></td>
+                        <td>
+                        	<span v-if="1===item.available" class="label label-success">是</span>
+                        	<span v-if="0===item.available" class="label label-danger">否</span>
+                        </td>
+                        <td v-text="item.batteryVoltage" ></td>
+                         <td v-text="item.addr" ></td>
+                        <td v-text="item.lastSeenTime" ></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="control-sidebar-bg"></div>
+<script src="js/jquery.min.js"></script>
+<script src="/themes/dist/js/bootstrap.min.js"></script>
+<script src="/themes/js/vue.min.js"></script>
+<script src="js/device.js?_v=3.52"></script>
+</body>
+</html>
