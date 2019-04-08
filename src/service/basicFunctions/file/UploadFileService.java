@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 
-import service.basicFunctions.BaseService;
 import utils.StringUtil;
 import utils.model.BaseConstant;
 import utils.model.Resp;
 
 @Service
-public class UploadFileService extends BaseService {
+public class UploadFileService {
 
 	private static final Logger log = LoggerFactory.getLogger(UploadFileService.class);
 

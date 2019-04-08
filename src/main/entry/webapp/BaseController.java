@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
-import database.models.home.HomeUser;
+import database.models.HomeUser;
 import utils.IPUtil;
 import utils.StringUtil;
 import utils.model.BaseConstant;
@@ -36,7 +36,7 @@ public class BaseController {
 	public void setSessionHomeUser(HomeUser homeUser, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.setAttribute(BaseConstant.HOME_USER, homeUser);
-		session.setAttribute(BaseConstant.HOME_USER_REAL_NAME, homeUser.getRealName());
+		session.setAttribute(BaseConstant.HOME_USER_REAL_NAME, homeUser.getName());
 	}
 	
 	public void setSessionNull(HttpServletRequest request) {
