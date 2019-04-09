@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class PageController {
 	
+	
+	
 	/**
 	 * 跳转至首页
 	 * @return
@@ -15,10 +17,6 @@ public class PageController {
 		return "/index";
 	}
 	
-	@RequestMapping(value = "/iot-admin/welcome")
-	public String admin(){
-		return "/index";
-	}
 	
 	@RequestMapping(value = "/index")
 	public String index(){

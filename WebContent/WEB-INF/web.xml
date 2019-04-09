@@ -21,6 +21,16 @@
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <!-- 页面过滤器 -->
+    	<filter>
+		<filter-name>PageSessionFilter</filter-name>
+		<filter-class>main.entry.webapp.filter.PageFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>PageSessionFilter</filter-name>
+		<url-pattern>/p/*</url-pattern>
+	</filter-mapping>
+    
     <!-- 全局访问映射 -->
     <servlet>
         <servlet-name>nbBaseServlet</servlet-name>
