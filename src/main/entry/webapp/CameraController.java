@@ -1,5 +1,7 @@
 package main.entry.webapp;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +38,10 @@ public class CameraController extends BaseController{
 	 * 抓拍机新增页面
 	 * @return
 	 */
-	@RequestMapping(value = "/p/camera/add")
-	public String add(){
-		return "/page/camera_add";
+	@RequestMapping(value = "/p/camera/edit")
+	public String edit(HttpServletRequest req,Integer id){
+		req.setAttribute("id", id);
+		return "/page/camera_edit";
 	}
 	
 	/**
@@ -53,6 +56,24 @@ public class CameraController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			return new Resp<>(cameraService.findByPage(streetId, p));
+		} catch (Exception e) {
+			LOG.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 查询单个相机
+	 * @param streetId
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/d/camera/find")
+	@ResponseBody
+	public Resp<?> find(Integer streetId,Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(cameraService.find(id));
 		} catch (Exception e) {
 			LOG.error("e:{}",e);
 		}

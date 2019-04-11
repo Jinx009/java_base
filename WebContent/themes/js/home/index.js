@@ -30,12 +30,12 @@ function login() {
 			$('#errorMsg').html('密码不能为空！')
 		} else {
 			$.ajax({
-				url : '/data/login',
+				url : '/d/user/login',
 				type : 'post',
 				data : params,
 				success : function(res) {
 					if ('200' == res.code && '访问成功' == res.msg) {
-						_open('1','/p/device/router/list');
+						_open('1','/p/camera/list');
 					} else {
 						$('#errorMsg').html(res.msg)
 					}

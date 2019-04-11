@@ -51,5 +51,9 @@ public class CameraService {
 	public PageDataList<Camera> findByPage(Integer streetId,int pageNum){
 		return  cameraDao.findByPage(streetId,pageNum);
 	}
+
+	public Camera find(Integer id) {
+		return cameraDao.find(id);
+	}
 	
 }

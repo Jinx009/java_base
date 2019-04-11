@@ -1,7 +1,7 @@
 package service.basicFunctions;
 
 import java.util.Date;
-
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +53,9 @@ public class StreetService {
     public void delete(Integer id){
     	streetDao.delete(id);
     }
+
+	public List<Street> findAll() {
+		return streetDao.findAll();
+	}
     
 }
