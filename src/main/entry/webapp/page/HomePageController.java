@@ -15,6 +15,16 @@ public class HomePageController extends BaseController{
 		return "/home/pro_user";
 	}
 
+	@RequestMapping(path="/pro_switch")
+	public String pro_switch(){
+		return "/home/pro_switch";
+	}
+	
+	@RequestMapping(path="/pro_swim_switch")
+	public String pro_swim_switch(){
+		return "/home/pro_swim_switch";
+	}
+	
 	@RequestMapping(path = "/pro_swimming")
 	public String pro_swimming(){
 		return "/home/pro_swimming";
