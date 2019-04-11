@@ -141,11 +141,9 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
-<!-- 		<dependency>
-			<groupId>com.google.code.google-collections</groupId>
-			<artifactId>google-collect</artifactId>
-			<version>snapshot-20080530</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>com.google.code.google-collections</groupId> 
+			<artifactId>google-collect</artifactId> <version>snapshot-20080530</version> 
+			</dependency> -->
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
@@ -276,10 +274,25 @@
 			<artifactId>sdk-core-java</artifactId>
 			<version>1.0.4</version>
 		</dependency>
-	<!-- 	<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>17.0</version>
-		</dependency> -->
+
+			<dependency>
+				<groupId>org.eclipse.californium</groupId>
+				<artifactId>californium-core</artifactId>
+				<version>2.0.0-M3</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.californium</groupId>
+				<artifactId>element-connector</artifactId>
+				<version>2.0.0-M3</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.californium</groupId>
+				<artifactId>scandium</artifactId>
+				<version>2.0.0-M3</version>
+			</dependency>
+
+
+			<!-- <dependency> <groupId>com.google.guava</groupId> <artifactId>guava</artifactId> 
+				<version>17.0</version> </dependency> -->
 	</dependencies>
 </project>
