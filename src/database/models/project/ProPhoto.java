@@ -17,9 +17,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="pro_switch")
-public class ProSwitch {
-	
+@Table(name="pro_photo")
+public class ProPhoto {
+
 	@Id
 	@Column(unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +31,7 @@ public class ProSwitch {
 	private Date createTime;
 	@Column(name = "name")
 	private String name;
-	@Column(name = "reason")
-	private String reason;
 	@Column(name = "type")//时间段
 	private Integer type;
-
+	
 }

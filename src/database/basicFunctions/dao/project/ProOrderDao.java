@@ -96,5 +96,29 @@ public class ProOrderDao extends  BaseDao<ProOrder>{
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findByCriteria(queryParam);
 	}
+
+	public List<ProOrder> findOrder(Integer userId, String orderDate, String orderTime, int type) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("userId", userId);
+		queryParam.addParam("orderTime", orderTime);
+		queryParam.addParam("orderDate", orderDate);
+		queryParam.addParam("type", type);
+		return findByCriteria(queryParam);
+	}
+
+	public List<ProOrder> findOrder(String orderDate, String orderTime, int type) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("orderTime", orderTime);
+		queryParam.addParam("orderDate", orderDate);
+		queryParam.addParam("type", type);
+		return findByCriteria(queryParam);
+	}
+
+	public List<ProOrder> findOrderByTime(String dateStr, String time) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("orderTime", time);
+		queryParam.addParam("orderDate", dateStr);
+		return findByCriteria(queryParam);
+	}
 	
 }
