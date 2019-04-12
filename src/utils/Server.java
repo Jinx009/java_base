@@ -9,7 +9,7 @@ import org.eclipse.californium.core.CoapServer;
 import org.eclipse.californium.core.network.CoapEndpoint;
 import org.eclipse.californium.core.network.config.NetworkConfig;
 import org.eclipse.californium.core.server.resources.CoapExchange;
-import org.eclipse.californium.elements.tcp.TcpServerConnector;
+//import org.eclipse.californium.elements.tcp.TcpServerConnector;
  
 public class Server {
 	
@@ -20,12 +20,12 @@ public class Server {
 		final CoapServer server = new CoapServer();
 		
 		//默认就是ucp实现传输层
-		server.addEndpoint(new CoapEndpoint(new InetSocketAddress("127.0.0.1", 5683)));
-		
-		//加入tcp实现传输层
-		server.addEndpoint(new CoapEndpoint(
-				new TcpServerConnector(new InetSocketAddress("127.0.0.1", 5683), 4, 20000),
-				NetworkConfig.getStandard()));
+//		server.addEndpoint(new CoapEndpoint(new InetSocketAddress("127.0.0.1", 5683)));
+//		
+//		//加入tcp实现传输层
+//		server.addEndpoint(new CoapEndpoint(
+//				new TcpServerConnector(new InetSocketAddress("127.0.0.1", 5683), 4, 20000),
+//				NetworkConfig.getStandard()));
 		
 		//可以加入dtls支持，也就是coaps
 //		server.addEndpoint(new CoapEndpoint(
