@@ -1,5 +1,7 @@
 package main.entry.webapp.page;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,15 +10,34 @@ import main.entry.webapp.BaseController;
 @Controller
 public class FrontPageController extends BaseController{
 
-	@RequestMapping(value = "/f/p/login")
+	@RequestMapping(value = "/f/login")
 	public String login(){
 		return "/front/login";
 	}
 	
-	@RequestMapping(value = "/f/p/register")
+	@RequestMapping(value = "/f/register")
 	public String register(){
 		return "/front/register";
 	}
+	
+	@RequestMapping(value = "/f/base")
+	public String base(){
+		return "/front/base";
+	}
+	
+	
+	@RequestMapping(value = "/f/p/index")
+	public String index(){
+		return "/front/index";
+	}
+	
+	@RequestMapping(value = "/f/p/select")
+	public String select(HttpServletRequest req,String type,String dateStr){
+		req.setAttribute("dateStr", dateStr);
+		req.setAttribute("type", type);
+		return "/front/select";
+	}
+	
 	
 	@RequestMapping(value = "/f/p/pro_order")
 	public String pro_order(){

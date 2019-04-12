@@ -11,7 +11,7 @@ function _getData(_type,_index){
 	var _data = {};
 	_data.p = _getPage(_type,_index);
 	var orderDate = $('#orderDate').val();;
-	var type = 2;
+	var type = 3;
 	if(orderDate!=_orderDate||_type!=type){
 		_data.p = 1;
 		_orderDate = orderDate;

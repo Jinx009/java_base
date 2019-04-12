@@ -58,7 +58,7 @@ function _login(_m,_p){
 			if('200'==res.code){
 				 setLocalStorage('userId',res.data.id);
 				 setLocalStorage('type',res.data.type);
-				_open('icon-settings-','/front/p/me');
+				 location.href = '/f/p/me';
 			}
 		}
 	})

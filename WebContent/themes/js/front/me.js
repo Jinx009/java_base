@@ -49,5 +49,5 @@ function _out(){
 	setLocalStorage('_m','');
 	setLocalStorage('_p','');
 	setLocalStorage('_url','/f/p/me');
-	location.href = '/f/p/pro_diving';
+	location.href = '/f/login';
 }

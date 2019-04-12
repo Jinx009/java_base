@@ -12,7 +12,7 @@ function _getData(_type,_index){
 	_data.p = _getPage(_type,_index);
 	var orderDate = $('#orderDate').val();
 	if(orderDate!=_orderDate){
-		_data.p = 3;
+		_data.p = 1;
 		_orderDate = orderDate;
 	}
 	if(_data.p!=-1){

@@ -32,7 +32,7 @@ public class ProUserService {
 		proUser.setDesc(desc);
 		proUser.setMobilePhone(mobilePhone);
 		proUser.setName(name);
-		proUser.setPwd(pwd);
+		proUser.setPwd(MD5Util.md5(pwd));
 		proUser.setRemarkA(remarkA);
 		proUser.setRemarkB(remarkB);
 		proUser.setRemarkC(remarkC);
@@ -63,7 +63,7 @@ public class ProUserService {
 		return proUserDao.findByMobilePhone(userName);
 	}
 
-	public Object register(String userName, String pwd) {
+	public ProUser register(String userName, String pwd) {
 		ProUser proUser = new ProUser();
 		proUser.setCreateTime(new Date());
 		proUser.setMobilePhone(userName);

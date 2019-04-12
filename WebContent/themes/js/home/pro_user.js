@@ -3,12 +3,12 @@ $(function(){
 })
 var _d = '';
 var  _nowPage = 0,_max = 0;
-var _name = '',_type = 0;
+var _name = '',_type_ = 0;
 function _getData(_type,_index){
 	var _data = {};
 	_data.p = _getPage(_type,_index);
 	var name = $('#name').val(),type = $('#type').val();
-	if(name!=_name||type!=_type){
+	if(name!=_name||type!=_type_){
 		_data.p = 1;
 		_name = name;
 		_type = type;
@@ -52,8 +52,8 @@ function _save(){
 	if(_mobilePhone==''||_name==''||_pwd==''){
 		layer.alert('手机号，密码，名称为必填项！');
 	}else{
-		var _params = 'mobilePhone='+_mobilePhone+'&name='+_name+'&type='+_type+'&remarkA='+_remarkA+
-			'&remarkB='+_remarkB+'&remarkC='+_remarkC+'&pwd='+_pwd+'&desc='+_desc;
+		var _params = 'mobilePhone='+_mobilePhone+'&name='+_name+'&type='+_type+
+			'&remarkB='+_remarkB+'&pwd='+_pwd+'&desc='+_desc;
 		$.ajax({
 			url:'/d/user/homeSave',
 			type:'post',

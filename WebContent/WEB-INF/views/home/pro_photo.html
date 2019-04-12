@@ -16,7 +16,6 @@
     	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
 <body class="hold-transition skin-blue fixed sidebar-mini">
 	<!-- Site wrapper -->
 	<div class="wrapper">
@@ -26,14 +25,14 @@
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> 教室预定</a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> 开关管理</a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
 			<section class="content"  id="data">
 								<div class="box box-default">
 					<div class="box-header with-border">
-						<h3 class="box-title">筛选条件</h3>
+						<h3 class="box-title">新建开关</h3>
 						<div class="box-tools pull-right">
 							<button type="button" class="btn btn-box-tool"
 								data-widget="collapse">
@@ -45,14 +44,25 @@
 						<div class="row">
 							<div class="col-md-3">
 								<div class="form-group">
-									<label>预约日期</label> 
-									<input type="text" id="orderDate" class="form-control" readonly="readonly" >
+									<label>日期</label> 
+									<input type="text" id="dateStr" class="form-control" readonly="readonly" >
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>时段</label> <select id="type"
+										class="form-control select2 select2-hidden-accessible" 
+										style="width: 100%;" tabindex="-1" aria-hidden="true">
+										<option value="1" >上午</option>
+										<option value="2" >下午</option>
+										<option value="3" >夜间</option>
+									</select>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>操作</label> 
-									<input type="button" class="btn btn-default btn-xs form-control" onclick="_getData(0,1)" value="查询" >
+									<input type="button" class="btn btn-default btn-xs form-control" onclick="_save();" value="提交" >
 								</div>
 							</div>
 						</div>
@@ -62,7 +72,7 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">场地预约列表</h3>
+								<h3 class="box-title">历史记录</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body table-responsive no-padding">
@@ -70,34 +80,22 @@
 									<thead>
 										<tr>
 											<th>编号</th>
-											<th>用户类型</th>
-											<th>预订者姓名</th>
-											<th>联系人手机</th>
-											<th>预定日期</th>
-											<th>预定时间</th>
-											<th>上报人数</th>
-											<th>实到人数</th>
-											<th>备注</th>
+											<th>时间</th>
+											<th>时段</th>
+											<th>状态</th>
+											<th>创建时间</th>
 											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr v-for="item in datas.list">
 											<td v-text="item.id"></td>
-											<td v-text="item.userType"></td>
+											<td v-text="item.dateStr"></td>
 											<td v-text="item.name"></td>
-											<td v-text="item.mobilePhone"></td>
-											<td v-text="item.orderDate"></td>
-											<td v-text="item.orderTime"></td>
-											<td v-text="item.num"></td>
-											<th>
-												<input type="text" class="form-control input-sm" style="width: 100px;height: 25px;" v-bind:id="'realNum'+item.id" v-bind:value="item.realNum" >
-											</th>
+											<td>不开放</td>
+											<td v-text="item.createTime">
 											<td>
-												<input type="text" class="form-control input-sm" style="width: 100px;height: 25px;" v-bind:id="'remark'+item.id" v-bind:value="item.remark" >
-											</td>
-											<td>
-												<button  v-bind:id="'_remark'+item.id" onclick="_saveRemark(this);" class="btn btn-danger btn-xs">保存</button>
+												<button   v-bind:id="'item.id" onclick="_del(this);"   class="btn btn-danger btn-xs">删除</button>
 											</td>
 										</tr>
 									</tbody>
@@ -124,7 +122,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_class_room.js?version=1.26"></script>
+	<script src="/themes/js/home/pro_photo.js?version=1.14"></script>
 
 </body>
 </html>

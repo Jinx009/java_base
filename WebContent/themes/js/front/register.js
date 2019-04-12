@@ -23,7 +23,7 @@ function register(){
 		   type:'post',
 		   success:function(res){
 			   if('200'==res.code){
-			    	location.href = '/f/p/pro_login';
+			    	location.href = '/f/login';
 			   }else{
 				   layer.open({
 				    content: res.msg

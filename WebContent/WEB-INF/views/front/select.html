@@ -1,0 +1,93 @@
+<#include "m_header.html">
+<input type="hidden" id="_type" value="${type}" />
+<div class="content" style="margin-top: 20px;">
+	<div class="content-block">
+		<div class="list-block">
+			<ul>
+				<li>
+					<div class="item-content">
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title label" style="font-size: 15px;">
+								日期<font>&nbsp;</font>
+							</div>
+							<div class="item-input">
+								<input type="text" style="font-size: 15px;" id="_dateStr"
+									value="${dateStr}" readonly="readonly">
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="item-content">
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title label" style="font-size: 15px;">
+								时间<font>&nbsp;</font>
+							</div>
+							<div class="item-input">
+								<input type="text" style="font-size: 15px;" id="type"
+									value="" readonly="readonly">
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="item-content">
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title label" style="font-size: 15px;">
+								参与人数<font style="color: red;">&nbsp;*</font>
+							</div>
+							<div class="item-input">
+								<input type="text" style="font-size: 15px;" id="num" onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();" 
+									placeholder="请输入随行人数" value="0">
+							</div>
+						</div>
+					</div>
+				</li>
+						<li>
+					<div class="item-content">
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							 <p><a href="#" class="button bb button-warning" id="zyq">自由潜</a></p>
+							 <p><a href="#" class="button bb  button-warning" id="sfq">水肺潜</a></p>
+							 <p><a href="#" class="button  bb button-warning" id="yx">&nbsp;&nbsp;游泳&nbsp;&nbsp;</a></p>
+							 <p><a href="#" class="button bb  button-warning" id="js">&nbsp;&nbsp;教室&nbsp;&nbsp;</a></p>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="item-content">
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title label" style="font-size: 15px;">
+								备注<font style="color: red;">&nbsp;</font>
+							</div>
+							<div class="item-input">
+								<input type="text" style="font-size: 15px;" id="remark"
+									placeholder="">
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<p><a href="#" class="button button-success" onclick="_save()">确认预约</a></p>
+		<div style="height: 30px;"></div>
+	</div>
+</div>
+
+<script src="/themes/js/front/base.js?_v=0.04"></script>
+<script src="/themes/js/front/select.js?_v=0.18"></script>
+<#include "m_footer.html">

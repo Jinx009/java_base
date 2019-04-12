@@ -73,10 +73,10 @@ public class ProOrderDataController extends BaseController {
 	 */
 	@RequestMapping(path = "/save")
 	@ResponseBody
-	public Resp<?> save(String orderDate, Integer type, Integer userId, Integer userType, Integer num) {
+	public Resp<?> save(String orderDate, Integer type, Integer userId, Integer userType, Integer num,String remark,Integer orderTime) {
 		Resp<?> resp = new Resp<>(true);
 		try {
-			proOrderService.save(orderDate, userType, userId, type, num);
+			proOrderService.save(orderDate,type, userId, userType,  num, remark,  orderTime);
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}", e);
@@ -183,23 +183,23 @@ public class ProOrderDataController extends BaseController {
 							js++;
 						}
 					}
-					str+= "水肺潜水："+sf+"人|";
-					if(js<1){
-						str+= "教室A：可预订|";
-					}else{
-						str+= "教室A：已预订|";
-					}
-					str+= "自由潜水："+zy+"人|";
-					if(js<2){
-						str+= "教室B：可预订|";
-					}else{
-						str+= "教室B：已预订|";
-					}
-					if(proPhoto!=null){
-						str+= "水下摄像：已预订";
-					}else{
-						str+= "水下摄像：可预订";
-					}
+				}
+				str+= "水肺潜水："+sf+"人|";
+				if(js<1){
+					str+= "教室A：可预订|";
+				}else{
+					str+= "教室A：已预订|";
+				}
+				str+= "自由潜水："+zy+"人|";
+				if(js<2){
+					str+= "教室B：可预订|";
+				}else{
+					str+= "教室B：已预订|";
+				}
+				if(proPhoto!=null){
+					str+= "水下摄像：已预订";
+				}else{
+					str+= "水下摄像：可预订";
 				}
 				map.put("sw", str);
 			}
@@ -225,23 +225,23 @@ public class ProOrderDataController extends BaseController {
 							js++;
 						}
 					}
-					str+= "水肺潜水："+sf+"人|";
-					if(js<1){
-						str+= "教室A：可预订|";
-					}else{
-						str+= "教室A：已预订|";
-					}
-					str+= "自由潜水："+zy+"人|";
-					if(js<2){
-						str+= "教室B：可预订|";
-					}else{
-						str+= "教室B：已预订|";
-					}
-					if(proPhoto!=null){
-						str+= "水下摄像：已预订";
-					}else{
-						str+= "水下摄像：可预订";
-					}
+				}
+				str+= "水肺潜水："+sf+"人|";
+				if(js<1){
+					str+= "教室A：可预订|";
+				}else{
+					str+= "教室A：已预订|";
+				}
+				str+= "自由潜水："+zy+"人|";
+				if(js<2){
+					str+= "教室B：可预订|";
+				}else{
+					str+= "教室B：已预订|";
+				}
+				if(proPhoto!=null){
+					str+= "水下摄像：已预订";
+				}else{
+					str+= "水下摄像：可预订";
 				}
 				map.put("xw", str);
 			}
@@ -267,23 +267,23 @@ public class ProOrderDataController extends BaseController {
 							js++;
 						}
 					}
-					str+= "水肺潜水："+sf+"人|";
-					if(js<1){
-						str+= "教室A：可预订|";
-					}else{
-						str+= "教室A：已预订|";
-					}
-					str+= "自由潜水："+zy+"人|";
-					if(js<2){
-						str+= "教室B：可预订|";
-					}else{
-						str+= "教室B：已预订|";
-					}
-					if(proPhoto!=null){
-						str+= "水下摄像：已预订|";
-					}else{
-						str+= "水下摄像：可预订|";
-					}
+				}
+				str+= "水肺潜水："+sf+"人|";
+				if(js<1){
+					str+= "教室A：可预订|";
+				}else{
+					str+= "教室A：已预订|";
+				}
+				str+= "自由潜水："+zy+"人|";
+				if(js<2){
+					str+= "教室B：可预订|";
+				}else{
+					str+= "教室B：已预订|";
+				}
+				if(proPhoto!=null){
+					str+= "水下摄像：已预订|";
+				}else{
+					str+= "水下摄像：可预订|";
 				}
 				ProSwimSwitch proSwimSwitch = proSwimSwitchService.findByDateStr(dateStr);
 				if(proSwimSwitch!=null){
@@ -293,6 +293,7 @@ public class ProOrderDataController extends BaseController {
 				}
 				map.put("yj", str);
 			}
+			return new Resp<>(map);
 		} catch (Exception e) {
 			log.error("e:{}", e);
 		}
@@ -313,39 +314,39 @@ public class ProOrderDataController extends BaseController {
 	public Resp<?> getButtons(Integer userId, String orderDate, String orderTime, String userType) {
 		Resp<?> resp = new Resp<>(false);
 		Map<String, String> map = new HashMap<>();
-		map.put("zyq", "1");
-		map.put("sfq", "1");
-		map.put("yx", "1");
-		map.put("js", "1");
+		map.put("zyq", "0");
+		map.put("sfq", "0");
+		map.put("yx", "0");
+		map.put("js", "0");
 		try {
 			if ("5".equals(userType)) {
-				map.put("zyq", "0");
-				map.put("sfq", "0");
-				map.put("yx", "0");
-				map.put("js", "0");
 				return new Resp<>(map);
-			} else if ("4".equals(userType)) {
+			} 
+			if ("4".equals(userType)) {
 				map.put("zyq", "1");
 				List<ProOrder> list = proOrderService.findOrder(userId, orderDate, orderTime, 1);
 				if (list != null && !list.isEmpty()) {
 					map.put("zyq", "0");
 				}
 				return new Resp<>(map);
-			} else if ("3".equals(userType)) {
+			} 
+			if ("3".equals(userType)) {
 				map.put("sfq", "1");
 				List<ProOrder> list = proOrderService.findOrder(userId, orderDate, orderTime, 2);
 				if (list != null && !list.isEmpty()) {
 					map.put("sfq", "0");
 				}
 				return new Resp<>(map);
-			} else if ("2".equals(userType)) {
+			} 
+			if ("2".equals(userType)) {
 				map.put("yx", "1");
 				List<ProOrder> list = proOrderService.findOrder(userId, orderDate, orderTime, 3);
 				if (list != null && !list.isEmpty()) {
 					map.put("yx", "0");
 				}
 				return new Resp<>(map);
-			} else if ("1".equals(userType)) {
+			} 
+			if ("1".equals(userType)) {
 				map.put("zyq", "1");
 				map.put("sfq", "1");
 				map.put("js", "1");

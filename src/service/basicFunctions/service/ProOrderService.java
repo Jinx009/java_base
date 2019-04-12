@@ -47,12 +47,12 @@ public class ProOrderService {
 		}
 	}
 
-	public void save(String orderDate, Integer type, Integer userId, Integer userType, Integer num) {
+	public void save(String orderDate, Integer type, Integer userId, Integer userType, Integer num, String remark, Integer orderTime2) {
 		String orderTime = "上午";
-		if (type == 2) {
+		if (orderTime2 == 2) {
 			orderTime = "下午";
 		}
-		if (type == 3) {
+		if (orderTime2 == 3) {
 			orderTime = "夜间";
 		}
 		String _userType = "普通账户";
@@ -86,6 +86,7 @@ public class ProOrderService {
 		proOrder.setType(type);
 		proOrder.setUserId(userId);
 		proOrder.setUserType(_userType);
+		proOrder.setRemark(remark);
 		proOrderDao.save(proOrder);
 	}
 

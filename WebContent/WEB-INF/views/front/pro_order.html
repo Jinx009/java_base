@@ -11,15 +11,16 @@ body{
 </style>
 <div class="content" style="background: #eeeeee;margin-top: 0;" >
 	<div class="buttons-tab">
-		<a href="#tab1" class="tab-link active button">潜水池</a> <a href="#tab2"
-			class="tab-link button">泳池</a> <a href="#tab3"
-			class="tab-link button">教室</a>
+		<a href="#tab1" class="tab-link active button">自由潜</a> 
+		<a href="#tab2" class="tab-link button">水肺潜</a>  
+			<a href="#tab3" class="tab-link button">游泳</a>
+			<a href="#tab4" class="tab-link button">教室</a>
 	</div>
 	<div class="content-block" >
 		<div class="tabs" style="margin-top: 0;" >
 			<div id="tab1" class="tab active">
-				<div style="width: 96%;margin-left: 2%;" class="content-block" id="diving" >
-					<div class="card"  v-for="item in diving" style="width: 100%;margin:0;margin-top: 15px;" > 
+				<div style="width: 96%;margin-left: 2%;" class="content-block" id="zyq" >
+					<div class="card"  v-for="item in zyq" style="width: 100%;margin:0;margin-top: 15px;" > 
 					  <div class="card-content">
 					      <div class="card-content-inner" v-html="item.orderDate+'&nbsp;&nbsp;&nbsp;&nbsp;'+item.orderTime" ></div>
 					    </div>
@@ -28,8 +29,8 @@ body{
 				</div>
 			</div>
 			<div id="tab2" class="tab">
-				<div  style="width: 96%;margin-left: 2%;"  class="content-block" id="swimming" >
-					<div class="card"  v-for="item in swimming" style="width: 100%;margin:0;margin-top: 15px;" > 
+				<div  style="width: 96%;margin-left: 2%;"  class="content-block" id="sfq" >
+					<div class="card"  v-for="item in sfq" style="width: 100%;margin:0;margin-top: 15px;" > 
 					  <div class="card-content">
 					      <div class="card-content-inner" v-html="item.orderDate+'&nbsp;&nbsp;&nbsp;&nbsp;'+item.orderTime" ></div>
 					    </div>
@@ -38,8 +39,18 @@ body{
 				</div>
 			</div>
 			<div id="tab3" class="tab">
-				<div  style="width: 96%;margin-left: 2%;"  class="content-block" id="class_room" >
-					<div class="card"  v-for="item in class_room" style="width: 100%;margin:0;margin-top: 15px;" > 
+				<div  style="width: 96%;margin-left: 2%;"  class="content-block" id="yy" >
+					<div class="card"  v-for="item in yy" style="width: 100%;margin:0;margin-top: 15px;" > 
+					  <div class="card-content">
+					      <div class="card-content-inner" v-html="item.orderDate+'&nbsp;&nbsp;&nbsp;&nbsp;'+item.orderTime" ></div>
+					    </div>
+					    <div class="card-footer" v-text="'预约人数：'+item.num" ></div>
+				  </div>
+				</div>
+			</div>
+			<div id="tab4" class="tab">
+				<div  style="width: 96%;margin-left: 2%;"  class="content-block" id="js" >
+					<div class="card"  v-for="item in js" style="width: 100%;margin:0;margin-top: 15px;" > 
 					  <div class="card-content">
 					      <div class="card-content-inner" v-html="item.orderDate+'&nbsp;&nbsp;&nbsp;&nbsp;'+item.orderTime" ></div>
 					    </div>
@@ -51,5 +62,5 @@ body{
 	</div>
 </div>
 <script src="/themes/js/front/base.js?_v=0.01" ></script>
-<script src="/themes/js/front/pro_order.js?_v=1.05" ></script>
+<script src="/themes/js/front/pro_order.js?_v=1.06" ></script>
 <#include "m_footer.html">

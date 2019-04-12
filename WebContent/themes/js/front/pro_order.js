@@ -14,32 +14,40 @@ function _getData(){
 			dataType:'json',
 			type:'post',
 			success:function(res){
-				var _diving = [],_swimming =[],_class_room = [];
+				var _zyq = [],_sfq =[],_yy = [],_js=[];
 				for(var i in res.data){
 					if(res.data[i].type==1){
-						_diving.push(res.data[i]);
+						_zyq.push(res.data[i]);
 					}else if(res.data[i].type==2){
-						_swimming.push(res.data[i]);
+						_sfq.push(res.data[i]);
 					}else if(res.data[i].type==3){
-						_class_room.push(res.data[i]);
+						_yy.push(res.data[i]);
+					}else if(res.data[i].type==4){
+						_js.push(res.data[i]);
 					}
 				}
 				new Vue({
-					el:'#diving',
+					el:'#zyq',
 					data:{
-						diving:_diving
+						zyq:_zyq
 					}
 				})
 				new Vue({
-					el:'#swimming',
+					el:'#sfq',
 					data:{
-						swimming:_swimming
+						sfq:_sfq
 					}
 				})
 				new Vue({
-					el:'#class_room',
+					el:'#yy',
 					data:{
-						class_room:_class_room
+						yy:_yy
+					}
+				})
+				new Vue({
+					el:'#js',
+					data:{
+						js:_js
 					}
 				})
 			}

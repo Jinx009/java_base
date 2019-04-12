@@ -13,6 +13,14 @@
 	</context-param>
 	<!-- 后台数据拦截 -->
 	<filter>
+		<filter-name>FrontPageSessionFilter</filter-name>
+		<filter-class>main.entry.filter.FrontPageFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>FrontPageSessionFilter</filter-name>
+		<url-pattern>/f/p/*</url-pattern>
+	</filter-mapping>
+	<filter>
 		<filter-name>HomeDataSessionFilter</filter-name>
 		<filter-class>main.entry.filter.HomeDataFilter</filter-class>
 	</filter>

@@ -67,6 +67,12 @@ function _newDate_1(){
 	var time = date.Format("yyyy-MM-dd");  
 	return time;
 }
+function _newDate_2(){
+	var date = new Date();//获取当前时间  
+	date.setDate(date.getDate()+1);//设置天数 -1 天  
+	var time = date.Format("yyyy-MM-dd");  
+	return time;
+}
 function _newDate(){
 	var date = new Date();//获取当前时间  
 	var time = date.Format("yyyy-MM-dd");  

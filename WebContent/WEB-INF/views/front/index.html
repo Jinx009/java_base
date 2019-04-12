@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>预约概况</title>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="/themes/css/sm.min.css">
+</head>
+<body style="background: #f7f7f8" >
+	<div class="content" >
+		<div class="content-block"  >
+			<div class="list-block">
+				<ul>
+					<li>
+						<div class="item-content">
+							<div class="item-inner">
+								<div class="item-title label">日期</div>
+								<div class="item-input">
+									<input type="text" placeholder="" id="my-input" onchange="_getData();">
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		  <div class="card " id="a" style="border-radius:.6rem;"  onclick="_go('1')">
+		    <div class="card-header" style="font-size: .75rem;color: red;"  >&nbsp;&nbsp;10:00至14:00泳池预定情况</div>
+		    <div class="card-content" id="a1">
+		      <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">
+		      		<font style="width: 48%;display: inline-block;" id="a11"></font>
+		      		<font style="width: 48%;display: inline-block;"  id="a12"></font>
+		      </div>
+		      <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">
+		      		<font style="width: 48%;display: inline-block;" id="a13"></font>
+		      		<font style="width: 48%;display: inline-block;" id="a14" ></font>
+		      </div>
+		      <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">
+		      		<font style="width: 48%;display: inline-block;" id="a15"></font>
+		      		<font style="width: 48%;display: inline-block;" id="a16" ></font>
+		      </div>
+		    </div>
+		  </div>
+		   <div class="card " id="b" style="border-radius:.6rem;margin-top: 1.7em;" onclick="_go('2')">
+		    <div class="card-header" style="font-size: .75rem;color: red;"  >&nbsp;&nbsp;14:00至18:00泳池预定情况</div>
+		    <div class="card-content" id="b1">
+		      <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">
+		      		<font style="width: 48%;display: inline-block;" id="b11"></font>
+		      		<font style="width: 48%;display: inline-block;" id="b12" ></font>
+		      </div>
+		      <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">
+		      		<font style="width: 48%;display: inline-block;" id="b13"></font>
+		      		<font style="width: 48%;display: inline-block;"  id="b14"></font>
+		      </div>
+		      <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">
+		      		<font style="width: 48%;display: inline-block;" id="b15"></font>
+		      		<font style="width: 48%;display: inline-block;"  id="b16"></font>
+		      </div>
+		    </div>
+		  </div>
+		   <div class="card " id="c" style="border-radius:.6rem;margin-top: 1.7em;" onclick="_go('3')">
+		    <div class="card-header" style="font-size: .75rem;color: red;"  >&nbsp;&nbsp;18:00至22:00泳池预定情况</div>
+		    <div class="card-content" id="c1">
+		      <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">
+		      		<font style="width: 48%;display: inline-block;" id="c11"></font>
+		      		<font style="width: 48%;display: inline-block;" id="c12" ></font>
+		      </div>
+		      <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">
+		      		<font style="width: 48%;display: inline-block;" id="c13"></font>
+		      		<font style="width: 48%;display: inline-block;" id="c14" ></font>
+		      </div>
+		      <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">
+		      		<font style="width: 48%;display: inline-block;" id="c15"></font>
+		      		<font style="width: 48%;display: inline-block;"  id="c16"></font>
+		      </div>
+		    </div>
+		  </div>
+	</div>
+	<script type='text/javascript' src='/themes/js/zepto.min.js' charset='utf-8'></script>
+	<script type='text/javascript' src='/themes/js/sm.min.js' charset='utf-8'></script>
+	<script src="/themes/js/front/base.js?_v=0.04"></script>
+	<script type="text/javascript">
+		var _date = _newDate_1();
+		$(function(){
+			$("#my-input").calendar({
+				minDate : _date
+			});
+			_date = _newDate();
+			$('#my-input').val(_date);
+			_getData();
+		})
+		function _getData(){
+			var date = $('#my-input').val();			
+			 $.ajax({
+		    	   url:'/d/order/base',
+		    	   data:'dateStr='+date,
+		    	   dataType:'json',
+		    	   type:'post',
+		    	   success:function(res){
+		    		  var sw = res.data.sw;
+		    		  var xw = res.data.xw;
+		    		  var yj = res.data.yj;
+		    		 $('#a1').html(' <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">'+
+		 		      		'<font style="width: 48%;display: inline-block;" id="a11"></font><font style="width: 48%;display: inline-block;"  id="a12"></font></div>'+
+		 		      		'<div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;"><font style="width: 48%;display: inline-block;" id="a13"></font>'+
+		 		      		'<font style="width: 48%;display: inline-block;" id="a14" ></font></div>'+
+		 		      		'<div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">'+
+		 		      		'<font style="width: 48%;display: inline-block;" id="a15"></font>'+
+		 		      		'<font style="width: 48%;display: inline-block;" id="a16" ></font></div>');
+		    		 $('#b1').html(' <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">'+
+			 		      		'<font style="width: 48%;display: inline-block;" id="b11"></font><font style="width: 48%;display: inline-block;"  id="b12"></font></div>'+
+			 		      		'<div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;"><font style="width: 48%;display: inline-block;" id="b13"></font>'+
+			 		      		'<font style="width: 48%;display: inline-block;" id="b14" ></font></div>'+
+			 		      		'<div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">'+
+			 		      		'<font style="width: 48%;display: inline-block;" id="b15"></font>'+
+			 		      		'<font style="width: 48%;display: inline-block;" id="b16" ></font></div>');
+		    		 $('#c1').html(' <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">'+
+			 		      		'<font style="width: 48%;display: inline-block;" id="c11"></font><font style="width: 48%;display: inline-block;"  id="c12"></font></div>'+
+			 		      		'<div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;"><font style="width: 48%;display: inline-block;" id="c13"></font>'+
+			 		      		'<font style="width: 48%;display: inline-block;" id="c14" ></font></div>'+
+			 		      		'<div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .3rem;">'+
+			 		      		'<font style="width: 48%;display: inline-block;" id="c15"></font>'+
+			 		      		'<font style="width: 48%;display: inline-block;" id="c16" ></font></div>');
+		    		  if(sw.split('|')[0]=='#'){
+		    			  $('#a').attr('onclick','');
+		    			  $('#a').css({'background':'#3d41453d'});
+		    			  $('#a1').css({'color':'white'});
+		    			  var text = sw.split('|')[1];
+		    			  $('#a1').html(' <div class="card-content-inner"  style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .4rem;text-align:center;color:#3d41453d;">#</div>'+
+		    			  '<div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .4rem;text-align:center;">'+text+'</div>'+
+		    			  '<div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .4rem;text-align:center;color:#3d41453d;">#</div>');
+		    		  
+		    		  }else{
+		    			  $('#a').attr('onclick','_go(1)');
+		    			  $('#a').css({'background':'#fff'});
+		    			  $('#a1').css({'color':'black'});
+		    			  var _arr = sw.split('|');
+		    			  for(var i in _arr){
+		    				  $('#a1'+i).text(_arr[i]);
+		    			  }
+		    		  }
+		    		  if(xw.split('|')[0]=='#'){
+		    			  $('#b').attr('onclick','');
+		    			  $('#b').css({'background':'#3d41453d'});
+		    			  $('#b1').css({'color':'white'});
+		    			  var text = xw.split('|')[1];
+		    			  $('#b1').html(' <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .4rem;text-align:center;color:#3d41453d;">#</div>'+
+		    			  '<div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .4rem;text-align:center;">'+text+'</div>'+
+		    			  '<div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .4rem;text-align:center;color:#3d41453d;">#</div>');
+		    		  }else{
+		    			  $('#b').attr('onclick','_go(2)');
+		    			  $('#b').css({'background':'#fff'});
+		    			  $('#b1').css({'color':'black'});
+		    			  var _arr = xw.split('|');
+		    			  for(var i in _arr){
+		    				  $('#b1'+i).text(_arr[i]);
+		    			  }
+		    		  }
+		    		  if(yj.split('|')[0]=='#'){
+		    			  $('#c').css({'background':'#3d41453d'});
+		    			  $('#c1').css({'color':'white'});
+		    			  var text = yj.split('|')[1];
+		    			  $('#c').attr('onclick','');
+		    			  $('#c1').html(' <div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .4rem;text-align:center;color:#3d41453d;">#</div>'+
+		    			  '<div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .4rem;text-align:center;">'+text+'</div>'+
+		    			  '<div class="card-content-inner" style="padding-left: .9rem;padding-top: .35rem;padding-bottom: .4rem;text-align:center;color:#3d41453d;">#</div>');
+		    		  }else{
+		    			  $('#c').attr('onclick','_go(3)');
+		    			  $('#c').css({'background':'#fff'});
+		    			  $('#c1').css({'color':'black'});
+		    			  var _arr = yj.split('|');
+		    			  for(var i in _arr){
+		    				  $('#c1'+i).text(_arr[i]);
+		    			  }
+		    		  }
+		    	   }
+		       })
+		}
+		function _go(type){
+			location.href = '/f/p/select?dateStr='+$('#my-input').val()+'&type='+type;
+		}
+	</script>
+
+</body>
+</html>

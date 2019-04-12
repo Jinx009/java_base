@@ -37,7 +37,7 @@ public class FrontPageFilter implements Filter {
 		ProUser proUser = (ProUser)session.getAttribute(BaseConstant.FRONT_USER);
 		// 通过检查session中的变量，过虑请求
 		if(proUser==null){
-			httpServletResponse.sendRedirect("/f/p/register");
+			httpServletResponse.sendRedirect("/f/login");
 			return;
 		}
 		chain.doFilter(request, response);
