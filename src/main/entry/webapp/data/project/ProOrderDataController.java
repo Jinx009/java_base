@@ -76,6 +76,21 @@ public class ProOrderDataController extends BaseController {
 	public Resp<?> save(String orderDate, Integer type, Integer userId, Integer userType, Integer num,String remark,Integer orderTime) {
 		Resp<?> resp = new Resp<>(true);
 		try {
+			String time = "";
+			if(orderTime.equals("1")) {
+				time = "上午";
+			}
+			if(orderTime.equals("2")) {
+				time = "下午";
+			}
+			if(orderTime.equals("3")) {
+				time = "夜间";
+			}
+			List<ProOrder> proOrder = proOrderService.findOrder(userId, orderDate, time, type);
+			if(proOrder!=null&&!proOrder.isEmpty()) {
+				resp.setMsg("不能重复预定！");
+				return resp;
+			}
 			proOrderService.save(orderDate,type, userId, userType,  num, remark,  orderTime);
 			return new Resp<>(true);
 		} catch (Exception e) {
@@ -170,31 +185,31 @@ public class ProOrderDataController extends BaseController {
 				int sf = 0;
 				int zy = 0;
 				int js = 0;
-				List<ProOrder> list = proOrderService.findOrderByTime(dateStr, "1");
+				List<ProOrder> list = proOrderService.findOrderByTime(dateStr, "上午");
 				if(list!=null&&!list.isEmpty()){
 					for(ProOrder proOrder:list){
 						if(proOrder.getType()==1){
-							zy++;
+							zy+= proOrder.getNum();
 						}
 						if(proOrder.getType()==2){
-							sf++;
+							sf+= proOrder.getNum();
 						}
 						if(proOrder.getType()==4){
-							js++;
+							js+= proOrder.getNum();
 						}
 					}
 				}
-				str+= "水肺潜水："+sf+"人|";
+				str+= "水肺潜水：<font style='color:red;' >"+sf+"</font>人|";
 				if(js<1){
 					str+= "教室A：可预订|";
 				}else{
-					str+= "教室A：已预订|";
+					str+= "教室A：<font style='color:red;' >已预订</font>|";
 				}
-				str+= "自由潜水："+zy+"人|";
+				str+= "自由潜水：<font style='color:red;' >"+zy+"</font>人|";
 				if(js<2){
 					str+= "教室B：可预订|";
 				}else{
-					str+= "教室B：已预订|";
+					str+= "教室B：<font style='color:red;' >已预订</font>|";
 				}
 				if(proPhoto!=null){
 					str+= "水下摄像：已预订";
@@ -212,31 +227,31 @@ public class ProOrderDataController extends BaseController {
 				int sf = 0;
 				int zy = 0;
 				int js = 0;
-				List<ProOrder> list = proOrderService.findOrderByTime(dateStr, "2");
+				List<ProOrder> list = proOrderService.findOrderByTime(dateStr, "下午");
 				if(list!=null&&!list.isEmpty()){
 					for(ProOrder proOrder:list){
 						if(proOrder.getType()==1){
-							zy++;
+							zy+= proOrder.getNum();
 						}
 						if(proOrder.getType()==2){
-							sf++;
+							sf+= proOrder.getNum();
 						}
 						if(proOrder.getType()==4){
-							js++;
+							js+= proOrder.getNum();
 						}
 					}
 				}
-				str+= "水肺潜水："+sf+"人|";
+				str+= "水肺潜水：<font style='color:red;' >"+sf+"</font>人|";
 				if(js<1){
 					str+= "教室A：可预订|";
 				}else{
-					str+= "教室A：已预订|";
+					str+= "教室A：<font style='color:red;' >已预订</font>|";
 				}
-				str+= "自由潜水："+zy+"人|";
+				str+= "自由潜水：<font style='color:red;' >"+zy+"</font>人|";
 				if(js<2){
 					str+= "教室B：可预订|";
 				}else{
-					str+= "教室B：已预订|";
+					str+= "教室B：<font style='color:red;' >已预订</font>|";
 				}
 				if(proPhoto!=null){
 					str+= "水下摄像：已预订";
@@ -254,31 +269,31 @@ public class ProOrderDataController extends BaseController {
 				int sf = 0;
 				int zy = 0;
 				int js = 0;
-				List<ProOrder> list = proOrderService.findOrderByTime(dateStr, "3");
+				List<ProOrder> list = proOrderService.findOrderByTime(dateStr, "夜间");
 				if(list!=null&&!list.isEmpty()){
 					for(ProOrder proOrder:list){
 						if(proOrder.getType()==1){
-							zy++;
+							zy+= proOrder.getNum();
 						}
 						if(proOrder.getType()==2){
-							sf++;
+							sf+= proOrder.getNum();
 						}
 						if(proOrder.getType()==4){
-							js++;
+							js+= proOrder.getNum();
 						}
 					}
 				}
-				str+= "水肺潜水："+sf+"人|";
+				str+= "水肺潜水：<font style='color:red;' >"+sf+"</font>人|";
 				if(js<1){
 					str+= "教室A：可预订|";
 				}else{
-					str+= "教室A：已预订|";
+					str+= "教室A：<font style='color:red;' >已预订</font>|";
 				}
-				str+= "自由潜水："+zy+"人|";
+				str+= "自由潜水：<font style='color:red;' >"+zy+"</font>人|";
 				if(js<2){
 					str+= "教室B：可预订|";
 				}else{
-					str+= "教室B：已预订|";
+					str+= "教室B：<font style='color:red;' >已预订</font>|";
 				}
 				if(proPhoto!=null){
 					str+= "水下摄像：已预订|";

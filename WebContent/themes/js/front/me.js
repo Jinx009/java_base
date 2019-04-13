@@ -24,7 +24,7 @@ function _getData(){
 	})
 }
 function _save(){
-	var _params = 'userId='+_userId+'&name='+$('#name').val()+'&pwd='+$('#pwd').val()+'&remarkB='+$('#remarkB').val();
+	var _params = 'userId='+_userId+'&name='+$('#name').val()+'&pwd='+$('#pwd').val()+'&remarkB=';
 	$.ajax({
 		url:'/d/user/update',
 		data:_params,

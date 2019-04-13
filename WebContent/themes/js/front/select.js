@@ -94,7 +94,7 @@ function _setType(type){
 		_t = 1;
 	}
 	if('sfq'==type){
-		_t = 1;
+		_t = 2;
 	}
 	if('yx'==type){
 		_t = 3;
