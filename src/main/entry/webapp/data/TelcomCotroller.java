@@ -1,6 +1,8 @@
 package main.entry.webapp.data;
 
+import java.math.BigDecimal;
 import java.net.DatagramSocket;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -350,7 +352,13 @@ public class TelcomCotroller extends BaseController {
 	}
 	
 	public static void main(String[] args) {
-		new TelcomCotroller().sendChaozhou("000118112100000969000D00FFDB00FFE6000006000015000BE707D61FFDF500D800CF",null);
+//		new TelcomCotroller().sendChaozhou("000118112100000969000D00FFDB00FFE6000006000015000BE707D61FFDF500D800CF",null);
+		try {
+			new TelcomCotroller().getData10000( "4500","4");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private String getDataBase(String index, String _d) throws Exception {
@@ -418,7 +426,11 @@ public class TelcomCotroller extends BaseController {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		String result = String.valueOf(Double.valueOf(e) / 100);
+		Double r = Double.valueOf(e)/100;
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result =  decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
@@ -453,7 +465,11 @@ public class TelcomCotroller extends BaseController {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		String result = String.valueOf(Double.valueOf(e) / 10000);
+		Double r = Double.valueOf(e)/10000;
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result =  decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
@@ -525,11 +541,17 @@ public class TelcomCotroller extends BaseController {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		String result = String.valueOf(Double.valueOf(e) / 1000);
+		Double r = Double.valueOf(e)/1000;
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result =  decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
 
+
+	
 	/**
 	 * 设备注册
 	 * 

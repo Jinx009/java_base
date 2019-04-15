@@ -1,8 +1,10 @@
 package main.entry.webapp.data;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -154,7 +156,11 @@ public class UDPServerThread extends Thread {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		String result = String.valueOf(Double.valueOf(e) / 100);
+		Double r = Double.valueOf(e)/100;
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result =  decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
@@ -189,7 +195,11 @@ public class UDPServerThread extends Thread {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		String result = String.valueOf(Double.valueOf(e) / 10000);
+		Double r = Double.valueOf(e)/10000;
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result =  decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
@@ -224,7 +234,11 @@ public class UDPServerThread extends Thread {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		String result = String.valueOf(Double.valueOf(e) / 1000);
+		Double r = Double.valueOf(e)/1000;
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result =  decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
