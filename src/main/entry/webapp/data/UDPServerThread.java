@@ -99,15 +99,21 @@ public class UDPServerThread extends Thread {
 	private void sendPushi(String data, IoTCloudDevice ioTCloudDevice) throws NumberFormatException, Exception {
 		Map<String, Object> map = new HashMap<>();
 		Map<String, Object> sendData = new HashMap<>();
-		map.put("deviceId", ioTCloudDevice.getUdpIp().split("|")[0]);
-		map.put("apikey", ioTCloudDevice.getUdpIp().split("|")[1]);
-		Double x =  Double.valueOf(getData(data.substring(36, 37), data.substring(36, 40)));
-		Double y =  Double.valueOf(getData(data.substring(42, 43), data.substring(42, 46)));
-		Double z =  Double.valueOf(getData(data.substring(46, 47), data.substring(46, 50)));
-		Double gX = Double.valueOf(getData(data.substring(18, 19), data.substring(18, 22)));
-		Double gY = Double.valueOf(getData(data.substring(24, 25), data.substring(24, 28)));
-		Double gZ = Double.valueOf(getData(data.substring(30, 31), data.substring(30, 34)));
-		sendData.put("103_1", x+","+y+","+z+","+gX+","+gY+","+gZ);
+		map.put("deviceId", ioTCloudDevice.getUdpIp().split("_")[0]);
+		map.put("apikey", ioTCloudDevice.getUdpIp().split("_")[1]);
+		String type = data.substring(16, 18);
+		if (type.equals("68")) {
+			type = "报警";
+		} else {
+			type = "心跳";
+		}
+		String acc_x = getData10000(data.substring(18, 19), data.substring(18, 22)) ;
+		String acc_y = getData10000(data.substring(24, 25), data.substring(24, 28)) ;
+		String acc_z = getData10000(data.substring(30, 31), data.substring(30, 34));
+		String x = getData100(data.substring(36, 37), data.substring(36, 40));
+		String y = getData100(data.substring(42, 43), data.substring(42, 46));
+		String z = getData100(data.substring(58, 59), data.substring(58, 62));
+		sendData.put("103_1", x+","+y+","+z+","+acc_x+","+acc_y+","+acc_z);
 		map.put("data", sendData);
 		String json = JSONObject.toJSONString(map);
 		log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
@@ -116,6 +122,78 @@ public class UDPServerThread extends Thread {
 		String res = HttpUtils.postJson(url, json);
 		log.warn("send res-----------------------\n:{}\n---------------------------------", res);
 	}
+
+	
+	private String getData100(String index, String _d) throws Exception {
+		log.warn("index:{},data:{}", index, _d);
+		int _index = Integer.parseInt(index, 16);
+		Integer a = Integer.valueOf(_d, 16);
+		String b = Integer.toBinaryString(a);
+		String[] arrs = b.split("");
+		String[] arr = new String[16];
+		int i = 0;
+		for (String s : arrs) {
+			if (s != null && !"".equals(s)) {
+				arr[i] = s;
+				i++;
+			}
+		}
+		String c = "";
+		Integer e = Integer.parseInt(b, 2);
+		if (_index > 8) {
+			for (String d : arr) {
+				if (d != null && !"".equals(d)) {
+					if (d.equals("1")) {
+						c += "0";
+					} else {
+						c += "1";
+					}
+				}
+			}
+			e = (Integer.parseInt(c, 2) + 1) * -1;
+		} else {
+			e = Integer.parseInt(_d, 16);
+		}
+		String result = String.valueOf(Double.valueOf(e) / 100);
+		log.warn("result:{}", result);
+		return result;
+	}
+	
+	private String getData10000(String index, String _d) throws Exception {
+		log.warn("index:{},data:{}", index, _d);
+		int _index = Integer.parseInt(index, 16);
+		Integer a = Integer.valueOf(_d, 16);
+		String b = Integer.toBinaryString(a);
+		String[] arrs = b.split("");
+		String[] arr = new String[16];
+		int i = 0;
+		for (String s : arrs) {
+			if (s != null && !"".equals(s)) {
+				arr[i] = s;
+				i++;
+			}
+		}
+		String c = "";
+		Integer e = Integer.parseInt(b, 2);
+		if (_index > 8) {
+			for (String d : arr) {
+				if (d != null && !"".equals(d)) {
+					if (d.equals("1")) {
+						c += "0";
+					} else {
+						c += "1";
+					}
+				}
+			}
+			e = (Integer.parseInt(c, 2) + 1) * -1;
+		} else {
+			e = Integer.parseInt(_d, 16);
+		}
+		String result = String.valueOf(Double.valueOf(e) / 10000);
+		log.warn("result:{}", result);
+		return result;
+	}
+	
 	private String getData(String index, String _d) throws Exception {
 		log.warn("index:{},data:{}", index, _d);
 		int _index = Integer.parseInt(index, 16);
