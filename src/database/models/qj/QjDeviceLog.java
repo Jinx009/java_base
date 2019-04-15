@@ -34,6 +34,8 @@ public class QjDeviceLog {
     private String voltage;
     @Column(name = "y_type")
     private Integer yType;
+    @Column(name = "z_type")
+    private Integer zType;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time")
     private Date createTime;
@@ -41,6 +43,8 @@ public class QjDeviceLog {
     private String baseX;
     @Column(name = "base_y")
     private String baseY;
+    @Column(name = "base_z")
+    private String baseZ;
     @Column(name = "base_acce_x")
     private String baseAcceX;
     @Column(name = "base_acce_y")

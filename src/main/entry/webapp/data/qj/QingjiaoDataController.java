@@ -92,6 +92,11 @@ public class QingjiaoDataController extends BaseController {
 		return resp;
 	}
 
+	/**
+	 * 潮州带温度
+	 * @param data
+	 * @return
+	 */
 	@RequestMapping(path = "/zhanway/push/1_0")
 	@ResponseBody
 	public Resp<?> pushZhanwayV1_0(String data) {
@@ -206,6 +211,131 @@ public class QingjiaoDataController extends BaseController {
 		}
 		return new Resp<>(true);
 	}
+	
+	/**
+	 * 普质 带z轴
+	 * @param data
+	 * @return
+	 */
+	@RequestMapping(path = "/zhanway/push/2_0")
+	@ResponseBody
+	public Resp<?> pushZhanwayV2_0(String data) {
+		try {
+			String sn = data.substring(0, 16);
+			String type = data.substring(16, 18);
+			if (type.equals("68")) {
+				type = "报警";
+			} else {
+				type = "心跳";
+			}
+			QjDevice qjDevice = qjDeviceService.findBySn(sn);
+			if (qjDevice == null) {
+				qjDevice = new QjDevice();
+				qjDevice.setSnValue(sn);
+				qjDevice.setType(type);
+				qjDevice.setCreateTime(new Date());
+				qjDevice.setBaseAcceX(getDataBase(data.substring(18, 19), data.substring(18, 22)) + "/10000");
+				qjDevice.setAcceXType(Integer.valueOf(data.substring(22, 24)));
+				qjDevice.setBaseAcceY(getDataBase(data.substring(24, 25), data.substring(24, 28)) + "/10000");
+				qjDevice.setAcceYType(Integer.valueOf(data.substring(28, 30)));
+				qjDevice.setBaseAcceZ(getDataBase(data.substring(30, 31), data.substring(30, 34)) + "/10000");
+				qjDevice.setAcceZType(Integer.valueOf(data.substring(34, 36)));
+				qjDevice.setBaseX(getData100(data.substring(36, 37), data.substring(36, 40)));
+				qjDevice.setXValue(getData100(data.substring(36, 37), data.substring(36, 40)));
+				qjDevice.setBaseY(getData100(data.substring(42, 43), data.substring(42, 46)));
+				qjDevice.setYValue(getData100(data.substring(42, 43), data.substring(42, 46)));
+				qjDevice.setXType(Integer.valueOf(data.substring(40, 42)));
+				qjDevice.setYType(Integer.valueOf(data.substring(46, 48)));
+				qjDevice.setVoltage(getData(data.substring(48, 49), data.substring(48, 52)));
+				qjDevice.setDoneType(1);
+				qjDevice.setNoticeType(0);
+				qjDevice.setBusinessType(1);
+				qjDeviceService.save(qjDevice);
+
+			} else {
+				qjDevice.setType(type);
+				qjDevice.setCreateTime(new Date());
+				qjDevice.setBaseAcceX(getDataBase(data.substring(18, 19), data.substring(18, 22)) + "/10000");
+				qjDevice.setAcceXType(Integer.valueOf(data.substring(22, 24)));
+				qjDevice.setBaseAcceY(getDataBase(data.substring(24, 25), data.substring(24, 28)) + "/10000");
+				qjDevice.setAcceYType(Integer.valueOf(data.substring(28, 30)));
+				qjDevice.setBaseAcceZ(getDataBase(data.substring(30, 31), data.substring(30, 34)) + "/10000");
+				qjDevice.setAcceZType(Integer.valueOf(data.substring(34, 36)));
+				qjDevice.setXValue(
+						String.valueOf(Double.valueOf(getData100(data.substring(36, 37), data.substring(36, 40)))
+								- Double.valueOf(qjDevice.getBaseX())));
+				qjDevice.setBaseX(getData100(data.substring(36, 37), data.substring(36, 40)));
+				qjDevice.setYValue(
+						String.valueOf(Double.valueOf(getData100(data.substring(42, 43), data.substring(42, 46)))
+								- Double.valueOf(qjDevice.getBaseY())));
+				qjDevice.setBaseY(getData100(data.substring(42, 43), data.substring(42, 46)));
+				qjDevice.setXType(Integer.valueOf(data.substring(40, 42)));
+				qjDevice.setYType(Integer.valueOf(data.substring(46, 48)));
+				qjDevice.setVoltage(getData(data.substring(48, 49), data.substring(48, 52)));
+				qjDevice.setDoneType(0);
+				qjDevice.setZValue(getData100(data.substring(70, 71), data.substring(70, 74)));
+				qjDevice.setZType(Integer.valueOf(data.substring(74, 76)));
+				qjDeviceService.update(qjDevice);
+				QjDeviceLog qjDeviceLog = new QjDeviceLog();
+				qjDeviceLog.setBaseX(qjDevice.getBaseX());
+				qjDeviceLog.setBaseY(qjDevice.getBaseY());
+				qjDeviceLog.setSnValue(qjDevice.getSnValue());
+				qjDeviceLog.setType(qjDevice.getType());
+				qjDeviceLog.setVoltage(qjDevice.getVoltage());
+				qjDeviceLog.setXType(qjDevice.getXType());
+				qjDeviceLog.setYType(qjDevice.getYType());
+				qjDeviceLog.setAcceXType(qjDevice.getAcceXType());
+				qjDeviceLog.setAcceYType(qjDevice.getAcceYType());
+				qjDeviceLog.setAcceZType(qjDevice.getAcceZType());
+				qjDeviceLog.setBaseAcceX(qjDevice.getBaseAcceX());
+				qjDeviceLog.setBaseAcceY(qjDevice.getBaseAcceY());
+				qjDeviceLog.setBaseAcceZ(qjDevice.getBaseAcceZ());
+				qjDeviceLog.setZType(qjDevice.getZType());
+				qjDeviceLog.setBaseZ(qjDevice.getZValue());
+				if (data.length() > 52) {
+					if ("心跳".equals(qjDevice.getType())) {
+						qjDeviceLog.setTem(getData100(data.substring(52, 53), data.substring(52, 56)));
+					} else {
+						qjDeviceLog.setTem("");
+					}
+					qjDeviceLog.setRssi(data.substring(56, 58));
+					qjDeviceLog.setPci(String
+							.valueOf(Double.valueOf(getData(data.substring(58, 59), data.substring(58, 62))) * 1000));
+					qjDeviceLog.setRsrp(String
+							.valueOf(Double.valueOf(getData(data.substring(62, 63), data.substring(62, 66))) * 1000));
+					qjDeviceLog.setSnr(String
+							.valueOf(Double.valueOf(getData(data.substring(66, 67), data.substring(66, 70))) * 1000));
+				}
+
+				QjDeviceLog qjDeviceLog2 = qjDeviceLogService.getNearBySn(sn);
+				if ("报警".equals(qjDevice.getType())) {
+					if ((qjDeviceLog2 != null && !qjDeviceLog2.getBaseX().equals(qjDeviceLog.getBaseX())
+							&& !qjDeviceLog2.getBaseY().equals(qjDeviceLog.getBaseY())) || qjDeviceLog2 == null) {
+						if (qjDevice.getMobilePhone() != null && !"".equals(qjDevice.getMobilePhone())
+								&& qjDevice.getNoticeType() != null && qjDevice.getNoticeType() == 1) {
+							if (qjDevice.getBusinessType() == 0) {
+								AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_MOUNTAIN_TEMPLATE,
+										BaseConstant.MESSAGE_SIGN);
+								AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_ROAD_TEMPLATE,
+										BaseConstant.MESSAGE_SIGN);
+							} else if (qjDevice.getBusinessType() == 1) {
+								AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_MOUNTAIN_TEMPLATE,
+										BaseConstant.MESSAGE_SIGN);
+							} else if (qjDevice.getBusinessType() == 1) {
+								AlimsgUtils.send(qjDevice.getMobilePhone(), BaseConstant.MESSAGE_QJ_ROAD_TEMPLATE,
+										BaseConstant.MESSAGE_SIGN);
+							}
+						}
+					}
+				}
+				qjDeviceLogService.save(qjDeviceLog);
+			}
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return new Resp<>(true);
+	}
+
 
 	@RequestMapping(path = "/zhanway/push")
 	@ResponseBody

@@ -35,10 +35,14 @@ public class QjDevice {
     private Integer xType;
     @Column(name = "y_value")
     private String yValue;
+    @Column(name = "z_value")
+    private String zValue;
     @Column(name = "voltage")
     private String voltage;
     @Column(name = "y_type")
     private Integer yType;
+    @Column(name = "z_type")
+    private Integer zType;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time")
     private Date createTime;
