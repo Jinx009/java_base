@@ -191,7 +191,12 @@ public class TelcomCotroller extends BaseController {
 							HttpUtils.get(
 									"http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
 							sendChaozhou(iotCloudLog.getData(),ioTCloudDevice);
-						} else {
+						}  else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
+							HttpUtils.get(
+									"http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
+							sendPushi(iotCloudLog.getData(),ioTCloudDevice);
+						}else {
 							send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 						}
 					}
@@ -226,6 +231,10 @@ public class TelcomCotroller extends BaseController {
 							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
 						sendChaozhou(iotCloudLog.getData(),ioTCloudDevice);
+					} else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
+						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
+						sendPushi(iotCloudLog.getData(),ioTCloudDevice);
 					} else {
 						send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 					}
@@ -237,6 +246,34 @@ public class TelcomCotroller extends BaseController {
 		}
 		return resp;
 
+	}
+
+	/**
+	 * 普适地质灾害
+	 * @param data
+	 * @param ioTCloudDevice
+	 * @throws NumberFormatException
+	 * @throws Exception
+	 */
+	private void sendPushi(String data, IoTCloudDevice ioTCloudDevice) throws NumberFormatException, Exception {
+		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> sendData = new HashMap<>();
+		map.put("deviceId", ioTCloudDevice.getUdpIp().split("_")[0]);
+		map.put("apikey", ioTCloudDevice.getUdpIp().split("_")[1]);
+		Double x =  Double.valueOf(getData(data.substring(36, 37), data.substring(36, 40)));
+		Double y =  Double.valueOf(getData(data.substring(42, 43), data.substring(42, 46)));
+		Double z =  Double.valueOf(getData(data.substring(46, 47), data.substring(46, 50)));
+		Double gX = Double.valueOf(getData(data.substring(18, 19), data.substring(18, 22)));
+		Double gY = Double.valueOf(getData(data.substring(24, 25), data.substring(24, 28)));
+		Double gZ = Double.valueOf(getData(data.substring(30, 31), data.substring(30, 34)));
+		sendData.put("103_1", x+","+y+","+z+","+gX+","+gY+","+gZ);
+		map.put("data", sendData);
+		String json = JSONObject.toJSONString(map);
+		log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
+		String url = "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
+		log.warn("send url-----------------------\n:{}\n---------------------------------", url);
+		String res = HttpUtils.postJson(url, json);
+		log.warn("send res-----------------------\n:{}\n---------------------------------", res);
 	}
 
 	private void sendBeijingQj(IoTCloudDevice device, IotCloudLog iotCloudLog) {
@@ -379,6 +416,8 @@ public class TelcomCotroller extends BaseController {
 		log.warn("result:{}", result);
 		return result;
 	}
+	
+
 
 	private void sendWuhanQj(IoTCloudDevice device, IotCloudLog iotCloudLog) {
 		Map<String, Object> map = new HashMap<String, Object>();

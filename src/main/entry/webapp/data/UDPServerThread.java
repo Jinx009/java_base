@@ -66,6 +66,16 @@ public class UDPServerThread extends Thread {
 					HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + info);
 					sendBeijingQj(ioTCloudDevice, iotCloudLog);
 				}
+				if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
+					HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + info);
+					try {
+						sendPushi(iotCloudLog.getData(), ioTCloudDevice);
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				// InetAddress address = packet.getAddress();
 				// int port = packet.getPort();
 				// byte[] data2 = "ok".getBytes();
@@ -78,6 +88,34 @@ public class UDPServerThread extends Thread {
 		}
 	}
 
+
+	/**
+	 * 普适地质灾害
+	 * @param data
+	 * @param ioTCloudDevice
+	 * @throws NumberFormatException
+	 * @throws Exception
+	 */
+	private void sendPushi(String data, IoTCloudDevice ioTCloudDevice) throws NumberFormatException, Exception {
+		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> sendData = new HashMap<>();
+		map.put("deviceId", ioTCloudDevice.getUdpIp().split("|")[0]);
+		map.put("apikey", ioTCloudDevice.getUdpIp().split("|")[1]);
+		Double x =  Double.valueOf(getData(data.substring(36, 37), data.substring(36, 40)));
+		Double y =  Double.valueOf(getData(data.substring(42, 43), data.substring(42, 46)));
+		Double z =  Double.valueOf(getData(data.substring(46, 47), data.substring(46, 50)));
+		Double gX = Double.valueOf(getData(data.substring(18, 19), data.substring(18, 22)));
+		Double gY = Double.valueOf(getData(data.substring(24, 25), data.substring(24, 28)));
+		Double gZ = Double.valueOf(getData(data.substring(30, 31), data.substring(30, 34)));
+		sendData.put("103_1", x+","+y+","+z+","+gX+","+gY+","+gZ);
+		map.put("data", sendData);
+		String json = JSONObject.toJSONString(map);
+		log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
+		String url = "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
+		log.warn("send url-----------------------\n:{}\n---------------------------------", url);
+		String res = HttpUtils.postJson(url, json);
+		log.warn("send res-----------------------\n:{}\n---------------------------------", res);
+	}
 	private String getData(String index, String _d) throws Exception {
 		log.warn("index:{},data:{}", index, _d);
 		int _index = Integer.parseInt(index, 16);
@@ -178,6 +216,7 @@ public class UDPServerThread extends Thread {
 		}
 	}
 
+	
 	public static void main(String[] args) throws IOException {
 		/*
 		 * 服务器端接受客户端的数据
@@ -187,7 +226,8 @@ public class UDPServerThread extends Thread {
 		st.start();
 
 	}
-
+	
+	
 	private static String bytesToHexString(byte[] src, int length) {
 		StringBuilder stringBuilder = new StringBuilder("");
 		if (src == null || length <= 0) {
