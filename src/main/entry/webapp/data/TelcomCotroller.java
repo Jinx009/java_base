@@ -194,7 +194,7 @@ public class TelcomCotroller extends BaseController {
 						}  else if (ioTCloudDevice.getLocalIp() != null
 								&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
 							HttpUtils.get(
-									"http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
+									"http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
 							sendPushi(iotCloudLog.getData(),ioTCloudDevice);
 						}else {
 							send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
@@ -233,7 +233,7 @@ public class TelcomCotroller extends BaseController {
 						sendChaozhou(iotCloudLog.getData(),ioTCloudDevice);
 					} else if (ioTCloudDevice.getLocalIp() != null
 							&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
-						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
+						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
 						sendPushi(iotCloudLog.getData(),ioTCloudDevice);
 					} else {
 						send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
@@ -271,7 +271,7 @@ public class TelcomCotroller extends BaseController {
 		String acc_z = getData10000(data.substring(30, 31), data.substring(30, 34)) ;
 		String x = getData100(data.substring(36, 37), data.substring(36, 40));
 		String y = getData100(data.substring(42, 43), data.substring(42, 46));
-		String z = getData100(data.substring(58, 59), data.substring(58, 62));
+		String z = getData100(data.substring(72, 73), data.substring(72, 76));
 		sendData.put("103_1", x+","+y+","+z+","+acc_x+","+acc_y+","+acc_z);
 		map.put("data", sendData);
 		String json = JSONObject.toJSONString(map);

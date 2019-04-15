@@ -67,7 +67,7 @@ public class UDPServerThread extends Thread {
 					sendBeijingQj(ioTCloudDevice, iotCloudLog);
 				}
 				if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
-					HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + info);
+					HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + info);
 					try {
 						sendPushi(iotCloudLog.getData(), ioTCloudDevice);
 					} catch (NumberFormatException e) {
@@ -112,7 +112,7 @@ public class UDPServerThread extends Thread {
 		String acc_z = getData10000(data.substring(30, 31), data.substring(30, 34));
 		String x = getData100(data.substring(36, 37), data.substring(36, 40));
 		String y = getData100(data.substring(42, 43), data.substring(42, 46));
-		String z = getData100(data.substring(58, 59), data.substring(58, 62));
+		String z = getData100(data.substring(72, 73), data.substring(72, 76));
 		sendData.put("103_1", x+","+y+","+z+","+acc_x+","+acc_y+","+acc_z);
 		map.put("data", sendData);
 		String json = JSONObject.toJSONString(map);
