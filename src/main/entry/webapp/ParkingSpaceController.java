@@ -35,12 +35,12 @@ public class ParkingSpaceController extends BaseController{
 	}
 	
 	/**
-	 * 新增停车位页面
+	 * 编辑停车位页面
 	 * @return
 	 */
-	@RequestMapping(value = "/p/space/add")
-	public String add(){
-		return "/page/space_add";
+	@RequestMapping(value = "/p/space/edit")
+	public String edit(){
+		return "/page/space_edit";
 	}
 	
 	/**
@@ -96,6 +96,23 @@ public class ParkingSpaceController extends BaseController{
 		try {
 			parkingSpaceService.delete(id);
 			return new Resp<>(true);
+		} catch (Exception e) {
+			LOG.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 获取单个停车位
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/d/space/find")
+	@ResponseBody
+	public Resp<?> find(Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(parkingSpaceService.find(id));
 		} catch (Exception e) {
 			LOG.error("e:{}",e);
 		}

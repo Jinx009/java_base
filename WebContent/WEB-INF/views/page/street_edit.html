@@ -31,7 +31,7 @@
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Camera编辑 </a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> Street编辑 </a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
@@ -41,7 +41,7 @@
 						<div class="box">
 							<div class="box-header">
 								<h3 class="box-title">
-									<button type="button" class="btn btn-info btn-xs" onclick="_open('1','/p/camera/list')" data-widget="collapse">返回</button>
+									<button type="button" class="btn btn-info btn-xs" onclick="_open('1','/p/street/list')" data-widget="collapse">返回</button>
 									<b style="display: none;" id="id" >${id}</b>
 								</h3>
 							</div>
@@ -53,21 +53,27 @@
 											<th>编号：</th><td v-text="datas.id" ></td>
 										</tr>
 										<tr>
-											<th>相机型号:</th>
+											<th>街道名称:</th>
 											<td>
-												<input type="text" class="form-control" v-bind:value="datas.deviceType" id="deviceType" >
+												<input type="text" class="form-control" v-bind:value="datas.name" id="name" >
 											</td>
 										</tr>
 										<tr>
-											<th>管辖车位号:</th>
+											<th>街道编号:</th>
 											<td >
-												<textarea class="form-control" v-bind:value="datas.parkNumber" id="parkNumber" ></textarea>
+												<input type="text" class="form-control" v-bind:value="datas.streetNumber" id="parkNumber" >
+											</td>
+										</tr>
+											<tr>
+											<th>车位总数:</th>
+											<td >
+												<input type="text" class="form-control" v-bind:value="datas.parkTotal" id="parkTotal" >
 											</td>
 										</tr>
 										<tr>
-											<th>所属街道</th>
-											<td>
-												<select id="streetId" class="form-control"  ></select>
+											<th>详细地址:</th>
+											<td >
+												<textarea class="form-control" v-bind:value="datas.address" id="address" ></textarea>
 											</td>
 										</tr>
 										<tr>
@@ -85,7 +91,7 @@
 		</div>
 		<#include "_footer.html">
 	</div>
-	<script src="/themes/js/page/camera_edit.js?version=1.33"></script>
+	<script src="/themes/js/page/street_edit.js?version=1.33"></script>
 
 </body>
 </html>

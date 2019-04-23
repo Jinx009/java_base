@@ -18,10 +18,10 @@ public class StreetService {
 	private StreetDao streetDao;
 	
     
-    public void save(String streetNumber,String addess,Integer parkTotal,String name){
+    public void save(String streetNumber,String address,Integer parkTotal,String name){
     	Street street = new Street();
     	street.setStreetNumber(streetNumber);
-    	street.setAddress(addess);
+    	street.setAddress(address);
     	street.setParkTotal(parkTotal);
     	street.setName(name);
     	street.setCreateTime(new Date());
@@ -56,6 +56,10 @@ public class StreetService {
 
 	public List<Street> findAll() {
 		return streetDao.findAll();
+	}
+
+	public Street findById(Integer id) {
+		return streetDao.find(id);
 	}
     
 }

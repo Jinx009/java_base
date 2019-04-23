@@ -1,6 +1,6 @@
 $(function() {
 	_getData(0, 1);
-	_getStreet();
+	_getCamera();
 })
 var _d = '';
 var _nowPage = 0, _max = 0;
@@ -15,7 +15,7 @@ function _getData(_type, _index) {
 	if (_data.p != -1) {
 		$
 				.ajax({
-					url : '/d/camera/list',
+					url : '/d/space/list',
 					dataType : 'json',
 					data : 'p='+_data.p,
 					type : 'post',
@@ -45,14 +45,11 @@ function _getData(_type, _index) {
  * 保存相机
  */
 function _save() {
+	var _cameraId = $('#cameras').val();
 	var _parkNumber = $('#parkNumber').val();
-	var _streetId = $('#streetId').val();
-	var _streetName = $('#streetId option:selected"').text();
-	var _deviceType = $('#deviceType').val();
-	var _params = 'parkNumber=' + _parkNumber + '&streetId=' + _streetId
-			+ '&streetName=' + _streetName + '&deviceType=' + _deviceType;
+	var _params = 'parkNumber=' + _parkNumber + '&cameraId=' + _cameraId;
 	$.ajax({
-		url : '/d/camera/add',
+		url : '/d/space/add',
 		dataType : 'json',
 		type : 'post',
 		data : _params,
@@ -73,7 +70,7 @@ function _save() {
  */
 function _edit(_e) {
 	var _id = $(_e).attr('id').split('_edit')[1];
-	location.href = '/p/camera/edit?id=' + _id;
+	location.href = '/p/space/edit?id=' + _id;
 }
 /**
  * 删除相机
@@ -82,7 +79,7 @@ function _edit(_e) {
 function _delete(_e) {
 	var _id = $(_e).attr('id').split('_delete')[1];
 	$.ajax({
-		url : '/d/camera/del',
+		url : '/d/space/del',
 		dataType : 'json',
 		data : 'id='+_id,
 		type : 'post',
@@ -102,12 +99,12 @@ function _delete(_e) {
  */
 function _getStreet() {
 	$.ajax({
-		url : '/d/street/all',
+		url : '/d/camera/all',
 		dataType : 'json',
 		type : 'post',
 		success : function(res) {
 			new Vue({
-				el : '#streetId',
+				el : '#cameras',
 				data : {
 					streets : res.data
 				}

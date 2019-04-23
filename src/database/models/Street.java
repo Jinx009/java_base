@@ -30,7 +30,7 @@ public class Street {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Column(name = "parkTotal")
+    @Column(name = "park_total")
     private Integer parkTotal;
     @Column(name = "street_number")
     private String streetNumber;

@@ -46,5 +46,7 @@ public class ParkingSpace {
     @Column(name = "happen_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date happenTime;
+    @Column(name = "park_number")
+    private String parkNumber;
 	
 }

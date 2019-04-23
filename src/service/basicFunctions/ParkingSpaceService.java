@@ -45,5 +45,9 @@ public class ParkingSpaceService {
 	public PageDataList<ParkingSpace> findByPage(int p){
 		return parkingSpaceDao.findByPage(p);
 	}
+
+	public ParkingSpace find(Integer id) {
+		return parkingSpaceDao.find(id);
+	}
 	
 }

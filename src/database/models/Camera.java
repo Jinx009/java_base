@@ -36,7 +36,7 @@ public class Camera {
     private String streetName;
     @Column(name = "park_number")
     private String parkNumber;
-    @Column(name = "device_type")
+    @Column(name = "device_type")//设备型号
     private String deviceType;
     @Column(name = "create_time")
     @Temporal(TemporalType.TIMESTAMP)

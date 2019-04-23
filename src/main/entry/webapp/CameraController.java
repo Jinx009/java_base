@@ -63,6 +63,23 @@ public class CameraController extends BaseController{
 	}
 	
 	/**
+	 * 获取所有相机
+	 * @param p
+	 * @return
+	 */
+	@RequestMapping(value = "/d/camera/all")
+	@ResponseBody
+	public Resp<?> all(Integer p){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(cameraService.findAll());
+		} catch (Exception e) {
+			LOG.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	/**
 	 * 查询单个相机
 	 * @param streetId
 	 * @param id
