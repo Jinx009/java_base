@@ -259,5 +259,11 @@
 		    <artifactId>tomcat-util</artifactId>
 		    <version>8.0.0-RC1</version>
 		</dependency>
+		
+		<dependency>
+	    <groupId>org.postgresql</groupId>
+	    <artifactId>postgresql</artifactId>
+	    <version>42.2.2</version>
+	</dependency>
     </dependencies>
 </project>
