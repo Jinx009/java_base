@@ -123,5 +123,25 @@ public class DeviceSensor {
     private String bluetoothArray;
     @Column(name = "bluetooth")
     private String bluetooth;
+    
+    /**
+     * 2019年4月23日新增
+     */
+    @Column(name = "vedio_status")
+    private String vedioStatus;
+    @Column(name = "vedio_time")
+    private String vedioTime;
+    @Column(name = "sensor_time")
+    private String sensorTime;
+    @Column(name = "cph")
+    private String cph;
+    @Column(name = "cp_color")
+    private String cpColor;
+    @Column(name = "camera_id")
+    private String cameraId;
+    @Column(name = "camera_name")
+    private String cameraName;
+    @Column(name = "pic_link")
+    private String picLink;
 	
 }
