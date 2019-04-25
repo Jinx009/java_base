@@ -23,12 +23,12 @@ public class StatusCheckTask {
 		Statement stmt = null;
 		try {
 			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/db_person", "postgres","123456");
+			c = DriverManager.getConnection("jdbc:postgresql://10.0.0.18:5432/port", "gv","Hik12345");
 			c.setAutoCommit(false);
 			log.warn("Connect Sql Success!");
 			stmt = c.createStatement();
  
-			ResultSet rs = stmt.executeQuery("select * from company02");
+			ResultSet rs = stmt.executeQuery("select * from device_type_code");
 			while(rs.next()){
 				int id = rs.getInt("id");
 				log.warn("id:{}",id);
@@ -42,4 +42,28 @@ public class StatusCheckTask {
 		}
 	}
 
+	public static void main(String[] args){
+		Connection c = null;
+		Statement stmt = null;
+		try {
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection("jdbc:postgresql://10.0.0.18:5432/port", "gv","Hik12345");
+			c.setAutoCommit(false);
+			log.warn("Connect Sql Success!");
+			stmt = c.createStatement();
+ 
+			ResultSet rs = stmt.executeQuery("select * from device_type_code");
+			while(rs.next()){
+				String id = rs.getString("name");
+				log.warn("name:{}",id);
+//				System.out.println(id + "," + name + "," + age + "," + address.trim() + "," + salary);
+			}
+			rs.close();
+			stmt.close();
+			c.close();
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+	}
+	
 }

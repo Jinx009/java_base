@@ -48,5 +48,7 @@ public class ParkingSpace {
     private Date happenTime;
     @Column(name = "park_number")
     private String parkNumber;
+    @Column(name = "mac")
+    private String mac;
 	
 }
