@@ -50,4 +50,8 @@ public class ParkingSpaceService {
 		return parkingSpaceDao.find(id);
 	}
 	
+	public ParkingSpace getByCameraNameAndParkNumber(String cameraName,String parkNumber){
+		return parkingSpaceDao.getByCameraNameAndParkNumber(cameraName,parkNumber);
+	}
+	
 }

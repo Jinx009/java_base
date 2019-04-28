@@ -22,5 +22,7 @@ public class ParkingRecordDao extends BaseDao<ParkingRecord> {
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);
 	}
+	
+
 
 }

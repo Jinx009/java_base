@@ -19,4 +19,11 @@ public class ParkingSpaceDao extends BaseDao<ParkingSpace>{
 		return findPageList(queryParam);
 	}
 
+	public ParkingSpace getByCameraNameAndParkNumber(String cameraName,String parkNumber){
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("cameraNumber", cameraName);
+		queryParam.addParam("parkNumber", parkNumber);
+		return findByCriteriaForUnique(queryParam);
+	}
+	
 }
