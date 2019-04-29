@@ -89,7 +89,7 @@ public class StatusCheckTask {
 				Date date = new Date();
 				String dirPath = sdf.format(date);
 				ParkingSpace parkingSpace = parkingSpaceService.getByCameraNameAndParkNumber(parkInfo.getSCameraName(),parkInfo.getSParkingid());
-				String picPath = dirPath+"_pic/"+parkingSpace.getMac()+"_"+iVehicleEnterstate+"_"+date.getTime();
+				String picPath = dirPath+"/"+parkingSpace.getMac()+"_"+iVehicleEnterstate+"_"+date.getTime();
 				savePic(sWholeSenceUrl, picPath+".jpeg");
 				Map<String,String> map = new HashMap<>();
 				map.put("mac", parkingSpace.getMac());
