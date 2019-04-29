@@ -1,6 +1,8 @@
 package database.basicFunctions.dao;
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
@@ -17,8 +19,11 @@ public class ParkInfoDao extends BaseDao<ParkInfo>{
 		queryParam.addPage(1,5);
 		queryParam.addOrder(OrderType.DESC, "baseId");
 		PageDataList<ParkInfo> page = 	findPageList(queryParam);	
-		ParkInfo p = page.getList().get(0);
-		return p.getBaseId();
+		List<ParkInfo> p = page.getList();
+		if(p!=null&&!p.isEmpty()){
+			return p.get(0).getBaseId();
+		}
+		return 0;
 	}
 	
 }

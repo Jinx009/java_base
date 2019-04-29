@@ -47,45 +47,104 @@ public class StatusCheckTask {
 		Connection c = null;
 		Statement stmt = null;
 		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+			SimpleDateFormat sdf3 = new SimpleDateFormat("yyyyMMddHHmmss");
 			Integer maxId = parkInfoService.getMaxBaseId();
+			if(maxId==null||maxId==0){
+				maxId = 233;
+			}
 			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection("jdbc:postgresql://10.0.0.18:5432/port", "gv", "Hik12345");
+			c = DriverManager.getConnection("jdbc:postgresql://10.0.0.18:5432/port", "v_admin", "v_admin");
 			c.setAutoCommit(false);
 			log.warn("Connect Sql Success!");
 			stmt = c.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from v_parking_info where id>" + maxId);
+			ResultSet rs = stmt.executeQuery("select * from v_parking_info where id>" + maxId );
 			while (rs.next()) {
 				ParkInfo parkInfo = new ParkInfo();
 				int id = rs.getInt("id");
 				parkInfo.setBaseId(id);
-				String sLocation = rs.getString("sLocation");
+				String sLocation = rs.getString("slocation");
 				parkInfo.setSLocation(sLocation);
-				String sCameraName = rs.getString("sCameraName");
+				String sCameraName = rs.getString("scameraname");
 				parkInfo.setSCameraName(sCameraName);
-				String sCameraIndex = rs.getString("sCameraIndex");
+				String sCameraIndex = rs.getString("scameraindex");
 				parkInfo.setSCameraIndex(sCameraIndex);
-				int iVehicleEnterstate = rs.getInt("iVehicleEnterstate");
+				int iVehicleEnterstate = rs.getInt("ivehicleenterstate");
 				parkInfo.setIVehicleEnterstate(iVehicleEnterstate);
-				String sParkingid = rs.getString("sParkingid");
+				if(iVehicleEnterstate==2){
+					parkInfo.setIVehicleEnterstate(0);
+				}
+				String sParkingid = rs.getString("sparkingid");
 				parkInfo.setSParkingid(sParkingid);
-				String tEventTime = rs.getString("tEventTime");
+				String tEventTime = rs.getString("teventtime");
 				parkInfo.setTEventTime(tEventTime);
 				parkInfo.setCreateTime(new Date());
-				String sPlateNo = rs.getString("sPlateNo");
+				String sPlateNo = rs.getString("splateno");
 				parkInfo.setSPlateNo(sPlateNo);
-				String sPlateColor = rs.getString("sPlateColor");
-				parkInfo.setSPlateColor(sPlateColor);
-				String sVehicleColor = rs.getString("sVehicleColor");
-				parkInfo.setSVehicleColor(sVehicleColor);
-				String sWholeSenceUrl = rs.getString("sWholeSenceUrl");
+				String sPlateColor = rs.getString("splatecolor");
+				String pColor = "其他颜色";
+				if("0".equals(sPlateColor)){
+					pColor = "白色";
+				}
+				if("1".equals(sPlateColor)){
+					pColor = "黄色";
+				}
+				if("2".equals(sPlateColor)){
+					pColor = "蓝色";
+				}
+				if("3".equals(sPlateColor)){
+					pColor = "黑色";
+				}
+				if("5".equals(sPlateColor)){
+					pColor = "绿色";
+				}
+				parkInfo.setSPlateColor(pColor);
+				String sVehicleColor = rs.getString("svehiclecolor");
+				String color = "未识别";
+				if("1".equals(sVehicleColor)){
+					color = "白色";
+				}
+				if("4".equals(sVehicleColor)){
+					color = "黑色";
+				}
+				if("5".equals(sVehicleColor)){
+					color = "红色";
+				}
+				if("7".equals(sVehicleColor)){
+					color = "蓝色";
+				}
+				if("2".equals(sVehicleColor)){
+					color = "银色";
+				}
+				if("3".equals(sVehicleColor)){
+					color = "灰色";
+				}
+				if("8".equals(sVehicleColor)){
+					color = "黄色";
+				}
+				if("10".equals(sVehicleColor)){
+					color = "棕色";
+				}
+				if("11".equals(sVehicleColor)){
+					color = "粉色";
+				}
+				if("12".equals(sVehicleColor)){
+					color = "紫色";
+				}
+				if("6".equals(sVehicleColor)){
+					color = "深蓝";
+				}
+				if("9".equals(sVehicleColor)){
+					color = "绿色";
+				}
+				parkInfo.setSVehicleColor(color);
+				String sWholeSenceUrl = rs.getString("swholesenceurl");
 				parkInfo.setSWholeSenceUrl(sWholeSenceUrl);
-				String sFutrureUrl = rs.getString("sFutrureUrl");
+				String sFutrureUrl = rs.getString("sfutrureurl");
 				parkInfo.setSFutrureUrl(sFutrureUrl);
 				log.warn("id:{}", id);
 				parkInfoService.save(parkInfo);
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				SimpleDateFormat sdf3 = new SimpleDateFormat("yyyyMMddHHmmss");
 				Date date = new Date();
 				String dirPath = sdf.format(date);
 				ParkingSpace parkingSpace = parkingSpaceService.getByCameraNameAndParkNumber(parkInfo.getSCameraName(),parkInfo.getSParkingid());
@@ -93,13 +152,15 @@ public class StatusCheckTask {
 				savePic(sWholeSenceUrl, picPath+".jpeg");
 				Map<String,String> map = new HashMap<>();
 				map.put("mac", parkingSpace.getMac());
-				map.put("cameraTime", sdf3.format(sdf2.parse(tEventTime)));
+				map.put("ChangeTime", sdf3.format(sdf2.parse(tEventTime)));
 				map.put("cameraId", sCameraIndex);
 				map.put("cph",sPlateNo);
 				map.put("cpColor", sPlateColor);
-				map.put("status", String.valueOf(iVehicleEnterstate));
-				map.put("picLink", picPath);
-				HttpUtil.postJson("http://124.74.252.162:1122/iot/vedio/dataSend", JSONObject.toJSONString(map));
+				map.put("status", String.valueOf(parkInfo.getIVehicleEnterstate()));
+				map.put("picLink","http://58.246.184.99:801/" +picPath);
+				if(iVehicleEnterstate!=0){
+					HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport", JSONObject.toJSONString(map));
+				}
 			}
 			rs.close();
 			stmt.close();
