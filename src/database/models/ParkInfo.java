@@ -55,5 +55,7 @@ public class ParkInfo {
     private Integer baseId;//对方数据库原始id
     @Column(name = "mac")
     private String mac;
+    @Column(name = "vedio_status")
+    private Integer vedioStatus;
     
 }
