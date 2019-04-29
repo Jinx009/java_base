@@ -61,106 +61,38 @@ public class StatusCheckTask {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from v_parking_info where id>" + maxId );
 			while (rs.next()) {
-				ParkInfo parkInfo = new ParkInfo();
 				int id = rs.getInt("id");
-				parkInfo.setBaseId(id);
 				String sLocation = rs.getString("slocation");
-				parkInfo.setSLocation(sLocation);
 				String sCameraName = rs.getString("scameraname");
-				parkInfo.setSCameraName(sCameraName);
 				String sCameraIndex = rs.getString("scameraindex");
-				parkInfo.setSCameraIndex(sCameraIndex);
 				int iVehicleEnterstate = rs.getInt("ivehicleenterstate");
-				parkInfo.setIVehicleEnterstate(iVehicleEnterstate);
-				if(iVehicleEnterstate==2){
-					parkInfo.setIVehicleEnterstate(0);
-				}
 				String sParkingid = rs.getString("sparkingid");
-				parkInfo.setSParkingid(sParkingid);
 				String tEventTime = rs.getString("teventtime");
-				parkInfo.setTEventTime(tEventTime);
-				parkInfo.setCreateTime(new Date());
 				String sPlateNo = rs.getString("splateno");
-				parkInfo.setSPlateNo(sPlateNo);
 				String sPlateColor = rs.getString("splatecolor");
-				String pColor = "其他颜色";
-				if("0".equals(sPlateColor)){
-					pColor = "白色";
-				}
-				if("1".equals(sPlateColor)){
-					pColor = "黄色";
-				}
-				if("2".equals(sPlateColor)){
-					pColor = "蓝色";
-				}
-				if("3".equals(sPlateColor)){
-					pColor = "黑色";
-				}
-				if("5".equals(sPlateColor)){
-					pColor = "绿色";
-				}
-				parkInfo.setSPlateColor(pColor);
 				String sVehicleColor = rs.getString("svehiclecolor");
-				String color = "未识别";
-				if("1".equals(sVehicleColor)){
-					color = "白色";
-				}
-				if("4".equals(sVehicleColor)){
-					color = "黑色";
-				}
-				if("5".equals(sVehicleColor)){
-					color = "红色";
-				}
-				if("7".equals(sVehicleColor)){
-					color = "蓝色";
-				}
-				if("2".equals(sVehicleColor)){
-					color = "银色";
-				}
-				if("3".equals(sVehicleColor)){
-					color = "灰色";
-				}
-				if("8".equals(sVehicleColor)){
-					color = "黄色";
-				}
-				if("10".equals(sVehicleColor)){
-					color = "棕色";
-				}
-				if("11".equals(sVehicleColor)){
-					color = "粉色";
-				}
-				if("12".equals(sVehicleColor)){
-					color = "紫色";
-				}
-				if("6".equals(sVehicleColor)){
-					color = "深蓝";
-				}
-				if("9".equals(sVehicleColor)){
-					color = "绿色";
-				}
-				parkInfo.setSVehicleColor(color);
 				String sWholeSenceUrl = rs.getString("swholesenceurl");
-				parkInfo.setSWholeSenceUrl(sWholeSenceUrl);
 				String sFutrureUrl = rs.getString("sfutrureurl");
-				parkInfo.setSFutrureUrl(sFutrureUrl);
-				log.warn("id:{}", id);
-				parkInfoService.save(parkInfo);
-				Date date = new Date();
+				ParkInfo parkInfo = saveParkInfo(id,sLocation,sCameraName,sCameraIndex,iVehicleEnterstate,sParkingid,tEventTime,sPlateNo,sPlateColor,sVehicleColor,sWholeSenceUrl,sFutrureUrl);
+				Date date = sdf2.parse(tEventTime);
+				String ChangeTime = sdf3.format(date);
 				String dirPath = sdf.format(date);
 				ParkingSpace parkingSpace = parkingSpaceService.getByCameraNameAndParkNumber(parkInfo.getSCameraName(),parkInfo.getSParkingid());
-				String picPath = dirPath+"/"+parkingSpace.getMac()+"_"+iVehicleEnterstate+"_"+date.getTime();
-				savePic(sWholeSenceUrl, picPath+".jpeg");
-				Map<String,String> map = new HashMap<>();
-				map.put("mac", parkingSpace.getMac());
-				map.put("ChangeTime", sdf3.format(sdf2.parse(tEventTime)));
-				map.put("cameraId", sCameraIndex);
-				map.put("cph",sPlateNo);
-				map.put("cpColor", sPlateColor);
-				map.put("status", String.valueOf(parkInfo.getIVehicleEnterstate()));
-				map.put("picLink","http://58.246.184.99:801/" +picPath);
-				if(iVehicleEnterstate!=0){
-					HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport", JSONObject.toJSONString(map));
+				parkInfo.setMac(parkingSpace.getMac());
+				parkInfoService.update(parkInfo);
+				parkingSpace.setCameraNumber(sCameraName);
+				parkingSpace.setStatus(parkInfo.getIVehicleEnterstate());
+				String picPath = dirPath+"/"+parkingSpace.getMac()+"_";
+				if(iVehicleEnterstate==1) {
+					parkingSpace.setHappenTime(date);
+					picPath+= ChangeTime;
+					savePic(sWholeSenceUrl, picPath+"_inCarImg.jpeg");
 				}
+				if(iVehicleEnterstate==2) {
+					picPath+= sdf2.format(parkingSpace.getHappenTime());
+					savePic(sWholeSenceUrl, picPath+"_outCarImg.jpeg");
+				}
+				sendData(parkingSpace,ChangeTime,sCameraIndex,sPlateNo,sPlateColor,parkInfo,picPath,iVehicleEnterstate);
 			}
 			rs.close();
 			stmt.close();
@@ -170,6 +102,130 @@ public class StatusCheckTask {
 		}
 	}
 
+	/**
+	 * 发送数据
+	 * @param parkingSpace
+	 * @param ChangeTime
+	 * @param sCameraIndex
+	 * @param sPlateNo
+	 * @param sPlateColor
+	 * @param parkInfo
+	 * @param picPath
+	 * @param iVehicleEnterstate
+	 */
+	private void sendData(ParkingSpace parkingSpace, String ChangeTime, String sCameraIndex, String sPlateNo,
+			String sPlateColor, ParkInfo parkInfo, String picPath, int iVehicleEnterstate) {
+		Map<String,String> map = new HashMap<>();
+		map.put("mac", parkingSpace.getMac());
+		map.put("ChangeTime", ChangeTime);
+		map.put("cameraId", sCameraIndex);
+		map.put("cph",sPlateNo);
+		map.put("cpColor", sPlateColor);
+		map.put("status", String.valueOf(parkInfo.getIVehicleEnterstate()));
+		map.put("picLink","http://58.246.184.99:801/" +picPath);
+		if(iVehicleEnterstate!=0){
+			HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport", JSONObject.toJSONString(map));
+		}		
+	}
+
+	/**
+	 * 保存记录
+	 * @param id
+	 * @param sLocation
+	 * @param sCameraName
+	 * @param sCameraIndex
+	 * @param iVehicleEnterstate
+	 * @param sParkingid
+	 * @param tEventTime
+	 * @param sPlateNo
+	 * @param sPlateColor
+	 * @param sVehicleColor
+	 * @param sWholeSenceUrl
+	 * @param sFutrureUrl
+	 * @return
+	 */
+	private ParkInfo saveParkInfo(int id, String sLocation, String sCameraName, String sCameraIndex,
+			int iVehicleEnterstate, String sParkingid, String tEventTime, String sPlateNo, String sPlateColor,
+			String sVehicleColor, String sWholeSenceUrl, String sFutrureUrl) {
+		ParkInfo parkInfo = new ParkInfo();
+		parkInfo.setBaseId(id);
+		parkInfo.setSLocation(sLocation);
+		parkInfo.setSCameraName(sCameraName);
+		parkInfo.setSCameraIndex(sCameraIndex);
+		parkInfo.setIVehicleEnterstate(iVehicleEnterstate);
+		if(iVehicleEnterstate==2){
+			parkInfo.setIVehicleEnterstate(0);
+		}
+		parkInfo.setSParkingid(sParkingid);
+		parkInfo.setTEventTime(tEventTime);
+		parkInfo.setCreateTime(new Date());
+		parkInfo.setSPlateNo(sPlateNo);
+		String pColor = "其他颜色";
+		if("0".equals(sPlateColor)){
+			pColor = "白色";
+		}
+		if("1".equals(sPlateColor)){
+			pColor = "黄色";
+		}
+		if("2".equals(sPlateColor)){
+			pColor = "蓝色";
+		}
+		if("3".equals(sPlateColor)){
+			pColor = "黑色";
+		}
+		if("5".equals(sPlateColor)){
+			pColor = "绿色";
+		}
+		parkInfo.setSPlateColor(pColor);
+		String color = "未识别";
+		if("1".equals(sVehicleColor)){
+			color = "白色";
+		}
+		if("4".equals(sVehicleColor)){
+			color = "黑色";
+		}
+		if("5".equals(sVehicleColor)){
+			color = "红色";
+		}
+		if("7".equals(sVehicleColor)){
+			color = "蓝色";
+		}
+		if("2".equals(sVehicleColor)){
+			color = "银色";
+		}
+		if("3".equals(sVehicleColor)){
+			color = "灰色";
+		}
+		if("8".equals(sVehicleColor)){
+			color = "黄色";
+		}
+		if("10".equals(sVehicleColor)){
+			color = "棕色";
+		}
+		if("11".equals(sVehicleColor)){
+			color = "粉色";
+		}
+		if("12".equals(sVehicleColor)){
+			color = "紫色";
+		}
+		if("6".equals(sVehicleColor)){
+			color = "深蓝";
+		}
+		if("9".equals(sVehicleColor)){
+			color = "绿色";
+		}
+		parkInfo.setSVehicleColor(color);
+		parkInfo.setSWholeSenceUrl(sWholeSenceUrl);
+		parkInfo.setSFutrureUrl(sFutrureUrl);
+		log.warn("id:{}", id);
+		return parkInfoService.save(parkInfo);
+	}
+
+	/**
+	 * 保存图片
+	 * @param picPathUrl
+	 * @param path
+	 */
 	private static void savePic(String picPathUrl,String path) {
 		byte[] btImg = getImageFromNetByUrl(picPathUrl);
 		if (null != btImg && btImg.length > 0) {
@@ -179,6 +235,11 @@ public class StatusCheckTask {
 		}
 	}
 
+	/**
+	 * 写入硬盘
+	 * @param data
+	 * @param fileName
+	 */
 	public static void writeImageToDisk(byte[] data, String fileName) {
 		try {
 			File file = new File("/data/ftp_pic/"+fileName); // 本地目录
@@ -196,6 +257,11 @@ public class StatusCheckTask {
 		}
 	}
 
+	/**
+	 * 获取远程视频流
+	 * @param strUrl
+	 * @return
+	 */
 	public static byte[] getImageFromNetByUrl(String strUrl) {
 		try {
 			URL url = new URL(strUrl);
@@ -211,6 +277,12 @@ public class StatusCheckTask {
 		return null;
 	}
 
+	/**
+	 * 流写入
+	 * @param inStream
+	 * @return
+	 * @throws Exception
+	 */
 	public static byte[] readInputStream(InputStream inStream) throws Exception {
 		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 		byte[] buffer = new byte[1024];
@@ -223,26 +295,6 @@ public class StatusCheckTask {
 	}
 
 	public static void main(String[] args) {
-//		Connection c = null;
-//		Statement stmt = null;
-//		try {
-//			Class.forName("org.postgresql.Driver");
-//			c = DriverManager.getConnection("jdbc:postgresql://10.0.0.18:5432/port", "gv", "Hik12345");
-//			c.setAutoCommit(false);
-//			log.warn("Connect Sql Success!");
-//			stmt = c.createStatement();
-//
-//			ResultSet rs = stmt.executeQuery("select * from device_type_code");
-//			while (rs.next()) {
-//				String id = rs.getString("name");
-//				log.warn("name:{}", id);
-//			}
-//			rs.close();
-//			stmt.close();
-//			c.close();
-//		} catch (Exception e) {
-//			log.error("e:{}", e);
-//		}
 		savePic("http://10.0.0.17/ISAPI/Traffic/ContentMgmt/Picture/ch00_00000000000003190076001047112", "20190429/1.jpeg");
 	}
 

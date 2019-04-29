@@ -16,8 +16,12 @@ public class ParkInfoService {
 		return parkInfoDao.getMaxBaseId();
 	}
 
-	public void save(ParkInfo parkInfo) {
-		parkInfoDao.save(parkInfo);
+	public ParkInfo save(ParkInfo parkInfo) {
+		return parkInfoDao.save(parkInfo);
+	}
+
+	public void update(ParkInfo parkInfo) {
+		parkInfoDao.update(parkInfo);
 	}
 	
 }
