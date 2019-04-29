@@ -359,6 +359,7 @@ public class StatusCheckTask {
 		}
 		return null;
 	}
+	
 
 	/**
 	 * 流写入
