@@ -188,7 +188,9 @@ public class StatusCheckTask {
 				parkingVedio.setMac(parkInfo.getMac());
 				parkingVedio.setType(parkInfo.getIVehicleEnterstate());
 				parkingSpaceService.update(parkingSpace);
-				parkingVedioService.save(parkingVedio);
+				if(iVehicleEnterstate==0){
+					parkingVedioService.save(parkingVedio);
+				}
 				sendData(parkingSpace, ChangeTime, sCameraIndex, sPlateNo, parkInfo.getSPlateColor(), parkInfo, picPath,
 						parkInfo.getIVehicleEnterstate());
 			}
