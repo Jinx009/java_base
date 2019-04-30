@@ -19,8 +19,8 @@ public class ParkInfoService {
 	public ParkInfo save(ParkInfo parkInfo) {
 		return parkInfoDao.save(parkInfo);
 	}
-	
-	public void update(ParkInfo parkInfo){
+
+	public void update(ParkInfo parkInfo) {
 		parkInfoDao.update(parkInfo);
 	}
 	

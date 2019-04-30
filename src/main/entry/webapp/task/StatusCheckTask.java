@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
+import java.sql.PreparedStatement;
 
 import database.models.ParkInfo;
 import database.models.ParkingSpace;
@@ -26,7 +27,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -371,6 +371,7 @@ public class StatusCheckTask {
 		}
 		return null;
 	}
+	
 
 	/**
 	 * 流写入
@@ -390,4 +391,6 @@ public class StatusCheckTask {
 		return outStream.toByteArray();
 	}
 
+
 }
+

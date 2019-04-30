@@ -22,4 +22,5 @@ public class ParkingVedioService {
 		parkingVedioDao.save(parkingVedio);
 	}
 	
+	
 }
