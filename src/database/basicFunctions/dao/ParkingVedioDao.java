@@ -15,9 +15,9 @@ public class ParkingVedioDao extends BaseDao<ParkingVedio>{
 	@SuppressWarnings("unchecked")
 	public List<ParkingVedio> findByTime(){
 		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date date2 = new Date(date.getTime()-300000);
-		String hql = "FROM ParkingVedio where changeTime < '"+sdf.format(date2)+"'";
+		String hql = "FROM ParkingVedio where eventTime < '"+sdf.format(date2)+" ' and sendStatus = 0";
 		List<ParkingVedio> list = em.createQuery(hql).getResultList();
 		return list;
 	}

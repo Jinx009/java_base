@@ -56,6 +56,9 @@ public class StatusCheckTask {
 			if (list != null && !list.isEmpty()) {
 				for (ParkingVedio parkingVedio : list) {
 					saveVedio(parkingVedio);
+					parkingVedio.setSendStatus(1);
+					parkingVedio.setSendTime(new Date());
+					parkingVedioService.update(parkingVedio);
 				}
 			}
 		} catch (Exception e) {
@@ -89,10 +92,10 @@ public class StatusCheckTask {
 			c.setAutoCommit(false);
 
 			Date date = sdf2.parse(parkingVedio.getEventTime());
-			Date beginTime = new Date(date.getTime() - 30000);
-			Date endTime = new Date(date.getTime() + 30000);
+			Date beginTime = new Date(date.getTime() - 8000);
+			Date endTime = new Date(date.getTime() + 7000);
 			Date date2 = sdf2.parse(parkingVedio.getChangeTime());
-			String filePath = "ftp://10.0.0.1.11/" + sdf3.format(date2) + "/" + parkingVedio.getMac() + "_"
+			String filePath = "ftp://10.0.0.11/" + sdf3.format(date2) + "/" + parkingVedio.getMac() + "_"
 					+ parkingVedio.getChangeTime() + "_";
 			if (parkingVedio.getType() == 0) {
 				filePath += "_outCarVideo.mp4";
@@ -166,6 +169,7 @@ public class StatusCheckTask {
 				ParkingVedio parkingVedio = new ParkingVedio();
 				parkingVedio.setCameraIndex(sCameraIndex);
 				parkingVedio.setEventTime(ChangeTime);
+				parkingVedio.setSendStatus(0);
 				if (iVehicleEnterstate == 1) {
 					parkingSpace.setHappenTime(date);
 					parkingVedio.setChangeTime(ChangeTime);
@@ -185,8 +189,8 @@ public class StatusCheckTask {
 				parkingVedio.setType(parkInfo.getIVehicleEnterstate());
 				parkingSpaceService.update(parkingSpace);
 				parkingVedioService.save(parkingVedio);
-				sendData(parkingSpace, ChangeTime, sCameraIndex, sPlateNo, sPlateColor, parkInfo, picPath,
-						iVehicleEnterstate);
+				sendData(parkingSpace, ChangeTime, sCameraIndex, sPlateNo, parkInfo.getSPlateColor(), parkInfo, picPath,
+						parkInfo.getIVehicleEnterstate());
 			}
 			rs.close();
 			stmt.close();

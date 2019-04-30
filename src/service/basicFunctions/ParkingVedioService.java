@@ -21,6 +21,10 @@ public class ParkingVedioService {
 	public void save(ParkingVedio parkingVedio) {
 		parkingVedioDao.save(parkingVedio);
 	}
+
+	public void update(ParkingVedio parkingVedio) {
+		parkingVedioDao.update(parkingVedio);
+	}
 	
 	
 }

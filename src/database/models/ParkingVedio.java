@@ -39,5 +39,7 @@ public class ParkingVedio {
     private Date sendTime;
     @Column(name = "camera_index")
     private String cameraIndex;
+    @Column(name = "send_status")
+    private Integer sendStatus;
 	
 }
