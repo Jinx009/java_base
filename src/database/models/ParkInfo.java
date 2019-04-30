@@ -53,5 +53,7 @@ public class ParkInfo {
     private String sFutrureUrl;//特写图url
     @Column(name = "baseId")
     private Integer baseId;//对方数据库原始id
+    @Column(name = "mac")
+    private String mac;
     
 }
