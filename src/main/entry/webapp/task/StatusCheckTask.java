@@ -135,7 +135,6 @@ public class StatusCheckTask {
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection("jdbc:postgresql://10.0.0.18:5432/port", "v_admin", "v_admin");
 			c.setAutoCommit(false);
-			log.warn("Connect Sql Success!");
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from v_parking_info where id>" + maxId);
 			while (rs.next()) {
@@ -158,6 +157,7 @@ public class StatusCheckTask {
 				String dirPath = sdf.format(date);
 				ParkingSpace parkingSpace = parkingSpaceService.getByCameraNameAndParkNumber(parkInfo.getSCameraName(),
 						parkInfo.getSParkingid());
+				//添加mac信息
 				parkInfo.setMac(parkingSpace.getMac());
 				parkInfoService.update(parkInfo);
 				parkingSpace.setCameraNumber(sCameraName);
@@ -173,6 +173,9 @@ public class StatusCheckTask {
 					savePic(sWholeSenceUrl, picPath + "_inCarImg.jpeg");
 				}
 				if (iVehicleEnterstate == 2) {
+					if(parkingSpace.getHappenTime()==null){
+						parkingSpace.setHappenTime(date);
+					}
 					picPath += sdf3.format(parkingSpace.getHappenTime());
 					parkingVedio.setChangeTime(sdf3.format(parkingSpace.getHappenTime()));
 					savePic(sWholeSenceUrl, picPath + "_outCarImg.jpeg");
@@ -180,6 +183,7 @@ public class StatusCheckTask {
 				parkingVedio.setEventTime(ChangeTime);
 				parkingVedio.setMac(parkInfo.getMac());
 				parkingVedio.setType(parkInfo.getIVehicleEnterstate());
+				parkingSpaceService.update(parkingSpace);
 				parkingVedioService.save(parkingVedio);
 				sendData(parkingSpace, ChangeTime, sCameraIndex, sPlateNo, sPlateColor, parkInfo, picPath,
 						iVehicleEnterstate);

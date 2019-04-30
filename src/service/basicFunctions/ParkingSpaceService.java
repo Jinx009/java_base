@@ -53,5 +53,9 @@ public class ParkingSpaceService {
 	public ParkingSpace getByCameraNameAndParkNumber(String cameraName,String parkNumber){
 		return parkingSpaceDao.getByCameraNameAndParkNumber(cameraName,parkNumber);
 	}
+
+	public void update(ParkingSpace parkingSpace) {
+		parkingSpaceDao.update(parkingSpace);
+	}
 	
 }
