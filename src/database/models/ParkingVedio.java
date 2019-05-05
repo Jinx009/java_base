@@ -41,5 +41,7 @@ public class ParkingVedio {
     private String cameraIndex;
     @Column(name = "send_status")
     private Integer sendStatus;
+    @Column(name = "update_status")
+    private Integer updateStatus;
 	
 }

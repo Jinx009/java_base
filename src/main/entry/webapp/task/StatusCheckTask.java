@@ -188,11 +188,11 @@ public class StatusCheckTask {
 				parkingVedio.setMac(parkInfo.getMac());
 				parkingVedio.setType(parkInfo.getIVehicleEnterstate());
 				parkingSpaceService.update(parkingSpace);
-				if(iVehicleEnterstate==0){
+				if(iVehicleEnterstate!=0){
 					parkingVedioService.save(parkingVedio);
 				}
 				sendData(parkingSpace, ChangeTime, sCameraIndex, sPlateNo, parkInfo.getSPlateColor(), parkInfo, picPath,
-						parkInfo.getIVehicleEnterstate());
+						iVehicleEnterstate);
 			}
 			rs.close();
 			stmt.close();
@@ -257,6 +257,9 @@ public class StatusCheckTask {
 		parkInfo.setIVehicleEnterstate(iVehicleEnterstate);
 		if (iVehicleEnterstate == 2) {
 			parkInfo.setIVehicleEnterstate(0);
+		}
+		if(iVehicleEnterstate==0){
+			parkInfo.setIVehicleEnterstate(3);
 		}
 		parkInfo.setSParkingid(sParkingid);
 		parkInfo.setTEventTime(tEventTime);
