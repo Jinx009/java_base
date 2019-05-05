@@ -16,6 +16,7 @@ import database.models.ParkingVedio;
 import service.basicFunctions.ParkInfoService;
 import service.basicFunctions.ParkingSpaceService;
 import service.basicFunctions.ParkingVedioService;
+import utils.GifUtils;
 import utils.HttpUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -49,13 +50,27 @@ public class StatusCheckTask {
 	@Autowired
 	private ParkingVedioService parkingVedioService;
 
+	/**
+	 * 录制视频
+	 */
 	@Scheduled(cron = "0/60 * * * * ? ") // 每1分钟
 	public void getVedio() {
 		try {
 			List<ParkingVedio> list = parkingVedioService.findByTime();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 			if (list != null && !list.isEmpty()) {
 				for (ParkingVedio parkingVedio : list) {
 					saveVedio(parkingVedio);
+					Date date = sdf.parse(parkingVedio.getEventTime());
+					String filePath = "/data/ftp_pic/" + sdf.format(date) + "/" + parkingVedio.getMac() + "_"
+							+ parkingVedio.getChangeTime() + "_";
+					if (parkingVedio.getType() == 0) {
+						filePath += "_outCarVideo.mp4";
+					} else {
+						filePath += "_inCarVideo.mp4";
+					}
+					parkingVedio.setFilePath(filePath);
+					parkingVedio.setUpdateStatus(0);
 					parkingVedio.setSendStatus(1);
 					parkingVedio.setSendTime(new Date());
 					parkingVedioService.update(parkingVedio);
@@ -65,6 +80,29 @@ public class StatusCheckTask {
 			log.error("e:{}", e);
 		}
 	}
+	
+	/**
+	 * 转换视频格式
+	 */
+	@Scheduled(cron = "0/60 * * * * ? ") // 每1分钟
+	public void updateVedio() {
+		try {
+			List<ParkingVedio> list = parkingVedioService.findByStatus();
+			if(list!=null&&!list.isEmpty()){
+				for(ParkingVedio pv : list){
+					File file = new File(pv.getFilePath());
+					if(file.exists()){
+						GifUtils.covMp4(pv.getFilePath());
+						pv.setUpdateStatus(1);
+						parkingVedioService.update(pv);
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.error("e:{}", e);
+		}
+	}
+
 
 	public static void main(String[] args) {
 		// savePic("http://10.0.0.17/ISAPI/Traffic/ContentMgmt/Picture/ch00_00000000000003190076001047112",
@@ -80,6 +118,10 @@ public class StatusCheckTask {
 		saveVedio(parkingVedio);
 	}
 
+	/**
+	 * 录制任务
+	 * @param parkingVedio
+	 */
 	private static void saveVedio(ParkingVedio parkingVedio) {
 		Connection c = null;
 		try {

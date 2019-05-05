@@ -43,5 +43,7 @@ public class ParkingVedio {
     private Integer sendStatus;
     @Column(name = "update_status")
     private Integer updateStatus;
+    @Column(name = "file_path")
+    private String filePath;
 	
 }

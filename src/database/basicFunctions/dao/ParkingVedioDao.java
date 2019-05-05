@@ -21,5 +21,12 @@ public class ParkingVedioDao extends BaseDao<ParkingVedio>{
 		List<ParkingVedio> list = em.createQuery(hql).getResultList();
 		return list;
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<ParkingVedio> findByStatus() {
+		String hql = "FROM ParkingVedio where sendStatus =1  and updateStatus = 0";
+		List<ParkingVedio> list = em.createQuery(hql).getResultList();
+		return list;
+	}
 	
 }

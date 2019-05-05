@@ -25,6 +25,10 @@ public class ParkingVedioService {
 	public void update(ParkingVedio parkingVedio) {
 		parkingVedioDao.update(parkingVedio);
 	}
+
+	public List<ParkingVedio> findByStatus() {
+		return parkingVedioDao.findByStatus();
+	}
 	
 	
 }
