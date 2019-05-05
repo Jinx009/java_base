@@ -70,7 +70,7 @@ public class BaseController {
     @SuppressWarnings("unchecked")
 	public static String login(HttpsUtil httpsUtil) throws Exception {
         String appId = Constant.APPID;
-        String secret = Constant.SECRET;
+        String secret = "RPfD_UjZzSb48kYelRdicfftOE4a";//Constant.SECRET;
         String urlLogin = Constant.APP_AUTH;
 
         Map<String, String> paramLogin = new HashMap<>();
