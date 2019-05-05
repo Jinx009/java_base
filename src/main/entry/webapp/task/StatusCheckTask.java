@@ -165,7 +165,7 @@ public class StatusCheckTask {
 		}
 	}
 
-	@Scheduled(cron = "0/3 * * * * ? ") // 每三秒
+	@Scheduled(cron = "0/5 * * * * ? ") // 每三秒
 	public void init() {
 		Connection c = null;
 		Statement stmt = null;
@@ -230,7 +230,7 @@ public class StatusCheckTask {
 				parkingVedio.setMac(parkInfo.getMac());
 				parkingVedio.setType(parkInfo.getIVehicleEnterstate());
 				parkingSpaceService.update(parkingSpace);
-				if(iVehicleEnterstate!=0){
+				if(iVehicleEnterstate!=0&&!"车牌".equals(parkInfo.getSPlateNo())){
 					parkingVedioService.save(parkingVedio);
 				}
 				sendData(parkingSpace, ChangeTime, sCameraIndex, sPlateNo, parkInfo.getSPlateColor(), parkInfo, picPath,
@@ -266,7 +266,7 @@ public class StatusCheckTask {
 		map.put("cpColor", sPlateColor);
 		map.put("status", String.valueOf(parkInfo.getIVehicleEnterstate()));
 		map.put("picLink", "http://58.246.184.99:801/" + picPath);
-		if (iVehicleEnterstate != 0) {
+		if (iVehicleEnterstate != 0&&!"车牌".equals(sPlateNo)) {
 			HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport", JSONObject.toJSONString(map));
 		}
 	}
