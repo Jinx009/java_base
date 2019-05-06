@@ -166,11 +166,11 @@ public class StatusCheckTask {
 			Date endTime = new Date(date.getTime() + 7000);
 			Date date2 = sdf2.parse(parkingVedio.getChangeTime());
 			String filePath = "ftp://10.0.0.11/" + sdf3.format(date2) + "/" + parkingVedio.getMac() + "_"
-					+ parkingVedio.getChangeTime() + "_";
+					+ parkingVedio.getChangeTime() ;
 			if (parkingVedio.getType() == 0) {
-				filePath += "_outCarVideo.mp4";
+				filePath += "_outCarVideo_.mp4";
 			} else {
-				filePath += "_inCarVideo.mp4";
+				filePath += "_inCarVideo_.mp4";
 			}
 			String sql = "insert into record_download_info (" + "iserialno," + "tcreatetime," + "scameraindex,"
 					+ "splateno," + "tbegintime," + "tendtime," + "sfilesavepath," + "sftpusername" + ",sftppassword,"
