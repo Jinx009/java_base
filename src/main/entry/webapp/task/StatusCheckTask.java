@@ -90,11 +90,11 @@ public class StatusCheckTask {
 					saveVedio(parkingVedio);
 					Date date = sdf2.parse(parkingVedio.getEventTime());
 					String filePath = "/data/ftp_pic/" + sdf.format(date) + "/" + parkingVedio.getMac() + "_"
-							+ parkingVedio.getChangeTime() + "_";
+							+ parkingVedio.getChangeTime();
 					if (parkingVedio.getType() == 0) {
-						filePath += "_outCarVideo.mp4";
+						filePath += "_outCarVideo_.mp4";
 					} else {
-						filePath += "_inCarVideo.mp4";
+						filePath += "_inCarVideo_.mp4";
 					}
 					parkingVedio.setFilePath(filePath);
 					parkingVedio.setUpdateStatus(0);
