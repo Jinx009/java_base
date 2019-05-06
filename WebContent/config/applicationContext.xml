@@ -34,7 +34,7 @@
         <property name="fileEncoding" value="utf-8"/> 
     </bean>
     
- 	<import resource="redis-context.xml"/> 
+ <!-- 	<import resource="redis-context.xml"/>  -->
  	
  	<bean id="nbTransactionInterceptor" class="common.helper.nbTransactionInterceptor"/>
 	<!-- freemarker html视图渲染器 -->

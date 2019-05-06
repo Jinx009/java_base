@@ -50,6 +50,32 @@ public class StatusCheckTask {
 	@Autowired
 	private ParkingVedioService parkingVedioService;
 
+	@Scheduled(cron = "0 1 0 * * ?") // 每天晚上0点01分创建新文件夹
+	public void chmod(){
+		try {
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			String data = "create_file";
+			File file = new File("/data/ftp_pic/" + sdf.format(date)+"/create_file.txt"); // 本地目录
+			File fileParent = file.getParentFile();
+			if (!fileParent.exists()) {
+				fileParent.mkdirs();
+				file.createNewFile();
+			}
+			FileOutputStream fops = new FileOutputStream(file);
+			fops.write(data.getBytes());
+			fops.flush();
+			fops.close();
+            String[] cmd = { "sh", "-c", "chmod 777 /data/ftp_pic/*" };
+            log.warn("log:chmod dir");
+            Process p = Runtime.getRuntime().exec(cmd);
+            p.waitFor();
+            p.destroy();
+        } catch (Exception e) {
+            log.error("error:{}", e);
+        }
+	}
+	
 	/**
 	 * 录制视频
 	 */
