@@ -167,6 +167,31 @@ public class HttpUtils {
 		}
 		return result;
     }
+    
+    /**
+     * http get
+     * @param url
+     * @return
+     */
+    @SuppressWarnings("resource")
+	public static String getPuzhiJob(String deviceId){
+    	logger.warn("HttpUtils.get[info:{}]",deviceId);
+        String result = "500";
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpGet get = new HttpGet("http://ghiot.cigem.cn/api/devices/"+deviceId+"/deliveryHistory");
+        get.setHeader("appkey", "KFKFxvyVAmAC6O-cSefzy31hcvPyc77HijsSLw9wQPND-GVeuw4seLDQdXR");
+		try {
+			HttpResponse response = httpClient.execute(get);
+			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			logger.warn("HttpUtils.get[res:{}]",result);
+		} catch (ParseException e) {
+			logger.error("HttpUtils.get[ParseException.error:{}]",e);
+		} catch (IOException e) {
+			logger.error("HttpUtils.get[IOException.error:{}]",e);
+		}
+		return result;
+    }
+	
 	
     
     /**

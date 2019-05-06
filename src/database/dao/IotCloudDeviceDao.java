@@ -1,5 +1,7 @@
 package database.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
@@ -36,6 +38,12 @@ public class IotCloudDeviceDao extends BaseDao<IoTCloudDevice>{
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);
+	}
+
+	public List<IoTCloudDevice> findByLocalIp(String localIp) {
+		QueryParam param = QueryParam.getInstance();
+		param.addParam("localIp", localIp);
+		return findByCriteria(param);
 	}
 
 	

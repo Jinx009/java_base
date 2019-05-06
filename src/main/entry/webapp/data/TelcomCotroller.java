@@ -268,20 +268,22 @@ public class TelcomCotroller extends BaseController {
 		} else {
 			type = "心跳";
 		}
-		String acc_x = getData10000(data.substring(18, 19), data.substring(18, 22));
-		String acc_y = getData10000(data.substring(24, 25), data.substring(24, 28)) ;
-		String acc_z = getData10000(data.substring(30, 31), data.substring(30, 34)) ;
-		String x = getData100(data.substring(36, 37), data.substring(36, 40));
-		String y = getData100(data.substring(42, 43), data.substring(42, 46));
-		String z = getData100(data.substring(70, 71), data.substring(70, 74));
-		sendData.put("103_1", x+","+y+","+z+","+acc_x+","+acc_y+","+acc_z);
-		map.put("data", sendData);
-		String json = JSONObject.toJSONString(map);
-		log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
-		String url = "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
-		log.warn("send url-----------------------\n:{}\n---------------------------------", url);
-		String res = HttpUtils.postJson(url, json);
-		log.warn("send res-----------------------\n:{}\n---------------------------------", res);
+		if(type.equals("报警")||type.equals("心跳")){
+			String acc_x = getData10000(data.substring(18, 19), data.substring(18, 22));
+			String acc_y = getData10000(data.substring(24, 25), data.substring(24, 28)) ;
+			String acc_z = getData10000(data.substring(30, 31), data.substring(30, 34)) ;
+			String x = getData100(data.substring(36, 37), data.substring(36, 40));
+			String y = getData100(data.substring(42, 43), data.substring(42, 46));
+			String z = getData100(data.substring(70, 71), data.substring(70, 74));
+			sendData.put("103_1", x+","+y+","+z+","+acc_x+","+acc_y+","+acc_z);
+			map.put("data", sendData);
+			String json = JSONObject.toJSONString(map);
+			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
+			String url = "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
+			log.warn("send url-----------------------\n:{}\n---------------------------------", url);
+			String res = HttpUtils.postJson(url, json);
+			log.warn("send res-----------------------\n:{}\n---------------------------------", res);
+		}
 	}
 
 	private void sendBeijingQj(IoTCloudDevice device, IotCloudLog iotCloudLog) {
