@@ -83,11 +83,12 @@ public class StatusCheckTask {
 	public void getVedio() {
 		try {
 			List<ParkingVedio> list = parkingVedioService.findByTime();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 			if (list != null && !list.isEmpty()) {
 				for (ParkingVedio parkingVedio : list) {
 					saveVedio(parkingVedio);
-					Date date = sdf.parse(parkingVedio.getEventTime());
+					Date date = sdf2.parse(parkingVedio.getEventTime());
 					String filePath = "/data/ftp_pic/" + sdf.format(date) + "/" + parkingVedio.getMac() + "_"
 							+ parkingVedio.getChangeTime() + "_";
 					if (parkingVedio.getType() == 0) {
@@ -116,6 +117,7 @@ public class StatusCheckTask {
 			List<ParkingVedio> list = parkingVedioService.findByStatus();
 			if(list!=null&&!list.isEmpty()){
 				for(ParkingVedio pv : list){
+					log.warn("vedio path:{}",pv.getFilePath());
 					File file = new File(pv.getFilePath());
 					if(file.exists()){
 						GifUtils.covMp4(pv.getFilePath());

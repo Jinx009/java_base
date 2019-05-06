@@ -45,12 +45,13 @@ public class GifUtils {
         command.add("scale=-1:720");
         command.add("-vcodec");
         command.add("h264");
-        command.add(inputPath);
+        String outPath = inputPath.split(".mp4")[0]+"@@@"+".mp4";
+        command.add(outPath);
         ProcessBuilder builder = new ProcessBuilder(command);
         Process process = null;
         try {
             process = builder.start();
-            log.warn("msg:cov MP4{}",inputPath);
+            log.warn("msg:cov MP4：{}-----------------------------------",inputPath);
         } catch (IOException e) {
             log.error("e:{}",e);
         }
@@ -71,8 +72,50 @@ public class GifUtils {
         if (errorStream != null) {
             errorStream.close();
         }
+        covAudio(inputPath,outPath);
+    }
+    
+    @SuppressWarnings("unused")
+	public static void covAudio(String inputPath,String outPath) throws Exception {
+        List<String> command = new ArrayList<String>();
+        command.add(ffmpegEXE);
+        command.add("-i");
+        command.add(outPath);
+        command.add("-c:v");
+        command.add("copy");
+        command.add("-c:a");
+        command.add("aac");
+        command.add("-q");
+        command.add("1");
+        command.add(inputPath);
+        ProcessBuilder builder = new ProcessBuilder(command);
+        Process process = null;
+        try {
+            process = builder.start();
+            log.warn("msg:cov Audio：{}--------------------------------------",inputPath);
+        } catch (IOException e) {
+        	 log.error("e:{}",e);
+        }
+        //使用这种方式会在瞬间大量消耗CPU和内存等系统资源，所以这里我们需要对流进行处理
+        InputStream errorStream = process.getErrorStream();
+        InputStreamReader inputStreamReader = new InputStreamReader(errorStream);
+        BufferedReader br = new BufferedReader(inputStreamReader);
+
+        String line = "";
+        while ((line = br.readLine()) != null) {
+        }
+        if (br != null) {
+            br.close();
+        }
+        if (inputStreamReader != null) {
+            inputStreamReader.close();
+        }
+        if (errorStream != null) {
+            errorStream.close();
+        }
         covGif(inputPath);
     }
+
     
     @SuppressWarnings("unused")
 	public static void covGif(String inputPath) throws Exception {
@@ -84,12 +127,12 @@ public class GifUtils {
         command.add("15");
         command.add("-vf");
         command.add("scale=-1:360");
-        command.add(inputPath.split(".")[0]+".gif");
+        command.add(inputPath.split(".mp4")[0]+".gif");
         ProcessBuilder builder = new ProcessBuilder(command);
         Process process = null;
         try {
             process = builder.start();
-            log.warn("msg:cov GIF{}",inputPath);
+            log.warn("msg:cov GIF：{}--------------------------------------",inputPath);
         } catch (IOException e) {
         	 log.error("e:{}",e);
         }
@@ -122,6 +165,7 @@ public class GifUtils {
 //    } catch (Exception e) {
 //       e.printStackTrace();
 //    }
+	 System.out.println("/data/ftp_pic/20190506/00011806140000A6_20190506130029__inCarVideo.mp4".split(".mp4")[0]);
  }
 	
 }
