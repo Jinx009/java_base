@@ -82,9 +82,9 @@ public class StatusCheckTask {
 										if (cmd.equals("setsensorattr")) {
 											String threshold = UrlUtils.parse($cmd, "threshold");
 											String[] s = threshold.split(",");
-											Integer a = Integer.valueOf(s[0]);
-											Integer b = Integer.valueOf(s[1]);
-											data = "4800450501" + UrlUtils.getHex(a * 1000) + UrlUtils.getHex(b * 1000);
+											double a = Double.valueOf(s[0]);
+											double b = Double.valueOf(s[1]);
+											data = "4800450501" + UrlUtils.getHex((int)(a * 1000) ) + UrlUtils.getHex((int)(b * 1000));
 											map.put("data", data);
 											HttpUtils.postJson("http://106.14.94.245:8091/job/send",
 													JSONObject.toJSONString(map));
@@ -108,4 +108,11 @@ public class StatusCheckTask {
 		}
 	}
 
+	public static void main(String[] args) {
+		double d = Double.valueOf("0.03");
+		int a = (int)(d * 1000);
+		String c = UrlUtils.getHex( a);
+		System.out.println(a+"---"+c);
+	}
+	
 }
