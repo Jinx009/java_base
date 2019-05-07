@@ -163,7 +163,7 @@ public class StatusCheckTask {
 			c.setAutoCommit(false);
 
 			Date date = sdf2.parse(parkingVedio.getEventTime());
-			Date beginTime = new Date(date.getTime()  +16000);
+			Date beginTime = new Date(date.getTime()  +6000);
 			Date endTime = new Date(date.getTime() +36000);
 			Date date2 = sdf2.parse(parkingVedio.getChangeTime());
 			String filePath = "ftp://10.0.0.11/" + sdf3.format(date2) + "/" + parkingVedio.getMac() + "_"
