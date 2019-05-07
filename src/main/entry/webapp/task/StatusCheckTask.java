@@ -93,8 +93,7 @@ public class StatusCheckTask {
 											String mode = UrlUtils.parse($cmd, "mode");
 											data = "480038010" + mode;
 											map.put("data", data);
-											HttpUtils.postJson("http://106.14.94.245:8091/job/send",
-													JSONObject.toJSONString(map));
+											//HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
 										}
 									}
 								}
