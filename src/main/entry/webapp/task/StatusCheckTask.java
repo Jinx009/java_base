@@ -118,11 +118,12 @@ public class StatusCheckTask {
 			if(list!=null&&!list.isEmpty()){
 				for(ParkingVedio pv : list){
 					log.warn("vedio path:{}",pv.getFilePath());
+					pv.setUpdateStatus(1);
+					parkingVedioService.update(pv);
 					File file = new File(pv.getFilePath());
-					if(file.exists()){
+					File file2 = new File(pv.getFilePath().split("_.mp4")[0]+".mp4");
+					if(file.exists()&&!file2.exists()){
 						GifUtils.covMp4(pv.getFilePath());
-						pv.setUpdateStatus(1);
-						parkingVedioService.update(pv);
 					}
 				}
 			}
@@ -162,8 +163,8 @@ public class StatusCheckTask {
 			c.setAutoCommit(false);
 
 			Date date = sdf2.parse(parkingVedio.getEventTime());
-			Date beginTime = new Date(date.getTime() - 8000);
-			Date endTime = new Date(date.getTime() + 7000);
+			Date beginTime = new Date(date.getTime() );
+			Date endTime = new Date(date.getTime() +16000);
 			Date date2 = sdf2.parse(parkingVedio.getChangeTime());
 			String filePath = "ftp://10.0.0.11/" + sdf3.format(date2) + "/" + parkingVedio.getMac() + "_"
 					+ parkingVedio.getChangeTime() ;
