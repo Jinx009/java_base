@@ -36,7 +36,7 @@ public class StatusCheckTask {
 	/**
 	 * 搜索任务
 	 */
-	@Scheduled(cron = "0/60 * * * * ? ") // 每1分钟
+	@Scheduled(cron = "0/10 * * * * ? ") // 每1分钟
 	public void getVedio() {
 		try {
 			List<IoTCloudDevice> list = iotCloudDeviceService.findByLocalIp("QJ_PUSHI");
