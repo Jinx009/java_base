@@ -77,8 +77,7 @@ public class StatusCheckTask {
 											String sample_intv = UrlUtils.parse($cmd, "sample_intv");
 											data = "48007A02010" + sample_intv;
 											map.put("data", data);
-											HttpUtils.postJson("http://106.14.94.245:8091/job/send",
-													JSONObject.toJSONString(map));
+										//	HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
 										}
 										if (cmd.equals("setsensorattr")) {
 											String threshold = UrlUtils.parse($cmd, "threshold");
