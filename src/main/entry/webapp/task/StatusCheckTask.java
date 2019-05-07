@@ -222,7 +222,7 @@ public class StatusCheckTask {
 				String sPlateNo = rs.getString("splateno");
 				String sPlateColor = rs.getString("splatecolor");
 				String sVehicleColor = rs.getString("svehiclecolor");
-				String sWholeSenceUrl = rs.getString("swholesenceurl");
+				String sWholeSenceUrl = rs.getString("spic3");
 				String sFutrureUrl = rs.getString("spic3");
 				ParkInfo parkInfo = saveParkInfo(id, sLocation, sCameraName, sCameraIndex, iVehicleEnterstate,
 						sParkingid, tEventTime, sPlateNo, sPlateColor, sVehicleColor, sWholeSenceUrl, sFutrureUrl);
