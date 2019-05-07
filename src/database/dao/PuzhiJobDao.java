@@ -12,7 +12,7 @@ public class PuzhiJobDao extends BaseDao<PuzhiJob>{
 
 	public PuzhiJob findByUuid(String uuid){
 		QueryParam param = QueryParam.getInstance();
-		param.addParam("featureUuid", uuid);
+		param.addParam("msgid", uuid);
 		return findByCriteriaForUnique(param);
 	}
 	

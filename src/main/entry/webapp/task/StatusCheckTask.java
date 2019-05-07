@@ -12,9 +12,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.sun.jndi.toolkit.url.UrlUtil;
 
 import database.models.IoTCloudDevice;
 import database.models.PuzhiJob;
@@ -52,8 +50,9 @@ public class StatusCheckTask {
 						List<PuzhiJob> jobs = JSONObject.parseArray(_d, PuzhiJob.class);
 						if (jobs != null && !jobs.isEmpty()) {
 							for (PuzhiJob pz : jobs) {
-								PuzhiJob job = puzhiJobService.findByUuid(pz.getFeatureUuid());
+								PuzhiJob job = puzhiJobService.findByUuid(pz.getMsgid());
 								if (job == null) {
+									log.warn("pz:{},job:{}",JSONObject.toJSONString(pz),JSONObject.toJSONString(job));
 									pz.setCreateTime(new Date());
 									pz.setMac(iot.getMac());
 									puzhiJobService.save(pz);

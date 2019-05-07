@@ -39,5 +39,7 @@ public class PuzhiJob {
 	private Date createTime;
 	@Column(name = "mac")
 	private String mac;
+	@Column(name = "msgid")
+	private String msgid;
 	
 }
