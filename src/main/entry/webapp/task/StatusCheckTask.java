@@ -111,7 +111,7 @@ public class StatusCheckTask {
 	/**
 	 * 转换视频格式
 	 */
-	@Scheduled(cron = "0/60 * * * * ? ") // 每1分钟
+	@Scheduled(cron = "0/59 * * * * ? ") // 每1分钟
 	public void updateVedio() {
 		try {
 			List<ParkingVedio> list = parkingVedioService.findByStatus();
@@ -222,7 +222,7 @@ public class StatusCheckTask {
 				String sPlateColor = rs.getString("splatecolor");
 				String sVehicleColor = rs.getString("svehiclecolor");
 				String sWholeSenceUrl = rs.getString("swholesenceurl");
-				String sFutrureUrl = rs.getString("sfutrureurl");
+				String sFutrureUrl = rs.getString("spic3");
 				ParkInfo parkInfo = saveParkInfo(id, sLocation, sCameraName, sCameraIndex, iVehicleEnterstate,
 						sParkingid, tEventTime, sPlateNo, sPlateColor, sVehicleColor, sWholeSenceUrl, sFutrureUrl);
 				Date date = sdf2.parse(tEventTime);

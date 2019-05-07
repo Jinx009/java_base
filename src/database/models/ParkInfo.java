@@ -57,5 +57,11 @@ public class ParkInfo {
     private String mac;
     @Column(name = "vedio_status")
     private Integer vedioStatus;
+    @Column(name = "spic1")
+    private String spic1;
+    @Column(name = "spic2")
+    private String spic2;
+    @Column(name = "spic3")
+    private String spic3;
     
 }
