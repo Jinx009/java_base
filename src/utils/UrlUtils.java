@@ -23,7 +23,7 @@ public class UrlUtils {
 	}
 	
 	public static String getHex(Integer num){
-		String _num =  Integer.toHexString(600);
+		String _num =  Integer.toHexString(num);
 		if(_num.length()==1){
 			return "0"+_num+"00";
 		}
@@ -47,6 +47,6 @@ public class UrlUtils {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println( Integer.toHexString(60));
+		System.out.println( getHex(3600));
 	}
 }
