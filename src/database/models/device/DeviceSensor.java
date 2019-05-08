@@ -143,5 +143,7 @@ public class DeviceSensor {
     private String cameraName;
     @Column(name = "pic_link")
     private String picLink;
+    @Column(name = "sensor_status")
+    private Integer sensorStatus;
 	
 }
