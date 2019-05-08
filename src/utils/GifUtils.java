@@ -10,6 +10,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * mp4转gif
  * 
@@ -30,6 +31,55 @@ public class GifUtils {
 
 	private static String ffmpegEXE = "/usr/local/bin/ffmpeg";
 
+	private static void dealStream(Process process) {
+	    if (process == null) {
+	        return;
+	    }
+	    // 处理InputStream的线程
+	    new Thread() {
+	        @Override
+	        public void run() {
+	            BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+	            String line = null;
+	            try {
+	                while ((line = in.readLine()) != null) {
+	                    log.info("output: " + line);
+	                }
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            } finally {
+	                try {
+	                    in.close();
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+	    }.start();
+	    // 处理ErrorStream的线程
+	    new Thread() {
+	        @Override
+	        public void run() {
+	            BufferedReader err = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+	            String line = null;
+	            try {
+	                while ((line = err.readLine()) != null) {
+	                    log.info("err: " + line);
+	                }
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            } finally {
+	                try {
+	                    err.close();
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+	    }.start();
+	}
+
+	
 	/**
 	 *
 	 * @param time
@@ -57,8 +107,7 @@ public class GifUtils {
 		command.add(outPath);
 		try {
 			Process videoProcess = new ProcessBuilder(command).start();
-			new PrintStream(videoProcess.getErrorStream()).start();
-			 new PrintStream(videoProcess.getInputStream()).start();
+			dealStream(videoProcess);
 			videoProcess.waitFor();
 			log.warn("msg:cov MP4：{}--------------------------------------{}", inputPath, outPath);
 			return true;
@@ -118,24 +167,3 @@ public class GifUtils {
 
 }
 
-class PrintStream extends Thread {
-	java.io.InputStream __is = null;
-
-	public PrintStream(java.io.InputStream is) {
-		__is = is;
-	}
-
-	public void run() {
-		try {
-			while (this != null) {
-				int _ch = __is.read();
-				if (_ch != -1)
-					System.out.print((char) _ch);
-				else
-					break;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-}
