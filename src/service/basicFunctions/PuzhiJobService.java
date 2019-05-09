@@ -27,5 +27,9 @@ public class PuzhiJobService {
 	public void update(PuzhiJob pz) {
 		puzhiJobDao.update(pz);
 	}
+
+	public PuzhiJob findByTelTaskId(String cammandId) {
+		return puzhiJobDao.findByTelTaskId(cammandId);
+	}
 	
 }

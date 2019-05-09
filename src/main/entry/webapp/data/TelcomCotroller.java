@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import database.models.IoTCloudDevice;
 import database.models.IotCloudLog;
+import database.models.PuzhiJob;
 import database.models.vo.PushModel;
 import database.models.vo.TModel;
 import database.models.vo.TelcomPushDataModel;
@@ -36,6 +37,7 @@ import utils.StreamClosedHttpResponse;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.IotCloudDeviceService;
 import service.basicFunctions.IotCloudLogService;
+import service.basicFunctions.PuzhiJobService;
 import utils.Resp;
 
 @Controller
@@ -48,6 +50,8 @@ public class TelcomCotroller extends BaseController {
 	private IotCloudDeviceService iotCloudDeviceService;
 	@Autowired
 	private IotCloudLogService iotCloudLogService;
+	@Autowired
+	private PuzhiJobService puzhiJobService;
 
 	@RequestMapping(path = "/na/iocm/devNotify/v1.1.0/reportCmdExecResult", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -68,6 +72,20 @@ public class TelcomCotroller extends BaseController {
 	public Resp<?> commandRspData(@RequestBody String r) {
 		Resp<?> resp = new Resp<>(false);
 		try {
+			JSONObject jobj = JSONObject.parseObject(r);
+			String cammandId = jobj.getString("commandId");
+			String status = jobj.getString("status");
+			PuzhiJob pz = puzhiJobService.findByTelTaskId(cammandId);
+			if(pz!=null){
+				pz.setTaskStatus(1);
+				pz.setFeatureUuid(status);
+				puzhiJobService.update(pz);
+				IoTCloudDevice device = iotCloudDeviceService.findByMac(pz.getMac());
+				Map<String, Object> _r = new HashMap<>();
+				String r2 = "$cmd="+pz.getCmd()+"&result="+status+"&msgid="+pz.getMsgid();
+				_r.put("data", r2);
+				HttpUtils.postPuzhiJob(device.getUdpIp().split("_")[0],JSONObject.toJSONString(_r));
+			}
 			log.warn("notice msg:{}", r);
 			return new Resp<>(true);
 		} catch (Exception e) {

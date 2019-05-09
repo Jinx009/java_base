@@ -28,5 +28,11 @@ public class PuzhiJobDao extends BaseDao<PuzhiJob>{
 		}
 		return 0;
 	}
+
+	public PuzhiJob findByTelTaskId(String cammandId) {
+		QueryParam param = QueryParam.getInstance();
+		param.addParam("telcomTaskId", cammandId);
+		return findByCriteriaForUnique(param);
+	}
 	
 }
