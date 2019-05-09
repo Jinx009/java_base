@@ -111,7 +111,7 @@ public class StatusCheckTask {
 	/**
 	 * 转换视频格式
 	 */
-	@Scheduled(cron = "0/120 * * * * ? ") // 每1分钟
+	@Scheduled(cron = "0/59 * * * * ? ") // 每1分钟
 	public void updateVedio() {
 		try {
 			List<ParkingVedio> list = parkingVedioService.findByStatus();
