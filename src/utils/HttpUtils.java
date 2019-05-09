@@ -183,7 +183,7 @@ public class HttpUtils {
 		try {
 			HttpResponse response = httpClient.execute(get);
 			result = EntityUtils.toString(response.getEntity(),"UTF-8");
-			logger.warn("HttpUtils.get[res:{}]",result);
+			//logger.warn("HttpUtils.get[res:{}]",result);
 		} catch (ParseException e) {
 			logger.error("HttpUtils.get[ParseException.error:{}]",e);
 		} catch (IOException e) {
@@ -242,4 +242,25 @@ public class HttpUtils {
         }
         return result;
     }
+
+	@SuppressWarnings("resource")
+	public static void postPuzhiJob(String deviceId,String jsonStr) {
+		logger.warn("HttpUtils.postJson[deviceId:{}]",deviceId);
+		String result = "500";
+        HttpPost post = new HttpPost("http://ghiot.cigem.cn/api/devices/"+deviceId+"/deliveryResponse");
+        post.addHeader("Content-type","application/json;charset=utf-8");
+        post.addHeader("apikey", "KFKFxvyVAmAC6O-cSefzy31hcvPyc77HijsSLw9wQPND-GVeuw4seLDQdXR");
+        post.setHeader("Accept", "application/json");
+        post.setEntity(new StringEntity(jsonStr, Charset.forName("UTF-8")));
+        try {
+        	DefaultHttpClient httpClient = new DefaultHttpClient();
+        	HttpResponse response = httpClient.execute(post);
+			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			logger.warn("HttpUtils.postJson[res:{}]",result);
+		} catch (ParseException e) {
+			logger.error("HttpUtils.postJson[ParseException.error:{}]",e);
+		} catch (IOException e) {
+			logger.error("HttpUtils.postJson[IOException.error:{}]",e);
+		}
+	}
 }

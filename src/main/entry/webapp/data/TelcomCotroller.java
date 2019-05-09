@@ -62,6 +62,20 @@ public class TelcomCotroller extends BaseController {
 		return resp;
 
 	}
+	
+	@RequestMapping(path = "/na/iocm/devNotify/v1.1.0/commandRspData", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Resp<?> commandRspData(@RequestBody String r) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("notice msg:{}", r);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("erroe:{}", e);
+		}
+		return resp;
+
+	}
 
 	/**
 	 * 设置上报地址

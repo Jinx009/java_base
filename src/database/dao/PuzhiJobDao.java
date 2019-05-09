@@ -1,6 +1,8 @@
 package database.dao;
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
@@ -14,6 +16,17 @@ public class PuzhiJobDao extends BaseDao<PuzhiJob>{
 		QueryParam param = QueryParam.getInstance();
 		param.addParam("msgid", uuid);
 		return findByCriteriaForUnique(param);
+	}
+
+	public int findByMacAndTaskStatus(String mac, int taskStatus) {
+		QueryParam param = QueryParam.getInstance();
+		param.addParam("mac", mac);
+		param.addParam("taskStatus", taskStatus);
+		List<PuzhiJob>list = findByCriteria(param);
+		if(list!=null&&!list.isEmpty()){
+			return list.size();
+		}
+		return 0;
 	}
 	
 }

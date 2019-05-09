@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import database.models.IoTCloudDevice;
@@ -54,7 +55,7 @@ public class JobController extends BaseController {
 	@RequestMapping(path = "/send")
 	@ResponseBody
 	public Resp<?> job(@RequestBody Map<String, Object> data) {
-		Resp<?> resp = new Resp<>(false);
+		Resp<String> resp = new Resp<>(false);
 		try {
 			String mac = getString(data, "mac");
 			String data1 = getString(data, "data");
@@ -109,6 +110,7 @@ public class JobController extends BaseController {
 				HttpResponse responsePostAsynCmd = httpsUtil.doPostJson(urlPostAsynCmd, header, jsonRequest);
 				String responseBody = httpsUtil.getHttpResponseBody(responsePostAsynCmd);
 				log.warn("msg:{}", responseBody);
+				resp.setData(JSONObject.parseObject(responseBody).getString("commandId"));
 			}else if (ioTCloudDevice.getType() == 3) {//loraWan
 				String  msg = sendAndRcvHttpPostBase("https://api.opg-iot.cn/thingpark/lrc/rest/downlink?DevEUI="+mac+"&FPort=1&Payload="+data1,"");
 				IotCloudLog iotCloudLog = new IotCloudLog();

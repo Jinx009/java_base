@@ -19,5 +19,13 @@ public class PuzhiJobService {
 	public void save(PuzhiJob puzhiJob){
 		puzhiJobDao.save(puzhiJob);
 	}
+
+	public int findByMacAndTaskStatus(String mac, int taskStatus) {
+		return puzhiJobDao.findByMacAndTaskStatus(mac,taskStatus);
+	}
+
+	public void update(PuzhiJob pz) {
+		puzhiJobDao.update(pz);
+	}
 	
 }

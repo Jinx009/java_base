@@ -41,5 +41,11 @@ public class PuzhiJob {
 	private String mac;
 	@Column(name = "msgid")
 	private String msgid;
+	@Column(name = "telcom_task_id")
+	private String telcomTaskId;
+	@Column(name = "task_status")
+	private Integer taskStatus;
+	@Column(name = "cmd")
+	private String cmd;
 	
 }
