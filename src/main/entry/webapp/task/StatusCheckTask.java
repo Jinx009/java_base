@@ -261,7 +261,7 @@ public class StatusCheckTask {
 				parkingVedio.setMac(parkInfo.getMac());
 				parkingVedio.setType(parkInfo.getIVehicleEnterstate());
 				parkingSpaceService.update(parkingSpace);
-				if (iVehicleEnterstate != 0 && !"车牌".equals(parkInfo.getSPlateNo())) {
+				if (iVehicleEnterstate != 0 ) {
 					parkingVedioService.save(parkingVedio);
 				}
 				sendData(parkingSpace, ChangeTime, sCameraIndex, sPlateNo, parkInfo.getSPlateColor(), parkInfo, picPath,
@@ -297,7 +297,7 @@ public class StatusCheckTask {
 		map.put("cpColor", sPlateColor);
 		map.put("status", String.valueOf(parkInfo.getIVehicleEnterstate()));
 		map.put("picLink", "http://58.246.184.99:801/" + picPath);
-		if (iVehicleEnterstate != 0 && !"车牌".equals(sPlateNo)) {
+		if (iVehicleEnterstate != 0) {
 			if (parkInfo.getIVehicleEnterstate() == 0) {
 				new Thread(new Runnable() {
 					public void run() {
