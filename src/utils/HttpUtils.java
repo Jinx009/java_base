@@ -249,7 +249,7 @@ public class HttpUtils {
 		String result = "500";
         HttpPost post = new HttpPost("http://ghiot.cigem.cn/api/devices/"+deviceId+"/deliveryResponse");
         post.addHeader("Content-type","application/json;charset=utf-8");
-        post.addHeader("apikey", "KFKFxvyVAmAC6O-cSefzy31hcvPyc77HijsSLw9wQPND-GVeuw4seLDQdXR");
+        post.addHeader("appkey", "KFKFxvyVAmAC6O-cSefzy31hcvPyc77HijsSLw9wQPND-GVeuw4seLDQdXR");
         post.setHeader("Accept", "application/json");
         post.setEntity(new StringEntity(jsonStr, Charset.forName("UTF-8")));
         try {

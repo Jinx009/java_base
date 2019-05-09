@@ -51,7 +51,7 @@ public class StatusCheckTask {
 						if (jobs != null && !jobs.isEmpty()) {
 							PuzhiJob pz = jobs.get(0);
 							int taskNum = puzhiJobService.findByMacAndTaskStatus(iot.getMac(), 0);
-							if (taskNum == 0) {
+							if (taskNum == 0&&iot.getType()==2) {
 								log.warn("pz:{}", JSONObject.toJSONString(pz));
 								Map<String, Object> map = new HashMap<>();
 								String data = "";
@@ -62,6 +62,7 @@ public class StatusCheckTask {
 								pz.setCreateTime(new Date());
 								pz.setMac(iot.getMac());
 								pz.setCmd(cmd);
+								pz.setTaskStatus(0);
 								puzhiJobService.save(pz);
 								//解析指令
 								if (cmd.equals("reboot")) {
