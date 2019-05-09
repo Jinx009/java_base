@@ -110,7 +110,7 @@ public class JobController extends BaseController {
 				HttpResponse responsePostAsynCmd = httpsUtil.doPostJson(urlPostAsynCmd, header, jsonRequest);
 				String responseBody = httpsUtil.getHttpResponseBody(responsePostAsynCmd);
 				log.warn("msg:{}", responseBody);
-				resp.setData(JSONObject.parseObject(responseBody).getString("commandId"));
+				return new Resp<>(JSONObject.parseObject(responseBody).getString("commandId"));
 			}else if (ioTCloudDevice.getType() == 3) {//loraWan
 				String  msg = sendAndRcvHttpPostBase("https://api.opg-iot.cn/thingpark/lrc/rest/downlink?DevEUI="+mac+"&FPort=1&Payload="+data1,"");
 				IotCloudLog iotCloudLog = new IotCloudLog();
