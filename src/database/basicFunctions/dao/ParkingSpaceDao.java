@@ -25,5 +25,11 @@ public class ParkingSpaceDao extends BaseDao<ParkingSpace>{
 		queryParam.addParam("parkNumber", parkNumber);
 		return findByCriteriaForUnique(queryParam);
 	}
+
+	public ParkingSpace findByMac(String mac) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("mac", mac);
+		return findByCriteriaForUnique(queryParam);
+	}
 	
 }

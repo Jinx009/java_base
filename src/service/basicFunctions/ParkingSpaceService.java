@@ -57,5 +57,9 @@ public class ParkingSpaceService {
 	public void update(ParkingSpace parkingSpace) {
 		parkingSpaceDao.update(parkingSpace);
 	}
+
+	public ParkingSpace findByMac(String mac) {
+		return parkingSpaceDao.findByMac(mac);
+	}
 	
 }

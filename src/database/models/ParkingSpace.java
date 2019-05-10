@@ -50,5 +50,7 @@ public class ParkingSpace {
     private String parkNumber;
     @Column(name = "mac")
     private String mac;
+    @Column(name = "camera_index")
+    private String cameraIndex;
 	
 }

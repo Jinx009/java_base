@@ -45,5 +45,7 @@ public class ParkingVedio {
     private Integer updateStatus;
     @Column(name = "file_path")
     private String filePath;
+    @Column(name = "vedio_status")
+    private Integer vedioStatus;
 	
 }

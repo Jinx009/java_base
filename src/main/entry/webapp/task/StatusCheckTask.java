@@ -163,10 +163,15 @@ public class StatusCheckTask {
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection("jdbc:postgresql://10.0.0.18:5432/port", "v_admin", "v_admin");
 			c.setAutoCommit(false);
-
+			//正常视频截取时间
 			Date date = sdf2.parse(parkingVedio.getEventTime());
 			Date beginTime = new Date(date.getTime() + 6000);
 			Date endTime = new Date(date.getTime() + 36000);
+			//地磁录制时间
+			if(parkingVedio.getVedioStatus()==1){
+				beginTime = new Date(date.getTime() - 20000);
+				endTime = new Date(date.getTime() + 10000);
+			}
 			Date date2 = sdf2.parse(parkingVedio.getChangeTime());
 			String filePath = "ftp://10.0.0.11/" + sdf3.format(date2) + "/" + parkingVedio.getMac() + "_"
 					+ parkingVedio.getChangeTime();
@@ -243,20 +248,31 @@ public class StatusCheckTask {
 				parkingVedio.setCameraIndex(sCameraIndex);
 				parkingVedio.setEventTime(ChangeTime);
 				parkingVedio.setSendStatus(0);
+				parkingVedio.setCreateTime(new Date());
+				parkingSpace.setHappenTime(date);
+				parkingVedio.setChangeTime(ChangeTime);
+				parkingVedio.setVedioStatus(0);
+				picPath += ChangeTime;
 				if (iVehicleEnterstate == 1) {
-					parkingSpace.setHappenTime(date);
-					parkingVedio.setChangeTime(ChangeTime);
-					picPath += ChangeTime;
 					savePic(sWholeSenceUrl, picPath + "_inCarImg.jpeg");
 				}
 				if (iVehicleEnterstate == 2) {
-					if (parkingSpace.getHappenTime() == null) {
-						parkingSpace.setHappenTime(date);
-					}
-					picPath += sdf3.format(parkingSpace.getHappenTime());
-					parkingVedio.setChangeTime(sdf3.format(parkingSpace.getHappenTime()));
 					savePic(sWholeSenceUrl, picPath + "_outCarImg.jpeg");
 				}
+//				if (iVehicleEnterstate == 1) {
+//					parkingSpace.setHappenTime(date);
+//					parkingVedio.setChangeTime(ChangeTime);
+//					picPath += ChangeTime;
+//					savePic(sWholeSenceUrl, picPath + "_inCarImg.jpeg");
+//				}
+//				if (iVehicleEnterstate == 2) {
+//					if (parkingSpace.getHappenTime() == null) {
+//						parkingSpace.setHappenTime(date);
+//					}
+//					picPath += sdf3.format(parkingSpace.getHappenTime());
+//					parkingVedio.setChangeTime(sdf3.format(parkingSpace.getHappenTime()));
+//					savePic(sWholeSenceUrl, picPath + "_outCarImg.jpeg");
+//				}
 				parkingVedio.setEventTime(ChangeTime);
 				parkingVedio.setMac(parkInfo.getMac());
 				parkingVedio.setType(parkInfo.getIVehicleEnterstate());
