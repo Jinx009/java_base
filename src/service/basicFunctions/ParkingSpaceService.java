@@ -61,5 +61,9 @@ public class ParkingSpaceService {
 	public ParkingSpace findByMac(String mac) {
 		return parkingSpaceDao.findByMac(mac);
 	}
+
+	public ParkingSpace getByCameraIndexAndParkNumber(String sCameraIndex, String sParkingid) {
+		return parkingSpaceDao.getByCameraIndexAndParkNumber(sCameraIndex,sParkingid);
+	}
 	
 }

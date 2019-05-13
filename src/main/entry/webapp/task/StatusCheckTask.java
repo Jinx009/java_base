@@ -236,7 +236,7 @@ public class StatusCheckTask {
 				Date date = sdf2.parse(tEventTime);
 				String ChangeTime = sdf3.format(date);
 				String dirPath = sdf.format(date);
-				ParkingSpace parkingSpace = parkingSpaceService.getByCameraNameAndParkNumber(parkInfo.getSCameraName(),
+				ParkingSpace parkingSpace = parkingSpaceService.getByCameraIndexAndParkNumber(parkInfo.getSCameraIndex(),
 						parkInfo.getSParkingid());
 				// 添加mac信息
 				parkInfo.setMac(parkingSpace.getMac());
