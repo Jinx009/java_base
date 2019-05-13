@@ -224,11 +224,13 @@ public class TelcomCotroller extends BaseController {
 							 long dec_num = Long.parseLong(id, 16);  
 							PuzhiJob pz = puzhiJobService.findByMacAndId((int)dec_num,ioTCloudDevice.getMac());
 							if(pz!=null){
+								log.warn("puzhi task:{},{},{}",id,dec_num,pz);
 								pz.setTaskStatus(1);
 								Map<String, Object> _r = new HashMap<>();
 								String r2 = pz.getFeatureCtx()+"&msgid=" + pz.getMsgid()+"&result=succ";
 								_r.put("data", r2);
 								HttpUtils.postPuzhiJob(ioTCloudDevice.getUdpIp().split("_")[0], JSONObject.toJSONString(_r));
+								puzhiJobService.update(pz);
 							}else{
 								HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
 								sendPushi(iotCloudLog.getData(),ioTCloudDevice);
@@ -264,8 +266,21 @@ public class TelcomCotroller extends BaseController {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
 						sendChaozhou(iotCloudLog.getData(),ioTCloudDevice);
 					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
-						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
-						sendPushi(iotCloudLog.getData(),ioTCloudDevice);
+						String id = iotCloudLog.getData().substring(0, 6);
+						 long dec_num = Long.parseLong(id, 16);  
+						PuzhiJob pz = puzhiJobService.findByMacAndId((int)dec_num,ioTCloudDevice.getMac());
+						if(pz!=null){
+							log.warn("puzhi task:{},{},{}",id,dec_num,pz);
+							pz.setTaskStatus(1);
+							Map<String, Object> _r = new HashMap<>();
+							String r2 = pz.getFeatureCtx()+"&msgid=" + pz.getMsgid()+"&result=succ";
+							_r.put("data", r2);
+							HttpUtils.postPuzhiJob(ioTCloudDevice.getUdpIp().split("_")[0], JSONObject.toJSONString(_r));
+							puzhiJobService.update(pz);
+						}else{
+							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
+							sendPushi(iotCloudLog.getData(),ioTCloudDevice);
+						}
 					} else {
 						send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 					}

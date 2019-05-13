@@ -79,7 +79,7 @@ public class StatusCheckTask {
 									try {
 										// 解析指令
 										if (cmd.equals("reboot")) {//重启设备
-											data = "48003600"+UrlUtils.getSixHex(pz.getId()).toUpperCase();
+											data = "48003600"+UrlUtils.getSixHex(pz.getMac(),pz.getId()).toUpperCase();
 											map.put("data", data);
 											Map<String, Object> _r = new HashMap<>();
 											String r = "$cmd=" + cmd + "&result=已接收&msgid=" + pz.getMsgid();
@@ -120,7 +120,7 @@ public class StatusCheckTask {
 										}else if (cmd.equals("setsensortime")) {//设置传感器时间
 											String upload_intv = UrlUtils.parse($cmd, "upload_intv");
 											Integer value = Integer.valueOf(upload_intv);
-											data = "480034040101" + UrlUtils.getHex(value).toUpperCase()+UrlUtils.getSixHex(pz.getId()).toUpperCase();
+											data = "480034040101" + UrlUtils.getHex(value).toUpperCase()+UrlUtils.getSixHex(pz.getMac(),pz.getId()).toUpperCase();
 											map.put("data", data);
 											String res = HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
 											pz.setTelcomTaskId(JSONObject.parseObject(res).getString("data"));
@@ -137,7 +137,7 @@ public class StatusCheckTask {
 											String[] s = threshold.split(",");
 											double a = Double.valueOf(s[0]);
 											double b = Double.valueOf(s[1]);
-											data = "4800450501" + UrlUtils.getHex((int) (a * 1000)).toUpperCase()+ UrlUtils.getHex((int) (b * 1000)).toUpperCase()+UrlUtils.getSixHex(pz.getId()).toUpperCase();;
+											data = "4800450501" + UrlUtils.getHex((int) (a * 1000)).toUpperCase()+ UrlUtils.getHex((int) (b * 1000)).toUpperCase()+UrlUtils.getSixHex(pz.getMac(),pz.getId()).toUpperCase();;
 											map.put("data", data);
 											Map<String, Object> _r = new HashMap<>();
 											String r = "$cmd=" + cmd + "&result=已接收&msgid=" + pz.getMsgid();

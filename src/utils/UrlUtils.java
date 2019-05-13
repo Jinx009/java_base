@@ -60,6 +60,29 @@ public class UrlUtils {
 		}
 		return _num;
 	}
+	
+	public static String getSixHex(String mac, Integer id) {
+		if(mac.equals("0009190329000007")||mac.equals("0009190329000003")||mac.equals("0009190329000005")){
+			return "";
+		}
+		String _num =  Integer.toHexString(id);
+		if(_num.length()==1){
+			return "00000"+_num;
+		}
+		if(_num.length()==2){
+			return "0000"+_num;
+		}
+		if(_num.length()==3){
+			return "000"+_num;
+		}
+		if(_num.length()==4){
+			return "00"+_num;
+		}
+		if(_num.length()==5){
+			return "0"+_num;
+		}
+		return _num;
+	}
 
 	/**
 	 * 测试
@@ -69,4 +92,6 @@ public class UrlUtils {
 	public static void main(String[] args) {
 		System.out.println( Integer.toHexString(99999));
 	}
+
+	
 }
