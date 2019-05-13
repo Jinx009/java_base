@@ -1,5 +1,6 @@
 package main.entry.webapp.task;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +37,7 @@ public class StatusCheckTask {
 	/**
 	 * 搜索任务
 	 */
-	@Scheduled(cron = "0/10 * * * * ? ") // 每1分钟
+	@Scheduled(cron = "0/30 * * * * ? ") // 每1分钟
 	public void getVedio() {
 		try {
 			List<IoTCloudDevice> list = iotCloudDeviceService.findByLocalIp("QJ_PUSHI");
@@ -46,101 +47,126 @@ public class StatusCheckTask {
 					String json = HttpUtils.getPuzhiJob(deviceId);
 					JSONObject obj = JSONObject.parseObject(json);
 					String _d = obj.getString("data");
-						if (StringUtil.isNotBlank(_d)) {
-							List<PuzhiJob> jobs = JSONObject.parseArray(_d, PuzhiJob.class);
-							if (jobs != null && !jobs.isEmpty()) {
-								PuzhiJob pz = jobs.get(0);
+					if (StringUtil.isNotBlank(_d)) {
+						List<PuzhiJob> jobs = JSONObject.parseArray(_d, PuzhiJob.class);
+						if (jobs != null && !jobs.isEmpty()) {
+							for (PuzhiJob pz : jobs) {
 								String $cmd = pz.getFeatureCtx();
 								String cmd = UrlUtils.parse($cmd, "$cmd");
-								int taskNum = puzhiJobService.findByMacAndTaskStatus(iot.getMac(), 0);
-								if(iot.getType()!=2){
+								if (iot.getType() != 2) {
 									pz.setCreateTime(new Date());
 									pz.setMac(iot.getMac());
 									pz.setCmd(cmd);
 									pz.setTaskStatus(3);
 									puzhiJobService.save(pz);
 									Map<String, Object> _r = new HashMap<>();
-									String r = "$cmd="+cmd+"&result= 此类设备不支持下发&msgid="+pz.getMsgid();
+									String r = "$cmd=" + cmd + "&result= 此类设备不支持下发&msgid=" + pz.getMsgid();
 									_r.put("data", r);
-									HttpUtils.postPuzhiJob(deviceId,JSONObject.toJSONString(_r));
+									HttpUtils.postPuzhiJob(deviceId, JSONObject.toJSONString(_r));
 								}
-								if (taskNum == 0&&iot.getType()==2) {
+								//如果是电信设备才往下发
+								if (iot.getType() == 2) {
 									log.warn("pz:{}", JSONObject.toJSONString(pz));
 									Map<String, Object> map = new HashMap<>();
 									String data = "";
 									map.put("mac", iot.getMac());
-									//保存
+									// 保存
 									pz.setCreateTime(new Date());
 									pz.setMac(iot.getMac());
 									pz.setCmd(cmd);
 									pz.setTaskStatus(0);
-									puzhiJobService.save(pz);
-									//解析指令
-									if (cmd.equals("reboot")) {
-										data = "48003600";
-										map.put("data", data);
-										
+									pz = puzhiJobService.save(pz);
+									try {
+										// 解析指令
+										if (cmd.equals("reboot")) {//重启设备
+											data = "48003600"+UrlUtils.getSixHex(pz.getId()).toUpperCase();
+											map.put("data", data);
+											Map<String, Object> _r = new HashMap<>();
+											String r = "$cmd=" + cmd + "&result=已接收&msgid=" + pz.getMsgid();
+											_r.put("data", r);
+											HttpUtils.postPuzhiJob(deviceId, JSONObject.toJSONString(_r));
+											String res = HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
+											pz.setTelcomTaskId(JSONObject.parseObject(res).getString("data"));
+											puzhiJobService.update(pz);
+										}else if (cmd.equals("getstatus")) {//获取设备状态
+											Map<String, Object> _r = new HashMap<>();
+											String r = "$cmd=" + cmd + "&result=succ&msgid=" + pz.getMsgid()+"&state={}";
+											_r.put("data", r);
+											HttpUtils.postPuzhiJob(deviceId, JSONObject.toJSONString(_r));
+											pz.setTaskStatus(1);
+											puzhiJobService.update(pz);
+										}else if (cmd.equals("reqtime")) {//获取设备时间
+											SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+											Map<String, Object> _r = new HashMap<>();
+											String r = "$cmd=" + cmd + "&result=succ&msgid=" + pz.getMsgid()+"&time="+sdf.format(new Date());
+											_r.put("data", r);
+											HttpUtils.postPuzhiJob(deviceId, JSONObject.toJSONString(_r));
+											pz.setTaskStatus(1);
+											puzhiJobService.update(pz);
+										} else if (cmd.equals("getsensorID")) {//获取传感器类型
+											Map<String, Object> _r = new HashMap<>();
+											String r = "$cmd=" + cmd + "&result=succ&msgid=" + pz.getMsgid()+"&sensor_id=103_3";
+											_r.put("data", r);
+											HttpUtils.postPuzhiJob(deviceId, JSONObject.toJSONString(_r));
+											pz.setTaskStatus(1);
+											puzhiJobService.update(pz);
+										}else if (cmd.equals("getworkmode")) {//获取传感器工作模式
+											Map<String, Object> _r = new HashMap<>();
+											String r = "$cmd=" + cmd + "&result=succ&msgid=" + pz.getMsgid()+"&mode=0";
+											_r.put("data", r);
+											HttpUtils.postPuzhiJob(deviceId, JSONObject.toJSONString(_r));
+											pz.setTaskStatus(1);
+											puzhiJobService.update(pz);
+										}else if (cmd.equals("setsensortime")) {//设置传感器时间
+											String upload_intv = UrlUtils.parse($cmd, "upload_intv");
+											Integer value = Integer.valueOf(upload_intv);
+											data = "480034040101" + UrlUtils.getHex(value).toUpperCase()+UrlUtils.getSixHex(pz.getId()).toUpperCase();
+											map.put("data", data);
+											String res = HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
+											pz.setTelcomTaskId(JSONObject.parseObject(res).getString("data"));
+											puzhiJobService.update(pz);
+											String sample_intv = UrlUtils.parse($cmd, "sample_intv");
+											data = "48007A02010" + sample_intv;
+											map.put("data", data);
+											Map<String, Object> _r = new HashMap<>();
+											String r = "$cmd=" + cmd + "&result=已接收&msgid=" + pz.getMsgid();
+											_r.put("data", r);
+											HttpUtils.postPuzhiJob(deviceId, JSONObject.toJSONString(_r));
+										} else if (cmd.equals("setsensorattr")) {//设置传感器属性
+											String threshold = UrlUtils.parse($cmd, "threshold");
+											String[] s = threshold.split(",");
+											double a = Double.valueOf(s[0]);
+											double b = Double.valueOf(s[1]);
+											data = "4800450501" + UrlUtils.getHex((int) (a * 1000)).toUpperCase()+ UrlUtils.getHex((int) (b * 1000)).toUpperCase()+UrlUtils.getSixHex(pz.getId()).toUpperCase();;
+											map.put("data", data);
+											Map<String, Object> _r = new HashMap<>();
+											String r = "$cmd=" + cmd + "&result=已接收&msgid=" + pz.getMsgid();
+											_r.put("data", r);
+											HttpUtils.postPuzhiJob(deviceId, JSONObject.toJSONString(_r));
+											String res = HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
+											pz.setTelcomTaskId(JSONObject.parseObject(res).getString("data"));
+											puzhiJobService.update(pz);
+										} else {
+											Map<String, Object> _r = new HashMap<>();
+											String r = "$cmd=" + cmd + "&result=暂不支持&msgid=" + pz.getMsgid();
+											_r.put("data", r);
+											HttpUtils.postPuzhiJob(deviceId, JSONObject.toJSONString(_r));
+											pz.setTaskStatus(2);//不支持的命令状态为2
+											puzhiJobService.update(pz);
+										}
+									} catch (Exception e) {
+										log.error("e:{}",e);
 										Map<String, Object> _r = new HashMap<>();
-										String r = "$cmd="+cmd+"&result=已接收&msgid="+pz.getMsgid();
+										String r = "$cmd=" + cmd + "&result=指令参数异常&msgid=" + pz.getMsgid();
 										_r.put("data", r);
-										HttpUtils.postPuzhiJob(deviceId,JSONObject.toJSONString(_r));
-										
-										String res = HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
-										pz.setTelcomTaskId(JSONObject.parseObject(res).getString("data"));
+										HttpUtils.postPuzhiJob(deviceId, JSONObject.toJSONString(_r));
+										pz.setTaskStatus(-3);//参数异常状态为-3
 										puzhiJobService.update(pz);
-									} else if (cmd.equals("setsensortime")) {
-										String upload_intv = UrlUtils.parse($cmd, "upload_intv");
-										Integer value = Integer.valueOf(upload_intv);
-										data = "480034040101" + UrlUtils.getHex(value);
-										map.put("data", data);
-										
-										String res = HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
-										pz.setTelcomTaskId(JSONObject.parseObject(res).getString("data"));
-										puzhiJobService.update(pz);
-										
-										String sample_intv = UrlUtils.parse($cmd, "sample_intv");
-										data = "48007A02010" + sample_intv;
-										map.put("data", data);
-										
-										Map<String, Object> _r = new HashMap<>();
-										String r = "$cmd="+cmd+"&result=已接收&msgid="+pz.getMsgid();
-										_r.put("data", r);
-										HttpUtils.postPuzhiJob(deviceId,JSONObject.toJSONString(_r));
-										
-										// HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
-									} else if (cmd.equals("setsensorattr")) {
-										String threshold = UrlUtils.parse($cmd, "threshold");
-										String[] s = threshold.split(",");
-										double a = Double.valueOf(s[0]);
-										double b = Double.valueOf(s[1]);
-										data = "4800450501" + UrlUtils.getHex((int) (a * 1000))+ UrlUtils.getHex((int) (b * 1000));
-										map.put("data", data);
-										
-										Map<String, Object> _r = new HashMap<>();
-										String r = "$cmd="+cmd+"&result=已接收&msgid="+pz.getMsgid();
-										_r.put("data", r);
-										HttpUtils.postPuzhiJob(deviceId,JSONObject.toJSONString(_r));
-										String res = HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
-										pz.setTelcomTaskId(JSONObject.parseObject(res).getString("data"));
-										puzhiJobService.update(pz);
-									}
-	//								else if (cmd.equals("setworkmode")) {
-	//									String mode = UrlUtils.parse($cmd, "mode");
-	//									data = "480038010" + mode;
-	//									map.put("data", data);
-	//									// HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
-	//								}
-									else {
-										pz.setTaskStatus(2);
-										puzhiJobService.update(pz);
-										Map<String, Object> _r = new HashMap<>();
-										String r = "$cmd="+cmd+"&result=暂不支持&msgid="+pz.getMsgid();
-										_r.put("data", r);
-										HttpUtils.postPuzhiJob(deviceId,JSONObject.toJSONString(_r));
 									}
 								}
 							}
 						}
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -149,10 +175,11 @@ public class StatusCheckTask {
 	}
 
 	public static void main(String[] args) {
-		double d = Double.valueOf("0.03");
-		int a = (int) (d * 1000);
-		String c = UrlUtils.getHex(a);
-		System.out.println(a + "---" + c);
+//		double d = Double.valueOf("0.03");
+//		int a = (int) (d * 1000);
+//		String c = UrlUtils.getHex(a);
+		  long dec_num = Long.parseLong("01869f", 16);  
+		System.out.println(dec_num);
 	}
 
 }

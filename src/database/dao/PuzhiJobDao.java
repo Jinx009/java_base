@@ -34,5 +34,12 @@ public class PuzhiJobDao extends BaseDao<PuzhiJob>{
 		param.addParam("telcomTaskId", cammandId);
 		return findByCriteriaForUnique(param);
 	}
+
+	public PuzhiJob findByMacAndId(int id, String mac) {
+		QueryParam param = QueryParam.getInstance();
+		param.addParam("mac", mac);
+		param.addParam("id", id);
+		return findByCriteriaForUnique(param);
+	}
 	
 }

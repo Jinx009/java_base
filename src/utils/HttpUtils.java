@@ -175,7 +175,7 @@ public class HttpUtils {
      */
     @SuppressWarnings("resource")
 	public static String getPuzhiJob(String deviceId){
-    	logger.warn("HttpUtils.get[info:{}]",deviceId);
+    	//logger.warn("HttpUtils.get[info:{}]",deviceId);
         String result = "500";
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpGet get = new HttpGet("http://ghiot.cigem.cn/api/devices/"+deviceId+"/deliveryHistory");

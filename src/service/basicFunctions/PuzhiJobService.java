@@ -16,8 +16,8 @@ public class PuzhiJobService {
 		return puzhiJobDao.findByUuid(uuid);
 	}
 	
-	public void save(PuzhiJob puzhiJob){
-		puzhiJobDao.save(puzhiJob);
+	public PuzhiJob save(PuzhiJob puzhiJob){
+		return puzhiJobDao.save(puzhiJob);
 	}
 
 	public int findByMacAndTaskStatus(String mac, int taskStatus) {
@@ -30,6 +30,10 @@ public class PuzhiJobService {
 
 	public PuzhiJob findByTelTaskId(String cammandId) {
 		return puzhiJobDao.findByTelTaskId(cammandId);
+	}
+
+	public PuzhiJob findByMacAndId(int id, String mac) {
+		return puzhiJobDao.findByMacAndId(id,mac);
 	}
 	
 }

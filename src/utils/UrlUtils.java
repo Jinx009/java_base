@@ -40,6 +40,26 @@ public class UrlUtils {
 		}
 		return "";
 	}
+	
+	public static String getSixHex(int num){
+		String _num =  Integer.toHexString(num);
+		if(_num.length()==1){
+			return "00000"+_num;
+		}
+		if(_num.length()==2){
+			return "0000"+_num;
+		}
+		if(_num.length()==3){
+			return "000"+_num;
+		}
+		if(_num.length()==4){
+			return "00"+_num;
+		}
+		if(_num.length()==5){
+			return "0"+_num;
+		}
+		return _num;
+	}
 
 	/**
 	 * 测试
@@ -47,6 +67,6 @@ public class UrlUtils {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println( getHex(3600));
+		System.out.println( Integer.toHexString(99999));
 	}
 }
