@@ -18,6 +18,7 @@ import service.basicFunctions.ParkingSpaceService;
 import service.basicFunctions.ParkingVedioService;
 import utils.GifUtils;
 import utils.HttpUtil;
+import utils.PicUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -50,6 +51,9 @@ public class StatusCheckTask {
 	@Autowired
 	private ParkingVedioService parkingVedioService;
 
+	/**
+	 * 文件夹权限问题
+	 */
 	@Scheduled(cron = "0 1 0 * * ?") // 每天晚上0点01分创建新文件夹
 	public void chmod() {
 		try {
@@ -93,8 +97,10 @@ public class StatusCheckTask {
 							+ parkingVedio.getChangeTime();
 					if (parkingVedio.getType() == 0) {
 						filePath += "_outCarVideo_.mp4";
-					} else {
+					} else if (parkingVedio.getType() == 1){
 						filePath += "_inCarVideo_.mp4";
+					}else if (parkingVedio.getType() == 2){
+						filePath += "_steadyCarImg_.mp4";
 					}
 					parkingVedio.setFilePath(filePath);
 					parkingVedio.setUpdateStatus(0);
@@ -119,13 +125,34 @@ public class StatusCheckTask {
 				for (ParkingVedio pv : list) {
 					//log.warn("vedio path:{}", pv.getFilePath());
 					File file = new File(pv.getFilePath());
-					File file2 = new File(pv.getFilePath().split("_.mp4")[0] + ".mp4");
+					String fileName = pv.getFilePath().split("_.mp4")[0];
+					File file2 = new File(fileName+".mp4");
 					if (file.exists() && !file2.exists()) {
 						GifUtils.covMp4(pv.getFilePath());
 					}
 					if (file2.exists()) {
-						pv.setUpdateStatus(1);
-						parkingVedioService.update(pv);
+						if(pv.getVedioStatus()==1){
+							pv.setUpdateStatus(1);
+							parkingVedioService.update(pv);
+							if(pv.getType()==1){
+								GifUtils.covPic(fileName,"00:00:21",fileName.split("_inCarVideo")[0]+"_inCarImg.jpeg");
+							}
+							if(pv.getType()==0){
+								GifUtils.covPic(fileName,"00:00:21",fileName.split("_outCarVideo")[0]+"_outCarImg.jpeg");
+							}
+						}
+						if(pv.getVedioStatus()==2){//停稳截取第一帧
+							String picPath = fileName.split("_steadyCarImg")[0]+"_step4.jpeg";
+							File picFile = new File(picPath);
+							if(!picFile.exists()){
+								GifUtils.covPic(fileName,"00:00:01",picPath);
+							}else{
+								pv.setUpdateStatus(1);
+								parkingVedioService.update(pv);
+								//合成图片
+								PicUtils.checkPics(fileName.split("_steadyCarImg.mp4")[0]);
+							}
+						}
 					}
 				}
 			}
@@ -172,13 +199,19 @@ public class StatusCheckTask {
 				beginTime = new Date(date.getTime() - 20000);
 				endTime = new Date(date.getTime() + 10000);
 			}
+			if(parkingVedio.getVedioStatus()==2){//视频停稳只录制三秒
+				beginTime = new Date(date.getTime() + 180000);
+				endTime = new Date(date.getTime() + 183000);
+			}
 			Date date2 = sdf2.parse(parkingVedio.getChangeTime());
 			String filePath = "ftp://10.0.0.11/" + sdf3.format(date2) + "/" + parkingVedio.getMac() + "_"
 					+ parkingVedio.getChangeTime();
 			if (parkingVedio.getType() == 0) {
 				filePath += "_outCarVideo_.mp4";
-			} else {
+			} else if(parkingVedio.getType() == 1){
 				filePath += "_inCarVideo_.mp4";
+			}else if(parkingVedio.getType() == 2){
+				filePath += "_steadyCarImg_.mp4";
 			}
 			String sql = "insert into record_download_info (" + "iserialno," + "tcreatetime," + "scameraindex,"
 					+ "splateno," + "tbegintime," + "tendtime," + "sfilesavepath," + "sftpusername" + ",sftppassword,"
@@ -230,7 +263,10 @@ public class StatusCheckTask {
 				String sPlateColor = rs.getString("splatecolor");
 				String sVehicleColor = rs.getString("svehiclecolor");
 				String sWholeSenceUrl = rs.getString("spic3");
-				String sFutrureUrl = rs.getString("spic3");
+				String sFutrureUrl = rs.getString("spic3");//合成图
+				String pic1 = rs.getString("swholesenceurl");//原图1
+				String pic2 = rs.getString("sfutrureurl");//原图2
+				String pic3 = rs.getString("spic1");//原图3
 				ParkInfo parkInfo = saveParkInfo(id, sLocation, sCameraName, sCameraIndex, iVehicleEnterstate,
 						sParkingid, tEventTime, sPlateNo, sPlateColor, sVehicleColor, sWholeSenceUrl, sFutrureUrl);
 				Date date = sdf2.parse(tEventTime);
@@ -255,6 +291,9 @@ public class StatusCheckTask {
 				picPath += ChangeTime;
 				if (iVehicleEnterstate == 1) {
 					savePic(sWholeSenceUrl, picPath + "_inCarImg.jpeg");
+					savePic(pic1, picPath + "_step1.jpeg");
+					savePic(pic2, picPath + "_step2.jpeg");
+					savePic(pic3, picPath + "_step3.jpeg");
 				}
 				if (iVehicleEnterstate == 2) {
 					savePic(sWholeSenceUrl, picPath + "_outCarImg.jpeg");

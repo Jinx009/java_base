@@ -26,11 +26,14 @@ public class GifUtils {
 	// "D:\\Downloads\\ffmpeg-20180528-ebf85d3-win64-static\\bin\\ffmpeg.exe";
 
 	// Linux与mac下 ffmpeg的路径
-	// private static String ffmpegEXE =
-	// "/usr/local/Cellar/ffmpeg/4.1.2/bin/ffmpeg";
+	 //private static String ffmpegEXE = "/usr/local/Cellar/ffmpeg/4.1.2/bin/ffmpeg";
 
-	private static String ffmpegEXE = "/usr/local/bin/ffmpeg";
+	 private static String ffmpegEXE = "/usr/local/bin/ffmpeg";
 
+	/**
+	 * 开辟线程处理流
+	 * @param process
+	 */
 	private static void dealStream(Process process) {
 	    if (process == null) {
 	        return;
@@ -111,13 +114,18 @@ public class GifUtils {
 			videoProcess.waitFor();
 			log.warn("msg:cov MP4：{}--------------------------------------{}", inputPath, outPath);
 			return true;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			log.error("e:{}", e);
 		}
 		return false;
 		// covGif(outPath);
 	}
 
+	/**
+	 * mp4转gif
+	 * @param inputPath
+	 * @throws Exception
+	 */
 	public static void covGif(String inputPath) throws Exception {
 		List<String> command = new ArrayList<String>();
 		command.add(ffmpegEXE);
@@ -159,10 +167,47 @@ public class GifUtils {
 
 	public static void main(String[] args) {
 		try {
-			covMp4("/Users/jinx/Downloads/111_.mp4");
+			covPic("/Users/jinx/Downloads/xxxx","00:00:21","");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 截取一帧作为图片
+	 * @param fileName
+	 * ffmpeg -i /Users/jinx/Downloads/test.mp4 -y -f image2 -ss 00:00:01 -vframes 1 /Users/jinx/Downloads/test.jpeg
+	 * @return
+	 */
+	public static boolean covPic(String fileName,String time,String outName) {
+		List<String> command = new ArrayList<String>();
+		command.add(ffmpegEXE);
+		command.add("-i");
+		command.add(fileName+".mp4");
+		command.add("-y");
+		command.add("-f");
+		command.add("image2");
+		command.add("-ss");
+		command.add(time);
+		command.add("-vframes");
+		command.add("1");
+		command.add("-s");
+		command.add("2688x1520");
+		if(StringUtil.isNotBlank(outName)){
+			command.add(outName);
+		}else{
+			command.add(fileName+".jpeg");
+		}
+		try {
+			Process videoProcess = new ProcessBuilder(command).start();
+			dealStream(videoProcess);
+			videoProcess.waitFor();
+			log.warn("msg:cov Pic：{}",fileName);
+			return true;
+		} catch (Exception e) {
+			log.error("e:{}", e);
+		}
+		return false;
 	}
 
 }

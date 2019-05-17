@@ -1,6 +1,5 @@
 package main.entry.webapp;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -31,27 +30,20 @@ public class ParkingVedioController extends BaseController{
 	public Resp<?> insertVedio(String mac,String eventTime,Integer status){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			SimpleDateFormat sdf3 = new SimpleDateFormat("yyyyMMddHHmmss");
 			ParkingSpace space = parkingSpacesService.findByMac(mac);
 			ParkingVedio p = new ParkingVedio();
-			Date date = sdf3.parse(eventTime);
 			p.setCameraIndex(space.getCameraIndex());
 			p.setChangeTime(eventTime);
 			p.setCreateTime(new Date());
 			p.setEventTime(eventTime);
-			String filePath = "ftp://10.0.0.11/"+sdf.format(date)+"/"+mac+"_"+eventTime;
-			if (status == 0) {
-				filePath += "_outCarVideo_.mp4";
-			} else {
-				filePath += "_inCarVideo_.mp4";
-			}
-			p.setFilePath(filePath);
 			p.setMac(mac);
 			p.setSendStatus(0);
 			p.setType(status);
 			p.setUpdateStatus(0);
 			p.setVedioStatus(1);
+			if(status==2){
+				p.setVedioStatus(2);
+			}
 			parkingVedioService.save(p);
 			return new Resp<>(true);
 		} catch (Exception e) {
