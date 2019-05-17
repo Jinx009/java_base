@@ -150,7 +150,7 @@ public class StatusCheckTask {
 								pv.setUpdateStatus(1);
 								parkingVedioService.update(pv);
 								//合成图片
-								PicUtils.checkPics(fileName.split("_steadyCarImg.mp4")[0]);
+								PicUtils.checkPics(fileName.split("_steadyCarImg")[0]);
 							}
 						}
 					}
