@@ -145,5 +145,7 @@ public class DeviceSensor {
     private String picLink;
     @Column(name = "sensor_status")
     private Integer sensorStatus;
+    @Column(name ="c_id")
+    private String cId;
 	
 }
