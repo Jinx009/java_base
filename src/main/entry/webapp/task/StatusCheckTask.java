@@ -140,8 +140,7 @@ public class StatusCheckTask {
 							if(pv.getType()==0){
 								GifUtils.covPic(fileName,"00:00:21",fileName.split("_outCarVideo")[0]+"_outCarImg.jpeg");
 							}
-						}
-						if(pv.getVedioStatus()==2){//停稳截取第一帧
+						}else if(pv.getVedioStatus()==2){//停稳截取第一帧
 							String picPath = fileName.split("_steadyCarImg")[0]+"_step4.jpeg";
 							File picFile = new File(picPath);
 							if(!picFile.exists()){
@@ -152,6 +151,9 @@ public class StatusCheckTask {
 								//合成图片
 								PicUtils.checkPics(fileName.split("_steadyCarImg")[0]);
 							}
+						}else{
+							pv.setUpdateStatus(1);
+							parkingVedioService.update(pv);
 						}
 					}
 				}
