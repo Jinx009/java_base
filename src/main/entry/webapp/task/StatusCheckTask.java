@@ -360,16 +360,16 @@ public class StatusCheckTask {
 					public void run() {
 						try {
 							Thread.sleep(10000);
-//							HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
 							HttpUtil.postJson("http://124.74.252.162:1122/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
+							HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
 						} catch (Exception e) {
 							log.error("e:{}", e);
 						}
 					}
 				}).start();
 			} else {
-//				HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
 				HttpUtil.postJson("http://124.74.252.162:1122/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
+				HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
 			}
 		}
 	}
