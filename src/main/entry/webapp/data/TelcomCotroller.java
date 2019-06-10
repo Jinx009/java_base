@@ -213,7 +213,10 @@ public class TelcomCotroller extends BaseController {
 						} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")) {
 							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 							sendWuhanQj(ioTCloudDevice, iotCloudLog);
-						} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
+						}else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_YICHANG")) {
+							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
+							sendWuhanQj2_0(ioTCloudDevice, iotCloudLog);
+						}  else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
 							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 							sendBeijingQj(ioTCloudDevice, iotCloudLog);
 						} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
@@ -259,7 +262,10 @@ public class TelcomCotroller extends BaseController {
 					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 						sendWuhanQj(ioTCloudDevice, iotCloudLog);
-					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
+					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_YICHANG")) {
+						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
+						sendWuhanQj2_0(ioTCloudDevice, iotCloudLog);
+					}  else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 						sendBeijingQj(ioTCloudDevice, iotCloudLog);
 					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
@@ -292,6 +298,46 @@ public class TelcomCotroller extends BaseController {
 		}
 		return resp;
 
+	}
+
+	/**
+	 * 宜昌新设备
+	 * @param device
+	 * @param iotCloudLog
+	 */
+	private void sendWuhanQj2_0(IoTCloudDevice device, IotCloudLog iotCloudLog) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String data = iotCloudLog.getData();
+		String sn = data.substring(0, 16);
+		map.put("JCDB19A080", sn);
+		String type = data.substring(16, 18);
+		if (type.equals("68")) {
+			type = "报警";
+		} else {
+			type = "心跳";
+		}
+		try {
+			map.put("JCDB19A130", getData(data.substring(48, 49), data.substring(48, 52)));
+			map.put("JCDB19A010", type);
+			map.put("JCDB19A020", getData10000(data.substring(18, 19), data.substring(18, 22)));
+			map.put("JCDB19A030", getData10000(data.substring(24, 25), data.substring(24, 28)));
+			map.put("JCDB19A040", getData10000(data.substring(30, 31), data.substring(30, 34)));
+			map.put("JCDB19A050", Integer.valueOf(data.substring(22, 24)));
+			map.put("JCDB19A060", Integer.valueOf(data.substring(28, 30)));
+			map.put("JCDB19A070", Integer.valueOf(data.substring(34, 36)));
+			map.put("JCDB19A090", getData100(data.substring(36, 37), data.substring(36, 40)));
+			map.put("JCDB19A100", getData100(data.substring(42, 43), data.substring(42, 46)));
+			map.put("JCDB19A110", Integer.valueOf(data.substring(40, 42)));
+			map.put("JCDB19A120", Integer.valueOf(data.substring(46, 48)));
+			String json = JSONObject.toJSONString(map);
+			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
+			String url = "http://" + device.getUdpIp() + ":" + device.getUdpPort() + "/DzhZXJC/Sjcj/AddJCDB19A";
+			log.warn("send url-----------------------\n:{}\n---------------------------------", url);
+			String res = HttpUtils.sendPost(url, "json=" + json + "&appID=DZH_ZXJC_SJCJ");
+			log.warn("send res-----------------------\n:{}\n---------------------------------", res);
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
 	}
 
 	/**
