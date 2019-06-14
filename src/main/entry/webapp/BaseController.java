@@ -77,7 +77,7 @@ public class BaseController {
         paramLogin.put("appId", appId);
         paramLogin.put("secret", secret);
         StreamClosedHttpResponse responseLogin = httpsUtil.doPostFormUrlEncodedGetStatusLine(urlLogin, paramLogin);
-        log.warn("access-token:{},{}",responseLogin.getStatusLine(),responseLogin.getContent());
+        log.warn("------access-token:------{}",responseLogin.getContent());
 
         Map<String, String> data = new HashMap<>();
         data = JsonUtil.jsonString2SimpleObj(responseLogin.getContent(), data.getClass());

@@ -53,6 +53,22 @@ public class TelcomCotroller extends BaseController {
 	@Autowired
 	private PuzhiJobService puzhiJobService;
 
+	
+	
+	@RequestMapping(path = "/na/iocm/devNotify/v1.1.0/addDevice", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Resp<?> addDevice(@RequestBody String r) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			log.warn("addDevice msg:{}", r);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("erroe:{}", e);
+		}
+		return resp;
+
+	}
+	
 	@RequestMapping(path = "/na/iocm/devNotify/v1.1.0/reportCmdExecResult", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Resp<?> cmd(@RequestBody String r) {
@@ -222,7 +238,9 @@ public class TelcomCotroller extends BaseController {
 						} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
 							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
 							sendChaozhou(iotCloudLog.getData(),ioTCloudDevice);
-						}  else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
+						}  else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_2.0")) {
+							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
+						} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
 							String id = iotCloudLog.getData().substring(0, 6);
 							 long dec_num = Long.parseLong(id, 16);  
 							PuzhiJob pz = puzhiJobService.findByMacAndId((int)dec_num,ioTCloudDevice.getMac());
@@ -271,6 +289,8 @@ public class TelcomCotroller extends BaseController {
 					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
 						sendChaozhou(iotCloudLog.getData(),ioTCloudDevice);
+					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_2.0")) {
+						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
 					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
 						String id = iotCloudLog.getData().substring(0, 6);
 						 long dec_num = Long.parseLong(id, 16);  
@@ -654,7 +674,7 @@ public class TelcomCotroller extends BaseController {
 	 */
 	@RequestMapping(path = "/register")
 	@ResponseBody
-	public Resp<?> register(String imei, String mac, String ipLocal, String name) {
+	public Resp<?> register(String imei, String mac, String ipLocal, String name,String simCard) {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			HttpsUtil httpsUtil = new HttpsUtil();
@@ -675,11 +695,11 @@ public class TelcomCotroller extends BaseController {
 			header.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
 			StreamClosedHttpResponse responseReg = httpsUtil.doPostJsonGetStatusLine(urlReg, header, jsonRequest);
 			JSONObject jsonObject = JSONObject.parseObject(responseReg.getContent());
-			log.warn("msg:{}", jsonObject);
+			log.warn("regInfo------:{}", jsonObject);
 			String deviceId = jsonObject.getString("deviceId");
 			httpsUtil = new HttpsUtil();
 			httpsUtil.initSSLConfigForTwoWay();
-			accessToken = login(httpsUtil);
+			String accessToken2 = login(httpsUtil);
 			String urlModifyDeviceInfo = Constant.MODIFY_DEVICE_INFO + "/" + deviceId;
 			String manufacturerId = "Zhanway";
 			String manufacturerName = "Zhanway";
@@ -691,21 +711,23 @@ public class TelcomCotroller extends BaseController {
 			paramModifyDeviceInfo.put("manufacturerName", manufacturerName);
 			paramModifyDeviceInfo.put("deviceType", deviceType);
 			paramModifyDeviceInfo.put("model", model);
-			paramModifyDeviceInfo.put("name", name + "_" + imei);
+			paramModifyDeviceInfo.put("name", name);
 			paramModifyDeviceInfo.put("protocolType", protocolType);
 			String jsonRequest2 = JsonUtil.jsonObj2Sting(paramModifyDeviceInfo);
 			Map<String, String> header2 = new HashMap<>();
-			header.put(Constant.HEADER_APP_KEY, appId);
-			header.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
+			header2.put(Constant.HEADER_APP_KEY, appId);
+			header2.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken2);
 			StreamClosedHttpResponse responseModifyDeviceInfo = httpsUtil.doPutJsonGetStatusLine(urlModifyDeviceInfo,
 					header2, jsonRequest2);
-			log.warn("msg:{}", responseModifyDeviceInfo.getContent());
+			jsonObject = JSONObject.parseObject(responseModifyDeviceInfo.getContent());
+			log.warn("ModifyDeviceInfo-------:{}", jsonObject);
 			IoTCloudDevice ioTCloudDevice = new IoTCloudDevice();
 			ioTCloudDevice.setCreateTime(new Date());
 			ioTCloudDevice.setImei(imei);
 			ioTCloudDevice.setLocalIp(ipLocal);
 			ioTCloudDevice.setMac(mac);
-			ioTCloudDevice.setType(1);
+			ioTCloudDevice.setType(2);
+			ioTCloudDevice.setSimCard(simCard);
 			ioTCloudDevice.setDeviceId(deviceId);
 			iotCloudDeviceService.save(ioTCloudDevice);
 			return new Resp<>(true);
