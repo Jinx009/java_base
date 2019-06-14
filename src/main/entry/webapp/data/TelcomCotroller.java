@@ -308,7 +308,7 @@ public class TelcomCotroller extends BaseController {
 	private void sendWuhanQj2_0(IoTCloudDevice device, IotCloudLog iotCloudLog) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String data = iotCloudLog.getData();
-		String sn = data.substring(0, 16);
+		String sn = device.getSimCard().split("_")[1];
 		map.put("JCDB19A080", sn);
 		String type = data.substring(16, 18);
 		if (type.equals("68")) {
