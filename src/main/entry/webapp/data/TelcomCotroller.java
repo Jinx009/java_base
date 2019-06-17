@@ -349,6 +349,12 @@ public class TelcomCotroller extends BaseController {
 			map.put("JCDB19A100", getData100(data.substring(42, 43), data.substring(42, 46)));
 			map.put("JCDB19A110", Integer.valueOf(data.substring(40, 42)));
 			map.put("JCDB19A120", Integer.valueOf(data.substring(46, 48)));
+			if("心跳".equals(type)){
+				map.put("JCDB19A020", 0);
+				map.put("JCDB19A030", 0);
+				map.put("JCDB19A040", 0);
+				map.put("JCDB19A100", getData100_3(data.substring(42, 43), data.substring(42, 46)));
+			}
 			String json = JSONObject.toJSONString(map);
 			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
 			String url = "http://" + device.getUdpIp() + ":" + device.getUdpPort() + "/DzhZXJC/Sjcj/AddJCDB19A";
@@ -468,7 +474,6 @@ public class TelcomCotroller extends BaseController {
 		try {
 			new TelcomCotroller().getData10000( "4500","4");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -507,6 +512,46 @@ public class TelcomCotroller extends BaseController {
 		log.warn("result:{}", result);
 		return result;
 	}
+	
+	private String getData100_3(String index, String _d) throws Exception {
+		log.warn("index:{},data:{}", index, _d);
+		int _index = Integer.parseInt(index, 16);
+		Integer a = Integer.valueOf(_d, 16);
+		String b = Integer.toBinaryString(a);
+		String[] arrs = b.split("");
+		String[] arr = new String[16];
+		int i = 0;
+		for (String s : arrs) {
+			if (s != null && !"".equals(s)) {
+				arr[i] = s;
+				i++;
+			}
+		}
+		String c = "";
+		Integer e = Integer.parseInt(b, 2);
+		if (_index > 8) {
+			for (String d : arr) {
+				if (d != null && !"".equals(d)) {
+					if (d.equals("1")) {
+						c += "0";
+					} else {
+						c += "1";
+					}
+				}
+			}
+			e = (Integer.parseInt(c, 2) + 1) * -1;
+		} else {
+			e = Integer.parseInt(_d, 16);
+		}
+		Double r = Double.valueOf(e)/300;
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result =  decimalFormat.format(g);
+		log.warn("result:{}", result);
+		return result;
+	}
+	
 
 	private String getData100(String index, String _d) throws Exception {
 		log.warn("index:{},data:{}", index, _d);
