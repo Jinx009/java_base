@@ -52,7 +52,7 @@ public class QjDeviceLogDao extends BaseDao<QjDeviceLog>{
 		try {
 			String hql = " from QjDeviceLog where  createTime >='"+date+" 00:00:00' and createTime <= '"+date+" 23:59:59'  order by id desc ";
 			if(StringUtil.isNotBlank(mac)) {
-				hql = " from QjDeviceLog where  createTime >='"+date+" 00:00:00' and createTime <= '"+date+" 23:59:59' and mac like '%"+mac+"%' order by id desc ";
+				hql = " from QjDeviceLog where  createTime >='"+date+" 00:00:00' and createTime <= '"+date+" 23:59:59' and snValue like '%"+mac+"%' order by id desc ";
 			}
 			List<QjDeviceLog> list = em.createQuery(hql).getResultList();
 			if(list!=null&&!list.isEmpty()){
