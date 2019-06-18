@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import common.helper.StringUtil;
 import database.common.BaseDao;
 import database.models.qj.QjDeviceLog;
 
@@ -36,6 +37,23 @@ public class QjDeviceLogDao extends BaseDao<QjDeviceLog>{
 			Date date = new Date();
 			String dateStr = sdf.format(date);
 			String hql = " from QjDeviceLog where  createTime >='"+dateStr+" 00:00:00' and createTime <= '"+dateStr+" 23:59:59' order by id desc ";
+			List<QjDeviceLog> list = em.createQuery(hql).getResultList();
+			if(list!=null&&!list.isEmpty()){
+				return list;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Object nearList(String mac, String date) {
+		try {
+			String hql = " from QjDeviceLog where  createTime >='"+date+" 00:00:00' and createTime <= '"+date+" 23:59:59'  order by id desc ";
+			if(StringUtil.isNotBlank(mac)) {
+				hql = " from QjDeviceLog where  createTime >='"+date+" 00:00:00' and createTime <= '"+date+" 23:59:59' and mac like '%"+mac+"%' order by id desc ";
+			}
 			List<QjDeviceLog> list = em.createQuery(hql).getResultList();
 			if(list!=null&&!list.isEmpty()){
 				return list;

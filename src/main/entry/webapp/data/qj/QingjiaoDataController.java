@@ -44,10 +44,10 @@ public class QingjiaoDataController extends BaseController {
 
 	@RequestMapping(path = "/logs")
 	@ResponseBody
-	public Resp<?> logs() {
+	public Resp<?> logs(String mac,String date) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(qjDeviceLogService.nearList());
+			return new Resp<>(qjDeviceLogService.nearList(mac,date));
 		} catch (Exception e) {
 			log.error("error:{}", e);
 		}

@@ -29,5 +29,10 @@ public class QjDeviceLogService {
 	public List<QjDeviceLog> nearList() {
 		return qjDeviceLogDao.nearList();
 	}
+
+
+	public Object nearList(String mac, String date) {
+		return qjDeviceLogDao.nearList(mac,date);
+	}
 	
 }
