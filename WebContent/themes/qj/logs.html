@@ -44,10 +44,10 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">基本信息</div>
-            <div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;">
+            <div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
               <input type="text" class="form-control"  id="mac" placeholder="请输入mac号码" value="000919032900001E" >
 		    </div>
-           	<div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;">
+           	<div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
 		      <input type="text" class="form-control" readonly="readonly" id="datepicker" >
 		      <span class="input-group-btn">
 		        <button class="btn btn-default" onclick="_getData();" type="button">&nbsp;查&nbsp;看&nbsp;</button>
@@ -145,6 +145,7 @@
 		$('#datepicker').val(new Date().Format('yyyy-MM-dd'));
 		_getData();
 	})
+	var _d = '';
 	function _getData() {
 		var mac = $('#mac').val();
 		var date = $('#datepicker').val();
@@ -166,12 +167,17 @@
 					        res.data[i].snr = parseInt(res.data[i].snr);
 					    }
 				}
-				new Vue({
-					el : '#data',
-					data : {
-						datas : res.data
-					}
-				})
+				if(_d==''){
+					_d = new Vue({
+						el : '#data',
+						data : {
+							datas : res.data
+						}
+					});
+				}else{
+					_d.datas = res.data;
+				}
+				
 			}
 		})
 	}
