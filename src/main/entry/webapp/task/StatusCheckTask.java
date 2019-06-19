@@ -347,29 +347,31 @@ public class StatusCheckTask {
 	private void sendData(ParkingSpace parkingSpace, String ChangeTime, String sCameraIndex, String sPlateNo,
 			String sPlateColor, ParkInfo parkInfo, String picPath, int iVehicleEnterstate) {
 		Map<String, String> map = new HashMap<>();
-		map.put("mac", parkingSpace.getMac());
-		map.put("ChangeTime", ChangeTime);
-		map.put("cameraId", sCameraIndex);
-		map.put("cph", sPlateNo);
-		map.put("cpColor", sPlateColor);
-		map.put("status", String.valueOf(parkInfo.getIVehicleEnterstate()));
-		map.put("picLink", "http://58.246.184.99:801/" + picPath);
-		if (iVehicleEnterstate != 0) {
-			if (parkInfo.getIVehicleEnterstate() == 0) {
-				new Thread(new Runnable() {
-					public void run() {
-						try {
-							Thread.sleep(10000);
-							HttpUtil.postJson("http://124.74.252.162:1122/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
-							HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
-						} catch (Exception e) {
-							log.error("e:{}", e);
+		if(!"0001180614000062".equals( parkingSpace.getMac())) {
+			map.put("mac", parkingSpace.getMac());
+			map.put("ChangeTime", ChangeTime);
+			map.put("cameraId", sCameraIndex);
+			map.put("cph", sPlateNo);
+			map.put("cpColor", sPlateColor);
+			map.put("status", String.valueOf(parkInfo.getIVehicleEnterstate()));
+			map.put("picLink", "http://58.246.184.99:801/" + picPath);
+			if (iVehicleEnterstate != 0) {
+				if (parkInfo.getIVehicleEnterstate() == 0) {
+					new Thread(new Runnable() {
+						public void run() {
+							try {
+								Thread.sleep(10000);
+								HttpUtil.postJson("http://124.74.252.162:1122/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
+								//HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
+							} catch (Exception e) {
+								log.error("e:{}", e);
+							}
 						}
-					}
-				}).start();
-			} else {
-				HttpUtil.postJson("http://124.74.252.162:1122/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
-				HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
+					}).start();
+				} else {
+					HttpUtil.postJson("http://124.74.252.162:1122/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
+					//HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
+				}
 			}
 		}
 	}
