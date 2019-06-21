@@ -502,6 +502,7 @@ public class StatusCheckTask {
 			        public void run() {
 			            try {
 			            	FtpUtils ftp = new FtpUtils();
+			            	log.warn("file path:{}",path);
 							String dirPath =  "/"+path.split("/")[3];
 							String ftpFileName =  path.split("/")[4];
 							ftp.uploadFile(dirPath, ftpFileName, path);
