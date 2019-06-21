@@ -5,7 +5,12 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class PicUtils {
+	
+	private static final Logger log = LoggerFactory.getLogger(PicUtils.class);
 
 	public static void map(String[] picPath,String fileName) {
 		try {
@@ -40,7 +45,20 @@ public class PicUtils {
 			ImageNew.setRGB(width, height, width, height, array_3, 0, width);
 			File outFile = new File(fileName);
 			ImageIO.write(ImageNew, "jpeg", outFile);// 写图片
-
+			//ftp上传合成图
+			new Thread() {
+		        @Override
+		        public void run() {
+		            try {
+		            	FtpUtils ftp = new FtpUtils();
+						String dirPath = "/"+fileName.split("/")[3];
+						String ftpFileName =  fileName.split("/")[4];
+						ftp.uploadFile(dirPath, ftpFileName, fileName);
+		            } catch (Exception e) {
+		               log.error("ftp pic full error:{}",e);
+		            } 
+		        }
+		    }.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,6 +77,12 @@ public class PicUtils {
 		if(file1.exists()&&file2.exists()&&file3.exists()&&file4.exists()){
 			map(picPath, fileName+"_steadyCarImg.jpeg");
 		}
+	}
+	
+	public static void main(String[] args) {
+		String fileName = "/data/ftp_pic/20190621/00011806140000B4_20190621084811_inCarVideo.jpeg";
+		System.out.println(fileName.split("/")[3]);
+		System.out.println(fileName.split("/")[4]);
 	}
 
 }
