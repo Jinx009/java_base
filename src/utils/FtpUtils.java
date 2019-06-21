@@ -169,6 +169,6 @@ public class FtpUtils {
     
     public static void main(String[] args) {
         FtpUtils ftp =new FtpUtils(); 
-        ftp.uploadFile("/20190632/", "1.jpg","/Users/jinx/Downloads/1.jpg");
+        ftp.uploadFile("/20190632/", "1.mp4","/Users/jinx/Downloads/0001180614000233_20190621074125_inCarVideo.mp4");
     }
 }

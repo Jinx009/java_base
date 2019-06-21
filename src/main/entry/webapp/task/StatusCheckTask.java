@@ -155,19 +155,14 @@ public class StatusCheckTask {
 							pv.setUpdateStatus(1);
 							parkingVedioService.update(pv);
 							//上传所有mp4
-						    new Thread() {
-						        @Override
-						        public void run() {
-						            try {
-						            	FtpUtils ftp = new FtpUtils();
-										String dirPath =  "/"+fileName.split("/")[3];
-										String ftpFileName =  fileName.split("/")[4]+".mp4";
-										ftp.uploadFile(dirPath, ftpFileName, fileName+".mp4");
-						            } catch (Exception e) {
-						               log.error("ftp mp4 error:{}",e);
-						            } 
-						        }
-						    }.start();
+							try {
+								FtpUtils ftp = new FtpUtils();
+								String dirPath =  "/"+fileName.split("/")[3];
+								String ftpFileName =  fileName.split("/")[4]+".mp4";
+								ftp.uploadFile(dirPath, ftpFileName, fileName+".mp4");
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				}
@@ -497,20 +492,15 @@ public class StatusCheckTask {
 		byte[] btImg = getImageFromNetByUrl(picPathUrl);
 		if (null != btImg && btImg.length > 0) {
 			writeImageToDisk(btImg, path);
-			 new Thread() {
-			        @Override
-			        public void run() {
-			            try {
-			            	FtpUtils ftp = new FtpUtils();
-			            	log.warn("file path:{}",path);
-							String dirPath =  "/"+path.split("/")[3];
-							String ftpFileName =  path.split("/")[4];
-							ftp.uploadFile(dirPath, ftpFileName, path);
-			            } catch (Exception e) {
-			               log.error("ftp pic error:{}",e);
-			            } 
-			        }
-			    }.start();
+			try {
+				FtpUtils ftp = new FtpUtils();
+            	log.warn("file path:{}",path);
+				String dirPath =  "/"+path.split("/")[0];
+				String ftpFileName =  path.split("/")[1];
+				ftp.uploadFile(dirPath, ftpFileName, path);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			log.warn("no things");
 		}

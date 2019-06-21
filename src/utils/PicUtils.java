@@ -46,19 +46,14 @@ public class PicUtils {
 			File outFile = new File(fileName);
 			ImageIO.write(ImageNew, "jpeg", outFile);// 写图片
 			//ftp上传合成图
-			new Thread() {
-		        @Override
-		        public void run() {
-		            try {
-		            	FtpUtils ftp = new FtpUtils();
-						String dirPath = "/"+fileName.split("/")[3];
-						String ftpFileName =  fileName.split("/")[4];
-						ftp.uploadFile(dirPath, ftpFileName, fileName);
-		            } catch (Exception e) {
-		               log.error("ftp pic full error:{}",e);
-		            } 
-		        }
-		    }.start();
+			try {
+				FtpUtils ftp = new FtpUtils();
+				String dirPath = "/"+fileName.split("/")[3];
+				String ftpFileName =  fileName.split("/")[4];
+				ftp.uploadFile(dirPath, ftpFileName, fileName);
+			} catch (Exception e) {
+				log.error("e:{}",e);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
