@@ -497,7 +497,7 @@ public class StatusCheckTask {
             	log.warn("file path:{}",path);
 				String dirPath =  "/"+path.split("/")[0];
 				String ftpFileName =  path.split("/")[1];
-				ftp.uploadFile(dirPath, ftpFileName, path);
+				ftp.uploadFile(dirPath, ftpFileName, "/data/ftp_pic/"+path);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
