@@ -134,6 +134,14 @@ public class StatusCheckTask {
 						if(pv.getVedioStatus()==1){
 							pv.setUpdateStatus(1);
 							parkingVedioService.update(pv);
+							try {
+								FtpUtils ftp = new FtpUtils();
+								String dirPath =  "/"+fileName.split("/")[3];
+								String ftpFileName =  fileName.split("/")[4]+".mp4";
+								ftp.uploadFile(dirPath, ftpFileName, fileName+".mp4");
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 							if(pv.getType()==1){
 								GifUtils.covPic(fileName,"00:00:21",fileName.split("_inCarVideo")[0]+"_inCarImg.jpeg");
 							}

@@ -203,6 +203,14 @@ public class GifUtils {
 			dealStream(videoProcess);
 			videoProcess.waitFor();
 			log.warn("msg:cov Pic：{}",fileName);
+			try {
+				FtpUtils ftp = new FtpUtils();
+				String dirPath =  "/"+outName.split("/")[3];
+				String ftpFileName =  outName.split("/")[4];
+				ftp.uploadFile(dirPath, ftpFileName, outName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return true;
 		} catch (Exception e) {
 			log.error("e:{}", e);
