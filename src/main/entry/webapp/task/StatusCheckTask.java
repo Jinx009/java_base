@@ -154,7 +154,7 @@ public class StatusCheckTask {
 						}else{
 							pv.setUpdateStatus(1);
 							parkingVedioService.update(pv);
-							//上传所有mp4
+							//上传完成转换的mp4
 							try {
 								FtpUtils ftp = new FtpUtils();
 								String dirPath =  "/"+fileName.split("/")[3];
