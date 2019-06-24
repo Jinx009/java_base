@@ -45,6 +45,7 @@ public class FtpUtils {
             log.warn("connecting...ftp...server:{},{}",hostname,port);
             ftp.connect(hostname, port); //连接ftp服务器
             ftp.login(username, password); //登录ftp服务器
+            ftp.enterLocalPassiveMode();
             int replyCode = ftp.getReplyCode(); //是否成功登录服务器
             if(!FTPReply.isPositiveCompletion(replyCode)){
             	log.warn("connect failed...ftp:{},{}",hostname,port);
