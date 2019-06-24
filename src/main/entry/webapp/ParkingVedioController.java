@@ -30,6 +30,7 @@ public class ParkingVedioController extends BaseController{
 	public Resp<?> insertVedio(String mac,String eventTime,Integer status){
 		Resp<?> resp = new Resp<>(false);
 		try {
+			log.warn("mac:{},eventTime:{},status:{}",mac,eventTime,status);
 			ParkingSpace space = parkingSpacesService.findByMac(mac);
 			ParkingVedio p = new ParkingVedio();
 			p.setCameraIndex(space.getCameraIndex());
