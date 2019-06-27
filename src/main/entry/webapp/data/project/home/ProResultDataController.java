@@ -51,7 +51,7 @@ public class ProResultDataController extends BaseController{
 		try {
 			ProResult proResult = proResultService.find(id);
 			long time = new Date().getTime();
-			String filePath = "/project/server-book/webapps/paper/themes/upload_files/"+time+".txt";
+			String filePath = "/Users/jinx/Documents/jobs/git_mine/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/java_base/themes/upload_files/"+time+".txt";
 			File file = new File(filePath);
 		   try {
 	            if(!file.exists()){
