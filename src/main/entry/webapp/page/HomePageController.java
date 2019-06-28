@@ -10,34 +10,19 @@ import main.entry.webapp.BaseController;
 @RequestMapping(value = "/home/p")
 public class HomePageController extends BaseController{
 	
-	@RequestMapping(path = "/pro_driver")
+	@RequestMapping(path = "/pro_user")
 	public String driver(){
-		return "/home/pro_driver";
+		return "/home/pro_user";
 	}
 	
-	@RequestMapping(path = "/pro_driver_new")
+	@RequestMapping(path = "/pro_vedio")
 	public String driver_new(){
-		return "/home/pro_driver_new";
+		return "/home/pro_vedio";
 	}
 	
-	@RequestMapping(path = "/pro_task_new")
+	@RequestMapping(path = "/pro_vedio_new")
 	public String task_new(){
-		return "/home/pro_task_new";
-	}
-	
-	@RequestMapping(path = "/pro_task")
-	public String task(){
-		return "/home/pro_task";
-	}
-	
-	@RequestMapping(path = "/pro_task_title")
-	public String task_title(){
-		return "/home/pro_task_title";
-	}
-	
-	@RequestMapping(path = "/pro_log")
-	public String log(){
-		return "/home/pro_log";
+		return "/home/pro_vedio_new";
 	}
 	
 	
