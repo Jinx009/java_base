@@ -14,28 +14,28 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @Entity
-@Table(name="pro_driver")
-public class ProDriver {
+@Table(name="pro_user")
+public class ProUser {
 
 	@Id
 	@Column(unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "mobile_phone")
-	private String mobilePhone;
+	@Column(name = "user_name")
+	private String userName;
 	@Column(name = "pwd")
 	private String pwd;
-	@Column(name = "openid")
-	private String openid;
-	@Column(name = "name")
-	private String name;
+	@Column(name = "user_level")
+	private Integer userLevel;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name = "plate_number")
-	private String plateNumber;
+	@Column(name = "level_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date levelTime;
 	
 }
