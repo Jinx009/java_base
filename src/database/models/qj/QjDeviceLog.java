@@ -67,4 +67,20 @@ public class QjDeviceLog {
     private String snr;
     @Column(name = "tem")
     private String tem;
+    @Column(name = "hard_v")
+    private String hardV;
+    @Column(name = "soft_v")
+    private String softV;
+    @Column(name = "acc_x_max")
+    private String accxMax;
+    @Column(name = "acc_y_max")
+    private String accyMax;
+    @Column(name = "acc_z_max")
+    private String acczMax;
+    @Column(name = "acc_x_min")
+    private String accxMin;
+    @Column(name = "acc_y_min")
+    private String accyMin;
+    @Column(name = "acc_z_min")
+    private String acczMin;
 }

@@ -1,5 +1,6 @@
 package main.entry.webapp.data.qj;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -212,6 +213,130 @@ public class QingjiaoDataController extends BaseController {
 		return new Resp<>(true);
 	}
 	
+	private static String hexToFloat(String s){
+		    BigInteger big = new BigInteger(s, 16);
+	        Float f  =  Float.intBitsToFloat(big.intValue());
+	        return String.valueOf(f);
+	}
+	
+	
+	/**
+	 * 第三版数据上报格式20190703
+	 * @param data
+	 * @return
+	 */
+	@RequestMapping(path = "/zhanway/push/3_0")
+	@ResponseBody
+	public Resp<?> pushZhanwayV3_0(String data) {
+		try {
+			String sn = data.substring(0, 16);
+			String cmd = data.substring(20, 22);
+			String flag = data.substring(24,26);
+			if (cmd.equals("68")) {
+				cmd = "心跳_"+flag;
+				String acc_x = hexToFloat(data.substring(26,34));
+				String acc_y = hexToFloat(data.substring(34,42));
+				String acc_z = hexToFloat(data.substring(42,50));
+				String x = getData(data.substring(50, 51), data.substring(50, 54));
+				String y = getData(data.substring(54, 55), data.substring(54, 58));
+				String z = getData(data.substring(58, 59), data.substring(58, 62));
+				String bat =  getData100(data.substring(62, 63), data.substring(62, 66));
+				String tem =  getData100(data.substring(66, 67), data.substring(66, 70));
+				String rssi =  data.substring(70, 72);
+				String rsrp = String.valueOf(Double.valueOf(getData(data.substring(72, 73), data.substring(72, 76))) * 1000);
+				String snr = String.valueOf(Double.valueOf(getData(data.substring(76, 77), data.substring(76,80))) * 1000);
+				String pci = String.valueOf(Double.valueOf(getData(data.substring(80, 81), data.substring(80, 84))) * 1000);
+				String hard =  data.substring(84,90);
+				String soft =  data.substring(90,96);
+				QjDeviceLog log = new QjDeviceLog();
+				log.setBaseAcceX(acc_x);
+				log.setBaseAcceY(acc_y);
+				log.setBaseAcceZ(acc_z);
+				log.setBaseX(x);
+				log.setBaseY(y);
+				log.setBaseZ(z);
+				log.setCreateTime(new Date());
+				log.setHardV(hard);
+				log.setSoftV(soft);
+				log.setSnValue(sn);
+				log.setType(cmd);
+				log.setPci(pci);
+				log.setRsrp(rsrp);
+				log.setRssi(rssi);
+				log.setSnr(snr);
+				log.setTem(tem);
+				log.setVoltage(bat);
+				log.setType(flag);
+				qjDeviceLogService.save(log);
+			} else if(cmd.equals("69")){
+				cmd = "报警_"+flag;
+				QjDeviceLog log = new QjDeviceLog();
+				log.setAcceXType(Integer.valueOf(data.substring(28, 30)));
+				log.setAcceYType(Integer.valueOf(data.substring(30, 32)));
+				log.setAcceZType(Integer.valueOf(data.substring(32, 34)));
+				log.setXType(Integer.valueOf(data.substring(34, 36)));
+				log.setYType(Integer.valueOf(data.substring(36, 38)));
+				log.setZType(Integer.valueOf(data.substring(38, 40)));
+				String acc_x = hexToFloat(data.substring(40,48));
+				String acc_y = hexToFloat(data.substring(48,56));
+				String acc_z = hexToFloat(data.substring(56,64));
+				String x = getData(data.substring(64,65), data.substring(64, 68));
+				String y = getData(data.substring(68, 69), data.substring(68,72));
+				String z = getData(data.substring(72,73), data.substring(72,76));
+				String acc_x_max = hexToFloat(data.substring(76,84));
+				String acc_y_max = hexToFloat(data.substring(84,92));
+				String acc_z_max = hexToFloat(data.substring(92,100));
+				String acc_x_min = hexToFloat(data.substring(100,108));
+				String acc_y_min = hexToFloat(data.substring(108,116));
+				String acc_z_min = hexToFloat(data.substring(116,124));
+				String bat =  getData100(data.substring(124, 125), data.substring(124, 128));
+				String tem =  getData100(data.substring(128, 129), data.substring(128, 132));
+				log.setType(flag);
+				log.setBaseAcceX(acc_x);
+				log.setBaseAcceY(acc_y);
+				log.setBaseAcceZ(acc_z);
+				log.setBaseX(x);
+				log.setBaseY(y);
+				log.setBaseZ(z);
+				log.setCreateTime(new Date());
+				log.setSnValue(sn);
+				log.setType(cmd);
+				log.setTem(tem);
+				log.setAccxMax(acc_x_max);
+				log.setAccyMax(acc_y_max);
+				log.setAcczMax(acc_z_max);
+				log.setAccxMin(acc_x_min);
+				log.setAccyMin(acc_y_min);
+				log.setAcczMin(acc_z_min);
+				log.setVoltage(bat);
+				log.setCreateTime(new Date());
+				qjDeviceLogService.save(log);
+			}else{
+				cmd = "温度_"+flag;
+				int num = Integer.valueOf(data.substring(24, 26)).intValue();
+				int start = 26;
+				if(num!=0){
+					for(int i = 0;i<num;i++){
+						start+= i*28;
+						QjDeviceLog log = new QjDeviceLog();
+						log.setType(flag);
+						log.setCreateTime(new Date());
+						log.setTem(getData100(data.substring(start, start+1), data.substring(start, start+4)));
+						log.setBaseAcceX(hexToFloat(data.substring(start+4, start+12)));
+						log.setBaseAcceX(hexToFloat(data.substring(start+12, start+20)));
+						log.setBaseAcceX(hexToFloat(data.substring(start+20, start+28)));
+						qjDeviceLogService.save(log);
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return new Resp<>(true);
+	}
+
+	
 	/**
 	 * 普质 带z轴
 	 * @param data
@@ -299,12 +424,9 @@ public class QingjiaoDataController extends BaseController {
 						qjDeviceLog.setTem("");
 					}
 					qjDeviceLog.setRssi(data.substring(56, 58));
-					qjDeviceLog.setPci(String
-							.valueOf(Double.valueOf(getData(data.substring(58, 59), data.substring(58, 62))) * 1000));
-					qjDeviceLog.setRsrp(String
-							.valueOf(Double.valueOf(getData(data.substring(62, 63), data.substring(62, 66))) * 1000));
-					qjDeviceLog.setSnr(String
-							.valueOf(Double.valueOf(getData(data.substring(66, 67), data.substring(66, 70))) * 1000));
+					qjDeviceLog.setPci(String.valueOf(Double.valueOf(getData(data.substring(58, 59), data.substring(58, 62))) * 1000));
+					qjDeviceLog.setRsrp(String.valueOf(Double.valueOf(getData(data.substring(62, 63), data.substring(62, 66))) * 1000));
+					qjDeviceLog.setSnr(String.valueOf(Double.valueOf(getData(data.substring(66, 67), data.substring(66, 70))) * 1000));
 				}
 
 				QjDeviceLog qjDeviceLog2 = qjDeviceLogService.getNearBySn(sn);
