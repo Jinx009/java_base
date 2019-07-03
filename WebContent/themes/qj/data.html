@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数据曲线</title>
+<link
+	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	rel="stylesheet">
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" target="_blank"
+					href="http://www.zhanway.com"><img height="50px;"
+					style="margin-top: -15px;" src="img/logo.png"></a>
+			</div>
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="show.html">地理位置</a></li>
+					<li><a href="device.html">设备管理</a></li>
+					<li ><a href="logs.html">报警管理</a></li>
+					<li class="active"><a href="data.html">数据曲线</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a target="_blank" href="http://www.zhanway.com">走进展为</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="row" style="width: 98%;margin-left: 1%;" >
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">基本信息</div>
+            <div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
+              <input type="text" class="form-control"  id="mac" placeholder="请输入mac号码" value="000919032900001E" >
+		    </div>
+           	<div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
+		      <input type="text" class="form-control" readonly="readonly" id="datepicker" >
+		      <span class="input-group-btn">
+		        <button class="btn btn-default" onclick="_getData();" type="button">&nbsp;查&nbsp;看&nbsp;</button>
+		      </span>
+		    </div>
+        </div>
+        <div id="logs" >
+        
+        </div>
+    </div>
+</div>
+	<div class="row" style="width: 98%; margin-left: 1%;">
+		<div class="col-md-12" id="data">
+			<div class="panel panel-default" style="border-color: white;">
+				<div class="panel-body">
+					<div style="float: left;position: relative;min-height: 1px;width: 1280px;height:500px;padding: 0 "  id="draw_1"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 	<footer class="main-footer"
+		style="text-align: center; width: 100%; position: absolute; bottom: 15px;">
+		<strong>Copyright &copy; <a href="http://www.zhanway.com"
+			target="_blank">上海展为智能技术股份有限公司</a>.
+		</strong> All rights reserved.
+	</footer> -->
+	<div class="control-sidebar-bg"></div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+<script src="/themes/layer/layer.js"></script>
+<script src="/themes/laydate/laydate.js"></script>
+<script src="js/base.js"></script>
+<script src="https://cdn.bootcss.com/echarts/3.8.0/echarts.min.js"></script>
+<script type="text/javascript">
+var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[];
+	$(function() {
+		$('#datepicker').val(new Date().Format('yyyy-MM-dd'));
+		laydate.render({
+			elem : '#datepicker',
+		});
+		_getData();
+	})
+	var _d = '';
+	function _getData() {
+		var mac = $('#mac').val();
+		var date = $('#datepicker').val();
+		var map = [];
+		$.ajax({
+			url : '/home/cloud/qj/logs',
+			dataType : 'json',
+			data:'mac='+mac+'&date='+date,
+			type : 'post',
+			success : function(res) {
+				if(res!=''&&res.data.length!='')
+				for(var i = res.data.length-1;i>=0;i--){
+					res.data[i].createTime = jsDateTime(res.data[i].createTime);
+					if(res.data[i].baseX!=''&&res.data[i].baseAcceX!=''){
+						acc_x.push(res.data[i].baseAcceX.split('/')[0]);
+						acc_y.push(res.data[i].baseAcceY.split('/')[0]);
+						acc_z.push(res.data[i].baseAcceZ.split('/')[0]);
+						x.push(res.data[i].baseX);
+						y.push(res.data[i].baseY);
+						z.push(res.data[i].baseZ);
+						ddate.push(res.data[i].createTime)
+					}
+				}
+				_draw();
+			}
+		})
+	}
+	function _draw(){
+		var myChart_1 = echarts.init(document.getElementById('draw_1'),'dark');
+		var colors = ['#5793f3', '#d14a61', '#675bba','#1193f3', '#224a61', '#335bba'];
+		option = {
+		    color: colors,
+		    tooltip: {
+		        trigger: 'none',
+		        axisPointer: {
+		            type: 'cross'
+		        }
+		    },
+		    legend: {
+		        data:['x','y','z','acc_x','acc_y','acc_z']
+		    },
+		    grid: {
+		        top: 70,
+		        bottom: 50
+		    },
+		    xAxis: [
+		        {
+		            type: 'category',
+		            axisTick: {
+		                alignWithLabel: true
+		            },
+		            axisLine: {
+		                onZero: false,
+		                lineStyle: {
+		                    color: colors[1]
+		                }
+		            },
+		            axisPointer: {
+		                label: {
+		                    formatter: function (params) {
+		                        return  'x：' + (params.seriesData.length ? '：' + params.seriesData[0].data : ' ') ;
+		                    }
+		                }
+		            },
+		            data: ddate
+		        },
+		        {
+		            type: 'category',
+		            axisTick: {
+		                alignWithLabel: true
+		            },
+		            axisLine: {
+		                onZero: false,
+		                lineStyle: {
+		                    color: colors[0]
+		                }
+		            },
+		            axisPointer: {
+		                label: {
+		                    formatter: function (params) {
+		                        return 'y：'+ (params.seriesData.length ? '：' + params.seriesData[0].data : ' ') ;
+		                    }
+		                }
+		            },
+		            data: ddate
+		        },
+		        {
+		            type: 'category',
+		            axisTick: {
+		                alignWithLabel: true
+		            },
+		            axisLine: {
+		                onZero: false,
+		                lineStyle: {
+		                    color: colors[0]
+		                }
+		            },
+		            axisPointer: {
+		                label: {
+		                    formatter: function (params) {
+		                        return 'z：'+ (params.seriesData.length ? '：' + params.seriesData[0].data : ' ') ;
+		                    }
+		                }
+		            },
+		            data: ddate
+		        },
+		        {
+		            type: 'category',
+		            axisTick: {
+		                alignWithLabel: true
+		            },
+		            axisLine: {
+		                onZero: false,
+		                lineStyle: {
+		                    color: colors[0]
+		                }
+		            },
+		            axisPointer: {
+		                label: {
+		                    formatter: function (params) {
+		                        return 'acc_x：'+  (params.seriesData.length ? '：' + params.seriesData[0].data : ' ') ;
+		                    }
+		                }
+		            },
+		            data: ddate
+		        },
+		        {
+		            type: 'category',
+		            axisTick: {
+		                alignWithLabel: true
+		            },
+		            axisLine: {
+		                onZero: false,
+		                lineStyle: {
+		                    color: colors[0]
+		                }
+		            },
+		            axisPointer: {
+		                label: {
+		                    formatter: function (params) {
+		                        return 'acc_y：'+  (params.seriesData.length ? '：' + params.seriesData[0].data : ' ') ;
+		                    }
+		                }
+		            },
+		            data: ddate
+		        },
+		        {
+		            type: 'category',
+		            axisTick: {
+		                alignWithLabel: true
+		            },
+		            axisLine: {
+		                onZero: false,
+		                lineStyle: {
+		                    color: colors[0]
+		                }
+		            },
+		            axisPointer: {
+		                label: {
+		                    formatter: function (params) {
+		                        return 'acc_z：'+  (params.seriesData.length ? '：' + params.seriesData[0].data : ' ') ;
+		                    }
+		                }
+		            },
+		            data: ddate
+		        }
+		    ],
+		    yAxis: [
+		        {
+		            type: 'value'
+		        }
+		    ],
+		    series: [
+		        {
+		            name:'x',
+		            type:'line',
+		            xAxisIndex: 1,
+		            smooth: true,
+		            data:x
+		        },
+		        {
+		            name:'y',
+		            type:'line',
+		            smooth: true,
+		            data:y
+		        },
+		        {
+		            name:'z',
+		            type:'line',
+		            smooth: true,
+		            data:z
+		        },
+		        {
+		            name:'acc_x',
+		            type:'line',
+		            smooth: true,
+		            data:acc_x
+		        },
+		        {
+		            name:'acc_y',
+		            type:'line',
+		            smooth: true,
+		            data:acc_y
+		        },
+		        {
+		            name:'acc_z',
+		            type:'line',
+		            smooth: true,
+		            data:acc_z
+		        }
+		    ]
+		};
+		 myChart_1.setOption(option, true);
+	}
+	Date.prototype.Format = function(fmt) { 
+		var o = {
+			"M+" : this.getMonth() + 1, // 月份
+			"d+" : this.getDate(), // 日
+			"h+" : this.getHours(), // 小时
+			"m+" : this.getMinutes(), // 分
+			"s+" : this.getSeconds(), // 秒
+			"q+" : Math.floor((this.getMonth() + 3) / 3), // 季度
+			"S" : this.getMilliseconds()
+		// 毫秒
+		};
+		if (/(y+)/.test(fmt))
+			fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "")
+					.substr(4 - RegExp.$1.length));
+		for ( var k in o)
+			if (new RegExp("(" + k + ")").test(fmt))
+				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k])
+						: (("00" + o[k]).substr(("" + o[k]).length)));
+		return fmt;
+	};
+</script>
+
+</html>
