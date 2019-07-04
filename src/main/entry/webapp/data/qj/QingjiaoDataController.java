@@ -220,6 +220,10 @@ public class QingjiaoDataController extends BaseController {
 	}
 	
 	
+	public static void main(String[] args) throws Exception {
+		System.out.println(new QingjiaoDataController().getData("0","0C9A"));
+	}
+	
 	/**
 	 * 第三版数据上报格式20190703
 	 * @param data
@@ -266,7 +270,7 @@ public class QingjiaoDataController extends BaseController {
 				log.setSnr(snr);
 				log.setTem(tem);
 				log.setVoltage(bat);
-				log.setType(flag);
+				log.setType(cmd);
 				qjDeviceLogService.save(log);
 			} else if(cmd.equals("69")){
 				cmd = "报警_"+flag;
@@ -291,7 +295,7 @@ public class QingjiaoDataController extends BaseController {
 				String acc_z_min = hexToFloat(data.substring(116,124));
 				String bat =  getData100(data.substring(124, 125), data.substring(124, 128));
 				String tem =  getData100(data.substring(128, 129), data.substring(128, 132));
-				log.setType(flag);
+				log.setType(cmd);
 				log.setBaseAcceX(acc_x);
 				log.setBaseAcceY(acc_y);
 				log.setBaseAcceZ(acc_z);
@@ -319,7 +323,7 @@ public class QingjiaoDataController extends BaseController {
 					for(int i = 0;i<num;i++){
 						start+= i*28;
 						QjDeviceLog log = new QjDeviceLog();
-						log.setType(flag);
+						log.setType(cmd);
 						log.setCreateTime(new Date());
 						log.setTem(getData100(data.substring(start, start+1), data.substring(start, start+4)));
 						log.setBaseAcceX(hexToFloat(data.substring(start+4, start+12)));
