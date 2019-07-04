@@ -293,7 +293,9 @@ public class TelcomCotroller extends BaseController {
 						sendChaozhou(iotCloudLog.getData(),ioTCloudDevice);
 					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_2.0")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
-					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
+					}  else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0")) {
+						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data=" + tModel.getData());
+					}else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
 						String id = iotCloudLog.getData().substring(0, 6);
 						 long dec_num = Long.parseLong(id, 16);  
 						PuzhiJob pz = puzhiJobService.findByMacAndId((int)dec_num,ioTCloudDevice.getMac());
