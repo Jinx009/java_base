@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
+
 import common.helper.StringUtil;
 import database.models.qj.QjDevice;
 import database.models.qj.QjDeviceLog;
@@ -221,7 +223,22 @@ public class QingjiaoDataController extends BaseController {
 	
 	
 	public static void main(String[] args) throws Exception {
-		System.out.println(new QingjiaoDataController().getData("0","0C9A"));
+		String data = "000919060000000148006A0002FD3D3EF3B6463EF3B6463EF3B646FD3D3EF3B6463EF3B6463EF3B646";
+		int num = Integer.valueOf(data.substring(24, 26)).intValue();
+		int start = 26;
+		if(num!=0){
+			for(int i = 0;i<num;i++){
+				start+= i*28;
+				QjDeviceLog log = new QjDeviceLog();
+				log.setType("特么");
+				log.setCreateTime(new Date());
+				log.setTem(new QingjiaoDataController().getData100(data.substring(start, start+1), data.substring(start, start+4)));
+				log.setBaseAcceX(hexToFloat(data.substring(start+4, start+12)));
+				log.setBaseAcceY(hexToFloat(data.substring(start+12, start+20)));
+				log.setBaseAcceZ(hexToFloat(data.substring(start+20, start+28)));
+				System.out.println(JSONObject.toJSONString(log));
+			}
+		}
 	}
 	
 	/**
@@ -319,16 +336,18 @@ public class QingjiaoDataController extends BaseController {
 				cmd = "温度_"+flag;
 				int num = Integer.valueOf(data.substring(24, 26)).intValue();
 				int start = 26;
+				Date date = new Date();
 				if(num!=0){
 					for(int i = 0;i<num;i++){
 						start+= i*28;
 						QjDeviceLog log = new QjDeviceLog();
 						log.setType(cmd);
-						log.setCreateTime(new Date());
+						log.setSnValue(sn);
+						log.setCreateTime(date);
 						log.setTem(getData100(data.substring(start, start+1), data.substring(start, start+4)));
 						log.setBaseAcceX(hexToFloat(data.substring(start+4, start+12)));
-						log.setBaseAcceX(hexToFloat(data.substring(start+12, start+20)));
-						log.setBaseAcceX(hexToFloat(data.substring(start+20, start+28)));
+						log.setBaseAcceY(hexToFloat(data.substring(start+12, start+20)));
+						log.setBaseAcceZ(hexToFloat(data.substring(start+20, start+28)));
 						qjDeviceLogService.save(log);
 					}
 				}
