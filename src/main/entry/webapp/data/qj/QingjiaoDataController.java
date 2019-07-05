@@ -262,13 +262,13 @@ public class QingjiaoDataController extends BaseController {
 				String y = getData(data.substring(54, 55), data.substring(54, 58));
 				String z = getData(data.substring(58, 59), data.substring(58, 62));
 				String bat =  getData100(data.substring(62, 63), data.substring(62, 66));
-				String tem =  getData100(data.substring(66, 67), data.substring(66, 70));
-				String rssi =  data.substring(70, 72);
-				String rsrp = String.valueOf(Double.valueOf(getData(data.substring(72, 73), data.substring(72, 76))) * 1000);
-				String snr = String.valueOf(Double.valueOf(getData(data.substring(76, 77), data.substring(76,80))) * 1000);
-				String pci = String.valueOf(Double.valueOf(getData(data.substring(80, 81), data.substring(80, 84))) * 1000);
-				String hard =  data.substring(84,90);
-				String soft =  data.substring(90,96);
+				String tem =  data.substring(66, 68);
+				String rssi = data.substring(68, 70);
+				String rsrp = String.valueOf(Double.valueOf(getData(data.substring(70,71), data.substring(70,74))));
+				String snr = String.valueOf(Double.valueOf(getData(data.substring(74,75), data.substring(74,78))));
+				String pci = String.valueOf(Double.valueOf(getData(data.substring(78,79), data.substring(78,82))));
+				String hard =  data.substring(82,88);
+				String soft =  data.substring(88,94);
 				QjDeviceLog log = new QjDeviceLog();
 				log.setBaseAcceX(acc_x);
 				log.setBaseAcceY(acc_y);
@@ -311,7 +311,7 @@ public class QingjiaoDataController extends BaseController {
 				String acc_y_min = hexToFloat(data.substring(108,116));
 				String acc_z_min = hexToFloat(data.substring(116,124));
 				String bat =  getData100(data.substring(124, 125), data.substring(124, 128));
-				String tem =  getData100(data.substring(128, 129), data.substring(128, 132));
+				String tem =  data.substring(128, 130);
 				log.setType(cmd);
 				log.setBaseAcceX(acc_x);
 				log.setBaseAcceY(acc_y);
@@ -339,15 +339,15 @@ public class QingjiaoDataController extends BaseController {
 				Date date = new Date();
 				if(num!=0){
 					for(int i = 0;i<num;i++){
-						start+= i*28;
+						start+= i*26;
 						QjDeviceLog log = new QjDeviceLog();
 						log.setType(cmd);
 						log.setSnValue(sn);
 						log.setCreateTime(date);
-						log.setTem(getData100(data.substring(start, start+1), data.substring(start, start+4)));
-						log.setBaseAcceX(hexToFloat(data.substring(start+4, start+12)));
-						log.setBaseAcceY(hexToFloat(data.substring(start+12, start+20)));
-						log.setBaseAcceZ(hexToFloat(data.substring(start+20, start+28)));
+						log.setTem(data.substring(start, start+2));
+						log.setBaseAcceX(hexToFloat(data.substring(start+2, start+10)));
+						log.setBaseAcceY(hexToFloat(data.substring(start+10, start+18)));
+						log.setBaseAcceZ(hexToFloat(data.substring(start+18, start+26)));
 						qjDeviceLogService.save(log);
 					}
 				}
