@@ -95,6 +95,7 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[];
 	})
 	var _d = '';
 	function _getData() {
+		acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[];
 		var mac = $('#mac').val();
 		var date = $('#datepicker').val();
 		var map = [];
@@ -125,187 +126,72 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[];
 		var myChart_1 = echarts.init(document.getElementById('draw_1'),'dark');
 		var colors = ['#5793f3', '#d14a61', '#675bba','#1193f3', '#224a61', '#335bba'];
 		option = {
-		    color: colors,
-		    tooltip: {
-		        trigger: 'none',
-		        axisPointer: {
-		            type: 'cross'
-		        }
-		    },
-		    legend: {
-		        data:['x','y','z','acc_x','acc_y','acc_z']
-		    },
-		    grid: {
-		        top: 70,
-		        bottom: 50
-		    },
-		    xAxis: [
-		        {
-		            type: 'category',
-		            axisTick: {
-		                alignWithLabel: true
-		            },
-		            axisLine: {
-		                onZero: false,
-		                lineStyle: {
-		                    color: colors[1]
-		                }
-		            },
-		            axisPointer: {
-		                label: {
-		                    formatter: function (params) {
-		                        return  'x' + (params.seriesData.length ? '：' + params.seriesData[0].data : ' ') ;
-		                    }
-		                }
-		            },
-		            data: ddate
-		        },
-		        {
-		            type: 'category',
-		            axisTick: {
-		                alignWithLabel: true
-		            },
-		            axisLine: {
-		                onZero: false,
-		                lineStyle: {
-		                    color: colors[0]
-		                }
-		            },
-		            axisPointer: {
-		                label: {
-		                    formatter: function (params) {
-		                        return 'y'+ (params.seriesData.length ? '：' + params.seriesData[0].data : ' ') ;
-		                    }
-		                }
-		            },
-		            data: ddate
-		        },
-		        {
-		            type: 'category',
-		            axisTick: {
-		                alignWithLabel: true
-		            },
-		            axisLine: {
-		                onZero: false,
-		                lineStyle: {
-		                    color: colors[0]
-		                }
-		            },
-		            axisPointer: {
-		                label: {
-		                    formatter: function (params) {
-		                        return 'z'+ (params.seriesData.length ? '：' + params.seriesData[0].data : ' ') ;
-		                    }
-		                }
-		            },
-		            data: ddate
-		        },
-		        {
-		            type: 'category',
-		            axisTick: {
-		                alignWithLabel: true
-		            },
-		            axisLine: {
-		                onZero: false,
-		                lineStyle: {
-		                    color: colors[0]
-		                }
-		            },
-		            axisPointer: {
-		                label: {
-		                    formatter: function (params) {
-		                        return 'acc_x'+  (params.seriesData.length ? '：' + params.seriesData[0].data : ' ') ;
-		                    }
-		                }
-		            },
-		            data: ddate
-		        },
-		        {
-		            type: 'category',
-		            axisTick: {
-		                alignWithLabel: true
-		            },
-		            axisLine: {
-		                onZero: false,
-		                lineStyle: {
-		                    color: colors[0]
-		                }
-		            },
-		            axisPointer: {
-		                label: {
-		                    formatter: function (params) {
-		                        return 'acc_y'+  (params.seriesData.length ? '：' + params.seriesData[0].data : ' ') ;
-		                    }
-		                }
-		            },
-		            data: ddate
-		        },
-		        {
-		            type: 'category',
-		            axisTick: {
-		                alignWithLabel: true
-		            },
-		            axisLine: {
-		                onZero: false,
-		                lineStyle: {
-		                    color: colors[0]
-		                }
-		            },
-		            axisPointer: {
-		                label: {
-		                    formatter: function (params) {
-		                        return 'acc_z'+  (params.seriesData.length ? '：' + params.seriesData[0].data : ' ') ;
-		                    }
-		                }
-		            },
-		            data: ddate
-		        }
-		    ],
-		    yAxis: [
-		        {
-		            type: 'value'
-		        }
-		    ],
-		    series: [
-		        {
-		            name:'x',
-		            type:'line',
-		            xAxisIndex: 1,
-		            smooth: true,
-		            data:x
-		        },
-		        {
-		            name:'y',
-		            type:'line',
-		            smooth: true,
-		            data:y
-		        },
-		        {
-		            name:'z',
-		            type:'line',
-		            smooth: true,
-		            data:z
-		        },
-		        {
-		            name:'acc_x',
-		            type:'line',
-		            smooth: true,
-		            data:acc_x
-		        },
-		        {
-		            name:'acc_y',
-		            type:'line',
-		            smooth: true,
-		            data:acc_y
-		        },
-		        {
-		            name:'acc_z',
-		            type:'line',
-		            smooth: true,
-		            data:acc_z
-		        }
-		    ]
-		};
+			    title: {
+			        text: 'Step Line'
+			    },
+			    tooltip: {
+			        trigger: 'axis'
+			    },
+			    legend: {
+			        data:['x', 'y', 'z','加速度x','加速度y','加速度z']
+			    },
+			    grid: {
+			        left: '3%',
+			        right: '4%',
+			        bottom: '3%',
+			        containLabel: true
+			    },
+			    toolbox: {
+			        feature: {
+			            saveAsImage: {}
+			        }
+			    },
+			    xAxis: {
+			        type: 'category',
+			        data: ddate
+			    },
+			    yAxis: {
+			        type: 'value'
+			    },
+			    series: [
+			        {
+			            name:'x',
+			            type:'line',
+			            step: 'x',
+			            data:x
+			        },
+			        {
+			            name:'y',
+			            type:'line',
+			            step: 'y',
+			            data:y
+			        },
+			        {
+			            name:'z',
+			            type:'line',
+			            step: 'z',
+			            data:z
+			        },
+			        {
+			            name:'加速度x',
+			            type:'line',
+			            step: '加速度x',
+			            data:acc_x
+			        },
+			        {
+			            name:'加速度y',
+			            type:'line',
+			            step: '加速度y',
+			            data:acc_y
+			        },
+			        {
+			            name:'加速度z',
+			            type:'line',
+			            step: '加速度z',
+			            data:acc_z
+			        }
+			    ]
+			};
 		 myChart_1.setOption(option, true);
 	}
 	Date.prototype.Format = function(fmt) { 
