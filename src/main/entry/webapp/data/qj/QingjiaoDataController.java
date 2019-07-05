@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
 
 import common.helper.StringUtil;
 import database.models.qj.QjDevice;
@@ -223,22 +222,23 @@ public class QingjiaoDataController extends BaseController {
 	
 	
 	public static void main(String[] args) throws Exception {
-		String data = "000919060000000148006A0002FD3D3EF3B6463EF3B6463EF3B646FD3D3EF3B6463EF3B6463EF3B646";
-		int num = Integer.valueOf(data.substring(24, 26)).intValue();
-		int start = 26;
-		if(num!=0){
-			for(int i = 0;i<num;i++){
-				start+= i*28;
-				QjDeviceLog log = new QjDeviceLog();
-				log.setType("特么");
-				log.setCreateTime(new Date());
-				log.setTem(new QingjiaoDataController().getData100(data.substring(start, start+1), data.substring(start, start+4)));
-				log.setBaseAcceX(hexToFloat(data.substring(start+4, start+12)));
-				log.setBaseAcceY(hexToFloat(data.substring(start+12, start+20)));
-				log.setBaseAcceZ(hexToFloat(data.substring(start+20, start+28)));
-				System.out.println(JSONObject.toJSONString(log));
-			}
-		}
+//		String data = "000919060000000148006A0002FD3D3EF3B6463EF3B6463EF3B646FD3D3EF3B6463EF3B6463EF3B646";
+//		int num = Integer.valueOf(data.substring(24, 26)).intValue();
+//		int start = 26;
+//		if(num!=0){
+//			for(int i = 0;i<num;i++){
+//				start+= i*28;
+//				QjDeviceLog log = new QjDeviceLog();
+//				log.setType("特么");
+//				log.setCreateTime(new Date());
+//				log.setTem(new QingjiaoDataController().getData100(data.substring(start, start+1), data.substring(start, start+4)));
+//				log.setBaseAcceX(hexToFloat(data.substring(start+4, start+12)));
+//				log.setBaseAcceY(hexToFloat(data.substring(start+12, start+20)));
+//				log.setBaseAcceZ(hexToFloat(data.substring(start+20, start+28)));
+//				System.out.println(JSONObject.toJSONString(log));
+//			}
+//		}
+		System.out.println(Integer.parseInt("16",16));
 	}
 	
 	/**
@@ -262,13 +262,13 @@ public class QingjiaoDataController extends BaseController {
 				String y = getData(data.substring(54, 55), data.substring(54, 58));
 				String z = getData(data.substring(58, 59), data.substring(58, 62));
 				String bat =  getData100(data.substring(62, 63), data.substring(62, 66));
-				String tem =  data.substring(66, 68);
-				String rssi = data.substring(68, 70);
-				String rsrp = String.valueOf(Double.valueOf(getData(data.substring(70,71), data.substring(70,74))));
-				String snr = String.valueOf(Double.valueOf(getData(data.substring(74,75), data.substring(74,78))));
-				String pci = String.valueOf(Double.valueOf(getData(data.substring(78,79), data.substring(78,82))));
-				String hard =  data.substring(82,88);
-				String soft =  data.substring(88,94);
+				String tem =  String.valueOf(Integer.parseInt(data.substring(66, 68),16));
+				String rssi = String.valueOf(Integer.parseInt(data.substring(68, 70),16));
+				String rsrp = String.valueOf(Double.valueOf(getDataBase(data.substring(70,71), data.substring(70,74))));
+				String snr = String.valueOf(Double.valueOf(getDataBase(data.substring(74,75), data.substring(74,78))));
+				String pci = String.valueOf(Double.valueOf(getDataBase(data.substring(78,79), data.substring(78,82))));
+				String hard =  data.substring(82,94);
+				String soft =  data.substring(94,106);
 				QjDeviceLog log = new QjDeviceLog();
 				log.setBaseAcceX(acc_x);
 				log.setBaseAcceY(acc_y);
@@ -311,7 +311,7 @@ public class QingjiaoDataController extends BaseController {
 				String acc_y_min = hexToFloat(data.substring(108,116));
 				String acc_z_min = hexToFloat(data.substring(116,124));
 				String bat =  getData100(data.substring(124, 125), data.substring(124, 128));
-				String tem =  data.substring(128, 130);
+				String tem =  String.valueOf(Integer.parseInt(data.substring(128, 130),16));
 				log.setType(cmd);
 				log.setBaseAcceX(acc_x);
 				log.setBaseAcceY(acc_y);
@@ -344,7 +344,7 @@ public class QingjiaoDataController extends BaseController {
 						log.setType(cmd);
 						log.setSnValue(sn);
 						log.setCreateTime(date);
-						log.setTem(data.substring(start, start+2));
+						log.setTem(String.valueOf(Integer.parseInt(data.substring(start, start+2),16)));
 						log.setBaseAcceX(hexToFloat(data.substring(start+2, start+10)));
 						log.setBaseAcceY(hexToFloat(data.substring(start+10, start+18)));
 						log.setBaseAcceZ(hexToFloat(data.substring(start+18, start+26)));
