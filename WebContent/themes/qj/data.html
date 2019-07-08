@@ -85,7 +85,7 @@
 <script src="js/base.js"></script>
 <script src="https://cdn.bootcss.com/echarts/3.8.0/echarts.min.js"></script>
 <script type="text/javascript">
-var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[];
+var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 	$(function() {
 		$('#datepicker').val(new Date().Format('yyyy-MM-dd'));
 		laydate.render({
@@ -95,7 +95,7 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[];
 	})
 	var _d = '';
 	function _getData() {
-		acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[];
+		acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 		var mac = $('#mac').val();
 		var date = $('#datepicker').val();
 		var map = [];
@@ -109,12 +109,13 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[];
 				for(var i = res.data.length-1;i>=0;i--){
 					res.data[i].createTime = jsDateTime(res.data[i].createTime);
 					if(res.data[i].baseX!=''&&res.data[i].baseAcceX!=''){
-						acc_x.push(res.data[i].baseAcceX.split('/')[0]);
-						acc_y.push(res.data[i].baseAcceY.split('/')[0]);
-						acc_z.push(res.data[i].baseAcceZ.split('/')[0]);
+						acc_x.push(parseInt(res.data[i].baseAcceX.split('/')[0])/10000);
+						acc_y.push(parseInt(res.data[i].baseAcceY.split('/')[0])/10000);
+						acc_z.push(parseInt(res.data[i].baseAcceZ.split('/')[0])/10000);
 						x.push(res.data[i].baseX);
 						y.push(res.data[i].baseY);
 						z.push(res.data[i].baseZ);
+						tem.push(parseInt(res.data[i].tem)/1000);
 						ddate.push(res.data[i].createTime)
 					}
 				}
@@ -124,7 +125,7 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[];
 	}
 	function _draw(){
 		var myChart_1 = echarts.init(document.getElementById('draw_1'),'dark');
-		var colors = ['#5793f3', '#d14a61', '#675bba','#1193f3', '#224a61', '#335bba'];
+		var colors = ['#5793f3', '#d14a61', '#675bba','#1193f3', '#224a61', '#335bba','#FFF'];
 		option = {
 			    title: {
 			        text: 'Step Line'
@@ -133,7 +134,7 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[];
 			        trigger: 'axis'
 			    },
 			    legend: {
-			        data:['x', 'y', 'z','加速度x','加速度y','加速度z']
+			        data:['x', 'y', 'z','加速度x','加速度y','加速度z','温度']
 			    },
 			    grid: {
 			        left: '3%',
@@ -157,38 +158,37 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[];
 			        {
 			            name:'x',
 			            type:'line',
-			            step: 'x',
 			            data:x
 			        },
 			        {
 			            name:'y',
 			            type:'line',
-			            step: 'y',
 			            data:y
 			        },
 			        {
 			            name:'z',
 			            type:'line',
-			            step: 'z',
 			            data:z
 			        },
 			        {
 			            name:'加速度x',
 			            type:'line',
-			            step: '加速度x',
 			            data:acc_x
 			        },
 			        {
 			            name:'加速度y',
 			            type:'line',
-			            step: '加速度y',
 			            data:acc_y
 			        },
 			        {
 			            name:'加速度z',
 			            type:'line',
-			            step: '加速度z',
 			            data:acc_z
+			        },
+			        {
+			            name:'温度',
+			            type:'line',
+			            data:tem
 			        }
 			    ]
 			};
