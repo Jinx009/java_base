@@ -20,8 +20,6 @@ function _getData(){
 						_zyq.push(res.data[i]);
 					}else if(res.data[i].type==2){
 						_sfq.push(res.data[i]);
-					}else if(res.data[i].type==3){
-						_yy.push(res.data[i]);
 					}else if(res.data[i].type==4){
 						_js.push(res.data[i]);
 					}

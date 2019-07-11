@@ -59,11 +59,9 @@
 										class="form-control select2 select2-hidden-accessible"
 										style="width: 100%;" tabindex="-1" aria-hidden="true">
 										<option value="0">全部类型</option>
-										<option value="1">潜水教练</option>
-										<option value="2">游泳教练</option>
-										<option value="3">水肺潜会员</option>
-										<option value="4">自由潜水会员</option>
-										<option value="5">未分级账号</option>
+										<option value="1">教练</option>
+										<option value="2">会员</option>
+										<option value="3">散客</option>
 									</select>
 								</div>
 							</div>
@@ -111,26 +109,20 @@
 											<td v-text="item.name"></td>
 											<td>
 												<button style="width: 100px;" v-if="1===item.type"
-													class="btn btn-success btn-xs">潜水教练</button>
+													class="btn btn-success btn-xs">教练</button>
 												<button style="width: 100px;" v-if="2===item.type"
-													class="btn btn-success btn-xs">游泳教练</button>
+													class="btn btn-success btn-xs">会员</button>
 												<button style="width: 100px;" v-if="3===item.type"
-													class="btn btn-success btn-xs">水肺潜会员</button>
-												<button style="width: 100px;" v-if="4===item.type"
-													class="btn btn-success btn-xs">自由潜水会员</button>
-												<button style="width: 100px;" v-if="5===item.type"
-													class="btn btn-success btn-xs">未分级账号</button>
+													class="btn btn-success btn-xs">散客</button>
 											</td>
 											<td v-text="item.remarkB"></td>
 											<td v-text="item.desc">
 											<td><select v-bind:id="'type_'+item.id"
 												class="form-control select2 select2-hidden-accessible input-sm"
 												style="width: 100%;" tabindex="-1" aria-hidden="true">
-													<option value="1">潜水教练</option>
-													<option value="2">游泳教练</option>
-													<option value="3">水肺潜会员</option>
-													<option value="4">自由潜水会员</option>
-													<option value="5">未分级账号</option>
+													<option value="1">教练</option>
+													<option value="2">会员</option>
+													<option value="3">散客</option>
 											</select></td>
 											<td v-text="item.createTime"></td>
 											<td>
@@ -182,11 +174,9 @@
 					</div>
 					<div class="form-group">
 						<label for="">用户类型</label> <select class="form-control" id="_type">
-							<option value="1">潜水教练</option>
-							<option value="2">游泳教练</option>
-							<option value="3">水肺潜会员</option>
-							<option value="4">自由潜水会员</option>
-							<option value="5">未分级账号</option>
+							<option value="1">教练</option>
+							<option value="2">会员</option>
+							<option value="3">散客</option>
 						</select>
 					</div>
 					<div class="form-group">

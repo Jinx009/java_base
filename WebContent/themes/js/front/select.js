@@ -9,6 +9,11 @@ $(function() {
 	if (type == 3) {
 		$('#type').val('18:00至22:00');
 	}
+	var _userType = getLocalStorage('type');
+	if(1==_userType){
+		$('#jl').show();
+		$('#jl_type').hide();
+	}
 	_getData();
 })
 function _getData() {
@@ -24,6 +29,9 @@ function _getData() {
 		dataType : 'json',
 		success : function(res) {
 			if ('200' == res.code) {
+				_tArry[1] = parseInt(res.data.zyq);
+				_tArry[2] = parseInt(res.data.sfq);
+				_tArry[4] = parseInt(res.data.js);
 				if (res.data.zyq == '0') {
 					$('#zyq').removeClass('button-warning');
 					$('#zyq').addClass('disabled');
@@ -35,12 +43,6 @@ function _getData() {
 					$('#sfq').addClass('disabled');
 				} else {
 					$('#sfq').attr('onclick', '_setType("sfq")');
-				}
-				if (res.data.yx == '0') {
-					$('#yx').removeClass('button-warning');
-					$('#yx').addClass('disabled');
-				} else {
-					$('#yx').attr('onclick', '_setType("yx")');
 				}
 				if (res.data.js == '0') {
 					$('#js').removeClass('button-warning');
@@ -58,46 +60,49 @@ function _save(){
 		    content: '您没有任何可选科目！'
 		    ,btn: '好'
 		  });
+	}else{
+		var dateStr = $('#_dateStr').val();
+		var _userId = getLocalStorage('userId');
+		var _type = $('#_type').val();
+		var _userType = getLocalStorage('type');
+		var num = $('#num').val();
+		var jlNum = $('#jl_num').val();
+		var remark = $('#remark').val();
+		var _params = 'userId=' + _userId + '&userType=' + _userType + '&orderDate='
+		+ dateStr + '&orderTime=' + _type+'&num='+num+'&reamrk='+remark+'&type='+_t+'&jlNum='+jlNum;
+		var _num_ = _tArry[_t]-parseInt(jlNum)-parseInt(num);
+		if(_num_<0&&_t!=4){
+			layer.open({
+				content:'超过剩余人数上限：'+_tArry[_t],
+				btn:'好'
+			})
+		}else{
+			 $.ajax({
+				   url:'/d/order/save',
+				   data:_params,
+				   dataType:'json',
+				   type:'post',
+				   success:function(res){
+					   if('200'==res.code){
+							   location.href = '/f/p/pro_order';
+					   }else{
+						   layer.open({
+							   content:res.msg,
+							   btn:'好'
+						   })
+					   }
+				   }
+			   })
+		}
 	}
-	var dateStr = $('#_dateStr').val();
-	var _userId = getLocalStorage('userId');
-	var _type = $('#_type').val();
-	var _userType = getLocalStorage('type');
-	var num = $('#num').val();
-	var remark = $('#remark').val();
-	var _params = 'userId=' + _userId + '&userType=' + _userType + '&orderDate='
-	+ dateStr + '&orderTime=' + _type+'&num='+num+'&reamrk='+remark+'&type='+_t;
-	 $.ajax({
-		   url:'/d/order/save',
-		   data:_params,
-		   dataType:'json',
-		   type:'post',
-		   success:function(res){
-			   if('200'==res.code){
-//				   layer.open({
-//					   content:'预约成功！',
-//					   btn:'好'
-//				   })
-				   location.href = '/f/p/pro_order';
-			   }else{
-				   layer.open({
-					   content:res.msg,
-					   btn:'好'
-				   })
-			   }
-		   }
-	   })
 }
-var _t = '';
+var _t = '',_tArry = [];
 function _setType(type){
 	if('zyq'==type){
 		_t = 1;
 	}
 	if('sfq'==type){
 		_t = 2;
-	}
-	if('yx'==type){
-		_t = 3;
 	}
 	if('js'==type){
 		_t = 4;

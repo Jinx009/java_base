@@ -1,6 +1,11 @@
 package database.basicFunctions.dao.project;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -119,6 +124,54 @@ public class ProOrderDao extends  BaseDao<ProOrder>{
 		queryParam.addParam("orderTime", time);
 		queryParam.addParam("orderDate", dateStr);
 		return findByCriteria(queryParam);
+	}
+
+	public int findOrderNum(String orderDate, String orderTime) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("orderTime", orderTime);
+		queryParam.addParam("type", 2);
+		queryParam.addParam("orderDate", orderDate);
+		List<ProOrder> list = findByCriteria(queryParam);
+		QueryParam queryParam2 = QueryParam.getInstance();
+		queryParam2.addParam("orderTime", orderTime);
+		queryParam2.addParam("type", 1);
+		queryParam2.addParam("orderDate", orderDate);
+		List<ProOrder> list2= findByCriteria(queryParam2);
+		int num1 = 0;
+		int num2 = 0;
+		if(list!=null&&!list.isEmpty()){
+			for(ProOrder order : list){
+				num1+= order.getJlNum();
+				num1+= order.getNum();
+			}
+		}
+		if(list2!=null&&!list2.isEmpty()){
+			for(ProOrder order : list2){
+				num2+= order.getJlNum();
+				num2+= order.getNum();
+			}
+		}
+		
+		return getDateStatus(orderDate,orderTime)- num1-num2;
+	}
+	
+	public static int getDateStatus(String orderDate,String orderTime){
+		try {
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	        Calendar ca = Calendar.getInstance();
+	        Date d = df.parse(orderDate);
+	        ca.setTime(d);//设置当前时间
+	        if(ca.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY && ca.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&"夜间".equals(orderTime)){
+	        	return 10;
+	        }
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+       return 25;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(getDateStatus("2019-07-13", "夜间"));
 	}
 	
 }

@@ -45,6 +45,8 @@ public class ProOrder {
 	private String orderDate;
 	@Column(name = "num")
 	private Integer num;
+	@Column(name = "jl_num")
+	private Integer jlNum;
 	@Column(name = "real_num")
 	private Integer realNum;
 	@Column(name = "money")

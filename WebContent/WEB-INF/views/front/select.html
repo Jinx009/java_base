@@ -30,8 +30,8 @@
 								时间<font>&nbsp;</font>
 							</div>
 							<div class="item-input">
-								<input type="text" style="font-size: 15px;" id="type"
-									value="" readonly="readonly">
+								<input type="text" style="font-size: 15px;" id="type" value=""
+									readonly="readonly">
 							</div>
 						</div>
 					</div>
@@ -43,25 +43,48 @@
 						</div>
 						<div class="item-inner">
 							<div class="item-title label" style="font-size: 15px;">
-								参与人数<font style="color: red;">&nbsp;*</font>
+								随行人数<font style="color: red;">&nbsp;*</font>
 							</div>
 							<div class="item-input">
-								<input type="text" style="font-size: 15px;" id="num" onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();" 
-									placeholder="请输入随行人数" value="0">
+								<input type="text" style="font-size: 15px;" id="num"
+									onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+									onblur="this.v();" placeholder="请输入随行人数" value="0">
 							</div>
 						</div>
 					</div>
 				</li>
-						<li>
+				<li id="jl"  style="display: none;" >
+				<div class="item-content" >
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title label" style="font-size: 15px;">
+								教练人数<font style="color: red;">&nbsp;*</font>
+							</div>
+							<div class="item-input">
+								<input type="text" style="font-size: 15px;" id="jl_num"
+									onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
+									onblur="this.v();" placeholder="请输入教练人数" value="0">
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
 					<div class="item-content">
 						<div class="item-media">
 							<i class="icon icon-form-name"></i>
 						</div>
 						<div class="item-inner">
-							 <p><a href="#" class="button bb button-warning" id="zyq">自由潜</a></p>
-							 <p><a href="#" class="button bb  button-warning" id="sfq">水肺潜</a></p>
-							 <p><a href="#" class="button  bb button-warning" id="yx">&nbsp;&nbsp;游泳&nbsp;&nbsp;</a></p>
-							 <p><a href="#" class="button bb  button-warning" id="js">&nbsp;&nbsp;教室&nbsp;&nbsp;</a></p>
+							<p>
+								<a href="#" class="button bb button-warning" id="zyq">自由潜</a>
+							</p>
+							<p>
+								<a href="#" class="button bb  button-warning" id="sfq">水肺潜</a>
+							</p>
+							<p>
+								<a href="#" class="button bb  button-warning" id="js">&nbsp;&nbsp;教室&nbsp;&nbsp;</a>
+							</p>
 						</div>
 					</div>
 				</li>
@@ -83,11 +106,26 @@
 				</li>
 			</ul>
 		</div>
-		<p><a href="#" class="button button-success" onclick="_save()">确认预约</a></p>
+		  <div class="card" style="background: #eeeeee;">
+			<div class="card-content">
+				<div class="card-content-inner" style="color: red; font-size: 12px;">
+					水肺价格：工作日258元/场，周末328元/场。<br>
+					自由潜价格：工作日188元/场，周末328元/场。<br>
+					<font id="jl_type" >每场2小时，可在该时段任选两小时。<br></font>
+					*如需预约双瓶，请备注。<br>
+					*预约如有变动，请务必提前1天修改。<br>
+					*客服联系电话：18116351992<br>
+					*营业时间：每天10:00-22:00<br>
+				</div>
+			</div>
+		</div>
+		<p>
+			<a href="#" class="button button-success" onclick="_save()">确认预约</a>
+		</p>
 		<div style="height: 30px;"></div>
 	</div>
 </div>
 
 <script src="/themes/js/front/base.js?_v=0.04"></script>
-<script src="/themes/js/front/select.js?_v=1.18"></script>
+<script src="/themes/js/front/select.js?_v=1.148"></script>
 <#include "m_footer.html">

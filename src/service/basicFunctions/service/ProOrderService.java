@@ -47,7 +47,7 @@ public class ProOrderService {
 		}
 	}
 
-	public void save(String orderDate, Integer type, Integer userId, Integer userType, Integer num, String remark, Integer orderTime2) {
+	public void save(String orderDate, Integer type, Integer userId, Integer userType, Integer num, String remark, Integer orderTime2, Integer jlNum) {
 		String orderTime = "上午";
 		if (orderTime2 == 2) {
 			orderTime = "下午";
@@ -58,19 +58,13 @@ public class ProOrderService {
 		String _userType = "普通账户";
 		ProUser proUser = proUserDao.find(userId);
 		if (proUser.getType() == 1) {
-			_userType = "潜水教练";
+			_userType = "教练";
 		}
 		if (proUser.getType() == 2) {
-			_userType = "游泳教练";
+			_userType = "会员";
 		}
 		if (proUser.getType() == 3) {
-			_userType = "水肺潜水会员";
-		}
-		if (proUser.getType() == 4) {
-			_userType = "自由潜会员";
-		}
-		if (proUser.getType() == 5) {
-			_userType = "未分级账号";
+			_userType = "散客";
 		}
 
 		ProOrder proOrder = new ProOrder();
@@ -85,6 +79,7 @@ public class ProOrderService {
 		proOrder.setStatus(0);
 		proOrder.setType(type);
 		proOrder.setUserId(userId);
+		proOrder.setJlNum(jlNum);
 		proOrder.setUserType(_userType);
 		proOrder.setRemark(remark);
 		proOrderDao.save(proOrder);
@@ -104,6 +99,10 @@ public class ProOrderService {
 
 	public List<ProOrder> findOrderByTime(String dateStr, String time) {
 		return proOrderDao.findOrderByTime(dateStr, time);
+	}
+
+	public int findOrderNum(String orderDate, String orderTime) {
+		return proOrderDao.findOrderNum(orderDate,orderTime);
 	}
 
 }

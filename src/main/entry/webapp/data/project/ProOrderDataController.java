@@ -12,13 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import database.models.project.ProOrder;
-import database.models.project.ProPhoto;
-import database.models.project.ProSwimSwitch;
 import database.models.project.ProSwitch;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.service.ProOrderService;
-import service.basicFunctions.service.ProPhotoService;
-import service.basicFunctions.service.ProSwimSwitchService;
 import service.basicFunctions.service.ProSwitchService;
 import utils.Resp;
 
@@ -31,11 +27,7 @@ public class ProOrderDataController extends BaseController {
 	@Autowired
 	private ProOrderService proOrderService;
 	@Autowired
-	private ProSwimSwitchService proSwimSwitchService;
-	@Autowired
 	private ProSwitchService proSwitchService;
-	@Autowired
-	private ProPhotoService proPhotoService;
 
 	@RequestMapping(path = "/pageList")
 	@ResponseBody
@@ -73,7 +65,7 @@ public class ProOrderDataController extends BaseController {
 	 */
 	@RequestMapping(path = "/save")
 	@ResponseBody
-	public Resp<?> save(String orderDate, Integer type, Integer userId, Integer userType, Integer num,String remark,Integer orderTime) {
+	public Resp<?> save(String orderDate, Integer type, Integer userId, Integer userType, Integer num,String remark,Integer orderTime,Integer jlNum) {
 		Resp<?> resp = new Resp<>(true);
 		try {
 			String time = "";
@@ -91,7 +83,7 @@ public class ProOrderDataController extends BaseController {
 				resp.setMsg("不能重复预定！");
 				return resp;
 			}
-			proOrderService.save(orderDate,type, userId, userType,  num, remark,  orderTime);
+			proOrderService.save(orderDate,type, userId, userType,  num, remark,  orderTime,jlNum);
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}", e);
@@ -111,61 +103,6 @@ public class ProOrderDataController extends BaseController {
 		return resp;
 	}
 
-	// @RequestMapping(path = "/getStatus")
-	// @ResponseBody
-	// public Resp<?> getStatus(String date,Integer type,String userId){
-	// Resp<?> resp = new Resp<>(true);
-	// try {
-	// Integer a = proOrderService.getStatus(date,type,userId,"上午");
-	// Integer b = proOrderService.getStatus(date,type,userId,"下午");
-	// Integer c = proOrderService.getStatus(date,type,userId,"夜间");
-	// Map<String, Integer> map = new HashMap<String,Integer>();
-	// map.put("a",a);
-	// map.put("b",b);
-	// map.put("c",c);
-	// return new Resp<>(map);
-	// } catch (Exception e) {
-	// log.error("error:{}",e);
-	// }
-	// return resp;
-	// }
-
-	// @RequestMapping(path = "/getSwimmingStatus")
-	// @ResponseBody
-	// public Resp<?> getSwimmingStatus(String date,Integer type,String userId){
-	// Resp<?> resp = new Resp<>(true);
-	// try {
-	// Integer a =
-	// proOrderService.getStatus(date,type,userId,"09:00:00~10:30:00");
-	// Integer b =
-	// proOrderService.getStatus(date,type,userId,"10:30:00~12:00:00");
-	// Integer c =
-	// proOrderService.getStatus(date,type,userId,"12:00:00~13:30:00");
-	// Integer d =
-	// proOrderService.getStatus(date,type,userId,"13:30:00~15:00:00");
-	// Integer e =
-	// proOrderService.getStatus(date,type,userId,"15:00:00~16:30:00");
-	// Integer f =
-	// proOrderService.getStatus(date,type,userId,"16:30:00~18:00:00");
-	// Integer g =
-	// proOrderService.getStatus(date,type,userId,"18:00:00~19:30:00");
-	// Integer h =
-	// proOrderService.getStatus(date,type,userId,"19:30:00~21:00:00");
-	// Map<String, Integer> map = new HashMap<String,Integer>();
-	// map.put("a",a);
-	// map.put("b",b);
-	// map.put("c",c);
-	// map.put("d",d);
-	// map.put("e",e);
-	// map.put("f",f);
-	// map.put("g",g);
-	// map.put("h",h);
-	// return new Resp<>(map);
-	// } catch (Exception e) {
-	// log.error("error:{}",e);
-	// }
-	// return resp;
-	// }
 
 	@RequestMapping(path = "/base")
 	@ResponseBody
@@ -177,7 +114,6 @@ public class ProOrderDataController extends BaseController {
 		map.put("yj", "1");
 		try {
 			ProSwitch proSwitch = proSwitchService.findByDateStr(dateStr, 1);
-			ProPhoto proPhoto = proPhotoService.findByDateStr(dateStr,1);
 			if(proSwitch!=null){
 				map.put("sw", "#|"+proSwitch.getReason());
 			}else{
@@ -195,31 +131,30 @@ public class ProOrderDataController extends BaseController {
 							sf+= proOrder.getNum();
 						}
 						if(proOrder.getType()==4){
-							js+= proOrder.getNum();
+							js+= 1;
 						}
 					}
 				}
 				str+= "水肺潜水：<font style='color:red;' >"+sf+"</font>人|";
+				str+= "自由潜水：<font style='color:red;' >"+zy+"</font>人|";
 				if(js<1){
 					str+= "教室A：可预订|";
 				}else{
 					str+= "教室A：<font style='color:red;' >已预订</font>|";
 				}
-				str+= "自由潜水：<font style='color:red;' >"+zy+"</font>人|";
 				if(js<2){
 					str+= "教室B：可预订|";
 				}else{
 					str+= "教室B：<font style='color:red;' >已预订</font>|";
 				}
-				if(proPhoto!=null){
-					str+= "水下摄像：已预订";
+				if(js<3){
+					str+= "教室C：可预订|";
 				}else{
-					str+= "水下摄像：可预订";
+					str+= "教室C：<font style='color:red;' >已预订</font>|";
 				}
 				map.put("sw", str);
 			}
 			proSwitch = proSwitchService.findByDateStr(dateStr, 2);
-			proPhoto = proPhotoService.findByDateStr(dateStr,2);
 			if(proSwitch!=null){
 				map.put("xw", "#|"+proSwitch.getReason());
 			}else{
@@ -237,31 +172,30 @@ public class ProOrderDataController extends BaseController {
 							sf+= proOrder.getNum();
 						}
 						if(proOrder.getType()==4){
-							js+= proOrder.getNum();
+							js+= 1;
 						}
 					}
 				}
 				str+= "水肺潜水：<font style='color:red;' >"+sf+"</font>人|";
+				str+= "自由潜水：<font style='color:red;' >"+zy+"</font>人|";
 				if(js<1){
 					str+= "教室A：可预订|";
 				}else{
 					str+= "教室A：<font style='color:red;' >已预订</font>|";
 				}
-				str+= "自由潜水：<font style='color:red;' >"+zy+"</font>人|";
 				if(js<2){
 					str+= "教室B：可预订|";
 				}else{
 					str+= "教室B：<font style='color:red;' >已预订</font>|";
 				}
-				if(proPhoto!=null){
-					str+= "水下摄像：已预订";
+				if(js<3){
+					str+= "教室C：可预订|";
 				}else{
-					str+= "水下摄像：可预订";
+					str+= "教室C：<font style='color:red;' >已预订</font>|";
 				}
 				map.put("xw", str);
 			}
 			proSwitch = proSwitchService.findByDateStr(dateStr, 3);
-			proPhoto = proPhotoService.findByDateStr(dateStr,3);
 			if(proSwitch!=null){
 				map.put("yj", "#|"+proSwitch.getReason());
 			}else{
@@ -279,32 +213,26 @@ public class ProOrderDataController extends BaseController {
 							sf+= proOrder.getNum();
 						}
 						if(proOrder.getType()==4){
-							js+= proOrder.getNum();
+							js+= 1;
 						}
 					}
 				}
 				str+= "水肺潜水：<font style='color:red;' >"+sf+"</font>人|";
+				str+= "自由潜水：<font style='color:red;' >"+zy+"</font>人|";
 				if(js<1){
 					str+= "教室A：可预订|";
 				}else{
 					str+= "教室A：<font style='color:red;' >已预订</font>|";
 				}
-				str+= "自由潜水：<font style='color:red;' >"+zy+"</font>人|";
 				if(js<2){
 					str+= "教室B：可预订|";
 				}else{
 					str+= "教室B：<font style='color:red;' >已预订</font>|";
 				}
-				if(proPhoto!=null){
-					str+= "水下摄像：已预订|";
+				if(js<3){
+					str+= "教室C：可预订|";
 				}else{
-					str+= "水下摄像：可预订|";
-				}
-				ProSwimSwitch proSwimSwitch = proSwimSwitchService.findByDateStr(dateStr);
-				if(proSwimSwitch!=null){
-					str+= "游泳大班不可预订";
-				}else{
-					str+= "游泳大班对外开放";
+					str+= "教室C：<font style='color:red;' >已预订</font>|";
 				}
 				map.put("yj", str);
 			}
@@ -327,69 +255,53 @@ public class ProOrderDataController extends BaseController {
 	@RequestMapping(path = "/getButtons")
 	@ResponseBody
 	public Resp<?> getButtons(Integer userId, String orderDate, String orderTime, String userType) {
+		if(orderTime.equals("1")) {
+			orderTime = "上午";
+		}
+		if(orderTime.equals("2")) {
+			orderTime = "下午";
+		}
+		if(orderTime.equals("3")) {
+			orderTime = "夜间";
+		}
 		Resp<?> resp = new Resp<>(false);
 		Map<String, String> map = new HashMap<>();
-		map.put("zyq", "0");
-		map.put("sfq", "0");
-		map.put("yx", "0");
-		map.put("js", "0");
 		try {
-			if ("5".equals(userType)) {
-				return new Resp<>(map);
-			} 
-			if ("4".equals(userType)) {
-				map.put("zyq", "1");
-				List<ProOrder> list = proOrderService.findOrder(userId, orderDate, orderTime, 1);
-				if (list != null && !list.isEmpty()) {
+			if ("3".equals(userType)||"2".equals(userType)) {//散客和会员
+				List<ProOrder> zy = proOrderService.findOrder(userId, orderDate, orderTime, 1);
+				List<ProOrder> sf = proOrderService.findOrder(userId, orderDate, orderTime, 2);
+				int num = proOrderService.findOrderNum(orderDate, orderTime);
+				map.put("js", "0");//0无权
+				map.put("zyq", String.valueOf(num));
+				map.put("sfq", String.valueOf(num));
+				if(zy!=null&&!zy.isEmpty()){//已预约无权
 					map.put("zyq", "0");
 				}
-				return new Resp<>(map);
-			} 
-			if ("3".equals(userType)) {
-				map.put("sfq", "1");
-				List<ProOrder> list = proOrderService.findOrder(userId, orderDate, orderTime, 2);
-				if (list != null && !list.isEmpty()) {
+				if(sf!=null&&!sf.isEmpty()){
 					map.put("sfq", "0");
 				}
 				return new Resp<>(map);
 			} 
-			if ("2".equals(userType)) {
-				map.put("yx", "1");
-				List<ProOrder> list = proOrderService.findOrder(userId, orderDate, orderTime, 3);
+			if ("1".equals(userType)) {//教练
+				map.put("js", "3");//默认三间
+				List<ProOrder> list = proOrderService.findOrder(orderDate, orderTime, 4);//教室
+				List<ProOrder> list2 = proOrderService.findOrder(userId, orderDate, orderTime, 4);
 				if (list != null && !list.isEmpty()) {
-					map.put("yx", "0");
+					map.put("js", String.valueOf(3-list.size()));
 				}
-				return new Resp<>(map);
-			} 
-			if ("1".equals(userType)) {
-				map.put("zyq", "1");
-				map.put("sfq", "1");
-				map.put("js", "1");
-				List<ProOrder> list = proOrderService.findOrder(orderDate, orderTime, 4);
-				if (list != null && !list.isEmpty()) {
-					if (list.size() == 2) {
-						map.put("js", "0");
-					}
-					for (ProOrder proOrder : list) {
-						if (proOrder.getUserId() == userId) {
-							map.put("zyq", "0");
-							map.put("sfq", "0");
-							map.put("js", "0");
-							break;
-						}
-					}
+				if(list2!=null&&!list2.isEmpty()){
+					map.put("js", String.valueOf(0));
 				}
-				List<ProOrder> list2 = proOrderService.findOrder(userId, orderDate, orderTime, 2);
-				if (list2 != null && !list2.isEmpty()) {
+				int num = proOrderService.findOrderNum(orderDate, orderTime);
+				map.put("zyq", String.valueOf(num));
+				map.put("sfq", String.valueOf(num));
+				List<ProOrder> zy = proOrderService.findOrder(userId, orderDate, orderTime, 1);
+				List<ProOrder> sf = proOrderService.findOrder(userId, orderDate, orderTime, 2);
+				if(zy!=null&&!zy.isEmpty()){//已预约无权
 					map.put("zyq", "0");
-					map.put("sfq", "0");
-					map.put("js", "0");
 				}
-				List<ProOrder> list3 = proOrderService.findOrder(userId, orderDate, orderTime, 1);
-				if (list3 != null && !list3.isEmpty()) {
-					map.put("zyq", "0");
+				if(sf!=null&&!sf.isEmpty()){
 					map.put("sfq", "0");
-					map.put("js", "0");
 				}
 				return new Resp<>(map);
 			}
