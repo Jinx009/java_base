@@ -120,7 +120,7 @@
 									<th>pci</th>
 									<th>snr</th>
 									<th>tem</th>
-									<th></th>
+									<th>sum_s</th>
 									<td></td>
 									<td></td>
 								</tr>
@@ -138,7 +138,7 @@
 									<td v-text="item.pci"></td>
 									<td v-text="item.snr"></td>
 									<td v-text="item.tem"></td>
-									<td></td>
+									<td v-text="item.sum_s"></td>
 									<td></td>
 									<td></td>
 								</tr>
@@ -186,6 +186,7 @@
 					success : function(res) {
 						for ( var i in res.data) {
 							res.data[i].createTime = jsDateTime(res.data[i].createTime);
+							res.data[i].sum_s = '';
 							if (res.data[i].rsrp != null
 									&& res.data[i].rsrp != '') {
 								res.data[i].rsrp = parseInt(res.data[i].rsrp);
@@ -197,6 +198,9 @@
 							if (res.data[i].snr != null
 									&& res.data[i].snr != '') {
 								res.data[i].snr = parseInt(res.data[i].snr);
+							}
+							if(res.data[i].acczMin!=''&&res.data[i].acczMin!=null){
+								res.data[i].sum_s = parseFloat(res.data[i].acczMin)+parseFloat(res.data[i].accyMin)+parseFloat(res.data[i].accxMin);
 							}
 						}
 						if (_d == '') {
