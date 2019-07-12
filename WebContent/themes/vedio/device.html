@@ -37,7 +37,7 @@
             </a>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown user user-menu"><a href="/home/page/notice"
+                    <li class="dropdown user user-menu"><a href=""
                                                            class="dropdown-toggle" data-toggle="dropdown"
                                                            aria-expanded="false"> <i class="fa fa-bell-o"></i> <span
                             class="label label-warning" id="warningNum"></span>
@@ -67,6 +67,12 @@
             </form>
             <ul class="sidebar-menu">
                 <li class="header">MAIN MENUS</li>
+                <li class="treeview"><a href="show.html"> <i class="fa fa-edit"></i>
+                    <span>概览</span> <span class="pull-right-container"> <i
+                            class="fa fa-angle-left pull-right"></i>
+				</span>
+                </a>
+                </li>
                 <li class="treeview"><a href="index.html"> <i class="fa fa-edit"></i>
                     <span>实时监测</span> <span class="pull-right-container"> <i
                             class="fa fa-angle-left pull-right"></i>
@@ -94,6 +100,20 @@
 				</span>
                 </a>
                 </li>
+                <li class="treeview"><a href="data.html"> <i
+                        class="fa fa-binoculars"></i> <span>数据分析</span> <span
+                        class="pull-right-container"> <i
+                        class="fa fa-angle-left pull-right"></i>
+				</span>
+                </a>
+                </li>
+                <li class="treeview"><a href="total.html"> <i
+                        class="fa fa-binoculars"></i> <span>数据统计</span> <span
+                        class="pull-right-container"> <i
+                        class="fa fa-angle-left pull-right"></i>
+				</span>
+                </a>
+                </li>
             </ul>
             <ul class="sidebar-menu">
 
@@ -105,7 +125,7 @@
         <section class="content-header" style="height: 50px;">
             <h1></h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> 实时监测 </a></li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> 监测点管理 </a></li>
             </ol>
         </section>
         <!-- 主内容 -->
@@ -123,36 +143,52 @@
                                     <th>序列号</th>
                                     <th>设备编号</th>
                                     <th>子网ip</th>
-                                    <th>车位号</th>
-                                    <th>ParentMac</th>
-                                    <th>RouterMac</th>
-                                    <th>Area</th>
-                                    <th>RFID</th>
-                                    <th>有车</th>
-                                    <th>上次通信时间</th>
+                                    <th>地区编号</th>
+                                    <th>位置编号</th>
+                                    <th>违停时间</th>
+                                    <th>设备品牌</th>
+                                    <th>设备型号</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="item in datas.list">
-                                    <td v-text="item.id"></td>
-                                    <td style="color: blue;" v-text="item.mac" class="mac" v-bind:uid="item.lotNo" v-bind:mac="item.mac" onclick="showLog(this)" ></td>
-                                    <td v-text="item.batteryVoltage"></td>
-                                    <td v-text="item.desc"></td>
-                                    <td v-text="item.parentMac"></td>
-                                    <td v-text="item.routerMac"></td>
-                                    <td v-text="item.areaName"></td>
-                                    <td v-text="item.bluetooth"></td>
+                                <tr>
+                                    <td>3</td>
+                                    <td>19042804521310107745</td>
+                                    <td>10.105.1.3</td>
+                                    <td>JAZ028</td>
+                                    <td>03</td>
+                                    <td>07:00-19:00</td>
+                                    <td>海康威视</td>
+                                    <td>iDS-2PT9122IX-D/S</td>
                                     <td>
-                                        <a v-if="1===item.available"
-                                           class='btn btn-success btn-xs' v-text="'有'" ></a>
-                                        <a v-if="0===item.available"
-                                           class='btn btn-danger btn-xs'  v-text="'无'"  ></a>
+                                        <button class='btn btn-danger btn-xs'  >删除</button>
                                     </td>
-                                    <td v-text="item.lastSeenTime"></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>19042811061310409505</td>
+                                    <td>10.105.1.2</td>
+                                    <td>JAZ028</td>
+                                    <td>02</td>
+                                    <td>07:00-19:00</td>
+                                    <td>海康威视</td>
+                                    <td>iDS-2PT9122IX-D/S</td>
                                     <td>
-                                        <button class='btn btn-info btn-xs' v-bind:id="'_d'+item.mac" onclick="_goDetail(this);" v-text="'详情'" ></button>
-                                        <button class='btn btn-info btn-xs' v-bind:id="'_j'+item.mac" onclick="_goJob(this);"  v-text="'运行指令'"  ></button>
+                                        <button class='btn btn-danger btn-xs'  >删除</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>19042811061310409490</td>
+                                    <td>10.105.1.1</td>
+                                    <td>JAZ028</td>
+                                    <td>01</td>
+                                    <td>07:00-19:00</td>
+                                    <td>大华</td>
+                                    <td>iDS-2PT9122IX-D/S</td>
+                                    <td>
+                                        <button class='btn btn-danger btn-xs'  >删除</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -200,22 +236,7 @@
 <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
 <![endif]-->
 </body>
-<script src="https://vjs.zencdn.net/7.0.3/video.js"></script>
 <script>
-    var player = videojs('v-1', {
-        autoplay: true
-    }, function onPlayerReady() {
-        this.play()
-    })
-    var player1 = videojs('v-2', {
-        autoplay: true
-    }, function onPlayerReady() {
-        this.play()
-    })
-    var player2 = videojs('v-3', {
-        autoplay: true
-    }, function onPlayerReady() {
-        this.play()
-    })
+
 </script>
 </html>
