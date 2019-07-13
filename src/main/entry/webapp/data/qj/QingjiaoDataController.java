@@ -240,8 +240,8 @@ public class QingjiaoDataController extends BaseController {
 		// System.out.println(JSONObject.toJSONString(log));
 		// }
 		// }
-		String a = new QingjiaoDataController().convertHexToString("322E31303000");
-		System.out.println(a);
+//		String a = new QingjiaoDataController().convertHexToString("322E31303000");
+//		getB("18");
 	}
 
 	public String convertStringToHex(String str) {
@@ -324,26 +324,27 @@ public class QingjiaoDataController extends BaseController {
 			} else if (cmd.equals("69")) {
 				cmd = "报警_" + flag;
 				QjDeviceLog log = new QjDeviceLog();
-				log.setAcceXType(Integer.valueOf(data.substring(28, 30)));
-				log.setAcceYType(Integer.valueOf(data.substring(30, 32)));
-				log.setAcceZType(Integer.valueOf(data.substring(32, 34)));
-				log.setXType(Integer.valueOf(data.substring(34, 36)));
-				log.setYType(Integer.valueOf(data.substring(36, 38)));
-				log.setZType(Integer.valueOf(data.substring(38, 40)));
-				String acc_x = hexToFloat(data.substring(40, 48));
-				String acc_y = hexToFloat(data.substring(48, 56));
-				String acc_z = hexToFloat(data.substring(56, 64));
-				String x = getData(data.substring(64, 65), data.substring(64, 68));
-				String y = getData(data.substring(68, 69), data.substring(68, 72));
-				String z = getData(data.substring(72, 73), data.substring(72, 76));
-				String acc_x_max = hexToFloat(data.substring(76, 84));
-				String acc_y_max = hexToFloat(data.substring(84, 92));
-				String acc_z_max = hexToFloat(data.substring(92, 100));
-				String acc_x_min = hexToFloat(data.substring(100, 108));
-				String acc_y_min = hexToFloat(data.substring(108, 116));
-				String acc_z_min = hexToFloat(data.substring(116, 124));
-				String bat = getData100(data.substring(124, 125), data.substring(124, 128));
-				String tem = String.valueOf(Integer.parseInt(data.substring(128, 130), 16));
+			    int[] arr = getB(data.substring(28, 30));
+				log.setAcceXType(arr[5]);
+				log.setAcceYType(arr[4]);
+				log.setAcceZType(arr[3]);
+				log.setXType(arr[2]);
+				log.setYType(arr[1]);
+				log.setZType(arr[0]);
+				String acc_x = hexToFloat(data.substring(30, 38));
+				String acc_y = hexToFloat(data.substring(38, 46));
+				String acc_z = hexToFloat(data.substring(46, 54));
+				String x = getData(data.substring(54, 55), data.substring(54, 58));
+				String y = getData(data.substring(58, 59), data.substring(58, 62));
+				String z = getData(data.substring(62, 63), data.substring(62, 66));
+				String acc_x_max = hexToFloat(data.substring(66, 74));
+				String acc_y_max = hexToFloat(data.substring(74, 82));
+				String acc_z_max = hexToFloat(data.substring(82, 90));
+				String acc_x_min = hexToFloat(data.substring(90, 98));
+				String acc_y_min = hexToFloat(data.substring(98, 106));
+				String acc_z_min = hexToFloat(data.substring(106, 114));
+				String bat = getData100(data.substring(114, 115), data.substring(114, 118));
+				String tem = String.valueOf(Integer.parseInt(data.substring(118, 120), 16));
 				log.setType(cmd);
 				log.setBaseAcceX(acc_x);
 				log.setBaseAcceY(acc_y);
@@ -391,6 +392,46 @@ public class QingjiaoDataController extends BaseController {
 		return new Resp<>(true);
 	}
 
+	public int[] getB(String data) {
+		Integer num = Integer.parseInt(data, 16);
+		String a = Integer.toBinaryString(num);
+		int[] s = new int[] {0,0,0,0,0,0};
+		if(a.length()==1) {
+			s[5]=Integer.valueOf(a);
+		}
+		if(a.length()==2) {
+			s[4]=Integer.valueOf(a.substring(0, 1));
+			s[5]=Integer.valueOf(a.substring(1, 2));
+		}
+		if(a.length()==3) {
+			s[3]=Integer.valueOf(a.substring(0, 1));
+			s[4]=Integer.valueOf(a.substring(1, 2));
+			s[5]=Integer.valueOf(a.substring(2, 3));
+		}
+		if(a.length()==4) {
+			s[2]=Integer.valueOf(a.substring(0, 1));
+			s[3]=Integer.valueOf(a.substring(1, 2));
+			s[4]=Integer.valueOf(a.substring(2, 3));
+			s[5]=Integer.valueOf(a.substring(3, 4));
+		}
+		if(a.length()==5) {
+			s[1]=Integer.valueOf(a.substring(0, 1));
+			s[2]=Integer.valueOf(a.substring(1, 2));
+			s[3]=Integer.valueOf(a.substring(2, 3));
+			s[4]=Integer.valueOf(a.substring(3, 4));
+			s[5]=Integer.valueOf(a.substring(4, 5));
+		}
+		if(a.length()==6) {
+			s[0]=Integer.valueOf(a.substring(0, 1));
+			s[1]=Integer.valueOf(a.substring(1, 2));
+			s[2]=Integer.valueOf(a.substring(2, 3));
+			s[3]=Integer.valueOf(a.substring(3, 4));
+			s[4]=Integer.valueOf(a.substring(4, 5));
+			s[5]=Integer.valueOf(a.substring(5, 6));
+		}
+		return s;
+	}
+	
 	/**
 	 * 普质 带z轴
 	 * 
