@@ -90,20 +90,6 @@ public class TelcomCotroller extends BaseController {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			log.warn("commandRspData msg:{}", r);
-//			JSONObject jobj = JSONObject.parseObject(r);
-//			String cammandId = jobj.getString("commandId");
-//			String status = jobj.getString("status");
-//			PuzhiJob pz = puzhiJobService.findByTelTaskId(cammandId);
-//			if(pz!=null){
-//				pz.setTaskStatus(1);
-//				pz.setFeatureUuid(status);
-//				puzhiJobService.update(pz);
-//				IoTCloudDevice device = iotCloudDeviceService.findByMac(pz.getMac());
-//				Map<String, Object> _r = new HashMap<>();
-//				String r2 = "$cmd="+pz.getCmd()+"&result="+status+"&msgid="+pz.getMsgid();
-//				_r.put("data", r2);
-//				HttpUtils.postPuzhiJob(device.getUdpIp().split("_")[0],JSONObject.toJSONString(_r));
-//			}
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("erroe:{}", e);
