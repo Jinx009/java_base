@@ -48,7 +48,7 @@
 				<div class="input-group"
 					style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top: 10px; float: left;">
 					<input type="text" class="form-control" id="mac"
-						placeholder="请输入mac号码" value="000919032900001E">
+						placeholder="请输入mac号码" value="0009190600000001">
 				</div>
 				<div class="input-group"
 					style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top: 10px; float: left;">
@@ -167,55 +167,59 @@
 <script src="js/base.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$('#datepicker').val(new Date().Format('yyyy-MM-dd'));
+/* 		$('#datepicker').val(new Date().Format('yyyy-MM-dd')); */
 		laydate.render({
 			elem : '#datepicker',
+			type: 'datetime' ,
+			 range: true
 		});
-		_getData();
 	})
 	var _d = '';
 	function _getData() {
 		var mac = $('#mac').val();
 		var date = $('#datepicker').val();
-		$
-				.ajax({
-					url : '/home/cloud/qj/logs',
-					dataType : 'json',
-					data : 'mac=' + mac + '&date=' + date,
-					type : 'post',
-					success : function(res) {
-						for ( var i in res.data) {
-							res.data[i].createTime = jsDateTime(res.data[i].createTime);
-							res.data[i].sum_s = '';
-							if (res.data[i].rsrp != null
-									&& res.data[i].rsrp != '') {
-								res.data[i].rsrp = parseInt(res.data[i].rsrp);
-							}
-							if (res.data[i].pci != null
-									&& res.data[i].pci != '') {
-								res.data[i].pci = parseInt(res.data[i].pci);
-							}
-							if (res.data[i].snr != null
-									&& res.data[i].snr != '') {
-								res.data[i].snr = parseInt(res.data[i].snr);
-							}
-							if(res.data[i].acczMin!=''&&res.data[i].acczMin!=null){
-								res.data[i].sum_s = parseFloat(res.data[i].acczMin)+parseFloat(res.data[i].accyMin)+parseFloat(res.data[i].accxMin);
-							}
+		if(date==null||date==''){
+			layer.alert('请选择日期！');
+		}else{
+			$.ajax({
+				url : '/home/cloud/qj/logs',
+				dataType : 'json',
+				data : 'mac=' + mac + '&date=' + date,
+				type : 'post',
+				success : function(res) {
+					for ( var i in res.data) {
+						res.data[i].createTime = jsDateTime(res.data[i].createTime);
+						res.data[i].sum_s = '';
+						if (res.data[i].rsrp != null
+								&& res.data[i].rsrp != '') {
+							res.data[i].rsrp = parseInt(res.data[i].rsrp);
 						}
-						if (_d == '') {
-							_d = new Vue({
-								el : '#data',
-								data : {
-									datas : res.data
-								}
-							});
-						} else {
-							_d.datas = res.data;
+						if (res.data[i].pci != null
+								&& res.data[i].pci != '') {
+							res.data[i].pci = parseInt(res.data[i].pci);
 						}
-
+						if (res.data[i].snr != null
+								&& res.data[i].snr != '') {
+							res.data[i].snr = parseInt(res.data[i].snr);
+						}
+						if(res.data[i].acczMin!=''&&res.data[i].acczMin!=null){
+							res.data[i].sum_s = parseFloat(res.data[i].acczMin)+parseFloat(res.data[i].accyMin)+parseFloat(res.data[i].accxMin);
+						}
 					}
-				})
+					if (_d == '') {
+						_d = new Vue({
+							el : '#data',
+							data : {
+								datas : res.data
+							}
+						});
+					} else {
+						_d.datas = res.data;
+					}
+
+				}
+			})
+		}
 	}
 	Date.prototype.Format = function(fmt) {
 		var o = {

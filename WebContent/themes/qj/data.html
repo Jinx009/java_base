@@ -46,7 +46,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">基本信息</div>
             <div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
-              <input type="text" class="form-control"  id="mac" placeholder="请输入mac号码" value="000919032900001E" >
+              <input type="text" class="form-control"  id="mac" placeholder="请输入mac号码" value="0009190600000001" >
 		    </div>
            	<div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
 		      <input type="text" class="form-control" readonly="readonly" id="datepicker" >
@@ -87,41 +87,46 @@
 <script type="text/javascript">
 var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 	$(function() {
-		$('#datepicker').val(new Date().Format('yyyy-MM-dd'));
+	//	$('#datepicker').val(new Date().Format('yyyy-MM-dd'));
 		laydate.render({
 			elem : '#datepicker',
+			  type: 'datetime',
+			  range: true
 		});
-		_getData();
 	})
 	var _d = '';
 	function _getData() {
 		acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 		var mac = $('#mac').val();
 		var date = $('#datepicker').val();
-		var map = [];
-		$.ajax({
-			url : '/home/cloud/qj/logs',
-			dataType : 'json',
-			data:'mac='+mac+'&date='+date,
-			type : 'post',
-			success : function(res) {
-				if(res!=''&&res.data.length!='')
-				for(var i = res.data.length-1;i>=0;i--){
-					res.data[i].createTime = jsDateTime(res.data[i].createTime);
-					if(res.data[i].baseX!=''&&res.data[i].baseAcceX!=''){
-						acc_x.push(parseInt(res.data[i].baseAcceX.split('/')[0])/10000);
-						acc_y.push(parseInt(res.data[i].baseAcceY.split('/')[0])/10000);
-						acc_z.push(parseInt(res.data[i].baseAcceZ.split('/')[0])/10000);
-						x.push(res.data[i].baseX);
-						y.push(res.data[i].baseY);
-						z.push(res.data[i].baseZ);
-						tem.push(parseInt(res.data[i].tem)/1000);
-						ddate.push(res.data[i].createTime)
+		if(date==null||date==''){
+			layer.alert('请选择日期！');
+		}else{
+			var map = [];
+			$.ajax({
+				url : '/home/cloud/qj/logs',
+				dataType : 'json',
+				data:'mac='+mac+'&date='+date,
+				type : 'post',
+				success : function(res) {
+					if(res!=''&&res.data.length!='')
+					for(var i = res.data.length-1;i>=0;i--){
+						res.data[i].createTime = jsDateTime(res.data[i].createTime);
+						if(res.data[i].baseX!=''&&res.data[i].baseAcceX!=''){
+							acc_x.push(parseInt(res.data[i].baseAcceX.split('/')[0])/10000);
+							acc_y.push(parseInt(res.data[i].baseAcceY.split('/')[0])/10000);
+							acc_z.push(parseInt(res.data[i].baseAcceZ.split('/')[0])/10000);
+							x.push(res.data[i].baseX);
+							y.push(res.data[i].baseY);
+							z.push(res.data[i].baseZ);
+							tem.push(parseInt(res.data[i].tem)/1000);
+							ddate.push(res.data[i].createTime)
+						}
 					}
+					_draw();
 				}
-				_draw();
-			}
-		})
+			})
+		}
 	}
 	function _draw(){
 		var myChart_1 = echarts.init(document.getElementById('draw_1'),'dark');

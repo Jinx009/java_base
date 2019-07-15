@@ -50,9 +50,11 @@ public class QjDeviceLogDao extends BaseDao<QjDeviceLog>{
 	@SuppressWarnings("unchecked")
 	public Object nearList(String mac, String date) {
 		try {
-			String hql = " from QjDeviceLog where  createTime >='"+date+" 00:00:00' and createTime <= '"+date+" 23:59:59'  order by id desc ";
+			String date1 = date.split(" - ")[0];
+			String date2 = date.split(" - ")[1];
+			String hql = " from QjDeviceLog where  createTime >='"+date1+"' and createTime <= '"+date2+"'  order by id desc ";
 			if(StringUtil.isNotBlank(mac)) {
-				hql = " from QjDeviceLog where  createTime >='"+date+" 00:00:00' and createTime <= '"+date+" 23:59:59' and snValue like '%"+mac+"%' order by id desc ";
+				hql = " from QjDeviceLog where  createTime >='"+date1+"'  and createTime <= '"+date2+"'  and snValue like '%"+mac+"%' order by id desc ";
 			}
 			List<QjDeviceLog> list = em.createQuery(hql).getResultList();
 			if(list!=null&&!list.isEmpty()){
