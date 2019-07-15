@@ -112,7 +112,7 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 					if(res!=''&&res.data.length!='')
 					for(var i = res.data.length-1;i>=0;i--){
 						res.data[i].createTime = jsDateTime(res.data[i].createTime);
-						if(res.data[i].baseX!=''&&res.data[i].baseAcceX!=''){
+						if(res.data[i].baseX!=''&&res.data[i].baseAcceX!=''&&res.data[i].baseX!=null){
 							acc_x.push(parseInt(res.data[i].baseAcceX.split('/')[0])/10000);
 							acc_y.push(parseInt(res.data[i].baseAcceY.split('/')[0])/10000);
 							acc_z.push(parseInt(res.data[i].baseAcceZ.split('/')[0])/10000);

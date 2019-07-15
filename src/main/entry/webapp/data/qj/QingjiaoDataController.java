@@ -370,7 +370,7 @@ public class QingjiaoDataController extends BaseController {
 				log.setVoltage(bat);
 				log.setCreateTime(new Date());
 				qjDeviceLogService.save(log);
-			} else {
+			} else if (cmd.equals("6A"))  {
 				cmd = "温度_" + flag;
 				int num = Integer.valueOf(data.substring(24, 26)).intValue();
 				int start = 26;
