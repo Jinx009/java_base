@@ -216,6 +216,22 @@ public class QingjiaoDataController extends BaseController {
 		return new Resp<>(true);
 	}
 
+	/**
+	 * 浮点数按IEEE754标准转16进制字符串
+	 * @param f
+	 * @return
+	 */
+	public  String FloatToHexString(float f){
+		int i  = Float.floatToIntBits(f);
+        String str = Integer.toHexString(i).toUpperCase();
+        return str;
+	}
+	
+	/**
+	 * 16进制字符串IEEE754标准转小数
+	 * @param s
+	 * @return
+	 */
 	private static String hexToFloat(String s) {
 		BigInteger big = new BigInteger(s, 16);
 		Float z = Float.intBitsToFloat(big.intValue());
@@ -228,29 +244,14 @@ public class QingjiaoDataController extends BaseController {
 	}
 
 	public static void main(String[] args) throws Exception {
-		// String data =
-		// "000919060000000148006A0002FD3D3EF3B6463EF3B6463EF3B646FD3D3EF3B6463EF3B6463EF3B646";
-		// int num = Integer.valueOf(data.substring(24, 26)).intValue();
-		// int start = 26;
-		// if(num!=0){
-		// for(int i = 0;i<num;i++){
-		// start+= i*28;
-		// QjDeviceLog log = new QjDeviceLog();
-		// log.setType("特么");
-		// log.setCreateTime(new Date());
-		// log.setTem(new
-		// QingjiaoDataController().getData100(data.substring(start, start+1),
-		// data.substring(start, start+4)));
-		// log.setBaseAcceX(hexToFloat(data.substring(start+4, start+12)));
-		// log.setBaseAcceY(hexToFloat(data.substring(start+12, start+20)));
-		// log.setBaseAcceZ(hexToFloat(data.substring(start+20, start+28)));
-		// System.out.println(JSONObject.toJSONString(log));
-		// }
-		// }
-//		String a = new QingjiaoDataController().convertHexToString("322E31303000");
-//		getB("18");
+
 	}
 
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public String convertStringToHex(String str) {
 		char[] chars = str.toCharArray();
 		StringBuffer hex = new StringBuffer();
@@ -300,12 +301,9 @@ public class QingjiaoDataController extends BaseController {
 				String bat = getData100(data.substring(62, 63), data.substring(62, 66));
 				String tem = String.valueOf(Integer.parseInt(data.substring(66, 68), 16));
 				String rssi = String.valueOf(Integer.parseInt(data.substring(68, 70), 16));
-				String rsrp = String
-						.valueOf(Double.valueOf(getDataBase(data.substring(70, 71), data.substring(70, 74))));
-				String snr = String
-						.valueOf(Double.valueOf(getDataBase(data.substring(74, 75), data.substring(74, 78))));
-				String pci = String
-						.valueOf(Double.valueOf(getDataBase(data.substring(78, 79), data.substring(78, 82))));
+				String rsrp = String.valueOf(Double.valueOf(getDataBase(data.substring(70, 71), data.substring(70, 74))));
+				String snr = String.valueOf(Double.valueOf(getDataBase(data.substring(74, 75), data.substring(74, 78))));
+				String pci = String.valueOf(Double.valueOf(getDataBase(data.substring(78, 79), data.substring(78, 82))));
 				String hard = convertHexToString(data.substring(82, 94));
 				String soft = convertHexToString(data.substring(94, 106));
 				QjDeviceLog log = new QjDeviceLog();
