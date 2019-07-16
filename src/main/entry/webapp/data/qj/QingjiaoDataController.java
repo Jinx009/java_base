@@ -1,6 +1,8 @@
 package main.entry.webapp.data.qj;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -216,8 +218,13 @@ public class QingjiaoDataController extends BaseController {
 
 	private static String hexToFloat(String s) {
 		BigInteger big = new BigInteger(s, 16);
-		Float f = Float.intBitsToFloat(big.intValue());
-		return String.valueOf(f);
+		Float z = Float.intBitsToFloat(big.intValue());
+		Double r = Double.valueOf(z);
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result =  decimalFormat.format(g);
+		return result;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -773,7 +780,6 @@ public class QingjiaoDataController extends BaseController {
 	}
 
 	private String getDataBase(String index, String _d) throws Exception {
-		log.warn("index:{},data:{}", index, _d);
 		int _index = Integer.parseInt(index, 16);
 		Integer a = Integer.valueOf(_d, 16);
 		String b = Integer.toBinaryString(a);
@@ -802,13 +808,16 @@ public class QingjiaoDataController extends BaseController {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		String result = String.valueOf(Double.valueOf(e));
+		Double r = Double.valueOf(e);
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result =  decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
 
 	private String getData100(String index, String _d) throws Exception {
-		log.warn("index:{},data:{}", index, _d);
 		int _index = Integer.parseInt(index, 16);
 		Integer a = Integer.valueOf(_d, 16);
 		String b = Integer.toBinaryString(a);
@@ -837,13 +846,16 @@ public class QingjiaoDataController extends BaseController {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		String result = String.valueOf(Double.valueOf(e) / 100);
+		Double r = Double.valueOf(e)/100;
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result =  decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
 
 	private String getData(String index, String _d) throws Exception {
-		log.warn("index:{},data:{}", index, _d);
 		int _index = Integer.parseInt(index, 16);
 		Integer a = Integer.valueOf(_d, 16);
 		String b = Integer.toBinaryString(a);
@@ -872,7 +884,11 @@ public class QingjiaoDataController extends BaseController {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		String result = String.valueOf(Double.valueOf(e) / 1000);
+		Double r = Double.valueOf(e)/1000;
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result =  decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
