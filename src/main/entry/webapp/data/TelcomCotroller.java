@@ -374,7 +374,8 @@ public class TelcomCotroller extends BaseController {
 			map.put("data", sendData);
 			String json = JSONObject.toJSONString(map);
 			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
-			String url = "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
+			//String url = "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
+			String url = "http://218.6.244.186:44445/api/devices/datapoints?type=3";
 			log.warn("send url-----------------------\n:{}\n---------------------------------", url);
 			String res = HttpUtils.postJson(url, json);
 			log.warn("send res-----------------------\n:{}\n---------------------------------", res);
