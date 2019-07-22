@@ -135,10 +135,14 @@ public class StatusCheckTask {
 							pv.setUpdateStatus(1);
 							parkingVedioService.update(pv);
 							try {
-								FtpUtils ftp = new FtpUtils();
-								String dirPath =  "/"+fileName.split("/")[3];
-								String ftpFileName =  fileName.split("/")[4]+".mp4";
-								ftp.uploadFile(dirPath, ftpFileName, fileName+".mp4");
+								new Thread(){
+									public void run(){
+										FtpUtils ftp = new FtpUtils();
+										String dirPath =  "/"+fileName.split("/")[3];
+										String ftpFileName =  fileName.split("/")[4]+".mp4";
+										ftp.uploadFile(dirPath, ftpFileName, fileName+".mp4");
+									}
+								}.start();
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -164,10 +168,14 @@ public class StatusCheckTask {
 							parkingVedioService.update(pv);
 							//上传完成转换的mp4
 							try {
-								FtpUtils ftp = new FtpUtils();
-								String dirPath =  "/"+fileName.split("/")[3];
-								String ftpFileName =  fileName.split("/")[4]+".mp4";
-								ftp.uploadFile(dirPath, ftpFileName, fileName+".mp4");
+								new Thread(){
+									public void run(){
+										FtpUtils ftp = new FtpUtils();
+										String dirPath =  "/"+fileName.split("/")[3];
+										String ftpFileName =  fileName.split("/")[4]+".mp4";
+										ftp.uploadFile(dirPath, ftpFileName, fileName+".mp4");
+									}
+								}.start();
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -499,11 +507,15 @@ public class StatusCheckTask {
 		if (null != btImg && btImg.length > 0) {
 			writeImageToDisk(btImg, path);
 			try {
-				FtpUtils ftp = new FtpUtils();
-            	log.warn("file path:{}",path);
-				String dirPath =  "/"+path.split("/")[0];
-				String ftpFileName =  path.split("/")[1];
-				ftp.uploadFile(dirPath, ftpFileName, "/data/ftp_pic/"+path);
+				new Thread(){
+					public void run(){
+						FtpUtils ftp = new FtpUtils();
+		            	log.warn("file path:{}",path);
+						String dirPath =  "/"+path.split("/")[0];
+						String ftpFileName =  path.split("/")[1];
+						ftp.uploadFile(dirPath, ftpFileName, "/data/ftp_pic/"+path);
+					}
+				}.start();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

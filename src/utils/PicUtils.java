@@ -47,10 +47,14 @@ public class PicUtils {
 			ImageIO.write(ImageNew, "jpeg", outFile);// 写图片
 			//ftp上传合成图
 			try {
-				FtpUtils ftp = new FtpUtils();
-				String dirPath = "/"+fileName.split("/")[3];
-				String ftpFileName =  fileName.split("/")[4];
-				ftp.uploadFile(dirPath, ftpFileName, fileName);
+				new Thread(){
+					public void run(){
+						FtpUtils ftp = new FtpUtils();
+						String dirPath = "/"+fileName.split("/")[3];
+						String ftpFileName =  fileName.split("/")[4];
+						ftp.uploadFile(dirPath, ftpFileName, fileName);
+					}
+				}.start();
 			} catch (Exception e) {
 				log.error("e:{}",e);
 			}

@@ -39,6 +39,8 @@ public class FtpUtils {
 	public void uploadFile( String pathname, String fileName,String originfilename){
         InputStream inputStream = null;
         FTPClient ftp = new FTPClient();
+        ftp.setDefaultTimeout(600*1000);
+        ftp.setDataTimeout(600*1000);
         ftp.setControlEncoding("utf-8");
         try{
             inputStream = new FileInputStream(new File(originfilename));
