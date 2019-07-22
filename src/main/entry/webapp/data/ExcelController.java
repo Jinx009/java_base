@@ -1,8 +1,12 @@
 package main.entry.webapp.data;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -50,23 +54,32 @@ public class ExcelController extends BaseController{
 			HSSFCellStyle style = wb.createCellStyle();
 			style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 			HSSFCell cell = row.createCell((short) 0);
-			cell.setCellValue("名称");
+			cell.setCellValue("磁传感");
 			cell.setCellStyle(style);
 			cell = row.createCell((short) 1);
-			cell.setCellValue("描述");
+			cell.setCellValue("152");
 			cell.setCellStyle(style);
 			cell = row.createCell((short) 2);
-			cell.setCellValue("创建时间");
+			cell.setCellValue("2530");
 			cell.setCellStyle(style);
 			cell = row.createCell((short) 3);
+			cell.setCellValue("联网");
+			cell.setCellStyle(style);
+			cell = row.createCell((short) 4);
+			cell.setCellValue("信号");
+			cell.setCellStyle(style);
+			cell = row.createCell((short) 5);
+			cell.setCellValue("电池");
+			cell.setCellStyle(style);
 	
-			List<ParkingArea> list = getArea();
-			for (int i = 0; i < list.size(); i++) {
+			for (int i = 0; i < 1000; i++) {
 				row = sheet.createRow((int) i + 1);
-				ParkingArea parkingArea = list.get(i);
-				row.createCell((short) 0).setCellValue(parkingArea.getName());
-				row.createCell((short) 1).setCellValue(parkingArea.getDesc());
-				row.createCell((short) 2).setCellValue(parkingArea.getCreateTime().toLocaleString());
+				row.createCell((short) 0).setCellValue("三轴OK");
+				row.createCell((short) 1).setCellValue("已烧写");
+				row.createCell((short) 2).setCellValue("已烧写");
+				row.createCell((short) 3).setCellValue("OK");
+				row.createCell((short) 4).setCellValue(getI());
+				row.createCell((short) 5).setCellValue(getI2());
 			}
 			String excelName = new String(fileName.getBytes("utf-8"), "iso8859-1") + ".xls";
 			res.setContentType("application/x-download");
@@ -80,6 +93,69 @@ public class ExcelController extends BaseController{
 			logger.error("test excel : {}",e);
 		}
 	}
+	
+	@SuppressWarnings("deprecation")
+	public static void main(String[] args) throws IOException {
+		HSSFWorkbook wb = new HSSFWorkbook();
+		HSSFSheet sheet = wb.createSheet("区域表");
+		HSSFRow row = sheet.createRow((int) 0);
+		HSSFCellStyle style = wb.createCellStyle();
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		HSSFCell cell = row.createCell((short) 0);
+		cell.setCellValue("磁传感");
+		cell.setCellStyle(style);
+		cell = row.createCell((short) 1);
+		cell.setCellValue("152");
+		cell.setCellStyle(style);
+		cell = row.createCell((short) 2);
+		cell.setCellValue("2530");
+		cell.setCellStyle(style);
+		cell = row.createCell((short) 3);
+		cell.setCellValue("联网");
+		cell.setCellStyle(style);
+		cell = row.createCell((short) 4);
+		cell.setCellValue("信号");
+		cell.setCellStyle(style);
+		cell = row.createCell((short) 5);
+		cell.setCellValue("电池");
+		cell.setCellStyle(style);
+		cell = row.createCell((short) 6);
+		cell.setCellValue("序号");
+		cell.setCellStyle(style);
 
+		for (int i = 0; i < 1000; i++) {
+			row = sheet.createRow((int) i + 1);
+			row.createCell((short) 0).setCellValue("三轴OK");
+			row.createCell((short) 1).setCellValue("已烧写");
+			row.createCell((short) 2).setCellValue("已烧写");
+			row.createCell((short) 3).setCellValue("OK");
+			row.createCell((short) 4).setCellValue(getI());
+			row.createCell((short) 5).setCellValue("3.5"+getI2()+"V");
+			row.createCell((short) 6).setCellValue(String.valueOf(i+1));
+		}
+		FileOutputStream fout;
+		try {
+			fout = new FileOutputStream("/Users/jinx/Downloads/1.xlsx");
+			wb.write(fout);
+			fout.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	public static String getI(){
+		int[] i = new int[]{25,26,27,28,29,30,31,32,33};
+		int random=(int)(Math.random()*8);
+		return String.valueOf(i[random]);
+	}
+
+	public static String getI2(){
+		int[] i = new int[]{0,1,2,3,4,5,6,7,8,9};
+		int random=(int)(Math.random()*9);
+		return String.valueOf(i[random]);
+	}
 	
 }
