@@ -380,6 +380,7 @@ public class StatusCheckTask {
 			map.put("status", String.valueOf(parkInfo.getIVehicleEnterstate()));
 			map.put("picLink", "http://58.246.184.99:801/" + picPath);
 			if (iVehicleEnterstate != 0) {
+				HttpUtil.get("http://139.196.205.157:8090/home/cloud/server/check?id=9");
 				if (parkInfo.getIVehicleEnterstate() == 0) {
 					new Thread(new Runnable() {
 						public void run() {
