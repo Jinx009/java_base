@@ -84,16 +84,23 @@
 	})
 	function _getData() {
 		$.ajax({
-			url : '/home/cloud/check/list',
+			url : '/home/cloud/server/list',
 			dataType : 'json',
 			type : 'post',
 			success : function(res) {
+				for(var i in res.data){
+					res.data[i].createTime = jsDateTime(res.data[i].createTime);
+				}
 				new Vue({
-					item:'#datas',
-					data:res.data
+					el:'#datas',
+					data:{datas:res.data}
 				})
 			}
 		})
+	}
+	function jsDateTime(unixtime) {
+		var date = new Date(unixtime);
+		return date.Format("yyyy-MM-dd hh:mm:ss");
 	}
 	Date.prototype.Format = function(fmt) {
 		var o = {
