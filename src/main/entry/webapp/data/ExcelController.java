@@ -3,10 +3,6 @@ package main.entry.webapp.data;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import database.models.parking.ParkingArea;
 import main.entry.webapp.BaseController;
 
 @Controller
@@ -31,17 +26,6 @@ public class ExcelController extends BaseController{
 	
 	private static final Logger logger = LoggerFactory.getLogger(ExcelController.class);
 
-	private static List<ParkingArea> getArea() {
-		List<ParkingArea> list = new ArrayList<ParkingArea>();
-		ParkingArea parkingArea = new ParkingArea();
-		parkingArea.setCreateTime(new Date());
-		parkingArea.setDesc("描述");
-		parkingArea.setName("名称");
-		parkingArea.setShowStatus(1);
-		parkingArea.setStatus(1);
-		list.add(parkingArea);
-		return list;
-	}
 
 	@SuppressWarnings("deprecation")
 	@RequestMapping(path = "/excelTest")

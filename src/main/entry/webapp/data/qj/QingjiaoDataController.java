@@ -244,7 +244,7 @@ public class QingjiaoDataController extends BaseController {
 	}
 
 	public static void main(String[] args) throws Exception {
-
+		System.out.println(new QingjiaoDataController().getData100("0", "0C6F"));
 	}
 
 	/**

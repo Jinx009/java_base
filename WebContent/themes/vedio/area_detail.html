@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>展为智能</title>
+<meta name="viewport"
+	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<link rel="shortcut icon" href="/themes/img/favicon.ico"
+	type="image/x-icon" />
+<link rel="stylesheet" href="/themes/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="/themes/awe/dist/css/AdminLTE.min.css">
+<link rel="stylesheet"
+	href="/themes/awe/dist/css/skins/_all-skins.min.css">
+<link href="https://vjs.zencdn.net/7.0.3/video-js.css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
+<script src="/themes/awe/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- <script src="/themes/js/jquery-1.7.2.min.js"></script>  -->
+<script src="/themes/dist/js/bootstrap.min.js"></script>
+<script src="/themes/awe/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="/themes/awe/plugins/fastclick/fastclick.js"></script>
+<script src="/themes/awe/dist/js/app.min.js"></script>
+<script src="/themes/awe/dist/js/demo.js"></script>
+<script src="/themes/js/vue.min.js"></script>
+<script src="/themes/layer/layer.js"></script>
+<script src="/themes/laydate/laydate.js"></script>
+<script type="text/javascript" src="js/raphael.js"></script>
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<script>
+	var paper, c_1, c_2, c_3, c_4, _path,c_arr = [];
+	c_arr[0] = c_1;
+	c_arr[1] = c_2;
+	c_arr[2] = c_3;
+	c_arr[3] = c_4;
+	$(function() {
+		paper = new Raphael(document.getElementById("paper"),1344, 760);
+		c_1 = paper.circle(100, 100, 3).attr({
+			stroke : 'red',
+			'stroke-width' : 3,
+			fill : 'red',
+			cursor : 'move',
+			num:0
+		});
+		c_2 = paper.circle(300, 100, 3).attr({
+			stroke : 'red',
+			'stroke-width' : 3,
+			fill : 'red',
+			cursor : 'move',
+		});
+		c_3 = paper.circle(300, 200, 3).attr({
+			stroke : 'red',
+			'stroke-width' : 3,
+			fill : 'red',
+			cursor : 'move',
+		});
+		c_4 = paper.circle(100, 200, 3).attr({
+			stroke : 'red',
+			'stroke-width' : 3,
+			fill : 'red',
+			cursor : 'move',
+		});
+		c_1.drag(move, start, end);
+		c_2.drag(move, start, end);
+		c_3.drag(move, start, end);
+		c_4.drag(move, start, end);
+		var pathStr = 'M ' + c_1.attr('cx') + ' ' + c_1.attr('cy') + ' L '
+				+ c_2.attr('cx') + ' ' + c_2.attr('cy') + ' L '
+				+ c_3.attr('cx') + ' ' + c_3.attr('cy') + ' L '
+				+ c_4.attr('cx') + ' ' + c_4.attr('cy') + ' L '
+				+ c_1.attr('cx') + ' ' + c_1.attr('cy');
+		_path = paper.path(pathStr).attr({
+			'arrow-end' : 'none',
+			stroke : 'red',
+			'stroke-width' : 3
+		});
+	})
+
+	var start = function() {
+		this.ox = this.attr("cx");//自定义该对象坐标存储变量
+		this.oy = this.attr("cy");
+		console.log(this.attr('num'))
+
+	}
+	var move = function(dx, dy) {
+		var cc_x = this.ox + dx;
+		var cc_y = this.oy + dy;
+		var attr = {
+			cx : cc_x,
+			cy :cc_y,
+			cursor : "move",
+			fill : "red",
+			r : 3,
+			stroke : "red",
+			'stroke-width' : 3
+		};
+		if(cc_x>5&&cc_x<1341&&cc_y>5&&cc_y<755){
+			this.attr(attr);
+			var pathStr = 'M ' + c_1.attr('cx') + ' ' + c_1.attr('cy') + ' L '
+					+ c_2.attr('cx') + ' ' + c_2.attr('cy') + ' L '
+					+ c_3.attr('cx') + ' ' + c_3.attr('cy') + ' L '
+					+ c_4.attr('cx') + ' ' + c_4.attr('cy') + ' L '
+					+ c_1.attr('cx') + ' ' + c_1.attr('cy');
+			_path.attr({
+				path : pathStr
+			});
+			_path.attr({
+				'arrow-end' : 'none',
+				stroke : 'red',
+				'stroke-width' : 3
+			});
+		}
+	}
+	var end = function() {
+	};
+</script>
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+		<header class="main-header">
+			<a class="logo"> <img alt="" src="/themes/img/logo.jpg"
+				style="height: 40px;">
+			</a>
+			<nav class="navbar navbar-static-top">
+				<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
+					role="button"> <span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+				</a>
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+						<li class="dropdown user user-menu"><a href=""
+							class="dropdown-toggle" data-toggle="dropdown"
+							aria-expanded="false"> <i class="fa fa-bell-o"></i> <span
+								class="label label-warning" id="warningNum"></span>
+						</a></li>
+						<li class="dropdown user user-menu"><a
+							class="dropdown-toggle" data-toggle="dropdown"> <span
+								class="hidden-xs">欢迎您</span>
+						</a></li>
+						<li><a onclick="loginOut();"><i class="fa fa-sign-out"></i></a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<!--左侧导航 -->
+		<aside class="main-sidebar">
+			<section class="sidebar">
+				<form action="#" method="get" class="sidebar-form">
+					<div class="input-group">
+						<input type="text" id="warningInput" class="form-control" value=""
+							disabled="disabled"> <span class="input-group-btn">
+							<button type="button" name="search" id="search-btn"
+								class="btn btn-flat">
+								<i class="fa fa-calendar"></i>
+							</button>
+						</span>
+					</div>
+				</form>
+				<ul class="sidebar-menu">
+					<li class="header">MAIN MENUS</li>
+					<li class="treeview"><a href="show.html"> <i
+							class="fa fa-edit"></i> <span>概览</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a></li>
+					<li class="treeview"><a href="index.html"> <i
+							class="fa fa-edit"></i> <span>实时监测</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a></li>
+					<li class="treeview"><a href="device.html"> <i
+							class="fa fa-briefcase"></i> <span>监测点管理</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a></li>
+					<li class="treeview active"><a href="area.html"> <i
+							class="fa fa-optin-monster"></i> <span>区域管理</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a></li>
+					<li class="treeview"><a href="log.html"> <i
+							class="fa fa-binoculars"></i> <span>违停管理</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a></li>
+					<li class="treeview"><a href="data.html"> <i
+							class="fa fa-binoculars"></i> <span>数据分析</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a></li>
+					<li class="treeview"><a href="total.html"> <i
+							class="fa fa-binoculars"></i> <span>数据统计</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a></li>
+				</ul>
+				<ul class="sidebar-menu">
+
+				</ul>
+			</section>
+		</aside>
+		<!-- 路径导航 -->
+		<div class="content-wrapper" style="background-color: white;">
+			<section class="content-header" style="height: 50px;">
+				<h5 style="color: red;">请尽量绘制无交叉图形，以免影响分析，编辑完成请点击保存！</h5>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> 区域详情 </a></li>
+				</ol>
+			</section>
+			<!-- 主内容 -->
+			<section class="content" id="datas" style="overflow: scroll;">
+				<div id="paper"
+					style="background: url('/themes/upload_files/vedio/spic5.jpg'); width: 1344px; height: 760px; background-repeat: no-repeat; background-size: 100% 100%; -moz-background-size: 100% 100%;"></div>
+			
+			</section>
+		</div>
+		<!-- 底部导航 -->
+		<footer class="main-footer">
+			<div class="pull-right hidden-xs">
+				<b>Version</b> 1.0.0
+			</div>
+			<strong>Copyright &copy; 2014-2026 <a
+				href="http://www.zhanway.com" target="_blank">上海展为智能技术股份有限公司</a>.
+			</strong> All rights reserved.
+		</footer>
+		<div class="control-sidebar-bg"></div>
+	</div>
+</body>
+<script>
+	
+</script>
+</html>
