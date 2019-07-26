@@ -46,6 +46,12 @@ public class VedioArea {
 	private Double y3;
 	@Column(name = "y4")
 	private Double y4;
+	@Column(name = "width")
+	private Integer width;
+	@Column(name = "height")
+	private Integer height;
+	@Column(name = "b")
+	private Integer b;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;

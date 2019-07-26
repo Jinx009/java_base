@@ -35,5 +35,15 @@ public class VedioAreaService {
 		vedioArea.setCreateTime(new Date());
 		return vedioAreaDao.save(vedioArea);
 	}
+
+	public void update(VedioArea vedioArea) {
+		vedioAreaDao.update(vedioArea);
+	}
+
+	public void update(Integer id, Double x1, Double x2, Double x3, Double x4, Double y1, Double y2, Double y3,
+			Double y4) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
