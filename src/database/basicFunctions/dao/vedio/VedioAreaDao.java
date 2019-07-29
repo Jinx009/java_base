@@ -10,7 +10,7 @@ import database.models.vedio.VedioArea;
 @Repository
 public class VedioAreaDao extends BaseDao<VedioArea>{
 
-	public VedioArea save(VedioArea vedioArea){
+	public VedioArea saveV(VedioArea vedioArea){
 		return save(vedioArea);
 	}
 	

@@ -31,21 +31,21 @@ public class VedioArea {
 	@Column(name = "pic_path")
 	private String picPath;
 	@Column(name = "x1")
-	private Double x1;
+	private String x1;
 	@Column(name = "x2")
-	private Double x2;
+	private String x2;
 	@Column(name = "x3")
-	private Double x3;
+	private String x3;
 	@Column(name = "x4")
-	private Double x4;
+	private String x4;
 	@Column(name = "y1")
-	private Double y1;
+	private String y1;
 	@Column(name = "y2")
-	private Double y2;
+	private String y2;
 	@Column(name = "y3")
-	private Double y3;
+	private String y3;
 	@Column(name = "y4")
-	private Double y4;
+	private String y4;
 	@Column(name = "width")
 	private Integer width;
 	@Column(name = "height")

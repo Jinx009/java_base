@@ -40,6 +40,7 @@ public class VedioAreaController {
 			HttpServletRequest request,
 			HttpServletResponse response){
 		Resp<?> resp = new Resp<>(false);
+		log.warn("name:{},cameraIndex:{}",name,cameraIndex);
 		InputStream in = null;
 		OutputStream out = null;
 		try {
@@ -54,7 +55,7 @@ public class VedioAreaController {
 		        	resp.setMsg("仅支持.jpeg,.jpg,.png格式图片");
 		        	return resp;
 		        }else{
-		        	VedioArea vedioArea = vedioAreaService.save(name, cameraIndex, "", 100.00, 300.00, 300.00, 100.00, 100.00, 100.00, 200.00, 200.00);
+		        	VedioArea vedioArea = vedioAreaService.save(name, cameraIndex, "", "100","300", "300","100" ,"100" ,"100","200", "200");
 		        	String filePath = cameraIndex+"_"+vedioArea.getId()+"."+suffix;
 					File serverFile = new File(dir.getAbsolutePath() + File.separator +filePath);
 					in = file.getInputStream();
@@ -95,7 +96,47 @@ public class VedioAreaController {
 		return resp;
 	}
 	
-	public Resp<?> update(Integer id,Double x1,Double x2,Double x3,Double x4,Double y1,Double y2,Double y3,Double y4){
+	@RequestMapping(path = "/del")
+	@ResponseBody
+	public Resp<?> del(Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			vedioAreaService.del(id);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/find")
+	@ResponseBody
+	public Resp<?> find(Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(vedioAreaService.find(id));
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/list")
+	@ResponseBody
+	public Resp<?> list(){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(vedioAreaService.findAll());
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	
+	@RequestMapping(path = "/update")
+	@ResponseBody
+	public Resp<?> update(Integer id,String x1,String x2,String x3,String x4,String y1,String y2,String y3,String y4){
 		Resp<?> resp = new Resp<>(false);
 		try {
 			vedioAreaService.update(id,x1,x2,x3,x4,y1,y2,y3,y4);
