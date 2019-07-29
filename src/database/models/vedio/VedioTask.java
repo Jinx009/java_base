@@ -45,5 +45,7 @@ public class VedioTask {
 	private String size;
 	@Column(name = "dir_path")
 	private String dirPath;
+	@Column(name = "num")
+	private Integer num;
 	
 }

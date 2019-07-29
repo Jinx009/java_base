@@ -102,6 +102,7 @@ public class VedioTaskController extends BaseController {
 						        }
 						        VedioUtils.zipFiles(files, new File(vedioTask.getDirPath()+"/"+vedioTask.getName()+".zip"));
 						        vedioTask.setStatus(2);
+						        vedioTask.setNum((int)num);
 							} catch (ParseException e) {
 								e.printStackTrace();
 							}
