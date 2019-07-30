@@ -133,23 +133,17 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">分析日志</h3>
-                            <div class="box-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <div class="input-group-btn">
-                                        <a href="/themes/vedio/task_new.html"
-                                           type="button" style="float: right;" class="btn btn-info">新增分析</a>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="box-body table-responsive no-padding">
                                 <table class="table table-hover table-bordered">
                                     <thead>
                                     <tr>
                                         <th>序列号</th>
-                                        <th>区域名称</th>
-                                        <th>视频索引</th>
-                                        <th>视频时长</th>
-                                        <th>开始时间</th>
+                                        <th>车牌号</th>
+                                        <th>时间</th>
+                                        <th>车辆上坐标</th>
+                                        <th>车辆下坐标</th>
+                                        <th>车牌上坐标</th>
+                                        <th>车牌下坐标</th>
                                         <th>状态</th>
                                         <th>操作</th>
                                     </tr>
@@ -157,20 +151,19 @@
                                     <tbody id="datas">
                                     <tr v-for="item in datas">
                                         <td v-text="item.id"></td>
-                                        <td v-text="item.areaName"></td>
-                                        <td v-text="item.name"></td>
-                                        <td v-text="item.time+'s'"></td>
-                                        <td v-text="item.vedioStart"></td>
+                                        <td v-text="item.carNumber"></td>
+                                        <td v-text="item.vedioTime"></td>
+                                        <td v-text="item.carX+','+item.carY"></td>
+                                        <td v-text="item.carX2+','+item.carY2"></td>
+                                        <td v-text="item.cpX+','+item.cpY"></td>
+                                        <td v-text="item.cpX2+','+item.cpY2"></td>
                                         <td>
-                                        	<font  v-if="0==item.status" >新建</font>
-                                        	<font  v-if="1==item.status" >取帧中</font>
-                                        	<font  v-if="2==item.status"  >压缩中</font>
-                                        	<font  v-if="3==item.status" >分析中</font>
-                                        	<font  v-if="item.status===4" >完成</font>
+                                        	<font  v-if="-1==item.status" >未识别车牌</font>
+                                        	<font  v-if="0==item.status" >未违停</font>
+                                        	<font  v-if="1==item.status"  style="color: red;" >违停</font>
                                         </td>
                                         <td>
-                                            <button class='btn btn-info btn-xs' v-bind:src="item.name" onclick="_goVedio(this)" >查看视频</button>
-                                            <button class='btn btn-info btn-xs' v-if="4==item.status" onclick="_taskDetail(this)" v-bind:id="item.id" >分析结果</button>
+                                            <button class='btn btn-info btn-xs' v-bind:id="item.id" onclick="_goDetail(this)" >查看该时间</button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -215,7 +208,7 @@
 <script src="/themes/js/vue.min.js"></script>
 <script src="/themes/layer/layer.js"></script>
 <script src="/themes/laydate/laydate.js"></script>
-<script src="/themes/vedio/js/task.js?_v=12"></script>
+<script src="/themes/vedio/js/log_list.js?_v=16"></script>
 <!--[if lt IE 9]>
 <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
 <![endif]-->

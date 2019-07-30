@@ -18,9 +18,9 @@ import ws.schild.jave.MultimediaObject;
 public class VedioUtils {
 
 	// Linux与mac下 ffmpeg的路径
-	private static String ffmpegEXE = "/usr/local/Cellar/ffmpeg/4.1.4_1/bin/ffmpeg";
+//	private static String ffmpegEXE = "/usr/local/Cellar/ffmpeg/4.1.4_1/bin/ffmpeg";
 
-	// private static String ffmpegEXE = "/usr/local/ffmpeg/bin/ffmpeg";
+	 private static String ffmpegEXE = "/usr/local/ffmpeg/bin/ffmpeg";
 
 	/**
 	 * 开辟线程处理流

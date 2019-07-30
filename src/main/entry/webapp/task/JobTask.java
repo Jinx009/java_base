@@ -13,8 +13,12 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import common.helper.StringUtil;
+import database.models.qj.QjDeviceLog;
 import database.models.vedio.VedioTask;
 import service.basicFunctions.parking.ParkingAreaService;
+import service.basicFunctions.qj.QjDeviceLogService;
+import service.basicFunctions.vedio.VedioLogService;
 import service.basicFunctions.vedio.VedioTaskService;
 import utils.VedioUtils;
 import utils.msg.AlimsgUtils;
@@ -30,6 +34,27 @@ public class JobTask {
 	private ParkingAreaService parkingAreaService;
 	@Autowired
 	private VedioTaskService vedioTaskService;
+	@Autowired
+	private VedioLogService vedioLogService;
+	@Autowired
+	private QjDeviceLogService qjDeviceLogService;
+	
+	@Scheduled(fixedRate = 1000 * 3600, initialDelay = 1000)
+	public void qjCheck() {
+		String[] s = new String[]{"0009190329000022","0009190600000042","0009190600000039","0009190600000036",
+				"0009190600000004","0009190600000003","0009190600000001","0009190329000016","0009190329000007"};
+		for(String str:s){
+			QjDeviceLog log = qjDeviceLogService.getNearBySn(str);
+			Date date = new Date();
+			if(log!=null){
+				if(date.getTime()-log.getCreateTime().getTime()>5400000){
+					AlimsgUtils.sendCheck(log.getSnValue(), "SMS_171565355", "展为","18217700275");
+					AlimsgUtils.sendCheck(log.getSnValue(), "SMS_171565355", "展为","13918073897");
+					AlimsgUtils.sendCheck(log.getSnValue(), "SMS_171565355", "展为","18108196835");
+				}
+			}
+		}
+	}
 
 	@Scheduled(fixedRate = 1000 * 3600, initialDelay = 1000)
 	public void init() {
@@ -38,24 +63,24 @@ public class JobTask {
 		Date parkingArea3 = parkingAreaService.find(11).getCreateTime();// vedio
 		Date date = new Date();
 		if (parkingArea == null) {
-			AlimsgUtils.sendCheck("vedio", "SMS_140735042", "展为","18217700275");
+			AlimsgUtils.sendCheck("vedio", "SMS_171565355", "展为","18217700275");
 		} else {
 			if((date.getTime()-parkingArea.getTime())>(1000*3600)){
-				AlimsgUtils.sendCheck("vedio", "SMS_140735042", "展为","18217700275");
+				AlimsgUtils.sendCheck("vedio", "SMS_171565355", "展为","18217700275");
 			}
 		}
 		if (parkingArea2 == null) {
-			AlimsgUtils.sendCheck("1.1", "SMS_140735042", "展为","18217700275");
+			AlimsgUtils.sendCheck("1.1", "SMS_171565355", "展为","18217700275");
 		} else {
 			if((date.getTime()-parkingArea2.getTime())>(1000*3600)){
-				AlimsgUtils.sendCheck("1.1", "SMS_140735042", "展为","18217700275");
+				AlimsgUtils.sendCheck("1.1", "SMS_171565355", "展为","18217700275");
 			}
 		}
 		if (parkingArea3 == null) {
-			AlimsgUtils.sendCheck("1.4", "SMS_140735042", "展为","18217700275");
+			AlimsgUtils.sendCheck("1.4", "SMS_171565355", "展为","18217700275");
 		} else {
 			if((date.getTime()-parkingArea3.getTime())>(1000*3600)){
-				AlimsgUtils.sendCheck("1.4", "SMS_140735042", "展为","18217700275");
+				AlimsgUtils.sendCheck("1.4", "SMS_171565355", "展为","18217700275");
 			}
 		}
 	}
@@ -136,9 +161,13 @@ public class JobTask {
 			                    result.append(s);
 			                }
 			                br.close();
-			                vedioTask.setResult(result.toString());
-			                vedioTask.setStatus(4);
-			                vedioTaskService.update(vedioTask);
+			                String res = result.toString();
+			                if(StringUtil.isNotBlank(res)){
+			                	vedioTask.setResult(result.toString());
+				                vedioTask.setStatus(4);
+				                vedioTaskService.update(vedioTask);
+				                insertLog(vedioTask);
+			                }
 						} catch (Exception e) {
 							log.error("e:{}",e);
 						}
@@ -147,5 +176,17 @@ public class JobTask {
 		}
 	}
 	
+	
+	private void insertLog(VedioTask vedioTask){
+		try {
+			vedioLogService.insertVedioLog(vedioTask);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		AlimsgUtils.sendCheck("0009190600000042", "SMS_171565355", "展为","18217700275");
+	}
 
 }

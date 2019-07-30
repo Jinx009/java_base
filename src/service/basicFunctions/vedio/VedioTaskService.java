@@ -40,5 +40,13 @@ public class VedioTaskService {
 	public void update(VedioTask vedioTask) {
 		vedioTaskDao.update(vedioTask);
 	}
+
+	public List<VedioTask> findAll() {
+		return vedioTaskDao.findAll();
+	}
+
+	public VedioTask  find(Integer id) {
+		return vedioTaskDao.find(id);
+	}
 	
 }

@@ -143,7 +143,19 @@ public class VedioTaskController extends BaseController {
 	public Resp<?> list(){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			
+			return new Resp<>(vedioTaskService.findAll());
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/find")
+	@ResponseBody
+	public Resp<?> find(Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(vedioTaskService.find(id));
 		} catch (Exception e) {
 			log.error("e:{}",e);
 		}

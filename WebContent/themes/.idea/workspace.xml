@@ -50,7 +50,7 @@
       <file leaf-file-name="task_new.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vedio/task_new.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
+            <state relative-caret-position="1161">
               <caret line="108" column="47" selection-start-line="108" selection-start-column="47" selection-end-line="108" selection-end-column="47" />
               <folding />
             </state>
@@ -296,12 +296,12 @@
       <workItem from="1562892107911" duration="5675000" />
       <workItem from="1563958880203" duration="68000" />
       <workItem from="1564370440718" duration="2824000" />
-      <workItem from="1564450006485" duration="3225000" />
+      <workItem from="1564450006485" duration="3562000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16100000" />
+    <option name="totallyTimeSpent" value="16437000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="829" extended-state="6" />
@@ -677,7 +677,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vedio/task_new.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
+        <state relative-caret-position="1161">
           <caret line="108" column="47" selection-start-line="108" selection-start-column="47" selection-end-line="108" selection-end-column="47" />
           <folding />
         </state>

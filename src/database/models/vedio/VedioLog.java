@@ -33,15 +33,25 @@ public class VedioLog {
 	private String vedioTime;
 	@Column(name = "status")
 	private Integer status;
+	@Column(name = "pic_num")
+	private Integer picNumber;
 	@Column(name = "car_number")
 	private String carNumber;
 	@Column(name = "cp_x")
-	private String cp_x;
+	private String cpX;
 	@Column(name = "cp_y")
 	private String cpY;
+	@Column(name = "cp_x2")
+	private String cpX2;
+	@Column(name = "cp_y2")
+	private String cpY2;
 	@Column(name = "car_x")
 	private String carX;
 	@Column(name = "car_y")
 	private String carY;
+	@Column(name = "car_x2")
+	private String carX2;
+	@Column(name = "car_y2")
+	private String carY2;
 	
 }
