@@ -129,90 +129,65 @@
             </ol>
         </section>
         <!-- 主内容 -->
-        <section class="content" id="datas">
+        <section class="content">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">监测点设备</h3>
-                        </div>
-                        <div class="box-body table-responsive no-padding">
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>序列号</th>
-                                    <th>设备编号</th>
-                                    <th>区域编号</th>
-                                    <th>违停位置</th>
-                                    <th>车牌号</th>
-                                    <th>车牌颜色</th>
-                                    <th>描述</th>
-                                    <th>发生时间</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>3</td>
-                                    <td>19042804521310107745</td>
-                                    <td>JAZ028</td>
-                                    <td>03</td>
-                                    <td>川A888888</td>
-                                    <td>蓝色</td>
-                                    <td>解放路484号</td>
-                                    <td>2019-04-23 14:42:00</td>
-                                    <td>
-                                        <button class='btn btn-info btn-xs'  >查看视频</button>
-                                        <button class='btn btn-info btn-xs'  >查看图片</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>19042804521310107745</td>
-                                    <td>JAZ028</td>
-                                    <td>03</td>
-                                    <td>川A888888</td>
-                                    <td>蓝色</td>
-                                    <td>解放路484号</td>
-                                    <td>2019-04-23 14:42:00</td>
-                                    <td>
-                                        <button class='btn btn-info btn-xs'  >查看视频</button>
-                                        <button class='btn btn-info btn-xs'  >查看图片</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>19042804521310107745</td>
-                                    <td>JAZ028</td>
-                                    <td>03</td>
-                                    <td>川A888888</td>
-                                    <td>蓝色</td>
-                                    <td>解放路484号</td>
-                                    <td>2019-04-23 14:42:00</td>
-                                    <td>
-                                        <button class='btn btn-info btn-xs'  >查看视频</button>
-                                        <button class='btn btn-info btn-xs'  >查看图片</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="box-footer clearfix"
-                             style="width: 320px; float: right;">
-                            <div class="input-group">
-                                <span class="input-group-addon" onclick="_getData(0,1);">«</span>
-                                <span class="input-group-addon" onclick="_getData(1,0);">‹</span>
-                                <input type="text" style="text-align: center;"
-                                       onfocus="_getNowPage(this)" onblur="_getAllPage(this)"
-                                       value="当前第1页，共1页"
-                                       class="form-control"> <span class="input-group-addon"
-                                                                   onclick="_getData(1,1);">›</span> <span
-                                    class="input-group-addon" id="_end">»</span>
+                            <h3 class="box-title">分析日志</h3>
+                            <div class="box-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <div class="input-group-btn">
+                                        <a href="/themes/vedio/task_new.html"
+                                           type="button" style="float: right;" class="btn btn-info">新增分析</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>序列号</th>
+                                        <th>区域名称</th>
+                                        <th>视频索引</th>
+                                        <th>视频时长</th>
+                                        <th>开始时间</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="datas">
+                                    <tr v-for="item in datas">
+                                        <td v-text="item.id"></td>
+                                        <td v-text="item.areaName"></td>
+                                        <td v-text="item.name"></td>
+                                        <td v-text="item.time+'s'"></td>
+                                        <td v-text="vedioStart"></td>
+                                        <td></td>
+                                        <td>
+                                            <button class='btn btn-info btn-xs'>查看视频</button>
+                                            <button class='btn btn-info btn-xs' v-if="3==item.status">分析结果</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box-footer clearfix"
+                                 style="width: 320px; float: right;">
+                                <div class="input-group">
+                                    <span class="input-group-addon" onclick="_getData(0,1);">«</span>
+                                    <span class="input-group-addon" onclick="_getData(1,0);">‹</span>
+                                    <input type="text" style="text-align: center;"
+                                           onfocus="_getNowPage(this)" onblur="_getAllPage(this)"
+                                           value="当前第1页，共1页"
+                                           class="form-control"> <span class="input-group-addon"
+                                                                       onclick="_getData(1,1);">›</span> <span
+                                        class="input-group-addon" id="_end">»</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
     </div>
     <!-- 底部导航 -->
@@ -235,6 +210,7 @@
 <script src="/themes/js/vue.min.js"></script>
 <script src="/themes/layer/layer.js"></script>
 <script src="/themes/laydate/laydate.js"></script>
+<script src="/themes/vedio/js/task.js"></script>
 <!--[if lt IE 9]>
 <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
 <![endif]-->

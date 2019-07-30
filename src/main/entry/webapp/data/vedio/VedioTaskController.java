@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import common.helper.StringUtil;
 import database.models.vedio.VedioArea;
 import database.models.vedio.VedioTask;
 import main.entry.webapp.BaseController;
@@ -43,7 +44,7 @@ public class VedioTaskController extends BaseController {
 	
 	@RequestMapping(path = "save")
 	@ResponseBody
-	public Resp<?> save(String name,Integer areaId,String vedioStart,@RequestParam("file") MultipartFile file, 
+	public Resp<?> save(Integer areaId,String vedioStart,@RequestParam("file") MultipartFile file, 
 			HttpServletRequest request,
 			HttpServletResponse response){
 		Resp<?> resp = new Resp<>(false);
@@ -64,9 +65,12 @@ public class VedioTaskController extends BaseController {
 		        	resp.setMsg("仅支持.mp4视频");
 		        	return resp;
 		        }else{
+		        	if(StringUtil.isBlank(vedioStart)){
+		        		vedioStart = "2019-01-01 00:00:00";
+		        	}
 		        	VedioTask  vedioTask = vedioTaskService.save(dPath, 0l, areaId,vedioStart,"");
 		        	String filePath = dPath+"."+suffix;
-					File serverFile = new File(dir.getAbsolutePath() + File.separator +filePath);
+					File serverFile = new File(dir.getAbsolutePath() +"/" +filePath);
 					in = file.getInputStream();
 					out = new FileOutputStream(serverFile);
 					byte[] b = new byte[1024];
@@ -76,9 +80,11 @@ public class VedioTaskController extends BaseController {
 					}
 					out.close();
 					in.close();
+					log.warn("---{}",serverFile.getAbsolutePath());
 					vedioTask.setTime(VedioUtils.getVedioTime(serverFile));
-					vedioTask.setSize(VedioUtils.getVedioSize(serverFile));
+					vedioTask.setSize(vedioArea.getWidth()+"x"+vedioArea.getHeight());
 					vedioTask.setDirPath(dir.getAbsolutePath());
+					vedioTask.setName(dPath);
 					vedioTaskService.update(vedioTask);
 					new Thread(){
 						public void run(){
@@ -100,9 +106,9 @@ public class VedioTaskController extends BaseController {
 						            VedioUtils.covPic(fileName,time,vedioTask.getDirPath()+"/ffmpeg_"+(i+1)+".jpg",vedioTask.getSize());
 						            files[i] = new File(vedioTask.getDirPath()+"/ffmpeg_"+(i+1)+".jpg");
 						        }
-						        VedioUtils.zipFiles(files, new File(vedioTask.getDirPath()+"/"+vedioTask.getName()+".zip"));
-						        vedioTask.setStatus(2);
+						        vedioTask.setStatus(1);
 						        vedioTask.setNum((int)num);
+						        vedioTaskService.update(vedioTask);
 							} catch (ParseException e) {
 								e.printStackTrace();
 							}
@@ -127,6 +133,19 @@ public class VedioTaskController extends BaseController {
 			} catch (IOException e) {
 				log.error("close error:{}",e);
 			}
+		}
+		return resp;
+	}
+	
+	
+	@RequestMapping(path = "/list")
+	@ResponseBody
+	public Resp<?> list(){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			
+		} catch (Exception e) {
+			log.error("e:{}",e);
 		}
 		return resp;
 	}

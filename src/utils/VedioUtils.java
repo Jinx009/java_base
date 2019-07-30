@@ -12,137 +12,131 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import common.helper.StringUtil;
-import it.sauronsoftware.jave.Encoder;
-import it.sauronsoftware.jave.EncoderException;
-import it.sauronsoftware.jave.MultimediaInfo;
+import ws.schild.jave.MultimediaInfo;
+import ws.schild.jave.MultimediaObject;
 
 public class VedioUtils {
 
+	// Linux与mac下 ffmpeg的路径
+	private static String ffmpegEXE = "/usr/local/Cellar/ffmpeg/4.1.4_1/bin/ffmpeg";
 
-    // Linux与mac下 ffmpeg的路径
-    private static String ffmpegEXE = "/usr/local/Cellar/ffmpeg/4.1.2/bin/ffmpeg";
+	// private static String ffmpegEXE = "/usr/local/ffmpeg/bin/ffmpeg";
 
-//    private static String ffmpegEXE = "/usr/local/bin/ffmpeg";
+	/**
+	 * 开辟线程处理流
+	 * 
+	 * @param process
+	 */
+	private static void dealStream(Process process) {
+		if (process == null) {
+			return;
+		}
+		// 处理InputStream的线程
+		new Thread() {
+			@Override
+			public void run() {
+				BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+				try {
+					while ((in.readLine()) != null) {
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						in.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
+		// 处理ErrorStream的线程
+		new Thread() {
+			@Override
+			public void run() {
+				BufferedReader err = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+				try {
+					while ((err.readLine()) != null) {
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						err.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
+	}
 
-    /**
-     * 开辟线程处理流
-     * @param process
-     */
-    private static void dealStream(Process process) {
-        if (process == null) {
-            return;
-        }
-        // 处理InputStream的线程
-        new Thread() {
-            @Override
-            public void run() {
-                BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                try {
-                    while ((in.readLine()) != null) {
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        in.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
-        // 处理ErrorStream的线程
-        new Thread() {
-            @Override
-            public void run() {
-                BufferedReader err = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                try {
-                    while ((err.readLine()) != null) {
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        err.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
-    }
+	public static void main(String[] args) {
+		System.out.println(getVedioTime(new File(
+				"/Users/jinx/Documents/jobs/git_mine/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/java_base/themes/upload_files/vedio/19042804521310107745_1564456102642/19042804521310107745_1564456102642.mp4")));
+	}
 
-	
 	/**
 	 * 获取视频时长：秒
+	 * 
 	 * @param file
 	 * @return
 	 */
 	public static Long getVedioTime(File file) {
-		Encoder encoder = new Encoder();
-		MultimediaInfo m;
 		try {
-			m = encoder.getInfo(file);
-			long ls = m.getDuration();
-			return ls / 1000;
-		} catch (EncoderException e) {
+			MultimediaObject instance = new MultimediaObject(file);
+			MultimediaInfo result = instance.getInfo();
+			long ls = result.getDuration() / 1000;
+			return ls;
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return 0l;
 	}
 	
-	public static String getVedioSize(File file) {
-		Encoder encoder = new Encoder();
-		MultimediaInfo m;
-		try {
-			m = encoder.getInfo(file);
-			return m.getVideo().getSize().getWidth()+"x"+m.getVideo().getSize().getHeight();
-		} catch (EncoderException e) {
-			e.printStackTrace();
-		}
-		return "";
-	}
 	
-	
-	 /**
-     * 截取一帧作为图片
-     * @param fileName
-     * ffmpeg -i /Users/jinx/Downloads/test.mp4 -y -f image2 -ss 00:00:01 -vframes 1 /Users/jinx/Downloads/test.jpeg
-     * @return
-     */
-    public static boolean covPic(String fileName,String time,String outName,String size) {
-        List<String> command = new ArrayList<String>();
-        command.add(ffmpegEXE);
-        command.add("-i");
-        command.add(fileName);
-        command.add("-y");
-        command.add("-f");
-        command.add("image2");
-        command.add("-ss");
-        command.add(time);
-        command.add("-vframes");
-        command.add("1");
-        command.add("-s");
-        command.add(size);
-        if(StringUtil.isNotBlank(outName)){
-            command.add(outName);
-        }else{
-            command.add(fileName+".jpeg");
-        }
-        System.out.println(command);
-        try {
-            Process videoProcess = new ProcessBuilder(command).start();
-            dealStream(videoProcess);
-            videoProcess.waitFor();
-            return true;
-        } catch (Exception e) {
-        }
-        return false;
-    }
 
+	/**
+	 * 截取一帧作为图片
+	 * 
+	 * @param fileName
+	 *            ffmpeg -i /Users/jinx/Downloads/test.mp4 -y -f image2 -ss
+	 *            00:00:01 -vframes 1 /Users/jinx/Downloads/test.jpeg
+	 * @return
+	 */
+	public static boolean covPic(String fileName, String time, String outName, String size) {
+		List<String> command = new ArrayList<String>();
+		command.add(ffmpegEXE);
+		command.add("-i");
+		command.add(fileName);
+		command.add("-y");
+		command.add("-f");
+		command.add("image2");
+		command.add("-ss");
+		command.add(time);
+		command.add("-vframes");
+		command.add("1");
+		command.add("-s");
+		command.add(size);
+		if (StringUtil.isNotBlank(outName)) {
+			command.add(outName);
+		} else {
+			command.add(fileName + ".jpeg");
+		}
+		System.out.println(command);
+		try {
+			Process videoProcess = new ProcessBuilder(command).start();
+			dealStream(videoProcess);
+			videoProcess.waitFor();
+			return true;
+		} catch (Exception e) {
+		}
+		return false;
+	}
 
 	/**
 	 * 多文件压缩为一个文件
+	 * 
 	 * @param srcFiles
 	 * @param zipFile
 	 */
