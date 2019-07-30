@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import common.helper.StringUtil;
 import ws.schild.jave.MultimediaInfo;
 import ws.schild.jave.MultimediaObject;
@@ -21,6 +24,8 @@ public class VedioUtils {
 //	private static String ffmpegEXE = "/usr/local/Cellar/ffmpeg/4.1.4_1/bin/ffmpeg";
 
 	 private static String ffmpegEXE = "/usr/local/ffmpeg/bin/ffmpeg";
+	 
+	 private static final Logger log = LoggerFactory.getLogger(VedioUtils.class);
 
 	/**
 	 * 开辟线程处理流
@@ -36,9 +41,11 @@ public class VedioUtils {
 			@Override
 			public void run() {
 				BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+				String line = null;
 				try {
-					while ((in.readLine()) != null) {
-					}
+					while ((line = in.readLine()) != null) {
+	                    log.warn("output: " + line);
+	                }
 				} catch (IOException e) {
 					e.printStackTrace();
 				} finally {
@@ -55,9 +62,11 @@ public class VedioUtils {
 			@Override
 			public void run() {
 				BufferedReader err = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+				String line = null;
 				try {
-					while ((err.readLine()) != null) {
-					}
+					while ((line = err.readLine()) != null) {
+	                    log.warn("output: " + line);
+	                }
 				} catch (IOException e) {
 					e.printStackTrace();
 				} finally {
@@ -123,7 +132,6 @@ public class VedioUtils {
 		} else {
 			command.add(fileName + ".jpeg");
 		}
-		System.out.println(command);
 		try {
 			Process videoProcess = new ProcessBuilder(command).start();
 			dealStream(videoProcess);
