@@ -6,7 +6,7 @@ $(function(){
 var _taskDetailId;
 function _getData(){
 	$.ajax({
-		url:'/d/vedioLog/findByTaskId?id='+_taskDetailId,
+		url:'/d/vedioLog/findByTaskId?taskId='+_taskDetailId,
 		type:'get',
 		dataType:'json',
 		success:function(res){

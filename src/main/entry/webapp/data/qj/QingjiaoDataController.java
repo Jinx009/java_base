@@ -811,7 +811,7 @@ public class QingjiaoDataController extends BaseController {
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
 		String result =  decimalFormat.format(g);
-		log.warn("result:{}", result);
+//		log.warn("result:{}", result);
 		return result;
 	}
 
@@ -849,7 +849,7 @@ public class QingjiaoDataController extends BaseController {
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
 		String result =  decimalFormat.format(g);
-		log.warn("result:{}", result);
+//		log.warn("result:{}", result);
 		return result;
 	}
 
@@ -887,7 +887,7 @@ public class QingjiaoDataController extends BaseController {
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
 		String result =  decimalFormat.format(g);
-		log.warn("result:{}", result);
+//		log.warn("result:{}", result);
 		return result;
 	}
 }

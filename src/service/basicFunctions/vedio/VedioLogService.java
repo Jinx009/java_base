@@ -40,12 +40,12 @@ public class VedioLogService {
 			String s = jsonObject.getString("ffmpeg_"+(i+1)+".jpg");
 			if(StringUtil.isNotBlank(s)){
 				JSONObject obj = JSONObject.parseObject(s);
-				insert(obj,0,vedioArea,vedioTask,format.format(d));
+				insert(obj,0,vedioArea,vedioTask,format.format(d),(i+1));
 			}
 		}
 	}
 	
-	private void insert(JSONObject obj,int num,VedioArea area,VedioTask task,String d){
+	private void insert(JSONObject obj,int num,VedioArea area,VedioTask task,String d,int picNum){
 		String ss = obj.getString(""+num+"");
 		if(StringUtil.isNotBlank(ss)){
 			num++;
@@ -60,7 +60,7 @@ public class VedioLogService {
 			vedioLog.setCarY(cArry.get(1));
 			vedioLog.setCarY2(cArry.get(3));
 			vedioLog.setStatus(-1);
-			vedioLog.setPicNumber(num);
+			vedioLog.setPicNumber(picNum);
 			JSONArray jsonArray = JSONObject.parseArray( JSONObject.parseObject(ss).getString("chepai"));
 			vedioLog.setCpX("");
 			vedioLog.setCpX2("");
@@ -88,7 +88,7 @@ public class VedioLogService {
 				}
 			}
 			vedioLogDao.save(vedioLog);
-			insert(obj, num,area,task,d);
+			insert(obj, num,area,task,d,picNum);
 		}
 	}
 
