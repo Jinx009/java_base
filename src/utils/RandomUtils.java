@@ -7,9 +7,8 @@ import java.util.Set;
 /**
  * 工具类-随机数
  * 
- * @author ZhuJunjie
+ * @author Jinx
  * @version 2.0
- * @since 2015-06-01
  */
 public class RandomUtils {
 
