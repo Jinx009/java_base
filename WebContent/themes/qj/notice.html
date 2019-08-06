@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>报警记录</title>
+<title>通知管理</title>
 <link
 	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -32,9 +32,9 @@
 				<ul class="nav navbar-nav">
 					<li><a href="show.html">地理位置</a></li>
 					<li><a href="device.html">设备管理</a></li>
-					<li class="active"><a href="logs.html">报警管理</a></li>
+					<li><a href="logs.html">报警管理</a></li>
 					<li><a href="data.html">数据曲线</a></li>
-					<li ><a href="notice.html">通知管理</a></li>
+					<li class="active"><a href="notice.html">通知管理</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a target="_blank" href="http://www.zhanway.com">走进展为</a></li>
@@ -49,14 +49,13 @@
 				<div class="input-group"
 					style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top: 10px; float: left;">
 					<input type="text" class="form-control" id="mac"
-						placeholder="请输入mac号码" value="0009190600000001">
+						placeholder="请输入mac号码">
 				</div>
 				<div class="input-group"
 					style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top: 10px; float: left;">
 					<input type="text" class="form-control" readonly="readonly"
 						id="datepicker"> <span class="input-group-btn">
-						<button class="btn btn-default" onclick="_getData();"
-							type="button">&nbsp;查&nbsp;看&nbsp;</button>
+						<button class="btn btn-default" onclick="_add()" type="button">&nbsp;新&nbsp;增&nbsp;</button>
 					</span>
 				</div>
 			</div>
@@ -66,84 +65,24 @@
 	<div class="row" style="width: 98%; margin-left: 1%;">
 		<div class="col-md-12" id="data">
 			<div class="panel panel-default" style="border-color: white;">
-				<div class="panel-heading">报警记录</div>
+				<div class="panel-heading">通知列表</div>
 				<div class="panel-body">
 					<div style="margin-bottom: 10px; width: 100%;">
 						<table class="table table-bordered">
-							<tbody v-for="item in datas">
 								<tr>
-									<th>SN</th>
-									<th>电压</th>
-									<th>x值</th>
-									<th>y值</th>
-									<th>z值</th>
-									<th>时间</th>
-									<th>类型</th>
-									<th>x报警</th>
-									<th>y报警</th>
-									<th>z报警</th>
-									<th>acc_x</th>
-									<th>acc_y</th>
-									<th>acc_z</th>
-									<th>acc_x报警</th>
-									<th>acc_y报警</th>
-									<th>acc_z报警</th>
+									<th>编号</th>
+									<th>MAC</th>
+									<th>添加时间</th>
+									<th>操作</th>
 								</tr>
-								<tr>
-									<td v-text="item.snValue"></td>
-									<td v-text="item.voltage"></td>
-									<td v-text="item.baseX"></td>
-									<td v-text="item.baseY"></td>
-									<td v-text="item.baseZ"></td>
+								<tbody >
+								<tr v-for="item in datas">
+									<td v-text="item.id"></td>
+									<td v-text="item.mac"></td>
 									<td v-text="item.createTime"></td>
-									<td v-text="item.type"></td>
-									<td v-text="item.xtype"></td>
-									<td v-text="item.ytype"></td>
-									<td v-text="item.ztype"></td>
-									<td v-text="item.baseAcceX"></td>
-									<td v-text="item.baseAcceY"></td>
-									<td v-text="item.baseAcceZ"></td>
-									<td v-text="item.acceXType"></td>
-									<td v-text="item.acceYType"></td>
-									<td v-text="item.acceZType"></td>
+									<td><a class="btn btn-danger" v-bind:id="item.id"
+										onclick="_del(this)">删除</a></td>
 								</tr>
-								<tr>
-									<th>acc_x最大</th>
-									<th>acc_y最大</th>
-									<th>acc_z最大</th>
-									<th>acc_x最小</th>
-									<th>acc_y最小</th>
-									<th>acc_z最小</th>
-									<th>硬件</th>
-									<th>软件</th>
-									<th>rsrp</th>
-									<th>信号</th>
-									<th>pci</th>
-									<th>snr</th>
-									<th>温度</th>
-									<th>sum_s</th>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td v-text="item.accxMax"></td>
-									<td v-text="item.accyMax"></td>
-									<td v-text="item.acczMax"></td>
-									<td v-text="item.accxMin"></td>
-									<td v-text="item.accyMin"></td>
-									<td v-text="item.acczMin"></td>
-									<td v-text="item.hardV"></td>
-									<td v-text="item.softV"></td>
-									<td v-text="item.rsrp"></td>
-									<td v-text="item.rssi"></td>
-									<td v-text="item.pci"></td>
-									<td v-text="item.snr"></td>
-									<td v-text="item.tem"></td>
-									<td v-text="item.sum_s"></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr height="20px;"></tr>
 							</tbody>
 						</table>
 					</div>
@@ -168,44 +107,43 @@
 <script src="js/base.js"></script>
 <script type="text/javascript">
 	$(function() {
-/* 		$('#datepicker').val(new Date().Format('yyyy-MM-dd')); */
-		laydate.render({
-			elem : '#datepicker',
-			type: 'datetime' ,
-			 range: true
-		});
+		_getData();
 	})
+	function _add(){
+		var mac = $('#mac').val();
+		$.ajax({
+			url:'/home/cloud/qjNotcie/save?mac='+mac,
+			dataType:'json',
+			type:'get',
+			success:function(res){
+				layer.alert('操作成功！');
+				_getData();
+			}
+		})
+	}
+	
+	function _del(_e){
+		var id = $(_e).attr('id');
+		$.ajax({
+			url:'/home/cloud/qjNotcie/del?id='+id,
+			dataType:'json',
+			type:'get',
+			success:function(res){
+				layer.alert('操作成功！');
+				_getData();
+			}
+		})
+	}
+	
 	var _d = '';
 	function _getData() {
-		var mac = $('#mac').val();
-		var date = $('#datepicker').val();
-		if(date==null||date==''){
-			layer.alert('请选择日期！');
-		}else{
 			$.ajax({
-				url : '/home/cloud/qj/logs',
+				url : '/home/cloud/qjNotcie/list',
 				dataType : 'json',
-				data : 'mac=' + mac + '&date=' + date,
 				type : 'post',
 				success : function(res) {
 					for ( var i in res.data) {
 						res.data[i].createTime = jsDateTime(res.data[i].createTime);
-						res.data[i].sum_s = '';
-						if (res.data[i].rsrp != null
-								&& res.data[i].rsrp != '') {
-							res.data[i].rsrp = parseInt(res.data[i].rsrp);
-						}
-						if (res.data[i].pci != null
-								&& res.data[i].pci != '') {
-							res.data[i].pci = parseInt(res.data[i].pci);
-						}
-						if (res.data[i].snr != null
-								&& res.data[i].snr != '') {
-							res.data[i].snr = parseInt(res.data[i].snr);
-						}
-						if(res.data[i].acczMin!=''&&res.data[i].acczMin!=null){
-							res.data[i].sum_s = parseFloat(res.data[i].acczMin)+parseFloat(res.data[i].accyMin)+parseFloat(res.data[i].accxMin);
-						}
 					}
 					if (_d == '') {
 						_d = new Vue({
@@ -217,10 +155,8 @@
 					} else {
 						_d.datas = res.data;
 					}
-
 				}
 			})
-		}
 	}
 	Date.prototype.Format = function(fmt) {
 		var o = {

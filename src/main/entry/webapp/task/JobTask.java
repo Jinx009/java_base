@@ -15,9 +15,11 @@ import org.springframework.stereotype.Component;
 
 import common.helper.StringUtil;
 import database.models.qj.QjDeviceLog;
+import database.models.qj.QjNotice;
 import database.models.vedio.VedioTask;
 import service.basicFunctions.parking.ParkingAreaService;
 import service.basicFunctions.qj.QjDeviceLogService;
+import service.basicFunctions.qj.QjNoticeService;
 import service.basicFunctions.vedio.VedioLogService;
 import service.basicFunctions.vedio.VedioTaskService;
 import utils.VedioUtils;
@@ -38,13 +40,14 @@ public class JobTask {
 	private VedioLogService vedioLogService;
 	@Autowired
 	private QjDeviceLogService qjDeviceLogService;
+	@Autowired
+	private QjNoticeService qjNoticeService;
 	
 	@Scheduled(fixedRate = 1000 * 3600, initialDelay = 1000)
 	public void qjCheck() {
-		String[] s = new String[]{"0009190329000022","0009190600000042","0009190600000039","0009190600000036",
-				"0009190600000004","0009190600000003","0009190600000001","0009190329000016","0009190329000007"};
-		for(String str:s){
-			QjDeviceLog log = qjDeviceLogService.getNearBySn(str);
+		List<QjNotice> list = qjNoticeService.findAll();
+		for(QjNotice str:list){
+			QjDeviceLog log = qjDeviceLogService.getNearBySn(str.getMac());
 			Date date = new Date();
 			if(log!=null){
 				if(date.getTime()-log.getCreateTime().getTime()>5400000){
