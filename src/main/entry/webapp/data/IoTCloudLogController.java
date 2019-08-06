@@ -73,7 +73,7 @@ public class IoTCloudLogController extends BaseController{
 	
 	
 	public static void main(String[] args) {
-		String s = "0009190600000001".substring(0, 8);
+		String s = "001E2FE4".substring(0, 8);
 		System.out.println(Long.parseLong(s, 16));
 	}
 	

@@ -7,7 +7,7 @@ function _save(){
 	var _value1 = $('#value1').val();
 	var value2 = $('#value2').val();
 	var cmdName = $('#cmdName').val();
-	var params = 'mac='+_mac+'&value1='+_value1+'&value2='+_value2+'&cmdName='+_cmdName;
+	var params = 'mac='+_mac+'&value1='+_value1+'&value2='+value2+'&cmdName='+cmdName;
 	$.ajax({
 		url:'/iot/log/save',
 		data:params,
@@ -15,9 +15,8 @@ function _save(){
 		type:'post',
 		success:function(res){
 			if('200'==res.code){
-				layer.alert('下发成功！',function(){
-					_getData(0,1);
-				})
+				layer.alert('下发成功！');
+				_getData(0,1);
 			}
 		}
 	})
@@ -29,7 +28,7 @@ function _getData(_type,_index){
 	_data.p = _getPage(_type,_index);
 	if(_data.p!=-1){
 		$.ajax({
-			url:'/iot/qj/cmdList?p='+_data.p,
+			url:'/iot/log/cmdList?p='+_data.p,
 			dataType:'json',
 			type:'post',
 			success:function(res){
