@@ -22,6 +22,11 @@ public class HomeController {
 		return "/home/index";
 	}
 	
+	@RequestMapping(path = "/qj/cmd")
+	public String qj_cmd(HttpServletRequest request){
+		return "/home/qj_cmd";
+	}
+	
 	@RequestMapping(path = "/unicom/device")
 	public String unicom_device(HttpServletRequest request){
 		return "/home/unicom_device";

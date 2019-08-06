@@ -1,5 +1,6 @@
 package main.entry.webapp.data;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,18 @@ public class IoTCloudDeviceController extends BaseController{
 		}
 		return resp;
 	}
+	
+	@RequestMapping(path = "/localIp")
+	@ResponseBody
+	public Resp<?> type(String localIp){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(iotCloudDeviceService.findByLocalIp(localIp) );
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	
 }

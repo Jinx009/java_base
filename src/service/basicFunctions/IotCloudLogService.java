@@ -30,6 +30,22 @@ public class IotCloudLogService {
 	public List<IotCloudLog> findByMacLike(String mac) {
 		return ioTCloudLogDao.findByMacLike(mac);
 	}
+
+	public PageDataList<IotCloudLog> cmdList(Integer p) {
+		return ioTCloudLogDao.cmdList(p);
+	}
+
+	public IotCloudLog saveA(IotCloudLog iotCloudLog) {
+		return ioTCloudLogDao.save(iotCloudLog);
+	}
+
+	public void update(IotCloudLog iotCloudLog) {
+		ioTCloudLogDao.update(iotCloudLog);
+	}
+
+	public IotCloudLog findById(int dec_num) {
+		return ioTCloudLogDao.find(dec_num);
+	}
 	
 	
 }

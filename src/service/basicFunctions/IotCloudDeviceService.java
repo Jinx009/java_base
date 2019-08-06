@@ -50,5 +50,6 @@ public class IotCloudDeviceService {
 	public List<IoTCloudDevice> findByLocalIp(String localIp) {
 		return  iotCloudDeviceDao.findByLocalIp(localIp);
 	}
+
 	
 }

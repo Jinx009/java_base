@@ -37,6 +37,12 @@ public class IotCloudLog {
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
+	@Column(name = "cmd_name")
+	private String  cmdName;
+	@Column(name = "status")
+	private Integer  status;
+	@Column(name = "cmd_type")
+	private Integer  cmdType;
 	
 	
 }

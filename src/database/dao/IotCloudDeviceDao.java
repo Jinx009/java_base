@@ -46,5 +46,6 @@ public class IotCloudDeviceDao extends BaseDao<IoTCloudDevice>{
 		return findByCriteria(param);
 	}
 
+
 	
 }

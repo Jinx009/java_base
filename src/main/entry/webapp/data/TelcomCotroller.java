@@ -54,8 +54,6 @@ public class TelcomCotroller extends BaseController {
 	@Autowired
 	private PuzhiJobService puzhiJobService;
 
-	
-	
 	@RequestMapping(path = "/na/iocm/devNotify/v1.1.0/addDevice", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Resp<?> addDevice(@RequestBody String r) {
@@ -69,7 +67,7 @@ public class TelcomCotroller extends BaseController {
 		return resp;
 
 	}
-	
+
 	@RequestMapping(path = "/na/iocm/devNotify/v1.1.0/reportCmdExecResult", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Resp<?> cmd(@RequestBody String r) {
@@ -83,7 +81,7 @@ public class TelcomCotroller extends BaseController {
 		return resp;
 
 	}
-	
+
 	@RequestMapping(path = "/na/iocm/devNotify/v1.1.0/commandRspData", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Resp<?> commandRspData(@RequestBody String r) {
@@ -173,13 +171,13 @@ public class TelcomCotroller extends BaseController {
 		}
 		return null;
 	}
-	
+
 	@RequestMapping(path = "/test")
 	@ResponseBody
 	public Resp<?> test() {
 		try {
 			IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByMac("0001181121000009");
-			sendChaozhou("000118112100000969000D00FFDB00FFE6000006000015000BE707D61FFDF500D800CF",ioTCloudDevice);
+			sendChaozhou("000118112100000969000D00FFDB00FFE6000006000015000BE707D61FFDF500D800CF", ioTCloudDevice);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -199,7 +197,8 @@ public class TelcomCotroller extends BaseController {
 				if (list != null && !list.isEmpty()) {
 					for (PushModel pushModel : list) {
 						TModel tModel = pushModel.getData();
-						IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(telcomPushDataModel.getDeviceId());
+						IoTCloudDevice ioTCloudDevice = iotCloudDeviceService
+								.findByDeviceId(telcomPushDataModel.getDeviceId());
 						IotCloudLog iotCloudLog = new IotCloudLog();
 						iotCloudLog.setData(tModel.getData());
 						iotCloudLog.setFromSite("telcom");
@@ -210,55 +209,110 @@ public class TelcomCotroller extends BaseController {
 						iotCloudLogService.save(iotCloudLog);
 						if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("SM_CZ")) {
 							String _s = "content=" + tModel.getData() + "&key=gdzxxxkjgfyxgs9981n";
-							HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="+ MD5Util.toMD5(_s).toLowerCase() + "&" + _s);
+							HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="
+									+ MD5Util.toMD5(_s).toLowerCase() + "&" + _s);
 						} else if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("QJ")) {
 							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/push?data=" + tModel.getData());
-						} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")) {
+						} else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")) {
 							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 							sendWuhanQj(ioTCloudDevice, iotCloudLog);
-						}else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_YICHANG")) {
-							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
+						} else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_YICHANG")) {
+							HttpUtils.get(
+									"http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
 							sendWuhanQj2_0(ioTCloudDevice, iotCloudLog);
-						}  else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
+						} else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
 							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 							sendBeijingQj(ioTCloudDevice, iotCloudLog);
-						} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
-							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
-							sendChaozhou(iotCloudLog.getData(),ioTCloudDevice);
-						}  else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_2.0")) {
-							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
-						}  else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0")) {
-							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data=" + tModel.getData());
-						} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_YIBIN")) {
-							sendYIBIN(ioTCloudDevice, iotCloudLog.getData());
-							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data=" + tModel.getData());
-						}else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_GUANGDONG")) {
-							sendGUANGDONG(ioTCloudDevice, iotCloudLog.getData());
-							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data=" + tModel.getData());
-						}else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
+						} else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
+							HttpUtils.get(
+									"http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
+							sendChaozhou(iotCloudLog.getData(), ioTCloudDevice);
+						} else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_2.0")) {
+							HttpUtils.get(
+									"http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
+						} else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0")) {
+							try {
+								String id = tModel.getData().substring(0, 8);
+								long dec_num = Long.parseLong(id, 16);
+								IotCloudLog log = iotCloudLogService.findById((int) dec_num);
+								if (log != null && log.getCmdType() == 1) {
+									log.setCmdType(1);
+									iotCloudLogService.update(log);
+								} else {
+									HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="
+											+ tModel.getData());
+								}
+							} catch (Exception e) {
+								log.error("e:{}", e);
+							}
+						} else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_YIBIN")) {
+							try {
+								String id = tModel.getData().substring(0, 8);
+								long dec_num = Long.parseLong(id, 16);
+								IotCloudLog log = iotCloudLogService.findById((int) dec_num);
+								if (log != null && log.getCmdType() == 1) {
+									log.setCmdType(1);
+									iotCloudLogService.update(log);
+								} else {
+									sendYIBIN(ioTCloudDevice, iotCloudLog.getData());
+									HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="
+											+ tModel.getData());
+								}
+							} catch (Exception e) {
+								log.error("e:{}", e);
+							}
+						} else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_GUANGDONG")) {
+							try {
+								String id = tModel.getData().substring(0, 8);
+								long dec_num = Long.parseLong(id, 16);
+								IotCloudLog log = iotCloudLogService.findById((int) dec_num);
+								if (log != null && log.getCmdType() == 1) {
+									log.setCmdType(1);
+									iotCloudLogService.update(log);
+								} else {
+									sendGUANGDONG(ioTCloudDevice, iotCloudLog.getData());
+									HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="
+											+ tModel.getData());
+								}
+							} catch (Exception e) {
+								log.error("e:{}", e);
+							}
+						} else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
 							String id = iotCloudLog.getData().substring(0, 6);
-							 long dec_num = Long.parseLong(id, 16);  
-							PuzhiJob pz = puzhiJobService.findByMacAndId((int)dec_num,ioTCloudDevice.getMac());
-							if(pz!=null){
-								log.warn("puzhi task:{},{},{}",id,dec_num,pz);
+							long dec_num = Long.parseLong(id, 16);
+							PuzhiJob pz = puzhiJobService.findByMacAndId((int) dec_num, ioTCloudDevice.getMac());
+							if (pz != null) {
+								log.warn("puzhi task:{},{},{}", id, dec_num, pz);
 								pz.setTaskStatus(1);
 								Map<String, Object> _r = new HashMap<>();
-								String r2 = pz.getFeatureCtx()+"&msgid=" + pz.getMsgid()+"&result=succ";
+								String r2 = pz.getFeatureCtx() + "&msgid=" + pz.getMsgid() + "&result=succ";
 								_r.put("data", r2);
-								HttpUtils.postPuzhiJob(ioTCloudDevice.getUdpIp().split("_")[0], JSONObject.toJSONString(_r));
+								HttpUtils.postPuzhiJob(ioTCloudDevice.getUdpIp().split("_")[0],
+										JSONObject.toJSONString(_r));
 								puzhiJobService.update(pz);
-							}else{
-								HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
-								sendPushi(iotCloudLog.getData(),ioTCloudDevice);
+							} else {
+								HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data="
+										+ tModel.getData());
+								sendPushi(iotCloudLog.getData(), ioTCloudDevice);
 							}
-						}else {
+						} else {
 							send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 						}
 					}
 				}
 				if (pushModel2 != null) {
 					TModel tModel = pushModel2.getData();
-					IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(telcomPushDataModel.getDeviceId());
+					IoTCloudDevice ioTCloudDevice = iotCloudDeviceService
+							.findByDeviceId(telcomPushDataModel.getDeviceId());
 					IotCloudLog iotCloudLog = new IotCloudLog();
 					iotCloudLog.setData(tModel.getData());
 					iotCloudLog.setFromSite("telcom");
@@ -269,46 +323,99 @@ public class TelcomCotroller extends BaseController {
 					iotCloudLogService.save(iotCloudLog);
 					if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("SM_CZ")) {
 						String _s = "content=" + tModel.getData() + "&key=gdzxxxkjgfyxgs9981n";
-						HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="+ MD5Util.toMD5(_s).toLowerCase() + "&" + _s);
+						HttpUtils.get("http://zhxf.gdzxkj.net:8003/api/devices_get_single_info?sign="
+								+ MD5Util.toMD5(_s).toLowerCase() + "&" + _s);
 					} else if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("QJ")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/push?data=" + tModel.getData());
-					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")) {
+					} else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 						sendWuhanQj(ioTCloudDevice, iotCloudLog);
-					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_YICHANG")) {
+					} else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_YICHANG")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
 						sendWuhanQj2_0(ioTCloudDevice, iotCloudLog);
-					}  else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
+					} else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push?data=" + tModel.getData());
 						sendBeijingQj(ioTCloudDevice, iotCloudLog);
-					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
+					} else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_1.0_CZ")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/1_0?data=" + tModel.getData());
-						sendChaozhou(iotCloudLog.getData(),ioTCloudDevice);
-					} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_2.0")) {
+						sendChaozhou(iotCloudLog.getData(), ioTCloudDevice);
+					} else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_2.0")) {
 						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
-					}  else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0")) {
-						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data=" + tModel.getData());
-					}else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_YIBIN")) {
-						sendYIBIN(ioTCloudDevice, iotCloudLog.getData());
-						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data=" + tModel.getData());
-					}else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_GUANGDONG")) {
-						sendGUANGDONG(ioTCloudDevice, iotCloudLog.getData());
-						HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data=" + tModel.getData());
-					}else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
-						String id = iotCloudLog.getData().substring(0, 6);
-						 long dec_num = Long.parseLong(id, 16);  
-						PuzhiJob pz = puzhiJobService.findByMacAndId((int)dec_num,ioTCloudDevice.getMac());
-						if(pz!=null){
-							log.warn("puzhi task:{},{},{}",id,dec_num,pz);
+					} else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0")) {
+						try {
+							String id = tModel.getData().substring(0, 8);
+							long dec_num = Long.parseLong(id, 16);
+							IotCloudLog log = iotCloudLogService.findById((int) dec_num);
+							if (log != null && log.getCmdType() == 1) {
+								log.setCmdType(1);
+								iotCloudLogService.update(log);
+							} else {
+								HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="
+										+ tModel.getData());
+							}
+						} catch (Exception e) {
+							log.error("e:{}", e);
+						}
+
+					} else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_YIBIN")) {
+						try {
+							String id = tModel.getData().substring(0, 8);
+							long dec_num = Long.parseLong(id, 16);
+							IotCloudLog log = iotCloudLogService.findById((int) dec_num);
+							if (log != null && log.getCmdType() == 1) {
+								log.setCmdType(1);
+								iotCloudLogService.update(log);
+							} else {
+								sendYIBIN(ioTCloudDevice, iotCloudLog.getData());
+								HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="
+										+ tModel.getData());
+							}
+						} catch (Exception e) {
+							log.error("e:{}", e);
+						}
+
+					} else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_GUANGDONG")) {
+						try {
+							String id = tModel.getData().substring(0, 8);
+							long dec_num = Long.parseLong(id, 16);
+							IotCloudLog log = iotCloudLogService.findById((int) dec_num);
+							if (log != null && log.getCmdType() == 1) {
+								log.setCmdType(1);
+								iotCloudLogService.update(log);
+							} else {
+								sendGUANGDONG(ioTCloudDevice, iotCloudLog.getData());
+								HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="
+										+ tModel.getData());
+							}
+						} catch (Exception e) {
+							log.error("e:{}", e);
+						}
+
+					} else if (ioTCloudDevice.getLocalIp() != null && ioTCloudDevice.getLocalIp().equals("QJ_PUSHI")) {
+						String id = iotCloudLog.getData().substring(0, 8);
+						long dec_num = Long.parseLong(id, 16);
+						PuzhiJob pz = puzhiJobService.findByMacAndId((int) dec_num, ioTCloudDevice.getMac());
+						if (pz != null) {
+							log.warn("puzhi task:{},{},{}", id, dec_num, pz);
 							pz.setTaskStatus(1);
 							Map<String, Object> _r = new HashMap<>();
-							String r2 = pz.getFeatureCtx()+"&msgid=" + pz.getMsgid()+"&result=succ";
+							String r2 = pz.getFeatureCtx() + "&msgid=" + pz.getMsgid() + "&result=succ";
 							_r.put("data", r2);
-							HttpUtils.postPuzhiJob(ioTCloudDevice.getUdpIp().split("_")[0], JSONObject.toJSONString(_r));
+							HttpUtils.postPuzhiJob(ioTCloudDevice.getUdpIp().split("_")[0],
+									JSONObject.toJSONString(_r));
 							puzhiJobService.update(pz);
-						}else{
-							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
-							sendPushi(iotCloudLog.getData(),ioTCloudDevice);
+						} else {
+							HttpUtils.get(
+									"http://app.zhanway.com/home/cloud/qj/zhanway/push/2_0?data=" + tModel.getData());
+							sendPushi(iotCloudLog.getData(), ioTCloudDevice);
 						}
 					} else {
 						send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
@@ -322,23 +429,22 @@ public class TelcomCotroller extends BaseController {
 		return resp;
 
 	}
-	
-
 
 	/**
 	 * 浮点数按IEEE754标准转16进制字符串
+	 * 
 	 * @param f
 	 * @return
 	 */
-	public  String FloatToHexString(float f){
-		int i  = Float.floatToIntBits(f);
-        String str = Integer.toHexString(i).toUpperCase();
-        return str;
+	public String FloatToHexString(float f) {
+		int i = Float.floatToIntBits(f);
+		String str = Integer.toHexString(i).toUpperCase();
+		return str;
 	}
-	
-	
+
 	/**
 	 * 16进制字符串IEEE754标准转小数
+	 * 
 	 * @param s
 	 * @return
 	 */
@@ -349,18 +455,19 @@ public class TelcomCotroller extends BaseController {
 		BigDecimal f = new BigDecimal(r);
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-		String result =  decimalFormat.format(g);
+		String result = decimalFormat.format(g);
 		return result;
 	}
 
 	/**
 	 * 普世广东
+	 * 
 	 * @param ioTCloudDevice
 	 * @param data
 	 * @throws NumberFormatException
 	 * @throws Exception
 	 */
-	private void sendGUANGDONG(IoTCloudDevice ioTCloudDevice, String data) throws NumberFormatException, Exception{
+	private void sendGUANGDONG(IoTCloudDevice ioTCloudDevice, String data) throws NumberFormatException, Exception {
 		Map<String, Object> map = new HashMap<>();
 		Map<String, Object> sendData = new HashMap<>();
 		map.put("deviceId", ioTCloudDevice.getUdpIp().split("_")[0]);
@@ -371,33 +478,35 @@ public class TelcomCotroller extends BaseController {
 		} else {
 			cmd = "心跳";
 		}
-		if(cmd.equals("报警")||cmd.equals("心跳")){
+		if (cmd.equals("报警") || cmd.equals("心跳")) {
 			String acc_x = hexToFloat(data.substring(26, 34));
 			String acc_y = hexToFloat(data.substring(34, 42));
 			String acc_z = hexToFloat(data.substring(42, 50));
 			String x = getData(data.substring(50, 51), data.substring(50, 54));
 			String y = getData(data.substring(54, 55), data.substring(54, 58));
 			String z = getData(data.substring(58, 59), data.substring(58, 62));
-			sendData.put("103_1", x+","+y+","+z+","+acc_x+","+acc_y+","+acc_z);
+			sendData.put("103_1", x + "," + y + "," + z + "," + acc_x + "," + acc_y + "," + acc_z);
 			map.put("data", sendData);
 			String json = JSONObject.toJSONString(map);
 			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
-			//String url = "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
+			// String url =
+			// "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
 			String url = "http://121.8.170.150:8201/api/devices/datapoints?type=3";
 			log.warn("send url-----------------------\n:{}\n---------------------------------", url);
 			String res = HttpUtils.postJson(url, json);
 			log.warn("send res-----------------------\n:{}\n---------------------------------", res);
 		}
 	}
-	
+
 	/**
 	 * 普世宜宾
+	 * 
 	 * @param ioTCloudDevice
 	 * @param data
 	 * @throws NumberFormatException
 	 * @throws Exception
 	 */
-	private void sendYIBIN(IoTCloudDevice ioTCloudDevice, String data) throws NumberFormatException, Exception{
+	private void sendYIBIN(IoTCloudDevice ioTCloudDevice, String data) throws NumberFormatException, Exception {
 		Map<String, Object> map = new HashMap<>();
 		Map<String, Object> sendData = new HashMap<>();
 		map.put("deviceId", ioTCloudDevice.getUdpIp().split("_")[0]);
@@ -408,18 +517,19 @@ public class TelcomCotroller extends BaseController {
 		} else {
 			cmd = "心跳";
 		}
-		if(cmd.equals("报警")||cmd.equals("心跳")){
+		if (cmd.equals("报警") || cmd.equals("心跳")) {
 			String acc_x = hexToFloat(data.substring(26, 34));
 			String acc_y = hexToFloat(data.substring(34, 42));
 			String acc_z = hexToFloat(data.substring(42, 50));
 			String x = getData(data.substring(50, 51), data.substring(50, 54));
 			String y = getData(data.substring(54, 55), data.substring(54, 58));
 			String z = getData(data.substring(58, 59), data.substring(58, 62));
-			sendData.put("103_1", x+","+y+","+z+","+acc_x+","+acc_y+","+acc_z);
+			sendData.put("103_1", x + "," + y + "," + z + "," + acc_x + "," + acc_y + "," + acc_z);
 			map.put("data", sendData);
 			String json = JSONObject.toJSONString(map);
 			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
-			//String url = "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
+			// String url =
+			// "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
 			String url = "http://218.6.244.186:44445/api/devices/datapoints?type=3";
 			log.warn("send url-----------------------\n:{}\n---------------------------------", url);
 			String res = HttpUtils.postJson(url, json);
@@ -427,9 +537,9 @@ public class TelcomCotroller extends BaseController {
 		}
 	}
 
-
 	/**
 	 * 宜昌新设备
+	 * 
 	 * @param device
 	 * @param iotCloudLog
 	 */
@@ -457,7 +567,7 @@ public class TelcomCotroller extends BaseController {
 			map.put("JCDB19A100", getData100(data.substring(42, 43), data.substring(42, 46)));
 			map.put("JCDB19A110", Integer.valueOf(data.substring(40, 42)));
 			map.put("JCDB19A120", Integer.valueOf(data.substring(46, 48)));
-			if("心跳".equals(type)){
+			if ("心跳".equals(type)) {
 				map.put("JCDB19A020", 0);
 				map.put("JCDB19A030", 0);
 				map.put("JCDB19A040", 0);
@@ -476,6 +586,7 @@ public class TelcomCotroller extends BaseController {
 
 	/**
 	 * 普适地质灾害
+	 * 
 	 * @param data
 	 * @param ioTCloudDevice
 	 * @throws NumberFormatException
@@ -492,14 +603,14 @@ public class TelcomCotroller extends BaseController {
 		} else {
 			type = "心跳";
 		}
-		if(type.equals("报警")||type.equals("心跳")){
+		if (type.equals("报警") || type.equals("心跳")) {
 			String acc_x = getData10000(data.substring(18, 19), data.substring(18, 22));
-			String acc_y = getData10000(data.substring(24, 25), data.substring(24, 28)) ;
-			String acc_z = getData10000(data.substring(30, 31), data.substring(30, 34)) ;
+			String acc_y = getData10000(data.substring(24, 25), data.substring(24, 28));
+			String acc_z = getData10000(data.substring(30, 31), data.substring(30, 34));
 			String x = getData100(data.substring(36, 37), data.substring(36, 40));
 			String y = getData100(data.substring(42, 43), data.substring(42, 46));
 			String z = getData100(data.substring(70, 71), data.substring(70, 74));
-			sendData.put("103_1", x+","+y+","+z+","+acc_x+","+acc_y+","+acc_z);
+			sendData.put("103_1", x + "," + y + "," + z + "," + acc_x + "," + acc_y + "," + acc_z);
 			map.put("data", sendData);
 			String json = JSONObject.toJSONString(map);
 			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
@@ -540,7 +651,7 @@ public class TelcomCotroller extends BaseController {
 		}
 	}
 
-	private void sendChaozhou(String data,IoTCloudDevice ioTCloudDevice) {
+	private void sendChaozhou(String data, IoTCloudDevice ioTCloudDevice) {
 		String type = data.substring(16, 18);
 		if (type.equals("68")) {
 			type = "报警";
@@ -566,21 +677,24 @@ public class TelcomCotroller extends BaseController {
 				tem = getData100(data.substring(52, 53), data.substring(52, 56));
 			}
 			String rssi = data.substring(56, 58);
-			String params = "type="+type+"&acc_x="+acc_x+"&acc_y="+acc_y+"&acc_z="+acc_z+"&acc_x_type="+acc_x_type+"&acc_y_type="+acc_y_type+"&acc_z_type="+acc_z_type+
-					"&sn="+sn+"&x="+x+"&y="+y+"&x_type="+x_type+"&y_type="+y_type+"&bat="+bat+"&tem="+tem+"&rssi="+rssi;
-			String SIGN = MD5Util.toMD5(params+sign);
-			params = params+"&sign="+SIGN;
+			String params = "type=" + type + "&acc_x=" + acc_x + "&acc_y=" + acc_y + "&acc_z=" + acc_z + "&acc_x_type="
+					+ acc_x_type + "&acc_y_type=" + acc_y_type + "&acc_z_type=" + acc_z_type + "&sn=" + sn + "&x=" + x
+					+ "&y=" + y + "&x_type=" + x_type + "&y_type=" + y_type + "&bat=" + bat + "&tem=" + tem + "&rssi="
+					+ rssi;
+			String SIGN = MD5Util.toMD5(params + sign);
+			params = params + "&sign=" + SIGN;
 			HttpUtils.sendPost(ioTCloudDevice.getUdpIp(), params);
 		} catch (Exception e) {
-			log.error("error:{}",e);
+			log.error("error:{}", e);
 		}
 
 	}
-	
+
 	public static void main(String[] args) {
-//		new TelcomCotroller().sendChaozhou("000118112100000969000D00FFDB00FFE6000006000015000BE707D61FFDF500D800CF",null);
+		// new
+		// TelcomCotroller().sendChaozhou("000118112100000969000D00FFDB00FFE6000006000015000BE707D61FFDF500D800CF",null);
 		try {
-			new TelcomCotroller().getData10000( "4500","4");
+			new TelcomCotroller().getData10000("4500", "4");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -620,7 +734,7 @@ public class TelcomCotroller extends BaseController {
 		log.warn("result:{}", result);
 		return result;
 	}
-	
+
 	private String getData100_3(String index, String _d) throws Exception {
 		log.warn("index:{},data:{}", index, _d);
 		int _index = Integer.parseInt(index, 16);
@@ -651,15 +765,14 @@ public class TelcomCotroller extends BaseController {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		Double r = Double.valueOf(e)/300;
+		Double r = Double.valueOf(e) / 300;
 		BigDecimal f = new BigDecimal(r);
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-		String result =  decimalFormat.format(g);
+		String result = decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
-	
 
 	private String getData100(String index, String _d) throws Exception {
 		log.warn("index:{},data:{}", index, _d);
@@ -691,15 +804,15 @@ public class TelcomCotroller extends BaseController {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		Double r = Double.valueOf(e)/100;
+		Double r = Double.valueOf(e) / 100;
 		BigDecimal f = new BigDecimal(r);
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-		String result =  decimalFormat.format(g);
+		String result = decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
-	
+
 	private String getData10000(String index, String _d) throws Exception {
 		log.warn("index:{},data:{}", index, _d);
 		int _index = Integer.parseInt(index, 16);
@@ -730,15 +843,14 @@ public class TelcomCotroller extends BaseController {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		Double r = Double.valueOf(e)/10000;
+		Double r = Double.valueOf(e) / 10000;
 		BigDecimal f = new BigDecimal(r);
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-		String result =  decimalFormat.format(g);
+		String result = decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
-	
 
 	private void sendWuhanQj(IoTCloudDevice device, IotCloudLog iotCloudLog) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -806,17 +918,15 @@ public class TelcomCotroller extends BaseController {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		Double r = Double.valueOf(e)/1000;
+		Double r = Double.valueOf(e) / 1000;
 		BigDecimal f = new BigDecimal(r);
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-		String result =  decimalFormat.format(g);
+		String result = decimalFormat.format(g);
 		log.warn("result:{}", result);
 		return result;
 	}
 
-
-	
 	/**
 	 * 设备注册
 	 * 
@@ -827,7 +937,7 @@ public class TelcomCotroller extends BaseController {
 	 */
 	@RequestMapping(path = "/register")
 	@ResponseBody
-	public Resp<?> register(String imei, String mac, String ipLocal, String name,String simCard) {
+	public Resp<?> register(String imei, String mac, String ipLocal, String name, String simCard) {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			HttpsUtil httpsUtil = new HttpsUtil();
