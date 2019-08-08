@@ -2,8 +2,8 @@ package main.entry.webapp.data;
 
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,7 @@ import utils.Resp;
 @Controller
 public class ServerCheckController {
 
-	private static final Logger log = LoggerFactory.getLogger(ServerCheckController.class);
+//	private static final Logger log = LoggerFactory.getLogger(ServerCheckController.class);
 	
 	@Autowired
 	private ParkingAreaService parkingAreaService;
@@ -25,7 +25,7 @@ public class ServerCheckController {
 	@RequestMapping(path = "check")
 	@ResponseBody
 	public Resp<?> check(Integer id){
-		log.warn("id:{}",id);
+//		log.warn("id:{}",id);
 		Resp<?> resp = new Resp<>(true);
 		ParkingArea parkingArea = parkingAreaService.find(id);
 		parkingArea.setCreateTime(new Date());

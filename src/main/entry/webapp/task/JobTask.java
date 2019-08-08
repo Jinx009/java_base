@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSONObject;
+
 import common.helper.StringUtil;
 import database.models.qj.QjDeviceLog;
 import database.models.qj.QjNotice;
@@ -46,6 +48,7 @@ public class JobTask {
 	@Scheduled(fixedRate = 1000 * 3600, initialDelay = 1000)
 	public void qjCheck() {
 		List<QjNotice> list = qjNoticeService.findAll();
+		log.warn("mac list:{}",JSONObject.toJSONString(list));
 		for(QjNotice str:list){
 			QjDeviceLog log = qjDeviceLogService.getNearBySn(str.getMac());
 			Date date = new Date();
