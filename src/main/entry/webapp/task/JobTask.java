@@ -52,12 +52,14 @@ public class JobTask {
 		for(QjNotice str:list){
 			QjDeviceLog log = qjDeviceLogService.getNearBySn(str.getMac());
 			Date date = new Date();
-			if(log!=null){
-				if(date.getTime()-log.getCreateTime().getTime()>5400000){
-					AlimsgUtils.sendCheck(log.getSnValue(), "SMS_171565355", "展为","18217700275");
-					AlimsgUtils.sendCheck(log.getSnValue(), "SMS_171565355", "展为","13918073897");
-					AlimsgUtils.sendCheck(log.getSnValue(), "SMS_171565355", "展为","18108196835");
-				}
+			if(log==null){
+				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18217700275");
+				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","13918073897");
+				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18108196835");
+			}else if(date.getTime()-log.getCreateTime().getTime()>5400000){
+				AlimsgUtils.sendCheck(log.getSnValue(), "SMS_171565355", "展为","18217700275");
+				AlimsgUtils.sendCheck(log.getSnValue(), "SMS_171565355", "展为","13918073897");
+				AlimsgUtils.sendCheck(log.getSnValue(), "SMS_171565355", "展为","18108196835");
 			}
 		}
 	}
