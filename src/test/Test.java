@@ -5,7 +5,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -13,8 +16,7 @@ import java.util.List;
 public class Test {
 
 	private static double EARTH_RADIUS = 6378.137;//地球半径
-	private static double rad(double d)
-	{
+	private static double rad(double d){
 	   return d * Math.PI / 180.0;
 	} 
 
@@ -32,10 +34,6 @@ public class Test {
 	   return s;
 	}
 	
-	
-	public static void main(String[] args) {
-		System.out.println(13%30);
-	}
 	
 	
 	
@@ -60,6 +58,21 @@ public class Test {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	
+	public static void main(String[] args) {
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.add(Calendar.HOUR, -3);
+			date = calendar.getTime();
+			String dateStr = sdf.format(date);
+			System.out.println(dateStr);
+		} catch (Exception e) {
+		}
 	}
 	
 }
