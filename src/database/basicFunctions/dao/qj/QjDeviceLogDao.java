@@ -24,7 +24,7 @@ public class QjDeviceLogDao extends BaseDao<QjDeviceLog>{
 			calendar.add(Calendar.HOUR, -3);
 			date = calendar.getTime();
 			String dateStr = sdf.format(date);
-			String hql = " from QjDeviceLog where snValue='"+sn+"' and  createTime >='"+dateStr+" order by id desc ";
+			String hql = " from QjDeviceLog where snValue='"+sn+"' and  createTime >='"+dateStr+"' order by id desc ";
 			List<QjDeviceLog> list = em.createQuery(hql).getResultList();
 			if(list!=null&&!list.isEmpty()){
 				return list.get(0);
