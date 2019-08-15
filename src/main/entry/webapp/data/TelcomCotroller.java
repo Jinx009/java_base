@@ -431,7 +431,7 @@ public class TelcomCotroller extends BaseController {
 	}
 
 	/**
-	 * 新固件武汉对接
+	 * 新固件武汉对接2019-08-14
 	 * @param device
 	 * @param iotCloudLog
 	 */
@@ -453,7 +453,7 @@ public class TelcomCotroller extends BaseController {
 				String acc_z = hexToFloat(data.substring(42, 50));
 				String x = getData(data.substring(50, 51), data.substring(50, 54));
 				String y = getData(data.substring(54, 55), data.substring(54, 58));
-				String bat = getData100(data.substring(62, 63), data.substring(62, 66));
+				String bat = getData(data.substring(62, 63), data.substring(62, 66));
 				map.put("JCDB19A130", bat);
 				map.put("JCDB19A010", cmd);
 				map.put("JCDB19A020", acc_x);//acc_x
@@ -483,7 +483,7 @@ public class TelcomCotroller extends BaseController {
 				String acc_z = hexToFloat(data.substring(42, 50));
 				String x = getData(data.substring(50, 51), data.substring(50, 54));
 				String y = getData(data.substring(54, 55), data.substring(54, 58));
-				String bat = getData100(data.substring(62, 63), data.substring(62, 66));
+				String bat = getData(data.substring(62, 63), data.substring(62, 66));
 				map.put("JCDB19A130", bat);
 				map.put("JCDB19A010", cmd);
 				map.put("JCDB19A020", acc_x);//acc_x

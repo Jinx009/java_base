@@ -332,7 +332,7 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
 //         basicApp.insertChengjiandanwei(); //插入承建单位
 //         basicApp.insertYunweidanwei();//插入运维单位
 //         basicApp.insertJianshedanwei();//插入建设单位
-         basicApp.insertJianceyiqi("");
-         basicApp.queryTable(" SELECT * FROM JCCA06A WHERE JCCA06A010 = '2012010101' ");
+//         basicApp.insertJianceyiqi("");
+         basicApp.queryTable(" SELECT * FROM JCCA02A WHERE JCCA02A010 = '510181010288' ");
     }
 }
