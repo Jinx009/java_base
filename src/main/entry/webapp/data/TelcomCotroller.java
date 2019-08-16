@@ -451,8 +451,8 @@ public class TelcomCotroller extends BaseController {
 				String acc_x = hexToFloat(data.substring(26, 34));
 				String acc_y = hexToFloat(data.substring(34, 42));
 				String acc_z = hexToFloat(data.substring(42, 50));
-				String x = getData(data.substring(50, 51), data.substring(50, 54));
-				String y = getData(data.substring(54, 55), data.substring(54, 58));
+				String x = getData100(data.substring(50, 51), data.substring(50, 54));
+				String y = getData100(data.substring(54, 55), data.substring(54, 58));
 				String bat = getData(data.substring(62, 63), data.substring(62, 66));
 				map.put("JCDB19A130", bat);
 				map.put("JCDB19A010", cmd);
@@ -481,8 +481,8 @@ public class TelcomCotroller extends BaseController {
 				String acc_x = hexToFloat(data.substring(26, 34));
 				String acc_y = hexToFloat(data.substring(34, 42));
 				String acc_z = hexToFloat(data.substring(42, 50));
-				String x = getData(data.substring(50, 51), data.substring(50, 54));
-				String y = getData(data.substring(54, 55), data.substring(54, 58));
+				String x = getData100(data.substring(50, 51), data.substring(50, 54));
+				String y = getData100(data.substring(54, 55), data.substring(54, 58));
 				String bat = getData(data.substring(62, 63), data.substring(62, 66));
 				map.put("JCDB19A130", bat);
 				map.put("JCDB19A010", cmd);
@@ -600,9 +600,9 @@ public class TelcomCotroller extends BaseController {
 			String acc_x = hexToFloat(data.substring(26, 34));
 			String acc_y = hexToFloat(data.substring(34, 42));
 			String acc_z = hexToFloat(data.substring(42, 50));
-			String x = getData(data.substring(50, 51), data.substring(50, 54));
-			String y = getData(data.substring(54, 55), data.substring(54, 58));
-			String z = getData(data.substring(58, 59), data.substring(58, 62));
+			String x = getData100(data.substring(50, 51), data.substring(50, 54));
+			String y = getData100(data.substring(54, 55), data.substring(54, 58));
+			String z = getData100(data.substring(58, 59), data.substring(58, 62));
 			sendData.put("103_1", x + "," + y + "," + z + "," + acc_x + "," + acc_y + "," + acc_z);
 			map.put("data", sendData);
 			String json = JSONObject.toJSONString(map);
@@ -639,9 +639,9 @@ public class TelcomCotroller extends BaseController {
 			String acc_x = hexToFloat(data.substring(26, 34));
 			String acc_y = hexToFloat(data.substring(34, 42));
 			String acc_z = hexToFloat(data.substring(42, 50));
-			String x = getData(data.substring(50, 51), data.substring(50, 54));
-			String y = getData(data.substring(54, 55), data.substring(54, 58));
-			String z = getData(data.substring(58, 59), data.substring(58, 62));
+			String x = getData100(data.substring(50, 51), data.substring(50, 54));
+			String y = getData100(data.substring(54, 55), data.substring(54, 58));
+			String z = getData100(data.substring(58, 59), data.substring(58, 62));
 			sendData.put("103_1", x + "," + y + "," + z + "," + acc_x + "," + acc_y + "," + acc_z);
 			map.put("data", sendData);
 			String json = JSONObject.toJSONString(map);
