@@ -478,12 +478,12 @@ public class TelcomCotroller extends BaseController {
 				String sn = device.getSimCard().split("_")[1];
 				map.put("JCDB19A080", sn);
 				int[] arr = getB(data.substring(28, 30));
-				String acc_x = hexToFloat(data.substring(26, 34));
-				String acc_y = hexToFloat(data.substring(34, 42));
-				String acc_z = hexToFloat(data.substring(42, 50));
-				String x = getData100(data.substring(50, 51), data.substring(50, 54));
-				String y = getData100(data.substring(54, 55), data.substring(54, 58));
-				String bat = getData(data.substring(62, 63), data.substring(62, 66));
+				String acc_x = hexToFloat(data.substring(30, 38));
+				String acc_y = hexToFloat(data.substring(38, 46));
+				String acc_z = hexToFloat(data.substring(46, 54));
+				String x = getData100(data.substring(54, 55), data.substring(54, 58));
+				String y = getData100(data.substring(58, 59), data.substring(58, 62));
+				String bat = getData(data.substring(114, 115), data.substring(114, 118));
 				map.put("JCDB19A130", bat);
 				map.put("JCDB19A010", cmd);
 				map.put("JCDB19A020", acc_x);//acc_x
