@@ -438,11 +438,12 @@ public class TelcomCotroller extends BaseController {
 	private void sendWuhanQj3_0(IoTCloudDevice device, IotCloudLog iotCloudLog) {
 		try {
 			String data =  iotCloudLog.getData();
+			log.warn("data:-----{}",data);
 			String cmd =  data.substring(20, 22);
 			if (cmd.equals("68")) {
-				cmd = "报警";
-			} else {
 				cmd = "心跳";
+			} else  if(cmd.equals("69")){
+				cmd = "报警";
 			}
 			if (cmd.equals("心跳")) {
 				Map<String, Object> map = new HashMap<String, Object>();
