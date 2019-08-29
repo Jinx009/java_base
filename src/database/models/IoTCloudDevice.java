@@ -40,5 +40,13 @@ public class IoTCloudDevice {
 	private Integer udpPort;
 	@Column(name = "sim_card")
 	private String simCard;
+	@Column(name = "park_name")
+	private String parkName;
+	@Column(name = "park_number")
+	private String parkNumber;
+	@Column(name = "area")
+	private String area;
+	@Column(name = "location")
+	private String location;
 	
 }

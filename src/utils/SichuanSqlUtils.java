@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,7 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
 	private static Logger log = LoggerFactory.getLogger(SichuanSqlUtils.class);
 	
     String jdbcString = "dm.jdbc.driver.DmDriver";// 定义 DM URL 连接串
-    String urlString = "jdbc:dm://202.61.89.33:16002";// 定义连接用户名
+    String urlString = "jdbc:dm://202.61.89.33:16002";// 定义连接用户名http://202.61.89.33
     String userName = "sichuanceshiku";// 定义连接用户口令
     String password = "dameng@1234";// 定义连接对象
     Connection conn = null;
@@ -69,7 +68,7 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
      * 插入心跳
      * @throws SQLException 
      */
-    public void insertXintiao(String sjbh,String yhd,String jcz) throws SQLException{
+    public void insertXintiao(String sjbh,String yhd,String jcz,String type) throws SQLException{
 			      String sql = "INSERT INTO JCCA16A("
 			      		+ "JCCA16A010,"
 			      		+ "JCCA16A020,"
@@ -81,14 +80,16 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			// 为参数赋值
 			pstmt.setString(1, UUIDUtils.random());
-			pstmt.setString(2, sjbh);
+			pstmt.setString(2, sjbh+type);
 			pstmt.setString(3, yhd);
 			pstmt.setString(4, jcz);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-			pstmt.setDate(5,Date.valueOf(sdf.format(new java.util.Date())));
+			pstmt.setDate(5,new Date(new java.util.Date().getTime()));
 			pstmt.executeUpdate();
 			pstmt.close();
     }
+    
+    
+
     
     /**
      * 插入报警
@@ -107,12 +108,11 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
 			      + "VALUES(?,?,?,?,?,?,?,?);";
 			// 创建语句对象
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			// 为参数赋值
 			pstmt.setString(1, UUIDUtils.random());
 			pstmt.setString(2, jb);//C1-注意级、C2-警示 级、C3-警戒级、C4-警报级
 			pstmt.setInt(3, qz);//对应:C1:1/ C2:2/ C3:3/ C4:4
-			pstmt.setDate(4, Date.valueOf(sdf.format(new java.util.Date())));
+			pstmt.setDate(4, new Date(new java.util.Date().getTime()));
 			pstmt.setString(5, jcd);//监测点
 			pstmt.setString(6, yhd);//隐患点
 			pstmt.setDouble(7, jcz);//监测值
@@ -333,6 +333,9 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
 //         basicApp.insertYunweidanwei();//插入运维单位
 //         basicApp.insertJianshedanwei();//插入建设单位
 //         basicApp.insertJianceyiqi("");
-         basicApp.queryTable(" SELECT * FROM JCCA02A WHERE JCCA02A010 = '511823010309' ");
+//         basicApp.insertXintiao("511802010214QX01", "511802010214", "0.01","01");
+         basicApp.insertBaojing("C1", 1, "511802010214QX01", "511802010214", 1.3,1.0);
+//         basicApp.queryTable(" SELECT * FROM JCCA16A where  JCCA16A020 = '511802010214QX0101'  limit 10 ");
+         basicApp.queryTable(" SELECT * FROM JCCA20A where  JCCA20A060 = '511802010214'  limit 10 ");
     }
 }
