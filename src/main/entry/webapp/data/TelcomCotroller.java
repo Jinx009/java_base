@@ -852,7 +852,8 @@ public class TelcomCotroller extends BaseController {
 		// new
 		// TelcomCotroller().sendChaozhou("000118112100000969000D00FFDB00FFE6000006000015000BE707D61FFDF500D800CF",null);
 		try {
-			new TelcomCotroller().getData10000("4500", "4");
+//			new TelcomCotroller().getData10000("4500", "4");
+			System.out.print(hexToFloat("40400000"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
