@@ -334,8 +334,9 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
 //         basicApp.insertJianshedanwei();//插入建设单位
 //         basicApp.insertJianceyiqi("");
 //         basicApp.insertXintiao("511802010214QX01", "511802010214", "0.01","01");
-         basicApp.insertBaojing("C1", 1, "511802010214QX01", "511802010214", 1.3,1.0);
+//         basicApp.insertBaojing("C1", 1, "511802010214QX01", "511802010214", 1.3,1.0);
 //         basicApp.queryTable(" SELECT * FROM JCCA16A where  JCCA16A020 = '511802010214QX0101'  limit 10 ");
-         basicApp.queryTable(" SELECT * FROM JCCA20A where  JCCA20A060 = '511802010214'  limit 10 ");
+         basicApp.queryTable(" SELECT * FROM JCCA16A where  JCCA16A025 = '511024010749'  limit 10 ");
+         basicApp.disConnect();
     }
 }
