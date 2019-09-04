@@ -34,12 +34,13 @@ import utils.HttpsUtil;
 import utils.JsonUtil;
 import utils.MD5Util;
 import utils.StreamClosedHttpResponse;
-
+import utils.StringUtil;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.IotCloudDeviceService;
 import service.basicFunctions.IotCloudLogService;
 import service.basicFunctions.PuzhiJobService;
 import utils.Resp;
+import utils.SichuanSqlUtils;
 
 @Controller
 @RequestMapping(value = "/telcom")
@@ -307,6 +308,9 @@ public class TelcomCotroller extends BaseController {
 						} else {
 							send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 						}
+						if(StringUtil.isNotBlank(ioTCloudDevice.getLocation())){
+							sendSichuan(ioTCloudDevice,iotCloudLog.getData());
+						}
 					}
 				}
 				if (pushModel2 != null) {
@@ -420,6 +424,9 @@ public class TelcomCotroller extends BaseController {
 					} else {
 						send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 					}
+					if(StringUtil.isNotBlank(ioTCloudDevice.getLocation())){
+						sendSichuan(ioTCloudDevice,iotCloudLog.getData());
+					}
 				}
 			}
 			return new Resp<>(true);
@@ -428,6 +435,38 @@ public class TelcomCotroller extends BaseController {
 		}
 		return resp;
 
+	}
+
+	private void sendSichuan(IoTCloudDevice device, String data) {
+		try {
+			log.warn("data:--四川---{}",data);
+			String cmd =  data.substring(20, 22);
+			if (cmd.equals("68")) {
+				cmd = "心跳";
+			} else  if(cmd.equals("69")){
+				cmd = "报警";
+			}
+			if (cmd.equals("心跳")) {
+				SichuanSqlUtils basicApp = new SichuanSqlUtils();
+		         basicApp.loadJdbcDriver();
+		         basicApp.connect();
+		         String x = getData100(data.substring(50, 51), data.substring(50, 54));
+		         basicApp.insertXintiao(device.getArea(),device.getLocation(), x,"01");
+		         basicApp.disConnect();
+				log.warn("send qj-----sichuan------------------\n:{},{},{},{}\n---------------------------------", device.getArea(),device.getLocation(), x,"01");
+			}
+			if ("报警".equals(cmd)) {
+				SichuanSqlUtils basicApp = new SichuanSqlUtils();
+		         basicApp.loadJdbcDriver();
+		         basicApp.connect();
+		         String x = getData100(data.substring(50, 51), data.substring(50, 54));
+		         basicApp.insertBaojing("C1", 1,device.getArea(),device.getLocation(), Double.valueOf(x),2.0);
+		         basicApp.disConnect();
+				log.warn("send qj-----sichuan bj------------------\n:{},{},{},{}\n---------------------------------", device.getArea(),device.getLocation(), x,"01");
+			}
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
 	}
 
 	/**

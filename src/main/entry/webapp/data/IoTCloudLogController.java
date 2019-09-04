@@ -104,7 +104,13 @@ public class IoTCloudLogController extends BaseController{
 				data = "48003200"+sn;
 			}
 			if(3==cmdName){
-				data = "48007B0501"+FloatToHexString(Float.valueOf(value1))+FloatToHexString(Float.valueOf(value2))+sn;
+				String ax = FloatToHexString(Float.valueOf(value1.split(",")[0]));
+				String ay = FloatToHexString(Float.valueOf(value1.split(",")[1]));
+				String az = FloatToHexString(Float.valueOf(value1.split(",")[2]));
+				String x = FloatToHexString(Float.valueOf(value2.split(",")[0]));
+				String y = FloatToHexString(Float.valueOf(value2.split(",")[1]));
+				String z = FloatToHexString(Float.valueOf(value2.split(",")[2]));
+				data = "48007B0501"+ax+ay+az+x+y+z+sn;
 			}
 			if(4==cmdName){
 				data = "48007A0201"+value1+  sn;
