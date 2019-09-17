@@ -151,7 +151,6 @@ public class QingjiaoDataController extends BaseController {
 			log.setRsrp("");
 			log.setRssi("");
 			log.setSnr("");
-			log.setTem("");
 			log.setVoltage(String.valueOf(bat));
 			log.setType(cmd);
 			qjDeviceLogService.save(log);
