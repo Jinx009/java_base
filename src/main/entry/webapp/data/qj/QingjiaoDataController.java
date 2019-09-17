@@ -118,19 +118,22 @@ public class QingjiaoDataController extends BaseController {
 			} else if (cmd.equals("8")) {
 				cmd = "报警";
 			}
-			String x1 = data.substring(32, 34);
-			String x2 = data.substring(30, 32);
-			String x3 = data.substring(28, 30);
-			String x4 = data.substring(26, 28);
-			String y1 = data.substring(44, 46);
-			String y2 = data.substring(42, 44);
-			String y3 = data.substring(40, 42);
-			String y4 = data.substring(38, 40);
+			String x1 = data.substring(38, 40);
+			String x2 = data.substring(36, 38);
+			String x3 = data.substring(34, 36);
+			String x4 = data.substring(32, 34);
+			String y1 = data.substring(50, 52);
+			String y2 = data.substring(48, 50);
+			String y3 = data.substring(46, 48);
+			String y4 = data.substring(44, 46);
 			String x = hexToFloat(x1 + x2 + x3 + x4);
 			String y = hexToFloat(y1 + y2 + y3 + y4);
-			String b1 = data.substring(52, 54);
-			String b2 = data.substring(50, 52);
-			Double bat = Double.valueOf(Long.parseLong(b1 + b2, 16)) / 100;
+			String w1 = data.substring(58, 60);
+	        String w2 = data.substring(56, 58);
+	        Double w = Double.valueOf(Long.parseLong(w1 + w2, 16)) / 100;
+	        String b1 = data.substring(66, 68);
+	        String b2 = data.substring(64, 66);
+	        Double bat = Double.valueOf(Long.parseLong(b1 + b2, 16)) / 100;
 			QjDeviceLog log = new QjDeviceLog();
 			log.setBaseAcceX("");
 			log.setBaseAcceY("");
@@ -138,6 +141,7 @@ public class QingjiaoDataController extends BaseController {
 			log.setBaseX(x);
 			log.setBaseY(y);
 			log.setBaseZ("");
+			log.setTem(String.valueOf(w));
 			log.setCreateTime(new Date());
 			log.setHardV("");
 			log.setSoftV("");
