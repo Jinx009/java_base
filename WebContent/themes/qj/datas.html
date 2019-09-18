@@ -118,16 +118,17 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 					for(var i = res.data.length-1;i>=0;i--){
 						res.data[i].createTime = jsDateTime(res.data[i].createTime);
 						if(res.data[i].baseX!=''&&res.data[i].baseAcceX!=''&&res.data[i].baseX!=null){
-							acc_x.push(parseFloat(res.data[i].baseAcceX).toFixed(4));
-							acc_y.push(parseFloat(res.data[i].baseAcceY).toFixed(4));
-							acc_z.push(parseFloat(res.data[i].baseAcceZ).toFixed(4));
-							x.push(parseFloat(res.data[i].baseX).toFixed(4));
-							y.push(parseFloat(res.data[i].baseY).toFixed(4));
-							z.push(parseFloat(res.data[i].baseZ).toFixed(4));
-							tem.push(parseInt(res.data[i].tem)/1000);
+							acc_x.push(parseFloat(res.data[i].baseAcceX*1000));
+							acc_y.push(parseFloat(res.data[i].baseAcceY*1000));
+							acc_z.push(parseFloat(res.data[i].baseAcceZ*1000));
+							x.push(parseFloat(res.data[i].baseX*1000));
+							y.push(parseFloat(res.data[i].baseY*1000));
+							z.push(parseFloat(res.data[i].baseZ*1000));
+							tem.push(parseFloat(res.data[i].tem));
 							ddate.push(res.data[i].createTime)
 						}
 					}
+					console.log(y)
 					_draw();
 				}
 			})

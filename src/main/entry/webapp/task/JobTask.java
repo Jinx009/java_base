@@ -52,9 +52,9 @@ public class JobTask {
 		for(QjNotice str:list){
 			QjDeviceLog log = qjDeviceLogService.getNearBySn(str.getMac());
 			if(log==null){
-				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18217700275");
-				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","13918073897");
-				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18108196835");
+//				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18217700275");
+//				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","13918073897");
+//				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18108196835");
 			}
 		}
 	}
