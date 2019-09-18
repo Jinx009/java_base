@@ -53,7 +53,7 @@ public class QjDeviceLogDao extends BaseDao<QjDeviceLog>{
 	}
 
 	@SuppressWarnings("unchecked")
-	public Object nearList(String mac, String date) {
+	public List<QjDeviceLog> nearList(String mac, String date) {
 		try {
 			String date1 = date.split(" - ")[0];
 			String date2 = date.split(" - ")[1];
@@ -61,6 +61,29 @@ public class QjDeviceLogDao extends BaseDao<QjDeviceLog>{
 			if(StringUtil.isNotBlank(mac)) {
 				hql = " from QjDeviceLog where  createTime >='"+date1+"'  and createTime <= '"+date2+"'  and snValue like '%"+mac+"%' order by id desc ";
 			}
+			List<QjDeviceLog> list = em.createQuery(hql).getResultList();
+			if(list!=null&&!list.isEmpty()){
+				return list;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<QjDeviceLog> nearList(String mac, String date, String tem) {
+		try {
+			String date1 = date.split(" - ")[0];
+			String date2 = date.split(" - ")[1];
+			String hql = " from QjDeviceLog where  createTime >='"+date1+"' and createTime <= '"+date2+"'  order by id desc ";
+			if(StringUtil.isNotBlank(mac)) {
+				hql = " from QjDeviceLog where  createTime >='"+date1+"'  and createTime <= '"+date2+"'  and snValue like '%"+mac+"%' order by id desc ";
+			}
+			if(StringUtil.isNotBlank(tem)){
+				hql = " from QjDeviceLog where  createTime >='"+date1+"'  and  tem>='"+tem.split("-")[0]+"'  and  tem<='"+tem.split("-")[1]+"'   and createTime <= '"+date2+"'  and snValue like '%"+mac+"%' order by id desc ";
+			}
+			System.out.println(hql);
 			List<QjDeviceLog> list = em.createQuery(hql).getResultList();
 			if(list!=null&&!list.isEmpty()){
 				return list;

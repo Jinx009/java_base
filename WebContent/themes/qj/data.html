@@ -49,6 +49,9 @@
             <div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
               <input type="text" class="form-control"  id="mac" placeholder="请输入mac号码" value="0009190600000001" >
 		    </div>
+		    <div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
+              <input type="text" class="form-control"  id="tem" placeholder="请输入温度区间格式：8-21" value="" >
+		    </div>
            	<div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
 		      <input type="text" class="form-control" readonly="readonly" id="datepicker" >
 		      <span class="input-group-btn">
@@ -100,14 +103,15 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 		acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 		var mac = $('#mac').val();
 		var date = $('#datepicker').val();
+		var tem_ = $('#tem').val();
 		if(date==null||date==''){
 			layer.alert('请选择日期！');
 		}else{
 			var map = [];
 			$.ajax({
-				url : '/home/cloud/qj/logs',
+				url : '/home/cloud/qj/datas',
 				dataType : 'json',
-				data:'mac='+mac+'&date='+date,
+				data:'mac='+mac+'&date='+date+'&tem='+tem_,
 				type : 'post',
 				success : function(res) {
 					if(res!=''&&res.data.length!='')

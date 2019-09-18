@@ -56,6 +56,18 @@ public class QingjiaoDataController extends BaseController {
 		}
 		return resp;
 	}
+	
+	@RequestMapping(path = "/datas")
+	@ResponseBody
+	public Resp<?> datas(String mac, String date,String tem) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(qjDeviceLogService.nearList(mac, date,tem));
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return resp;
+	}
 
 	@RequestMapping(path = "/update")
 	@ResponseBody
