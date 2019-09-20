@@ -1,0 +1,75 @@
+body{min-width:768px}.bg-img{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}.bg-content{width:100%;height:100%;margin:0;padding:0;text-align:center;padding-top:200px;z-index:99}.bg-table{width:500px;text-align:center}.bg-table td{height:50px;line-height:50px}.right{text-align:right;width:30%}.left{text-align:left;width:70%}.white{color:#fff}.bg-table .min-height{height:20px;line-height:20px}body{min-width:auto;height:auto}.login-box,.register-box{margin:15% auto;opacity:.8}.login-box-body,.register-box-body{border-radius:10px}
+.cursor{
+    cursor: pointer;
+}
+.float-right{
+    float: right;
+}
+.box.box-primary {
+    border-top-color: #f4f4f4;
+}
+.box-header>.fa, .box-header>.glyphicon, .box-header>.ion, .box-header .box-title{
+    font-size: 15px;
+}
+.none{
+    display: none;
+}
+.center{
+    text-align: center;
+}
+.width-10{
+    width: 110px;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    cursor: not-allowed;
+    background-color: white;
+    opacity: 1;
+}
+.fly-box{
+    position: fixed;
+    z-index: 999;
+    top: 100px;
+    left: 30%;
+    width: 40%;
+    height: 400px;
+    border: 2px solid lightgray;
+}
+.fly-box-m{
+    position: fixed;
+    z-index: 999;
+    top: 100px;
+    left: 30%;
+    width: 40%;
+    height: 380px;
+    border: 2px solid lightgray;
+}
+.fly-box-h{
+    position: fixed;
+    z-index: 999;
+    top: 100px;
+    left: 30%;
+    width: 40%;
+    height: 450px;
+    border: 2px solid lightgray;
+}
+.fly-box-area{
+    position: fixed;
+    z-index: 999;
+    top: 100px;
+    left: 30%;
+    width: 40%;
+    height: 300px;
+    border: 2px solid lightgray;
+}
+.fly-box-update{
+    position: fixed;
+    z-index: 999;
+    top: 80px;
+    left: 30%;
+    width: 40%;
+    height: 620px;
+    border: 2px solid lightgray;
+}
+.none{
+    display: none;
+}

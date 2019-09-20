@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BlocksIt.js Demonstration #2</title>
+<meta name="description" content="BlocksIt.js jQuery plugin Demonstration #2 Pinterest dynamic grid with CSS3 Transitions by inWebson.com" />
+<meta name="keywords" content="demonstration,demo,jquery,blocksit.js,css3,dynamic,grid,layout,inwebson" />
+<link rel='stylesheet' href='../css/style.css' media='screen' />
+<script src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+<script src="../js/blocksit.js"></script>
+<script>
+	$(document).ready(function() {
+
+		//blocksit define
+		$(window).load(function() {
+			$('#container').BlocksIt({
+				numOfCol : 3,
+				offsetX : 8,
+				offsetY : 8
+			});
+		});
+
+		//window resize
+		var currentWidth = 1100;
+		$(window).resize(function() {
+			var winWidth = $(window).width();
+			var conWidth;
+			if (winWidth < 660) {
+				conWidth = 440;
+				col = 2
+			} else if (winWidth < 880) {
+				conWidth = 660;
+				col = 3
+			} else if (winWidth < 1100) {
+				conWidth = 880;
+				col = 4;
+			} else {
+				conWidth = 1100;
+				col = 5;
+			}
+
+			if (conWidth != currentWidth) {
+				currentWidth = conWidth;
+				$('#container').width(conWidth);
+				$('#container').BlocksIt({
+					numOfCol : col,
+					offsetX : 8,
+					offsetY : 8
+				});
+			}
+		});
+	});
+	function _addContent(_index){
+		$('#content_'+_index).html('JAZ02801 2019-05-23 11:08:00 车进<br>JAZ02801 2019-05-23 11:08:00 车进<br>JAZ02801 2019-05-23 11:08:00 车进<br>JAZ02801 2019-05-23 11:08:00 车进<br>');
+		$('#container').BlocksIt({
+			numOfCol : 3,
+			offsetX : 8,
+			offsetY : 8
+		});
+	}
+</script>
+
+</head>
+<body>
+
+
+	<!-- Content -->
+	<section id="wrapper">
+		<hgroup>
+			<h2>交通视频分析平台</h2>
+			<h3>高精度车辆流动轨迹分析系统</h3>
+		</hgroup>
+		<div id="container">
+			<div class="grid">
+				<div class="imgholder">
+					<video src="1.mp4" style="width: 100%" controls="controls">您的浏览器不支持 video 标签。</video>
+				</div>
+				<p id="content_1" >尚未进行识别...</p>
+				<div class="meta"  onclick="_addContent(1)" >识&nbsp;别</div>
+			</div>
+			<div class="grid">
+				<div class="imgholder">
+					<video src="2.mp4" style="width: 100%" controls="controls">您的浏览器不支持 video 标签。</video>
+				</div>
+				<p id="content_2" >尚未进行识别...</p>
+				<div class="meta"  onclick="_addContent(2)" >识&nbsp;别</div>
+			</div>
+			<div class="grid">
+				<div class="imgholder">
+					<video src="3.mp4" style="width: 100%" controls="controls">您的浏览器不支持 video 标签。</video>
+				</div>
+				<p id="content_3" >尚未进行识别...</p>
+				<div class="meta"  onclick="_addContent(3)" >识&nbsp;别</div>
+			</div>
+			<div class="grid">
+				<div class="imgholder">
+					<video src="4.mp4" style="width: 100%" controls="controls">您的浏览器不支持 video 标签。</video>
+				</div>
+				<p id="content_4" >尚未进行识别...</p>
+				<div class="meta"  onclick="_addContent(4)" >识&nbsp;别</div>
+			</div>
+			<div class="grid">
+				<div class="imgholder">
+					<video src="5.mp4" style="width: 100%" controls="controls">您的浏览器不支持 video 标签。</video>
+				</div>
+				<p id="content_5" >尚未进行识别...</p>
+				<div class="meta"  onclick="_addContent(5)" >识&nbsp;别</div>
+			</div>
+			<div class="grid">
+				<div class="imgholder">
+					<video src="6.mp4" style="width: 100%" controls="controls">您的浏览器不支持 video 标签。</video>
+				</div>
+				<p id="content_6" >尚未进行识别...</p>
+				<div class="meta"  onclick="_addContent(6)" >识&nbsp;别</div>
+			</div>
+			<div class="grid">
+				<div class="imgholder">
+				
+				</div>
+				<strong>尝试更多视频分析</strong>
+				<p>在此处上传新的视频</p>
+				<div style="color: green;" class="meta">上&nbsp;传</div>
+			</div>
+			<!---->
+		</div>
+	</section>
+
+</body>
+</html>

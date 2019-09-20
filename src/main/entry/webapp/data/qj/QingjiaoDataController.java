@@ -56,6 +56,18 @@ public class QingjiaoDataController extends BaseController {
 		}
 		return resp;
 	}
+	
+	@RequestMapping(path = "/datas")
+	@ResponseBody
+	public Resp<?> datas(String mac, String date,String tem) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(qjDeviceLogService.nearList(mac, date,tem));
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return resp;
+	}
 
 	@RequestMapping(path = "/update")
 	@ResponseBody
@@ -92,6 +104,72 @@ public class QingjiaoDataController extends BaseController {
 		} catch (Exception e) {
 			log.error("error:{}", e);
 		}
+		return resp;
+	}
+
+	/**
+	 * 直川倾角
+	 * 
+	 * @param data
+	 * @return
+	 */
+	@RequestMapping(path = "/zhanway/push/zcqj")
+	@ResponseBody
+	public Resp<?> zcqj(String data) {
+		Resp<?> resp = new Resp<>(true);
+		try {
+			log.warn("data:---zc--{}", data);
+			String cmd = data.substring(5, 6);
+			String sn1 = data.substring(20, 22);
+			String sn2 = data.substring(18, 20);
+			String sn3 = data.substring(16, 18);
+			String sn4 = data.substring(14, 16);
+			long sn = Long.parseLong(sn1 + sn2 + sn3 + sn4, 16);
+			if (cmd.equals("7")) {
+				cmd = "心跳";
+			} else if (cmd.equals("8")) {
+				cmd = "报警";
+			}
+			String x1 = data.substring(38, 40);
+			String x2 = data.substring(36, 38);
+			String x3 = data.substring(34, 36);
+			String x4 = data.substring(32, 34);
+			String y1 = data.substring(50, 52);
+			String y2 = data.substring(48, 50);
+			String y3 = data.substring(46, 48);
+			String y4 = data.substring(44, 46);
+			String x = hexToFloat(x1 + x2 + x3 + x4);
+			String y = hexToFloat(y1 + y2 + y3 + y4);
+			String w1 = data.substring(58, 60);
+	        String w2 = data.substring(56, 58);
+	        Double w = Double.valueOf(Long.parseLong(w1 + w2, 16)) / 100;
+	        String b1 = data.substring(66, 68);
+	        String b2 = data.substring(64, 66);
+	        Double bat = Double.valueOf(Long.parseLong(b1 + b2, 16)) / 100;
+			QjDeviceLog log = new QjDeviceLog();
+			log.setBaseAcceX("");
+			log.setBaseAcceY("");
+			log.setBaseAcceZ("");
+			log.setBaseX(x);
+			log.setBaseY(y);
+			log.setBaseZ("");
+			log.setTem(String.valueOf(w));
+			log.setCreateTime(new Date());
+			log.setHardV("");
+			log.setSoftV("");
+			log.setSnValue(String.valueOf(sn));
+			log.setType(cmd);
+			log.setPci("");
+			log.setRsrp("");
+			log.setRssi("");
+			log.setSnr("");
+			log.setVoltage(String.valueOf(bat));
+			log.setType(cmd);
+			qjDeviceLogService.save(log);
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+
 		return resp;
 	}
 
@@ -216,6 +294,24 @@ public class QingjiaoDataController extends BaseController {
 		return new Resp<>(true);
 	}
 
+	/**
+	 * 浮点数按IEEE754标准转16进制字符串
+	 * 
+	 * @param f
+	 * @return
+	 */
+	public String FloatToHexString(float f) {
+		int i = Float.floatToIntBits(f);
+		String str = Integer.toHexString(i).toUpperCase();
+		return str;
+	}
+
+	/**
+	 * 16进制字符串IEEE754标准转小数
+	 * 
+	 * @param s
+	 * @return
+	 */
 	private static String hexToFloat(String s) {
 		BigInteger big = new BigInteger(s, 16);
 		Float z = Float.intBitsToFloat(big.intValue());
@@ -223,34 +319,19 @@ public class QingjiaoDataController extends BaseController {
 		BigDecimal f = new BigDecimal(r);
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-		String result =  decimalFormat.format(g);
+		String result = decimalFormat.format(g);
 		return result;
 	}
 
 	public static void main(String[] args) throws Exception {
-		// String data =
-		// "000919060000000148006A0002FD3D3EF3B6463EF3B6463EF3B646FD3D3EF3B6463EF3B6463EF3B646";
-		// int num = Integer.valueOf(data.substring(24, 26)).intValue();
-		// int start = 26;
-		// if(num!=0){
-		// for(int i = 0;i<num;i++){
-		// start+= i*28;
-		// QjDeviceLog log = new QjDeviceLog();
-		// log.setType("特么");
-		// log.setCreateTime(new Date());
-		// log.setTem(new
-		// QingjiaoDataController().getData100(data.substring(start, start+1),
-		// data.substring(start, start+4)));
-		// log.setBaseAcceX(hexToFloat(data.substring(start+4, start+12)));
-		// log.setBaseAcceY(hexToFloat(data.substring(start+12, start+20)));
-		// log.setBaseAcceZ(hexToFloat(data.substring(start+20, start+28)));
-		// System.out.println(JSONObject.toJSONString(log));
-		// }
-		// }
-//		String a = new QingjiaoDataController().convertHexToString("322E31303000");
-//		getB("18");
+		System.out.println(new QingjiaoDataController().getData100("0", "0C6F"));
 	}
 
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public String convertStringToHex(String str) {
 		char[] chars = str.toCharArray();
 		StringBuffer hex = new StringBuffer();
@@ -294,10 +375,10 @@ public class QingjiaoDataController extends BaseController {
 				String acc_x = hexToFloat(data.substring(26, 34));
 				String acc_y = hexToFloat(data.substring(34, 42));
 				String acc_z = hexToFloat(data.substring(42, 50));
-				String x = getData(data.substring(50, 51), data.substring(50, 54));
-				String y = getData(data.substring(54, 55), data.substring(54, 58));
-				String z = getData(data.substring(58, 59), data.substring(58, 62));
-				String bat = getData100(data.substring(62, 63), data.substring(62, 66));
+				String x = getData100(data.substring(50, 51), data.substring(50, 54));
+				String y = getData100(data.substring(54, 55), data.substring(54, 58));
+				String z = getData100(data.substring(58, 59), data.substring(58, 62));
+				String bat = getData(data.substring(62, 63), data.substring(62, 66));
 				String tem = String.valueOf(Integer.parseInt(data.substring(66, 68), 16));
 				String rssi = String.valueOf(Integer.parseInt(data.substring(68, 70), 16));
 				String rsrp = String
@@ -331,7 +412,7 @@ public class QingjiaoDataController extends BaseController {
 			} else if (cmd.equals("69")) {
 				cmd = "报警_" + flag;
 				QjDeviceLog log = new QjDeviceLog();
-			    int[] arr = getB(data.substring(28, 30));
+				int[] arr = getB(data.substring(28, 30));
 				log.setAcceXType(arr[5]);
 				log.setAcceYType(arr[4]);
 				log.setAcceZType(arr[3]);
@@ -341,16 +422,16 @@ public class QingjiaoDataController extends BaseController {
 				String acc_x = hexToFloat(data.substring(30, 38));
 				String acc_y = hexToFloat(data.substring(38, 46));
 				String acc_z = hexToFloat(data.substring(46, 54));
-				String x = getData(data.substring(54, 55), data.substring(54, 58));
-				String y = getData(data.substring(58, 59), data.substring(58, 62));
-				String z = getData(data.substring(62, 63), data.substring(62, 66));
+				String x = getData100(data.substring(54, 55), data.substring(54, 58));
+				String y = getData100(data.substring(58, 59), data.substring(58, 62));
+				String z = getData100(data.substring(62, 63), data.substring(62, 66));
 				String acc_x_max = hexToFloat(data.substring(66, 74));
 				String acc_y_max = hexToFloat(data.substring(74, 82));
 				String acc_z_max = hexToFloat(data.substring(82, 90));
 				String acc_x_min = hexToFloat(data.substring(90, 98));
 				String acc_y_min = hexToFloat(data.substring(98, 106));
 				String acc_z_min = hexToFloat(data.substring(106, 114));
-				String bat = getData100(data.substring(114, 115), data.substring(114, 118));
+				String bat = getData(data.substring(114, 115), data.substring(114, 118));
 				String tem = String.valueOf(Integer.parseInt(data.substring(118, 120), 16));
 				log.setType(cmd);
 				log.setBaseAcceX(acc_x);
@@ -372,7 +453,7 @@ public class QingjiaoDataController extends BaseController {
 				log.setVoltage(bat);
 				log.setCreateTime(new Date());
 				qjDeviceLogService.save(log);
-			} else {
+			} else if (cmd.equals("6A")) {
 				cmd = "温度_" + flag;
 				int num = Integer.valueOf(data.substring(24, 26)).intValue();
 				int start = 26;
@@ -402,43 +483,43 @@ public class QingjiaoDataController extends BaseController {
 	public int[] getB(String data) {
 		Integer num = Integer.parseInt(data, 16);
 		String a = Integer.toBinaryString(num);
-		int[] s = new int[] {0,0,0,0,0,0};
-		if(a.length()==1) {
-			s[5]=Integer.valueOf(a);
+		int[] s = new int[] { 0, 0, 0, 0, 0, 0 };
+		if (a.length() == 1) {
+			s[5] = Integer.valueOf(a);
 		}
-		if(a.length()==2) {
-			s[4]=Integer.valueOf(a.substring(0, 1));
-			s[5]=Integer.valueOf(a.substring(1, 2));
+		if (a.length() == 2) {
+			s[4] = Integer.valueOf(a.substring(0, 1));
+			s[5] = Integer.valueOf(a.substring(1, 2));
 		}
-		if(a.length()==3) {
-			s[3]=Integer.valueOf(a.substring(0, 1));
-			s[4]=Integer.valueOf(a.substring(1, 2));
-			s[5]=Integer.valueOf(a.substring(2, 3));
+		if (a.length() == 3) {
+			s[3] = Integer.valueOf(a.substring(0, 1));
+			s[4] = Integer.valueOf(a.substring(1, 2));
+			s[5] = Integer.valueOf(a.substring(2, 3));
 		}
-		if(a.length()==4) {
-			s[2]=Integer.valueOf(a.substring(0, 1));
-			s[3]=Integer.valueOf(a.substring(1, 2));
-			s[4]=Integer.valueOf(a.substring(2, 3));
-			s[5]=Integer.valueOf(a.substring(3, 4));
+		if (a.length() == 4) {
+			s[2] = Integer.valueOf(a.substring(0, 1));
+			s[3] = Integer.valueOf(a.substring(1, 2));
+			s[4] = Integer.valueOf(a.substring(2, 3));
+			s[5] = Integer.valueOf(a.substring(3, 4));
 		}
-		if(a.length()==5) {
-			s[1]=Integer.valueOf(a.substring(0, 1));
-			s[2]=Integer.valueOf(a.substring(1, 2));
-			s[3]=Integer.valueOf(a.substring(2, 3));
-			s[4]=Integer.valueOf(a.substring(3, 4));
-			s[5]=Integer.valueOf(a.substring(4, 5));
+		if (a.length() == 5) {
+			s[1] = Integer.valueOf(a.substring(0, 1));
+			s[2] = Integer.valueOf(a.substring(1, 2));
+			s[3] = Integer.valueOf(a.substring(2, 3));
+			s[4] = Integer.valueOf(a.substring(3, 4));
+			s[5] = Integer.valueOf(a.substring(4, 5));
 		}
-		if(a.length()==6) {
-			s[0]=Integer.valueOf(a.substring(0, 1));
-			s[1]=Integer.valueOf(a.substring(1, 2));
-			s[2]=Integer.valueOf(a.substring(2, 3));
-			s[3]=Integer.valueOf(a.substring(3, 4));
-			s[4]=Integer.valueOf(a.substring(4, 5));
-			s[5]=Integer.valueOf(a.substring(5, 6));
+		if (a.length() == 6) {
+			s[0] = Integer.valueOf(a.substring(0, 1));
+			s[1] = Integer.valueOf(a.substring(1, 2));
+			s[2] = Integer.valueOf(a.substring(2, 3));
+			s[3] = Integer.valueOf(a.substring(3, 4));
+			s[4] = Integer.valueOf(a.substring(4, 5));
+			s[5] = Integer.valueOf(a.substring(5, 6));
 		}
 		return s;
 	}
-	
+
 	/**
 	 * 普质 带z轴
 	 * 
@@ -812,8 +893,8 @@ public class QingjiaoDataController extends BaseController {
 		BigDecimal f = new BigDecimal(r);
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-		String result =  decimalFormat.format(g);
-		log.warn("result:{}", result);
+		String result = decimalFormat.format(g);
+		// log.warn("result:{}", result);
 		return result;
 	}
 
@@ -846,12 +927,12 @@ public class QingjiaoDataController extends BaseController {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		Double r = Double.valueOf(e)/100;
+		Double r = Double.valueOf(e) / 100;
 		BigDecimal f = new BigDecimal(r);
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-		String result =  decimalFormat.format(g);
-		log.warn("result:{}", result);
+		String result = decimalFormat.format(g);
+		// log.warn("result:{}", result);
 		return result;
 	}
 
@@ -884,12 +965,12 @@ public class QingjiaoDataController extends BaseController {
 		} else {
 			e = Integer.parseInt(_d, 16);
 		}
-		Double r = Double.valueOf(e)/1000;
+		Double r = Double.valueOf(e) / 1000;
 		BigDecimal f = new BigDecimal(r);
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-		String result =  decimalFormat.format(g);
-		log.warn("result:{}", result);
+		String result = decimalFormat.format(g);
+		// log.warn("result:{}", result);
 		return result;
 	}
 }

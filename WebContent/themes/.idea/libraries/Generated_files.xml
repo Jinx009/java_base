@@ -1,0 +1,36 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/md5-compiled.js" />
+        <item url="file://$PROJECT_DIR$/vedio/js/task-compiled.js" />
+        <item url="file://$PROJECT_DIR$/js/ajaxUpload-compiled.js" />
+        <item url="file://$PROJECT_DIR$/vedio/js/area-compiled.js" />
+        <item url="file://$PROJECT_DIR$/park/index-compiled.js" />
+        <item url="file://$PROJECT_DIR$/iot/iot-compiled.js" />
+        <item url="file://$PROJECT_DIR$/park/detail-compiled.js" />
+        <item url="file://$PROJECT_DIR$/iot/iot_1-compiled.js" />
+        <item url="file://$PROJECT_DIR$/iot/weui.min-compiled.js" />
+        <item url="file://$PROJECT_DIR$/vedio/js/task_new-compiled.js" />
+        <item url="file://$PROJECT_DIR$/iot/zepto.min-compiled.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/vedio/js/task-compiled.js" />
+      <root url="file://$PROJECT_DIR$/vedio/js/area-compiled.js" />
+      <root url="file://$PROJECT_DIR$/vedio/js/task_new-compiled.js" />
+      <root url="file://$PROJECT_DIR$/md5-compiled.js" />
+      <root url="file://$PROJECT_DIR$/vedio/js/task-compiled.js" />
+      <root url="file://$PROJECT_DIR$/js/ajaxUpload-compiled.js" />
+      <root url="file://$PROJECT_DIR$/vedio/js/area-compiled.js" />
+      <root url="file://$PROJECT_DIR$/park/index-compiled.js" />
+      <root url="file://$PROJECT_DIR$/iot/iot-compiled.js" />
+      <root url="file://$PROJECT_DIR$/park/detail-compiled.js" />
+      <root url="file://$PROJECT_DIR$/iot/iot_1-compiled.js" />
+      <root url="file://$PROJECT_DIR$/iot/weui.min-compiled.js" />
+      <root url="file://$PROJECT_DIR$/vedio/js/task_new-compiled.js" />
+      <root url="file://$PROJECT_DIR$/iot/zepto.min-compiled.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
