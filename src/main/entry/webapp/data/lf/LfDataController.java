@@ -42,9 +42,9 @@ public class LfDataController extends BaseController {
 		JSONObject obj = JSONObject.parseObject(s);
 		String SensorID = obj.getString("SensorID");
 		Integer SensorType = obj.getInteger("SensorType");
-		String data1 = obj.getString("data1");
-		String data2 = obj.getString("data2");
-		String data3 = obj.getString("data3");
+		String data1 = obj.getString("Data1");
+		String data2 = obj.getString("Data2");
+		String data3 = obj.getString("Data3");
 		Long AcqTime = obj.getLong("AcqTime");
 		Long PushTime = obj.getLong("PushTime");
 		LfDevice lfDevice = lfDeviceService.findById(SensorID);
@@ -54,6 +54,7 @@ public class LfDataController extends BaseController {
 			lfDevice.setData2(data2);
 			lfDevice.setData3(data3);
 			lfDevice.setPushTime(PushTime);
+			lfDevice.setSensorType(SensorType);
 			lfDeviceService.update(lfDevice);
 		}else{
 			lfDevice = new LfDevice();
@@ -75,7 +76,7 @@ public class LfDataController extends BaseController {
 		lfLog.setSensorID(SensorID);
 		lfLog.setPushTime(PushTime);
 		lfLogService.save(lfLog);
-		return new Resp<>(true);
+		return new Resp<>("");
 	}
 	
 }
