@@ -289,6 +289,24 @@ public class TelcomCotroller extends BaseController {
 								log.error("e:{}", e);
 							}
 						} else if (ioTCloudDevice.getLocalIp() != null
+								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_PUSHI")) {
+							try {
+								String id = tModel.getData().substring(0, 8);
+								long dec_num = Long.parseLong(id, 16);
+								IotCloudLog log = iotCloudLogService.findById((int) dec_num);
+								if (log != null && log.getCmdType() == 1) {
+									log.setCmdType(1);
+									iotCloudLogService.update(log);
+								} else {
+									sendPushiNew(ioTCloudDevice, iotCloudLog.getData());
+									HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="
+											+ tModel.getData());
+								}
+							} catch (Exception e) {
+								log.error("e:{}", e);
+							}
+
+						}else if (ioTCloudDevice.getLocalIp() != null
 								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_GUANGDONG")) {
 							try {
 								String id = tModel.getData().substring(0, 8);
@@ -421,6 +439,24 @@ public class TelcomCotroller extends BaseController {
 								iotCloudLogService.update(log);
 							} else {
 								sendYIBIN(ioTCloudDevice, iotCloudLog.getData());
+								HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="
+										+ tModel.getData());
+							}
+						} catch (Exception e) {
+							log.error("e:{}", e);
+						}
+
+					}  else if (ioTCloudDevice.getLocalIp() != null
+							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_PUSHI")) {
+						try {
+							String id = tModel.getData().substring(0, 8);
+							long dec_num = Long.parseLong(id, 16);
+							IotCloudLog log = iotCloudLogService.findById((int) dec_num);
+							if (log != null && log.getCmdType() == 1) {
+								log.setCmdType(1);
+								iotCloudLogService.update(log);
+							} else {
+								sendPushiNew(ioTCloudDevice, iotCloudLog.getData());
 								HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="
 										+ tModel.getData());
 							}
@@ -766,6 +802,45 @@ public class TelcomCotroller extends BaseController {
 			// String url =
 			// "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
 			String url = "http://121.8.170.150:8201/api/devices/datapoints?type=3";
+			log.warn("send url-----------------------\n:{}\n---------------------------------", url);
+			String res = HttpUtils.postJson(url, json);
+			log.warn("send res-----------------------\n:{}\n---------------------------------", res);
+		}
+	}
+	
+	/**
+	 * 普世宜宾3.0版本设备
+	 * 
+	 * @param ioTCloudDevice
+	 * @param data
+	 * @throws NumberFormatException
+	 * @throws Exception
+	 */
+	private void sendPushiNew(IoTCloudDevice ioTCloudDevice, String data) throws NumberFormatException, Exception {
+		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> sendData = new HashMap<>();
+		map.put("deviceId", ioTCloudDevice.getUdpIp().split("_")[0]);
+		map.put("apikey", ioTCloudDevice.getUdpIp().split("_")[1]);
+		String cmd = data.substring(20, 22);
+		if (cmd.equals("68")) {
+			cmd = "报警";
+		} else {
+			cmd = "心跳";
+		}
+		if (cmd.equals("报警") || cmd.equals("心跳")) {
+			String acc_x = hexToFloat(data.substring(26, 34));
+			String acc_y = hexToFloat(data.substring(34, 42));
+			String acc_z = hexToFloat(data.substring(42, 50));
+			String x = getData100(data.substring(50, 51), data.substring(50, 54));
+			String y = getData100(data.substring(54, 55), data.substring(54, 58));
+			String z = getData100(data.substring(58, 59), data.substring(58, 62));
+			sendData.put("103_1", x + "," + y + "," + z + "," + acc_x + "," + acc_y + "," + acc_z);
+			map.put("data", sendData);
+			String json = JSONObject.toJSONString(map);
+			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
+			// String url =
+			// "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
+			String url = "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
 			log.warn("send url-----------------------\n:{}\n---------------------------------", url);
 			String res = HttpUtils.postJson(url, json);
 			log.warn("send res-----------------------\n:{}\n---------------------------------", res);
