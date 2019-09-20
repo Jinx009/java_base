@@ -17,7 +17,7 @@ function _getData(_type,_index){
 				})
 				_max = res.data.page.pages;
 				for(var i in res.data.list){
-					res.data.list[i].lastSeenTime = toDateTime(res.data.list[i].lastSeenTime);
+					res.data.list[i].dataTime = toDateTime(res.data.list[i].dataTime);
 				}
 				if(''==_d){
 					_d = new Vue({

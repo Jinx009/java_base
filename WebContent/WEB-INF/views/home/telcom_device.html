@@ -54,7 +54,7 @@
 											<th>deviceId</th>
 											<th>上报地址</th>
 											<th>上报端口</th>
-											<th>场库名称</th>
+											<th>最后数据时间</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -66,7 +66,7 @@
 											<td v-text="item.deviceId"></td>
 											<td v-text="item.udpIp"></td>
 											<td v-text="item.udpPort"></td>
-											<td v-text="item.parkName"></td>
+											<td v-text="item.dataTime"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -91,7 +91,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/telcom_device.js?_v=1.28"></script>
+	<script src="/themes/js/home/telcom_device.js?_v=1.38"></script>
 	<script src="/themes/js/home/base.js?version=1.26"></script>
 
 </body>
