@@ -19,11 +19,16 @@ import common.helper.StringUtil;
 import database.models.qj.QjDeviceLog;
 import database.models.qj.QjNotice;
 import database.models.vedio.VedioTask;
+import database.models.wenshidu.WenshiduDevice;
+import database.models.wenshidu.WenshiduLog;
 import service.basicFunctions.parking.ParkingAreaService;
 import service.basicFunctions.qj.QjDeviceLogService;
 import service.basicFunctions.qj.QjNoticeService;
 import service.basicFunctions.vedio.VedioLogService;
 import service.basicFunctions.vedio.VedioTaskService;
+import service.basicFunctions.wenshidu.WenshiduDeviceService;
+import service.basicFunctions.wenshidu.WenshiduLogService;
+import utils.HttpUtils;
 import utils.VedioUtils;
 import utils.msg.AlimsgUtils;
 
@@ -44,6 +49,10 @@ public class JobTask {
 	private QjDeviceLogService qjDeviceLogService;
 	@Autowired
 	private QjNoticeService qjNoticeService;
+	@Autowired
+	private WenshiduDeviceService wenshiduDeviceService;
+	@Autowired
+	private WenshiduLogService wenshiduLogService;
 	
 	@Scheduled(fixedRate = 1000 * 3600, initialDelay = 1000)
 	public void qjCheck() {
@@ -52,9 +61,43 @@ public class JobTask {
 		for(QjNotice str:list){
 			QjDeviceLog log = qjDeviceLogService.getNearBySn(str.getMac());
 			if(log==null){
-//				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18217700275");
-//				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","13918073897");
-//				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18108196835");
+				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18217700275");
+				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","13918073897");
+				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18108196835");
+			}
+		}
+	}
+	
+	@Scheduled(fixedRate = 1000 * 1200, initialDelay = 1000)
+	public void wenshidu() {
+		List<WenshiduDevice> list = wenshiduDeviceService.findAll();
+		if(list!=null&&!list.isEmpty()){
+			for(WenshiduDevice device : list){
+				try {
+					Thread.sleep(2000);
+					String s = HttpUtils.get("http://open.sennor.net:8088/device/getDeviceInfo?secretKey=4498261B15CF4EEE&deviceNumber="+device.getDeviceNumber());
+					JSONObject obj = JSONObject.parseObject(s);
+					String data = obj.getString("data");
+					WenshiduDevice d = JSONObject.parseObject(data, WenshiduDevice.class);
+					Date d1 = device.getTime();
+					Date d2 = d.getTime();
+					if(d1==null||d2.after(d1)){
+						device.setTime(d2);
+						device.setData(d.getData());
+						device.setDeviceId(d.getDeviceId());
+						device.setName(d.getName());
+						device.setOnLineState(d.getOnLineState());
+						wenshiduDeviceService.update(device);
+						WenshiduLog log = new WenshiduLog();
+						log.setData(d.getData());
+						log.setDeviceNumber(d.getDeviceNumber());
+						log.setName(d.getName());
+						log.setTime(d2);
+						wenshiduLogService.save(log);
+					}
+				} catch (Exception e) {
+					log.error("e:{}",e);
+				}
 			}
 		}
 	}
