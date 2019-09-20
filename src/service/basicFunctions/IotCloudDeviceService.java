@@ -51,5 +51,9 @@ public class IotCloudDeviceService {
 		return  iotCloudDeviceDao.findByLocalIp(localIp);
 	}
 
+	public void update(IoTCloudDevice ioTCloudDevice) {
+		iotCloudDeviceDao.update(ioTCloudDevice);
+	}
+
 	
 }

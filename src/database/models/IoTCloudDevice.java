@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +31,7 @@ public class IoTCloudDevice {
 	@Column(name = "local_ip")
 	private String localIp;
 	@Column(name = "create_time")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
 	@Column(name = "type")
 	private Integer type; //1电信 2 联通
@@ -48,5 +51,7 @@ public class IoTCloudDevice {
 	private String area;
 	@Column(name = "location")
 	private String location;
-	
+	@Column(name = "data_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataTime;
 }

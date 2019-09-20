@@ -200,6 +200,8 @@ public class TelcomCotroller extends BaseController {
 						TModel tModel = pushModel.getData();
 						IoTCloudDevice ioTCloudDevice = iotCloudDeviceService
 								.findByDeviceId(telcomPushDataModel.getDeviceId());
+						ioTCloudDevice.setDataTime(new Date());
+						iotCloudDeviceService.update(ioTCloudDevice);
 						IotCloudLog iotCloudLog = new IotCloudLog();
 						iotCloudLog.setData(tModel.getData());
 						iotCloudLog.setFromSite("telcom");
@@ -339,6 +341,8 @@ public class TelcomCotroller extends BaseController {
 					TModel tModel = pushModel2.getData();
 					IoTCloudDevice ioTCloudDevice = iotCloudDeviceService
 							.findByDeviceId(telcomPushDataModel.getDeviceId());
+					ioTCloudDevice.setDataTime(new Date());
+					iotCloudDeviceService.update(ioTCloudDevice);
 					IotCloudLog iotCloudLog = new IotCloudLog();
 					iotCloudLog.setData(tModel.getData());
 					iotCloudLog.setFromSite("telcom");
