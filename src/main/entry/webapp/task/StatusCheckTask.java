@@ -328,16 +328,16 @@ public class StatusCheckTask {
 	public static String getFourHex(Integer id) {
 		String _num =  Integer.toHexString(id);
 		if(_num.length()==1){
-			return "000"+_num;
+			return "0"+_num+"00";
 		}
 		if(_num.length()==2){
-			return "00"+_num;
+			return _num+"00";
 		}
 		if(_num.length()==3){
-			return "0"+_num;
+			return _num.substring(1,3)+"0"+_num.substring(0,1);
 		}
 		if(_num.length()==4){
-			return _num;
+			return _num.substring(2,4)+_num.substring(0,2);
 		}
 		return _num;
 	}
