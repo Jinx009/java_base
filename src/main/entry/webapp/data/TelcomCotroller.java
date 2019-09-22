@@ -822,29 +822,26 @@ public class TelcomCotroller extends BaseController {
 		map.put("deviceId", ioTCloudDevice.getUdpIp().split("_")[0]);
 		map.put("apikey", ioTCloudDevice.getUdpIp().split("_")[1]);
 		String cmd = data.substring(20, 22);
-		if (cmd.equals("68")) {
+		if (cmd.equals("69")) {
 			cmd = "报警";
-		} else {
+		} else if (cmd.equals("68")){
 			cmd = "心跳";
 		}
-		String acc_x = hexToFloat(data.substring(26, 34));
-		String acc_y = hexToFloat(data.substring(34, 42));
-		String acc_z = hexToFloat(data.substring(42, 50));
+		String acc_x = "0";
+		String acc_y = "0";
+		String acc_z = "0";
+		String x = getData100(data.substring(50, 51), data.substring(50, 54));
+		String y = getData100(data.substring(54, 55), data.substring(54, 58));
+		String z = getData100(data.substring(58, 59), data.substring(58, 62));
 		if (cmd.equals("报警")) {
+			x = getData100(data.substring(54, 55), data.substring(54, 58));
+			y = getData100(data.substring(58, 59), data.substring(58, 62));
+			z = getData100(data.substring(62, 63), data.substring(62, 66));
 			acc_x = hexToFloat(data.substring(66, 74));
 			acc_y = hexToFloat(data.substring(74, 82));
 			acc_z = hexToFloat(data.substring(82, 90));
 		}
-		if (cmd.equals("心跳")) {
-			acc_x = "0";
-			acc_y = "0";
-			acc_z = "0";
-		}
-		
 		if (cmd.equals("报警") || cmd.equals("心跳")) {
-			String x = getData100(data.substring(50, 51), data.substring(50, 54));
-			String y = getData100(data.substring(54, 55), data.substring(54, 58));
-			String z = getData100(data.substring(58, 59), data.substring(58, 62));
 			sendData.put("103_1", x + "," + y + "," + z + "," + acc_x + "," + acc_y + "," + acc_z);
 			map.put("data", sendData);
 			String json = JSONObject.toJSONString(map);
@@ -872,9 +869,9 @@ public class TelcomCotroller extends BaseController {
 		map.put("deviceId", ioTCloudDevice.getUdpIp().split("_")[0]);
 		map.put("apikey", ioTCloudDevice.getUdpIp().split("_")[1]);
 		String cmd = data.substring(20, 22);
-		if (cmd.equals("68")) {
+		if (cmd.equals("69")) {
 			cmd = "报警";
-		} else {
+		} else if (cmd.equals("68")){
 			cmd = "心跳";
 		}
 		if (cmd.equals("报警") || cmd.equals("心跳")) {
@@ -909,9 +906,9 @@ public class TelcomCotroller extends BaseController {
 		String sn = device.getSimCard().split("_")[1];
 		map.put("JCDB19A080", sn);
 		String type = data.substring(16, 18);
-		if (type.equals("68")) {
+		if (type.equals("69")) {
 			type = "报警";
-		} else {
+		} else if (type.equals("68")){
 			type = "心跳";
 		}
 		try {
@@ -958,9 +955,9 @@ public class TelcomCotroller extends BaseController {
 		map.put("deviceId", ioTCloudDevice.getUdpIp().split("_")[0]);
 		map.put("apikey", ioTCloudDevice.getUdpIp().split("_")[1]);
 		String type = data.substring(16, 18);
-		if (type.equals("68")) {
+		if (type.equals("69")) {
 			type = "报警";
-		} else {
+		} else if (type.equals("68")){
 			type = "心跳";
 		}
 		if (type.equals("报警") || type.equals("心跳")) {
@@ -1219,9 +1216,9 @@ public class TelcomCotroller extends BaseController {
 		String sn = data.substring(0, 16);
 		map.put("JCDB19A080", sn);
 		String type = data.substring(16, 18);
-		if (type.equals("68")) {
+		if (type.equals("69")) {
 			type = "报警";
-		} else {
+		} else if (type.equals("68")){
 			type = "心跳";
 		}
 		try {

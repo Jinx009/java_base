@@ -262,8 +262,7 @@ public class StatusCheckTask {
 												String[] s = upload_intv.split(",");
 												data = "48007D0701" + getFourHex(Integer.valueOf(s[0])).toUpperCase()
 														+ getFourHex(Integer.valueOf(s[1])).toUpperCase()
-														+ getFourHex(Integer.valueOf(s[2])).toUpperCase()
-														+ getFourHex(Integer.valueOf(s[3])).toUpperCase()+getMore(Integer.toHexString(pz.getId()));
+														+ getFourHex(Integer.valueOf(s[2])).toUpperCase()+getMore(Integer.toHexString(pz.getId()));
 												map.put("data", data);
 												String res = HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
 												pz.setTelcomTaskId(JSONObject.parseObject(res).getString("data"));
