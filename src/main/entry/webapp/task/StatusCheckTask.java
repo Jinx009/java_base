@@ -258,9 +258,12 @@ public class StatusCheckTask {
 												pz.setStatus("直接返回");
 												puzhiJobService.update(pz);
 											}else if (cmd.equals("setsensortime")) {//设置传感器时间 采样间隔
-												String upload_intv = UrlUtils.parse($cmd, "upload_intv");
-												Integer value = Integer.valueOf(upload_intv);
-												data = "48007A0201" + UrlUtils.getHex(value).toUpperCase()+getMore(Integer.toHexString(pz.getId()));
+												String upload_intv = UrlUtils.parse($cmd, "sample_intv");
+												String[] s = upload_intv.split(",");
+												data = "48007D0701" + getFourHex(Integer.valueOf(s[0])).toUpperCase()
+														+ getFourHex(Integer.valueOf(s[1])).toUpperCase()
+														+ getFourHex(Integer.valueOf(s[2])).toUpperCase()
+														+ getFourHex(Integer.valueOf(s[3])).toUpperCase()+getMore(Integer.toHexString(pz.getId()));
 												map.put("data", data);
 												String res = HttpUtils.postJson("http://106.14.94.245:8091/job/send",JSONObject.toJSONString(map));
 												pz.setTelcomTaskId(JSONObject.parseObject(res).getString("data"));
@@ -322,6 +325,24 @@ public class StatusCheckTask {
 			log.error("e:{}", e);
 		}
 	}
+	
+	public static String getFourHex(Integer id) {
+		String _num =  Integer.toHexString(id);
+		if(_num.length()==1){
+			return "000"+_num;
+		}
+		if(_num.length()==2){
+			return "00"+_num;
+		}
+		if(_num.length()==3){
+			return "0"+_num;
+		}
+		if(_num.length()==4){
+			return _num;
+		}
+		return _num;
+	}
+
 	
 	/**
 	 * 浮点数按IEEE754标准转16进制字符串

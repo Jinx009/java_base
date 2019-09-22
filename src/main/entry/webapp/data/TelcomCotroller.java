@@ -827,10 +827,21 @@ public class TelcomCotroller extends BaseController {
 		} else {
 			cmd = "心跳";
 		}
+		String acc_x = hexToFloat(data.substring(26, 34));
+		String acc_y = hexToFloat(data.substring(34, 42));
+		String acc_z = hexToFloat(data.substring(42, 50));
+		if (cmd.equals("报警")) {
+			acc_x = hexToFloat(data.substring(66, 74));
+			acc_y = hexToFloat(data.substring(74, 82));
+			acc_z = hexToFloat(data.substring(82, 90));
+		}
+		if (cmd.equals("心跳")) {
+			acc_x = "0";
+			acc_y = "0";
+			acc_z = "0";
+		}
+		
 		if (cmd.equals("报警") || cmd.equals("心跳")) {
-			String acc_x = hexToFloat(data.substring(26, 34));
-			String acc_y = hexToFloat(data.substring(34, 42));
-			String acc_z = hexToFloat(data.substring(42, 50));
 			String x = getData100(data.substring(50, 51), data.substring(50, 54));
 			String y = getData100(data.substring(54, 55), data.substring(54, 58));
 			String z = getData100(data.substring(58, 59), data.substring(58, 62));
