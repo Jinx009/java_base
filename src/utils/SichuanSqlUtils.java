@@ -124,6 +124,34 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
     }
     
     /**
+     * 插入报警
+     * @throws SQLException 
+     */
+    public void insertYinhuandian(String yhd,int gs,String bz) throws SQLException{
+			      String sql = "INSERT INTO JCCA02A("
+			      		+ "JCCA02A010,"
+			      		+ "JCCA02A020,"
+			      		+ "JCCA02A030,"
+			      		+ "JCCA02A040,"
+			      		+ "JCCA02A050,"
+			      		+ "JCCA02A060,"
+			      		+ "JCCA02A080) "
+			      + "VALUES(?,?,?,?,?,?,?);";
+			// 创建语句对象
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			// 为参数赋值
+			pstmt.setString(1,yhd);
+			pstmt.setInt(2, gs);
+			pstmt.setInt(3, gs);
+			pstmt.setString(4,"初期监测");
+			pstmt.setString(5,"已编制");
+			pstmt.setString(6,"Ⅲ");
+			pstmt.setString(7,bz);
+			pstmt.executeUpdate();
+			pstmt.close();
+    }
+    
+    /**
      * 插入承建单位
      * @throws SQLException 
      */
@@ -261,6 +289,43 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
 			pstmt.close();
     }
 
+    /**
+     * 插入责任人
+     * @throws SQLException 
+     */
+    public void insertZerenren() throws SQLException{
+			      String sql = "INSERT INTO JCCA05A("
+			      		+ "JCCA05A016,"
+			      		+ "JCCA05A020,"
+			      		+ "JCCA05A030,"
+			      		+ "JCCA05A040,"
+			      		+ "JCCA05A050,"
+			      		+ "JCCA05A060,"
+			      		+ "JCCA05A070,"
+			      		+ "JCCA05A080,"
+			      		+ "JCCA05A090,"
+			      		+ "JCCA05A100,"
+			      		+ "JCCA05A110,"
+			      		+ "JCCA05A010) "
+			      + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
+			// 创建语句对象
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			// 为参数赋值
+			pstmt.setString(1, "成都市");
+			pstmt.setString(2, "植强");
+			pstmt.setString(3, "男");
+			pstmt.setDate(4, Date.valueOf("1971-08-14"));
+			pstmt.setString(5, "技术总监");
+			pstmt.setString(6, "技术总监");
+			pstmt.setString(7, "18108192627");
+			pstmt.setString(8, "18108192627");
+			pstmt.setString(9, "");
+			pstmt.setString(10, "");
+			pstmt.setString(11, "");
+			pstmt.setString(12, "100001");
+			pstmt.executeUpdate();
+			pstmt.close();
+    }
 
 
 
@@ -338,7 +403,9 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
 //         basicApp.insertXintiao("511802010214QX01", "511802010214", "0.01","01");
 //         basicApp.insertBaojing("C1", 1, "511802010214QX01", "511802010214", 1.3,1.0);
 //         basicApp.queryTable(" SELECT * FROM JCCA16A where  JCCA16A020 = '511802010214QX0101'  limit 10 ");
-         basicApp.queryTable(" SELECT * FROM JCCA16A where  JCCA16A025 = '511024010749'  limit 10 ");
+//         basicApp.insertZerenren();
+         basicApp.queryTable(" SELECT * FROM JCCA05A");//JCCA05A
+//         basicApp.insertYinhuandian("511524010101",2, "长宁县双河镇杨柳村7组大田包滑坡");
          basicApp.disConnect();
     }
 }
