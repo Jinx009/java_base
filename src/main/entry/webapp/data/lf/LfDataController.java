@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import database.models.lf.LfDevice;
@@ -39,43 +40,46 @@ public class LfDataController extends BaseController {
 	@ResponseBody
 	public Resp<?> dataPush(@RequestBody String s){
 		log.warn("data:{}",s);
-		JSONObject obj = JSONObject.parseObject(s);
-		String SensorID = obj.getString("SensorID");
-		Integer SensorType = obj.getInteger("SensorType");
-		String data1 = obj.getString("Data1");
-		String data2 = obj.getString("Data2");
-		String data3 = obj.getString("Data3");
-		Long AcqTime = obj.getLong("AcqTime");
-		Long PushTime = obj.getLong("PushTime");
-		LfDevice lfDevice = lfDeviceService.findById(SensorID);
-		if(lfDevice!=null){
-			lfDevice.setAcqTime(AcqTime);
-			lfDevice.setData1(data1);
-			lfDevice.setData2(data2);
-			lfDevice.setData3(data3);
-			lfDevice.setPushTime(PushTime);
-			lfDevice.setSensorType(SensorType);
-			lfDeviceService.update(lfDevice);
-		}else{
-			lfDevice = new LfDevice();
-			lfDevice.setAcqTime(AcqTime);
-			lfDevice.setSensorType(SensorType);
-			lfDevice.setData1(data1);
-			lfDevice.setData2(data2);
-			lfDevice.setData3(data3);
-			lfDevice.setSensorID(SensorID);
-			lfDevice.setPushTime(PushTime);
-			lfDeviceService.save(lfDevice);
+		JSONArray arr = JSONObject.parseArray(s);
+		for(int i =0;i<arr.size();i++) {
+			JSONObject obj = arr.getJSONObject(i);
+			String SensorID = obj.getString("SensorID");
+			Integer SensorType = obj.getInteger("SensorType");
+			String data1 = obj.getString("Data1");
+			String data2 = obj.getString("Data2");
+			String data3 = obj.getString("Data3");
+			Long AcqTime = obj.getLong("AcqTime");
+			Long PushTime = obj.getLong("PushTime");
+			LfDevice lfDevice = lfDeviceService.findById(SensorID);
+			if(lfDevice!=null){
+				lfDevice.setAcqTime(AcqTime);
+				lfDevice.setData1(data1);
+				lfDevice.setData2(data2);
+				lfDevice.setData3(data3);
+				lfDevice.setPushTime(PushTime);
+				lfDevice.setSensorType(SensorType);
+				lfDeviceService.update(lfDevice);
+			}else{
+				lfDevice = new LfDevice();
+				lfDevice.setAcqTime(AcqTime);
+				lfDevice.setSensorType(SensorType);
+				lfDevice.setData1(data1);
+				lfDevice.setData2(data2);
+				lfDevice.setData3(data3);
+				lfDevice.setSensorID(SensorID);
+				lfDevice.setPushTime(PushTime);
+				lfDeviceService.save(lfDevice);
+			}
+			LfLog lfLog = new LfLog();
+			lfLog.setAcqTime(AcqTime);
+			lfLog.setSensorType(SensorType);
+			lfLog.setData1(data1);
+			lfLog.setData2(data2);
+			lfLog.setData3(data3);
+			lfLog.setSensorID(SensorID);
+			lfLog.setPushTime(PushTime);
+			lfLogService.save(lfLog);
 		}
-		LfLog lfLog = new LfLog();
-		lfLog.setAcqTime(AcqTime);
-		lfLog.setSensorType(SensorType);
-		lfLog.setData1(data1);
-		lfLog.setData2(data2);
-		lfLog.setData3(data3);
-		lfLog.setSensorID(SensorID);
-		lfLog.setPushTime(PushTime);
-		lfLogService.save(lfLog);
 		return new Resp<>("");
 	}
 	
