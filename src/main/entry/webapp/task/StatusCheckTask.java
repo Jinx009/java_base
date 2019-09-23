@@ -282,9 +282,9 @@ public class StatusCheckTask {
 												String ax = FloatToHexString(Float.valueOf(s[0]));
 												String ay = FloatToHexString(Float.valueOf(s[1]));
 												String az = FloatToHexString(Float.valueOf(s[2]));
-												String x = FloatToHexString(Float.valueOf(s[0]));
-												String y = FloatToHexString(Float.valueOf(s[1]));
-												String z = FloatToHexString(Float.valueOf(s[2]));
+												String x = FloatToHexString(Float.valueOf(s[3]));
+												String y = FloatToHexString(Float.valueOf(s[4]));
+												String z = FloatToHexString(Float.valueOf(s[5]));
 												data = "48007B1901"+ax+ay+az+x+y+z+getMore(Integer.toHexString(pz.getId()));
 												map.put("data", data);
 												Map<String, Object> _r = new HashMap<>();
