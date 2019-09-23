@@ -36,9 +36,11 @@ public class SichuanDataUtils {
 	// 定义 DM URL 连接串
 	String urlString = "jdbc:dm://202.61.89.33:16002";
 	// 定义连接用户名
-	String userName = "sichuanceshiku";
+//	String userName = "sichuanceshiku";
+	String userName = "SFQJCQZK";
 	// 定义连接用户口令
-	String password = "dameng@1234";
+//	String password = "dameng@1234";
+	String password = "SFQJCQZKHJ@123";
 	// 定义连接对象
 	Connection conn = null;
 
