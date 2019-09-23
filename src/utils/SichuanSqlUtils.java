@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -252,6 +254,66 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
     }
     
     /**
+     * 插入专业监测点信息
+     * @throws SQLException 
+     * @throws ParseException 
+     */
+    public void insertJiancedian(String jcd,String yhd,String yqbm,String bz,Double jd,Double wd) throws SQLException, ParseException{
+			      String sql = "INSERT INTO JCCA03A("
+			      		+ "JCCA03A010,"
+			      		+ "JCCA03A020,"
+			      		+ "JCCA03A030,"
+			      		+ "JCCA03A040,"
+			      		+ "JCCA03A050,"
+			      		+ "JCCA03A060,"
+			      		+ "JCCA03A070,"
+			      		+ "JCCA03A071,"
+			      		+ "JCCA03A072,"
+			      		+ "JCCA03A073,"
+			      		+ "JCCA03A080,"
+			      		+ "JCCA03A090,"
+			      		+ "JCCA03A110,"
+			      		+ "JCCA03A120,"
+			      		+ "JCCA03A130,"
+			      		+ "JCCA03A140,"
+			      		+ "JCCA03A150,"
+			      		+ "JCCA03A151,"
+			      		+ "JCCA03A160,"
+			      		+ "JCCA03A170,"
+			      		+ "JCCA03A011,"
+			      		+ "JCCA03A041) "
+			      + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+			// 创建语句对象
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			// 为参数赋值
+			pstmt.setString(1, jcd);
+			pstmt.setString(2, yhd);
+			pstmt.setString(3, yqbm);
+			pstmt.setString(4, "QX");
+			pstmt.setString(5, "表面");
+			pstmt.setString(6, "A1");
+			pstmt.setString(7, "");
+			pstmt.setInt(8, 0);
+			pstmt.setInt(9, 0);
+			pstmt.setString(10, "");
+			pstmt.setDouble(11, jd);
+			pstmt.setDouble(12, wd);
+			pstmt.setDate(13, new Date(sdf.parse("2019-08-23 00:00:00").getTime()));
+			pstmt.setDate(14, new Date(sdf.parse("2019-08-23 00:00:00").getTime()));
+			pstmt.setDate(15, new Date(sdf.parse("2019-08-23 00:00:00").getTime()));
+			pstmt.setString(16, "2012010101");
+			pstmt.setString(17, "2012010201");
+			pstmt.setString(18, "2012010301");
+			pstmt.setString(19, "100001");
+			pstmt.setString(20,bz);
+			pstmt.setString(21, bz);
+			pstmt.setString(22, "I");
+			pstmt.executeUpdate();
+			pstmt.close();
+    }
+    
+    /**
      * 插入承建单位
      * @throws SQLException 
      */
@@ -392,19 +454,20 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
 
 
 
-    public static void main(String args[]) throws SQLException {
+    public static void main(String args[]) throws Exception {
     	SichuanSqlUtils basicApp = new SichuanSqlUtils();
          basicApp.loadJdbcDriver();
          basicApp.connect();
 //         basicApp.insertChengjiandanwei(); //插入承建单位
 //         basicApp.insertYunweidanwei();//插入运维单位
 //         basicApp.insertJianshedanwei();//插入建设单位
-//         basicApp.insertJianceyiqi("");
+//         basicApp.insertJianceyiqi("919060000004A");
 //         basicApp.insertXintiao("511802010214QX01", "511802010214", "0.01","01");
 //         basicApp.insertBaojing("C1", 1, "511802010214QX01", "511802010214", 1.3,1.0);
 //         basicApp.queryTable(" SELECT * FROM JCCA16A where  JCCA16A020 = '511802010214QX0101'  limit 10 ");
 //         basicApp.insertZerenren();
-         basicApp.queryTable(" SELECT * FROM JCCA05A");//JCCA05A
+//         basicApp.insertJiancedian("511425010038QX01","511425010038","919060000004A","眉山市汉阳镇新路村3组易家湾滑坡",103.4716,29.4324);
+         basicApp.queryTable(" SELECT * FROM JCCA03A");//JCCA05A
 //         basicApp.insertYinhuandian("511524010101",2, "长宁县双河镇杨柳村7组大田包滑坡");
          basicApp.disConnect();
     }
