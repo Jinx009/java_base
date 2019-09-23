@@ -19,8 +19,10 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
 	
     String jdbcString = "dm.jdbc.driver.DmDriver";// 定义 DM URL 连接串
     String urlString = "jdbc:dm://202.61.89.33:16002";// 定义连接用户名http://202.61.89.33
-    String userName = "sichuanceshiku";// 定义连接用户口令
-    String password = "dameng@1234";// 定义连接对象
+//    String userName = "sichuanceshiku";// 定义连接用户口令
+//    String password = "dameng@1234";// 定义连接对象
+    String userName = "SFQJCQZK";// 定义连接用户口令
+    String password = "SFQJCQZKHJ@123";// 定义连接对象
     Connection conn = null;
 
     /**
