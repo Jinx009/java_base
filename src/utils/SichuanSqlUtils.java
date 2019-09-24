@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.Executor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +52,11 @@ public class SichuanSqlUtils {// 定义 DM JDBC驱动串
         try {
             log.warn("Connecting to DM Server...");
             conn = DriverManager.getConnection(urlString, userName, password);
+            conn.setNetworkTimeout(new Executor() {
+				public void execute(Runnable command) {
+					log.error("conn out ...");
+				}
+			}, 1000*180);
         } catch (SQLException e) {
             log.error("Connect to DM Server Error : {}" ,e.getMessage());
         }
