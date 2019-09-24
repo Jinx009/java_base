@@ -350,8 +350,13 @@ public class TelcomCotroller extends BaseController {
 						} else {
 							send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 						}
-						if (StringUtil.isNotBlank(ioTCloudDevice.getLocation())) {
-							sendSichuan(ioTCloudDevice, iotCloudLog.getData());
+						if (StringUtil.isNotBlank(ioTCloudDevice.getLocation())&&ioTCloudDevice.getType()==2) {
+							new Thread() {
+								public void run() {
+									log.warn("开始线程");
+									sendSichuan(ioTCloudDevice, iotCloudLog.getData());
+								}
+							}.start();
 						}
 					}
 				}
@@ -508,13 +513,13 @@ public class TelcomCotroller extends BaseController {
 					} else {
 						send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 					}
-					if (StringUtil.isNotBlank(ioTCloudDevice.getLocation())) {
+					if (StringUtil.isNotBlank(ioTCloudDevice.getLocation())&&ioTCloudDevice.getType()==2) {
 						new Thread() {
 							public void run() {
+								log.warn("开始线程");
 								sendSichuan(ioTCloudDevice, iotCloudLog.getData());
 							}
 						}.start();
-
 					}
 				}
 			}
@@ -606,7 +611,6 @@ public class TelcomCotroller extends BaseController {
 				basicApp.connect();
 				String x = getData100(data.substring(50, 51), data.substring(50, 54));
 				basicApp.insertXintiao(device.getArea(), device.getLocation(), x, "01");
-				basicApp.disConnect();
 				log.warn("send qj-----sichuan------------------\n:{},{},{},{}\n---------------------------------",
 						device.getArea(), device.getLocation(), x, "01");
 			}
@@ -616,7 +620,6 @@ public class TelcomCotroller extends BaseController {
 				basicApp.connect();
 				String x = getData100(data.substring(50, 51), data.substring(50, 54));
 				basicApp.insertBaojing("C1", 1, device.getArea(), device.getLocation(), Double.valueOf(x), 2.0);
-				basicApp.disConnect();
 				log.warn("send qj-----sichuan bj------------------\n:{},{},{},{}\n---------------------------------",
 						device.getArea(), device.getLocation(), x, "01");
 			}
