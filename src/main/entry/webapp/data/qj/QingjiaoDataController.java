@@ -368,6 +368,9 @@ public class QingjiaoDataController extends BaseController {
 	public Resp<?> pushZhanwayV3_0(String data) {
 		try {
 			String sn = data.substring(0, 16);
+			if(sn.equals("0009190906000062")){
+				sn = "0009190906000063";
+			}
 			String cmd = data.substring(20, 22);
 			String flag = data.substring(24, 26);
 			if (cmd.equals("68")) {
