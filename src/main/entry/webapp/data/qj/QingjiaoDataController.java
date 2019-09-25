@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
 
 import common.helper.StringUtil;
 import database.models.qj.QjDevice;
@@ -456,6 +460,40 @@ public class QingjiaoDataController extends BaseController {
 				log.setVoltage(bat);
 				log.setCreateTime(new Date());
 				qjDeviceLogService.save(log);
+				if(sn.equals("0009190906000063")||sn.equals("0009190906000064")||sn.equals("0009190906000060")){
+					DecimalFormat    df   = new DecimalFormat("######0.00");   
+					Double x_d = Double.valueOf(x);
+					Double y_d = Double.valueOf(y);
+					Double z_d = Double.valueOf(z);
+					Double angle_max = x_d;
+					if(y_d>angle_max){
+						angle_max = y_d;
+					}
+					if(z_d>angle_max){
+						angle_max = z_d;
+					}
+					Double acc_x_d = Double.valueOf(acc_x_max);
+					Double acc_y_d = Double.valueOf(acc_y_max);
+					Double acc_z_d = Double.valueOf(acc_z_max);
+					Double acc_max = acc_x_d;
+					if(acc_y_d>angle_max){
+						acc_max = acc_y_d;
+					}
+					if(acc_z_d>angle_max){
+						acc_max = acc_z_d;
+					}
+					Double min_x_d = Double.valueOf(acc_x_min);
+					Double min_y_d = Double.valueOf(acc_y_min);
+					Double min_z_d = Double.valueOf(acc_z_min);
+					String zd = df.format(min_x_d+min_y_d+min_z_d);
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("acc", df.format(angle_max));
+					map.put("acc_max", df.format(acc_max));
+					map.put("zd",zd);
+					map.put("address", "攀枝花煤矿监测点"+sn.substring(5,16));
+					AlimsgUtils.sendNotice("18217700275", "124038385", "展为", JSONObject.toJSONString(map));
+					AlimsgUtils.sendNotice("13918073897", "124038385", "展为", JSONObject.toJSONString(map));
+				}
 			} else if (cmd.equals("6A")) {
 				cmd = "温度_" + flag;
 				int num = Integer.valueOf(data.substring(24, 26)).intValue();
