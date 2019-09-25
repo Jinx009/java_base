@@ -487,7 +487,7 @@ public class QingjiaoDataController extends BaseController {
 					Double min_z_d = Double.valueOf(acc_z_min);
 					String zd = df.format(min_x_d+min_y_d+min_z_d);
 					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("acc", df.format(angle_max));
+					map.put("angle", df.format(angle_max));
 					map.put("acc_max", df.format(acc_max));
 					map.put("zd",zd);
 					map.put("address", "攀枝花煤矿监测点"+sn.substring(5,16));
