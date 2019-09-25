@@ -306,7 +306,7 @@ public class TelcomCotroller extends BaseController {
 								log.error("e:{}", e);
 							}
 
-						}else if (ioTCloudDevice.getLocalIp() != null
+						} else if (ioTCloudDevice.getLocalIp() != null
 								&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_GUANGDONG")) {
 							try {
 								String id = tModel.getData().substring(0, 8);
@@ -350,8 +350,13 @@ public class TelcomCotroller extends BaseController {
 						} else {
 							send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 						}
-						if (StringUtil.isNotBlank(ioTCloudDevice.getLocation())) {
-							sendSichuan(ioTCloudDevice, iotCloudLog.getData());
+						if (StringUtil.isNotBlank(ioTCloudDevice.getLocation())&&ioTCloudDevice.getType()==2) {
+							new Thread() {
+								public void run() {
+									log.warn("开始线程");
+									sendSichuan(ioTCloudDevice, iotCloudLog.getData());
+								}
+							}.start();
 						}
 					}
 				}
@@ -446,7 +451,7 @@ public class TelcomCotroller extends BaseController {
 							log.error("e:{}", e);
 						}
 
-					}  else if (ioTCloudDevice.getLocalIp() != null
+					} else if (ioTCloudDevice.getLocalIp() != null
 							&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_PUSHI")) {
 						try {
 							String id = tModel.getData().substring(0, 8);
@@ -508,8 +513,13 @@ public class TelcomCotroller extends BaseController {
 					} else {
 						send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
 					}
-					if (StringUtil.isNotBlank(ioTCloudDevice.getLocation())) {
-						sendSichuan(ioTCloudDevice, iotCloudLog.getData());
+					if (StringUtil.isNotBlank(ioTCloudDevice.getLocation())&&ioTCloudDevice.getType()==2) {
+						new Thread() {
+							public void run() {
+								log.warn("开始线程");
+								sendSichuan(ioTCloudDevice, iotCloudLog.getData());
+							}
+						}.start();
 					}
 				}
 			}
@@ -601,7 +611,6 @@ public class TelcomCotroller extends BaseController {
 				basicApp.connect();
 				String x = getData100(data.substring(50, 51), data.substring(50, 54));
 				basicApp.insertXintiao(device.getArea(), device.getLocation(), x, "01");
-				basicApp.disConnect();
 				log.warn("send qj-----sichuan------------------\n:{},{},{},{}\n---------------------------------",
 						device.getArea(), device.getLocation(), x, "01");
 			}
@@ -611,7 +620,6 @@ public class TelcomCotroller extends BaseController {
 				basicApp.connect();
 				String x = getData100(data.substring(50, 51), data.substring(50, 54));
 				basicApp.insertBaojing("C1", 1, device.getArea(), device.getLocation(), Double.valueOf(x), 2.0);
-				basicApp.disConnect();
 				log.warn("send qj-----sichuan bj------------------\n:{},{},{},{}\n---------------------------------",
 						device.getArea(), device.getLocation(), x, "01");
 			}
@@ -807,7 +815,7 @@ public class TelcomCotroller extends BaseController {
 			log.warn("send res-----------------------\n:{}\n---------------------------------", res);
 		}
 	}
-	
+
 	/**
 	 * 普世宜宾3.0版本设备
 	 * 
@@ -824,7 +832,7 @@ public class TelcomCotroller extends BaseController {
 		String cmd = data.substring(20, 22);
 		if (cmd.equals("69")) {
 			cmd = "报警";
-		} else if (cmd.equals("68")){
+		} else if (cmd.equals("68")) {
 			cmd = "心跳";
 		}
 		String acc_x = "0";
@@ -871,7 +879,7 @@ public class TelcomCotroller extends BaseController {
 		String cmd = data.substring(20, 22);
 		if (cmd.equals("69")) {
 			cmd = "报警";
-		} else if (cmd.equals("68")){
+		} else if (cmd.equals("68")) {
 			cmd = "心跳";
 		}
 		if (cmd.equals("报警") || cmd.equals("心跳")) {
@@ -908,7 +916,7 @@ public class TelcomCotroller extends BaseController {
 		String type = data.substring(16, 18);
 		if (type.equals("69")) {
 			type = "报警";
-		} else if (type.equals("68")){
+		} else if (type.equals("68")) {
 			type = "心跳";
 		}
 		try {
@@ -957,7 +965,7 @@ public class TelcomCotroller extends BaseController {
 		String type = data.substring(16, 18);
 		if (type.equals("69")) {
 			type = "报警";
-		} else if (type.equals("68")){
+		} else if (type.equals("68")) {
 			type = "心跳";
 		}
 		if (type.equals("报警") || type.equals("心跳")) {
@@ -1218,7 +1226,7 @@ public class TelcomCotroller extends BaseController {
 		String type = data.substring(16, 18);
 		if (type.equals("69")) {
 			type = "报警";
-		} else if (type.equals("68")){
+		} else if (type.equals("68")) {
 			type = "心跳";
 		}
 		try {
