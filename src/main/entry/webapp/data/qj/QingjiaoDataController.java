@@ -491,8 +491,8 @@ public class QingjiaoDataController extends BaseController {
 					map.put("acc_max", df.format(acc_max));
 					map.put("zd",zd);
 					map.put("address", "攀枝花煤矿监测点"+sn.substring(5,16));
-					AlimsgUtils.sendNotice("18217700275", "124038385", "展为", JSONObject.toJSONString(map));
-					AlimsgUtils.sendNotice("13918073897", "124038385", "展为", JSONObject.toJSONString(map));
+					AlimsgUtils.sendNotice("18217700275", "SMS_174806667", "展为", JSONObject.toJSONString(map));
+					AlimsgUtils.sendNotice("13918073897", "SMS_174806667", "展为", JSONObject.toJSONString(map));
 				}
 			} else if (cmd.equals("6A")) {
 				cmd = "温度_" + flag;
