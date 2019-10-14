@@ -97,7 +97,7 @@ public class JobTask {
 						log.setName(d.getName());
 						log.setTime(d2);
 						wenshiduLogService.save(log);
-						String[] ss = device.getData().split("|");
+						String[] ss = device.getData().split("\\|");
 						String yl = "";
 						if(ss[0].contains("m")){
 							yl = ss[0].split("mm")[0];
