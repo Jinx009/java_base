@@ -3,8 +3,11 @@ package main.entry.webapp.task;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,6 +97,21 @@ public class JobTask {
 						log.setName(d.getName());
 						log.setTime(d2);
 						wenshiduLogService.save(log);
+						String[] ss = device.getData().split("|");
+						String yl = "";
+						if(ss[0].contains("m")){
+							yl = ss[0].split("mm")[0];
+						}
+						if(ss[1].contains("m")){
+							yl = ss[1].split("mm")[0];
+						}
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						Map< String, String> map = new HashMap<String, String>();
+						map.put("sblxbm", "201");
+						map.put("jczb", yl);
+						map.put("jcsj", sdf.format(d2));
+						map.put("cgq", "1");
+						HttpUtils.postWuhanParams("http://119.97.193.69:97/DzhZXJC/http/addSblxcs?datatype=6&deviceid="+device.getDeviceId()+"&data="+JSONObject.toJSONString(map));
 					}
 				} catch (Exception e) {
 					log.error("e:{}",e);
@@ -232,7 +250,27 @@ public class JobTask {
 	}
 	
 	public static void main(String[] args) {
-		AlimsgUtils.sendCheck("0009190600000042", "SMS_171565355", "展为","18217700275");
+//		AlimsgUtils.sendCheck("0009190600000042", "SMS_171565355", "展为","18217700275");
+		WenshiduDevice device = new WenshiduDevice();
+		device.setDeviceId("03111800013");
+		device.setTime(new Date());
+		device.setData("2.5 mm | 0 RSSI");
+		Date d2 = device.getTime();
+		String[] ss = device.getData().split("\\|");
+		String yl = "";
+		if(ss[0].contains("m")){
+			yl = ss[0].split("mm")[0];
+		}
+		if(ss[1].contains("m")){
+			yl = ss[1].split("mm")[0];
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Map< String, String> map = new HashMap<String, String>();
+		map.put("sblxbm", "201");
+		map.put("jczb", yl);
+		map.put("jcsj", sdf.format(d2));
+		map.put("cgq", "1");
+		HttpUtils.sendPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+device.getDeviceId()+"&data="+JSONObject.toJSONString(map));
 	}
 
 }

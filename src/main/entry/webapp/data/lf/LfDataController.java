@@ -1,6 +1,11 @@
 package main.entry.webapp.data.lf;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,7 @@ import database.models.lf.LfLog;
 import main.entry.webapp.BaseController;
 import service.basicFunctions.lf.LfDeviceService;
 import service.basicFunctions.lf.LfLogService;
+import utils.HttpUtils;
 import utils.Resp;
 
 @Controller
@@ -55,10 +61,18 @@ public class LfDataController extends BaseController {
 				lfDevice.setAcqTime(AcqTime);
 				lfDevice.setData1(data1);
 				lfDevice.setData2(data2);
-				lfDevice.setData3(data3);
+//				lfDevice.setData3(data3);
 				lfDevice.setPushTime(PushTime);
 				lfDevice.setSensorType(SensorType);
 				lfDeviceService.update(lfDevice);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Map< String, String> map = new HashMap<String, String>();
+				map.put("sblxbm", "101");
+				map.put("jczb",lfDevice.getData1());
+				map.put("jcsj", sdf.format(new Date(PushTime)));
+				map.put("cgq", "1");
+				HttpUtils.sendPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+lfDevice.getData3()+"&data="+JSONObject.toJSONString(map));
+			
 			}else{
 				lfDevice = new LfDevice();
 				lfDevice.setAcqTime(AcqTime);

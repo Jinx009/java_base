@@ -1,6 +1,11 @@
 package utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.Map;
 
@@ -107,11 +112,90 @@ public class HttpUtils {
 	 * @return
 	 */
     @SuppressWarnings("resource")
+	public static String postWuhanParams(String url){
+    	logger.warn("HttpUtils.postParams[info:{}]",url);
+        String result = "500";
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpPost post = new HttpPost(url);
+		try {
+			HttpResponse response = httpClient.execute(post);
+			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			logger.warn("HttpUtils.postParams[res:{}]",result);
+		} catch (ParseException e) {
+			logger.error("HttpUtils.postParams[ParseException.error:{}]",e);
+		} catch (IOException e) {
+			logger.error("HttpUtils.postParams[IOException.error:{}]",e);
+		}
+		return result;
+    }
+    
+    /**
+     * 标准post
+     * @param url
+     * @param param
+     * @return
+     */
+    public static String sendPost(String url, String param) {
+        logger.warn("HttpUtils.sendPost url:{},param:{}",url,param);
+        PrintWriter out = null;
+        BufferedReader in = null;
+        String result = "";
+        try {
+            URL realUrl = new URL(url);
+            URLConnection conn = realUrl.openConnection();
+            conn.setRequestProperty("accept", "*/*");
+            conn.setRequestProperty("connection", "Keep-Alive");
+            conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            conn.setRequestProperty("appId", "123");
+            conn.setRequestProperty("userName", "root");
+            conn.setRequestProperty("userAccount", "root");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            out = new PrintWriter(conn.getOutputStream());
+            out.print(param);
+            out.flush();
+            in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+            logger.warn("HttpUtils.sendPost result:{}",result);
+        } catch (Exception e) {
+            logger.error("[HttpUtils.sendPost data:{},error:{}]", param + url, e);
+            e.printStackTrace();
+        }
+        finally{
+            try{
+                if(out!=null){
+                    out.close();
+                }
+                if(in!=null){
+                    in.close();
+                }
+            }
+            catch(IOException ex){
+                ex.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+	
+	/**
+	 * post发送http请求
+	 * @param url
+	 * @return
+	 */
+    @SuppressWarnings("resource")
 	public static String postParams(String url){
     	logger.warn("HttpUtils.postParams[info:{}]",url);
         String result = "500";
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpPost post = new HttpPost(url);
+        post.addHeader("appId","123");
+        post.addHeader("userName","root");
+        post.addHeader("userAccount","root");
 		try {
 			HttpResponse response = httpClient.execute(post);
 			result = EntityUtils.toString(response.getEntity(),"UTF-8");
