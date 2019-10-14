@@ -87,7 +87,7 @@ public class JobTask {
 					if(d1==null||d2.after(d1)){
 						device.setTime(d2);
 						device.setData(d.getData());
-						device.setDeviceId(d.getDeviceId());
+//						device.setDeviceId(d.getDeviceId());
 						device.setName(d.getName());
 						device.setOnLineState(d.getOnLineState());
 						wenshiduDeviceService.update(device);
@@ -111,7 +111,7 @@ public class JobTask {
 						map.put("jczb", yl);
 						map.put("jcsj", sdf.format(d2));
 						map.put("cgq", "1");
-						HttpUtils.postWuhanParams("http://119.97.193.69:97/DzhZXJC/http/addSblxcs?datatype=6&deviceid="+device.getDeviceId()+"&data="+JSONObject.toJSONString(map));
+						HttpUtils.sendPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+device.getDeviceId()+"&data="+JSONObject.toJSONString(map));
 					}
 				} catch (Exception e) {
 					log.error("e:{}",e);
