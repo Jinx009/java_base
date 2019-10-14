@@ -462,9 +462,9 @@ public class QingjiaoDataController extends BaseController {
 				qjDeviceLogService.save(log);
 				if(sn.equals("0009190906000063")||sn.equals("0009190906000064")||sn.equals("0009190906000060")){
 					DecimalFormat    df   = new DecimalFormat("######0.00");   
-					Double x_d = Double.valueOf(x);
-					Double y_d = Double.valueOf(y);
-					Double z_d = Double.valueOf(z);
+					Double x_d = Math.abs(Double.valueOf(x));
+					Double y_d = Math.abs(Double.valueOf(y));
+					Double z_d = Math.abs(Double.valueOf(z));
 					Double angle_max = x_d;
 					if(y_d>angle_max){
 						angle_max = y_d;
