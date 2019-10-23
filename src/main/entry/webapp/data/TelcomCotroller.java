@@ -860,6 +860,10 @@ public class TelcomCotroller extends BaseController {
 			log.warn("send url-----------------------\n:{}\n---------------------------------", url);
 			String res = HttpUtils.postJson(url, json);
 			log.warn("send res-----------------------\n:{}\n---------------------------------", res);
+			if(StringUtil.isNotBlank(ioTCloudDevice.getParkName())){
+				String url2 = "http://103.3.152.134:3030/api/devices/"+ioTCloudDevice.getParkName().split("_")[0]+"/datapoints";
+				HttpUtils.postGuizhouJson(url2, "{\"datastreams\":[{\"id\":\"012_1\",\"datapoints\":[{\"value\":{\"X\":"+x+",\"Y\":"+y+",\"Z\":"+z+"}}]}]}",ioTCloudDevice.getParkName().split("_")[1]);
+			}
 		}
 	}
 

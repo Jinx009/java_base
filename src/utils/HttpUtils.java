@@ -263,4 +263,25 @@ public class HttpUtils {
 			logger.error("HttpUtils.postJson[IOException.error:{}]",e);
 		}
 	}
+
+	@SuppressWarnings("resource")
+	public static void postGuizhouJson(String url, String json, String key) {
+		logger.warn("HttpUtils.postJson[info:{},{}]",url,json);
+		String result = "500";
+        HttpPost post = new HttpPost(url);
+        post.addHeader("Content-type","application/json;charset=utf-8");
+        post.addHeader("api-key",key);
+        post.setHeader("Accept", "application/json");
+        post.setEntity(new StringEntity(json, Charset.forName("UTF-8")));
+        try {
+        	DefaultHttpClient httpClient = new DefaultHttpClient();
+        	HttpResponse response = httpClient.execute(post);
+			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			logger.warn("HttpUtils.postJson[res:{}]",result);
+		} catch (ParseException e) {
+			logger.error("HttpUtils.postJson[ParseException.error:{}]",e);
+		} catch (IOException e) {
+			logger.error("HttpUtils.postJson[IOException.error:{}]",e);
+		}
+	}
 }
