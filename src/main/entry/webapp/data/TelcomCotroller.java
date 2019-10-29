@@ -851,18 +851,18 @@ public class TelcomCotroller extends BaseController {
 		}
 		if (cmd.equals("报警") || cmd.equals("心跳")) {
 			sendData.put("103_1", x + "," + y + "," + z + "," + acc_x + "," + acc_y + "," + acc_z);
-			map.put("data", sendData);
+			map.put("data", sendData); 
 			String json = JSONObject.toJSONString(map);
 			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
 			// String url =
 			// "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
-			String url = "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
+			String url = "http://ghiot.cigem.cn:8021/api/devices/datapoints?type=3";
 			log.warn("send url-----------------------\n:{}\n---------------------------------", url);
 			String res = HttpUtils.postJson(url, json);
 			log.warn("send res-----------------------\n:{}\n---------------------------------", res);
 			if(StringUtil.isNotBlank(ioTCloudDevice.getParkName())){
 				String url2 = "http://103.3.152.134:3030/api/devices/"+ioTCloudDevice.getParkName().split("_")[0]+"/datapoints";
-				HttpUtils.postGuizhouJson(url2, "{\"datastreams\":[{\"id\":\"012_1\",\"datapoints\":[{\"value\":{\"X\":"+x+",\"Y\":"+y+",\"Z\":"+z+"}}]}]}",ioTCloudDevice.getParkName().split("_")[1]);
+				HttpUtils.postGuizhouJson(url2, "{\"datastreams\":[{\"id\":\"012_1\",\"datapoints\":[{\"value\":{\"X\":"+x+",\"Y\":"+y+",\"Z\":"+z+",\"ACC_X\":"+acc_x+",\"ACC_Y\":"+acc_y+",\"ACC_Z\":"+acc_z+"}}]}]}",ioTCloudDevice.getParkName().split("_")[1]);
 			}
 		}
 	}
@@ -983,7 +983,7 @@ public class TelcomCotroller extends BaseController {
 			map.put("data", sendData);
 			String json = JSONObject.toJSONString(map);
 			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
-			String url = "http://ghiot.cigem.cn/api/devices/datapoints?type=3";
+			String url = "http://ghiot.cigem.cn:8021/api/devices/datapoints?type=3";
 			log.warn("send url-----------------------\n:{}\n---------------------------------", url);
 			String res = HttpUtils.postJson(url, json);
 			log.warn("send res-----------------------\n:{}\n---------------------------------", res);
