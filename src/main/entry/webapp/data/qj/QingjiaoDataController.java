@@ -3,8 +3,10 @@ package main.entry.webapp.data.qj;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -43,6 +45,36 @@ public class QingjiaoDataController extends BaseController {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			return new Resp<>(qjDeviceService.findList());
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "test")
+	@ResponseBody
+	public Resp<?> test() {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<QjDeviceLog> list = qjDeviceLogService.findAllDate();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Map<String, Integer> map = new HashMap<String,Integer>();
+			for(QjDeviceLog log : list){
+				if(log.getCreateTime()!=null){
+					Integer i = map.get(log.getSnValue()+"_"+sdf.format(log.getCreateTime()));
+					if(i==null){
+						map.put(log.getSnValue()+"_"+sdf.format(log.getCreateTime()),0);
+					}else{
+						i++;
+						map.put(log.getSnValue()+"_"+sdf.format(log.getCreateTime()),i);
+					}
+				}
+			}
+			for(Map.Entry<String, Integer> entry : map.entrySet()){
+			    String mapKey = entry.getKey();
+			    Integer mapValue = entry.getValue();
+			    System.out.println(mapKey+"_"+mapValue);
+			}
 		} catch (Exception e) {
 			log.error("error:{}", e);
 		}
