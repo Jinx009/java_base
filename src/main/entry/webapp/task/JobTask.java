@@ -64,7 +64,7 @@ public class JobTask {
 		for(QjNotice str:list){
 			QjDeviceLog log = qjDeviceLogService.getNearBySn(str.getMac());
 			if(log==null){
-				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18217700275");
+//				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","13167262228");
 				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","13918073897");
 				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18108196835");
 			}
@@ -120,7 +120,7 @@ public class JobTask {
 		}
 	}
 
-	@Scheduled(fixedRate = 1000 * 3600, initialDelay = 1000)
+	@Scheduled(fixedRate = 1000 * 600, initialDelay = 1000)
 	public void init() {
 		Date parkingArea = parkingAreaService.find(9).getCreateTime();// vedio
 		Date parkingArea2 = parkingAreaService.find(10).getCreateTime();// vedio
@@ -129,21 +129,21 @@ public class JobTask {
 		if (parkingArea == null) {
 			AlimsgUtils.sendCheck("vedio", "SMS_171565355", "展为","18217700275");
 		} else {
-			if((date.getTime()-parkingArea.getTime())>(1000*3600)){
+			if((date.getTime()-parkingArea.getTime())>(1000*1200)){
 				AlimsgUtils.sendCheck("vedio", "SMS_171565355", "展为","18217700275");
 			}
 		}
 		if (parkingArea2 == null) {
 			AlimsgUtils.sendCheck("1.1", "SMS_171565355", "展为","18217700275");
 		} else {
-			if((date.getTime()-parkingArea2.getTime())>(1000*3600)){
+			if((date.getTime()-parkingArea2.getTime())>(1000*1200)){
 				AlimsgUtils.sendCheck("1.1", "SMS_171565355", "展为","18217700275");
 			}
 		}
 		if (parkingArea3 == null) {
 			AlimsgUtils.sendCheck("1.4", "SMS_171565355", "展为","18217700275");
 		} else {
-			if((date.getTime()-parkingArea3.getTime())>(1000*3600)){
+			if((date.getTime()-parkingArea3.getTime())>(1000*1200)){
 				AlimsgUtils.sendCheck("1.4", "SMS_171565355", "展为","18217700275");
 			}
 		}
