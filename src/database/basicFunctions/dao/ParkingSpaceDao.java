@@ -1,42 +1,30 @@
 package database.basicFunctions.dao;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
-import database.common.PageDataList;
 import database.common.QueryParam;
-import database.common.OrderFilter.OrderType;
 import database.models.ParkingSpace;
-import utils.model.BaseConstant;
 
 @Repository
 public class ParkingSpaceDao extends BaseDao<ParkingSpace>{
 
-	public PageDataList<ParkingSpace> findByPage(int p) {
-		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
-		queryParam.addOrder(OrderType.DESC, "id");
-		return findPageList(queryParam);
+	public void updateSpace(Integer id,String plateNumber,Integer status,Date date){
+		ParkingSpace space = find(id);
+		space.setHappenTime(date);
+		space.setPlateNumber(plateNumber);
+		space.setStatus(status);
+		update(space);
 	}
 
-	public ParkingSpace getByCameraNameAndParkNumber(String cameraName,String parkNumber){
+	public List<ParkingSpace> findByCameraIndex(String cameraIndex) {
 		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addParam("cameraNumber", cameraName);
-		queryParam.addParam("parkNumber", parkNumber);
-		return findByCriteriaForUnique(queryParam);
-	}
-
-	public ParkingSpace findByMac(String mac) {
-		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addParam("mac", mac);
-		return findByCriteriaForUnique(queryParam);
-	}
-
-	public ParkingSpace getByCameraIndexAndParkNumber(String sCameraIndex, String sParkingid) {
-		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addParam("cameraIndex", sCameraIndex);
-		queryParam.addParam("parkNumber", sParkingid);
-		return findByCriteriaForUnique(queryParam);
+		queryParam.addParam("cameraIndex", cameraIndex);
+		return findByCriteria(queryParam);
+		
 	}
 	
 }

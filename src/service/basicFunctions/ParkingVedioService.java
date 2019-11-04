@@ -14,9 +14,6 @@ public class ParkingVedioService {
 	@Autowired
 	private ParkingVedioDao parkingVedioDao;
 	
-	public List<ParkingVedio> findByTime(){
-		return parkingVedioDao.findByTime();
-	}
 	
 	public void save(ParkingVedio parkingVedio) {
 		parkingVedioDao.save(parkingVedio);
@@ -26,8 +23,8 @@ public class ParkingVedioService {
 		parkingVedioDao.update(parkingVedio);
 	}
 
-	public List<ParkingVedio> findByStatus() {
-		return parkingVedioDao.findByStatus();
+	public List<ParkingVedio> findByStatus(Integer status) {
+		return parkingVedioDao.findByStatus(status);
 	}
 	
 	

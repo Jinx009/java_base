@@ -30,27 +30,37 @@ public class ParkingSpace {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Column(name = "street_id")
-    private Integer streetId;
     @Column(name = "status")
     private Integer status;
-    @Column(name = "street_name")
-    private String streetName;
-    @Column(name = "camera_id")
-    private Integer cameraId;
-    @Column(name = "camera_number")
-    private String cameraNumber;
     @Column(name = "create_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
     @Column(name = "happen_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date happenTime;
-    @Column(name = "park_number")
-    private String parkNumber;
-    @Column(name = "mac")
-    private String mac;
+    @Column(name = "plate_number")
+    private String plateNumber;
     @Column(name = "camera_index")
     private String cameraIndex;
+    @Column(name = "x1")
+    private Double x1;
+    @Column(name = "x2")
+    private Double x2;
+    @Column(name = "x3")
+    private Double x4;
+    @Column(name = "y1")
+    private Double y1;
+    @Column(name = "y2")
+    private Double y2;
+    @Column(name = "y3")
+    private Double y3;
+    @Column(name = "y4")
+    private Double y4;
+    @Column(name = "width")
+	private Integer width;
+	@Column(name = "height")
+	private Integer height;
+	@Column(name = "b")
+	private Integer b;
 	
 }

@@ -28,21 +28,13 @@ public class Camera {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @Column(name = "device_number")
-    private String deviceNumber;
-    @Column(name = "street_id")
-    private Integer streetId;
-    @Column(name = "street_name")
-    private String streetName;
-    @Column(name = "park_number")
-    private String parkNumber;
-    @Column(name = "device_type")//设备型号
-    private String deviceType;
+    @Column(name = "camera_index")
+    private String cameraIndex;
     @Column(name = "create_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
-    @Column(name = "happen_time")
+    @Column(name = "vedio_time")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date happenTime;
+    private Date vedioTime;
 	
 }

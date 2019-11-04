@@ -23,29 +23,27 @@ public class ParkingVedio {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @Column(name = "mac")
-    private String mac;
-    @Column(name = "change_time")
-    private String changeTime;
-    @Column(name = "event_time")
-    private String eventTime;
-    @Column(name = "type")
-    private Integer type;
-    @Column(name = "create_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;
-    @Column(name = "send_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date sendTime;
-    @Column(name = "camera_index")
-    private String cameraIndex;
-    @Column(name = "send_status")
-    private Integer sendStatus;
-    @Column(name = "update_status")
-    private Integer updateStatus;
-    @Column(name = "file_path")
-    private String filePath;
-    @Column(name = "vedio_status")
-    private Integer vedioStatus;
+    @Column(name = "time")
+	private Long time;
+	@Column(name = "zip_name")
+	private String zipName;
+	@Column(name = "camera_index")
+	 private String cameraIndex;
+	@Column(name = "create_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createTime;
+	@Column(name = "finish_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date finishTime;
+	@Column(name = "status")
+	private Integer status; //0 新建 1 转换zip名称成功 2 下发录制 3 录制完成 4 截图完成 5 打包完成 6 发送解析 7 彻底完成
+	@Column(name = "vedio_start")
+	private String vedioStart;
+	@Column(name = "vedio_end")
+	private String vedioEnd;
+	@Column(name = "dir_path")
+	private String dirPath;
+	@Column(name = "result")
+	private String result;
 	
 }

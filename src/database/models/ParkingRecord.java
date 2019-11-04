@@ -28,34 +28,34 @@ public class ParkingRecord {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @Column(name = "street_id")
-    private Integer streetId;
-    @Column(name = "status")
-    private Integer status;
-    @Column(name = "street_name")//街道名称
-    private String streetName;
-    @Column(name = "camera_id")
-    private Integer cameraId;
-    @Column(name = "camera_number")//相机编号
-    private String cameraNumber;
-    @Column(name = "park_number")//关联车位号
-    private String parkNumber;
-    @Column(name = "create_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;
-    @Column(name = "happen_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date happenTime;
-    @Column(name = "send_time")//发送时间
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date sendTime;
-    @Column(name = "send_status")//发送状态
-    private Integer sendStatus;
-    @Column(name = "pic_url")//首张合成图
-    private String picUrl;
-    @Column(name = "vedio_url")//小视频
-    private String vedioUrl;
-    @Column(name = "pic_next_url")//三分钟后合成图
-    private String picNextUrl;
+	@Column(name = "create_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createTime;
+	@Column(name = "task_id")
+	private Integer taskId;
+	@Column(name = "vedio_time")
+	private String vedioTime;
+	@Column(name = "status")
+	private Integer status;
+	@Column(name = "pic_num")
+	private Integer picNumber;
+	@Column(name = "car_number")
+	private String carNumber;
+	@Column(name = "cp_x")
+	private String cpX;
+	@Column(name = "cp_y")
+	private String cpY;
+	@Column(name = "cp_x2")
+	private String cpX2;
+	@Column(name = "cp_y2")
+	private String cpY2;
+	@Column(name = "car_x")
+	private String carX;
+	@Column(name = "car_y")
+	private String carY;
+	@Column(name = "car_x2")
+	private String carX2;
+	@Column(name = "car_y2")
+	private String carY2;
 	
 }

@@ -7,37 +7,30 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import java.sql.PreparedStatement;
 
-import database.models.ParkInfo;
-import database.models.ParkingSpace;
+import database.models.Camera;
+import database.models.ParkingRecord;
 import database.models.ParkingVedio;
-import service.basicFunctions.ParkInfoService;
-import service.basicFunctions.ParkingSpaceService;
+import service.basicFunctions.CameraService;
+import service.basicFunctions.ParkingRecordService;
 import service.basicFunctions.ParkingVedioService;
-import utils.FtpUtils;
 import utils.GifUtils;
 import utils.HttpUtil;
-import utils.PicUtils;
+import utils.StringUtil;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @Lazy(value = false)
@@ -46,14 +39,14 @@ public class StatusCheckTask {
 	private static final Logger log = LoggerFactory.getLogger(StatusCheckTask.class);
 
 	@Autowired
-	private ParkInfoService parkInfoService;
-	@Autowired
-	private ParkingSpaceService parkingSpaceService;
-	@Autowired
 	private ParkingVedioService parkingVedioService;
+	@Autowired
+	private CameraService cameraService;
+	@Autowired
+	private ParkingRecordService parkingRecordService;
 
 	/**
-	 * 文件夹权限问题
+	 * 第一步：文件夹权限问题
 	 */
 	@Scheduled(cron = "0 1 0 * * ?") // 每天晚上0点01分创建新文件夹
 	public void chmod() {
@@ -82,32 +75,29 @@ public class StatusCheckTask {
 	}
 
 	/**
-	 * 录制视频
+	 * 第二步：新建任务
 	 */
-	@Scheduled(cron = "0/60 * * * * ? ") // 每1分钟
-	public void getVedio() {
+	@Scheduled(cron = "0/120 * * * * ? ") // 每2分钟
+	public void newVedio() {
 		try {
-			List<ParkingVedio> list = parkingVedioService.findByTime();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
-			if (list != null && !list.isEmpty()) {
-				for (ParkingVedio parkingVedio : list) {
-					saveVedio(parkingVedio);
-					Date date = sdf2.parse(parkingVedio.getEventTime());
-					String filePath = "/data/ftp_pic/" + sdf.format(date) + "/" + parkingVedio.getMac() + "_"
-							+ parkingVedio.getChangeTime();
-					if (parkingVedio.getType() == 0) {
-						filePath += "_outCarVideo_.mp4";
-					} else if (parkingVedio.getType() == 1){
-						filePath += "_inCarVideo_.mp4";
-					}else if (parkingVedio.getType() == 2){
-						filePath += "_steadyCarImg_.mp4";
+			List<Camera> list = cameraService.findAll();
+			if(list!=null&&!list.isEmpty()){
+				for(Camera camera:list){
+					Date date = camera.getVedioTime();
+					if(date==null){
+						date = new Date((new Date()).getTime()-(1000*120));
 					}
-					parkingVedio.setFilePath(filePath);
-					parkingVedio.setUpdateStatus(0);
-					parkingVedio.setSendStatus(1);
-					parkingVedio.setSendTime(new Date());
-					parkingVedioService.update(parkingVedio);
+					Date dateEnd = new Date(date.getTime()+(1000*120));
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					ParkingVedio parkingVedio = new ParkingVedio();
+					parkingVedio.setCameraIndex(camera.getCameraIndex());
+					parkingVedio.setCreateTime(new Date());
+					parkingVedio.setStatus(0);
+					parkingVedio.setTime(date.getTime());
+					parkingVedio.setVedioStart(sdf.format(date));
+					parkingVedio.setVedioEnd(sdf.format(dateEnd));
+					parkingVedioService.save(parkingVedio);
+					cameraService.update(camera.getId(), dateEnd);
 				}
 			}
 		} catch (Exception e) {
@@ -116,71 +106,21 @@ public class StatusCheckTask {
 	}
 
 	/**
-	 * 转换视频格式
+	 * 第三步：修改zip名称
 	 */
-	@Scheduled(cron = "0/59 * * * * ? ") // 每1分钟
+	@Scheduled(cron = "0/30 * * * * ? ") // 每30s
 	public void updateVedio() {
 		try {
-			List<ParkingVedio> list = parkingVedioService.findByStatus();
-			if (list != null && !list.isEmpty()) {
-				for (ParkingVedio pv : list) {
-					File file = new File(pv.getFilePath());
-					String fileName = pv.getFilePath().split("_.mp4")[0];
-					File file2 = new File(fileName+".mp4");
-					if (file.exists() && !file2.exists()) {
-						GifUtils.covMp4(pv.getFilePath());
-					}
-					if (file2.exists()) {
-						if(pv.getVedioStatus()==1){
-							pv.setUpdateStatus(1);
-							parkingVedioService.update(pv);
-							try {
-								new Thread(){
-									public void run(){
-										FtpUtils ftp = new FtpUtils();
-										String dirPath =  "/"+fileName.split("/")[3];
-										String ftpFileName =  fileName.split("/")[4]+".mp4";
-										ftp.uploadFile(dirPath, ftpFileName, fileName+".mp4");
-									}
-								}.start();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-							if(pv.getType()==1){
-								GifUtils.covPic(fileName,"00:00:21",fileName.split("_inCarVideo")[0]+"_inCarImg.jpeg");
-							}
-							if(pv.getType()==0){
-								GifUtils.covPic(fileName,"00:00:21",fileName.split("_outCarVideo")[0]+"_outCarImg.jpeg");
-							}
-						}else if(pv.getVedioStatus()==2){//停稳截取第一帧
-							String picPath = fileName.split("_steadyCarImg")[0]+"_step4.jpeg";
-							File picFile = new File(picPath);
-							if(!picFile.exists()){
-								GifUtils.covPic(fileName,"00:00:01",picPath);
-							}else{
-								pv.setUpdateStatus(1);
-								parkingVedioService.update(pv);
-								//合成图片
-								PicUtils.checkPics(fileName.split("_steadyCarImg")[0]);
-							}
-						}else{
-							pv.setUpdateStatus(1);
-							parkingVedioService.update(pv);
-							//上传完成转换的mp4
-							try {
-								new Thread(){
-									public void run(){
-										FtpUtils ftp = new FtpUtils();
-										String dirPath =  "/"+fileName.split("/")[3];
-										String ftpFileName =  fileName.split("/")[4]+".mp4";
-										ftp.uploadFile(dirPath, ftpFileName, fileName+".mp4");
-									}
-								}.start();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-					}
+			List<ParkingVedio> list = parkingVedioService.findByStatus(0);
+			if(list!=null&&!list.isEmpty()){
+				for(ParkingVedio vedio:list){
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String fileName = sdf.format(vedio.getVedioStart())+"/"+vedio.getCameraIndex()+"_"+vedio.getTime()+"_"+vedio.getId();
+					vedio.setDirPath("/data/vedios/"+fileName);
+					vedio.setZipName("/data/vedios/"+fileName+"/"+vedio.getCameraIndex()+"_"+vedio.getTime()+"_"+vedio.getId()+".zip");
+					vedio.setStatus(1);
+					parkingVedioService.update(vedio);
+					saveVedio(vedio);
 				}
 			}
 		} catch (Exception e) {
@@ -188,64 +128,26 @@ public class StatusCheckTask {
 		}
 	}
 
-	public static void main(String[] args) {
-		// savePic("http://10.0.0.17/ISAPI/Traffic/ContentMgmt/Picture/ch00_00000000000003190076001047112",
-		// "20190429/1.jpeg");
-		ParkingVedio parkingVedio = new ParkingVedio();
-		parkingVedio.setCameraIndex("19042811061310409505");
-		parkingVedio.setChangeTime("20190430091813");
-		parkingVedio.setCreateTime(new Date());
-		parkingVedio.setEventTime("20190430091813");
-		parkingVedio.setType(1);
-		parkingVedio.setMac("00011806140000A");
-		parkingVedio.setId(1);
-		saveVedio(parkingVedio);
-	}
 
 	/**
-	 * 录制任务
+	 * 第四步：下发录制任务
 	 * 
-	 * @param parkingVedio
 	 */
-	private static void saveVedio(ParkingVedio parkingVedio) {
+	private  void saveVedio(ParkingVedio parkingVedio) {
 		Connection c = null;
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
-			SimpleDateFormat sdf3 = new SimpleDateFormat("yyyyMMdd");
 			PreparedStatement pstmt;
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection("jdbc:postgresql://10.0.0.18:5432/port", "v_admin", "v_admin");
 			c.setAutoCommit(false);
-			//正常视频截取时间
-			Date date = sdf2.parse(parkingVedio.getEventTime());
-			Date beginTime = new Date(date.getTime() + 6000);
-			Date endTime = new Date(date.getTime() + 36000);
-			//地磁录制时间
-			if(parkingVedio.getVedioStatus()==1){
-				beginTime = new Date(date.getTime() - 20000);
-				endTime = new Date(date.getTime() + 10000);
-			}
-			if(parkingVedio.getVedioStatus()==2){//视频停稳只录制三秒
-				beginTime = new Date(date.getTime() + 180000);
-				endTime = new Date(date.getTime() + 183000);
-			}
-			Date date2 = sdf2.parse(parkingVedio.getChangeTime());
-			String filePath = "ftp://10.0.0.11/" + sdf3.format(date2) + "/" + parkingVedio.getMac() + "_"
-					+ parkingVedio.getChangeTime();
-			if (parkingVedio.getType() == 0) {
-				filePath += "_outCarVideo_.mp4";
-			} else if(parkingVedio.getType() == 1){
-				filePath += "_inCarVideo_.mp4";
-			}else if(parkingVedio.getType() == 2){
-				filePath += "_steadyCarImg_.mp4";
-			}
+
 			String sql = "insert into record_download_info (" + "iserialno," + "tcreatetime," + "scameraindex,"
 					+ "splateno," + "tbegintime," + "tendtime," + "sfilesavepath," + "sftpusername" + ",sftppassword,"
 					+ "tupdatetime," + "iuploadstatus," + "suploadmsg," + "ifilesize) " + "values(" + ""
 					+ parkingVedio.getId() + "," + "'" + sdf.format(new Date()) + "'," + "'"
-					+ parkingVedio.getCameraIndex() + "'," + "''," + "'" + sdf.format(beginTime) + "'," + "'"
-					+ sdf.format(endTime) + "'," + "'" + filePath + "'," + "'ftp_user1'," + "'"
+					+ parkingVedio.getCameraIndex() + "'," + "''," + "'" + parkingVedio.getVedioStart() + "'," + "'"
+					+ parkingVedio.getVedioEnd()  + "'," + "'" + parkingVedio.getDirPath()+"/main.mp4" + "'," + "'ftp_user'," + "'"
 					+ Base64.getEncoder().encodeToString("Zhanway2017".getBytes(StandardCharsets.UTF_8)) + "'," + "'"
 					+ sdf.format(new Date()) + "'," + "0," + "''," + "0)";
 			log.warn("sql:{}", sql);
@@ -256,335 +158,197 @@ public class StatusCheckTask {
 			log.warn("num:{}", i);
 			pstmt.close();
 			c.close();
+			parkingVedio.setStatus(2);
+			parkingVedioService.update(parkingVedio);
 		} catch (Exception e) {
 			log.error("e:{}", e);
 		}
 	}
-
-	@Scheduled(cron = "0/10 * * * * ? ") // 每三秒
-	public void init() {
-		Connection c = null;
-		Statement stmt = null;
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-			SimpleDateFormat sdf3 = new SimpleDateFormat("yyyyMMddHHmmss");
-			Integer maxId = parkInfoService.getMaxBaseId();
-			if (maxId == null || maxId == 0) {
-				maxId = 233;
-			}
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection("jdbc:postgresql://10.0.0.18:5432/port", "v_admin", "v_admin");
-			c.setAutoCommit(false);
-			stmt = c.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from v_parking_info where id>" + maxId);
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				String sLocation = rs.getString("slocation");
-				String sCameraName = rs.getString("scameraname");
-				String sCameraIndex = rs.getString("scameraindex");
-				int iVehicleEnterstate = rs.getInt("ivehicleenterstate");
-				String sParkingid = rs.getString("sparkingid");
-				String tEventTime = rs.getString("teventtime");
-				String sPlateNo = rs.getString("splateno");
-				String sPlateColor = rs.getString("splatecolor");
-				String sVehicleColor = rs.getString("svehiclecolor");
-				String sWholeSenceUrl = rs.getString("spic3");
-				String sFutrureUrl = rs.getString("spic3");//合成图
-				String pic1 = rs.getString("swholesenceurl");//原图1
-				String pic2 = rs.getString("sfutrureurl");//原图2
-				String pic3 = rs.getString("spic1");//原图3
-				ParkInfo parkInfo = saveParkInfo(id, sLocation, sCameraName, sCameraIndex, iVehicleEnterstate,
-						sParkingid, tEventTime, sPlateNo, sPlateColor, sVehicleColor, sWholeSenceUrl, sFutrureUrl);
-				Date date = sdf2.parse(tEventTime);
-				String ChangeTime = sdf3.format(date);
-				String dirPath = sdf.format(date);
-				ParkingSpace parkingSpace = parkingSpaceService.getByCameraIndexAndParkNumber(parkInfo.getSCameraIndex(),
-						parkInfo.getSParkingid());
-				// 添加mac信息
-				parkInfo.setMac(parkingSpace.getMac());
-				parkInfoService.update(parkInfo);
-				parkingSpace.setCameraNumber(sCameraName);
-				parkingSpace.setStatus(parkInfo.getIVehicleEnterstate());
-				String picPath = dirPath + "/" + parkingSpace.getMac() + "_";
-				ParkingVedio parkingVedio = new ParkingVedio();
-				parkingVedio.setCameraIndex(sCameraIndex);
-				parkingVedio.setEventTime(ChangeTime);
-				parkingVedio.setSendStatus(0);
-				parkingVedio.setCreateTime(new Date());
-				parkingSpace.setHappenTime(date);
-				parkingVedio.setChangeTime(ChangeTime);
-				parkingVedio.setVedioStatus(0);
-				picPath += ChangeTime;
-				if (iVehicleEnterstate == 1) {
-					savePic(sWholeSenceUrl, picPath + "_inCarImg.jpeg");
-					savePic(pic1, picPath + "_step1.jpeg");
-					savePic(pic2, picPath + "_step2.jpeg");
-					savePic(pic3, picPath + "_step3.jpeg");
-				}
-				if (iVehicleEnterstate == 2) {
-					savePic(sWholeSenceUrl, picPath + "_outCarImg.jpeg");
-				}
-//				if (iVehicleEnterstate == 1) {
-//					parkingSpace.setHappenTime(date);
-//					parkingVedio.setChangeTime(ChangeTime);
-//					picPath += ChangeTime;
-//					savePic(sWholeSenceUrl, picPath + "_inCarImg.jpeg");
-//				}
-//				if (iVehicleEnterstate == 2) {
-//					if (parkingSpace.getHappenTime() == null) {
-//						parkingSpace.setHappenTime(date);
-//					}
-//					picPath += sdf3.format(parkingSpace.getHappenTime());
-//					parkingVedio.setChangeTime(sdf3.format(parkingSpace.getHappenTime()));
-//					savePic(sWholeSenceUrl, picPath + "_outCarImg.jpeg");
-//				}
-				parkingVedio.setEventTime(ChangeTime);
-				parkingVedio.setMac(parkInfo.getMac());
-				parkingVedio.setType(parkInfo.getIVehicleEnterstate());
-				parkingSpaceService.update(parkingSpace);
-				if (iVehicleEnterstate != 0 ) {
-					parkingVedioService.save(parkingVedio);
-				}
-				sendData(parkingSpace, ChangeTime, sCameraIndex, sPlateNo, parkInfo.getSPlateColor(), parkInfo, picPath,
-						iVehicleEnterstate);
-			}
-			rs.close();
-			stmt.close();
-			c.close();
-		} catch (Exception e) {
-			log.error("e:{}", e);
-		}
-	}
-
+	
+	
 	/**
-	 * 发送数据
-	 * 
-	 * @param parkingSpace
-	 * @param ChangeTime
-	 * @param sCameraIndex
-	 * @param sPlateNo
-	 * @param sPlateColor
-	 * @param parkInfo
-	 * @param picPath
-	 * @param iVehicleEnterstate
+	 * 第五步：开始截图
 	 */
-	private void sendData(ParkingSpace parkingSpace, String ChangeTime, String sCameraIndex, String sPlateNo,
-			String sPlateColor, ParkInfo parkInfo, String picPath, int iVehicleEnterstate) {
-		Map<String, String> map = new HashMap<>();
-			map.put("mac", parkingSpace.getMac());
-			map.put("ChangeTime", ChangeTime);
-			map.put("cameraId", sCameraIndex);
-			map.put("cph", sPlateNo);
-			map.put("cpColor", sPlateColor);
-			map.put("status", String.valueOf(parkInfo.getIVehicleEnterstate()));
-			map.put("picLink", "http://58.246.184.99:801/" + picPath);
-			if (iVehicleEnterstate != 0) {
-				HttpUtil.get("http://139.196.205.157:8090/home/cloud/server/check?id=9");
-				if (parkInfo.getIVehicleEnterstate() == 0) {
-					new Thread(new Runnable() {
-						public void run() {
-							try {
-								Thread.sleep(13000);
-								HttpUtil.postJson("http://124.74.252.162:1122/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
-								//HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
-							} catch (Exception e) {
-								log.error("e:{}", e);
+	@Scheduled(cron = "0/30 * * * * ? ") // 每30s
+	public void checkVedio() {
+		try {
+			List<ParkingVedio> list = parkingVedioService.findByStatus(2);
+			if(list!=null&&!list.isEmpty()){
+				for(ParkingVedio vedio:list){
+					File file = new File(vedio.getDirPath()+"/main.mp4");
+					if(file.exists()){
+						vedio.setStatus(3);
+						parkingVedioService.update(vedio);
+						new Thread(){
+							public void run(){
+						        String fileName = vedio.getDirPath();
+						        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						        SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss");
+						        Date d;
+								try {
+									d = format.parse("1998-01-01 00:00:00");
+									String time = "";
+									long num = 60;
+									File[] files = new File[(int) num];
+							        for( int i = 0;i<num;i++){
+							            Calendar calendar = Calendar.getInstance();
+							            calendar.setTime(d);
+							            calendar.add(Calendar.SECOND,2);
+							            d = calendar.getTime();
+							            time = f.format(d);
+							            GifUtils.covPic(fileName,time,vedio.getDirPath()+"/ffmpeg_"+(i+1)+".jpg");
+							            files[i] = new File(vedio.getDirPath()+"/ffmpeg_"+(i+1)+".jpg");
+							        }
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 							}
-						}
-					}).start();
-				} else {
-					HttpUtil.postJson("http://124.74.252.162:1122/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
-					//HttpUtil.postJson("http://112.64.46.113:8102/iot/iot/sensor/vedioReport",JSONObject.toJSONString(map));
+						}.start();
+					}
 				}
 			}
+		} catch (Exception e) {
+			log.error("e:{}", e);
+		}
 	}
 
+	
+	
 	/**
-	 * 保存记录
-	 * 
-	 * @param id
-	 * @param sLocation
-	 * @param sCameraName
-	 * @param sCameraIndex
-	 * @param iVehicleEnterstate
-	 * @param sParkingid
-	 * @param tEventTime
-	 * @param sPlateNo
-	 * @param sPlateColor
-	 * @param sVehicleColor
-	 * @param sWholeSenceUrl
-	 * @param sFutrureUrl
-	 * @return
+	 * 第六步：截图完成打包
 	 */
-	private ParkInfo saveParkInfo(int id, String sLocation, String sCameraName, String sCameraIndex,
-			int iVehicleEnterstate, String sParkingid, String tEventTime, String sPlateNo, String sPlateColor,
-			String sVehicleColor, String sWholeSenceUrl, String sFutrureUrl) {
-		ParkInfo parkInfo = new ParkInfo();
-		parkInfo.setBaseId(id);
-		parkInfo.setSLocation(sLocation);
-		parkInfo.setSCameraName(sCameraName);
-		parkInfo.setSCameraIndex(sCameraIndex);
-		parkInfo.setIVehicleEnterstate(iVehicleEnterstate);
-		if (iVehicleEnterstate == 2) {
-			parkInfo.setIVehicleEnterstate(0);
-		}
-		if (iVehicleEnterstate == 0) {
-			parkInfo.setIVehicleEnterstate(3);
-		}
-		parkInfo.setSParkingid(sParkingid);
-		parkInfo.setTEventTime(tEventTime);
-		parkInfo.setCreateTime(new Date());
-		parkInfo.setSPlateNo(sPlateNo);
-		String pColor = "其他颜色";
-		if ("0".equals(sPlateColor)) {
-			pColor = "白色";
-		}
-		if ("1".equals(sPlateColor)) {
-			pColor = "黄色";
-		}
-		if ("2".equals(sPlateColor)) {
-			pColor = "蓝色";
-		}
-		if ("3".equals(sPlateColor)) {
-			pColor = "黑色";
-		}
-		if ("5".equals(sPlateColor)) {
-			pColor = "绿色";
-		}
-		parkInfo.setSPlateColor(pColor);
-		String color = "未识别";
-		if ("1".equals(sVehicleColor)) {
-			color = "白色";
-		}
-		if ("4".equals(sVehicleColor)) {
-			color = "黑色";
-		}
-		if ("5".equals(sVehicleColor)) {
-			color = "红色";
-		}
-		if ("7".equals(sVehicleColor)) {
-			color = "蓝色";
-		}
-		if ("2".equals(sVehicleColor)) {
-			color = "银色";
-		}
-		if ("3".equals(sVehicleColor)) {
-			color = "灰色";
-		}
-		if ("8".equals(sVehicleColor)) {
-			color = "黄色";
-		}
-		if ("10".equals(sVehicleColor)) {
-			color = "棕色";
-		}
-		if ("11".equals(sVehicleColor)) {
-			color = "粉色";
-		}
-		if ("12".equals(sVehicleColor)) {
-			color = "紫色";
-		}
-		if ("6".equals(sVehicleColor)) {
-			color = "深蓝";
-		}
-		if ("9".equals(sVehicleColor)) {
-			color = "绿色";
-		}
-		parkInfo.setSVehicleColor(color);
-		parkInfo.setSWholeSenceUrl(sWholeSenceUrl);
-		parkInfo.setSFutrureUrl(sFutrureUrl);
-		log.warn("id:{}", id);
-		return parkInfoService.save(parkInfo);
-	}
-
-	/**
-	 * 保存图片
-	 * 
-	 * @param picPathUrl
-	 * @param path
-	 */
-	private static void savePic(String picPathUrl, String path) {
-		byte[] btImg = getImageFromNetByUrl(picPathUrl);
-		if (null != btImg && btImg.length > 0) {
-			writeImageToDisk(btImg, path);
-			try {
-				new Thread(){
-					public void run(){
-						FtpUtils ftp = new FtpUtils();
-		            	log.warn("file path:{}",path);
-						String dirPath =  "/"+path.split("/")[0];
-						String ftpFileName =  path.split("/")[1];
-						ftp.uploadFile(dirPath, ftpFileName, "/data/ftp_pic/"+path);
+	@Scheduled(cron = "0/30 * * * * ? ") // 每30s
+	public void zipVedio() {
+		try {
+			List<ParkingVedio> list = parkingVedioService.findByStatus(3);
+			if(list!=null&&!list.isEmpty()){
+				for(ParkingVedio vedio:list){
+					boolean r = true;
+					for(int i = 1;i<=60;i++){
+						File file = new File(vedio.getDirPath()+"/ffmpeg_"+i+".jpg");
+						if(!file.exists()){
+							r = false;
+							break;
+						}
 					}
-				}.start();
-			} catch (Exception e) {
-				e.printStackTrace();
+					if(r){
+						File[] files = new File[60];
+						for(int i = 1;i<=60;i++){
+							files[i-1] = new File(vedio.getDirPath()+"/ffmpeg_"+i+".jpg");
+						}
+						GifUtils.zipFiles(files, new File(vedio.getZipName()));
+						vedio.setStatus(4);
+						parkingVedioService.update(vedio);
+					}
+				}
 			}
-		} else {
-			log.warn("no things");
+		} catch (Exception e) {
+			log.error("e:{}", e);
 		}
 	}
 
+	
 	/**
-	 * 写入硬盘
-	 * 
-	 * @param data
-	 * @param fileName
+	 * 第七步：打包完成发任务
 	 */
-	public static void writeImageToDisk(byte[] data, String fileName) {
+	@Scheduled(cron = "0/30 * * * * ? ") // 每30s
+	public void zipComplate() {
 		try {
-			File file = new File("/data/ftp_pic/" + fileName); // 本地目录
-			File fileParent = file.getParentFile();
-			if (!fileParent.exists()) {
-				fileParent.mkdirs();
-				file.createNewFile();
+			List<ParkingVedio> list = parkingVedioService.findByStatus(4);
+			if(list!=null&&!list.isEmpty()){
+				for(ParkingVedio vedio:list){
+					File file = new File(vedio.getZipName());
+					if(file.exists()){
+						GifUtils.postFile("http://localhost/vehicle/upload", vedio.getZipName());
+						vedio.setStatus(6);
+						parkingVedioService.update(vedio);
+					}
+				}
 			}
-			FileOutputStream fops = new FileOutputStream(file);
-			fops.write(data);
-			fops.flush();
-			fops.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("e:{}", e);
 		}
 	}
-
+	
 	/**
-	 * 获取远程视频流
-	 * 
-	 * @param strUrl
-	 * @return
+	 * 第八步：查结果
 	 */
-	public static byte[] getImageFromNetByUrl(String strUrl) {
+	@Scheduled(cron = "0/30 * * * * ? ") // 每30s
+	public void result() {
 		try {
-			URL url = new URL(strUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setConnectTimeout(5 * 1000);
-			InputStream inStream = conn.getInputStream();
-			byte[] btData = readInputStream(inStream);
-			return btData;
+			List<ParkingVedio> list = parkingVedioService.findByStatus(6);
+			if(list!=null&&!list.isEmpty()){
+				for(ParkingVedio vedio:list){
+					String res = HttpUtil.get("http://localhost/vehicle/result");
+					vedio.setResult(res);
+					vedio.setStatus(7);
+					parkingVedioService.update(vedio);
+					JSONObject jsonObject = JSONObject.parseObject(vedio.getResult());
+					String date = vedio.getVedioStart();
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					Date d = format.parse(date);
+					for(int i = 0;i<60;i++){
+						Calendar calendar = Calendar.getInstance();
+						calendar.setTime(d);
+						calendar.add(Calendar.SECOND, 2);
+						d = calendar.getTime();
+						String s = jsonObject.getString("ffmpeg_"+(i+1)+".jpg");
+						if(StringUtil.isNotBlank(s)){
+							JSONObject obj = JSONObject.parseObject(s);
+							insert(obj,0,vedio,format.format(d),(i+1));
+						}
+					}
+				}
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("e:{}", e);
 		}
-		return null;
 	}
 
-	/**
-	 * 流写入
-	 * 
-	 * @param inStream
-	 * @return
-	 * @throws Exception
-	 */
-	public static byte[] readInputStream(InputStream inStream) throws Exception {
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-		byte[] buffer = new byte[1024];
-		int len = 0;
-		while ((len = inStream.read(buffer)) != -1) {
-			outStream.write(buffer, 0, len);
+	public void insert(JSONObject obj,int num,ParkingVedio vedio,String d,int picNum){
+		String ss = obj.getString(""+num+"");
+		if(StringUtil.isNotBlank(ss)){
+			num++;
+			ParkingRecord vedioLog = new ParkingRecord();
+			vedioLog.setVedioTime(d);
+			vedioLog.setTaskId(vedio.getId());
+			vedioLog.setCreateTime(new Date());
+			String carArry = JSONObject.parseObject(ss).getString("bbox");
+			List<String> cArry = JSONObject.parseArray(carArry, String.class);
+			vedioLog.setCarX(cArry.get(0));
+			vedioLog.setCarX2(cArry.get(2));
+			vedioLog.setCarY(cArry.get(1));
+			vedioLog.setCarY2(cArry.get(3));
+			vedioLog.setStatus(-1);
+			vedioLog.setPicNumber(picNum);
+			JSONArray jsonArray = JSONObject.parseArray( JSONObject.parseObject(ss).getString("chepai"));
+			vedioLog.setCpX("");
+			vedioLog.setCpX2("");
+			vedioLog.setCpY("");
+			vedioLog.setCpY2("");
+			if(!jsonArray.isEmpty()){
+				JSONObject j = jsonArray.getJSONObject(0);
+				String cph = unicodeToCn(j.getString("text"));
+				vedioLog.setCarNumber(cph);
+				List<String> cpArry = JSONObject.parseArray(j.getString("bbox"), String.class);
+				vedioLog.setCpX(cpArry.get(0));
+				vedioLog.setCpX2(cpArry.get(2));
+				vedioLog.setCpY(cpArry.get(1));
+				vedioLog.setCpY2(cpArry.get(3));
+			}
+			parkingRecordService.save(vedioLog);
+			insert(obj, num,vedio,d,picNum);
 		}
-		inStream.close();
-		return outStream.toByteArray();
 	}
+	
+	 public static String unicodeToCn(String s) {
+		   String cph = "";
+		   char[] c = s.toCharArray();
+			for(int i = 0;i<c.length;i++){
+				cph+=c[i];
+			}
+			return cph;
+	    }
+	
 
 }

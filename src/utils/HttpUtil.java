@@ -2,6 +2,7 @@ package utils;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Date;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -84,6 +85,7 @@ public class HttpUtil {
         String result = "500";
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpGet get = new HttpGet(url);
+        get.setHeader("ts", String.valueOf(new Date().getTime()/1000));
 		try {
 			HttpResponse response = httpClient.execute(get);
 			result = EntityUtils.toString(response.getEntity(),"UTF-8");
