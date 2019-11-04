@@ -43,8 +43,8 @@ public class QjDeviceLogService {
 
 
 
-	public List<QjDeviceLog> findAllDate() {
-		return qjDeviceLogDao.findAllDate();
+	public List<QjDeviceLog> findAllDate(String dateStr) {
+		return qjDeviceLogDao.findAllDate(dateStr);
 	}
 	
 }

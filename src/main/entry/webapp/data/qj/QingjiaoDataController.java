@@ -51,12 +51,12 @@ public class QingjiaoDataController extends BaseController {
 		return resp;
 	}
 	
-	@RequestMapping(path = "test")
+	@RequestMapping(path = "excel")
 	@ResponseBody
-	public Resp<?> test() {
-		Resp<?> resp = new Resp<>(false);
+	public String test(String dateStr) {
+		String str = "";
 		try {
-			List<QjDeviceLog> list = qjDeviceLogService.findAllDate();
+			List<QjDeviceLog> list = qjDeviceLogService.findAllDate(dateStr);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Map<String, Integer> map = new HashMap<String,Integer>();
 			for(QjDeviceLog log : list){
@@ -73,12 +73,12 @@ public class QingjiaoDataController extends BaseController {
 			for(Map.Entry<String, Integer> entry : map.entrySet()){
 			    String mapKey = entry.getKey();
 			    Integer mapValue = entry.getValue();
-			    System.out.println(mapKey+"_"+mapValue);
+			    str += mapKey+"_"+mapValue+"\n";
 			}
 		} catch (Exception e) {
 			log.error("error:{}", e);
 		}
-		return resp;
+		return str;
 	}
 
 	@RequestMapping(path = "/logs")

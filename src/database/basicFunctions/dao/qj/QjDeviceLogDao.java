@@ -94,8 +94,8 @@ public class QjDeviceLogDao extends BaseDao<QjDeviceLog>{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<QjDeviceLog> findAllDate() {
-		String hql = " from QjDeviceLog where  createTime >='2019-10-26 00:00:00'  ";
+	public List<QjDeviceLog> findAllDate(String dateStr) {
+		String hql = " from QjDeviceLog where  createTime >='"+dateStr+" 00:00:00'  ";
 		List<QjDeviceLog> list = em.createQuery(hql).getResultList();
 		if(list!=null&&!list.isEmpty()){
 			return list;
