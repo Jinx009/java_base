@@ -817,7 +817,7 @@ public class TelcomCotroller extends BaseController {
 	}
 
 	/**
-	 * 普世宜宾3.0版本设备
+	 * 普世3.0版本设备
 	 * 
 	 * @param ioTCloudDevice
 	 * @param data
@@ -886,13 +886,21 @@ public class TelcomCotroller extends BaseController {
 		} else if (cmd.equals("68")) {
 			cmd = "心跳";
 		}
+		String acc_x = "0";
+		String acc_y = "0";
+		String acc_z = "0";
+		String x = getData100(data.substring(50, 51), data.substring(50, 54));
+		String y = getData100(data.substring(54, 55), data.substring(54, 58));
+		String z = getData100(data.substring(58, 59), data.substring(58, 62));
+		if (cmd.equals("报警")) {
+			x = getData100(data.substring(54, 55), data.substring(54, 58));
+			y = getData100(data.substring(58, 59), data.substring(58, 62));
+			z = getData100(data.substring(62, 63), data.substring(62, 66));
+			acc_x = hexToFloat(data.substring(66, 74));
+			acc_y = hexToFloat(data.substring(74, 82));
+			acc_z = hexToFloat(data.substring(82, 90));
+		}
 		if (cmd.equals("报警") || cmd.equals("心跳")) {
-			String acc_x = hexToFloat(data.substring(26, 34));
-			String acc_y = hexToFloat(data.substring(34, 42));
-			String acc_z = hexToFloat(data.substring(42, 50));
-			String x = getData100(data.substring(50, 51), data.substring(50, 54));
-			String y = getData100(data.substring(54, 55), data.substring(54, 58));
-			String z = getData100(data.substring(58, 59), data.substring(58, 62));
 			sendData.put("103_1", x + "," + y + "," + z + "," + acc_x + "," + acc_y + "," + acc_z);
 			map.put("data", sendData);
 			String json = JSONObject.toJSONString(map);
@@ -1063,8 +1071,30 @@ public class TelcomCotroller extends BaseController {
 		// new
 		// TelcomCotroller().sendChaozhou("000118112100000969000D00FFDB00FFE6000006000015000BE707D61FFDF500D800CF",null);
 		try {
-			// new TelcomCotroller().getData10000("4500", "4");
-			System.out.print(hexToFloat("40400000"));
+//			// new TelcomCotroller().getData10000("4500", "4");
+//			System.out.print(hexToFloat("40400000"));
+			String data = "000919032900001648006930010108000000000000000000000000FF38000900003B3000003AB800003B2400000000000000000000000000000BE015";
+			String cmd = data.substring(20, 22);
+			if (cmd.equals("69")) {
+				cmd = "报警";
+			} else if (cmd.equals("68")) {
+				cmd = "心跳";
+			}
+			String acc_x = "0";
+			String acc_y = "0";
+			String acc_z = "0";
+			String x = new TelcomCotroller().getData100(data.substring(50, 51), data.substring(50, 54));
+			String y = new TelcomCotroller().getData100(data.substring(54, 55), data.substring(54, 58));
+			String z = new TelcomCotroller().getData100(data.substring(58, 59), data.substring(58, 62));
+			if (cmd.equals("报警")) {
+				x = new TelcomCotroller().getData100(data.substring(54, 55), data.substring(54, 58));
+				y = new TelcomCotroller().getData100(data.substring(58, 59), data.substring(58, 62));
+				z = new TelcomCotroller().getData100(data.substring(62, 63), data.substring(62, 66));
+				acc_x = hexToFloat(data.substring(66, 74));
+				acc_y = hexToFloat(data.substring(74, 82));
+				acc_z = hexToFloat(data.substring(82, 90));
+			}
+			System.out.println(acc_x +"---"+acc_y +"---"+acc_z+"---"+x+"---"+y+"---"+z+"---"+cmd);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

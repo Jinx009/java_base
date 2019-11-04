@@ -385,8 +385,9 @@ public class StatusCheckTask {
 //		double d = Double.valueOf("0.03");
 //		int a = (int) (d * 1000);
 //		String c = UrlUtils.getHex(a);
-		  long dec_num = Long.parseLong("01869f", 16);  
-		System.out.println(dec_num);
+//		  long dec_num = Long.parseLong("01869f", 16);  
+//		System.out.println(dec_num);
+	
 	}
 
 }
