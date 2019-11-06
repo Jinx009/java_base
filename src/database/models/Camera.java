@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tbl_camera")
+@Table(name = "tbl_camera_v")
 public class Camera {
 
 	@Id

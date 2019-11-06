@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tbl_vedio")
+@Table(name = "tbl_vedio_v")
 public class ParkingVedio {
 
 	@Id

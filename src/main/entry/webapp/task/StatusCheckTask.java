@@ -54,7 +54,7 @@ public class StatusCheckTask {
 			Date date = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			String data = "create_file";
-			File file = new File("/data/ftp_pic/" + sdf.format(date) + "/create_file.txt"); // 本地目录
+			File file = new File("/media/zhanway/DATA/data/" + sdf.format(date) + "/create_file.txt"); // 本地目录
 			File fileParent = file.getParentFile();
 			if (!fileParent.exists()) {
 				fileParent.mkdirs();
@@ -116,8 +116,8 @@ public class StatusCheckTask {
 				for(ParkingVedio vedio:list){
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					String fileName = sdf.format(vedio.getVedioStart())+"/"+vedio.getCameraIndex()+"_"+vedio.getTime()+"_"+vedio.getId();
-					vedio.setDirPath("/data/vedios/"+fileName);
-					vedio.setZipName("/data/vedios/"+fileName+"/"+vedio.getCameraIndex()+"_"+vedio.getTime()+"_"+vedio.getId()+".zip");
+					vedio.setDirPath("/media/zhanway/DATA/data/"+fileName);
+					vedio.setZipName("/media/zhanway/DATA/data/"+fileName+"/"+vedio.getCameraIndex()+"_"+vedio.getTime()+"_"+vedio.getId()+".zip");
 					vedio.setStatus(1);
 					parkingVedioService.update(vedio);
 					saveVedio(vedio);
@@ -147,7 +147,7 @@ public class StatusCheckTask {
 					+ "tupdatetime," + "iuploadstatus," + "suploadmsg," + "ifilesize) " + "values(" + ""
 					+ parkingVedio.getId() + "," + "'" + sdf.format(new Date()) + "'," + "'"
 					+ parkingVedio.getCameraIndex() + "'," + "''," + "'" + parkingVedio.getVedioStart() + "'," + "'"
-					+ parkingVedio.getVedioEnd()  + "'," + "'" + parkingVedio.getDirPath()+"/main.mp4" + "'," + "'ftp_user'," + "'"
+					+ parkingVedio.getVedioEnd()  + "'," + "'" + parkingVedio.getDirPath()+"/main.mp4" + "'," + "'zhanway'," + "'"
 					+ Base64.getEncoder().encodeToString("Zhanway2017".getBytes(StandardCharsets.UTF_8)) + "'," + "'"
 					+ sdf.format(new Date()) + "'," + "0," + "''," + "0)";
 			log.warn("sql:{}", sql);
