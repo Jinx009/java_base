@@ -129,7 +129,7 @@ public class JobTask {
 		if (parkingArea == null) {
 			AlimsgUtils.sendCheck("vedio", "SMS_171565355", "展为","18217700275");
 		} else {
-			if((date.getTime()-parkingArea.getTime())>(1000*1200)){
+			if((date.getTime()-parkingArea.getTime())>(1000*7200)){
 				AlimsgUtils.sendCheck("vedio", "SMS_171565355", "展为","18217700275");
 			}
 		}
