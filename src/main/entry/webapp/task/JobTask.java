@@ -119,12 +119,10 @@ public class JobTask {
 			}
 		}
 	}
-
-	@Scheduled(fixedRate = 1000 * 600, initialDelay = 1000)
-	public void init() {
+	
+	@Scheduled(fixedRate = 1000 * 3600, initialDelay = 1000)
+	public void initVedio() {
 		Date parkingArea = parkingAreaService.find(9).getCreateTime();// vedio
-		Date parkingArea2 = parkingAreaService.find(10).getCreateTime();// vedio
-		Date parkingArea3 = parkingAreaService.find(11).getCreateTime();// vedio
 		Date date = new Date();
 		if (parkingArea == null) {
 			AlimsgUtils.sendCheck("vedio", "SMS_171565355", "展为","18217700275");
@@ -133,6 +131,13 @@ public class JobTask {
 				AlimsgUtils.sendCheck("vedio", "SMS_171565355", "展为","18217700275");
 			}
 		}
+	}
+
+	@Scheduled(fixedRate = 1000 * 600, initialDelay = 1000)
+	public void init() {
+		Date parkingArea2 = parkingAreaService.find(10).getCreateTime();// vedio
+		Date parkingArea3 = parkingAreaService.find(11).getCreateTime();// vedio
+		Date date = new Date();
 		if (parkingArea2 == null) {
 			AlimsgUtils.sendCheck("1.1", "SMS_171565355", "展为","18217700275");
 		} else {
