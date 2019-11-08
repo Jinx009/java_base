@@ -197,8 +197,6 @@ public class StatusCheckTask {
 				for(ParkingVedio vedio:list){
 					File file = new File(vedio.getDirPath()+"/main.mp4");
 					if(file.exists()){
-						vedio.setStatus(3);
-						parkingVedioService.update(vedio);
 						new Thread(){
 							public void run(){
 						        String fileName = vedio.getDirPath();
@@ -219,6 +217,8 @@ public class StatusCheckTask {
 							            GifUtils.covPic(fileName,time,vedio.getDirPath()+"/ffmpeg_"+(i+1)+".jpg");
 							            files[i] = new File(vedio.getDirPath()+"/ffmpeg_"+(i+1)+".jpg");
 							        }
+							        vedio.setStatus(3);
+									parkingVedioService.update(vedio);
 								} catch (Exception e) {
 									e.printStackTrace();
 								}

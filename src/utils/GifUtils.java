@@ -193,7 +193,7 @@ public class GifUtils {
 		List<String> command = new ArrayList<String>();
 		command.add(ffmpegEXE);
 		command.add("-i");
-		command.add(fileName+".mp4");
+		command.add(fileName+"/main.mp4");
 		command.add("-y");
 		command.add("-f");
 		command.add("image2");
@@ -213,14 +213,14 @@ public class GifUtils {
 			dealStream(videoProcess);
 			videoProcess.waitFor();
 			log.warn("msg:cov Pic：{}",fileName);
-			try {
-				FtpUtils ftp = new FtpUtils();
-				String dirPath =  "/"+outName.split("/")[3];
-				String ftpFileName =  outName.split("/")[4];
-				ftp.uploadFile(dirPath, ftpFileName, outName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+//			try {
+//				FtpUtils ftp = new FtpUtils();
+//				String dirPath =  "/"+outName.split("/")[3];
+//				String ftpFileName =  outName.split("/")[4];
+//				ftp.uploadFile(dirPath, ftpFileName, outName);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 			return true;
 		} catch (Exception e) {
 			log.error("e:{}", e);
