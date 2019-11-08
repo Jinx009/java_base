@@ -15,7 +15,11 @@ public class ParkingVedioDao extends BaseDao<ParkingVedio>{
 	public List<ParkingVedio> findByStatus(Integer status) {
 		QueryParam param = QueryParam.getInstance();
 		param.addParam("status", status);
-		return findByCriteria(param);
+		List<ParkingVedio> list = findByCriteria(param);
+		if(list!=null&&!list.isEmpty()){
+			return list;
+		}
+		return null;
 	}
 	
 }

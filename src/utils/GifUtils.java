@@ -38,7 +38,7 @@ public class GifUtils {
 	// Linux与mac下 ffmpeg的路径
 	 //private static String ffmpegEXE = "/usr/local/Cellar/ffmpeg/4.1.2/bin/ffmpeg";
 
-	 private static String ffmpegEXE = "/usr/local/bin/ffmpeg";
+	 private static String ffmpegEXE = "/usr/bin/ffmpeg";
 
 	/**
 	 * 开辟线程处理流

@@ -64,7 +64,7 @@ public class StatusCheckTask {
 			fops.write(data.getBytes());
 			fops.flush();
 			fops.close();
-			String[] cmd = { "sh", "-c", "chmod 777 /data/ftp_pic/*" };
+			String[] cmd = { "sh", "-c", "chmod 777 /media/zhanway/DATA/data/" + sdf.format(date) +"/*" };
 			log.warn("log:chmod dir");
 			Process p = Runtime.getRuntime().exec(cmd);
 			p.waitFor();
@@ -115,7 +115,9 @@ public class StatusCheckTask {
 			if(list!=null&&!list.isEmpty()){
 				for(ParkingVedio vedio:list){
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					String fileName = sdf.format(vedio.getVedioStart())+"/"+vedio.getCameraIndex()+"_"+vedio.getTime()+"_"+vedio.getId();
+					SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					Date d = sdf2.parse(vedio.getVedioStart());
+					String fileName = sdf.format(d)+"/"+vedio.getCameraIndex()+"_"+vedio.getTime()+"_"+vedio.getId();
 					vedio.setDirPath("/media/zhanway/DATA/data/"+fileName);
 					vedio.setZipName("/media/zhanway/DATA/data/"+fileName+"/"+vedio.getCameraIndex()+"_"+vedio.getTime()+"_"+vedio.getId()+".zip");
 					vedio.setStatus(1);
@@ -137,17 +139,35 @@ public class StatusCheckTask {
 		Connection c = null;
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 			PreparedStatement pstmt;
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection("jdbc:postgresql://10.0.0.18:5432/port", "v_admin", "v_admin");
 			c.setAutoCommit(false);
-
+			Date d = sdf.parse(parkingVedio.getVedioStart());
+			String fileName =  sdf2.format(d)+"/"+parkingVedio.getCameraIndex()+"_"+parkingVedio.getTime()+"_"+parkingVedio.getId();;
+			String data = "init";
+			File file = new File("/media/zhanway/DATA/data/" + fileName+"/create_file.txt"); // 本地目录
+			File fileParent = file.getParentFile();
+			if (!fileParent.exists()) {
+				fileParent.mkdirs();
+				file.createNewFile();
+			}
+			FileOutputStream fops = new FileOutputStream(file);
+			fops.write(data.getBytes());
+			fops.flush();
+			fops.close();
+			String[] cmd = { "sh", "-c", "chmod 777 /media/zhanway/DATA/data/" + fileName+"/*" };
+			log.warn("log:chmod dir");
+			Process p = Runtime.getRuntime().exec(cmd);
+			p.waitFor();
+			p.destroy();
 			String sql = "insert into record_download_info (" + "iserialno," + "tcreatetime," + "scameraindex,"
 					+ "splateno," + "tbegintime," + "tendtime," + "sfilesavepath," + "sftpusername" + ",sftppassword,"
 					+ "tupdatetime," + "iuploadstatus," + "suploadmsg," + "ifilesize) " + "values(" + ""
-					+ parkingVedio.getId() + "," + "'" + sdf.format(new Date()) + "'," + "'"
+					+ (1000000+parkingVedio.getId()) + "," + "'" + sdf.format(new Date()) + "'," + "'"
 					+ parkingVedio.getCameraIndex() + "'," + "''," + "'" + parkingVedio.getVedioStart() + "'," + "'"
-					+ parkingVedio.getVedioEnd()  + "'," + "'" + parkingVedio.getDirPath()+"/main.mp4" + "'," + "'zhanway'," + "'"
+					+ parkingVedio.getVedioEnd()  + "'," + "'" + "ftp://10.0.0.178/"+fileName+"/main.mp4" + "'," + "'zhanway'," + "'"
 					+ Base64.getEncoder().encodeToString("Zhanway2017".getBytes(StandardCharsets.UTF_8)) + "'," + "'"
 					+ sdf.format(new Date()) + "'," + "0," + "''," + "0)";
 			log.warn("sql:{}", sql);
