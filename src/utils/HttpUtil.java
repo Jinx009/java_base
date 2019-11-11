@@ -97,5 +97,30 @@ public class HttpUtil {
 		}
 		return result;
     }
+    
+    /**
+     * http get
+     * @param url
+     * @return
+     */
+    @SuppressWarnings("resource")
+	public static String getName(String url,String fileName){
+    	logger.warn("HttpUtils.get[info:{}]",url);
+        String result = "500";
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpGet get = new HttpGet(url);
+        get.setHeader("ts", String.valueOf(new Date().getTime()/1000));
+        get.setHeader("fileName", fileName);
+		try {
+			HttpResponse response = httpClient.execute(get);
+			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			logger.warn("get[res:{}]",result);
+		} catch (ParseException e) {
+			logger.error("get[ParseException.error:{}]",e);
+		} catch (IOException e) {
+			logger.error("get[IOException.error:{}]",e);
+		}
+		return result;
+    }
 	
 }

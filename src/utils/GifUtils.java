@@ -202,7 +202,7 @@ public class GifUtils {
 		command.add("-vframes");
 		command.add("1");
 		command.add("-s");
-		command.add("2688x1520");
+		command.add("1920x1080");
 		if(StringUtil.isNotBlank(outName)){
 			command.add(outName);
 		}else{

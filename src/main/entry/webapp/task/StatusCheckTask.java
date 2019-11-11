@@ -299,7 +299,7 @@ public class StatusCheckTask {
 			List<ParkingVedio> list = parkingVedioService.findByStatus(6);
 			if(list!=null&&!list.isEmpty()){
 				for(ParkingVedio vedio:list){
-					String res = HttpUtil.get("http://localhost/vehicle/result");
+					String res = HttpUtil.getName("http://localhost/vehicle/result",vedio.getZipName().split("/")[7]);
 					vedio.setResult(res);
 					vedio.setStatus(7);
 					parkingVedioService.update(vedio);
@@ -324,6 +324,7 @@ public class StatusCheckTask {
 			log.error("e:{}", e);
 		}
 	}
+	
 
 	public void insert(JSONObject obj,int num,ParkingVedio vedio,String d,int picNum){
 		String ss = obj.getString(""+num+"");
