@@ -52,7 +52,7 @@ public class StatusCheckTask {
 	public void chmod() {
 		try {
 			Date date = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String data = "create_file";
 			File file = new File("/media/zhanway/DATA/data/" + sdf.format(date) + "/create_file.txt"); // 本地目录
 			File fileParent = file.getParentFile();
@@ -77,17 +77,15 @@ public class StatusCheckTask {
 	/**
 	 * 第二步：新建任务
 	 */
-	@Scheduled(cron = "0/120 * * * * ? ") // 每2分钟
+	@Scheduled(cron = "0/30 * * * * ? ") // 每30秒
 	public void newVedio() {
 		try {
 			List<Camera> list = cameraService.findAll();
 			if(list!=null&&!list.isEmpty()){
 				for(Camera camera:list){
-					Date date = camera.getVedioTime();
-					if(date==null){
-						date = new Date((new Date()).getTime()-(1000*120));
-					}
-					Date dateEnd = new Date(date.getTime()+(1000*120));
+					Date date = new Date((new Date()).getTime()-(1000*120));
+					camera.setVedioTime(date);
+					Date dateEnd = new Date(date.getTime()+(1000*5));//5秒的视频
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					ParkingVedio parkingVedio = new ParkingVedio();
 					parkingVedio.setCameraIndex(camera.getCameraIndex());
@@ -106,7 +104,7 @@ public class StatusCheckTask {
 	}
 
 	/**
-	 * 第三步：修改zip名称
+	 * 第三步：修改数据库zip名称
 	 */
 	@Scheduled(cron = "0/30 * * * * ? ") // 每30s
 	public void updateVedio() {
@@ -200,23 +198,24 @@ public class StatusCheckTask {
 						new Thread(){
 							public void run(){
 						        String fileName = vedio.getDirPath();
-						        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						        SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss");
-						        Date d;
+//						        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//						        SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss");
+//						        Date d;
 								try {
-									d = format.parse("1998-01-01 00:00:00");
-									String time = "";
-									long num = 60;
-									File[] files = new File[(int) num];
-							        for( int i = 0;i<num;i++){
-							            Calendar calendar = Calendar.getInstance();
-							            calendar.setTime(d);
-							            calendar.add(Calendar.SECOND,2);
-							            d = calendar.getTime();
-							            time = f.format(d);
-							            GifUtils.covPic(fileName,time,vedio.getDirPath()+"/ffmpeg_"+(i+1)+".jpg");
-							            files[i] = new File(vedio.getDirPath()+"/ffmpeg_"+(i+1)+".jpg");
-							        }
+//									d = format.parse("1998-01-01 00:00:00");
+//									String time = "";
+//									long num = 60;
+//									File[] files = new File[(int) num];
+//							        for( int i = 0;i<num;i++){
+//							            Calendar calendar = Calendar.getInstance();
+//							            calendar.setTime(d);
+//							            calendar.add(Calendar.SECOND,2);
+//							            d = calendar.getTime();
+//							            time = f.format(d);
+							            GifUtils.covPic(fileName,"00:00:01",vedio.getDirPath()+"/ffmpeg_1"+".jpg");
+							            GifUtils.covPic(fileName,"00:00:03",vedio.getDirPath()+"/ffmpeg_2"+".jpg");
+//							            files[i] = new File(vedio.getDirPath()+"/ffmpeg_"+(i+1)+".jpg");
+//							        }
 							        vedio.setStatus(3);
 									parkingVedioService.update(vedio);
 								} catch (Exception e) {
@@ -243,23 +242,33 @@ public class StatusCheckTask {
 			List<ParkingVedio> list = parkingVedioService.findByStatus(3);
 			if(list!=null&&!list.isEmpty()){
 				for(ParkingVedio vedio:list){
-					boolean r = true;
-					for(int i = 1;i<=60;i++){
-						File file = new File(vedio.getDirPath()+"/ffmpeg_"+i+".jpg");
-						if(!file.exists()){
-							r = false;
-							break;
-						}
-					}
-					if(r){
-						File[] files = new File[60];
-						for(int i = 1;i<=60;i++){
-							files[i-1] = new File(vedio.getDirPath()+"/ffmpeg_"+i+".jpg");
-						}
+					File file = new File(vedio.getDirPath()+"/ffmpeg_1"+".jpg");
+					File file2 = new File(vedio.getDirPath()+"/ffmpeg_2"+".jpg");
+					if(file.exists()&&file2.exists()){
+						File[] files = new File[2];
+						files[0] = file;
+						files[1] = file2;
 						GifUtils.zipFiles(files, new File(vedio.getZipName()));
 						vedio.setStatus(4);
 						parkingVedioService.update(vedio);
 					}
+//					boolean r = true;
+//					for(int i = 1;i<=60;i++){
+//						File file = new File(vedio.getDirPath()+"/ffmpeg_"+i+".jpg");
+//						if(!file.exists()){
+//							r = false;
+//							break;
+//						}
+//					}
+//					if(r){
+//						File[] files = new File[60];
+//						for(int i = 1;i<=60;i++){
+//							files[i-1] = new File(vedio.getDirPath()+"/ffmpeg_"+i+".jpg");
+//						}
+//						GifUtils.zipFiles(files, new File(vedio.getZipName()));
+//						vedio.setStatus(4);
+//						parkingVedioService.update(vedio);
+//					}
 				}
 			}
 		} catch (Exception e) {
