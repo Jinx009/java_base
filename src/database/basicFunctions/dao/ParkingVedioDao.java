@@ -21,5 +21,15 @@ public class ParkingVedioDao extends BaseDao<ParkingVedio>{
 		}
 		return null;
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<ParkingVedio> getNotOk() {
+		String hql = " from ParkingVedio where status!=7 and status != 0";
+		List<ParkingVedio> list = em.createQuery(hql).getResultList();
+		if(list!=null&&!list.isEmpty()){
+			return list;
+		}
+		return null;
+	}
 	
 }

@@ -26,6 +26,10 @@ public class ParkingVedioService {
 	public List<ParkingVedio> findByStatus(Integer status) {
 		return parkingVedioDao.findByStatus(status);
 	}
+
+	public List<ParkingVedio> getNotOk() {
+		return  parkingVedioDao.getNotOk();
+	}
 	
 	
 }
