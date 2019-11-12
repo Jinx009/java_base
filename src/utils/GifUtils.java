@@ -1,6 +1,8 @@
 package utils;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,6 +21,7 @@ import java.util.zip.ZipOutputStream;
 import org.apache.http.client.ClientProtocolException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 
 /**
@@ -175,13 +178,7 @@ public class GifUtils {
 
 	}
 
-	public static void main(String[] args) {
-		try {
-			covPic("/Users/jinx/Downloads/xxxx","00:00:21","");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
 
 	/**
 	 * 截取一帧作为图片
@@ -283,6 +280,90 @@ public class GifUtils {
 
 	}
 	
+	public static void main(String[] args) {
+		try {
+			String s = postZip("http://10.0.0.178/vehicle/upload","/Users/jinx/Downloads/19042811061310409490_1573538550577_4587.zip");
+			System.out.println(s);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static String postZip(String url,String filePath){
+		DataOutputStream out = null;
+		BufferedReader in = null;
+		String result = "";
+		try {
+			File file = new File(filePath);  
+	        if (!file.exists())  
+	            return null;  
+			URL realUrl = new URL(url);
+			HttpURLConnection conn = (HttpURLConnection) realUrl.openConnection(); 
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			
+			 String boundary = "-----------------------------" + System.currentTimeMillis(); 
+			 conn.setUseCaches(false);  
+	            conn.setRequestMethod("POST");  
+	            conn.setRequestProperty("Connection", "Keep-Alive");  
+	            conn.setRequestProperty("ts", String.valueOf((new Date().getTime()/1000)));  
+	            conn.setRequestProperty("name",file.getName() );  
+	            conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);  
+	            conn.connect();
+	            out = new DataOutputStream(conn.getOutputStream());
+	            byte[] end_data = ("\r\n--"+boundary+"--\r\n").getBytes();
+//	            StringBuilder sb1 = new StringBuilder();
+//	            sb1.append("--");
+//	            sb1.append(boundary);
+//	            sb1.append("\r\n");
+//	            sb1.append("Content-Disposition: form-data; name=\"luid\"");
+//	            sb1.append("\r\n");
+//	            sb1.append("\r\n");
+//	            sb1.append("123");
+//	            sb1.append("\r\n");
+//	            out.write(sb1.toString().getBytes());
+	            StringBuilder sb =new StringBuilder();
+	            sb.append("--");
+	            sb.append(boundary);
+	            sb.append("\r\n");
+	            sb.append("Content-Disposition: form-data; name=\"file\"; filename=\""+file.getName()+"\"");
+	            sb.append("\r\n");
+	            sb.append("Content-Type:application/octet-stream");
+	            sb.append("\r\n");
+	            sb.append("\r\n");
+	            out.write(sb.toString().getBytes());
+	            DataInputStream in1 = new DataInputStream(new FileInputStream(file));
+	            int bytes = 0;
+	            byte[] bufferOut = new byte[1024];
+	            while((bytes = in1.read(bufferOut))!=-1){
+	            	out.write(bufferOut,0,bytes);
+	            }
+	            out.write("\r\n".getBytes());
+	            in1.close();
+	            out.write(end_data);
+	            out.flush();
+	            in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	            String line;
+	            while((line = in.readLine())!=null){
+	            	result+=line;
+	            }
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}finally {
+			try {
+				if(out!=null){
+					out.close();
+				}
+				if(in!=null){
+					in.close();
+				}
+			} catch (Exception e) {
+				log.error("e:{}",e);
+			}
+		}
+		return result;
+	}
+	
 	
 	 public static String postFile(String url, String filePath) {  
 	        File file = new File(filePath);  
@@ -300,16 +381,15 @@ public class GifUtils {
 	            conn.setRequestMethod("POST");  
 	            conn.setRequestProperty("Connection", "Keep-Alive");  
 	            conn.setRequestProperty("ts", String.valueOf((new Date().getTime()/1000)));  
+	            conn.setRequestProperty("name",file.getName() );  
 	            conn.setRequestProperty("Cache-Control", "no-cache");  
 	            String boundary = "-----------------------------" + System.currentTimeMillis();  
 	            conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);  
-
+	            conn.connect();
 	            OutputStream output = conn.getOutputStream();  
 	            output.write(("--" + boundary + "\r\n").getBytes());  
-	            output.write(  
-	                    String.format("Content-Disposition: form-data; name=\"media\"; filename=\"%s\"\r\n", file.getName())  
-	                            .getBytes());  
-	            output.write("Content-Type: image/jpeg \r\n\r\n".getBytes());  
+	            output.write(String.format("Content-Disposition: form-data; name=\"zip\"; filename=\"%s\"\r\n", file.getName()).getBytes());  
+	            output.write("Content-Type: application/zip \r\n\r\n".getBytes());  
 	            byte[] data = new byte[1024];  
 	            int len = 0;  
 	            FileInputStream input = new FileInputStream(file);  
@@ -326,10 +406,10 @@ public class GifUtils {
 	                sb.append(new String(data, 0, len, "utf-8"));  
 	            resp.close();  
 	            result = sb.toString();  
-	            log.warn(result);  
+	            System.out.println(result);  
 	        } catch (ClientProtocolException e) {  
 	        	log.warn("postFile，不支持http协议"+ e);  
-	        } catch (IOException e) {  
+	        } catch (Exception e) {  
 	        	log.warn("postFile数据传输失败"+ e);  
 	        }  
 	        log.warn(result);  

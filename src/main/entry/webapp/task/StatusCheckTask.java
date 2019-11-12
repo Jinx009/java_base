@@ -77,7 +77,7 @@ public class StatusCheckTask {
 	/**
 	 * 第二步：新建任务
 	 */
-	@Scheduled(cron = "0/30 * * * * ? ") // 每30秒
+	@Scheduled(cron = "0/90 * * * * ? ") // 每30秒
 	public void newVedio() {
 		try {
 			List<Camera> list = cameraService.findAll();
@@ -301,7 +301,7 @@ public class StatusCheckTask {
 				for (ParkingVedio vedio : list) {
 					File file = new File(vedio.getZipName());
 					if (file.exists()) {
-						GifUtils.postFile("http://localhost/vehicle/upload", vedio.getZipName());
+						GifUtils.postZip("http://localhost/vehicle/upload", vedio.getZipName());
 						vedio.setStatus(6);
 						parkingVedioService.update(vedio);
 					}
@@ -324,6 +324,7 @@ public class StatusCheckTask {
 					String res = HttpUtil.getName("http://localhost/vehicle/result", vedio.getZipName().split("/")[7]);
 					vedio.setResult(res);
 					vedio.setStatus(7);
+					vedio.setFinishTime(new Date());
 					parkingVedioService.update(vedio);
 					JSONObject jsonObject = JSONObject.parseObject(vedio.getResult());
 					String date = vedio.getVedioStart();
