@@ -112,6 +112,14 @@ public class StatusCheckTask {
 			List<ParkingVedio> vedios = parkingVedioService.getNotOk();
 			boolean status = true;
 			if (vedios != null && vedios.size() > 20) {
+				for(ParkingVedio vedio:vedios){
+					if((new Date().getTime()-vedio.getCreateTime().getTime())>(3600*24*1000)){
+						vedio.setStatus(7);
+						vedio.setFinishTime(new Date());
+						vedio.setResult("date too long ago");
+						parkingVedioService.update(vedio);
+					}
+				}
 				status = false;
 			}
 			if (status) {
