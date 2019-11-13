@@ -111,7 +111,7 @@ public class StatusCheckTask {
 		try {
 			List<ParkingVedio> vedios = parkingVedioService.getNotOk();
 			boolean status = true;
-			if (vedios != null && vedios.size() > 10) {
+			if (vedios != null && vedios.size() > 20) {
 				status = false;
 			}
 			if (status) {
@@ -208,28 +208,9 @@ public class StatusCheckTask {
 						new Thread() {
 							public void run() {
 								String fileName = vedio.getDirPath();
-								// SimpleDateFormat format = new
-								// SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-								// SimpleDateFormat f = new
-								// SimpleDateFormat("HH:mm:ss");
-								// Date d;
 								try {
-									// d = format.parse("1998-01-01 00:00:00");
-									// String time = "";
-									// long num = 60;
-									// File[] files = new File[(int) num];
-									// for( int i = 0;i<num;i++){
-									// Calendar calendar =
-									// Calendar.getInstance();
-									// calendar.setTime(d);
-									// calendar.add(Calendar.SECOND,2);
-									// d = calendar.getTime();
-									// time = f.format(d);
 									GifUtils.covPic(fileName, "00:00:01", vedio.getDirPath() + "/ffmpeg_1" + ".jpg");
 									GifUtils.covPic(fileName, "00:00:03", vedio.getDirPath() + "/ffmpeg_2" + ".jpg");
-									// files[i] = new
-									// File(vedio.getDirPath()+"/ffmpeg_"+(i+1)+".jpg");
-									// }
 									vedio.setStatus(3);
 									parkingVedioService.update(vedio);
 								} catch (Exception e) {
@@ -264,25 +245,6 @@ public class StatusCheckTask {
 						vedio.setStatus(4);
 						parkingVedioService.update(vedio);
 					}
-					// boolean r = true;
-					// for(int i = 1;i<=60;i++){
-					// File file = new
-					// File(vedio.getDirPath()+"/ffmpeg_"+i+".jpg");
-					// if(!file.exists()){
-					// r = false;
-					// break;
-					// }
-					// }
-					// if(r){
-					// File[] files = new File[60];
-					// for(int i = 1;i<=60;i++){
-					// files[i-1] = new
-					// File(vedio.getDirPath()+"/ffmpeg_"+i+".jpg");
-					// }
-					// GifUtils.zipFiles(files, new File(vedio.getZipName()));
-					// vedio.setStatus(4);
-					// parkingVedioService.update(vedio);
-					// }
 				}
 			}
 		} catch (Exception e) {
@@ -322,23 +284,33 @@ public class StatusCheckTask {
 			if (list != null && !list.isEmpty()) {
 				for (ParkingVedio vedio : list) {
 					String res = HttpUtil.getName("http://localhost/vehicle/result", vedio.getZipName().split("/")[7]);
-					vedio.setResult(res);
-					vedio.setStatus(7);
-					vedio.setFinishTime(new Date());
-					parkingVedioService.update(vedio);
-					JSONObject jsonObject = JSONObject.parseObject(vedio.getResult());
-					String date = vedio.getVedioStart();
-					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					Date d = format.parse(date);
-					for (int i = 0; i < 60; i++) {
-						Calendar calendar = Calendar.getInstance();
-						calendar.setTime(d);
-						calendar.add(Calendar.SECOND, 2);
-						d = calendar.getTime();
-						String s = jsonObject.getString("ffmpeg_" + (i + 1) + ".jpg");
-						if (StringUtil.isNotBlank(s)) {
-							JSONObject obj = JSONObject.parseObject(s);
-							insert(obj, 0, vedio, format.format(d), (i + 1));
+					String code = JSONObject.parseObject(res).getString("code");
+					if("0".equals(code)){
+						String data =  JSONObject.parseObject(res).getString("data");
+						JSONObject dataObject = JSONObject.parseObject(data);
+						String status = dataObject.getString("status");
+						if(StringUtil.isNotBlank(status)&&"1".equals(status)){
+							String result = dataObject.getString("result");
+							vedio.setResult(result);
+							vedio.setStatus(7);
+							vedio.setFinishTime(new Date());
+							parkingVedioService.update(vedio);
+							JSONObject jsonObject = JSONObject.parseObject(vedio.getResult());
+							String date = vedio.getVedioStart();
+							SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+							Date d = format.parse(date);
+							String s1 = jsonObject.getString("ffmpeg_1.jpg");
+							String s2 = jsonObject.getString("ffmpeg_1.jpg");
+							JSONObject obj1 = JSONObject.parseObject(s1);
+							JSONObject obj2 = JSONObject.parseObject(s2);
+							Calendar calendar = Calendar.getInstance();
+							calendar.setTime(d);
+							calendar.add(Calendar.SECOND, 1);
+							d = calendar.getTime();
+							insert(obj1, 0, vedio, format.format(d), 1);
+							calendar.add(Calendar.SECOND, 2);
+							d = calendar.getTime();
+							insert(obj2, 0, vedio, format.format(d), 2);
 						}
 					}
 				}

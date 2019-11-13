@@ -105,7 +105,7 @@ public class HttpUtil {
      */
     @SuppressWarnings("resource")
 	public static String getName(String url,String fileName){
-    	logger.warn("HttpUtils.get[info:{}]",url);
+    	logger.warn("HttpUtils.get[info:{},fileName:{}]",url,fileName);
         String result = "500";
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpGet get = new HttpGet(url);

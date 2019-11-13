@@ -312,16 +312,6 @@ public class GifUtils {
 	            conn.connect();
 	            out = new DataOutputStream(conn.getOutputStream());
 	            byte[] end_data = ("\r\n--"+boundary+"--\r\n").getBytes();
-//	            StringBuilder sb1 = new StringBuilder();
-//	            sb1.append("--");
-//	            sb1.append(boundary);
-//	            sb1.append("\r\n");
-//	            sb1.append("Content-Disposition: form-data; name=\"luid\"");
-//	            sb1.append("\r\n");
-//	            sb1.append("\r\n");
-//	            sb1.append("123");
-//	            sb1.append("\r\n");
-//	            out.write(sb1.toString().getBytes());
 	            StringBuilder sb =new StringBuilder();
 	            sb.append("--");
 	            sb.append(boundary);
@@ -347,6 +337,7 @@ public class GifUtils {
 	            while((line = in.readLine())!=null){
 	            	result+=line;
 	            }
+	            log.warn("fileName,gif:{}",file.getName());
 		} catch (Exception e) {
 			log.error("e:{}",e);
 		}finally {
