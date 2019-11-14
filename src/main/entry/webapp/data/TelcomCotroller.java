@@ -561,7 +561,7 @@ public class TelcomCotroller extends BaseController {
 			map.put("jczb",d);
 			map.put("jcsj", sdf.format(new Date()));
 			map.put("cgq", "1");
-			HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map));
+			HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 
 //			Double bat = Double.valueOf(Long.parseLong(b1 + b2, 16)) / 100;
 //			map.put("JCDB19A130", bat);
@@ -653,7 +653,7 @@ public class TelcomCotroller extends BaseController {
 //				String bat = getData(data.substring(62, 63), data.substring(62, 66));
 				//2019-11-14修改为武汉新接口
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Map< String, String> map = new HashMap<String, String>();
+				Map< String, Object> map = new HashMap<String, Object>();
 				Map< String, Object> d = new HashMap<String, Object>();
 				d.put("gX", acc_x);
 				d.put("gY", acc_y);
@@ -662,10 +662,10 @@ public class TelcomCotroller extends BaseController {
 				d.put("Y", y);
 				d.put("Z", 0);
 				map.put("sblxbm", "103");
-				map.put("jczb",JSONObject.toJSONString(d));
+				map.put("jczb",d);
 				map.put("jcsj", sdf.format(new Date()));
 				map.put("cgq", "1");
-				HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map));
+				HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 //				
 //				map.put("JCDB19A130", bat);
 //				map.put("JCDB19A010", cmd);
@@ -710,7 +710,7 @@ public class TelcomCotroller extends BaseController {
 				map.put("jczb",d);
 				map.put("jcsj", sdf.format(new Date()));
 				map.put("cgq", "1");
-				HttpUtils.sendPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map));
+				HttpUtils.sendPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 //
 //				map.put("JCDB19A130", bat);
 //				map.put("JCDB19A010", cmd);
@@ -924,7 +924,7 @@ public class TelcomCotroller extends BaseController {
 				d.put("Y",0);
 				map.put("jczb",d);
 			}
-			HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map));
+			HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 
 //			String json = JSONObject.toJSONString(map);
 //			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
