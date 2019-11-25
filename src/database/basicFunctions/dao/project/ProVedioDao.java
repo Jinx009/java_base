@@ -1,20 +1,24 @@
 package database.basicFunctions.dao.project;
 
-import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
+import database.common.OrderFilter.OrderType;
+import database.common.PageDataList;
 import database.common.QueryParam;
 import database.models.project.ProVedio;
+import utils.BaseConstant;
 
 @Repository
 public class ProVedioDao extends BaseDao<ProVedio>{
 
-	public List<ProVedio> findByLevel(Integer level) {
-		QueryParam param = QueryParam.getInstance();
-		param.addParam("vedioLevel", level);
-		return findByCriteria(param);
+	public PageDataList<ProVedio> findByLevel(Integer level,Integer p) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
+		queryParam.addParam("vedioLevel", level);
+		queryParam.addOrder(OrderType.DESC, "id");
+		return findPageList(queryParam);
 	}
 
 	

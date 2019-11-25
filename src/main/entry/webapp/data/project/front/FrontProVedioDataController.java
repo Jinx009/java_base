@@ -22,10 +22,10 @@ public class FrontProVedioDataController extends BaseController{
 	
 	@RequestMapping(path = "/list")
 	@ResponseBody
-	public Resp<?> findByLevel(Integer level){
+	public Resp<?> findByLevel(Integer level,Integer p){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(proVedioService.findByLevel(level));
+			return new Resp<>(proVedioService.findByLevel(level,p));
 		} catch (Exception e) {
 			log.error("e:{}",e);
 		}
