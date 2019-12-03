@@ -106,12 +106,25 @@ public class JobTask {
 							yl = ss[1].split("mm")[0];
 						}
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						Map< String, String> map = new HashMap<String, String>();
-						map.put("sblxbm", "201");
-						map.put("jczb", yl);
-						map.put("jcsj", sdf.format(d2));
-						map.put("cgq", "1");
-						HttpUtils.sendPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+device.getDeviceId()+"&data="+JSONObject.toJSONString(map));
+						WenshiduLog his = wenshiduLogService.findByDateAndNum(d.getDeviceNumber());
+						if(his!=null){
+							String[] ss1 = his.getData().split("\\|");
+							String yl1 = "";
+							if(ss1[0].contains("m")){
+								yl1 = ss1[0].split("mm")[0];
+							}
+							if(ss1[1].contains("m")){
+								yl1 = ss1[1].split("mm")[0];
+							}
+							Double yld = Double.valueOf(yl);
+							Double yld1 = Double.valueOf(yl1);
+							Map< String, String> map = new HashMap<String, String>();
+							map.put("sblxbm", "201");
+							map.put("jczb", String.valueOf(yld-yld1));
+							map.put("jcsj", sdf.format(d2));
+							map.put("cgq", "1");
+							HttpUtils.sendPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+device.getDeviceId()+"&data="+JSONObject.toJSONString(map));
+						}
 					}
 				} catch (Exception e) {
 					log.error("e:{}",e);

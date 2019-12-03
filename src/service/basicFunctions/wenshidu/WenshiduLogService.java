@@ -16,4 +16,8 @@ public class WenshiduLogService {
 		wenshiduLogDao.save(log);
 	}
 
+	public WenshiduLog findByDateAndNum(String deviceNumber) {
+		return wenshiduLogDao.findByDateAndNum(deviceNumber);
+	}
+
 }
