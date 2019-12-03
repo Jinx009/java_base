@@ -116,8 +116,8 @@ public class TelcomCotroller extends BaseController {
 	@RequestMapping(path = "/ttt", method = RequestMethod.GET)
 	@ResponseBody
 	public Resp<?> test(){
-		IoTCloudDevice d = iotCloudDeviceService.findByMac("0009190600000034");
-		List<IotCloudLog> list = iotCloudLogService.findByMacLikeD("0009190600000034");
+		IoTCloudDevice d = iotCloudDeviceService.findByMac("0009190906000039");
+		List<IotCloudLog> list = iotCloudLogService.findByMacLikeD("0009190906000038");
 		System.out.println(list.size());
 		int i = 0;
 		for(IotCloudLog log:list) {
@@ -725,7 +725,7 @@ public class TelcomCotroller extends BaseController {
 				d.put("Z", 0);
 				map.put("sblxbm", "103");
 				map.put("jczb",d);
-				map.put("jcsj", sdf.format(new Date()));
+				map.put("jcsj", sdf.format(iotCloudLog.getCreateTime()));
 				map.put("cgq", "1");
 				HttpUtils.sendPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 //
