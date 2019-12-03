@@ -112,6 +112,21 @@ public class TelcomCotroller extends BaseController {
 		return resp;
 
 	}
+	
+	@RequestMapping(path = "/ttt", method = RequestMethod.GET)
+	@ResponseBody
+	public Resp<?> test(){
+		IoTCloudDevice d = iotCloudDeviceService.findByMac("0009190600000034");
+		List<IotCloudLog> list = iotCloudLogService.findByMacLikeD("0009190600000034");
+		System.out.println(list.size());
+		int i = 0;
+		for(IotCloudLog log:list) {
+			i++;
+			System.out.println(i);
+			sendWuhanQj3_0(d, log);
+		}
+		return new Resp<>(true);
+	}
 
 	/**
 	 * 设置上报地址
@@ -624,6 +639,8 @@ public class TelcomCotroller extends BaseController {
 			log.error("error:{}", e);
 		}
 	}
+	
+	
 
 	/**
 	 * 新固件武汉对接2019-08-14
@@ -663,7 +680,7 @@ public class TelcomCotroller extends BaseController {
 				d.put("Z", 0);
 				map.put("sblxbm", "103");
 				map.put("jczb",d);
-				map.put("jcsj", sdf.format(new Date()));
+				map.put("jcsj", sdf.format(iotCloudLog.getCreateTime()));
 				map.put("cgq", "1");
 				HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 //				

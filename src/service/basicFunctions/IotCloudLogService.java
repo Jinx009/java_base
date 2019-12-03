@@ -46,6 +46,10 @@ public class IotCloudLogService {
 	public IotCloudLog findById(int dec_num) {
 		return ioTCloudLogDao.find(dec_num);
 	}
+
+	public List<IotCloudLog> findByMacLikeD(String mac) {
+		return ioTCloudLogDao.findByMacLikeD(mac);
+	}
 	
 	
 }

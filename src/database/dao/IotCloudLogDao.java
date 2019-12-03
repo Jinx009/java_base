@@ -55,5 +55,12 @@ public class IotCloudLogDao extends BaseDao<IotCloudLog>{
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);
 	}
+
+	public List<IotCloudLog> findByMacLikeD(String mac) {
+		String sql = "   from IotCloudLog  where mac = '"+mac+"' and createTime>'2019-11-03 00:00:00'   order by id  ";
+		Query query = em.createQuery(sql);
+		List<IotCloudLog> list = query.getResultList();
+		return list;
+	}
 	
 }
