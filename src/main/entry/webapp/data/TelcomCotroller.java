@@ -116,8 +116,8 @@ public class TelcomCotroller extends BaseController {
 	@RequestMapping(path = "/ttt", method = RequestMethod.GET)
 	@ResponseBody
 	public Resp<?> test(){
-		IoTCloudDevice d = iotCloudDeviceService.findByMac("0009190906000039");
-		List<IotCloudLog> list = iotCloudLogService.findByMacLikeD("0009190906000038");
+		IoTCloudDevice d = iotCloudDeviceService.findByMac("0009190906000034");
+		List<IotCloudLog> list = iotCloudLogService.findByMacLikeD("0009190906000039");
 		System.out.println(list.size());
 		int i = 0;
 		for(IotCloudLog log:list) {
