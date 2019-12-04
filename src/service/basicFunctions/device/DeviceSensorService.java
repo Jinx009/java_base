@@ -211,5 +211,13 @@ public class DeviceSensorService extends BaseService{
 	public DeviceSensor findByMac(String mac) {
 		return deviceSensorDao.findByMac(mac);
 	}
+
+	public void save(DeviceSensor sensor) {
+		deviceSensorDao.save(sensor);
+	}
+
+	public void update(DeviceSensor sensor) {
+		deviceSensorDao.update(sensor);
+	}
 	
 }

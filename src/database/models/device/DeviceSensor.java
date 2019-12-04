@@ -31,6 +31,8 @@ public class DeviceSensor {
     private String firmwareVersion;
     @Column(name = "battery_voltage")
     private String batteryVoltage;
+    @Column(name = "mode")
+    private String mode;
     @Column(name = "x_mag")
     private String xMag;
     @Column(name = "y_mag")
