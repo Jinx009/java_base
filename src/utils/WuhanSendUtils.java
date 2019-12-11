@@ -65,6 +65,7 @@ public class WuhanSendUtils {
 			String status = JSONObject.parseObject(respParam).getString("status");
 			return status;
 			
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
