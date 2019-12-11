@@ -1,11 +1,14 @@
 package utils;
 
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.alibaba.fastjson.JSONArray;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.PostMethod;
+
 import com.alibaba.fastjson.JSONObject;
 
 import database.models.device.DeviceSensor;
@@ -14,76 +17,120 @@ import database.models.log.LogSensorStatus;
 
 public class WuhanSendUtils {
 
-	private static String appKey = "";
-	private static String userKey = "";
-	private static String URL  = "http://test.wuhanparking.com";
+	private static String appKey = "001001001";
+	private static String userKey = "001001001";
+	private static String URL  = "http://61.183.70.70:8081/whdc/api.whdc";
 	
-//	[{
-//		"log_id": "169033009725440",
-//		"berthcode": "210235",
-//		"changetime": "2015-05-01 12: 01: 02",
-//		"berthstatus": 0,
-//		"electricity": “0.00”,
-//		"voltage": 10,
-//		”regionid”: ”002002”
-//	}]
+
 	public static String sendStatus(LogSensorStatus log,DeviceSensor sensor){
-		try {
-			long time = new Date().getTime();
+		try{
+			HttpClient httpclient = new HttpClient();
+			PostMethod postMethod = new PostMethod(URL);
+			//泊位状态请求
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String req = "{\"berthcode\":\""+sensor.getDesc()+"\",\"regionID\":\""+sensor.getCameraName()+"\",\"berthstatus\":"+
+			sensor.getAvailable()+",\"changetime\":\""+sdf.format(log.getChangeTime())+"\",\"electricity\":\"0\",\"log_id\":\""+log.getId()+"\",\"voltage\":"+sensor.getBatteryVoltage()+"}";
+			//设备状态心跳
+			//String req = "{\"EquipmentType\":1,\"EquipmentCode\":\"868681046288088\",\"EquipmentStatus\":0,\"PushTime\":\"2019-11-25 15:19:11\",\"Electricity\":\"0.80\",\"Voltage\":10,\"regionID\":\"002002\"}";
+			long time = new Date().getTime();
 			String timestamp = String.valueOf(time);
-			String method = "uploadberthstatus";
-			Map<String, Object> map = new HashMap<String, Object>();
-			Map<String, Object> data = new HashMap<String, Object>();
-			data.put("log_id", log.getId());
-			data.put("berthcode", sensor.getDesc());
-			data.put("changetime", sdf.format(log.getChangeTime()));
-			data.put("berthstatus", sensor.getAvailable());
-			data.put("regionid", sensor.getCameraName());
-			data.put("electricity", Double.valueOf(sensor.getBatteryVoltage())/3.60);
-			data.put("voltage", sensor.getBatteryVoltage());
-			JSONArray arr = new JSONArray();
-			arr.add(data);
-			map.put("pushdata", arr);
-			String signStr = "appkey="+appKey+"&method="+method+"&timestamp="+timestamp+""+userKey;
-			String params = "appkey="+appKey+"&timestamp="+timestamp+"&method="+method+"&sign="+MD5Util.toMD5(signStr)+"&pushdata="+JSONObject.toJSONString(map).replaceAll("\\\\","");
-			String res = HttpUtil.sendPost(URL, params);
-			String status = JSONObject.parseObject(res).getString("status");
+			Map<String,String> params = new HashMap<String,String>();
+			params.put("appkey", appKey);
+			params.put("userkey", userKey);
+			params.put("timestamp", timestamp);
+			params.put("method", "uploadberthstatus");//泊位状态
+			//params.put("method", "pushheartbeat");//设备状态心跳
+			params.put("pushdata", req);
+			
+			postMethod.setParameter("appkey", params.get("appkey"));
+			postMethod.setParameter("userkey", params.get("userkey"));
+			postMethod.setParameter("timestamp", params.get("timestamp"));
+			postMethod.setParameter("method", params.get("method"));//泊位状态
+			postMethod.setParameter("pushdata", params.get("pushdata"));
+			
+			String checkSource = "timestamp=" + params.get("timestamp") + "&pushdata=" + params.get("pushdata") + "&method=" + params.get("method") + "&appkey=" + params.get("appkey")+"&userkey=" + params.get("userkey");
+			String sign =MD5Util.toMD5(checkSource).toUpperCase();
+			postMethod.setParameter("sign", sign);
+			httpclient.executeMethod(postMethod);
+			byte[] pByte = new byte[1024];
+			InputStream in = postMethod.getResponseBodyAsStream();
+			StringBuffer res = new StringBuffer();
+			while ((in.read(pByte)) != -1) {
+				res.append(new String(pByte));
+				pByte = new byte[1024];
+			}
+			String respParam = res.toString().trim();
+			// 释放连接
+			postMethod.releaseConnection();
+			String status = JSONObject.parseObject(respParam).getString("status");
 			return status;
-		} catch (Exception e) {
+			
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return "0";
 	}
 	
+	
 	public static String sendHeart(LogSensorHeart log,DeviceSensor sensor){
-		try {
-			long time = new Date().getTime();
+		try{
+			HttpClient httpclient = new HttpClient();
+			PostMethod postMethod = new PostMethod(URL);
+			//泊位状态请求
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			//设备状态心跳
+			String req = "{\"EquipmentType\":1,\"EquipmentCode\":\""+sensor.getMac()+"\",\"EquipmentStatus\":0,\"PushTime\":\""+sdf.format(new Date())
+			+"\",\"Electricity\":\""+Double.valueOf(sensor.getBatteryVoltage())/3.60+"\",\"Voltage\":"+log.getVol()+",\"regionID\":\""+sensor.getCameraName()+"\"}";
+			long time = new Date().getTime();
 			String timestamp = String.valueOf(time);
-			String method = "pushheartbeat";
-			Map<String, Object> map = new HashMap<String, Object>();
-			Map<String, Object> data = new HashMap<String, Object>();
-			data.put("EquipmentType",1);
-			data.put("EquipmentCode", sensor.getMac());
-			data.put("PushTime", sdf.format(log.getCreateTime()));
-			data.put("EquipmentStatus", 1);
-			data.put("regionid", sensor.getCameraName());
-			data.put("electricity", Double.valueOf(sensor.getBatteryVoltage())/3.60);
-			data.put("voltage", sensor.getBatteryVoltage());
-			JSONArray arr = new JSONArray();
-			arr.add(data);
-			map.put("pushdata", arr);
-			String signStr = "appkey="+appKey+"&method="+method+"&timestamp="+timestamp+""+userKey;
-			String params = "appkey="+appKey+"&timestamp="+timestamp+"&method="+method+"&sign="+MD5Util.toMD5(signStr)+"&pushdata="+JSONObject.toJSONString(map).replaceAll("\\\\","");
-			String res = HttpUtil.sendPost(URL, params);
-			String status = JSONObject.parseObject(res).getString("status");
+			Map<String,String> params = new HashMap<String,String>();
+			params.put("appkey", appKey);
+			params.put("userkey", userKey);
+			params.put("timestamp", timestamp);
+//			params.put("method", "uploadberthstatus");//泊位状态
+			params.put("method", "pushheartbeat");//设备状态心跳
+			params.put("pushdata", req);
+			
+			postMethod.setParameter("appkey", params.get("appkey"));
+			postMethod.setParameter("userkey", params.get("userkey"));
+			postMethod.setParameter("timestamp", params.get("timestamp"));
+			postMethod.setParameter("method", params.get("method"));//泊位状态
+			postMethod.setParameter("pushdata", params.get("pushdata"));
+			
+			String checkSource = "timestamp=" + params.get("timestamp") + "&pushdata=" + params.get("pushdata") + "&method=" + params.get("method") + "&appkey=" + params.get("appkey")+"&userkey=" + params.get("userkey");
+			String sign =MD5Util.toMD5(checkSource).toUpperCase();
+			postMethod.setParameter("sign", sign);
+			httpclient.executeMethod(postMethod);
+			byte[] pByte = new byte[1024];
+			InputStream in = postMethod.getResponseBodyAsStream();
+			StringBuffer res = new StringBuffer();
+			while ((in.read(pByte)) != -1) {
+				res.append(new String(pByte));
+				pByte = new byte[1024];
+			}
+			String respParam = res.toString().trim();
+			// 释放连接
+			postMethod.releaseConnection();
+			String status = JSONObject.parseObject(respParam).getString("status");
 			return status;
-		} catch (Exception e) {
+			
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return "0";
+	}
 	
+	public static void main(String[] args) {
+		DeviceSensor sensor = new DeviceSensor();
+		sensor.setMac("000119110700032A");
+		sensor.setBatteryVoltage("3.60");
+		sensor.setDesc("430000");
+		sensor.setCameraName("001001");
+		sensor.setAvailable(0);
+		LogSensorStatus log = new LogSensorStatus();
+		log.setId(100);
+		log.setChangeTime(new Date());
+		sendStatus(log, sensor);
 	}
 	
 }
