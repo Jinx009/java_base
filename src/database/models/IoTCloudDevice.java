@@ -54,4 +54,10 @@ public class IoTCloudDevice {
 	@Column(name = "data_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataTime;
+	@Column(name = "send_a")
+	private String sendA;
+	@Column(name = "send_b")
+	private String sendB;
+	@Column(name = "send_c")
+	private String sendC;
 }
