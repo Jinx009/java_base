@@ -47,6 +47,8 @@ public class ParkingSpace {
     @Column(name = "x2")
     private Double x2;
     @Column(name = "x3")
+    private Double x3;
+    @Column(name = "x4")
     private Double x4;
     @Column(name = "y1")
     private Double y1;

@@ -1,5 +1,7 @@
 package database.basicFunctions.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
@@ -21,6 +23,12 @@ public class ParkingRecordDao extends BaseDao<ParkingRecord> {
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);
+	}
+
+	public List<ParkingRecord> findByDate() {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addOrder(OrderType.ASC, "vedioTime");
+		return findByCriteria(queryParam);
 	}
 	
 

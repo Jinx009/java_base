@@ -23,4 +23,12 @@ public class ParkingSpaceService {
 		parkingSpaceDao.updateSpace(id, plateNumber, status, date);
 	}
 
+	public ParkingSpace findById(Integer id) {
+		return parkingSpaceDao.find(id);
+	}
+	
+	public void update(ParkingSpace parkingSpace) {
+		parkingSpaceDao.update(parkingSpace);
+	}
+
 }
