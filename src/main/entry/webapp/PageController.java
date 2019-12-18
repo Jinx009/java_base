@@ -47,10 +47,10 @@ public class PageController extends BaseController{
 			i++;
 			System.out.println(i+"----"+x+"----"+y);
 			for(ParkingSpace s : spaces){
-				double x1 = s.getX1()*2;
-				double x3 = s.getX3()*2;
-				double y1 = s.getY1()*2;
-				double y3 = s.getY3()*2;
+				double x1 = s.getX4()*2;
+				double x3 = s.getX2()*2;
+				double y1 = s.getY2()*2;
+				double y3 = s.getY4()*2;
 				
 				if(x>x1&&x<x3&&y<y3&&y>y1){
 						ParkingList parkingList = new ParkingList();
