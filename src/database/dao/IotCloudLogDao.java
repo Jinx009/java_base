@@ -56,6 +56,7 @@ public class IotCloudLogDao extends BaseDao<IotCloudLog>{
 		return findPageList(queryParam);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<IotCloudLog> findByMacLikeD(String mac) {
 		String sql = "   from IotCloudLog  where mac = '"+mac+"' and createTime>'2019-12-03 18:33:00'   order by id  ";
 		Query query = em.createQuery(sql);
