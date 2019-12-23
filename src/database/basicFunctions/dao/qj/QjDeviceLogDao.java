@@ -21,7 +21,7 @@ public class QjDeviceLogDao extends BaseDao<QjDeviceLog>{
 			Date date = new Date();
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
-			calendar.add(Calendar.HOUR, -3);
+			calendar.add(Calendar.HOUR, -24);
 			date = calendar.getTime();
 			String dateStr = sdf.format(date);
 			String hql = " from QjDeviceLog where snValue='"+sn+"' and  createTime >='"+dateStr+"' order by id desc ";

@@ -30,5 +30,7 @@ public class QjNotice {
     private Date createTime;
     @Column(name = "mac")
     private String mac;
+    @Column(name = "address")
+    private String address;
 	
 }

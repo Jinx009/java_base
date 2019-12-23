@@ -57,16 +57,16 @@ public class JobTask {
 	@Autowired
 	private WenshiduLogService wenshiduLogService;
 	
-	@Scheduled(fixedRate = 1000 * 3600, initialDelay = 1000)
+	@Scheduled(cron = "0 0 8 * * ?")
 	public void qjCheck() {
 		List<QjNotice> list = qjNoticeService.findAll();
 		log.warn("mac list:{}",JSONObject.toJSONString(list));
 		for(QjNotice str:list){
 			QjDeviceLog log = qjDeviceLogService.getNearBySn(str.getMac());
 			if(log==null){
-//				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","13167262228");
-				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","13918073897");
-				AlimsgUtils.sendCheck(str.getMac(), "SMS_171565355", "展为","18108196835");
+//				AlimsgUtils.sendCheck(str.getAddress()+str.getMac(), "SMS_180956741", "展为","13167262228");
+				AlimsgUtils.sendCheckDevice(str.getAddress()+str.getMac(), "SMS_180956741", "展为","13918073897");
+				AlimsgUtils.sendCheckDevice(str.getAddress()+str.getMac(), "SMS_180956741", "展为","18108196835");
 			}
 		}
 	}
