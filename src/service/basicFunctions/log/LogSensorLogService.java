@@ -116,7 +116,7 @@ public class LogSensorLogService extends BaseService {
 		logSensorStatusDao.save(sensorOperationLog);
 		sensorOperationLog = logSensorStatusDao.find(sensorOperationLog.getId());
 		// 武汉
-		if (sensorOperationLog.getAreaId() != null && 111 == sensorOperationLog.getAreaId()) {
+		if (sensorOperationLog.getAreaId() != null && 64 == sensorOperationLog.getAreaId()) {
 			String status = WuhanSendUtils.sendStatus(sensorOperationLog, sensor);
 			if("1".equals(status)){
 				sensorOperationLog.setSendStatus(1);

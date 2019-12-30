@@ -81,7 +81,7 @@ public class WuhanSendUtils {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			//设备状态心跳
 			String req = "{\"EquipmentType\":1,\"EquipmentCode\":\""+sensor.getMac()+"\",\"EquipmentStatus\":0,\"PushTime\":\""+sdf.format(new Date())
-			+"\",\"Electricity\":\""+Double.valueOf(sensor.getBatteryVoltage())/3.60+"\",\"Voltage\":"+log.getVol()+",\"regionID\":\""+sensor.getCameraName()+"\"}";
+			+"\",\"Electricity\":\""+Double.valueOf(sensor.getBatteryVoltage())/3.50+"\",\"Voltage\":"+log.getVol()+",\"regionID\":\""+sensor.getCameraName()+"\"}";
 			long time = new Date().getTime();
 			String timestamp = String.valueOf(time);
 			Map<String,String> params = new HashMap<String,String>();

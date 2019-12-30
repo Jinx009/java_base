@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.scheduling.annotation.Scheduled;
+//import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import database.models.device.DeviceRepeater;
@@ -35,7 +35,7 @@ public class DeviceRepeaterTask {
 	 * 获取repeater
 	 * 
 	 */
-	@Scheduled(cron = "0 0 12 * * ?")
+//	@Scheduled(cron = "0 0 12 * * ?")
 	public void init(){
 		try {
 			List<DeviceSensor> sensors = deviceSensorService.findAll();

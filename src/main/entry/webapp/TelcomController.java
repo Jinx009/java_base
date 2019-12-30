@@ -181,7 +181,8 @@ public class TelcomController extends BaseController{
                                     logSensorLogService.saveHeart(deviceLog);
                                     sensor.setBatteryVoltage(bat);
                                     sensor.setRssi(rssi);
-                                    if (sensor.getAreaId() != null && 111 == sensor.getAreaId()) {
+                                    sensor.setAddr(rssi);
+                                    if (sensor.getAreaId() != null && 64 == sensor.getAreaId()) {
                             			WuhanSendUtils.sendHeart(deviceLog, sensor);
                             		}
                                     deviceSensorService.update(sensor);

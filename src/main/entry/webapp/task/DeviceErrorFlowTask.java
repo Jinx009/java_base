@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.scheduling.annotation.Scheduled;
+//import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import database.basicFunctions.dao.device.DeviceErrorFlowDao;
@@ -26,7 +26,7 @@ public class DeviceErrorFlowTask {
 	@Autowired
 	private DeviceSensorDao deviceSensorDao;
 
-	@Scheduled(cron = "0 */10 * * * ?")//XX分钟处理一次
+//	@Scheduled(cron = "0 */10 * * * ?")//XX分钟处理一次
 	public void init(){
 		try {
 			List<DeviceErrorFlow> list = DeviceErrorFlowDao.findUse();
