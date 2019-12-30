@@ -127,13 +127,13 @@ public class WuhanSendUtils {
 	
 	public static void main(String[] args) {
 		DeviceSensor sensor = new DeviceSensor();
-		sensor.setMac("000119110700032A");
+		sensor.setMac("0001191107000322");
 		sensor.setBatteryVoltage("3.60");
-		sensor.setDesc("430000");
+		sensor.setDesc("430101");
 		sensor.setCameraName("001001");
 		sensor.setAvailable(0);
 		LogSensorStatus log = new LogSensorStatus();
-		log.setId(100);
+		log.setId(10086);
 		log.setChangeTime(new Date());
 		sendStatus(log, sensor);
 	}
