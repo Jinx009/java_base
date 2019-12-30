@@ -1,5 +1,6 @@
 package main.entry.webapp.data;
 
+import java.net.DatagramSocket;
 import java.util.Date;
 
 //import org.slf4j.Logger;
@@ -32,6 +33,24 @@ public class ServerCheckController {
 		parkingAreaService.update(parkingArea);
 		return resp;
 	}
+	
+	/**
+	 * 启动原始联通版本的udp倾角传感器服务器
+	 * @return
+	 */
+	@RequestMapping(path = "/udpServer")
+	@ResponseBody
+	public Resp<?> udpServer() {
+		try {
+			DatagramSocket socket = new DatagramSocket(1121);
+			UDPServerThread st = new UDPServerThread(socket);
+			st.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	
 	@RequestMapping(path = "list")
 	@ResponseBody
