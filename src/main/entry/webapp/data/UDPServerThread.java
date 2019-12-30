@@ -34,7 +34,7 @@ public class UDPServerThread extends Thread {
 				String info = bytesToHexString(data, packet.getLength());
 				log.warn("client info:{}", info);
 				HttpUtils.postJson("http://iot-admin.zhanway.com/na/iocm/devNotify/v1.1.0/updateDeviceDatas", 
-						"{\"notifyType\":\"deviceDatasChanged\",\"requestId\":null,\"deviceId\":"+info.substring(0,16)+",\"gatewayId\":"+info.substring(0,16)+",\"services\":[{\"serviceId\":\"data\",\"serviceType\":\"data\",\"data\":{\"data\":"+info+"},\"eventTime\":\"20191230T014307Z\"}]}");
+						"{\"notifyType\":\"deviceDatasChanged\",\"requestId\":null,\"deviceId\":\""+info.substring(0,16)+"\",\"gatewayId\":\""+info.substring(0,16)+"\",\"services\":[{\"serviceId\":\"data\",\"serviceType\":\"data\",\"data\":{\"data\":\""+info+"\"},\"eventTime\":\"20191230T014307Z\"}]}");
 				 InetAddress address = packet.getAddress();
 				 int port = packet.getPort();
 				 byte[] data2 = "UDPACK\r\n".getBytes();
