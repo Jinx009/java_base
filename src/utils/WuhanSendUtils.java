@@ -21,6 +21,7 @@ public class WuhanSendUtils {
 	private static String userKey = "001001001";
 	private static String URL  = "http://61.183.70.70:8081/whdc/api.whdc";
 	
+	
 
 	public static String sendStatus(LogSensorStatus log,DeviceSensor sensor){
 		try{
@@ -31,6 +32,7 @@ public class WuhanSendUtils {
 			String req = "{\"berthcode\":\""+sensor.getDesc()+"\",\"regionID\":\""+sensor.getCameraName()+"\",\"berthstatus\":"+
 			sensor.getAvailable()+",\"changetime\":\""+sdf.format(log.getChangeTime())+"\",\"electricity\":\"0\",\"log_id\":\""+log.getId()+"\",\"voltage\":"+sensor.getBatteryVoltage()+"}";
 			//设备状态心跳
+			System.out.println("req:"+req);
 			//String req = "{\"EquipmentType\":1,\"EquipmentCode\":\"868681046288088\",\"EquipmentStatus\":0,\"PushTime\":\"2019-11-25 15:19:11\",\"Electricity\":\"0.80\",\"Voltage\":10,\"regionID\":\"002002\"}";
 			long time = new Date().getTime();
 			String timestamp = String.valueOf(time);
@@ -62,6 +64,7 @@ public class WuhanSendUtils {
 			String respParam = res.toString().trim();
 			// 释放连接
 			postMethod.releaseConnection();
+			System.out.println("respParam:"+respParam);
 			String status = JSONObject.parseObject(respParam).getString("status");
 			return status;
 			
@@ -112,6 +115,7 @@ public class WuhanSendUtils {
 			String respParam = res.toString().trim();
 			// 释放连接
 			postMethod.releaseConnection();
+			System.out.println("respParam:"+respParam);
 			String status = JSONObject.parseObject(respParam).getString("status");
 			return status;
 			

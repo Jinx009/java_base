@@ -105,7 +105,7 @@ public class TelcomController extends BaseController{
                                         sensor.setCph("");
                                         sensor.setCpColor("");
                                         sensor.setCameraId("");
-                                        sensor.setCameraName("");
+//                                        sensor.setCameraName("");
                                         sensor.setPicLink("");
                                         sensor.setVedioTime("");
                                         deviceSensorService.update(sensor);
