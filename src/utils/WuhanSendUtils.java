@@ -84,8 +84,9 @@ public class WuhanSendUtils {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			//设备状态心跳
 			String req = "{\"EquipmentType\":1,\"EquipmentCode\":\""+sensor.getMac()+"\",\"EquipmentStatus\":0,\"PushTime\":\""+sdf.format(new Date())
-			+"\",\"Electricity\":\""+Double.valueOf(sensor.getBatteryVoltage())/3.50+"\",\"Voltage\":"+log.getVol()+",\"regionID\":\""+sensor.getCameraName()+"\"}";
+			+"\",\"Electricity\":\""+String.format("%.2f",Double.valueOf(sensor.getBatteryVoltage())/3.50)+"\",\"Voltage\":"+log.getVol()+",\"regionID\":\""+sensor.getCameraName()+"\"}";
 			long time = new Date().getTime();
+			System.out.println("req:"+req);
 			String timestamp = String.valueOf(time);
 			Map<String,String> params = new HashMap<String,String>();
 			params.put("appkey", appKey);
@@ -127,7 +128,7 @@ public class WuhanSendUtils {
 	
 	public static void main(String[] args) {
 		DeviceSensor sensor = new DeviceSensor();
-		sensor.setMac("0001191107000322");
+		sensor.setMac("000119110700032A");
 		sensor.setBatteryVoltage("3.60");
 		sensor.setDesc("430101");
 		sensor.setCameraName("001001");
@@ -135,7 +136,11 @@ public class WuhanSendUtils {
 		LogSensorStatus log = new LogSensorStatus();
 		log.setId(10086);
 		log.setChangeTime(new Date());
-		sendStatus(log, sensor);
+		LogSensorHeart logSensorHeart = new LogSensorHeart();
+		logSensorHeart.setVol("3.40");
+		
+//		sendStatus(log, sensor);
+		sendHeart(logSensorHeart, sensor);
 	}
 	
 }
