@@ -75,6 +75,7 @@ public class TelcomController extends BaseController{
                                 sensor.setPicLink("");
                                 sensor.setVedioTime("");
                                 sensor.setAreaId(2);
+                                sensor.setRecSt(1);
                                 deviceSensorService.save(sensor);
                             }else{
                                 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
