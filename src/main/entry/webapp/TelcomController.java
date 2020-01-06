@@ -3,6 +3,7 @@ package main.entry.webapp;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.net.DatagramSocket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,7 @@ import database.models.log.LogSensorHeart;
 import service.basicFunctions.device.DeviceSensorService;
 import service.basicFunctions.log.LogSensorLogService;
 import utils.StringUtil;
-import utils.WuhanSendUtils;
+import utils.model.Resp;
 
 @Controller
 public class TelcomController extends BaseController{
@@ -35,6 +36,24 @@ public class TelcomController extends BaseController{
 	@Autowired
 	private LogSensorLogService logSensorLogService;
 
+	/**
+	 * 启动原始联通版本的udp倾角传感器服务器
+	 * @return
+	 */
+	@RequestMapping(path = "/udpServer")
+	@ResponseBody
+	public Resp<?> udpServer() {
+		try {
+			DatagramSocket socket = new DatagramSocket(8101);
+			UDPServerThread st = new UDPServerThread(socket);
+			st.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
 	  /**
      * 点新地磁接入
      * @param bytes
@@ -105,9 +124,13 @@ public class TelcomController extends BaseController{
                                         sensor.setCph("");
                                         sensor.setCpColor("");
                                         sensor.setCameraId("");
-//                                        sensor.setCameraName("");
                                         sensor.setPicLink("");
                                         sensor.setVedioTime("");
+                                        sensor.setSensorStatus(sensor.getAvailable());
+                                        sensor.setSensorTime(sdf1.format(sensor.getHappenTime()));
+                                        sensor.setBluetooth("");
+                                        sensor.setBluetoothArray("");
+//                                        sensor.setCameraName("");
                                         deviceSensorService.update(sensor);
                                         logSensorLogService.saveOperationLog(sensor);
                                     }
@@ -183,9 +206,9 @@ public class TelcomController extends BaseController{
                                     sensor.setBatteryVoltage(bat);
                                     sensor.setRssi(rssi);
                                     sensor.setAddr(rssi);
-                                    if (sensor.getAreaId() != null && 64 == sensor.getAreaId()) {
-                            			WuhanSendUtils.sendHeart(deviceLog, sensor);
-                            		}
+//                                    if (sensor.getAreaId() != null && 1 == sensor.getAreaId()) {
+//                            			WuhanSendUtils.sendHeart(deviceLog, sensor);
+//                            		}
                                     deviceSensorService.update(sensor);
                                 }
                             }

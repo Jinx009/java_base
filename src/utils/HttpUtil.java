@@ -150,5 +150,24 @@ public class HttpUtil {
 		}
 		return result;
     }
+
+
+    @SuppressWarnings("resource")
+	public static String postTextJson(String url, String json) {
+        try {
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpPost post = new HttpPost(url);
+            post.addHeader("Content-type", "text/json; charset=utf-8");
+            post.addHeader("Accept", "text/json");
+            post.setEntity(new StringEntity(json, Charset.forName("UTF-8")));
+            HttpResponse response = httpClient.execute(post);
+            String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+            logger.warn("[HttpUtils.postJson data:{}]", jsonStr);
+            return jsonStr;
+        } catch (Exception e) {
+            logger.error("[HttpUtils.postJson data:{},error:{}]", json + url, e);
+        }
+        return "";
+    }
 	
 }
