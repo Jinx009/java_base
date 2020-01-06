@@ -125,14 +125,14 @@ public class LogSensorLogService extends BaseService {
 				logSensorStatusDao.update(sensorOperationLog);
 			}
 		}
-		if (sensorOperationLog.getAreaId() != null && 1 == sensorOperationLog.getAreaId()) {
-			boolean status = SendUtils.send(sensor.getHappenTime(), sensor.getMac(), String.valueOf(sensor.getAvailable()), "", sensor.getSensorTime(), "", "", "", "", "", "");
-			if(status){
-				sensorOperationLog.setSendStatus(1);
-				sensorOperationLog.setSendTime(new Date());
-				logSensorStatusDao.update(sensorOperationLog);
-			}
-		}
+//		if (sensorOperationLog.getAreaId() != null && 1 == sensorOperationLog.getAreaId()) {
+//			boolean status = SendUtils.send(sensor.getHappenTime(), sensor.getMac(), String.valueOf(sensor.getAvailable()), "", sensor.getSensorTime(), "", "", "", "", "", "");
+//			if(status){
+//				sensorOperationLog.setSendStatus(1);
+//				sensorOperationLog.setSendTime(new Date());
+//				logSensorStatusDao.update(sensorOperationLog);
+//			}
+//		}
 
 	}
 
