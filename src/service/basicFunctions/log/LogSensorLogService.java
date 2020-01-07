@@ -18,7 +18,6 @@ import database.models.log.LogSensorHeart;
 import database.models.log.LogSensorStatus;
 import service.basicFunctions.BaseService;
 import utils.WuhanSendUtils;
-import utils.baoxin.SendUtils;
 import utils.model.BaseConstant;
 import utils.model.Resp;
 
