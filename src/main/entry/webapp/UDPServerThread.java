@@ -35,7 +35,7 @@ public class UDPServerThread extends Thread {
 //				HttpUtil.postJson("http://127.0.0.1:8102/na/iocm/devNotify/v1.1.0/updateDeviceDatas", 
 //						"{\"notifyType\":\"deviceDatasChanged\",\"requestId\":null,\"deviceId\":\""+info.substring(0,16)+"\",\"gatewayId\":\""+info.substring(0,16)+"\",\"services\":[{\"serviceId\":\"data\",\"serviceType\":\"data\",\"data\":{\"data\":\""+info+"\"},\"eventTime\":\"20191230T014307Z\"}]}");
 				HttpUtil.postJson("http://127.0.0.1:1122/iot/na/iocm/devNotify/v1.1.0/updateDeviceDatas", 
-						"{\"notifyType\":\"deviceDatasChanged\",\"requestId\":null,\"deviceId\":\""+info.substring(0,16)+"\",\"gatewayId\":\""+info.substring(0,16)+"\",\"services\":[{\"serviceId\":\"data\",\"serviceType\":\"data\",\"data\":{\"data\":\""+info+"\"},\"eventTime\":\"20191230T014307Z\"}]}");
+						"{\"notifyType\":\"deviceDatasChanged\",\"requestId\":null,\"deviceId\":\""+info.substring(0,16)+"\",\"gatewayId\":\"LT\",\"services\":[{\"serviceId\":\"data\",\"serviceType\":\"data\",\"data\":{\"data\":\""+info+"\"},\"eventTime\":\"20191230T014307Z\"}]}");
 				 
 				InetAddress address = packet.getAddress();
 				 int port = packet.getPort();

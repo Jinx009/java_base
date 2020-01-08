@@ -23,6 +23,7 @@ import database.models.device.DeviceSensor;
 import database.models.log.LogSensorHeart;
 import service.basicFunctions.device.DeviceSensorService;
 import service.basicFunctions.log.LogSensorLogService;
+import utils.HttpUtil;
 import utils.StringUtil;
 import utils.model.Resp;
 
@@ -211,6 +212,9 @@ public class TelcomController extends BaseController{
 //                            			WuhanSendUtils.sendHeart(deviceLog, sensor);
 //                            		}
                                     deviceSensorService.update(sensor);
+                                    if("LT".equals(telcomPushDataModel.getGatewayId())) {
+                                    	HttpUtil.get("http://139.196.205.157:8090/home/cloud/server/check?id=10");
+                                    }
                                 }
                             }
                         }
