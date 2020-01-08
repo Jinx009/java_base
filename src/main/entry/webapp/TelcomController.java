@@ -44,7 +44,7 @@ public class TelcomController extends BaseController{
 	@ResponseBody
 	public Resp<?> udpServer() {
 		try {
-			DatagramSocket socket = new DatagramSocket(8101);
+			DatagramSocket socket = new DatagramSocket(1121);
 			UDPServerThread st = new UDPServerThread(socket);
 			st.start();
 		} catch (Exception e) {
@@ -229,7 +229,7 @@ public class TelcomController extends BaseController{
      * @param bytes
      * @return
      */
-    @RequestMapping(value = "/na/iocm/devNotify/v1.1.0/updateDeviceData", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/iot/na/iocm/devNotify/v1.1.0/updateDeviceData", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public String push(@RequestBody byte[] bytes){
         try {
