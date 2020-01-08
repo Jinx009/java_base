@@ -137,7 +137,7 @@ public class TelcomController extends BaseController{
                                     }
                                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 //                                    File f = new File("/data/logs/sensor_status/"+sdf.format(date)+"/"+mac+".txt");
-                                    File f = new File("/app/logs/sensor_status/"+sdf.format(date)+"/"+mac+".txt");
+                                    File f = new File("/apps/logs/sensor_status/"+sdf.format(date)+"/"+mac+".txt");
                                     File fileParent = f.getParentFile();
                                     if (!fileParent.exists()) {
                                         fileParent.mkdirs();
