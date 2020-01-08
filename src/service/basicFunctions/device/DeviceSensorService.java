@@ -219,5 +219,9 @@ public class DeviceSensorService extends BaseService{
 	public void update(DeviceSensor sensor) {
 		deviceSensorDao.update(sensor);
 	}
+
+	public List<DeviceSensor> getSensorsByArea(int i) {
+		return deviceSensorDao.getSensorsByArea(i);
+	}
 	
 }

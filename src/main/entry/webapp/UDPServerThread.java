@@ -34,7 +34,7 @@ public class UDPServerThread extends Thread {
 				log.warn("client info:{}", info);
 //				HttpUtil.postJson("http://127.0.0.1:8102/na/iocm/devNotify/v1.1.0/updateDeviceDatas", 
 //						"{\"notifyType\":\"deviceDatasChanged\",\"requestId\":null,\"deviceId\":\""+info.substring(0,16)+"\",\"gatewayId\":\""+info.substring(0,16)+"\",\"services\":[{\"serviceId\":\"data\",\"serviceType\":\"data\",\"data\":{\"data\":\""+info+"\"},\"eventTime\":\"20191230T014307Z\"}]}");
-				HttpUtil.postJson("http://127.0.0.1:1122/na/iocm/devNotify/v1.1.0/updateDeviceDatas", 
+				HttpUtil.postJson("http://127.0.0.1:1122/iot/na/iocm/devNotify/v1.1.0/updateDeviceDatas", 
 						"{\"notifyType\":\"deviceDatasChanged\",\"requestId\":null,\"deviceId\":\""+info.substring(0,16)+"\",\"gatewayId\":\""+info.substring(0,16)+"\",\"services\":[{\"serviceId\":\"data\",\"serviceType\":\"data\",\"data\":{\"data\":\""+info+"\"},\"eventTime\":\"20191230T014307Z\"}]}");
 				 
 				InetAddress address = packet.getAddress();
