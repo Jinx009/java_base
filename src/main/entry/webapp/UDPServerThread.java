@@ -32,9 +32,12 @@ public class UDPServerThread extends Thread {
 				socket.receive(packet);// 接受到数据之前该方法处于阻塞状态
 				String info = bytesToHexString(data, packet.getLength());
 				log.warn("client info:{}", info);
-				HttpUtil.postJson("http://127.0.0.1:8102/na/iocm/devNotify/v1.1.0/updateDeviceDatas", 
+//				HttpUtil.postJson("http://127.0.0.1:8102/na/iocm/devNotify/v1.1.0/updateDeviceDatas", 
+//						"{\"notifyType\":\"deviceDatasChanged\",\"requestId\":null,\"deviceId\":\""+info.substring(0,16)+"\",\"gatewayId\":\""+info.substring(0,16)+"\",\"services\":[{\"serviceId\":\"data\",\"serviceType\":\"data\",\"data\":{\"data\":\""+info+"\"},\"eventTime\":\"20191230T014307Z\"}]}");
+				HttpUtil.postJson("http://127.0.0.1:1122/na/iocm/devNotify/v1.1.0/updateDeviceDatas", 
 						"{\"notifyType\":\"deviceDatasChanged\",\"requestId\":null,\"deviceId\":\""+info.substring(0,16)+"\",\"gatewayId\":\""+info.substring(0,16)+"\",\"services\":[{\"serviceId\":\"data\",\"serviceType\":\"data\",\"data\":{\"data\":\""+info+"\"},\"eventTime\":\"20191230T014307Z\"}]}");
-				 InetAddress address = packet.getAddress();
+				 
+				InetAddress address = packet.getAddress();
 				 int port = packet.getPort();
 				 byte[] data2 = "UDPACK\r\n".getBytes();
 				 DatagramPacket packet2 = new DatagramPacket(data2,

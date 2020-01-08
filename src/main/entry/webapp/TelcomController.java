@@ -59,7 +59,7 @@ public class TelcomController extends BaseController{
      * @param bytes
      * @return
      */
-    @RequestMapping(value = "/na/iocm/devNotify/v1.1.0/updateDeviceDatas", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/iot/na/iocm/devNotify/v1.1.0/updateDeviceDatas", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public String pushs(@RequestBody byte[] bytes){
         try {
@@ -136,7 +136,7 @@ public class TelcomController extends BaseController{
                                     }
                                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 //                                    File f = new File("/data/logs/sensor_status/"+sdf.format(date)+"/"+mac+".txt");
-                                    File f = new File("/home/baoadmin/logs/sensor_status/"+sdf.format(date)+"/"+mac+".txt");
+                                    File f = new File("/app/logs/sensor_status/"+sdf.format(date)+"/"+mac+".txt");
                                     File fileParent = f.getParentFile();
                                     if (!fileParent.exists()) {
                                         fileParent.mkdirs();

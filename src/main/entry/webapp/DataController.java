@@ -14,15 +14,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import database.models.home.HomeUser;
 import service.basicFunctions.home.HomeUserService;
-import utils.HttpUtil;
 import utils.StringUtil;
 import utils.model.BaseConstant;
 import utils.model.Resp;
@@ -36,19 +35,6 @@ public class DataController extends BaseController {
 	@Autowired
 	private HomeUserService homeUserService;
 	
-	@RequestMapping(path = "/chaozhouPush")
-	@ResponseBody
-	public Resp<?> str(@RequestBody String s) {
-		Resp<?> resp = new Resp<>(false);
-		try {
-			log.warn("data:{}",s);
-			HttpUtil.postJson("http://www.czparking.com/api/heartbeat", s);
-			return new Resp<>(true);
-		} catch (Exception e) {
-			log.error("error:{}", e);
-		}
-		return resp;
-	}
 
 	@RequestMapping(path = "/login")
 	@ResponseBody

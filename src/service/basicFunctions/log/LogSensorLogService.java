@@ -18,6 +18,7 @@ import database.models.log.LogSensorHeart;
 import database.models.log.LogSensorStatus;
 import service.basicFunctions.BaseService;
 import utils.WuhanSendUtils;
+import utils.baoxin.SendUtils;
 import utils.model.BaseConstant;
 import utils.model.Resp;
 
@@ -124,19 +125,31 @@ public class LogSensorLogService extends BaseService {
 				logSensorStatusDao.update(sensorOperationLog);
 			}
 		}
-//		if (sensorOperationLog.getAreaId() != null && 1 == sensorOperationLog.getAreaId()) {
-//			boolean status = SendUtils.send(sensor.getHappenTime(), sensor.getMac(), String.valueOf(sensor.getAvailable()), "", sensor.getSensorTime(), "", "", "", "", "", "");
-//			if(status){
-//				sensorOperationLog.setSendStatus(1);
-//				sensorOperationLog.setSendTime(new Date());
-//				logSensorStatusDao.update(sensorOperationLog);
-//			}
-//		}
+		if (sensorOperationLog.getAreaId() != null && 1 == sensorOperationLog.getAreaId()) {
+			boolean status = SendUtils.send(sensor.getHappenTime(), sensor.getMac(), String.valueOf(sensor.getAvailable()), "", sensor.getSensorTime(), "", "", "", "", "", "");
+			if(status){
+				sensorOperationLog.setSendStatus(1);
+				sensorOperationLog.setSendTime(new Date());
+				logSensorStatusDao.update(sensorOperationLog);
+			}
+		}
 
 	}
 
 	public void saveHeart(LogSensorHeart deviceLog) {
 		logSensorHeartDao.save(deviceLog);
+	}
+
+	public void saveStatusLog(LogSensorStatus log2) {
+		logSensorStatusDao.save(log2);
+	}
+
+	public void updateStatus(LogSensorStatus log2) {
+		logSensorStatusDao.update(log2);
+	}
+
+	public LogSensorStatus getStatusLog(Integer id) {
+		return logSensorStatusDao.find(id);
 	}
 
 }

@@ -18,8 +18,8 @@ public class SendUtils {
     private static final Logger logger = LoggerFactory.getLogger(SendUtils.class);
     //    private static final String url = "http://10.101.2.1:8080/iPlatDAM/service/S_FM_01";
 //    private static final String url = "http://10.101.2.1:8088/iPlatDAM/service/S_FM_01";
-    private static final String url = "http://112.64.46.113/iPlatDAM/service/S_FM_01";//测试环境
-//       private static final String url = "http://10.105.0.200/iPlatDAM/service/S_FM_01";//正式环境
+//    private static final String url = "http://112.64.46.113/iPlatDAM/service/S_FM_01";//测试环境
+       private static final String url = "http://10.105.0.200/iPlatDAM/service/S_FM_01";//正式环境
     public static boolean send(Date ChangeTime,String DeviceId,String SignalStatus,
                                String recordSource,String diTime,String cameraTime,String cameraId,
                                String cph,String cpColor,String status,String picLink){
@@ -86,9 +86,9 @@ public class SendUtils {
                 }
                 if(d>=3.0){
                     sensor.setBatteryVoltage("80");
-                }else if(d>=2.8&&d<3.0){
+                }else if(d>=2.5&&d<3.0){
                     sensor.setBatteryVoltage("50");
-                }else if(d<2.8){
+                }else if(d<2.5){
                     sensor.setBatteryVoltage("20");
                 }
                 String[] strs = new String[]{simpleDateFormat.format(new Date()),sensor.getMac(),dumpEnergy,sensor.getBatteryVoltage()};
