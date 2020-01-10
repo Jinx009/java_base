@@ -128,19 +128,19 @@ public class WuhanSendUtils {
 	
 	public static void main(String[] args) {
 		DeviceSensor sensor = new DeviceSensor();
-		sensor.setMac("000119110700032A");
+		sensor.setMac("0001191107000324");
 		sensor.setBatteryVoltage("3.60");
-		sensor.setDesc("430101");
+		sensor.setDesc("430103");
 		sensor.setCameraName("001001");
 		sensor.setAvailable(0);
 		LogSensorStatus log = new LogSensorStatus();
-		log.setId(10086);
+		log.setId(100861);
 		log.setChangeTime(new Date());
 		LogSensorHeart logSensorHeart = new LogSensorHeart();
-		logSensorHeart.setVol("3.40");
+		logSensorHeart.setVol("3.60");
 		
-//		sendStatus(log, sensor);
-		sendHeart(logSensorHeart, sensor);
+		sendStatus(log, sensor);
+//		sendHeart(logSensorHeart, sensor);
 	}
 	
 }
