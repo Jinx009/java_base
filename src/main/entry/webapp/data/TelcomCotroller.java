@@ -355,6 +355,18 @@ public class TelcomCotroller extends BaseController {
 							}
 						} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("ZCT330M-SWP-N")) {//直川倾角
 							sendZcqj(ioTCloudDevice, iotCloudLog);
+							if(StringUtil.isNotBlank(ioTCloudDevice.getSendA())){
+								IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendA());
+								sendZcqj(de, iotCloudLog);
+							}
+							if(StringUtil.isNotBlank(ioTCloudDevice.getSendB())){
+								IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendB());
+								sendZcqj(de, iotCloudLog);
+							}
+							if(StringUtil.isNotBlank(ioTCloudDevice.getSendC())){
+								IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendC());
+								sendZcqj(de, iotCloudLog);
+							}
 							HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/zcqj?data=" + tModel.getData());
 						} else {
 							send(tModel.getData(), ioTCloudDevice.getUdpIp(), ioTCloudDevice.getUdpPort());
@@ -529,6 +541,18 @@ public class TelcomCotroller extends BaseController {
 					} else if (ioTCloudDevice.getLocalIp() != null
 							&& ioTCloudDevice.getLocalIp().equals("ZCT330M-SWP-N")) {
 						sendZcqj(ioTCloudDevice, iotCloudLog);
+						if(StringUtil.isNotBlank(ioTCloudDevice.getSendA())){
+							IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendA());
+							sendZcqj(de, iotCloudLog);
+						}
+						if(StringUtil.isNotBlank(ioTCloudDevice.getSendB())){
+							IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendB());
+							sendZcqj(de, iotCloudLog);
+						}
+						if(StringUtil.isNotBlank(ioTCloudDevice.getSendC())){
+							IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendC());
+							sendZcqj(de, iotCloudLog);
+						}
 						HttpUtils
 								.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/zcqj?data=" + tModel.getData());
 					} else {
