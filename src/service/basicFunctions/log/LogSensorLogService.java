@@ -19,6 +19,7 @@ import database.models.log.LogSensorStatus;
 import service.basicFunctions.BaseService;
 import utils.WuhanSendUtils;
 import utils.baoxin.SendUtils;
+import utils.chaozhou.ChaozhouSendUtils;
 import utils.model.BaseConstant;
 import utils.model.Resp;
 
@@ -117,22 +118,31 @@ public class LogSensorLogService extends BaseService {
 		logSensorStatusDao.save(sensorOperationLog);
 		sensorOperationLog = logSensorStatusDao.find(sensorOperationLog.getId());
 		// 武汉
-		if (sensorOperationLog.getAreaId() != null && 64 == sensorOperationLog.getAreaId()) {
-			String status = WuhanSendUtils.sendStatus(sensorOperationLog, sensor);
-			if("1".equals(status)){
-				sensorOperationLog.setSendStatus(1);
-				sensorOperationLog.setSendTime(new Date());
-				logSensorStatusDao.update(sensorOperationLog);
-			}
-		}
+//		if (sensorOperationLog.getAreaId() != null && 64 == sensorOperationLog.getAreaId()) {
+//			String status = WuhanSendUtils.sendStatus(sensorOperationLog, sensor);
+//			if("1".equals(status)){
+//				sensorOperationLog.setSendStatus(1);
+//				sensorOperationLog.setSendTime(new Date());
+//				logSensorStatusDao.update(sensorOperationLog);
+//			}
+//		}
+		//潮州
 		if (sensorOperationLog.getAreaId() != null && 1 == sensorOperationLog.getAreaId()) {
-			boolean status = SendUtils.send(sensor.getHappenTime(), sensor.getMac(), String.valueOf(sensor.getAvailable()), "", sensor.getSensorTime(), "", "", "", "", "", "");
-			if(status){
+			int status = JSONObject.parseObject(ChaozhouSendUtils.sendStatus(sensorOperationLog, "00163e0cec7c")).getIntValue("state");
+			if(0==status){
 				sensorOperationLog.setSendStatus(1);
 				sensorOperationLog.setSendTime(new Date());
 				logSensorStatusDao.update(sensorOperationLog);
 			}
 		}
+//		if (sensorOperationLog.getAreaId() != null && 1 == sensorOperationLog.getAreaId()) {
+//			boolean status = SendUtils.send(sensor.getHappenTime(), sensor.getMac(), String.valueOf(sensor.getAvailable()), "", sensor.getSensorTime(), "", "", "", "", "", "");
+//			if(status){
+//				sensorOperationLog.setSendStatus(1);
+//				sensorOperationLog.setSendTime(new Date());
+//				logSensorStatusDao.update(sensorOperationLog);
+//			}
+//		}
 
 	}
 
