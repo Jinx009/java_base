@@ -220,10 +220,10 @@ public class TelcomCotroller extends BaseController {
 				if (list != null && !list.isEmpty()) {
 					for (PushModel pushModel : list) {
 						TModel tModel = pushModel.getData();
-						IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(telcomPushDataModel.getDeviceId());
+						final IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(telcomPushDataModel.getDeviceId());
 						ioTCloudDevice.setDataTime(new Date());
 						iotCloudDeviceService.update(ioTCloudDevice);
-						IotCloudLog iotCloudLog = new IotCloudLog();
+						final IotCloudLog iotCloudLog = new IotCloudLog();
 						iotCloudLog.setData(tModel.getData());
 						iotCloudLog.setFromSite("telcom");
 						iotCloudLog.setCreateTime(new Date());
@@ -383,11 +383,11 @@ public class TelcomCotroller extends BaseController {
 				}
 				if (pushModel2 != null) {
 					TModel tModel = pushModel2.getData();
-					IoTCloudDevice ioTCloudDevice = iotCloudDeviceService
+					final IoTCloudDevice ioTCloudDevice = iotCloudDeviceService
 							.findByDeviceId(telcomPushDataModel.getDeviceId());
 					ioTCloudDevice.setDataTime(new Date());
 					iotCloudDeviceService.update(ioTCloudDevice);
-					IotCloudLog iotCloudLog = new IotCloudLog();
+					final IotCloudLog iotCloudLog = new IotCloudLog();
 					iotCloudLog.setData(tModel.getData());
 					iotCloudLog.setFromSite("telcom");
 					iotCloudLog.setCreateTime(new Date());
