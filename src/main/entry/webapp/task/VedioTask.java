@@ -47,7 +47,7 @@ public class VedioTask {
 		}
 	}
 
-//	@Scheduled(fixedRate = 90 * 1000) // 每1.5分钟S执行一次
+	@Scheduled(fixedRate = 90 * 1000) // 每1.5分钟S执行一次
 	public void sendNormal() {
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
