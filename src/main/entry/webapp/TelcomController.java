@@ -45,7 +45,7 @@ public class TelcomController extends BaseController{
 	@ResponseBody
 	public Resp<?> udpServer() {
 		try {
-			DatagramSocket socket = new DatagramSocket(2002);
+			DatagramSocket socket = new DatagramSocket(1121);
 			UDPServerThread st = new UDPServerThread(socket);
 			st.start();
 		} catch (Exception e) {
