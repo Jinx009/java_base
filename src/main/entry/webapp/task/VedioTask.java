@@ -36,7 +36,7 @@ public class VedioTask {
 	/**
 	 * 静安宝信推送心跳
 	 */
-//	@Scheduled(cron = "0 0 16 * * ?") // 每天中午16点推送一次
+	@Scheduled(cron = "0 0 23 * * ?") // 每天23点推送一次
 	public void sendJinganDeviceHeart() {
 		try {
 			log.warn("jingan device[start]");

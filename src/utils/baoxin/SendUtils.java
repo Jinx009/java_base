@@ -82,16 +82,16 @@ public class SendUtils {
                 d = Double.valueOf(sensor.getBatteryVoltage());
                 String dumpEnergy = "1";
                 if(d<2.00){
-                    dumpEnergy = "1";
+                    dumpEnergy = "0";
                 }
                 if(d>=3.0){
                     sensor.setBatteryVoltage("80");
-                }else if(d>=2.5&&d<3.0){
+                }else if(d>=2.7&&d<3.0){
                     sensor.setBatteryVoltage("50");
-                }else if(d<2.5){
+                }else if(d<2.7){
                     sensor.setBatteryVoltage("20");
                 }
-                String[] strs = new String[]{simpleDateFormat.format(new Date()),sensor.getMac(),dumpEnergy,sensor.getBatteryVoltage()};
+                String[] strs = new String[]{simpleDateFormat.format(sensor.getLastSeenTime()),sensor.getMac(),dumpEnergy,sensor.getBatteryVoltage()};
                 list1.add(strs);
             }
             meta.put("columns",initHeart());
