@@ -327,7 +327,7 @@ public class TelcomController extends BaseController{
 //                            		}
                                     deviceSensorService.update(sensor);
                                     if("LT".equals(telcomPushDataModel.getGatewayId())) {
-                                    	HttpUtil.get("http://139.196.205.157:8090/home/cloud/server/check?id=11");
+                                    	HttpUtil.get("http://139.196.205.157:8090/home/cloud/server/check?id=10");
                                     }
                                 }
                             }

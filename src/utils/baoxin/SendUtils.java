@@ -91,7 +91,11 @@ public class SendUtils {
                 }else if(d<2.7){
                     sensor.setBatteryVoltage("20");
                 }
-                String[] strs = new String[]{simpleDateFormat.format(sensor.getLastSeenTime()),sensor.getMac(),dumpEnergy,sensor.getBatteryVoltage()};
+                String dateStr = "";
+                if (sensor.getLastSeenTime() != null) {
+                  dateStr = simpleDateFormat.format(sensor.getLastSeenTime());
+                }
+                String[] strs = new String[]{dateStr,sensor.getMac(),dumpEnergy,sensor.getBatteryVoltage()};
                 list1.add(strs);
             }
             meta.put("columns",initHeart());
