@@ -34,29 +34,23 @@ public class TCPServerMThead extends Thread {
 					if (bufferedInputStream.available() > 0) {
 						byte[] receive = new byte[1024];
 						int read = bufferedInputStream.read(receive);
-						log.warn("server rec data：{}", new String(receive));
+						String str = new String(receive,"UTF-8").trim();
+						log.warn("server rec data：{}", str);
 						bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
-						String response = "success";
-						bufferedOutputStream.write(response.getBytes());
+						bufferedOutputStream.write(TCPServerThread.b);
 						bufferedOutputStream.flush();
+						log.warn(new String("end").equals(str)+"---"+str);
+						if("end".equals(str)) {
+							log.warn("server close");
+							if (bufferedInputStream != null)
+								bufferedInputStream.close();
+							if (bufferedOutputStream != null)
+								bufferedOutputStream.close();
+							if (socket != null)
+								socket.close();
+						}
 					} else {
 						Thread.sleep(50);
-					}
-					try {
-//						Thread.sleep(1000);
-//						bufferedOutputStream.write(TCPServerThread.b);//
-//						bufferedOutputStream.flush();
-						socket.sendUrgentData(0xff);
-					} catch (Exception e) {
-						Thread.sleep(5000);
-//						log.warn("client close");
-						if (bufferedInputStream != null)
-							bufferedInputStream.close();
-						if (bufferedOutputStream != null)
-							bufferedOutputStream.close();
-						if (socket != null)
-							socket.close();
-//						e.printStackTrace();
 					}
 				}
 			} catch (Exception e) {// 捕获异常
@@ -80,7 +74,7 @@ public class TCPServerMThead extends Thread {
 		 * 服务器端接受客户端的数据
 		 */
 		ServerSocket socket = new ServerSocket(1124);
-		TCPServerThread st = new TCPServerThread(socket);
+		TCPServerMThead st = new TCPServerMThead(socket);
 		st.start();
 
 	}

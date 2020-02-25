@@ -43,21 +43,6 @@ public class TCPServerThread extends Thread {
 					}else {
 						Thread.sleep(50);
 					}
-//					try {
-//						Thread.sleep(1000);
-//						bufferedOutputStream.write("test\n".getBytes());//TCPServerThread.b
-//						bufferedOutputStream.flush();
-//					} catch (Exception e) {
-//						Thread.sleep(5000);
-//						log.warn("client close");
-//						if (bufferedInputStream != null)
-//							bufferedInputStream.close();
-//						if (bufferedOutputStream != null)
-//							bufferedOutputStream.close();
-//						if (socket != null)
-//							socket.close();
-//						e.printStackTrace();
-//					}
 				}
 
 			} catch (Exception e) {// 捕获异常
