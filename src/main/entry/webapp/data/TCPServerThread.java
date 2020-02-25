@@ -1,7 +1,7 @@
 package main.entry.webapp.data;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,19 +18,32 @@ public class TCPServerThread extends Thread {
 		this.server = server;
 	}
 
+	public static byte[] b = null;
+
+	@SuppressWarnings({ "static-access", "unused" })
 	public void run() {
-		while (true) {
-			try {
-				Socket socket = server.accept();// 等待客户连接
-				DataInputStream in = new DataInputStream(socket.getInputStream());// 读取客户端传过来信息的DataInputStream
-				DataOutputStream out = new DataOutputStream(socket.getOutputStream());// 向客户端发送信息的DataOutputStream
-				String accpet = in.readUTF();// 读取来自客户端的信息
-				log.warn("tcp data:      {}", accpet);// 输出来自客户端的信息
-				out.writeUTF("success");// 把服务器端的输入发给客户端
-			} catch (Exception e) {// 捕获异常
-				e.printStackTrace();
+		try {
+			while (true) {
+				Socket socket = server.accept();
+				log.warn("client :{} ,{}", socket.getInetAddress().getLocalHost(), "conn success");
+				while (true) {
+					BufferedInputStream bufferedInputStream = new BufferedInputStream(socket.getInputStream());
+					if (bufferedInputStream.available() > 0) {
+						byte[] receive = new byte[1024];
+						int read = bufferedInputStream.read(receive);
+						b = receive;
+						log.warn("server rec data：{}", new String(receive).length());
+						BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
+						String response = "success";
+						bufferedOutputStream.write(response.getBytes());
+						bufferedOutputStream.flush();
+					}
+				}
 			}
+		} catch (Exception e) {// 捕获异常
+			e.printStackTrace();
 		}
+
 	}
 
 	public static void main(String[] args) throws IOException {

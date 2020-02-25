@@ -68,6 +68,23 @@ public class ServerCheckController {
 		}
 		return null;
 	}
+	
+	/**
+	 * 启动原始联通版本的udp倾角传感器服务器
+	 * @return
+	 */
+	@RequestMapping(path = "/tcpMServer")
+	@ResponseBody
+	public Resp<?>tcpMServer() {
+		try {
+			ServerSocket socket = new ServerSocket(1124);
+			TCPServerMThead st = new TCPServerMThead(socket);
+			st.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	
 	@RequestMapping(path = "list")
