@@ -51,8 +51,6 @@ public class TCPServerMThead extends Thread {
 						bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
 						bufferedOutputStream.write(a);//SocketServer.b
 						bufferedOutputStream.flush();
-					}else {
-						log.warn("location is same");
 					}
 				}
 			} catch (Exception e) {// 捕获异常

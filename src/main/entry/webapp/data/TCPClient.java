@@ -56,11 +56,11 @@ public class TCPClient {
 		int i = 0;
 		 Socket socket = new Socket("139.196.205.157", 1124);
 //		Socket socket = new Socket("localhost", 1124);
-		while (i < 3) {
+		while (true) {
 			i++;
-			OutputStream outputStream = socket.getOutputStream();
-			outputStream.write(("bS"+i).getBytes());
-			outputStream.flush();
+//			OutputStream outputStream = socket.getOutputStream();
+//			outputStream.write(("bS"+i).getBytes());
+//			outputStream.flush();
 			InputStream inputStream = socket.getInputStream();
 			InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -68,10 +68,9 @@ public class TCPClient {
             if ((str = bufferedReader.readLine()) != null) {
                 str+=str;
             }
-            System.out.println("rtcm message from Client: " + str);
-			Thread.sleep(100);
+            System.out.println("rtcm message from Client: ---"+i + str);
 		}
-		socket.shutdownInput();
-		socket.close();
+//		socket.shutdownInput();
+//		socket.close();
 	}
 }
