@@ -60,9 +60,7 @@ public class ServerCheckController {
 	@ResponseBody
 	public Resp<?>tcpServer() {
 		try {
-			ServerSocket socket = new ServerSocket(1123);
-			TCPServerThread st = new TCPServerThread(socket);
-			st.start();
+			SocketServer.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

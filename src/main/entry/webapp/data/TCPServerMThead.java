@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ public class TCPServerMThead extends Thread {
 	private static final Logger log = LoggerFactory.getLogger(TCPServerMThead.class);
 
 	ServerSocket server = null;
+	
+	public static byte[] a = new byte[] {};
 
 	public TCPServerMThead(ServerSocket server) {
 		this.server = server;
@@ -29,28 +32,27 @@ public class TCPServerMThead extends Thread {
 			try {
 				socket = server.accept();
 				log.warn("client :{} ,{}", socket.getInetAddress().getLocalHost(), "conn success");
+				if(socket!=null) {
+					new DataThread(socket).start();
+				}
 				while (true) {
+					String str = "";
 					bufferedInputStream = new BufferedInputStream(socket.getInputStream());
 					if (bufferedInputStream.available() > 0) {
 						byte[] receive = new byte[1024];
 						int read = bufferedInputStream.read(receive);
-						String str = new String(receive,"UTF-8").trim();
+						str = new String(receive, "UTF-8").trim();
 						log.warn("server rec data：{}", str);
-						bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
-						bufferedOutputStream.write(TCPServerThread.b);
-						bufferedOutputStream.flush();
-						log.warn(new String("end").equals(str)+"---"+str);
-						if("end".equals(str)) {
-							log.warn("server close");
-							if (bufferedInputStream != null)
-								bufferedInputStream.close();
-							if (bufferedOutputStream != null)
-								bufferedOutputStream.close();
-							if (socket != null)
-								socket.close();
-						}
 					} else {
 						Thread.sleep(50);
+					}
+					if(!Arrays.equals(SocketServer.b,a)){//
+						a = SocketServer.b;
+						bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
+						bufferedOutputStream.write(a);//SocketServer.b
+						bufferedOutputStream.flush();
+					}else {
+						log.warn("location is same");
 					}
 				}
 			} catch (Exception e) {// 捕获异常
@@ -77,5 +79,33 @@ public class TCPServerMThead extends Thread {
 		TCPServerMThead st = new TCPServerMThead(socket);
 		st.start();
 
+	}
+	class DataThread extends Thread{
+		private Socket socket;
+		public DataThread (Socket socket) {
+			this.socket = socket;
+		}
+		public void run() {
+				while(true) {
+					try {
+					Thread.sleep(5000);
+					socket.sendUrgentData(0xff);
+					System.out.println("send");
+					} catch (Exception e) {
+						e.printStackTrace();
+						try {
+							if(socket!=null) {
+								socket.shutdownInput();
+								socket.shutdownOutput();
+								socket.close();
+							}
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+						break;
+					}
+				}
+			
+		}
 	}
 }
