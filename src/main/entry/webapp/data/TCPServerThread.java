@@ -38,8 +38,8 @@ public class TCPServerThread extends Thread {
 					bufferedInputStream = new BufferedInputStream(socket.getInputStream());
 					if (bufferedInputStream.available() > 0) {
 						byte[] receive = new byte[256];
-						b = receive;
 						int read = bufferedInputStream.read(receive);
+						b = receive;
 						log.warn("server rec data：{}", read);
 					} 
 				}
@@ -101,9 +101,8 @@ public class TCPServerThread extends Thread {
 		public void run() {
 				while(true) {
 					try {
-					Thread.sleep(5000);
+					Thread.sleep(2000);
 					socket.sendUrgentData(0xff);
-					System.out.println("send");
 					} catch (Exception e) {
 						e.printStackTrace();
 						try {

@@ -43,11 +43,9 @@ public class TCPServerMThead extends Thread {
 						int read = bufferedInputStream.read(receive);
 						str = new String(receive, "UTF-8").trim();
 						log.warn("server rec data：{}", str);
-					} else {
-						Thread.sleep(50);
-					}
-					if(!Arrays.equals(SocketServer.b,a)){//
-						a = SocketServer.b;
+					} 
+					if(!Arrays.equals(TCPServerThread.b,a)){//
+						a = TCPServerThread.b;
 						bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
 						bufferedOutputStream.write(a);//SocketServer.b
 						bufferedOutputStream.flush();
@@ -88,7 +86,6 @@ public class TCPServerMThead extends Thread {
 					try {
 					Thread.sleep(5000);
 					socket.sendUrgentData(0xff);
-					System.out.println("send");
 					} catch (Exception e) {
 						e.printStackTrace();
 						try {
