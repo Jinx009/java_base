@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.Socket;
 
 public class TCPClient {
@@ -50,11 +49,12 @@ public class TCPClient {
 	// }
 	// }
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException, InterruptedException {
 		// 创建Socket对象，连接服务器
 		// 通过客户端的套接字对象Socket方法，获取字节输出流，将数据写向服务器
 		int i = 0;
-		 Socket socket = new Socket("139.196.205.157", 1124);
+		Socket socket = new Socket("139.196.205.157", 1124);
 //		Socket socket = new Socket("localhost", 1124);
 		while (true) {
 			i++;
