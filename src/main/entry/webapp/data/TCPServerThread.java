@@ -30,9 +30,9 @@ public class TCPServerThread extends Thread {
 			try {
 				socket = server.accept();
 				log.warn("client :{} ,{}", socket.getInetAddress().getLocalHost(), "conn success");
-				if(socket!=null) {
-					new DataThread(socket).start();
-				}
+//				if(socket!=null) {
+//					new DataThread(socket).start();
+//				}
 				while (true) {
 					if(socket!=null){
 						String str = "";
