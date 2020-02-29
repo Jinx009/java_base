@@ -16,7 +16,7 @@ public class TCPServerMThead extends Thread {
 	private static final Logger log = LoggerFactory.getLogger(TCPServerMThead.class);
 
 	ServerSocket server = null;
-	
+
 	public static byte[] a = new byte[] {};
 
 	public TCPServerMThead(ServerSocket server) {
@@ -32,27 +32,29 @@ public class TCPServerMThead extends Thread {
 			try {
 				socket = server.accept();
 				log.warn("client :{} ,{}", socket.getInetAddress().getLocalHost(), "conn success");
-				if(socket!=null) {
+				if (socket != null) {
 					new DataThread(socket).start();
 				}
 				while (true) {
-					String str = "";
-					bufferedInputStream = new BufferedInputStream(socket.getInputStream());
-					if (bufferedInputStream.available() > 0) {
-						byte[] receive = new byte[1024];
-						int read = bufferedInputStream.read(receive);
-						str = new String(receive, "UTF-8").trim();
-						log.warn("server rec data：{}", str);
-					} 
-					if(!Arrays.equals(TCPServerThread.b,a)){//
-						a = TCPServerThread.b;
-						bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
-						bufferedOutputStream.write(a);//SocketServer.b
-						bufferedOutputStream.flush();
+					if (socket != null) {
+						String str = "";
+						bufferedInputStream = new BufferedInputStream(socket.getInputStream());
+						if (bufferedInputStream.available() > 0) {
+							byte[] receive = new byte[1024];
+							int read = bufferedInputStream.read(receive);
+							str = new String(receive, "UTF-8").trim();
+							log.warn("server rec data：{}", str);
+						}
+						if (!Arrays.equals(TCPServerThread.b, a)) {//
+							a = TCPServerThread.b;
+							bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
+							bufferedOutputStream.write(a);// SocketServer.b
+							bufferedOutputStream.flush();
+						}
 					}
 				}
 			} catch (Exception e) {// 捕获异常
-				e.printStackTrace();
+				log.error("socket error");
 			}
 		}
 	}
@@ -76,31 +78,34 @@ public class TCPServerMThead extends Thread {
 		st.start();
 
 	}
-	class DataThread extends Thread{
+
+	class DataThread extends Thread {
 		private Socket socket;
-		public DataThread (Socket socket) {
+
+		public DataThread(Socket socket) {
 			this.socket = socket;
 		}
+
 		public void run() {
-				while(true) {
-					try {
+			while (true) {
+				try {
 					Thread.sleep(5000);
 					socket.sendUrgentData(0xff);
-					} catch (Exception e) {
-						e.printStackTrace();
-						try {
-							if(socket!=null) {
-								socket.shutdownInput();
-								socket.shutdownOutput();
-								socket.close();
-							}
-						} catch (IOException e1) {
-							e1.printStackTrace();
+				} catch (Exception e) {
+					log.error("socket closed");
+					try {
+						if (socket != null) {
+							socket.shutdownInput();
+							socket.shutdownOutput();
+							socket.close();
 						}
-						break;
+					} catch (IOException e1) {
+						e1.printStackTrace();
 					}
+					break;
 				}
-			
+			}
+
 		}
 	}
 }
