@@ -1,12 +1,19 @@
 package main.entry.webapp.data;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
 
 public class TCPClient {
 	// public static void main(String[] args) {
@@ -80,6 +87,8 @@ public class TCPClient {
 	//
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException, InterruptedException {
+		BufferedInputStream bufferedInputStream = null;
+		BufferedOutputStream bufferedOutputStream = null;
 		Socket socket = new Socket("rtk.ntrip.qxwz.com", 8002);
 		String msg = "GET /RTCM32_GGB HTTP/1.1 \r\n";// 请求行
 		msg += "Host: rtk.ntrip.qxwz.com \r\n";// 请求首部
@@ -90,20 +99,38 @@ public class TCPClient {
 		msg += "Authorization: Basic " + Base64.getEncoder().encodeToString("qxnfun00291:a79b386".getBytes())
 				+ "\r\n\r\n";// base64加密用户名和密码 // 请求首部
 		/******************************************************************/
-
+		boolean a = false;
+		boolean b = false;
 		System.out.print("" + msg);
-//		System.out.print("" + Base64.);
-		OutputStream outputStream = socket.getOutputStream();
-		outputStream.write(msg.getBytes());
-		outputStream.flush();
-		InputStream inputStream = socket.getInputStream();
-		InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-		String str;
-		if ((str = bufferedReader.readLine()) != null) {
-			str += str;
+		while (true) {
+			if (socket != null) {
+				String str = "";
+				bufferedInputStream = new BufferedInputStream(socket.getInputStream());
+				if (bufferedInputStream.available() > 0) {
+					byte[] receive = new byte[1024];
+					int read = bufferedInputStream.read(receive);
+					str = new String(receive, "UTF-8").trim();
+					System.out.print("server rec data："+ str);
+				}
+				if(!b){
+					bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
+					bufferedOutputStream.write(msg.getBytes());
+					bufferedOutputStream.flush();
+					b = true;
+				}
+				if(!a){
+					Thread.sleep(3000);
+					bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
+//					bufferedOutputStream.write("$GPGGA,135100.000,30.731083,N,103.970377,E,1,09,1.0,19.31,M,1,M\r\n".getBytes());
+//					013406.00,3640.4802879,N,11707.9560247,E,1,16,0.8,122.1179,M,-7.002,M,,*46
+					bufferedOutputStream.write("$GPGGA,013406.00,30.731083,N,103.970377,E,1,16,0.8,122.1179,M,-7.002,M,,*46\r\n".getBytes());
+					bufferedOutputStream.flush();
+					a = true;
+				}
+			}
 		}
-		System.out.println("rtcm message from Client: ---" + str);
-		// }
+		
 	}
+	
+	
 }
