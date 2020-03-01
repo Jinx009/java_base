@@ -30,18 +30,20 @@ public class TCPServerThread extends Thread {
 			try {
 				socket = server.accept();
 				log.warn("client :{} ,{}", socket.getInetAddress().getLocalHost(), "conn success");
-				if(socket!=null) {
-					new DataThread(socket).start();
-				}
+//				if(socket!=null) {
+//					new DataThread(socket).start();
+//				}
 				while (true) {
-					String str = "";
-					bufferedInputStream = new BufferedInputStream(socket.getInputStream());
-					if (bufferedInputStream.available() > 0) {
-						byte[] receive = new byte[256];
-						int read = bufferedInputStream.read(receive);
-						b = receive;
-						log.warn("server rec data：{}", read);
-					} 
+					if(socket!=null){
+						String str = "";
+						bufferedInputStream = new BufferedInputStream(socket.getInputStream());
+						if ( bufferedInputStream.available() > 0) {
+							byte[] receive = new byte[256];
+							int read = bufferedInputStream.read(receive);
+							b = receive;
+							log.warn("server rec data：{}", read);
+						} 
+					}
 				}
 //				Socket socket = server.accept();
 //				log.warn("client :{} ,{}", socket.getInetAddress().getLocalHost(), "conn success");
@@ -78,7 +80,7 @@ public class TCPServerThread extends Thread {
 				// outputStream.flush();
 
 			} catch (Exception e) {// 捕获异常
-				e.printStackTrace();
+				log.error("socket error");
 			}
 		}
 	}
@@ -104,7 +106,7 @@ public class TCPServerThread extends Thread {
 					Thread.sleep(2000);
 					socket.sendUrgentData(0xff);
 					} catch (Exception e) {
-						e.printStackTrace();
+					log.error("socket closed");
 						try {
 							if(socket!=null) {
 								socket.shutdownInput();
