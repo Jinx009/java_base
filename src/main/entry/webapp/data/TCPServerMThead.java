@@ -33,7 +33,7 @@ public class TCPServerMThead extends Thread {
 				socket = server.accept();
 				log.warn("client :{} ,{}", socket.getInetAddress().getLocalHost(), "conn success");
 				if(socket!=null) {
-					new DataThread(socket).start();
+//					new DataThread(socket).start();
 				}
 				while (true) {
 					String str = "";
