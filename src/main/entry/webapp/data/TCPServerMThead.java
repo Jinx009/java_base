@@ -33,7 +33,7 @@ public class TCPServerMThead extends Thread {
 				socket = server.accept();
 				log.warn("client :{} ,{}", socket.getInetAddress().getLocalHost(), "conn success");
 				if(socket!=null) {
-//					new DataThread(socket).start();
+					new DataThread(socket).start();
 				}
 				while (true) {
 					String str = "";
@@ -85,7 +85,10 @@ public class TCPServerMThead extends Thread {
 				while(true) {
 					try {
 					Thread.sleep(5000);
-					socket.sendUrgentData(0xff);
+					BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
+//					socket.sendUrgentData(0xff);
+					bufferedOutputStream.write(a);//SocketServer.b
+					bufferedOutputStream.flush();
 					} catch (Exception e) {
 						e.printStackTrace();
 						try {
