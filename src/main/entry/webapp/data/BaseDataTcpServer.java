@@ -62,16 +62,7 @@ public class BaseDataTcpServer extends Thread {
 				}
 			} catch (Exception e) {
 				log.error("base data tcp server thread error:{}: ", e.getMessage());
-			} finally {
-				if (socket != null) {
-					try {
-						socket.close();
-					} catch (Exception e) {
-						socket = null;
-						log.error("base data tcp server thread error", e.getMessage());
-					}
-				}
-			}
+			} 
 		}
 	}
 
