@@ -42,11 +42,21 @@ public class TCPServerThread extends Thread {
 							int read = bufferedInputStream.read(receive);
 							b = receive;
 							log.warn("server rec data：{}", read);
-							Socket s = new Socket("139.224.237.198", 8888);
-							OutputStream outputStream = socket.getOutputStream();
-							outputStream.write(b);
-							outputStream.flush();
-							s.close();
+							try {
+								Socket s = new Socket("139.224.237.198", 8888);
+								OutputStream outputStream = s.getOutputStream();
+								outputStream.write(b);
+								outputStream.flush();
+								s.close();
+							} catch (Exception e) {
+								log.error("socket error:{}",e);
+							}
+//							new Thread() {
+//								public void run() {
+//								
+//									
+//								}
+//							}.start();
 						}
 					}
 				}
