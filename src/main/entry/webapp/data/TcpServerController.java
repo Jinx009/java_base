@@ -1,11 +1,11 @@
 package main.entry.webapp.data;
 
-import java.net.ServerSocket;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import main.entry.webapp.socket.Server;
 import utils.Resp;
 
 @Controller
@@ -16,27 +16,26 @@ public class TcpServerController {
 	@ResponseBody
 	public Resp<?>baseDataTcpServer() {
 		try {
-			ServerSocket socket = new ServerSocket(8888);
-			BaseDataTcpServer st = new BaseDataTcpServer(socket);
-			st.start();
+			new main.entry.webapp.datasocket.Server(8888);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	@RequestMapping(path = "/deviceServer")
+	
+	@RequestMapping(path = "/tcpServer")
 	@ResponseBody
-	public Resp<?>deviceTcpServer() {
+	public Resp<?>tcpServer() {
 		try {
-			ServerSocket socket = new ServerSocket(9999);
-			DeviceTcpServer st = new DeviceTcpServer(socket);
-			st.start();
+			new Server(9999);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
+
 	
 	
 }
