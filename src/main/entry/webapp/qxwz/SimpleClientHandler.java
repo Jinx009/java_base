@@ -1,7 +1,10 @@
 package main.entry.webapp.qxwz;
 
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.Base64;
 import java.util.concurrent.TimeUnit;
 
@@ -132,7 +135,18 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter{
 		ByteBuf buf = (ByteBuf) msg;
 		byte[] req = new byte[buf.readableBytes()];
 		buf.readBytes(req);
-		NettyClient.b = req;
+		
+		try {
+//			Socket s = new Socket("139.224.237.198", 6666);
+			Socket s = new Socket("139.224.237.198", 6666);
+			OutputStream outputStream = s.getOutputStream();
+			outputStream.write(req);
+			outputStream.flush();
+			s.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
     }
 
 
