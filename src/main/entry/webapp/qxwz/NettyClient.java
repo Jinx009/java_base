@@ -80,6 +80,6 @@ public class NettyClient implements Runnable{
 
 
     public static void main(String[] args) {
-
+    	new NettyClient("rtk.ntrip.qxwz.com", 8002).run();
     }
 }

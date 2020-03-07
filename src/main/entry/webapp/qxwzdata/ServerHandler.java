@@ -1,7 +1,5 @@
-package main.entry.webapp.qxwz;
+package main.entry.webapp.qxwzdata;
 
-
-import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,28 +17,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	 */
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		log.warn("客户端与服务端连接开始...{}",ctx.channel().id());
 		NettyConfig.group.add(ctx.channel());
-		new Thread() {
-			public void run() {
-				byte[] data = new byte[] {};
-				while (true) {
-					if (!Arrays.equals(main.entry.webapp.qxwzdata.NettyConfig.data, data)) {
-						data = main.entry.webapp.qxwzdata.NettyConfig.data;
-						ByteBuf pingMessage = ctx.alloc().buffer(data.length);
-						pingMessage.writeBytes(data);
-						ctx.writeAndFlush(pingMessage);
-					}else {
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}
-		}.start();
-		
 	}
 
 	/**
@@ -73,10 +50,11 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	 */
 	@Override
 	public void channelRead(ChannelHandlerContext channelHandlerContext, Object info) throws Exception {
-		log.warn("netty data --server-------接收到了：{}", info);
-//		ByteBuf buf = (ByteBuf) info;
-//		byte[] req = new byte[buf.readableBytes()];
-//		buf.readBytes(req);
+		log.warn("--data----server接收到了：{}", info);
+		ByteBuf buf = (ByteBuf) info;
+		byte[] req = new byte[buf.readableBytes()];
+		buf.readBytes(req);
+		NettyConfig.data = req;
 	}
 
 }
