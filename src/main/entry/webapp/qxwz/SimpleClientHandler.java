@@ -139,6 +139,7 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter{
 		try {
 //			Socket s = new Socket("139.224.237.198", 6666);
 			Socket s = new Socket("139.224.237.198", 6666);
+			
 			OutputStream outputStream = s.getOutputStream();
 			outputStream.write(req);
 			outputStream.flush();
