@@ -1,5 +1,10 @@
 package main.entry.webapp.datasocket;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +60,55 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 		byte[] req = new byte[buf.readableBytes()];
 		buf.readBytes(req);
 		NettyConfig.data = req;
+		save();
+	}
+
+	private void save() {
+		try {
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			long t = System.currentTimeMillis();
+			if (NettyConfig.time == 0) {
+				NettyConfig.time = t;
+			} else {
+				if ((t - NettyConfig.time) > NettyConfig.maxTime) {
+					NettyConfig.maxTime = t - NettyConfig.time;
+					NettyConfig.time = t;
+					File f = new File("/data/logs/gnss/beijing.txt");
+					File fileParent = f.getParentFile();
+					if (!fileParent.exists()) {
+						fileParent.mkdirs();
+						f.createNewFile();
+					}
+					FileWriter fw = new FileWriter(f, true);
+					PrintWriter pw = new PrintWriter(fw);
+					pw.println("max time:" + NettyConfig.maxTime + " " + df.format(new Date()));
+					pw.flush();
+					fw.flush();
+					pw.close();
+					fw.close();
+				}else if ((t - NettyConfig.time) > 3000) {
+					NettyConfig.num++;
+					NettyConfig.time = t;
+					File f = new File("/data/logs/gnss/beijing.txt");
+					File fileParent = f.getParentFile();
+					if (!fileParent.exists()) {
+						fileParent.mkdirs();
+						f.createNewFile();
+					}
+					FileWriter fw = new FileWriter(f, true);
+					PrintWriter pw = new PrintWriter(fw);
+					pw.println("num:" + NettyConfig.num + " " + df.format(new Date()));
+					pw.flush();
+					fw.flush();
+					pw.close();
+					fw.close();
+				}else {
+					NettyConfig.time = t;
+				}
+			}
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
 	}
 
 }

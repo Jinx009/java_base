@@ -8,6 +8,9 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 public class NettyConfig {
     
 	public static byte[] data = new byte[] {};
+	public static long time = 0;
+	public static long maxTime = 0;
+	public static int num = 0;
 	
 	
     /**

@@ -17,7 +17,7 @@ public class TcpServerController {
 	@ResponseBody
 	public Resp<?>baseDataTcpServer() {
 		try {
-			new main.entry.webapp.datasocket.Server(8888);//监测院数据转发
+			new main.entry.webapp.datasocket.Server(1123);//监测院数据收
 			new main.entry.webapp.qxwzdata.Server(6666);//千寻本地转发
 //			new NettyClient("rtk.ntrip.qxwz.com", 8002).run();
 			new main.entry.webapp.qxwz.Server(7777);//千寻
