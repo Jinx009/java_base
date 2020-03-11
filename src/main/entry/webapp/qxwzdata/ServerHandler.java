@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import main.entry.webapp.datasocket.NettyConfig;
 
 public class ServerHandler extends ChannelInboundHandlerAdapter {
 

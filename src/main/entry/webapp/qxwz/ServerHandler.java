@@ -27,7 +27,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 				while (true) {
 					if (!Arrays.equals(main.entry.webapp.qxwzdata.NettyConfig.data, data)) {
 						data = main.entry.webapp.qxwzdata.NettyConfig.data;
-						ByteBuf pingMessage = ctx.alloc().buffer(data.length);
+						ByteBuf pingMessage = ctx.alloc().buffer(main.entry.webapp.qxwzdata.NettyConfig.data.length);
 						pingMessage.writeBytes(data);
 						ctx.writeAndFlush(pingMessage);
 					}else {
