@@ -33,6 +33,18 @@ public class IoTCloudDeviceController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/wuhan")
+	@ResponseBody
+	public Resp<?> wh(Integer p,Integer type){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(iotCloudDeviceService.getWuhan());
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/localIp")
 	@ResponseBody
 	public Resp<?> type(String localIp){

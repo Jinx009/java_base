@@ -2,6 +2,8 @@ package database.dao;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
@@ -44,6 +46,14 @@ public class IotCloudDeviceDao extends BaseDao<IoTCloudDevice>{
 		QueryParam param = QueryParam.getInstance();
 		param.addParam("localIp", localIp);
 		return findByCriteria(param);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<IoTCloudDevice> getWuhan() {
+		String sql = " select *  from pro_device  where local_ip ='QJ_ZHANWAY_V_3.0_WUHAN'  order by data_time desc ";
+		Query query = em.createNativeQuery(sql, IoTCloudDevice.class);
+		List<IoTCloudDevice> list = query.getResultList();
+		return list;
 	}
 
 

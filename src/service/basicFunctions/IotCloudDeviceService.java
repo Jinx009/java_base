@@ -55,5 +55,9 @@ public class IotCloudDeviceService {
 		iotCloudDeviceDao.update(ioTCloudDevice);
 	}
 
+	public List<IoTCloudDevice> getWuhan() {
+		return iotCloudDeviceDao.getWuhan();
+	}
+
 	
 }
