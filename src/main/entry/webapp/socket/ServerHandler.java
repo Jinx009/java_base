@@ -9,10 +9,12 @@ import org.slf4j.LoggerFactory;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import utils.HttpUtils;
 
 public class ServerHandler extends ChannelInboundHandlerAdapter {
 
 	private static final Logger log = LoggerFactory.getLogger(ServerHandler.class);
+	
 
 	/**
 	 * 客户端与服务端创建连接的时候调用
@@ -73,10 +75,25 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	 */
 	@Override
 	public void channelRead(ChannelHandlerContext channelHandlerContext, Object info) throws Exception {
-		log.warn("tcp --server-------接收到了：{}", info);
-//		ByteBuf buf = (ByteBuf) info;
+		ByteBuf buf = (ByteBuf) info;
+		String str = convertByteBufToString(buf);
+		log.warn("tcp --server-------接收到了：{}", str);
+		str = str.replace(" ", "");//480000191800001200006764B56201075C00701EC51AE307040C042D0837020000000F00FDFF0383EA0F0DE0FE43A7C52512F8350000256300007F00000021010000EB000000010500007600000016050000E4777900D30000001CF2100070000000DCCA49320000000000000000C651
+		HttpUtils.get("http://127.0.0.1:8089/d/rec?str="+str.replace(" ", ""));
 //		byte[] req = new byte[buf.readableBytes()];
 //		buf.readBytes(req);
+	}
+	
+	public String convertByteBufToString(ByteBuf buf) {
+	    String str;
+	    if(buf.hasArray()) { // 处理堆缓冲区
+	        str = new String(buf.array(), buf.arrayOffset() + buf.readerIndex(), buf.readableBytes());
+	    } else { // 处理直接缓冲区以及复合缓冲区
+	        byte[] bytes = new byte[buf.readableBytes()];
+	        buf.getBytes(buf.readerIndex(), bytes);
+	        str = new String(bytes, 0, buf.readableBytes());
+	    }
+	    return str;
 	}
 
 }
