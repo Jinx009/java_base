@@ -80,15 +80,17 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 		buf.readBytes(req);
 		String str = "";
 		for(byte b:req) {
-			byte[] b2 = new byte[1];
-			b2[0] = b;
-			str+= new String(b2,"UTF-8");
+			String s1 = Integer.toHexString(b);
+			if(s1.length()==1) {
+				str+=  "0"+s1;
+			}else {
+				str+=s1;
+			}
 		}
-//		String str = convertByteBufToString(buf);
 		log.warn("tcp --server-------接收到了：{}", str);
 		str = str.replace(" ", "");//480000191800001200006764B56201075C00701EC51AE307040C042D0837020000000F00FDFF0383EA0F0DE0FE43A7C52512F8350000256300007F00000021010000EB000000010500007600000016050000E4777900D30000001CF2100070000000DCCA49320000000000000000C651
 		try {
-			HttpUtils.get("http://127.0.0.1:8080/d/rec?str="+str.replace(" ", ""));
+			HttpUtils.get("http://127.0.0.1:8080/d/rec?str="+str.replace(" ", "").replace("ffffff", ""));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
@@ -96,22 +98,13 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 //		buf.readBytes(req);
 	}
 	
-	public String convertByteBufToString(ByteBuf buf) {
-	    String str;
-	    if(buf.hasArray()) { // 处理堆缓冲区
-	        str = new String(buf.array(), buf.arrayOffset() + buf.readerIndex(), buf.readableBytes());
-	    } else { // 处理直接缓冲区以及复合缓冲区
-	        byte[] bytes = new byte[buf.readableBytes()];
-	        buf.getBytes(buf.readerIndex(), bytes);
-	        str = new String(bytes, 0, buf.readableBytes());
-	    }
-	    return str;
-	}
+//	private String get16(byte b) {
+//		Integer.toHexString(b);
+//	}
 
 	public static void main(String[] args) {
-		byte[] bs1 = {97,98,100};
-		String s = new String(bs1);
-		System.out.println(s);
+		byte[] bs1 = {72};
+		System.out.println(new String(bs1));
 	}
 	
 }
