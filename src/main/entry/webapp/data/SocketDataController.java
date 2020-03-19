@@ -11,10 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import common.helper.StringUtil;
 import database.model.GnssDevice;
 import database.model.GnssLog;
 import service.GnssDeviceService;
 import service.GnssLogService;
+import utils.MapUtils;
 import utils.Resp;
 
 @Controller
@@ -27,11 +29,45 @@ public class SocketDataController {
 	private GnssDeviceService gnssDeviceService;
 	@Autowired
 	private GnssLogService gnssLogService;
+	
+	@RequestMapping(path = "/deviceData")
+	@ResponseBody
+	public Resp<?> deviceData() {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(gnssDeviceService.findAll());
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/logData")
+	@ResponseBody
+	public Resp<?> logData() {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(gnssLogService.find(1));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/device")
+	public String device() {
+		return "/device";
+	}
+	
+	@RequestMapping(path = "/log")
+	public String log() {
+		return "/log";
+	}
 
 	
 	@RequestMapping(path = "/rec")
 	@ResponseBody
-	public Resp<?>baseDataTcpServer(String str) {
+	public Resp<?> baseDataTcpServer(String str) {
 		try {
 			log.warn("socket data rec:{}",str);
 			String head = str.substring(0,2);
@@ -57,6 +93,29 @@ public class SocketDataController {
 					String hmsl = str.substring(110,118);
 					String horAccStr = str.substring(118,126);
 					String verAccStr = str.substring(126,134);
+					String yearStr = str.substring(46,50);
+					String monthStr = str.substring(50,52);
+					String dayStr = str.substring(52,54);
+					String hourStr = str.substring(54,56);
+					String minStr = str.substring(56,58);
+					String secStr = str.substring(58,60);
+					GnssLog gnssLog = new GnssLog();
+					gnssLog.setFixStatus(Integer.valueOf(Integer.valueOf(fixStatusStr,16)/64).toString());
+					gnssLog.setFixType(Integer.valueOf(fixTypeStr,16));
+					gnssLog.setHeight(getHex(height));
+					gnssLog.setHmsl(getHex(hmsl));
+					gnssLog.setDataTime(getHex4(yearStr)+"/"+Integer.valueOf(monthStr)+"/"+Integer.valueOf(dayStr)+" "+Integer.valueOf(hourStr)+":"+Integer.valueOf(minStr)+Integer.valueOf(secStr));
+					gnssLog.setHorAcc(getHex(horAccStr));
+					gnssLog.setVerAcc(getHex(verAccStr));
+					gnssLog.setLng(getHex10(lngStr));
+					gnssLog.setLat(getHex10(latStr));
+					gnssLog.setCreateTime(new Date());
+					gnssLog.setMac(mac);
+					if(StringUtil.isNotBlank(gnssDevice.getLat())) {
+						gnssLog.setDistance(MapUtils.GetDistance(getDouble(gnssLog.getLat()), getDouble(gnssLog.getLat()), getDouble(gnssDevice.getLat()), getDouble(gnssDevice.getLat())));
+					}
+					gnssLog.setNum(Integer.valueOf(numStr,16));
+					gnssLogService.save(gnssLog);
 					gnssDevice.setFixStatus(Integer.valueOf(Integer.valueOf(fixStatusStr,16)/64).toString());
 					gnssDevice.setFixType(Integer.valueOf(fixTypeStr,16));
 					gnssDevice.setHeight(getHex(height));
@@ -65,21 +124,9 @@ public class SocketDataController {
 					gnssDevice.setVerAcc(getHex(verAccStr));
 					gnssDevice.setLng(getHex10(lngStr));
 					gnssDevice.setLat(getHex10(latStr));
+					gnssDevice.setDataTime(gnssLog.getDataTime());
 					gnssDevice.setNum(Integer.valueOf(numStr,16));
 					gnssDeviceService.updateTime(gnssDevice);
-					GnssLog gnssLog = new GnssLog();
-					gnssLog.setFixStatus(Integer.valueOf(Integer.valueOf(fixStatusStr,16)/64).toString());
-					gnssLog.setFixType(Integer.valueOf(fixTypeStr,16));
-					gnssLog.setHeight(getHex(height));
-					gnssLog.setHmsl(getHex(hmsl));
-					gnssLog.setHorAcc(getHex(horAccStr));
-					gnssLog.setVerAcc(getHex(verAccStr));
-					gnssLog.setLng(getHex10(lngStr));
-					gnssLog.setLat(getHex10(latStr));
-					gnssLog.setCreateTime(new Date());
-					gnssLog.setMac(mac);
-					gnssLog.setNum(Integer.valueOf(numStr,16));
-					gnssLogService.save(gnssLog);
 				}
 			}
 		} catch (Exception e) {
@@ -94,8 +141,16 @@ public class SocketDataController {
 		String s3 = str.substring(2,4);
 		String s4 = str.substring(0,2);
 		String str2 = s1+s2+s3+s4;
+		return Integer.valueOf(str2).toString();
+	}
+	
+	private String  getHex4(String str) {//0DE0FE43-A7C52512
+		String s1 = str.substring(2,4);
+		String s2 = str.substring(0,2);
+		String str2 = s1+s2;
 		return Integer.valueOf(str2,16).toString();
 	}
+	
 	
 	private String  getHex10(String str) {//0DE0FE43-A7C52512-F8350000
 		String s1 = str.substring(6,8);
@@ -110,6 +165,13 @@ public class SocketDataController {
 		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
 		String result = decimalFormat.format(g);
 		return result;
+	}
+	
+	private Double getDouble(String s) {
+		Double r = Double.valueOf(s);
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+		return g;
 	}
 	
 	public static void main(String[] args) {

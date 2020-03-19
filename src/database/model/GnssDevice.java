@@ -49,6 +49,8 @@ public class GnssDevice {
 	private Date updateTime;
 	@Column(name = "num")
 	private Integer num;
+	@Column(name = "data_time")
+	private String dataTime;
 	
 
 }

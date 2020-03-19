@@ -46,5 +46,9 @@ public class GnssLog {
 	private Date createTime;
 	@Column(name = "num")
 	private Integer num;
+	@Column(name = "distance")
+	private Double distance;
+	@Column(name = "data_time")
+	private String dataTime;
 	
 }

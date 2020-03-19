@@ -1,9 +1,6 @@
 <header class="main-header">
-	<!-- <a class="logo"> <span class="logo-mini"><b>Z</b>hanway</span> <span
+	<a class="logo"> <span class="logo-mini"><b>Z</b>hanway</span> <span
 		class="logo-lg"><b>Zhan</b>way</span>
-	</a> -->
-	<a class="logo"> 
-		<img alt="" src="/themes/img/logo2.png" style="height: 50px;" >
 	</a> 
 	<nav class="navbar navbar-static-top">
 		<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
@@ -19,7 +16,7 @@
 						class="label label-warning" id="warningNum"></span>
 				</a></li>
 				<li class="dropdown user user-menu"><a class="dropdown-toggle"
-					data-toggle="dropdown"> <span class="hidden-xs">欢迎您：${homeUserName}</span>
+					data-toggle="dropdown"> <span class="hidden-xs">欢迎您：Admin</span>
 				</a></li>
 				<li><a onclick="loginOut();"><i class="fa fa-sign-out"></i></a>
 				</li>
@@ -44,109 +41,17 @@
 		<ul class="sidebar-menu">
 			<li class="header">MAIN MENUS</li>
 			<li class="treeview l1" ><a href="#"> <i
-					class="fa fa-edit"></i> <span>员工管理</span> <span
+					class="fa fa-edit"></i> <span>GNSS</span> <span
 					class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>
 			</a>
 				<ul class="treeview-menu u1" >
-					<li onclick="_open('1','/home/p/pos')"><a><i
+					<li onclick="_open('1','/d/device')"><a><i
 							class="fa fa-circle-o"></i>设备管理</a></li>
-					<li onclick="_open('1','/home/p/account')"><a><i
-							class="fa fa-circle-o"></i> 账户管理</a></li>
-					<li onclick="_open('1','/home/p/job')"><a><i
-							class="fa fa-circle-o"></i> 考勤管理</a></li>
+					<li onclick="_open('1','/d/log')"><a><i
+							class="fa fa-circle-o"></i> 日志管理</a></li>
 				</ul></li>
-			<li class="treeview l2" ><a href="#"> <i
-					class="fa fa-briefcase"></i> <span>设备管理</span> <span
-					class="pull-right-container"> <i
-						class="fa fa-angle-left pull-right"></i>
-				</span>
-			</a>
-				<ul class="treeview-menu u2" >
-					<li onclick="_open('2','/home/p/device')"><a><i
-							class="fa fa-circle-o"></i>车检器管理</a></li>
-					<li onclick="_open('2','/home/p/error')"><a><i
-							class="fa fa-circle-o"></i> 故障管理</a></li>
-					<li onclick="_open('2','/home/p/bluetooth')"><a><i
-							class="fa fa-circle-o"></i> 电子标签管理</a></li>
-				</ul></li>
-			<li class="treeview l3" ><a href="/home/p/device"> <i
-					class="fa fa-birthday-cake"></i> <span>区域管理</span> <span
-					class="pull-right-container"> <i
-						class="fa fa-angle-left pull-right"></i>
-				</span>
-			</a>
-				<ul class="treeview-menu u3" >
-					<li onclick="_open('3','/home/p/area')"><a><i
-							class="fa fa-circle-o"></i>地区管理</a></li>
-					<li onclick="_open('3','/home/p/street')"><a><i
-							class="fa fa-circle-o"></i> 街道管理</a></li>
-					<li onclick="_open('3','/home/p/place')"><a><i
-							class="fa fa-circle-o"></i> 车位列表</a></li>
-				</ul></li>
-			<li class="treeview l4" ><a href="#"> <i
-					class="fa fa-bolt"></i> <span>财务管理</span> <span
-					class="pull-right-container"> <i
-						class="fa fa-angle-left pull-right"></i>
-				</span>
-			</a>
-				<ul class="treeview-menu u4" >
-					<li onclick="_open('4','/home/p/allOrder')"><a><i
-							class="fa fa-circle-o"></i>全部订单</a></li>
-					<!-- <li onclick="_open('4','/home/p/order')"><a><i
-							class="fa fa-circle-o"></i> 实际订单</a></li> -->
-					<li onclick="_open('4','/home/p/invoice')"><a><i
-							class="fa fa-circle-o"></i> 发票管理</a></li>
-				</ul></li>
-			<li class="treeview l5" ><a href="#"> <i
-					class="fa  fa-plane"></i> <span>数据管理</span> <span
-					class="pull-right-container"> <i
-						class="fa fa-angle-left pull-right"></i>
-				</span>
-			</a>
-			<ul class="treeview-menu u5" >
-				<li onclick="_open('5','/home/p/table')"><a><i
-						class="fa fa-circle-o"></i> 仪表盘</a></li>
-				<li onclick="_open('5','/home/p/money')"><a><i
-						class="fa fa-circle-o"></i> 财务分析</a></li>
-				<li onclick="_open('5','/home/p/car')"><a><i
-						class="fa fa-circle-o"></i>停车示意图</a></li>
-		<!-- 		<li onclick="_open('5','/home/p/changping_a')"><a><i
-						class="fa fa-circle-o"></i>昌平路A</a></li>
-				<li onclick="_open('5','/home/p/changping_b')"><a><i
-						class="fa fa-circle-o"></i>昌平路B</a></li> -->
-				<li onclick="_open('5','/home/p/data')"><a><i
-						class="fa fa-circle-o"></i> 车次数据分析</a></li>
-			</ul></li>
-			<li class="treeview l6" ><a href="#"> <i
-					class="fa fa-book"></i> <span>会员管理</span> <span
-					class="pull-right-container"> <i
-						class="fa fa-angle-left pull-right"></i>
-				</span>
-			</a>
-			<ul class="treeview-menu u6" >
-				<li onclick="_open('6','/home/p/user')"><a><i
-						class="fa fa-circle-o"></i> 会员列表</a></li>
-				<li onclick="_open('6','/home/p/month')"><a><i
-						class="fa fa-circle-o"></i> 包月证管理</a></li>
-			</ul></li>
-			<li class="treeview l7" ><a href="#"> <i
-					class="fa  fa-hand-lizard-o"></i> <span>运营管理</span> <span
-					class="pull-right-container"> <i
-						class="fa fa-angle-left pull-right"></i>
-				</span>
-			</a>
-			<ul class="treeview-menu u7" >
-				<li onclick="_open('7','/home/p/charge')"><a><i
-						class="fa fa-circle-o"></i> 收费管理</a></li>
-				<li onclick="_open('7','/home/p/send')"><a><i
-						class="fa fa-circle-o"></i> 诱导牌管理</a></li>
-						<li onclick="_open('7','/home/p/pay')"><a><i
-						class="fa fa-circle-o"></i> 支付管理</a></li>
-						<li onclick="_open('7','/home/p/useradd')"><a><i
-						class="fa fa-circle-o"></i> 用户增长率</a></li>
-			</ul></li>
 		</ul>
 		<ul class="sidebar-menu">
 
