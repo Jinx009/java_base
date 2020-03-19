@@ -104,7 +104,7 @@ public class SocketDataController {
 					gnssLog.setFixType(Integer.valueOf(fixTypeStr,16));
 					gnssLog.setHeight(getHex(height));
 					gnssLog.setHmsl(getHex(hmsl));
-					gnssLog.setDataTime(getHex4(yearStr)+"/"+Integer.valueOf(monthStr)+"/"+Integer.valueOf(dayStr)+" "+Integer.valueOf(hourStr)+":"+Integer.valueOf(minStr)+Integer.valueOf(secStr));
+					gnssLog.setDataTime(getHex4(yearStr)+"/"+Integer.valueOf(monthStr,16)+"/"+Integer.valueOf(dayStr,16)+" "+Integer.valueOf(hourStr,16)+":"+Integer.valueOf(minStr,16)+":"+Integer.valueOf(secStr,16));
 					gnssLog.setHorAcc(getHex(horAccStr));
 					gnssLog.setVerAcc(getHex(verAccStr));
 					gnssLog.setLng(getHex10(lngStr));
@@ -141,7 +141,7 @@ public class SocketDataController {
 		String s3 = str.substring(2,4);
 		String s4 = str.substring(0,2);
 		String str2 = s1+s2+s3+s4;
-		return Integer.valueOf(str2).toString();
+		return Integer.valueOf(str2,16).toString();
 	}
 	
 	private String  getHex4(String str) {//0DE0FE43-A7C52512
