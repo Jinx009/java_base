@@ -25,18 +25,28 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 			public void run() {
 				byte[] data = new byte[] {};
 				while (true) {
-					if (!Arrays.equals(main.entry.webapp.qxwzdata.NettyConfig.data, data)) {
-						data = main.entry.webapp.qxwzdata.NettyConfig.data;
-						ByteBuf pingMessage = ctx.alloc().buffer(main.entry.webapp.qxwzdata.NettyConfig.data.length);
+					try {
+						String str = "D300853EC008491F7B8280080DF9C008EFBFD26FB0288182ABFCE0A7A38700145EFE9B41821E03525FE98652AD5F04D1CFF45CAC1A10CC39FF984962D903FE85AFA84C60BA7FC91DFA53053237000E29FD2EAF041402973FD4224F1D1F0C4BCFE9173820020B35FEE1310C19803408FF45C4C0BB02892FF4AE0229AB00D80BFA6CEE06F023317F56233CA5D300853EC008491F7B8280080DF9C008EFBFD26FB0288182ABFCE0A7A38700145EFE9B41821E03525FE98652AD5F04D1CFF45CAC1A10CC39FF984962D903FE85AFA84C60BA7FC91DFA53053237000E29FD2EAF041402973FD4224F1D1F0C4BCFE9173820020B35FEE1310C19803408FF45C4C0BB02892FF4AE0229AB00D80BFA6CEE06F023317F56233CA5D300853EC008491F7B8280080DF9C008EFBFD26FB0288182ABFCE0A7A38700145EFE9B41821E03525FE98652AD5F04D1CFF45CAC1A10CC39FF984962D903FE85AFA84C60BA7FC91DFA53053237000E29FD2EAF041402973FD4224F1D1F0C4BCFE9173820020B35FEE1310C19803408FF45C4C0BB02892FF4AE0229AB00D80BFA6CEE06F023317F56233CA5D300853EC008491F7B8280080DF9C008EFBFD26FB0288182ABFCE0A7A38700145EFE9B41821E03525FE98652AD5F04D1CFF45CAC1A10CC39FF984962D903FE85AFA84C60BA7FC91DFA53053237000E29FD2EAF041402973FD4224F1D1F0C4BCFE9173820020B35FEE1310C19803408FF45C4C0BB02892FF4AE0229AB00D80BFA6CEE06F023317F56233CA5";
+						data = str.getBytes();
+						ByteBuf pingMessage = ctx.alloc().buffer(data.length);
 						pingMessage.writeBytes(data);
 						ctx.writeAndFlush(pingMessage);
-					}else {
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
+//					if (!Arrays.equals(main.entry.webapp.qxwzdata.NettyConfig.data, data)) {
+//						data = main.entry.webapp.qxwzdata.NettyConfig.data;
+//						ByteBuf pingMessage = ctx.alloc().buffer(main.entry.webapp.qxwzdata.NettyConfig.data.length);
+//						pingMessage.writeBytes(data);
+//						ctx.writeAndFlush(pingMessage);
+//					}else {
+//						try {
+//							Thread.sleep(1);
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
+//					}
 				}
 			}
 		}.start();

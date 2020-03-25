@@ -34,7 +34,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 						ctx.writeAndFlush(pingMessage);
 					}else {
 						try {
-							Thread.sleep(1);
+							Thread.sleep(1000);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -103,8 +103,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 //	}
 
 	public static void main(String[] args) {
-		byte[] bs1 = {72};
-		System.out.println(new String(bs1));
+//		byte[] bs1 = {72};
+		System.out.println(new String(""));
 	}
 	
 }
