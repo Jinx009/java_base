@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import common.helper.StringUtil;
 import database.model.GnssDevice;
 import database.model.GnssLog;
+import database.model.SocketConnLog;
 import service.GnssDeviceService;
 import service.GnssLogService;
+import service.SocketConnLogService;
 import utils.MapUtils;
 import utils.Resp;
 
@@ -29,6 +31,8 @@ public class SocketDataController {
 	private GnssDeviceService gnssDeviceService;
 	@Autowired
 	private GnssLogService gnssLogService;
+	@Autowired
+	private SocketConnLogService socketConnLogService;
 	
 	@RequestMapping(path = "/deviceData")
 	@ResponseBody
@@ -54,14 +58,42 @@ public class SocketDataController {
 		return resp;
 	}
 	
+	@RequestMapping(path = "/socketData")
+	@ResponseBody
+	public Resp<?> socketData() {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(socketConnLogService.find());
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/device")
 	public String device() {
 		return "/device";
 	}
 	
+	@RequestMapping(path = "/socket")
+	public String socket() {
+		return "/socket";
+	}
+	
 	@RequestMapping(path = "/log")
 	public String log() {
 		return "/log";
+	}
+	
+	@RequestMapping(path = "/socketSave")
+	@ResponseBody
+	public String socketSave(String status,String ip) {
+		SocketConnLog socketConnLog = new SocketConnLog();
+		socketConnLog.setCreateTime(new Date());
+		socketConnLog.setIp(ip);
+		socketConnLog.setStatus(status);
+		socketConnLogService.save(socketConnLog);
+		return "log";
 	}
 
 	
@@ -104,7 +136,7 @@ public class SocketDataController {
 					gnssLog.setFixType(Integer.valueOf(fixTypeStr,16));
 					gnssLog.setHeight(getHex(height));
 					gnssLog.setHmsl(getHex(hmsl));
-					gnssLog.setDataTime(getHex4(yearStr)+"/"+Integer.valueOf(monthStr,16)+"/"+Integer.valueOf(dayStr,16)+" "+Integer.valueOf(hourStr,16)+":"+Integer.valueOf(minStr,16)+":"+Integer.valueOf(secStr,16));
+					gnssLog.setDataTime(getHex4(yearStr)+"/"+Integer.valueOf(monthStr,16)+"/"+Integer.valueOf(dayStr,16)+" "+(Integer.valueOf(hourStr,16)+8)+":"+Integer.valueOf(minStr,16)+":"+Integer.valueOf(secStr,16));
 					gnssLog.setHorAcc(getHex(horAccStr));
 					gnssLog.setVerAcc(getHex(verAccStr));
 					gnssLog.setLng(getHex10(lngStr));

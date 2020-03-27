@@ -13,7 +13,7 @@ public class GnssLogDao extends BaseDao<GnssLog>{
 
 	public PageDataList<GnssLog> findByPage(Integer p) {
 		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addPage(p,50);
+		queryParam.addPage(p,200);
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);
 	}

@@ -60,7 +60,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 		byte[] req = new byte[buf.readableBytes()];
 		buf.readBytes(req);
 		NettyConfig.data = req;
-		save();
+//		save();
 	}
 
 	private void save() {
