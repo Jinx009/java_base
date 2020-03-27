@@ -118,9 +118,13 @@ public class JobTask {
 							}
 							Double yld = Double.valueOf(yl);
 							Double yld1 = Double.valueOf(yl1);
+							Double y = yld-yld1;
+							if(y<0) {
+								y=0.00;
+							}
 							Map< String, String> map = new HashMap<String, String>();
 							map.put("sblxbm", "201");
-							map.put("jczb", String.valueOf(yld-yld1));
+							map.put("jczb", String.valueOf(0));
 							map.put("jcsj", sdf.format(d2));
 							map.put("cgq", "1");
 							HttpUtils.sendPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+device.getDeviceId()+"&data="+JSONObject.toJSONString(map));
