@@ -22,7 +22,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		log.warn("客户端与服务端连接开始...{}",ctx.channel().id());
-		HttpUtils.get("http://127.0.0.1:8080/d/socketSave?status=conn&ip="+ctx.channel().remoteAddress().toString());
+		HttpUtils.get("http://127.0.0.1:8080/d/socketSave?status=conn&ip="+ctx.channel().remoteAddress().toString().split(":")[0]);
 		NettyConfig.group.add(ctx.channel());
 		new Thread() {
 			public void run() {
@@ -59,7 +59,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	 */
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-		HttpUtils.get("http://127.0.0.1:8080/d/socketSave?status=close&ip="+ctx.channel().remoteAddress().toString());
+		HttpUtils.get("http://127.0.0.1:8080/d/socketSave?status=close&ip="+ctx.channel().remoteAddress().toString().split(":")[0]);
 		ctx.flush();
 	}
 

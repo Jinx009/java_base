@@ -19,7 +19,7 @@ public class SocketConnLogService {
 	}
 	
 	public List<SocketConnLog> find(){
-		return socketConnLogDao.findAll();
+		return socketConnLogDao.findAll2();
 	}
 	
 }
