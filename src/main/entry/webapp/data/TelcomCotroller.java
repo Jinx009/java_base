@@ -710,11 +710,11 @@ public class TelcomCotroller extends BaseController {
 //				Map<String, Object> map = new HashMap<String, Object>();
 				String sn = device.getSimCard().split("_")[1];
 //				map.put("JCDB19A080", sn);
-				String acc_x = hexToFloat(data.substring(26, 34));
-				String acc_y = hexToFloat(data.substring(34, 42));
-				String acc_z = hexToFloat(data.substring(42, 50));
-				String x = getData100(data.substring(50, 51), data.substring(50, 54));
-				String y = getData100(data.substring(54, 55), data.substring(54, 58));
+				String acc_x = hexToFloat_1(data.substring(26, 34));
+				String acc_y = hexToFloat_1(data.substring(34, 42));
+				String acc_z = hexToFloat_1(data.substring(42, 50));
+				String x = getData100_1(data.substring(50, 51), data.substring(50, 54));
+				String y = getData100_1(data.substring(54, 55), data.substring(54, 58));
 //				String bat = getData(data.substring(62, 63), data.substring(62, 66));
 				//2019-11-14修改为武汉新接口
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
