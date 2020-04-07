@@ -63,7 +63,7 @@ public class SocketDataController {
 	public Resp<?> socketData() {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(socketConnLogService.find());
+			return new Resp<>(socketConnLogService.find(1).getList());
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}
@@ -146,9 +146,9 @@ public class SocketDataController {
 					gnssLog.setMac(mac);
 					if(StringUtil.isNotBlank(gnssDevice.getLat())) {
 						double[] d = MapUtils.WGS84toECEF(getDoubleValue(gnssLog.getLat()), getDoubleValue(gnssLog.getLng()), getDoubleValue(gnssLog.getHeight()));
-						gnssLog.setX(d[0]);
-						gnssLog.setY(d[1]);
-						gnssLog.setZ(d[2]);
+						gnssLog.setX(d[0]*1000);
+						gnssLog.setY(d[1]*1000);
+						gnssLog.setZ(d[2]*1000);
 						gnssLog.setDistance(MapUtils.GetDistance(getDouble(gnssLog.getLat()), getDouble(gnssLog.getLat()), getDouble(gnssDevice.getLat()), getDouble(gnssDevice.getLat())));
 						if(gnssDevice.getX()!=0.00) {
 							gnssLog.setXDev(gnssLog.getX()-gnssDevice.getX());
@@ -199,7 +199,7 @@ public class SocketDataController {
 	private double getDoubleValue(String s) {
 //		BigDecimal f = new BigDecimal(Double.valueOf(s));
 //		return f.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue()/1000;
-		return Double.valueOf(s)*1000;
+		return Double.valueOf(s);
 	}
 	
 //	private double getDoubleDev(double x1,double x2) {
