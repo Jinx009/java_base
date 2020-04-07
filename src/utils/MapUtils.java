@@ -5,7 +5,6 @@ public class MapUtils {
 	// private static double EARTH_RADIUS = 6378.137;
 	private static double EARTH_RADIUS = 6371.393;
 
-
 	private static double rad(double d) {
 		return d * Math.PI / 180.0;
 	}
@@ -32,8 +31,12 @@ public class MapUtils {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(MapUtils.GetDistance(29.490295, 106.486654, 29.615467, 106.581515));
-		System.out.println(Double.valueOf("29.490295"));
+		// System.out.println(MapUtils.GetDistance(29.490295, 106.486654, 29.615467,
+		// 106.581515));
+		// System.out.println(Double.valueOf("29.490295"));
+//		double[] d = WGS84toECEF(30.7335894 / 1000, 103.9681949 / 1000, 495441 / 1000);
+//		System.out.println(d[0] + "--" + d[1] + "---" + d[2]);
+		System.out.println(ECEFtoWGS84(-1426814.8942052593, 5736207.14002754, 3492541.7182463093));
 	}
 
 	public static double[] WGS84toECEF(double latitude, double longitude, double height) {
@@ -52,7 +55,30 @@ public class MapUtils {
 		X = NH * COSLAT * COSLONG;
 		Y = NH * COSLAT * SINLONG;
 		Z = (b * b * N / (a * a) + height) * SINLAT;
-		return new double[] {X,Y,Z};
+		return new double[] { X, Y, Z };
+	}
+
+	public static String ECEFtoWGS84(double x, double y, double z){
+		double a, b, c, d;
+		double Longitude;// 经度
+		double Latitude;// 纬度
+		double Altitude;// 海拔高度
+		double p, q;
+		double N;
+		a = 6378137.0;
+		b = 6356752.31424518;
+		c = Math.sqrt(((a * a) - (b * b)) / (a * a));
+		d = Math.sqrt(((a * a) - (b * b)) / (b * b));
+		p = Math.sqrt((x * x) + (y * y));
+		q = Math.atan2((z * a), (p * b));
+		Longitude = Math.atan2(y, x);
+		Latitude = Math.atan2((z + (d * d) * b * Math.pow(Math.sin(q), 3)),
+				(p - (c * c) * a * Math.pow(Math.cos(q), 3)));
+		N = a / Math.sqrt(1 - ((c * c) * Math.pow(Math.sin(Latitude), 2)));
+		Altitude = (p / Math.cos(Latitude)) - N;
+		Longitude = Longitude * 180.0 / Math.PI;
+		Latitude = Latitude * 180.0 / Math.PI;
+		return Longitude + "," + Latitude + "," + Altitude;
 	}
 
 }
