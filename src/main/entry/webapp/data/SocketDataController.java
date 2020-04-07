@@ -111,6 +111,7 @@ public class SocketDataController {
 					gnssDevice.setCreateTime(new Date());
 					gnssDevice.setUpdateTime(new Date());
 					gnssDevice.setMac(mac);
+					gnssDevice.setX(0.00);
 					gnssDeviceService.save(gnssDevice);
 					gnssDevice = gnssDeviceService.findByMac(mac);
 				}
@@ -144,7 +145,16 @@ public class SocketDataController {
 					gnssLog.setCreateTime(new Date());
 					gnssLog.setMac(mac);
 					if(StringUtil.isNotBlank(gnssDevice.getLat())) {
+						double[] d = MapUtils.WGS84toECEF(getDoubleValue(gnssLog.getLat()), getDoubleValue(gnssLog.getLng()), getDoubleValue(gnssLog.getHeight()));
+						gnssLog.setX(d[0]);
+						gnssLog.setY(d[1]);
+						gnssLog.setZ(d[2]);
 						gnssLog.setDistance(MapUtils.GetDistance(getDouble(gnssLog.getLat()), getDouble(gnssLog.getLat()), getDouble(gnssDevice.getLat()), getDouble(gnssDevice.getLat())));
+						if(gnssDevice.getX()!=0.00) {
+							gnssLog.setXDev(gnssLog.getX()-gnssDevice.getX());
+							gnssLog.setYDev(gnssLog.getY()-gnssDevice.getY());
+							gnssLog.setZDev(gnssLog.getZ()-gnssDevice.getZ());
+						}
 					}
 					gnssLog.setNum(Integer.valueOf(numStr,16));
 					gnssLogService.save(gnssLog);
@@ -158,6 +168,9 @@ public class SocketDataController {
 					gnssDevice.setLat(getHex10(latStr));
 					gnssDevice.setDataTime(gnssLog.getDataTime());
 					gnssDevice.setNum(Integer.valueOf(numStr,16));
+					gnssDevice.setX(gnssLog.getX());
+					gnssDevice.setY(gnssLog.getY());
+					gnssDevice.setZ(gnssLog.getZ());
 					gnssDeviceService.updateTime(gnssDevice);
 				}
 			}
@@ -183,6 +196,16 @@ public class SocketDataController {
 		return Integer.valueOf(str2,16).toString();
 	}
 	
+	private double getDoubleValue(String s) {
+//		BigDecimal f = new BigDecimal(Double.valueOf(s));
+//		return f.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue()/1000;
+		return Double.valueOf(s)*1000;
+	}
+	
+//	private double getDoubleDev(double x1,double x2) {
+//		BigDecimal f = new BigDecimal(x1-x2);
+//		return f.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+//	}
 	
 	private String  getHex10(String str) {//0DE0FE43-A7C52512-F8350000
 		String s1 = str.substring(6,8);

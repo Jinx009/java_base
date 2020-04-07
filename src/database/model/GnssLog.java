@@ -50,5 +50,17 @@ public class GnssLog {
 	private Double distance;
 	@Column(name = "data_time")
 	private String dataTime;
+	@Column(name = "x")
+	private double x;
+	@Column(name = "y")
+	private double y;
+	@Column(name = "z")
+	private double z;
+	@Column(name = "x_dev")
+	private double xDev;
+	@Column(name = "y_dev")
+	private double yDev;
+	@Column(name = "z_dev")
+	private double zDev;
 	
 }

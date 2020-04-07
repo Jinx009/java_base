@@ -51,6 +51,12 @@ public class GnssDevice {
 	private Integer num;
 	@Column(name = "data_time")
 	private String dataTime;
+	@Column(name = "x")
+	private double x;
+	@Column(name = "y")
+	private double y;
+	@Column(name = "z")
+	private double z;
 	
 
 }
