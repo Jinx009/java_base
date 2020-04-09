@@ -114,6 +114,8 @@ public class SocketDataController {
 		SocketConnLog socketConnLog = new SocketConnLog();
 		socketConnLog.setCreateTime(new Date());
 		socketConnLog.setIp(ip);
+		socketConnLog.setClientPort(clientPort);
+		socketConnLog.setConnPort(connPort);
 		socketConnLog.setStatus(status);
 		socketConnLog.setMac("");
 		socketConnLogService.save(socketConnLog);

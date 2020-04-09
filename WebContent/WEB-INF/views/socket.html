@@ -48,14 +48,20 @@
 									<thead>
 										<tr>
 											<th>ip</th>
+											<th>mac</th>
 											<th>status</th>
+											<th>客户端端口</th>
+											<th>连接端口</th>
 											<th>create_time</th>
 										</tr>
 									</thead>
 									<tbody id="data">
 										<tr v-for="item in datas">
 											<td v-text="item.ip" class="mac" ></td>
+											<td v-text="item.mac"></td>
 											<td v-text="item.status"></td>
+											<td v-text="item.clientPort"></td>
+											<td v-text="item.connPort"></td>
 											<td v-text="item.createTime"></td>
 										</tr>
 									</tbody>
