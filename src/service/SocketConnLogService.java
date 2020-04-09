@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,14 @@ public class SocketConnLogService {
 	
 	public PageDataList<SocketConnLog> find(Integer p){
 		return socketConnLogDao.findByPage(p);
+	}
+
+	public SocketConnLog findBy(String ip, String clientPort, String connPort) {
+		return socketConnLogDao.findBy(ip,clientPort,connPort);
+	}
+
+	public void update(SocketConnLog socketConnLog) {
+		socketConnLogDao.update(socketConnLog);
 	}
 	
 }

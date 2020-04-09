@@ -57,6 +57,12 @@ public class GnssDevice {
 	private double y;
 	@Column(name = "z")
 	private double z;
+	@Column(name = "base_x")
+	private Double baseX;
+	@Column(name = "base_y")
+	private Double baseY;
+	@Column(name = "base_z")
+	private Double baseZ;
 	
 
 }

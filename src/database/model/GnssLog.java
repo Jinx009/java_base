@@ -44,6 +44,9 @@ public class GnssLog {
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
+	@Column(name = "date_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateTime;
 	@Column(name = "num")
 	private Integer num;
 	@Column(name = "distance")
@@ -62,5 +65,7 @@ public class GnssLog {
 	private double yDev;
 	@Column(name = "z_dev")
 	private double zDev;
+	@Column(name = "data_type")
+	private Integer dataType;
 	
 }

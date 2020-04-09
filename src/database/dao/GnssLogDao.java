@@ -1,5 +1,7 @@
 package database.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
@@ -16,6 +18,16 @@ public class GnssLogDao extends BaseDao<GnssLog>{
 		queryParam.addPage(p,200);
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<GnssLog> getByDate(String startDate, String endDate,String mac) {
+		String hql = " from GnssLog where  mac = '"+mac+"' and dateTime>='"+startDate+" 00:00:00' and dateTime <= '"+endDate+" 23:59:59'  ";
+		List<GnssLog> list = em.createQuery(hql).getResultList();
+		if(list!=null&&!list.isEmpty()){
+			return list;
+		}
+		return null;
 	}
 
 }

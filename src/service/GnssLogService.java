@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,9 @@ public class GnssLogService {
 	
 	public void save(GnssLog gnssLog) {
 		gnssLogDao.save(gnssLog);
+	}
+
+	public List<GnssLog> getByDate(String startDate, String endDate,String mac) {
+		return gnssLogDao.getByDate(startDate,endDate,mac) ;
 	}
 }

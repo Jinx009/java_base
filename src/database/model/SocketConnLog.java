@@ -25,8 +25,14 @@ public class SocketConnLog {
 	private Integer id;
 	@Column(name = "ip")
 	private String ip;
+	@Column(name = "mac")
+	private String mac;
 	@Column(name = "status")
 	private String status;
+	@Column(name = "conn_port")
+	private String connPort;
+	@Column(name = "client_port")
+	private String clientPort;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;

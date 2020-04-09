@@ -25,5 +25,18 @@ public class SocketConnLogDao extends BaseDao<SocketConnLog>{
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);
 	}
+
+	public SocketConnLog findBy(String ip, String clientPort, String connPort) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("mac", "");
+		queryParam.addParam("clientPort", clientPort);
+		queryParam.addParam("ip", ip);
+		queryParam.addParam("connPort", connPort);
+		List<SocketConnLog> list = findByCriteria(queryParam);
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0);
+		}
+		return null;
+	}
 	
 }
