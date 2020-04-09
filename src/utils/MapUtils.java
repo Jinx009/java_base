@@ -36,7 +36,10 @@ public class MapUtils {
 		// System.out.println(Double.valueOf("29.490295"));
 //		double[] d = WGS84toECEF(30.7335894 / 1000, 103.9681949 / 1000, 495441 / 1000);
 //		System.out.println(d[0] + "--" + d[1] + "---" + d[2]);
-		System.out.println(ECEFtoWGS84(-1426814.8942052593, 5736207.14002754, 3492541.7182463093));
+//		System.out.println(ECEFtoWGS84(-1426814.8942052593, 5736207.14002754, 3492541.7182463093));
+		BLHtoXYZ(30.7335894, 103.9681949, 495441, 6378137, 6356752.31424518);
+		double[] d = WGS84toECEF(30.7335894, 103.9681949, 495441);
+		System.out.println(d[0] + "--" + d[1] + "---" + d[2]);
 	}
 
 	public static double[] WGS84toECEF(double latitude, double longitude, double height) {
@@ -80,5 +83,18 @@ public class MapUtils {
 		Latitude = Latitude * 180.0 / Math.PI;
 		return Longitude + "," + Latitude + "," + Altitude;
 	}
+	
+	
+	public static void BLHtoXYZ(double B, double L, double H, double aAxis, double bAxis) {
+	    double dblD2R = Math.PI / 180;
+	    double e1 = Math.sqrt(Math.pow(aAxis, 2) - Math.pow(bAxis, 2)) / aAxis;
+	 
+	    double N = aAxis / Math.sqrt(1.0 - Math.pow(e1, 2) * Math.pow(Math.sin(B * dblD2R), 2));
+	    double targetX = (N + H) * Math.cos(B * dblD2R) * Math.cos(L * dblD2R);
+	    double targetY = (N + H) * Math.cos(B * dblD2R) * Math.sin(L * dblD2R);
+	    double targetZ = (N * (1.0 - Math.pow(e1, 2)) + H) * Math.sin(B * dblD2R);
+	    System.out.println(""+targetX+"--"+targetY+"-"+targetZ);
+	}
 
+	
 }
