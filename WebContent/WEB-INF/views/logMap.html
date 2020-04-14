@@ -58,7 +58,7 @@
 							</div>
 							<div class="col-md-3">
 								<div class="input-group"
-									style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top: 10px; float: left;">
+									style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top:25px; float: left;">
 									<input type="text" class="form-control" readonly="readonly"
 										id="datepicker"> <span class="input-group-btn">
 										<button class="btn btn-default" onclick="_getData();"
@@ -74,7 +74,7 @@
 						<div class="panel panel-default" style="border-color: white;">
 							<div class="panel-body">
 								<div
-									style="float: left; position: relative; min-height: 1px; width: 1280px; height: 500px; padding: 0"
+									style="float: left; position: relative; min-height: 1px; width: 1280px; height: 500px; padding: 0;background: white;";
 									id="draw_1"></div>
 							</div>
 						</div>
@@ -85,9 +85,15 @@
 		<#include "home_footer.html">
 	</div>
 	<script src="/themes/laydate/laydate.js"></script>
-	<script src="https://cdn.bootcss.com/echarts/3.8.0/echarts.min.js"></script>
+	       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
 	<script type="text/javascript">
-		var x = [], y = [], z = [];
+		var x = [], y = [], z = [],ddate =[];
 		$(function() {
 			//	$('#datepicker').val(new Date().Format('yyyy-MM-dd'));
 			laydate.render({
@@ -116,11 +122,10 @@
 							success : function(res) {
 								if (res != '' && res.data.length != '')
 									for (var i = res.data.length - 1; i >= 0; i--) {
-										res.data[i].createTime = jsDateTime(res.data[i].createTime);
-										x.push(parseFloat(res.data[i].xDev));
-										y.push(parseFloat(res.data[i].yDev));
-										z.push(parseFloat(res.data[i].zDev));
-										ddate.push(res.data[i].createTime);
+										x.push(res.data[i].xdev);
+										y.push(res.data[i].ydev);
+										z.push(res.data[i].zdev);
+										ddate.push(res.data[i].dataTime);
 									}
 								_draw();
 							}
@@ -128,10 +133,11 @@
 			}
 		}
 		function _draw() {
-			var myChart_1 = echarts.init(document.getElementById('draw_1'),'dark');
+			var myChart_1 = echarts.init(document.getElementById('draw_1'));
 			var dd = [];
+			dd.push([0,0,0,0]);
 			for(var i in x){
-				dd.push([x[i],y[i],ddate[i]]);
+				dd.push([x[i],y[i],z[i],ddate[i]]);
 			}
 			var app = {};
 			option = null;
@@ -169,10 +175,9 @@
 			        ]
 			    };
 
-			    myChart1.setOption(option);
 
 			if (option && typeof option === "object") {
-			    myChart1.setOption(option, true);
+				myChart_1.setOption(option, true);
 			}
 		}
 		Date.prototype.Format = function(fmt) {

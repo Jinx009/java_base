@@ -58,7 +58,7 @@
 							</div>
 							<div class="col-md-3">
 								<div class="input-group"
-									style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top: 10px; float: left;">
+									style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top:25px; float: left;">
 									<input type="text" class="form-control" readonly="readonly"
 										id="datepicker"> <span class="input-group-btn">
 										<button class="btn btn-default" onclick="_getData();"
@@ -116,11 +116,10 @@
 							success : function(res) {
 								if (res != '' && res.data.length != '')
 									for (var i = res.data.length - 1; i >= 0; i--) {
-										res.data[i].createTime = jsDateTime(res.data[i].createTime);
-										x.push(parseFloat(res.data[i].xDev));
-										y.push(parseFloat(res.data[i].yDev));
-										z.push(parseFloat(res.data[i].zDev));
-										ddate.push(res.data[i].createTime);
+										x.push(res.data[i].xdev);
+										y.push(res.data[i].ydev);
+										z.push(res.data[i].zdev);
+										ddate.push(res.data[i].dataTime);
 									}
 								_draw();
 							}
@@ -128,8 +127,7 @@
 			}
 		}
 		function _draw() {
-			var myChart_1 = echarts.init(document.getElementById('draw_1'),
-					'dark');
+			var myChart_1 = echarts.init(document.getElementById('draw_1'));
 			var colors = [ '#5793f3', '#d14a61', '#675bba' ];
 			option = {
 				title : {
