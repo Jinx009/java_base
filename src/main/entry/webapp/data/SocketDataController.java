@@ -186,7 +186,7 @@ public class SocketDataController {
 					gnssLog.setZDev(0.00);
 					gnssLog.setDataType(0);
 					if(StringUtil.isNotBlank(gnssDevice.getLat())) {
-						double[] d = MapUtils.WGS84toECEF(getDoubleValue(gnssLog.getLat()), getDoubleValue(gnssLog.getLng()), getDoubleValue(gnssLog.getHeight()));
+						double[] d = MapUtils.WGS84toECEF(getDoubleValue(gnssLog.getLat()), getDoubleValue(gnssLog.getLng()), getDoubleValueMm(gnssLog.getHeight()));
 						gnssLog.setX(d[0]*1000);
 						gnssLog.setY(d[1]*1000);
 						gnssLog.setZ(d[2]*1000);
@@ -242,6 +242,11 @@ public class SocketDataController {
 //		BigDecimal f = new BigDecimal(Double.valueOf(s));
 //		return f.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue()/1000;
 		return Double.valueOf(s);
+	}
+	
+	private double getDoubleValueMm(String s) {
+		BigDecimal f = new BigDecimal(Double.valueOf(s));
+		return f.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue()/1000;
 	}
 	
 //	private double getDoubleDev(double x1,double x2) {
