@@ -121,7 +121,7 @@
 							type : 'post',
 							success : function(res) {
 								if (res != '' && res.data.length != '')
-									for (var i res.data) {
+									for (var i in res.data) {
 										x.push(res.data[i].xdev);
 										y.push(res.data[i].ydev);
 										z.push(res.data[i].zdev);
