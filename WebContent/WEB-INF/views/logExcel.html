@@ -116,9 +116,9 @@
 							success : function(res) {
 								if (res != '' && res.data.length != '')
 									for (var i in res.data) {
-										x.push(res.data[i].xdev);
-										y.push(res.data[i].ydev);
-										z.push(res.data[i].zdev);
+										x.push(res.data[i].xdev.toFixed(2));
+										y.push(res.data[i].ydev.toFixed(2));
+										z.push(res.data[i].zdev.toFixed(2));
 										ddate.push(res.data[i].dataTime);
 									}
 								_draw();
