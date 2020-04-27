@@ -109,7 +109,7 @@ public class QjDeviceLogDao extends BaseDao<QjDeviceLog>{
 	public PageDataList<QjDeviceLog> newData(String mac) {
 		QueryParam param = QueryParam.getInstance();
 		param.addPage(1, 20);
-		param.addParam("mac", mac);
+		param.addParam("snValue", mac);
 		param.addOrder(OrderType.DESC, "id");
 		return findPageList(param);
 	}
