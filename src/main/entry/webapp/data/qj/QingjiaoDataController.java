@@ -104,6 +104,18 @@ public class QingjiaoDataController extends BaseController {
 		}
 		return resp;
 	}
+	
+	@RequestMapping(path = "/wxdata")
+	@ResponseBody
+	public Resp<?> wxdata(String mac) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(qjDeviceLogService.newData(mac));
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return resp;
+	}
 
 	@RequestMapping(path = "/update")
 	@ResponseBody

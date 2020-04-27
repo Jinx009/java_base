@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import common.helper.StringUtil;
 import database.common.BaseDao;
+import database.common.PageDataList;
+import database.common.QueryParam;
+import database.common.OrderFilter.OrderType;
 import database.models.qj.QjDeviceLog;
 
 @Repository
@@ -101,6 +104,14 @@ public class QjDeviceLogDao extends BaseDao<QjDeviceLog>{
 			return list;
 		}
 		return null;
+	}
+
+	public PageDataList<QjDeviceLog> newData(String mac) {
+		QueryParam param = QueryParam.getInstance();
+		param.addPage(1, 20);
+		param.addParam("mac", mac);
+		param.addOrder(OrderType.DESC, "id");
+		return findPageList(param);
 	}
 
 }

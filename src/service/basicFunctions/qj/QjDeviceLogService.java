@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import database.basicFunctions.dao.qj.QjDeviceLogDao;
+import database.common.PageDataList;
 import database.models.qj.QjDeviceLog;
 
 @Service
@@ -23,6 +24,10 @@ public class QjDeviceLogService {
 	
 	public QjDeviceLog getNearBySn(String sn){
 		return qjDeviceLogDao.getNearBySn(sn);
+	}
+
+	public PageDataList<QjDeviceLog> newData(String mac) {
+		return qjDeviceLogDao.newData(mac);
 	}
 
 

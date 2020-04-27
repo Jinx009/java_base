@@ -1,6 +1,5 @@
 package main.entry.webapp.data.wxapp;
 
-import javax.servlet.http.HttpUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.entry.webapp.BaseController;
-import main.entry.webapp.data.qj.QingjiaoDataController;
 import utils.Resp;
 
 @Controller
