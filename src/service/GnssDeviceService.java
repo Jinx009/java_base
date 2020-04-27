@@ -31,5 +31,9 @@ public class GnssDeviceService {
 	public GnssDevice findByMac(String mac) {
 		return gnssDeviceDao.findByMac(mac);
 	}
+
+	public List<GnssDevice> openDeviceData() {
+		return gnssDeviceDao.openDeviceData();
+	}
 	
 }

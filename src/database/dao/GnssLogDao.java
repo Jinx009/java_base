@@ -30,4 +30,12 @@ public class GnssLogDao extends BaseDao<GnssLog>{
 		return null;
 	}
 
+	public PageDataList<GnssLog> openLogData(int i, String mac) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addPage(i,50);
+		queryParam.addParam("mac", mac);
+		queryParam.addOrder(OrderType.DESC, "id");
+		return findPageList(queryParam);
+	}
+
 }

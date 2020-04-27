@@ -26,4 +26,8 @@ public class GnssLogService {
 	public List<GnssLog> getByDate(String startDate, String endDate,String mac) {
 		return gnssLogDao.getByDate(startDate,endDate,mac) ;
 	}
+
+	public PageDataList<GnssLog> openLogData(int i, String mac) {
+		return gnssLogDao.openLogData(1,mac);
+	}
 }

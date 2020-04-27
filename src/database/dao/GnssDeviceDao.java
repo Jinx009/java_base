@@ -1,5 +1,7 @@
 package database.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
@@ -13,6 +15,12 @@ public class GnssDeviceDao extends BaseDao<GnssDevice>{
 		QueryParam param = QueryParam.getInstance();
 		param.addParam("mac", mac);
 		return findByCriteriaForUnique(param);
+	}
+
+	public List<GnssDevice> openDeviceData() {
+		QueryParam param = QueryParam.getInstance();
+		param.addParam("status", 1);
+		return findByCriteria(param);
 	}
 	
 	

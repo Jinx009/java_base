@@ -63,6 +63,8 @@ public class GnssDevice {
 	private Double baseY;
 	@Column(name = "base_z")
 	private Double baseZ;
+	@Column(name = "status")
+	private Integer status;
 	
 
 }

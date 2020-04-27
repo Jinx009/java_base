@@ -59,6 +59,31 @@ public class SocketDataController {
 		return resp;
 	}
 	
+	@RequestMapping(path = "/openDeviceData")
+	@ResponseBody
+	public Resp<?> openDeviceData() {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(gnssDeviceService.openDeviceData());
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
+	
+	@RequestMapping(path = "/openLogData")
+	@ResponseBody
+	public Resp<?> openLogData(String mac) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(gnssLogService.openLogData(1,mac));
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/logData")
 	@ResponseBody
 	public Resp<?> logData() {
