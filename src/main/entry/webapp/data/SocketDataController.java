@@ -88,6 +88,11 @@ public class SocketDataController {
 		return "/device";
 	}
 	
+	@RequestMapping(path = "/point")
+	public String point() {
+		return "/point";
+	}
+	
 	@RequestMapping(path = "/logExcel")
 	public String logExcel() {
 		return "/logExcel";

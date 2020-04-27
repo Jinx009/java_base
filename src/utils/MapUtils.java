@@ -1,5 +1,7 @@
 package utils;
 
+import java.text.DecimalFormat;
+
 public class MapUtils {
 
 	// private static double EARTH_RADIUS = 6378.137;
@@ -37,9 +39,12 @@ public class MapUtils {
 //		double[] d = WGS84toECEF(30.7335894 / 1000, 103.9681949 / 1000, 495441 / 1000);
 //		System.out.println(d[0] + "--" + d[1] + "---" + d[2]);
 //		System.out.println(ECEFtoWGS84(-1426814.8942052593, 5736207.14002754, 3492541.7182463093));
-		BLHtoXYZ(30.7335894, 103.9681949, 495441, 6378137, 6356752.31424518);
-		double[] d = WGS84toECEF(30.7335894, 103.9681949, 495441);
-		System.out.println(d[0] + "--" + d[1] + "---" + d[2]);
+//		BLHtoXYZ(30.7335894, 103.9681949, 495441, 6378137, 6356752.31424518);
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		double[] d = WGS84toECEF(30.7335918, 103.9681825, 494.356);
+		System.out.println(decimalFormat.format(d[0] *1000)+ "--" + decimalFormat.format(d[1]*1000) + "---" +decimalFormat.format( d[2]*1000));
+		d = WGS84toECEF(30.7335918, 103.9681824, 494.356);
+		System.out.println(decimalFormat.format(d[0] *1000)+ "--" + decimalFormat.format(d[1]*1000) + "---" + decimalFormat.format(d[2]*1000));
 	}
 
 	public static double[] WGS84toECEF(double latitude, double longitude, double height) {
