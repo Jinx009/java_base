@@ -57,7 +57,7 @@ public class JobTask {
 	@Autowired
 	private WenshiduLogService wenshiduLogService;
 	
-	@Scheduled(cron = "0 0 8 * * ?")
+//	@Scheduled(cron = "0 0 8 * * ?")
 	public void qjCheck() {
 		List<QjNotice> list = qjNoticeService.findAll();
 		log.warn("mac list:{}",JSONObject.toJSONString(list));
