@@ -113,7 +113,7 @@
 					'stroke-width' : 2
 				});
 				var p = paper.path("M 20 20 60 20").attr({'stroke-width': 2});
-		        var p2 = paper.text(80,20,"2mm").attr({'font-size':'14px'});
+		        var p2 = paper.text(80,20,"1cm").attr({'font-size':'14px'});
 				for (var i = 1; i <= 15; i++) {
 					paper.circle((80 + i * 40), 300, 2).attr({
 						'fill' : '＃fff'
@@ -135,9 +135,9 @@
 							var base_x = res.data[0].x;
 							var base_y = res.data[0].y;
 							for ( var i in res.data) {
-								var xx = (res.data[i].x-base_x)/20;
-								var yy = (res.data[i].y-base_y)/20;
-								paper.circle(xx+400, yy+300,2).attr({
+								var xx = (res.data[i].x-base_x)/4;
+								var yy = (res.data[i].y-base_y)/4;
+								paper.circle(xx+400, yy+200,2).attr({
 									'fill' : 'green'
 								});
 							}
