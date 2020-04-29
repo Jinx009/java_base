@@ -74,7 +74,7 @@ public class WxappDataController extends BaseController{
 	public Resp<?> send(){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String accessToken = WxappUtils.getAccessToken();
+//			String accessToken = WxappUtils.getAccessToken();
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("touser", "oe5zd4nBn-ZYiGmPd4-MHUrVZz18");
 			map.put("template_id", "5NwUahjnLzwNNutInGdNYUAI3oM7rq0z0_GKXG9mAwQ");
