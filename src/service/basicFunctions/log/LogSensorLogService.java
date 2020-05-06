@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import database.basicFunctions.dao.log.LogSensorHeartDao;
@@ -18,8 +19,8 @@ import database.models.log.LogSensorHeart;
 import database.models.log.LogSensorStatus;
 import service.basicFunctions.BaseService;
 import utils.WuhanSendUtils;
-import utils.baoxin.SendUtils;
-import utils.chaozhou.ChaozhouSendUtils;
+import utils.bearhunting.BearHuntingDataUtils;
+import utils.bearhunting.KeyUtils;
 import utils.model.BaseConstant;
 import utils.model.Resp;
 
@@ -118,23 +119,33 @@ public class LogSensorLogService extends BaseService {
 		logSensorStatusDao.save(sensorOperationLog);
 		sensorOperationLog = logSensorStatusDao.find(sensorOperationLog.getId());
 		// 武汉
-//		if (sensorOperationLog.getAreaId() != null && 64 == sensorOperationLog.getAreaId()) {
-//			String status = WuhanSendUtils.sendStatus(sensorOperationLog, sensor);
-//			if("1".equals(status)){
-//				sensorOperationLog.setSendStatus(1);
-//				sensorOperationLog.setSendTime(new Date());
-//				logSensorStatusDao.update(sensorOperationLog);
-//			}
-//		}
-		//潮州
-		if (sensorOperationLog.getAreaId() != null && 1 == sensorOperationLog.getAreaId()) {
-			int status = JSONObject.parseObject(ChaozhouSendUtils.sendStatus(sensorOperationLog, "00163e0cec7c")).getIntValue("state");
-			if(0==status){
+		if (sensorOperationLog.getAreaId() != null && 64 == sensorOperationLog.getAreaId()) {
+			String status = WuhanSendUtils.sendStatus(sensorOperationLog, sensor);
+			if("1".equals(status)){
 				sensorOperationLog.setSendStatus(1);
 				sensorOperationLog.setSendTime(new Date());
 				logSensorStatusDao.update(sensorOperationLog);
 			}
 		}
+		if (sensorOperationLog.getAreaId() != null && 65 == sensorOperationLog.getAreaId()) {
+			String status = BearHuntingDataUtils.sendStatus(KeyUtils.STATUS_FIRE_URL,sensorOperationLog, sensor.getRouterMac(),sensorOperationLog.getAvailable());
+			Integer code = JSON.parseObject(status).getInteger("status");
+			if(1==code){
+				sensorOperationLog.setSendStatus(1);
+				sensorOperationLog.setSendTime(new Date());
+				logSensorStatusDao.update(sensorOperationLog);
+			}
+		}
+		//潮州
+//		if (sensorOperationLog.getAreaId() != null && 1 == sensorOperationLog.getAreaId()) {
+//			int status = JSONObject.parseObject(ChaozhouSendUtils.sendStatus(sensorOperationLog, "00163e0cec7c")).getIntValue("state");
+//			if(0==status){
+//				sensorOperationLog.setSendStatus(1);
+//				sensorOperationLog.setSendTime(new Date());
+//				logSensorStatusDao.update(sensorOperationLog);
+//			}
+//		}
+//宝信		
 //		if (sensorOperationLog.getAreaId() != null && 1 == sensorOperationLog.getAreaId()) {
 //			boolean status = SendUtils.send(sensor.getHappenTime(), sensor.getMac(), String.valueOf(sensor.getAvailable()), "", sensor.getSensorTime(), "", "", "", "", "", "");
 //			if(status){
