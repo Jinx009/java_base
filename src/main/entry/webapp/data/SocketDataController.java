@@ -37,10 +37,10 @@ public class SocketDataController {
 	
 	@RequestMapping(path = "/logExcelData")
 	@ResponseBody
-	public Resp<?> logExcelData(String startDate,String endDate,String mac) {
+	public Resp<?> logExcelData(String startDate,String endDate,String mac,Integer fixType,Integer fixStatus,Integer horMin,Integer horMax) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(gnssLogService.getByDate(startDate,endDate,mac));
+			return new Resp<>(gnssLogService.getByDate(startDate,endDate,mac,fixType,fixStatus,horMin,horMax));
 		} catch (Exception e) {
 			log.error("error:{}",e);
 		}

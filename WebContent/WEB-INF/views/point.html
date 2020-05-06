@@ -50,13 +50,43 @@
 					</div>
 					<div class="box-body">
 						<div class="row">
-							<div class="col-md-3">
+							<div class="col-md-2">
 								<div class="form-group">
 									<label>Mac</label> <input type="text" id="mac"
 										class="form-control" placeholder="请输入设备mac号">
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-2">
+								<div class="form-group">
+									<label>FixType</label> 
+									<select class="form-control"  id="fixType">
+										 <option value="-1" >不限制</option>
+										 <option value="0" >0</option>
+										 <option value="1" >1</option>
+										 <option value="2" >2</option>
+										 <option value="3" >3</option>
+									</select>
+								</div>
+							</div>
+								<div class="col-md-2">
+								<div class="form-group">
+									<label>FixStatus</label> 
+									<select class="form-control"  id="fixStatus">
+										 <option value="-1" >不限制</option>
+										 <option value="0" >0</option>
+										 <option value="1" >1</option>
+										 <option value="2" >2</option>
+										 <option value="3" >3</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label>HorAcc</label> <input type="text" id="horAcc"
+										class="form-control" placeholder="格式：-1~-1" value="-1~-1">
+								</div>
+							</div>
+							<div class="col-md-2">
 								<div class="input-group"
 									style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top: 25px; float: left;">
 									<input type="text" class="form-control" readonly="readonly"
@@ -100,6 +130,10 @@
 		function _getData() {
 			var mac = $('#mac').val();
 			var date = $('#datepicker').val();
+			var fixType = $('#fixType').val();
+			var fixStatus = $('#fixStatus').val();
+			var horMin = $('#horAcc').val().split('~')[0];
+			var horMax = $('#horAcc').val().split('~')[1];
 			if (date == null || date == '') {
 				layer.alert('请选择日期！');
 			} else {
@@ -128,19 +162,22 @@
 					url : '/d/logExcelData',
 					dataType : 'json',
 					data : 'mac=' + mac + '&startDate=' + date.split(' - ')[0]
-							+ '&endDate=' + date.split(' - ')[1],
+							+ '&endDate=' + date.split(' - ')[1]+'&fixType='+fixType+'&fixStatus='+fixStatus+'&horMin='+horMin+'&horMax='+horMax,
 					type : 'post',
 					success : function(res) {
-						if (res != '' && res.data.length != ''){
+						if (res != '' &&res.data!=null&& res.data.length != ''){
 							var base_x = res.data[0].x;
 							var base_y = res.data[0].y;
 							for ( var i in res.data) {
 								var xx = (res.data[i].x-base_x)/4;
 								var yy = (res.data[i].y-base_y)/4;
 								paper.circle(xx+400, yy+200,2).attr({
-									'fill' : 'green'
+									'fill' : 'green',
+									'stroke':'green'
 								});
 							}
+						}else{
+							layer.alert('无数据！');
 						}
 					}
 				})

@@ -50,13 +50,43 @@
 					</div>
 					<div class="box-body">
 						<div class="row">
-							<div class="col-md-3">
+							<div class="col-md-2">
 								<div class="form-group">
 									<label>Mac</label> <input type="text" id="mac"
 										class="form-control" placeholder="请输入设备mac号">
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-2">
+								<div class="form-group">
+									<label>FixType</label> 
+									<select class="form-control"  id="fixType">
+										 <option value="-1" >不限制</option>
+										 <option value="0" >0</option>
+										 <option value="1" >1</option>
+										 <option value="2" >2</option>
+										 <option value="3" >3</option>
+									</select>
+								</div>
+							</div>
+								<div class="col-md-2">
+								<div class="form-group">
+									<label>FixStatus</label> 
+									<select class="form-control"  id="fixStatus">
+										 <option value="-1" >不限制</option>
+										 <option value="0" >0</option>
+										 <option value="1" >1</option>
+										 <option value="2" >2</option>
+										 <option value="3" >3</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label>HorAcc</label> <input type="text" id="horAcc"
+										class="form-control" placeholder="格式：-1~-1" value="-1~-1">
+								</div>
+							</div>
+							<div class="col-md-2">
 								<div class="input-group"
 									style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top:25px; float: left;">
 									<input type="text" class="form-control" readonly="readonly"
@@ -100,6 +130,10 @@
 		function _getData() {
 			x = [], y = [], z = [],ddate =[];
 			var mac = $('#mac').val();
+			var fixStatus = $('#fixStatus').val();
+			var fixType = $('#fixType').val();
+			var horMin = $('#horAcc').val().split('~')[0];
+			var horMax = $('#horAcc').val().split('~')[1];
 			var date = $('#datepicker').val();
 			if (date == null || date == '') {
 				layer.alert('请选择日期！');
@@ -111,10 +145,10 @@
 							dataType : 'json',
 							data : 'mac=' + mac + '&startDate='
 									+ date.split(' - ')[0] + '&endDate='
-									+ date.split(' - ')[1],
+									+ date.split(' - ')[1]+'&fixType='+fixType+'&fixStatus='+fixStatus+'&horMin='+horMin+'&horMax='+horMax,
 							type : 'post',
 							success : function(res) {
-								if (res != '' && res.data.length != '')
+								if (res != '' &&res.data!=null&& res.data.length != ''){
 									for (var i in res.data) {
 										x.push(res.data[i].xdev.toFixed(2));
 										y.push(res.data[i].ydev.toFixed(2));
@@ -122,6 +156,8 @@
 										ddate.push(res.data[i].dataTime);
 									}
 								_draw();
+							}else{
+								layer.alert('无数据！');
 							}
 						})
 			}

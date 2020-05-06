@@ -21,8 +21,20 @@ public class GnssLogDao extends BaseDao<GnssLog>{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GnssLog> getByDate(String startDate, String endDate,String mac) {
-		String hql = " from GnssLog where  mac = '"+mac+"' and dateTime>='"+startDate+"' and dateTime <= '"+endDate+"'  and  dataType = 1";
+	public List<GnssLog> getByDate(String startDate, String endDate,String mac, Integer fixType, Integer fixStatus, Integer horMin, Integer horMax) {
+		String hql = " from GnssLog where  mac = '"+mac+"' and dateTime>='"+startDate+"' and dateTime <= '"+endDate+"'  and  dataType = 1 ";
+		if(fixType!=-1){
+			hql+= " and fixType= "+fixType;
+		}
+		if(fixStatus!=-1){
+			hql+= " and fixStatus= "+fixStatus;
+		}
+		if(horMin!=-1){
+			hql+= " and horAcc>= "+horMin;
+		}
+		if(horMax!=-1){
+			hql+= " and horAcc<= "+horMax;
+		}
 		List<GnssLog> list = em.createQuery(hql).getResultList();
 		if(list!=null&&!list.isEmpty()){
 			return list;
