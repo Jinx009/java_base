@@ -113,6 +113,11 @@ public class SocketDataController {
 		return "/device";
 	}
 	
+	@RequestMapping(path = "/height")
+	public String height() {
+		return "/height";
+	}
+	
 	@RequestMapping(path = "/point")
 	public String point() {
 		return "/point";

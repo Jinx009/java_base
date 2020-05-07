@@ -128,7 +128,7 @@
 		})
 		var _d = '';
 		function _getData() {
-			x = [], y = [], z = [], ddate = [];
+			x = [],ddate = [];
 			var mac = $('#mac').val();
 			var fixStatus = $('#fixStatus').val();
 			var fixType = $('#fixType').val();
@@ -151,9 +151,7 @@
 						if (res != '' && res.data != null
 								&& res.data.length != '') {
 							for ( var i in res.data) {
-								x.push(res.data[i].xdev.toFixed(2));
-								y.push(res.data[i].ydev.toFixed(2));
-								z.push(res.data[i].zdev.toFixed(2));
+								x.push(res.data[i].height);
 								ddate.push(res.data[i].dataTime);
 							}
 							_draw();
@@ -169,13 +167,13 @@
 			var colors = [ '#5793f3', '#d14a61', '#675bba' ];
 			option = {
 				title : {
-					text : '地心坐标系曲线'
+					text : '海拔曲线'
 				},
 				tooltip : {
 					trigger : 'axis'
 				},
 				legend : {
-					data : [ 'x', 'y', 'z' ]
+					data : [ 'x' ]
 				},
 				grid : {
 					left : '3%',
@@ -199,14 +197,6 @@
 					name : 'x',
 					type : 'line',
 					data : x
-				}, {
-					name : 'y',
-					type : 'line',
-					data : y
-				}, {
-					name : 'z',
-					type : 'line',
-					data : z
 				} ]
 			};
 			myChart_1.setOption(option, true);

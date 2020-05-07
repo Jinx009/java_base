@@ -109,7 +109,7 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter{
             		msg += "User-Agent: NTRIP GNSSInternetRadio 2.0.10 \r\n";// 请求首部
             		 msg += "Accept: */*\r\nConnection: close\r\n";// 7802_RTD
             		msg += "Accept:*/* \r\n";// 请求首部
-            		msg += "Authorization: Basic " + Base64.getEncoder().encodeToString("960bbd8:qxsxfk001".getBytes())
+            		msg += "Authorization: Basic " + Base64.getEncoder().encodeToString("qxsxfk001:960bbd8".getBytes())
             				+ "\r\n\r\n";// base64加密用户名和密码 // 请求首部
             		log.warn("Started Tcp Client:{} ",msg);
             		ByteBuf byteBuf = Unpooled.wrappedBuffer(msg.getBytes());
