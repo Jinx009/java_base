@@ -143,6 +143,11 @@ public class SocketDataController {
 		return "/log";
 	}
 	
+	@RequestMapping(path = "/enu")
+	public String enu() {
+		return "/enu";
+	}
+	
 	@RequestMapping(path = "/socketSave")
 	@ResponseBody
 	public String socketSave(String status,String ip,String clientPort,String connPort) {
@@ -179,6 +184,9 @@ public class SocketDataController {
 					gnssDevice.setMac(mac);
 					gnssDevice.setX(0.00);
 					gnssDeviceService.save(gnssDevice);
+					gnssDevice.setBaseLat(0.00);
+					gnssDevice.setBaseLng(0.00);
+					gnssDevice.setBaseHeight(0.00);
 					gnssDevice = gnssDeviceService.findByMac(mac);
 				}
 				String cmd = str.substring(20,22);
@@ -216,6 +224,9 @@ public class SocketDataController {
 					gnssLog.setX(0.00);
 					gnssLog.setY(0.00);
 					gnssLog.setZ(0.00);
+					gnssLog.setEnuX(0.00);
+					gnssLog.setEnuY(0.00);
+					gnssLog.setEnuZ(0.00);
 					gnssLog.setXDev(0.00);
 					gnssLog.setYDev(0.00);
 					gnssLog.setZDev(0.00);
@@ -231,6 +242,13 @@ public class SocketDataController {
 							gnssLog.setYDev(gnssLog.getY()-gnssDevice.getBaseY());
 							gnssLog.setZDev(gnssLog.getZ()-gnssDevice.getBaseZ());
 							gnssLog.setDataType(1);
+						}
+						if(gnssDevice.getBaseLat()!=0.00){
+							double[] arr = MapUtils.wgs84ToEcef(getDoubleValue(gnssLog.getLat()), getDoubleValue(gnssLog.getLng()), getDoubleValueMm(gnssLog.getHeight()));
+							double[] arr1 = MapUtils.ecefToEnu(arr[0], arr[1], arr[2], gnssDevice.getBaseLat(), gnssDevice.getBaseLng(), gnssDevice.getBaseHeight());
+							gnssLog.setEnuX(new BigDecimal(arr1[0]).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue());
+							gnssLog.setEnuY(new BigDecimal(arr1[1]).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue());
+							gnssLog.setEnuZ(new BigDecimal(arr1[2]).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue());
 						}
 					}
 					gnssLog.setNum(Integer.valueOf(numStr,16));

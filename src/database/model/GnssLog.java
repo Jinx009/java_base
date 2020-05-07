@@ -65,6 +65,12 @@ public class GnssLog {
 	private double yDev;
 	@Column(name = "z_dev")
 	private double zDev;
+	@Column(name = "enu_x")
+	private Double enuX;
+	@Column(name = "enu_y")
+	private Double enuY;
+	@Column(name = "enu_z")
+	private Double enuZ;
 	@Column(name = "data_type")
 	private Integer dataType;
 	
