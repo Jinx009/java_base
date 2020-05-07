@@ -151,8 +151,9 @@
 						if (res != '' && res.data != null
 								&& res.data.length != '') {
 							for ( var i in res.data) {
-								height.push(res.data[i].height);
-								ddate.push(res.data[i].dataTime);
+								res.data[i].createTime = toDateTime(res.data[i].createTime);
+								height.push(res.data[i].height-493075);
+								ddate.push(res.data[i].createTime);
 							}
 							_draw();
 						} else {

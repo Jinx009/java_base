@@ -165,10 +165,11 @@
 						if (res != '' && res.data != null
 								&& res.data.length != '') {
 							for ( var i in res.data) {
+								res.data[i].createTime = toDateTime(res.data[i].createTime);
 								x.push(res.data[i].xdev.toFixed(2));
 								y.push(res.data[i].ydev.toFixed(2));
 								z.push(res.data[i].zdev.toFixed(2));
-								ddate.push(res.data[i].dataTime);
+								ddate.push(res.data[i].createTime);
 							}
 							_draw();
 						} else {
