@@ -117,7 +117,7 @@
 	<script src="/themes/laydate/laydate.js"></script>
 	<script src="https://cdn.bootcss.com/echarts/3.8.0/echarts.min.js"></script>
 	<script type="text/javascript">
-		var x = [], y = [], z = [];
+		var height = [];
 		$(function() {
 			//	$('#datepicker').val(new Date().Format('yyyy-MM-dd'));
 			laydate.render({
@@ -128,7 +128,7 @@
 		})
 		var _d = '';
 		function _getData() {
-			x = [],ddate = [];
+			height = [],ddate = [];
 			var mac = $('#mac').val();
 			var fixStatus = $('#fixStatus').val();
 			var fixType = $('#fixType').val();
@@ -151,7 +151,7 @@
 						if (res != '' && res.data != null
 								&& res.data.length != '') {
 							for ( var i in res.data) {
-								x.push(res.data[i].height);
+								height.push(res.data[i].height);
 								ddate.push(res.data[i].dataTime);
 							}
 							_draw();
@@ -173,7 +173,7 @@
 					trigger : 'axis'
 				},
 				legend : {
-					data : [ 'x' ]
+					data : [ 'height' ]
 				},
 				grid : {
 					left : '3%',
@@ -194,9 +194,9 @@
 					type : 'value'
 				},
 				series : [ {
-					name : 'x',
+					name : 'height',
 					type : 'line',
-					data : x
+					data : height
 				} ]
 			};
 			myChart_1.setOption(option, true);
