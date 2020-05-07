@@ -30,9 +30,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 			public void run() {
 				byte[] data = new byte[] {};
 				while (true) {
-					if (!Arrays.equals(main.entry.webapp.datasocket.NettyConfig.data, data)) {
-						data = main.entry.webapp.datasocket.NettyConfig.data;
-						ByteBuf pingMessage = ctx.alloc().buffer(main.entry.webapp.datasocket.NettyConfig.data.length);
+					if (!Arrays.equals(main.entry.webapp.qxwzdata.NettyConfig.data, data)) {
+						data = main.entry.webapp.qxwzdata.NettyConfig.data;
+						ByteBuf pingMessage = ctx.alloc().buffer(main.entry.webapp.qxwzdata.NettyConfig.data.length);
 						pingMessage.writeBytes(data);
 						ctx.writeAndFlush(pingMessage);
 					}else {

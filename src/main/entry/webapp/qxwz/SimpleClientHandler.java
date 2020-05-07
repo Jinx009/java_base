@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -107,12 +109,14 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter{
             		msg += "User-Agent: NTRIP GNSSInternetRadio 2.0.10 \r\n";// 请求首部
             		 msg += "Accept: */*\r\nConnection: close\r\n";// 7802_RTD
             		msg += "Accept:*/* \r\n";// 请求首部
-            		msg += "Authorization: Basic " + Base64.getEncoder().encodeToString("qxnfun00291:a79b386".getBytes())
+            		msg += "Authorization: Basic " + Base64.getEncoder().encodeToString("960bbd8:qxsxfk001".getBytes())
             				+ "\r\n\r\n";// base64加密用户名和密码 // 请求首部
             		log.warn("Started Tcp Client:{} ",msg);
             		ByteBuf byteBuf = Unpooled.wrappedBuffer(msg.getBytes());
             		f.channel().writeAndFlush(byteBuf);
-            		msg = "$GPGGA,013406.00,30.731083,N,103.970377,E,1,16,0.8,122.1179,M,-7.002,M,,*46\r\n";
+            		SimpleDateFormat sdf = new SimpleDateFormat("hhmmss.sss");
+                    msg = "$GPGGA,"+sdf.format(new Date())+",3043.8649800,N,10358.2226200,E,1,00,1.0,641.212,M,-41.212,M,0.0,*46\r\n";
+//            		msg = "$GPGGA,013406.00,30.731083,N,103.970377,E,1,16,0.8,122.1179,M,-7.002,M,,*46\r\n";
             		Thread.sleep(2000);
             		byteBuf = Unpooled.wrappedBuffer(msg.getBytes());
             		f.channel().writeAndFlush(byteBuf);
