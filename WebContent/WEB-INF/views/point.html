@@ -154,7 +154,7 @@
 					});
 				}
 				for (var i = 1; i <= 11; i++) {
-					paper.circle(400, (20 + i * 40), 2).attr({
+					paper.circle(400, (20 + i *40), 2).attr({
 						'fill' : '#fff'
 					});
 				}
@@ -166,12 +166,15 @@
 					type : 'post',
 					success : function(res) {
 						if (res != '' &&res.data!=null&& res.data.length != ''){
-							var base_x = res.data[0].x;
-							var base_y = res.data[0].y;
+							//var base_x = res.data[0].x;
+							//var base_y = res.data[0].y;
+							var base_x = -1324606664.9914699;
+							var base_y = 5325300254.961298;
 							for ( var i in res.data) {
-								var xx = (res.data[i].x-base_x)/4;
-								var yy = (res.data[i].y-base_y)/4;
-								paper.circle(xx+400, yy+300,2).attr({
+								var xx = (res.data[i].xdev);
+								var yy = (res.data[i].ydev);
+								console.log(xx+'-'+yy)
+								paper.circle(xx-800, yy-900,2).attr({
 									'fill' : 'green',
 									'stroke':'green'
 								});
