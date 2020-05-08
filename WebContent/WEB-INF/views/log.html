@@ -58,7 +58,7 @@
 											<th>ver_acc</th>
 											<th>create_time</th>
 											<th>num</th>
-											<th>data_time</th>
+											<th>类型</th>
 											<th>xdev</th>
 											<th>ydev</th>
 											<th>zdev</th>
@@ -80,7 +80,10 @@
 											<td v-text="item.verAcc"></td>
 											<td v-text="item.createTime"></td>
 											<td v-text="item.num"></td>
-											<td v-text="item.dataTime"></td>
+											<td >
+												<font v-if="'1'==item.type" >PVT</font>
+												<font v-if="'2'==item.type" >高精度</font>
+											</td>
 											<th v-text="item.xdev"></th>
 											<th v-text="item.ydev"></th>
 											<th v-text="item.zdev"></th>
@@ -98,6 +101,6 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/log.js?version=1.45"></script>
+	<script src="/themes/js/log.js?version=1.47"></script>
 </body>
 </html>

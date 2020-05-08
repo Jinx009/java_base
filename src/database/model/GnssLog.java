@@ -73,5 +73,7 @@ public class GnssLog {
 	private Double enuZ;
 	@Column(name = "data_type")
 	private Integer dataType;
+	@Column(name = "type")
+	private String type;
 	
 }

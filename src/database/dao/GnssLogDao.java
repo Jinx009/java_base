@@ -15,13 +15,13 @@ public class GnssLogDao extends BaseDao<GnssLog>{
 
 	public PageDataList<GnssLog> findByPage(Integer p) {
 		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addPage(p,200);
+		queryParam.addPage(p,40);
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GnssLog> getByDate(String startDate, String endDate,String mac, Integer fixType, Integer fixStatus, Integer horMin, Integer horMax) {
+	public List<GnssLog> getByDate(String startDate, String endDate,String mac, Integer fixType, Integer fixStatus, Integer horMin, Integer horMax, String type) {
 		String hql = " from GnssLog where  mac = '"+mac+"' and dateTime>='"+startDate+"' and dateTime <= '"+endDate+"'  and  dataType = 1 ";
 		if(fixType!=-1){
 			hql+= " and fixType= "+fixType;
@@ -34,6 +34,9 @@ public class GnssLogDao extends BaseDao<GnssLog>{
 		}
 		if(horMax!=-1){
 			hql+= " and horAcc<= "+horMax;
+		}
+		if(!"-1".equals(type)){
+			hql+= " and type= '"+type+"'";
 		}
 		List<GnssLog> list = em.createQuery(hql).getResultList();
 		if(list!=null&&!list.isEmpty()){

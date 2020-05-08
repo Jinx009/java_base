@@ -23,8 +23,8 @@ public class GnssLogService {
 		gnssLogDao.save(gnssLog);
 	}
 
-	public List<GnssLog> getByDate(String startDate, String endDate,String mac, Integer fixType, Integer fixStatus, Integer horMin, Integer horMax) {
-		return gnssLogDao.getByDate(startDate,endDate,mac,fixType,fixStatus,horMin,horMax) ;
+	public List<GnssLog> getByDate(String startDate, String endDate,String mac, Integer fixType, Integer fixStatus, Integer horMin, Integer horMax, String type) {
+		return gnssLogDao.getByDate(startDate,endDate,mac,fixType,fixStatus,horMin,horMax,type) ;
 	}
 
 	public PageDataList<GnssLog> openLogData(int i, String mac) {

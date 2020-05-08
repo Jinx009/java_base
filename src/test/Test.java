@@ -7,11 +7,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class Test {
 
@@ -57,7 +61,7 @@ public class Test {
 		return null;
 	}
 
-	private static String getDataBase(String index, String _d) throws Exception {
+	public static String getDataBase(String index, String _d) throws Exception {
 		int _index = Integer.parseInt(index, 16);
 		Integer a = Integer.valueOf(_d, 16);
 		String b = Integer.toBinaryString(a);
@@ -174,9 +178,139 @@ public class Test {
 //		} catch (Exception e) {
 //			System.out.println(e.getMessage());
 //		}
-		System.out.println("-1--1".split("-")[1]);
+//		System.out.println("-1--1".split("-")[1]);
+//		String s = "48000019180000120022652c00b562011424000000000050285d1b694d7d4833b69e12fe4a00004a230000e012fd018d00000079000000e85e";
+//	String latBase = getHex10(s.substring(62,70));
+//	String lngBase = getHex10(s.substring(54,62));
+//	String timeStr =  getHex10(s.substring(46,54));
+//	String heightBase =  getHex(s.substring(70,78));
+//	String hmslBase =  getHex(s.substring(78,86));
+//	Integer lngDev =  Integer.valueOf(s.substring(86,88), 16);
+//	Integer latDev =  Integer.valueOf(s.substring(88,90), 16);
+//	Integer heightDev =  Integer.valueOf(s.substring(90,92), 16);
+//	Integer hmlsDev =  Integer.valueOf(s.substring(92,94), 16);
+//	String horAcc =  getHex(s.substring(94,102));
+//	String verAcc =  getHex(s.substring(102,110));
+//	if(lngDev>128){
+//		lngDev = 128-lngDev;
+//	}
+//	if(latDev>128){
+//		lngDev = 128-latDev;
+//	}
+//	if(heightDev>128){
+//		lngDev = 128-heightDev;
+//	}
+//	if(hmlsDev>128){
+//		hmlsDev = 128-hmlsDev;
+//	}
+//	String lat = getDouble(latBase, latDev);
+//	String lng =getDouble(lngBase, lngDev);
+//	String height = getDouble1(heightBase, heightDev);
+//	String hmsl = getDouble1(hmslBase, hmlsDev);
+//	System.out.println(lat+"-"+lng+"-"+Double.valueOf(height)+"-"+Double.valueOf(hmsl));
+//	try {
+//		Integer aa = Integer.parseInt("E0",16);
+//		if(aa>128){
+//			aa = -256+aa;
+//		}
+//		System.out.println(aa);
+//	} catch (Exception e) {
+//		e.printStackTrace();
+//	}
+//	
 	}
-
+	
+	public static  Integer get16(String index, String _d) throws Exception {
+		int _index = Integer.parseInt(index, 16);
+		Integer a = Integer.valueOf(_d, 16);
+		String b = Integer.toBinaryString(a);
+		String[] arrs = b.split("");
+		String[] arr = new String[16];
+		int i = 0;
+		for (String s : arrs) {
+			if (s != null && !"".equals(s)) {
+				arr[i] = s;
+				i++;
+			}
+		}
+		String c = "";
+		Integer e = Integer.parseInt(b, 2);
+		if (_index > 8) {
+			for (String d : arr) {
+				if (d != null && !"".equals(d)) {
+					if (d.equals("1")) {
+						c += "0";
+					} else {
+						c += "1";
+					}
+				}
+			}
+			e = (Integer.parseInt(c, 2) + 1) * -1;
+		} else {
+			e = Integer.parseInt(_d, 16);
+		}
+		
+		return e;
+	}
+	
+	public static String getDouble(String s,int a){
+		Double r = Double.valueOf(a);
+		Double r1 = Double.valueOf(s);
+		BigDecimal f = new BigDecimal(r);
+		BigDecimal f1 = new BigDecimal(r1);
+		double g = f.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue()/1000000000;
+		double g1 = f1.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result = decimalFormat.format(g+g1);
+		return result;
+	}
+	
+	public static String getDouble1(String s,int a){
+		Double r = Double.valueOf(a);
+		Double r1 = Double.valueOf(s);
+		BigDecimal f = new BigDecimal(r);
+		BigDecimal f1 = new BigDecimal(r1);
+		double g = f.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue()/10;
+		double g1 = f1.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result = decimalFormat.format(g+g1);
+		return result;
+	}
+	
+	public static String  getHex10(String str) {//0DE0FE43-A7C52512-F8350000
+		String s1 = str.substring(6,8);
+		String s2 = str.substring(4,6);
+		String s3 = str.substring(2,4);
+		String s4 = str.substring(0,2);
+		String str2 = s1+s2+s3+s4;
+		Integer i = Integer.valueOf(str2,16);
+		Double r = Double.valueOf(i);
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue()/10000000;
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		String result = decimalFormat.format(g);
+		return result;
+	}
+	
+	public static String  getHex(String str) {//0DE0FE43-A7C52512
+		String s1 = str.substring(6,8);
+		String s2 = str.substring(4,6);
+		String s3 = str.substring(2,4);
+		String s4 = str.substring(0,2);
+		String str2 = s1+s2+s3+s4;
+		return Integer.valueOf(str2,16).toString();
+	}
+	
+	public static String  getHex1(String str) {//0DE0FE43-A7C52512
+		String s1 = str.substring(6,8);
+		String s2 = str.substring(4,6);
+		String s3 = str.substring(2,4);
+		String s4 = str.substring(0,2);
+		String str2 = s1+s2+s3+s4;
+		Integer s = Integer.valueOf(str2,16)/10;
+		return s.toString();
+	}
+	
 	public static String convertHexToString(String hex) {
 		StringBuilder sb = new StringBuilder();
 		StringBuilder temp = new StringBuilder();

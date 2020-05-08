@@ -62,7 +62,7 @@ private static final Logger log = LoggerFactory.getLogger(ServerHandlerQxwzMain.
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
 		HttpUtils.get("http://127.0.0.1:8080/d/socketSave?status=close&ip="+
 		ctx.channel().remoteAddress().toString().split(":")[0].replaceAll("/", "")+"&clientPort="+
-	    ctx.channel().remoteAddress().toString().split(":")[1]+"&connPort=9999");
+	    ctx.channel().remoteAddress().toString().split(":")[1]+"&connPort=7777");
 		ctx.flush();
 	}
 

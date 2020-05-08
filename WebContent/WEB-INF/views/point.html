@@ -79,6 +79,16 @@
 									</select>
 								</div>
 							</div>
+								<div class="col-md-2">
+								<div class="form-group">
+									<label>类型</label> <select class="form-control"
+										id="type">
+										<option value="-1">不限制</option>
+										<option value="1">PVT</option>
+										<option value="2">高精度</option>
+									</select>
+								</div>
+							</div>
 							<div class="col-md-2">
 								<div class="form-group">
 									<label>HorAcc</label> <input type="text" id="horAcc"
@@ -143,6 +153,7 @@
 			var fixStatus = $('#fixStatus').val();
 			var horMin = $('#horAcc').val().split('~')[0];
 			var horMax = $('#horAcc').val().split('~')[1];
+			var type = $('#type').val();
 			if (date == null || date == '') {
 				layer.alert('请选择日期！');
 			} else {
@@ -150,7 +161,7 @@
 					url : '/d/logExcelData',
 					dataType : 'json',
 					data : 'mac=' + mac + '&startDate=' + date.split(' - ')[0]
-							+ '&endDate=' + date.split(' - ')[1]+'&fixType='+fixType+'&fixStatus='+fixStatus+'&horMin='+horMin+'&horMax='+horMax,
+							+ '&endDate=' + date.split(' - ')[1]+'&fixType='+fixType+'&fixStatus='+fixStatus+'&horMin='+horMin+'&horMax='+horMax+'&type='+type,
 					type : 'post',
 					success : function(res) {
 						if (res != '' &&res.data!=null&& res.data.length != ''){
