@@ -10,6 +10,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import utils.HttpUtils;
 
+/**
+ * 接收千寻数据
+ * @author jinx
+ *
+ */
 public class ServerHandler extends ChannelInboundHandlerAdapter {
 
 	private static final Logger log = LoggerFactory.getLogger(ServerHandler.class);
