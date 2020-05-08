@@ -18,9 +18,8 @@ import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-public class Server {
-	
-	private static final Logger log = LoggerFactory.getLogger(Server.class);
+public class ServerQxwzMain {
+	private static final Logger log = LoggerFactory.getLogger(ServerQxwzMain.class);
 	
 
     public  static Map<String, ChannelHandlerContext> map = new HashMap<String, ChannelHandlerContext>();
@@ -29,7 +28,7 @@ public class Server {
     private int port;
     private ServerSocketChannel serverSocketChannel;
  
-    public Server(int port){
+    public ServerQxwzMain(int port){
         this.port = port;
         bind();
     }
@@ -65,7 +64,7 @@ public class Server {
                                         //心跳检测，读超时，写超时，读写超时
                                         //new IdleStateHandler(5, 0, 0, TimeUnit.SECONDS),
                                         //自定义的处理器
-                                        new ServerHandler());
+                                        new ServerHandlerQxwzMain());
                             }
                         });
  
@@ -101,5 +100,4 @@ public class Server {
         }
     }
     
-
 }

@@ -1,10 +1,6 @@
 package main.entry.webapp.qxwzdata;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,33 +23,33 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 		ctx.channel().remoteAddress().toString().split(":")[0].replaceAll("/", "")+"&clientPort="+
 		ctx.channel().remoteAddress().toString().split(":")[1]+"&connPort=6666");
 		NettyConfig.group.add(ctx.channel());
-		new Thread() {
-			public void run() {
-				String str = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-				byte[] data = new byte[] {};
-				int i = 10000;
-				while (true) {
-					try {
-						String s = "";
-						if(i<13600) {
-							s = i+str+i;
-							
-						}else {
-							i = 10000;
-							s = i+str+i;
-						}
-						data = s.getBytes();
-						ByteBuf pingMessage = ctx.alloc().buffer(data.length);
-						pingMessage.writeBytes(data);
-						ctx.writeAndFlush(pingMessage);
-						Thread.sleep(1000);
-						i++;
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}.start();
+//		new Thread() {
+//			public void run() {
+//				String str = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+//				byte[] data = new byte[] {};
+//				int i = 10000;
+//				while (true) {
+//					try {
+//						String s = "";
+//						if(i<13600) {
+//							s = i+str+i;
+//							
+//						}else {
+//							i = 10000;
+//							s = i+str+i;
+//						}
+//						data = s.getBytes();
+//						ByteBuf pingMessage = ctx.alloc().buffer(data.length);
+//						pingMessage.writeBytes(data);
+//						ctx.writeAndFlush(pingMessage);
+//						Thread.sleep(1000);
+//						i++;
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//		}.start();
 	}
 
 	/**
@@ -94,63 +90,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 		byte[] req = new byte[buf.readableBytes()];
 		buf.readBytes(req);
 		NettyConfig.data = req;
-//		save();
 	}
 
-	private void save() {
-		try {
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			long t = System.currentTimeMillis();
-			if (NettyConfig.time == 0) {
-				NettyConfig.time = t;
-			} else {
-				if ((t - NettyConfig.time) > NettyConfig.maxTime) {
-					NettyConfig.maxTime = t - NettyConfig.time;
-					NettyConfig.time = t;
-					File f = new File("/data/logs/gnss/qxwz.txt");
-					File fileParent = f.getParentFile();
-					if (!fileParent.exists()) {
-						fileParent.mkdirs();
-						f.createNewFile();
-					}
-					FileWriter fw = new FileWriter(f, true);
-					PrintWriter pw = new PrintWriter(fw);
-					pw.println("max time:" + NettyConfig.maxTime + " " + df.format(new Date()));
-					pw.flush();
-					fw.flush();
-					pw.close();
-					fw.close();
-				}else if ((t - NettyConfig.time) > 3000) {
-					NettyConfig.num++;
-					NettyConfig.time = t;
-					File f = new File("/data/logs/gnss/qxwz.txt");
-					File fileParent = f.getParentFile();
-					if (!fileParent.exists()) {
-						fileParent.mkdirs();
-						f.createNewFile();
-					}
-					FileWriter fw = new FileWriter(f, true);
-					PrintWriter pw = new PrintWriter(fw);
-					pw.println("num:" + NettyConfig.num + " " + df.format(new Date()));
-					pw.flush();
-					fw.flush();
-					pw.close();
-					fw.close();
-				}else {
-					NettyConfig.time = t;
-				}
-			}
-		} catch (Exception e) {
-			log.error("error:{}", e);
-		}
-	}
 	
-	public static void main(String[] args) {
-		String str = "";
-		for(int i = 0;i<1024;i++) {
-			str+= "0";
-		}
-		System.out.println(str);
-	}
+	
+
 
 }

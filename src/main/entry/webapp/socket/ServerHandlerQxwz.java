@@ -1,6 +1,5 @@
 package main.entry.webapp.socket;
 
-
 import java.util.Arrays;
 
 import org.slf4j.Logger;
@@ -11,9 +10,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import utils.HttpUtils;
 
-public class ServerHandler extends ChannelInboundHandlerAdapter {
+public class ServerHandlerQxwz  extends ChannelInboundHandlerAdapter {
 
-	private static final Logger log = LoggerFactory.getLogger(ServerHandler.class);
+private static final Logger log = LoggerFactory.getLogger(ServerHandlerQxwz.class);
 	
 
 	/**
@@ -25,14 +24,14 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 		HttpUtils.get("http://127.0.0.1:8080/d/socketSave?status=conn&ip="+
 		ctx.channel().remoteAddress().toString().split(":")[0].replaceAll("/", "")+"&clientPort="+
 		ctx.channel().remoteAddress().toString().split(":")[1]+"&connPort=9999");
-		NettyConfig.group.add(ctx.channel());
+		NettyConfigQxwz.group.add(ctx.channel());
 		new Thread() {
 			public void run() {
 				byte[] data = new byte[] {};
 				while (true) {
-					if (!Arrays.equals(main.entry.webapp.datasocket.NettyConfig.data, data)) {
-						data = main.entry.webapp.datasocket.NettyConfig.data;
-						ByteBuf pingMessage = ctx.alloc().buffer(main.entry.webapp.datasocket.NettyConfig.data.length);
+					if (!Arrays.equals(main.entry.webapp.qxwzdata.NettyConfig.data, data)) {
+						data = main.entry.webapp.qxwzdata.NettyConfig.data;
+						ByteBuf pingMessage = ctx.alloc().buffer(main.entry.webapp.qxwzdata.NettyConfig.data.length);
 						pingMessage.writeBytes(data);
 						ctx.writeAndFlush(pingMessage);
 					}else {
@@ -53,7 +52,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	 */
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-		NettyConfig.group.remove(ctx.channel());
+		NettyConfigQxwz.group.remove(ctx.channel());
 	}
 
 	/**
@@ -105,5 +104,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	}
 	
 
+
+	
 	
 }
