@@ -26,7 +26,8 @@
 <body class="hold-transition skin-blue fixed sidebar-mini">
 	<!-- Site wrapper -->
 	<div class="wrapper">
-		<#include "home_nav.html"> <!-- 路径导航 -->
+		<#include "home_nav.html">
+		<!-- 路径导航 -->
 		<div class="content-wrapper" style="background-color: white;">
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
@@ -57,25 +58,25 @@
 							</div>
 							<div class="col-md-2">
 								<div class="form-group">
-									<label>FixType</label> <select class="form-control"
-										id="fixType">
-										<option value="-1">不限制</option>
-										<option value="0">0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
+									<label>FixType</label> 
+									<select class="form-control"  id="fixType">
+										 <option value="-1" >不限制</option>
+										 <option value="0" >0</option>
+										 <option value="1" >1</option>
+										 <option value="2" >2</option>
+										 <option value="3" >3</option>
 									</select>
 								</div>
 							</div>
-							<div class="col-md-2">
+								<div class="col-md-2">
 								<div class="form-group">
-									<label>FixStatus</label> <select class="form-control"
-										id="fixStatus">
-										<option value="-1">不限制</option>
-										<option value="0">0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
+									<label>FixStatus</label> 
+									<select class="form-control"  id="fixStatus">
+										 <option value="-1" >不限制</option>
+										 <option value="0" >0</option>
+										 <option value="1" >1</option>
+										 <option value="2" >2</option>
+										 <option value="3" >3</option>
 									</select>
 								</div>
 							</div>
@@ -115,27 +116,17 @@
 	</div>
 	<script src="/themes/laydate/laydate.js"></script>
 	<script src="/themes/js/raphael.js"></script>
-	<script type="text/javascript"
-		src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-	<script type="text/javascript"
-		src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
-	<script type="text/javascript"
-		src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
-	<script type="text/javascript"
-		src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
-	<script type="text/javascript"
-		src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
-	<script type="text/javascript"
-		src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
 	<script type="text/javascript">
+		var paper;
 		$(function() {
+			paper = Raphael("paper", 800, 600);
 			laydate.render({
 				elem : '#datepicker',
 				type : 'datetime',
 				range : true
 			});
 		})
-		var data = [];
+
 		function _getData() {
 			var mac = $('#mac').val();
 			var date = $('#datepicker').val();
@@ -146,6 +137,27 @@
 			if (date == null || date == '') {
 				layer.alert('请选择日期！');
 			} else {
+				paper.clear();
+				var x_path = paper.path("M 100 300 700 300").attr({
+					'arrow-end' : 'classic-wide-long',
+					'stroke-width' : 2
+				});
+				var y_path = paper.path("M 400 500 400 10").attr({
+					'arrow-end' : 'classic-wide-long',
+					'stroke-width' : 2
+				});
+				var p = paper.path("M 20 20 60 20").attr({'stroke-width': 2});
+		        var p2 = paper.text(80,20,"1cm").attr({'font-size':'14px'});
+				for (var i = 1; i <= 15; i++) {
+					paper.circle((80 + i * 40), 300, 2).attr({
+						'fill' : '#fff'
+					});
+				}
+				for (var i = 1; i <= 11; i++) {
+					paper.circle(400, (20 + i *40), 2).attr({
+						'fill' : '#fff'
+					});
+				}
 				$.ajax({
 					url : '/d/logExcelData',
 					dataType : 'json',
@@ -154,26 +166,18 @@
 					type : 'post',
 					success : function(res) {
 						if (res != '' &&res.data!=null&& res.data.length != ''){
-							
-							for(var i in res.data){
-							  data.push([parseFloat(res.data[i].xdev.toFixed(3)),parseFloat(res.data[i].ydev.toFixed(3))]);
-							}
-							var dom = document.getElementById("paper");
-							var myChart = echarts.init(dom);
-							var app = {};
-							option = null;
-							option = {
-							    xAxis: {},
-							    yAxis: {},
-							    series: [{
-							        symbolSize: 10,
-							        data: data,
-							        type: 'scatter'
-							    }]
-							};
-
-							if (option && typeof option === "object") {
-							    myChart.setOption(option, true);
+							//var base_x = res.data[0].x;
+							//var base_y = res.data[0].y;
+							var base_x = -1324606664.9914699;
+							var base_y = 5325300254.961298;
+							for ( var i in res.data) {
+								var xx = (res.data[i].xdev);
+								var yy = (res.data[i].ydev);
+								console.log(xx+'-'+yy)
+								paper.circle(xx-800, yy-900,2).attr({
+									'fill' : 'green',
+									'stroke':'green'
+								});
 							}
 						}else{
 							layer.alert('无数据！');
