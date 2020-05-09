@@ -294,6 +294,7 @@ public class SocketDataController {
 										baseLog.setBaseY(gnssLog.getY());
 										baseLog.setBaseZ(gnssLog.getZ());
 										baseLog.setMac(mac);
+										baseLog.setCreateTime(new Date());
 										gnssBaseLogService.save(baseLog);
 									}
 									if (gnssDevice.getBaseLat() != 0.00) {
@@ -399,6 +400,7 @@ public class SocketDataController {
 										baseLog.setBaseX(gnssLog.getX());
 										baseLog.setBaseY(gnssLog.getY());
 										baseLog.setBaseZ(gnssLog.getZ());
+										baseLog.setCreateTime(new Date());
 										baseLog.setMac(mac);
 										gnssBaseLogService.save(baseLog);
 									}

@@ -7,13 +7,13 @@ function _getData() {
 		dataType : 'json',
 		type : 'post',
 		success : function(res) {
-			for ( var i in res.data) {
-				res.data[i].createTime = toDateTime(res.data[i].createTime);
+			for ( var i in res.data.list) {
+				res.data.list[i].createTime = toDateTime(res.data.list[i].createTime);
 			}
 			new Vue({
 				el : '#data',
 				data : {
-					datas : res.data
+					datas : res.data.list
 				}
 			})
 		}

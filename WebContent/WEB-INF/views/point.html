@@ -55,7 +55,7 @@
 										class="form-control" placeholder="请输入设备mac号">
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-1">
 								<div class="form-group">
 									<label>FixType</label> <select class="form-control"
 										id="fixType">
@@ -67,7 +67,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-1">
 								<div class="form-group">
 									<label>FixStatus</label> <select class="form-control"
 										id="fixStatus">
@@ -76,6 +76,15 @@
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
+									</select>
+								</div>
+							</div>
+									<div class="col-md-2">
+								<div class="form-group">
+									<label>数据类型</label> <select class="form-control"
+										id="dataType">
+										<option value="xyz">XYZ</option>
+										<option value="ENU">ENU</option>
 									</select>
 								</div>
 							</div>
@@ -113,7 +122,7 @@
 						<div class="panel panel-default" style="border-color: white;">
 							<div class="panel-body">
 								<div
-									style="float: left; position: relative; min-height: 1px; width: 1280px; height: 500px; padding: 0"
+									style="float: left; position: relative; min-height: 1px; width: 600px; height: 600px; padding: 0"
 									id="paper"></div>
 							</div>
 						</div>
@@ -165,12 +174,17 @@
 					type : 'post',
 					success : function(res) {
 						if (res != '' &&res.data!=null&& res.data.length != ''){
-							
+							var dataType = $('#dataType').val();
+						/* 	data.push([-50,-0]);
+							data.push([50,100]); */
 							for(var i in res.data){
-							  data.push([parseFloat(res.data[i].xdev.toFixed(3)),parseFloat(res.data[i].ydev.toFixed(3))]);
+								if('ENU'==dataType){
+									  data.push([parseFloat(res.data[i].enuX.toFixed(3)),parseFloat(res.data[i].enuY.toFixed(3))]);
+								}else{
+									  data.push([parseFloat(res.data[i].xdev.toFixed(3)),parseFloat(res.data[i].ydev.toFixed(3))]);
+								}
 							}
-							var dom = document.getElementById("paper");
-							var myChart = echarts.init(dom);
+							var myChart = echarts.init(document.getElementById('paper'));
 							var app = {};
 							option = null;
 							option = {
