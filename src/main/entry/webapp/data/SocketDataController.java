@@ -355,8 +355,7 @@ public class SocketDataController {
 									gnssLog.setZDev(gnssLog.getZ() - gnssDevice.getBaseZ());
 									gnssLog.setDataType(1);
 									if ((gnssLog.getXDev() > 500 || gnssLog.getXDev() < -500)
-											&& Integer.valueOf(gnssLog.getHorAcc()) < 15 && gnssLog.getFixType() == 3
-											&& "2".equals(gnssLog.getFixStatus())) {
+											&& Double.valueOf(gnssLog.getHorAcc()) < 15) {
 										gnssDevice.setBaseHeight(Double.valueOf(gnssLog.getHeight()) / 1000);
 										gnssDevice.setBaseLat(Double.valueOf(gnssLog.getLat()));
 										gnssDevice.setBaseLng(Double.valueOf(gnssLog.getLng()));
