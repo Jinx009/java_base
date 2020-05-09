@@ -21,7 +21,7 @@ public class SocketConnLogDao extends BaseDao<SocketConnLog>{
 
 	public PageDataList<SocketConnLog> findByPage(Integer p) {
 		QueryParam queryParam = QueryParam.getInstance();
-		queryParam.addPage(p,200);
+		queryParam.addPage(p,30);
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);
 	}

@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import common.helper.StringUtil;
+import database.model.GnssBaseLog;
 import database.model.GnssDevice;
 import database.model.GnssLog;
 import database.model.SocketConnLog;
+import service.GnssBaseLogService;
 import service.GnssDeviceService;
 import service.GnssLogService;
 import service.SocketConnLogService;
@@ -34,6 +36,8 @@ public class SocketDataController {
 	private GnssLogService gnssLogService;
 	@Autowired
 	private SocketConnLogService socketConnLogService;
+	@Autowired
+	private GnssBaseLogService gnssBaseLogService;
 
 	@RequestMapping(path = "/logExcelData")
 	@ResponseBody
@@ -55,6 +59,18 @@ public class SocketDataController {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			return new Resp<>(gnssDeviceService.findAll());
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/baseLogData")
+	@ResponseBody
+	public Resp<?> baseLogData() {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(gnssBaseLogService.findByPage(1));
 		} catch (Exception e) {
 			log.error("error:{}", e);
 		}
@@ -112,6 +128,11 @@ public class SocketDataController {
 	@RequestMapping(path = "/device")
 	public String device() {
 		return "/device";
+	}
+	
+	@RequestMapping(path = "/baseLog")
+	public String baseLog() {
+		return "/baseLog";
 	}
 
 	@RequestMapping(path = "/height")
@@ -265,6 +286,15 @@ public class SocketDataController {
 										gnssDevice.setBaseX(gnssLog.getX());
 										gnssDevice.setBaseY(gnssLog.getY());
 										gnssDevice.setBaseZ(gnssLog.getZ());
+										GnssBaseLog baseLog = new GnssBaseLog();
+										baseLog.setBaseHeight(Double.valueOf(gnssLog.getHeight()) / 1000);
+										baseLog.setBaseLat(Double.valueOf(gnssLog.getLat()));
+										baseLog.setBaseLng(Double.valueOf(gnssLog.getLng()));
+										baseLog.setBaseX(gnssLog.getX());
+										baseLog.setBaseY(gnssLog.getY());
+										baseLog.setBaseZ(gnssLog.getZ());
+										baseLog.setMac(mac);
+										gnssBaseLogService.save(baseLog);
 									}
 									if (gnssDevice.getBaseLat() != 0.00) {
 										double[] arr = MapUtils.wgs84ToEcef(getDoubleValue(gnssLog.getLat()),
@@ -355,13 +385,22 @@ public class SocketDataController {
 									gnssLog.setZDev(gnssLog.getZ() - gnssDevice.getBaseZ());
 									gnssLog.setDataType(1);
 									if ((gnssLog.getXDev() > 500 || gnssLog.getXDev() < -500)
-											&& Double.valueOf(gnssLog.getHorAcc()) < 15) {
+											&& Double.valueOf(gnssLog.getHorAcc()) < 15.0) {
 										gnssDevice.setBaseHeight(Double.valueOf(gnssLog.getHeight()) / 1000);
 										gnssDevice.setBaseLat(Double.valueOf(gnssLog.getLat()));
 										gnssDevice.setBaseLng(Double.valueOf(gnssLog.getLng()));
 										gnssDevice.setBaseX(gnssLog.getX());
 										gnssDevice.setBaseY(gnssLog.getY());
 										gnssDevice.setBaseZ(gnssLog.getZ());
+										GnssBaseLog baseLog = new GnssBaseLog();
+										baseLog.setBaseHeight(Double.valueOf(gnssLog.getHeight()) / 1000);
+										baseLog.setBaseLat(Double.valueOf(gnssLog.getLat()));
+										baseLog.setBaseLng(Double.valueOf(gnssLog.getLng()));
+										baseLog.setBaseX(gnssLog.getX());
+										baseLog.setBaseY(gnssLog.getY());
+										baseLog.setBaseZ(gnssLog.getZ());
+										baseLog.setMac(mac);
+										gnssBaseLogService.save(baseLog);
 									}
 									if (gnssDevice.getBaseLat() != 0.00) {
 										double[] arr = MapUtils.wgs84ToEcef(getDoubleValue(gnssLog.getLat()),
