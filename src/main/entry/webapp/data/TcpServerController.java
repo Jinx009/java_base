@@ -23,8 +23,8 @@ public class TcpServerController {
 			new main.entry.webapp.qxwzdata.Server(6666);//千寻本地转发
 //			new NettyClient("rtk.ntrip.qxwz.com", 8002).run();
 //			new main.entry.webapp.qxwz.Server(7777);//千寻
-//			new Server(9999);//监测院数据对外
-			new ServerQxwz(9999);
+			new Server(9999);//监测院数据对外
+//			new ServerQxwz(9999);
 			new ServerQxwzMain(7777);
 		} catch (Exception e) {
 			e.printStackTrace();

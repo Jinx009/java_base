@@ -278,7 +278,7 @@ public class SocketDataController {
 									gnssLog.setZDev(gnssLog.getZ() - gnssDevice.getBaseZ());
 									gnssLog.setDataType(1);
 									if ((gnssLog.getXDev() > 500 || gnssLog.getXDev() < -500)
-											&& Integer.valueOf(gnssLog.getHorAcc()) < 15 && gnssLog.getFixType() == 3
+											&& Integer.valueOf(gnssLog.getHorAcc()) < 25 && gnssLog.getFixType() == 3
 											&& "2".equals(gnssLog.getFixStatus())) {
 										gnssDevice.setBaseHeight(Double.valueOf(gnssLog.getHeight()) / 1000);
 										gnssDevice.setBaseLat(Double.valueOf(gnssLog.getLat()));
@@ -386,7 +386,7 @@ public class SocketDataController {
 									gnssLog.setZDev(gnssLog.getZ() - gnssDevice.getBaseZ());
 									gnssLog.setDataType(1);
 									if ((gnssLog.getXDev() > 500 || gnssLog.getXDev() < -500)
-											&& Double.valueOf(gnssLog.getHorAcc()) < 15.0) {
+											&& Double.valueOf(gnssLog.getHorAcc()) < 25.0) {
 										gnssDevice.setBaseHeight(Double.valueOf(gnssLog.getHeight()) / 1000);
 										gnssDevice.setBaseLat(Double.valueOf(gnssLog.getLat()));
 										gnssDevice.setBaseLng(Double.valueOf(gnssLog.getLng()));
@@ -535,7 +535,8 @@ public class SocketDataController {
 	}
 
 	public static void main(String[] args) {
-
+		String str = "48000019180000120033676400b56201075c00d062c403e407050a112104f7ea0300001b7807000301ea1f334af83dbf9251127c850700a1fa07009f010000b6020000010000000000000000000000010000000000000031000000e97d750060000000dcca493200000000000000000f4848000019180000120033652c00b5620114240000000000d062c403334af83dbf9251127c850700a1fa070000fc030033100000181b0000b786";
+		System.out.println(str.length());
 	}
 
 }
