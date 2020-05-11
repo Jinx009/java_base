@@ -179,45 +179,46 @@ public class Test {
 //			System.out.println(e.getMessage());
 //		}
 //		System.out.println("-1--1".split("-")[1]);
-//		String s = "48000019180000120022652c00b562011424000000000050285d1b694d7d4833b69e12fe4a00004a230000e012fd018d00000079000000e85e";
-//	String latBase = getHex10(s.substring(62,70));
-//	String lngBase = getHex10(s.substring(54,62));
-//	String timeStr =  getHex10(s.substring(46,54));
-//	String heightBase =  getHex(s.substring(70,78));
-//	String hmslBase =  getHex(s.substring(78,86));
-//	Integer lngDev =  Integer.valueOf(s.substring(86,88), 16);
-//	Integer latDev =  Integer.valueOf(s.substring(88,90), 16);
-//	Integer heightDev =  Integer.valueOf(s.substring(90,92), 16);
-//	Integer hmlsDev =  Integer.valueOf(s.substring(92,94), 16);
-//	String horAcc =  getHex(s.substring(94,102));
-//	String verAcc =  getHex(s.substring(102,110));
-//	if(lngDev>128){
-//		lngDev = 128-lngDev;
-//	}
-//	if(latDev>128){
-//		lngDev = 128-latDev;
-//	}
-//	if(heightDev>128){
-//		lngDev = 128-heightDev;
-//	}
-//	if(hmlsDev>128){
-//		hmlsDev = 128-hmlsDev;
-//	}
-//	String lat = getDouble(latBase, latDev);
-//	String lng =getDouble(lngBase, lngDev);
-//	String height = getDouble1(heightBase, heightDev);
-//	String hmsl = getDouble1(hmslBase, hmlsDev);
-//	System.out.println(lat+"-"+lng+"-"+Double.valueOf(height)+"-"+Double.valueOf(hmsl));
-//	try {
-//		Integer aa = Integer.parseInt("E0",16);
-//		if(aa>128){
-//			aa = -256+aa;
-//		}
-//		System.out.println(aa);
-//	} catch (Exception e) {
-//		e.printStackTrace();
-//	}
-//	
+		String s = "48000019180000120022656400b56201075c00c839bf1be40705080912133701000000d67501000383ea204f4c7d4817b39e12014800004e20000";
+	String latBase = getHex10(s.substring(62,70));
+	String lngBase = getHex10(s.substring(54,62));
+	String timeStr =  getHex10(s.substring(46,54));
+	String heightBase =  getHex(s.substring(70,78));
+	String hmslBase =  getHex(s.substring(78,86));
+	Integer lngDev =  Integer.valueOf(s.substring(86,88), 16);
+	Integer latDev =  Integer.valueOf(s.substring(88,90), 16);
+	Integer heightDev =  Integer.valueOf(s.substring(90,92), 16);
+	Integer hmlsDev =  Integer.valueOf(s.substring(92,94), 16);
+	String horAcc =  getHex(s.substring(94,102));
+	String verAcc =  getHex(s.substring(102,110));
+	System.out.println(horAcc);
+	if(lngDev>128){
+		lngDev = -256+lngDev;
+	}
+	if(latDev>128){
+		lngDev = -256+latDev;
+	}
+	if(heightDev>128){
+		lngDev = -256+heightDev;
+	}
+	if(hmlsDev>128){
+		hmlsDev = -256+hmlsDev;
+	}
+	String lat = getDouble(latBase, latDev);
+	String lng =getDouble(lngBase, lngDev);
+	String height = getDouble1(heightBase, heightDev);
+	String hmsl = getDouble1(hmslBase, hmlsDev);
+	System.out.println(lat+"-"+lng+"-"+Double.valueOf(height)+"-"+Double.valueOf(hmsl));
+	try {
+		Integer aa = Integer.parseInt("E0",16);
+		if(aa>128){
+			aa = -256+aa;
+		}
+		System.out.println(aa);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	
 	}
 	
 	public static  Integer get16(String index, String _d) throws Exception {
