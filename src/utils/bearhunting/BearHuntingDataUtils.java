@@ -20,7 +20,7 @@ public class BearHuntingDataUtils {
 	            Date date = new Date();
 	            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	            String params = "Id3="+routerMac+"&devid="+s.getMac()+"&tick="+date.getTime()+"&event="+s.getAvailable()+
-	                    "&eventtime="+simpleDateFormat.format(date.getTime())+"&category="+status;
+	                    "&eventtime="+simpleDateFormat.format(date.getTime())+"&category=1";
 	            String sendParams = params+"&sign="+KeyUtils.get(params);
 	            log.warn("[bearhunting status: params{}]",sendParams);
 	            res = HttpUtil.sendPost(url,sendParams);
@@ -29,17 +29,18 @@ public class BearHuntingDataUtils {
 	        }
 	        return res;
 	    }
+	    
 
-//	    public static void main(String[] args){
-//	        Date date = new Date();
-//	        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//	        String params = "Id3=00163e0e0f3d&devid=000118031600000A&tick=1537753651654&event=1"+
-//	                "&eventtime="+simpleDateFormat.format(date.getTime())+"&category=1";
-//	        String sendParams = params+"&sign="+KeyUtils.get(params);
-//	        log.warn("[bearhunting status: params{}]",sendParams);
-//	        String res = HttpUtils.sendPost(KeyUtils.STATUS_URL,sendParams);
-//	        System.out.print(res);
-//	    }
+	    public static void main(String[] args){
+	        Date date = new Date();
+	        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        String params = "Id3=00047e449415&devid=0001191107000099&tick="+date.getTime()+"&event=1"+
+	                "&eventtime="+simpleDateFormat.format(date.getTime())+"&category=1";
+	        String sendParams = params+"&sign="+KeyUtils.get(params);
+	        log.warn("[bearhunting status: params{}]",sendParams);
+	        String res = HttpUtil.sendPost(KeyUtils.STATUS_FIRE_URL,sendParams);
+	        System.out.print(res);
+	    }
 
 
 //	    public static String sendStatusFire(String url,SensorOperationLog s, String routerMac){
