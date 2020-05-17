@@ -301,7 +301,19 @@ public class TelcomCotroller extends BaseController {
 									log.setCmdType(1);
 									iotCloudLogService.update(log);
 								} else {
-									sendYIBIN(ioTCloudDevice, iotCloudLog.getData());
+									sendYIBIN(ioTCloudDevice, iotCloudLog.getData());			
+									if(StringUtil.isNotBlank(ioTCloudDevice.getSendA())){
+										IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendA());
+										sendYIBIN(de, iotCloudLog.getData());
+									}
+									if(StringUtil.isNotBlank(ioTCloudDevice.getSendB())){
+										IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendB());
+										sendYIBIN(de, iotCloudLog.getData());
+									}
+									if(StringUtil.isNotBlank(ioTCloudDevice.getSendC())){
+										IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendC());
+										sendYIBIN(de, iotCloudLog.getData());
+									}
 									HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="+ tModel.getData());
 								}
 							} catch (Exception e) {
@@ -377,6 +389,18 @@ public class TelcomCotroller extends BaseController {
 								public void run() {
 									log.warn("开始线程");
 									sendSichuan(ioTCloudDevice, iotCloudLog.getData());
+									if(StringUtil.isNotBlank(ioTCloudDevice.getSendA())){
+										IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendA());
+										sendSichuan(de, iotCloudLog.getData());
+									}
+									if(StringUtil.isNotBlank(ioTCloudDevice.getSendB())){
+										IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendB());
+										sendSichuan(de, iotCloudLog.getData());
+									}
+									if(StringUtil.isNotBlank(ioTCloudDevice.getSendC())){
+										IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendC());
+										sendSichuan(de, iotCloudLog.getData());
+									}
 								}
 							}.start();
 						}
@@ -478,6 +502,18 @@ public class TelcomCotroller extends BaseController {
 								iotCloudLogService.update(log);
 							} else {
 								sendYIBIN(ioTCloudDevice, iotCloudLog.getData());
+								if(StringUtil.isNotBlank(ioTCloudDevice.getSendA())){
+									IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendA());
+									sendYIBIN(de, iotCloudLog.getData());
+								}
+								if(StringUtil.isNotBlank(ioTCloudDevice.getSendB())){
+									IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendB());
+									sendYIBIN(de, iotCloudLog.getData());
+								}
+								if(StringUtil.isNotBlank(ioTCloudDevice.getSendC())){
+									IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendC());
+									sendYIBIN(de, iotCloudLog.getData());
+								}
 								HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="
 										+ tModel.getData());
 							}
@@ -564,6 +600,18 @@ public class TelcomCotroller extends BaseController {
 							public void run() {
 								log.warn("开始线程");
 								sendSichuan(ioTCloudDevice, iotCloudLog.getData());
+								if(StringUtil.isNotBlank(ioTCloudDevice.getSendA())){
+									IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendA());
+									sendSichuan(de, iotCloudLog.getData());
+								}
+								if(StringUtil.isNotBlank(ioTCloudDevice.getSendB())){
+									IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendB());
+									sendSichuan(de, iotCloudLog.getData());
+								}
+								if(StringUtil.isNotBlank(ioTCloudDevice.getSendC())){
+									IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendC());
+									sendSichuan(de, iotCloudLog.getData());
+								}
 							}
 						}.start();
 					}
