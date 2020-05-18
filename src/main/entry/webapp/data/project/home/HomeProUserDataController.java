@@ -32,18 +32,7 @@ public class HomeProUserDataController extends BaseController{
 		return resp;
 	}
 	
-	@RequestMapping(path = "/setLevel")
-	@ResponseBody
-	public Resp<?> setLevel(Integer id){
-		Resp<?> resp = new Resp<>(false);
-		try {
-			proUserService.updateLevel(id);
-			return new Resp<>(true);
-		} catch (Exception e) {
-			log.error("e:{}",e);
-		}
-		return resp;
-	}
+
 	
 	
 }

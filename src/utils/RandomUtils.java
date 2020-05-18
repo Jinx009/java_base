@@ -223,4 +223,8 @@ public class RandomUtils {
 		return getUniqueRandomString(length, base);
 	}
 
+	public static void main(String[] args) {
+		System.out.println(code());
+	}
+	
 }

@@ -13,24 +13,25 @@ public class ProUserService {
 	@Autowired
 	private ProUserDao proUserDao;
 	
-	public void updateLevel(Integer id){
-		proUserDao.setLevel(id);
+	
+	public ProUser getByOpenid(String openid){
+		return proUserDao.getByOpenid(openid);
 	}
 	
-	public ProUser login(String userName,String pwd){
-		return proUserDao.getByUserNameAndPwd(userName, pwd);
+	
+	public void update(ProUser proUser){
+		proUserDao.update(proUser);
 	}
 	
-	public ProUser register(String userName,String pwd){
-		return proUserDao.register(userName, pwd);
-	}
 	
-	public ProUser findByUserName(String userName){
-		return proUserDao.findByUserName(userName);
-	}
 
 	public PageDataList<ProUser> findList(Integer p) {
 		return proUserDao.list(p);
+	}
+
+
+	public void save(ProUser proUser) {
+		proUserDao.save(proUser);
 	}
 	
 }

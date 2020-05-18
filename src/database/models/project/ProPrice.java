@@ -17,23 +17,35 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="pro_vedio")
-public class ProVedio {
+@Table(name="pro_price")
+public class ProPrice {
 
 	@Id
 	@Column(unique=true, nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "name")
-	private String name;
-	@Column(name = "pic_path")
-	private String picPath;
-	@Column(name = "vedio_path")
-	private String vedioPath;
-	@Column(name = "vedio_level")
-	private Integer vedioLevel;
+	@Column(name = "time")
+	private String time;
+	@Column(name = "a_name")
+	private String aName;
+	@Column(name = "a_price")
+	private Double aPrice;
+	@Column(name = "b_name")
+	private String bName;
+	@Column(name = "b_price")
+	private Double bPrice;
+	@Column(name = "c_name")
+	private String cName;
+	@Column(name = "c_price")
+	private Double cPrice;
+	@Column(name = "d_name")
+	private String dName;
+	@Column(name = "d_price")
+	private Double dPrice;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
+	@Column(name = "level")
+	private Integer level;
 	
 }

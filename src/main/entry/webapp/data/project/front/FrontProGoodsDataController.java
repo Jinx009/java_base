@@ -7,29 +7,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import main.entry.webapp.BaseController;
-import service.basicFunctions.project.ProVedioService;
+import service.basicFunctions.project.ProGoodsService;
 import utils.Resp;
 
 @Controller
-@RequestMapping(value = "/f/pro_vedio")
-public class FrontProVedioDataController extends BaseController{
+@RequestMapping(value = "/f/pro_goods")
+public class FrontProGoodsDataController extends BaseController {
 
-	private static final Logger log = LoggerFactory.getLogger(FrontProVedioDataController.class);
+	private static final Logger log = LoggerFactory.getLogger(FrontProGoodsDataController.class);
 	
 	@Autowired
-	private ProVedioService proVedioService;
+	private ProGoodsService proGoodsService;
 	
 	@RequestMapping(path = "/list")
 	@ResponseBody
-	public Resp<?> findByLevel(Integer level,Integer p){
+	public Resp<?> list(String date){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(proVedioService.findByLevel(level,p));
+			return new Resp<>(proGoodsService.findByDate(date));
 		} catch (Exception e) {
-			log.error("e:{}",e);
+			log.error("error:{}",e);
 		}
 		return resp;
 	}
+	
 	
 }

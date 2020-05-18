@@ -14,12 +14,11 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @Entity
-@Table(name="pro_user")
-public class ProUser {
+@Table(name="pro_order")
+public class ProOrder {
 
 	@Id
 	@Column(unique=true, nullable=false)
@@ -29,8 +28,20 @@ public class ProUser {
 	private String mobilePhone;
 	@Column(name = "openid")
 	private String openid;
+	@Column(name = "date")
+	private String date;
+	@Column(name = "time")
+	private String time;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "price")
+	private Double price;
+	@Column(name = "status")
+	private Integer status;
+	@Column(name = "type")
+	private String type;
 	
 }
