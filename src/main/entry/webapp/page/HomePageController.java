@@ -10,14 +10,14 @@ import main.entry.webapp.BaseController;
 @RequestMapping(value = "/home/p")
 public class HomePageController extends BaseController{
 	
-	@RequestMapping(path = "/pro_user")
+	@RequestMapping(path = "/pro_goods")
 	public String driver(){
-		return "/home/pro_user";
+		return "/home/pro_goods";
 	}
 	
-	@RequestMapping(path = "/pro_vedio")
+	@RequestMapping(path = "/pro_price")
 	public String driver_new(){
-		return "/home/pro_vedio";
+		return "/home/pro_price";
 	}
 	
 	@RequestMapping(path = "/pro_vedio_new")

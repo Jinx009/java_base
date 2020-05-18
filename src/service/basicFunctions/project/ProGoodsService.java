@@ -19,15 +19,56 @@ public class ProGoodsService {
 	private ProGoodsDao proGoodsDao;
 	@Autowired
 	private ProPriceDao proPriceDao;
-	
-	public List<ProGoods> findByDate(String date){
+
+	public List<ProGoods> findByDate(String date) {
 		List<ProGoods> list = proGoodsDao.findByDate(date);
-		if(list!=null&&!list.isEmpty()){
-			return list;
-		}else{
+		List<ProPrice> prices = proPriceDao.findOrderLevel();
+		if (list != null && !list.isEmpty()) {
+			List<ProGoods> goodsList = new ArrayList<ProGoods>();
+			for (ProPrice price : prices) {
+				ProGoods good = null;
+				for (ProGoods goods : list) {
+						if(goods.getTime().equals(price.getTime())){
+							goods.setAName(price.getAName());
+							goods.setBName(price.getBName());
+							goods.setCName(price.getCName());
+							goods.setDName(price.getDName());
+							goods.setAPrice(price.getAPrice());
+							goods.setBPrice(price.getBPrice());
+							goods.setCPrice(price.getCPrice());
+							goods.setDPrice(price.getDPrice());
+							proGoodsDao.update(goods);
+							good = goods;
+							break;
+						}
+				}
+				if(good!=null){
+					goodsList.add(good);
+				}else{
+					good = new ProGoods();
+					good.setAName(price.getAName());
+					good.setBName(price.getBName());
+					good.setCName(price.getCName());
+					good.setDName(price.getDName());
+					good.setDate(date);
+					good.setTime(price.getTime());
+					good.setCreateTime(new Date());
+					good.setAPrice(price.getAPrice());
+					good.setAType(0);
+					good.setBPrice(price.getBPrice());
+					good.setBType(0);
+					good.setCPrice(price.getCPrice());
+					good.setCType(0);
+					good.setDPrice(price.getDPrice());
+					good.setDType(0);
+					proGoodsDao.save(good);
+					goodsList .add(good);
+				}
+			}
+			return goodsList;
+		} else {
 			list = new ArrayList<ProGoods>();
-			List<ProPrice> prices = proPriceDao.findOrderLevel();
-			for(ProPrice price:prices){
+			for (ProPrice price : prices) {
 				ProGoods proGoods = new ProGoods();
 				proGoods.setAName(price.getAName());
 				proGoods.setBName(price.getBName());
@@ -58,5 +99,5 @@ public class ProGoodsService {
 	public ProGoods findByDateTimeName(String date, String time) {
 		return proGoodsDao.findByDateTimeName(date, time);
 	}
-	
+
 }
