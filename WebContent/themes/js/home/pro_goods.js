@@ -11,7 +11,7 @@ function _getData(_) {
 	} else {
 		$
 				.ajax({
-					url : '/h/pro_goods/list',
+					url : '/h/pro_goods/list?date='+date,
 					dataType : 'json',
 					type : 'post',
 					success : function(res) {
