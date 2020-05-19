@@ -1,6 +1,8 @@
 package service.basicFunctions.project;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,14 @@ public class ProOrderService {
 	
 	public void update(ProOrder proOrder) {
 		proOrderDao.update(proOrder);
+	}
+
+	public List<ProOrder> findByDateTimeType(String date, String time, String type) {
+		return proOrderDao.findByDateTimeType(date,time,type);
+	}
+
+	public PageDataList<ProOrder> findPage(Integer fromSite, String fromDate, String toDate,Integer p) {
+		return proOrderDao.findPageH(fromSite, fromDate,toDate,p);
 	}
 	
 }

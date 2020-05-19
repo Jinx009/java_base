@@ -34,20 +34,28 @@ public class HomeProPriceDataController extends BaseController {
 		return resp;
 	}
 	
+	@RequestMapping(path = "/findByTime")
+	@ResponseBody
+	public Resp<?> findByTime(String time){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(proPriceService.findByTime(time));
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	
 	
 	@RequestMapping(path = "/update")
 	@ResponseBody
-	public Resp<?> update(Integer id,String time,String aName,String bName,String cName,String dName,double aPrice,double bPrice,double cPrice,double dPrice){
+	public Resp<?> update(Integer id,String name,double price){
 		Resp<?> resp = new Resp<>(false);
 		try {
 			ProPrice proPrice = proPriceService.findById(id);
-			proPrice.setAName(aName);
-			proPrice.setAPrice(aPrice);
-			proPrice.setBName(bName);
-			proPrice.setCName(cName);
-			proPrice.setCPrice(cPrice);
-			proPrice.setDName(dName);
-			proPrice.setDPrice(dPrice);
+			proPrice.setName(name);
+			proPrice.setPrice(price);
 			proPriceService.update(proPrice);
 			return new Resp<>(true);
 		} catch (Exception e) {

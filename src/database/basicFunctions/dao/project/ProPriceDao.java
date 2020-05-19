@@ -17,6 +17,19 @@ public class ProPriceDao extends BaseDao<ProPrice>{
 		qpParam.addOrder(OrderType.ASC, "level");
 		return findByCriteria(qpParam);
 	}
+
+	public ProPrice findByTimeAbc(String string, String s) {
+		QueryParam qpParam = QueryParam.getInstance();
+		qpParam.addParam("type", string);
+		qpParam.addParam("time", s);
+		return findByCriteriaForUnique(qpParam);
+	}
+
+	public Object findByTime(String time) {
+		QueryParam qpParam = QueryParam.getInstance();
+		qpParam.addParam("time", time);
+		return findByCriteria(qpParam);
+	}
 	
 
 }

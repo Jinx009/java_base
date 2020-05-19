@@ -42,33 +42,23 @@ public class FrontProOrderDataController extends BaseController {
 	
 	@RequestMapping(path = "/save")
 	@ResponseBody
-	public Resp<?> list(String date,String name,String time,String openid,String mobilePhone,Double price,String type){
+	public Resp<?> list(Integer id,String openid,String mobilePhone){
 		Resp<?> resp = new Resp<>(false);
 		try {
+			ProGoods proGoods = ProGoodsService.findById(id);
 			ProOrder proOrder = new ProOrder();
 			proOrder.setCreateTime(new Date());
-			proOrder.setDate(date);
+			proOrder.setDate(proGoods.getDate());
 			proOrder.setMobilePhone(mobilePhone);
-			proOrder.setName(name);
+			proOrder.setName(proGoods.getName());
 			proOrder.setOpenid(openid);
-			proOrder.setPrice(price);
+			proOrder.setPrice(proGoods.getPrice());
 			proOrder.setStatus(0);
-			proOrder.setType(type);
-			proOrder.setTime(time);
+			proOrder.setType(proGoods.getAbc());
+			proOrder.setTime(proGoods.getTime());
+			proOrder.setFromSite(1);
 			proOrder = proOrderService.saveOrder(proOrder);
-			ProGoods proGoods = ProGoodsService.findByDateTimeName(proOrder.getDate(),proOrder.getTime());
-			if("A".equals(type)){
-				proGoods.setAType(1);
-			}
-			if("B".equals(type)){
-				proGoods.setBType(1);
-			}
-			if("C".equals(type)){
-				proGoods.setCType(1);
-			}
-			if("D".equals(type)){
-				proGoods.setDType(1);
-			}
+			proGoods.setType(1);
 			ProGoodsService.update(proGoods);
 			return new Resp<>(proOrder);
 		} catch (Exception e) {

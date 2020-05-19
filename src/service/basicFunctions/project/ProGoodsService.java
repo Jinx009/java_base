@@ -2,14 +2,18 @@ package service.basicFunctions.project;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import database.basicFunctions.dao.project.ProGoodsDao;
 import database.basicFunctions.dao.project.ProPriceDao;
 import database.models.project.ProGoods;
+import database.models.project.ProGoodsModel;
 import database.models.project.ProPrice;
 
 @Service
@@ -20,84 +24,94 @@ public class ProGoodsService {
 	@Autowired
 	private ProPriceDao proPriceDao;
 
-	public List<ProGoods> findByDate(String date) {
-		List<ProGoods> list = proGoodsDao.findByDate(date);
+	public List<ProGoodsModel> findByDate(String date) {
+		List<ProGoodsModel> models = new ArrayList<ProGoodsModel>();
 		List<ProPrice> prices = proPriceDao.findOrderLevel();
-		if (list != null && !list.isEmpty()) {
-			List<ProGoods> goodsList = new ArrayList<ProGoods>();
-			for (ProPrice price : prices) {
-				ProGoods good = null;
-				for (ProGoods goods : list) {
-						if(goods.getTime().equals(price.getTime())){
-							goods.setAName(price.getAName());
-							goods.setBName(price.getBName());
-							goods.setCName(price.getCName());
-							goods.setDName(price.getDName());
-							goods.setAPrice(price.getAPrice());
-							goods.setBPrice(price.getBPrice());
-							goods.setCPrice(price.getCPrice());
-							goods.setDPrice(price.getDPrice());
-							proGoodsDao.update(goods);
-							good = goods;
-							break;
-						}
-				}
-				if(good!=null){
-					goodsList.add(good);
-				}else{
-					good = new ProGoods();
-					good.setAName(price.getAName());
-					good.setBName(price.getBName());
-					good.setCName(price.getCName());
-					good.setDName(price.getDName());
-					good.setDate(date);
-					good.setTime(price.getTime());
-					good.setCreateTime(new Date());
-					good.setAPrice(price.getAPrice());
-					good.setAType(0);
-					good.setBPrice(price.getBPrice());
-					good.setBType(0);
-					good.setCPrice(price.getCPrice());
-					good.setCType(0);
-					good.setDPrice(price.getDPrice());
-					good.setDType(0);
-					proGoodsDao.save(good);
-					goodsList .add(good);
-				}
-			}
-			return goodsList;
-		} else {
-			list = new ArrayList<ProGoods>();
-			for (ProPrice price : prices) {
-				ProGoods proGoods = new ProGoods();
-				proGoods.setAName(price.getAName());
-				proGoods.setBName(price.getBName());
-				proGoods.setCName(price.getCName());
-				proGoods.setDName(price.getDName());
-				proGoods.setDate(date);
-				proGoods.setTime(price.getTime());
-				proGoods.setCreateTime(new Date());
-				proGoods.setAPrice(price.getAPrice());
-				proGoods.setAType(0);
-				proGoods.setBPrice(price.getBPrice());
-				proGoods.setBType(0);
-				proGoods.setCPrice(price.getCPrice());
-				proGoods.setCType(0);
-				proGoods.setDPrice(price.getDPrice());
-				proGoods.setDType(0);
-				proGoodsDao.save(proGoods);
-				list.add(proGoods);
-			}
-			return list;
+		Set<String> set = new LinkedHashSet<String>();
+		for (ProPrice p : prices) {
+			set.add(p.getTime());
 		}
+		for (String s : set) {
+			ProGoodsModel model = new ProGoodsModel();
+			model.setTime(s);
+			List<ProGoods> goods = new ArrayList<>();
+			ProGoods a = proGoodsDao.findByDateTimeAbc(date,s,"A");
+			ProGoods b = proGoodsDao.findByDateTimeAbc(date,s,"B");
+			ProGoods c = proGoodsDao.findByDateTimeAbc(date,s,"C");
+			ProGoods d = proGoodsDao.findByDateTimeAbc(date,s,"D");
+			if (a == null) {
+				a = new ProGoods();
+				a.setAbc("A");
+				a.setCreateTime(new Date());
+				a.setDate(date);
+				a.setTime(s);
+				ProPrice price = proPriceDao.findByTimeAbc("A",s);
+				a.setName(price.getName());
+				a.setPrice(price.getPrice());
+				a.setType(0);
+				a = proGoodsDao.save(a);
+			}
+			if (b == null) {
+				b = new ProGoods();
+				b.setAbc("B");
+				b.setCreateTime(new Date());
+				b.setDate(date);
+				b.setTime(s);
+				ProPrice price = proPriceDao.findByTimeAbc("B",s);
+				b.setName(price.getName());
+				b.setPrice(price.getPrice());
+				b.setType(0);
+				b = proGoodsDao.save(b);
+			}
+			if (c == null) {
+				c = new ProGoods();
+				c.setAbc("C");
+				c.setCreateTime(new Date());
+				c.setDate(date);
+				c.setTime(s);
+				ProPrice price = proPriceDao.findByTimeAbc("C",s);
+				c.setName(price.getName());
+				c.setPrice(price.getPrice());
+				c.setType(0);
+				c = proGoodsDao.save(c);
+			}
+			if (d == null) {
+				d = new ProGoods();
+				d.setAbc("D");
+				d.setCreateTime(new Date());
+				d.setDate(date);
+				d.setTime(s);
+				ProPrice price = proPriceDao.findByTimeAbc("D",s);
+				d.setName(price.getName());
+				d.setPrice(price.getPrice());
+				d.setType(0);
+				d = proGoodsDao.save(d);
+			}
+			goods.add(a);
+			goods.add(b);
+			goods.add(c);
+			goods.add(d);
+			model.setPlace(goods);
+			models.add(model);
+		}
+		return models;
 	}
 
 	public void update(ProGoods proGoods) {
 		proGoodsDao.update(proGoods);
 	}
 
-	public ProGoods findByDateTimeName(String date, String time) {
-		return proGoodsDao.findByDateTimeName(date, time);
+	public ProGoods findById(Integer id) {
+		return proGoodsDao.find(id);
 	}
+
+	public Object findByDateH(String date) {
+		return proGoodsDao.findByDate(date);
+	}
+
+	public ProGoods findByTimeDateAbc(String time, String type, String date) {
+		return proGoodsDao.findByDateTimeAbc(date,time,type);
+	}
+
 
 }

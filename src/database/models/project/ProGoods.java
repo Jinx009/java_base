@@ -28,30 +28,14 @@ public class ProGoods {
 	private String time;
 	@Column(name = "date")
 	private String date;
-	@Column(name = "a_name")
-	private String aName;
-	@Column(name = "b_name")
-	private String bName;
-	@Column(name = "c_name")
-	private String cName;
-	@Column(name = "d_name")
-	private String dName;
-	@Column(name = "a_type")
-	private Integer aType;
-	@Column(name = "a_price")
-	private Double aPrice;
-	@Column(name = "b_type")
-	private Integer bType;
-	@Column(name = "b_price")
-	private Double bPrice;
-	@Column(name = "c_type")
-	private Integer cType;
-	@Column(name = "c_price")
-	private Double cPrice;
-	@Column(name = "d_type")
-	private Integer dType;
-	@Column(name = "d_price")
-	private Double dPrice;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "abc")
+	private String abc;
+	@Column(name = "type")
+	private Integer type;
+	@Column(name = "price")
+	private Double price;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;

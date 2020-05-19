@@ -43,5 +43,7 @@ public class ProOrder {
 	private Integer status;
 	@Column(name = "type")
 	private String type;
+	@Column(name = "from_site")
+	private Integer fromSite;
 	
 }

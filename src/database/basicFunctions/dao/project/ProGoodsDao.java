@@ -19,10 +19,20 @@ public class ProGoodsDao extends BaseDao<ProGoods>{
 		return findByCriteria(qpParam);
 	}
 
-	public ProGoods findByDateTimeName(String date, String time) {
+
+	public List<ProGoods> findByDateTime(String date, String s) {
+		QueryParam qpParam = QueryParam.getInstance();
+		qpParam.addParam("date", date);
+		qpParam.addParam("time", s);
+		return findByCriteria(qpParam);
+	}
+
+
+	public ProGoods findByDateTimeAbc(String date, String time, String string) {
 		QueryParam qpParam = QueryParam.getInstance();
 		qpParam.addParam("date", date);
 		qpParam.addParam("time", time);
+		qpParam.addParam("abc", string);
 		return findByCriteriaForUnique(qpParam);
 	}
 	

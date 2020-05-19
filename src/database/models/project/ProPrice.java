@@ -26,26 +26,15 @@ public class ProPrice {
 	private Integer id;
 	@Column(name = "time")
 	private String time;
-	@Column(name = "a_name")
-	private String aName;
-	@Column(name = "a_price")
-	private Double aPrice;
-	@Column(name = "b_name")
-	private String bName;
-	@Column(name = "b_price")
-	private Double bPrice;
-	@Column(name = "c_name")
-	private String cName;
-	@Column(name = "c_price")
-	private Double cPrice;
-	@Column(name = "d_name")
-	private String dName;
-	@Column(name = "d_price")
-	private Double dPrice;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "price")
+	private Double price;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
 	@Column(name = "level")
 	private Integer level;
-	
+	@Column(name = "type")
+	private String type;
 }

@@ -9,7 +9,7 @@ function _getData(_type,_index){
 	_data.p = _getPage(_type,_index);
 	if(_data.p!=-1){
 		$.ajax({
-			url:'/home/d/pro_task_title/homeList?p='+_data.p,
+			url:'/h/pro_order/list?p='+_data.p,
 			dataType:'json',
 			type:'post',
 			success:function(res){
@@ -35,23 +35,4 @@ function _getData(_type,_index){
 		})
 	}
 }
-
-function _del(_e){
-	var _id = $(_e).attr('id');
-	$.ajax({
-		url:'/home/d/pro_task_title/update?titleId='+_id,
-		type:'post',
-		dataType:'json',
-		success:function(res){
-			if('200'==res.code){
-				layer.alert('删除成功！',function(){
-					location.reload();
-				})
-			}else{
-				layer.alert(res.msg);
-			}
-		}
-	})
-}
-
 

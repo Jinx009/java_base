@@ -20,9 +20,14 @@ public class HomePageController extends BaseController{
 		return "/home/pro_price";
 	}
 	
-	@RequestMapping(path = "/pro_vedio_new")
+	@RequestMapping(path = "/pro_order")
+	public String pro_order(){
+		return "/home/pro_order";
+	}
+	
+	@RequestMapping(path = "/pro_order_new")
 	public String task_new(){
-		return "/home/pro_vedio_new";
+		return "/home/pro_order_new";
 	}
 	
 	

@@ -26,5 +26,9 @@ public class ProPriceService {
 	public ProPrice findById(Integer id) {
 		return proPriceDao.find(id);
 	}
+
+	public Object findByTime(String time) {
+		return proPriceDao.findByTime(time);
+	}
 	
 }
