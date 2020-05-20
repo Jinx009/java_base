@@ -37,6 +37,8 @@ public class ProOrder {
 	private Date createTime;
 	@Column(name = "name")
 	private String name;
+	@Column(name = "user_name")
+	private String userName;
 	@Column(name = "price")
 	private Double price;
 	@Column(name = "status")

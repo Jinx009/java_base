@@ -34,7 +34,7 @@ public class HomeProOrderDataController extends BaseController {
 
 	@RequestMapping(path = "/save")
 	@ResponseBody
-	public Resp<?> list(Integer id, String date, String mobilePhone) {
+	public Resp<?> list(Integer id, String date, String mobilePhone,String userName) {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			ProPrice proPrice = proPriceService.findById(id);
@@ -56,6 +56,7 @@ public class HomeProOrderDataController extends BaseController {
 				proOrder = new ProOrder();
 				proOrder.setCreateTime(new Date());
 				proOrder.setDate(date);
+				proOrder.setUserName(userName);
 				proOrder.setFromSite(2);
 				proOrder.setMobilePhone(mobilePhone);
 				proOrder.setName(proPrice.getName());

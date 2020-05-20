@@ -42,7 +42,7 @@ public class FrontProOrderDataController extends BaseController {
 	
 	@RequestMapping(path = "/save")
 	@ResponseBody
-	public Resp<?> list(Integer id,String openid,String mobilePhone){
+	public Resp<?> list(Integer id,String openid,String mobilePhone,String userName){
 		Resp<?> resp = new Resp<>(false);
 		try {
 			ProGoods proGoods = ProGoodsService.findById(id);
@@ -52,6 +52,7 @@ public class FrontProOrderDataController extends BaseController {
 			proOrder.setMobilePhone(mobilePhone);
 			proOrder.setName(proGoods.getName());
 			proOrder.setOpenid(openid);
+			proOrder.setUserName(userName);
 			proOrder.setPrice(proGoods.getPrice());
 			proOrder.setStatus(0);
 			proOrder.setType(proGoods.getAbc());
