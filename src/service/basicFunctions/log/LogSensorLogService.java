@@ -128,7 +128,7 @@ public class LogSensorLogService extends BaseService {
 			}
 		}
 		if (sensorOperationLog.getAreaId() != null && 65 == sensorOperationLog.getAreaId()) {
-			String status = BearHuntingDataUtils.sendStatus(KeyUtils.STATUS_FIRE_URL,sensorOperationLog, sensor.getRouterMac(),sensorOperationLog.getAvailable());
+			String status = BearHuntingDataUtils.sendStatus(KeyUtils.STATUS_FIRE_URL,sensorOperationLog);
 			Integer code = JSON.parseObject(status).getInteger("status");
 			if(1==code){
 				sensorOperationLog.setSendStatus(1);
