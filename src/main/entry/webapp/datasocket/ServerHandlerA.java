@@ -76,7 +76,7 @@ public class ServerHandlerA extends ChannelInboundHandlerAdapter {
 	 */
 	@Override
 	public void channelRead(ChannelHandlerContext channelHandlerContext, Object info) throws Exception {
-		log.warn("--data----server接收到了：{}", info);
+		log.warn("--data---333-server接收到了：{}", info);
 		ByteBuf buf = (ByteBuf) info;
 		byte[] req = new byte[buf.readableBytes()];
 		buf.readBytes(req);
