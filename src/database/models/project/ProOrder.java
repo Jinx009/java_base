@@ -47,5 +47,9 @@ public class ProOrder {
 	private String type;
 	@Column(name = "from_site")
 	private Integer fromSite;
+	@Column(name = "msg")
+	private String msg;
+	@Column(name = "prepay_id")
+	private String prepayId;
 	
 }
