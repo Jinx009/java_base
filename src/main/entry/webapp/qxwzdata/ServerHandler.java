@@ -24,7 +24,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	 */
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		HttpUtils.get("http://127.0.0.1:8080/d/socketSave?status=conn&ip="+
+		HttpUtils.get("http://127.0.0.1:8086/d/socketSave?status=conn&ip="+
 		ctx.channel().remoteAddress().toString().split(":")[0].replaceAll("/", "")+"&clientPort="+
 		ctx.channel().remoteAddress().toString().split(":")[1]+"&connPort=6666");
 		NettyConfig.group.add(ctx.channel());
@@ -62,7 +62,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	 */
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-		HttpUtils.get("http://127.0.0.1:8080/d/socketSave?status=close&ip="+
+		HttpUtils.get("http://127.0.0.1:8086/d/socketSave?status=close&ip="+
 		ctx.channel().remoteAddress().toString().split(":")[0].replaceAll("/", "")+"&clientPort="+
 		ctx.channel().remoteAddress().toString().split(":")[1]+"&connPort=6666");
 		NettyConfig.group.remove(ctx.channel());
