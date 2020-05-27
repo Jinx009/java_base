@@ -13,15 +13,38 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import lombok.Getter;
+import lombok.Setter;
+import main.entry.webapp.data.TcpServerController;
 
 public class Server {
 	
 	private static final Logger log = LoggerFactory.getLogger(Server.class);
 	
     private int port;
-    private ServerSocketChannel serverSocketChannel;
+    private  ServerSocketChannel serverSocketChannel;
  
-    public Server(int port){
+    public int getPort() {
+		return port;
+	}
+
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+
+	public void closeServer() {
+		log.warn("close server .");
+		if (serverSocketChannel!= null) {
+			log.info("close server");
+			serverSocketChannel.close();
+			serverSocketChannel = null;
+		}
+	}
+    
+
+	public Server(int port){
         this.port = port;
         bind();
     }
@@ -83,6 +106,7 @@ public class Server {
                     worker.shutdownGracefully();
                 }
             }
+
         });
         thread.start();
     }
