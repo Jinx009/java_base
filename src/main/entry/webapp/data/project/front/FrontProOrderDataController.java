@@ -109,7 +109,7 @@ public class FrontProOrderDataController extends BaseController {
 			proOrder.setMobilePhone(mobilePhone);
 			proOrder.setName(proGoods.getName());
 			proOrder.setOpenid(openid);
-			proOrder.setUserName(userName);
+			proOrder.setUserName(new String(userName .getBytes("iso8859-1"),"utf-8"));
 			proOrder.setPrice(proGoods.getPrice());
 			proOrder.setStatus(0);
 			proOrder.setType(proGoods.getAbc());
@@ -139,7 +139,7 @@ public class FrontProOrderDataController extends BaseController {
 			String prepay_id = doXMLParse(res).get("prepay_id");
 			String randomStr = RandomUtils.getRandomNumbersAndString(32);
 			Date date = new Date();
-			String paySign = MD5Util.MD5("appId=wxbc5ec9a82883abb6&nonceStr="+randomStr+"&package=prepay_id="+prepay_id+"&signType=MD5&timeStamp="+date.getTime()+"&key=fX5FEHQjFAmSUe01kke3xogAPKl5GaD8");
+			String paySign = MD5Util.MD5("appId=wxbc5ec9a82883abb6&nonceStr="+randomStr+"&package=prepay_id="+prepay_id+"&signType=MD5&timeStamp="+date.getTime()/1000+"&key=fX5FEHQjFAmSUe01kke3xogAPKl5GaD8");
 			proOrder.setPrepayId(prepay_id);
 			proOrderService.update(proOrder);
 			Map<String, Object> map = new HashMap<>();
@@ -148,7 +148,7 @@ public class FrontProOrderDataController extends BaseController {
 			map.put("nonceStr", randomStr);
 			map.put("signType", "MD5");
 			map.put("package", "prepay_id="+prepay_id);
-			map.put("timeStamp", date.getTime());
+			map.put("timeStamp", date.getTime()/1000);
 			map.put("paySign", paySign);
 			map.put("orderId", proOrder.getId());
 			return new Resp<>(map);
