@@ -2,59 +2,108 @@ package main.entry.webapp.data;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
 
+import main.entry.webapp.netty.client.NettyClient;
+import main.entry.webapp.netty.client.NettyClientModel;
 import main.entry.webapp.netty.server.NettyServer;
-import main.entry.webapp.socket.Server;
-import main.entry.webapp.socket.ServerA;
-//import main.entry.webapp.qxwz.NettyClient;
-import main.entry.webapp.socket.ServerQxwz;
-import main.entry.webapp.socket.ServerQxwzMain;
+import main.entry.webapp.netty.server.NettyServerModel;
 import utils.Resp;
 
 @Controller
-@RequestMapping(value = "/server")
+@RequestMapping(value = "/netty")
 public class TcpServerController {
 	
 	public static List<NettyServer> list = new ArrayList<NettyServer>();
+	public static List<NettyClient> list2 = new ArrayList<NettyClient>();
 
-	@RequestMapping(path = "/start")
+	@RequestMapping(path = "/server")
 	@ResponseBody
 	public Resp<?>baseDataTcpServer(int port,int dataFrom,boolean autoSend) {
 		try {
-//			main.entry.webapp.datasocket.Server server = new main.entry.webapp.datasocket.Server(5555);//监测院数据收1123
 			NettyServer nettyServer = new NettyServer(port,dataFrom,autoSend);
 			list.add(nettyServer);
-//			new main.entry.webapp.qxwzdata.Server(6666);//千寻本地转发
-//			new main.entry.webapp.datasocket.ServerA(3333);
-//			new NettyClient("rtk.ntrip.qxwz.com", 8002).run();
-//			new main.entry.webapp.qxwz.Server(7777);//千寻
-//			new Server(9999);//监测院数据对外
-//			new ServerA(4444);
-//			new ServerQxwz(9999);
-//			new ServerQxwzMain(7777);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new Resp<>(true);
 	}
 	
-	@RequestMapping(path = "/close")
+	@RequestMapping(path = "/list")
+	@ResponseBody
+	public Resp<?>list() {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			List<NettyClientModel> clients = new ArrayList<NettyClientModel>();
+			List<NettyServerModel> servers = new ArrayList<NettyServerModel>();
+			for(NettyServer server : list){
+				NettyServerModel s = new NettyServerModel();
+				s.setAutoSend(server.isAutoSend());
+				s.setDataFrom(server.getDataFrom());
+				s.setPort(server.getPort());
+				servers.add(s);
+			}
+			for(NettyClient client : list2){
+				NettyClientModel c = new NettyClientModel();
+				c.setDataFrom(client.getDataFrom());
+				c.setIp(client.getIp());
+				c.setPort(client.getPort());
+				clients.add(c);
+			}
+			map.put("client", clients);
+			map.put("server", servers);
+			return new Resp<>(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Resp<>(true);
+	}
+	
+	
+	@RequestMapping(path = "/client")
+	@ResponseBody
+	public Resp<?>baseDataTcpClient(int port,int dataFrom,String ip) {
+		try {
+			NettyClient nettyClient = new NettyClient(ip,port,dataFrom);
+			list2.add(nettyClient);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Resp<>(true);
+	}
+	
+	@RequestMapping(path = "/closeServer")
 	@ResponseBody
 	public Resp<?>closeServer(int port) {
 		try {
-			System.out.println(JSONObject.toJSONString(list));
 			for(NettyServer server : list){
 				if(server.getPort()==port){
-					System.out.println("123");
 					server.closeServer();
 					list.remove(server);
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Resp<>(true);
+	}
+	
+	@RequestMapping(path = "/closeClient")
+	@ResponseBody
+	public Resp<?>closeClient(int port) {
+		try {
+			for(NettyClient client : list2){
+				if(client.getDataFrom()==port){
+					client.setDataFrom(0);
+					list2.remove(client);
 					break;
 				}
 			}

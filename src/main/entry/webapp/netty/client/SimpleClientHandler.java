@@ -34,13 +34,12 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
 	/**
 	 * 交互channel
 	 */
-	@SuppressWarnings("unused")
 	private static Channel channel;
 
 	/**
 	 * 服务端ip 重连时使用
 	 */
-	private String ip;
+	private NettyClient nettyClient;
 
 	/**
 	 * 服务端端口
@@ -49,7 +48,6 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
 	/**
 	 * 需要被转发的数据server来源
 	 */
-	private int dataFrom;
 	private long time = 0;
 
 	/**
@@ -57,11 +55,9 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
 	 */
 	private final static int reconnectDelay = 1;
 
-	public SimpleClientHandler(Bootstrap bootstrap, String ip, int port, int dataFrom) {
+	public SimpleClientHandler(Bootstrap bootstrap, NettyClient nettyClient) {
 		this.bootstrap = bootstrap;
-		this.ip = ip;
-		this.dataFrom = dataFrom;
-		this.port = port;
+		this.nettyClient = nettyClient;
 	}
 
 	/**
@@ -99,7 +95,7 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
 	 * 每隔十秒重连一次
 	 */
 	private void doConnect() {
-		ChannelFuture future = bootstrap.connect(new InetSocketAddress(ip, port));
+		ChannelFuture future = bootstrap.connect(new InetSocketAddress(nettyClient.getIp(), nettyClient.getPort()));
 		future.addListener(new ChannelFutureListener() {
 			public void operationComplete(ChannelFuture f) throws Exception {
 				if (f.isSuccess()) {
@@ -150,16 +146,20 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
     	new Thread(){
     		public void run(){
     			while(true){
-    				if(dataFrom!=0){
-    					if (NettyTcpConstant.map.get("server" + dataFrom+ "time") != null) {
+    				if (nettyClient.getDataFrom()== 0) {
+    					ctx.close();
+						break;
+					} 
+    				if(nettyClient.getDataFrom()!=0){
+    					if (NettyTcpConstant.map.get("server" + nettyClient.getDataFrom()+ "time") != null) {
 							if (time == 0 || time != (long) NettyTcpConstant.map
-									.get("server" + dataFrom + "time")) {
+									.get("server" + nettyClient.getDataFrom() + "time")) {
 								byte[] data = (byte[]) NettyTcpConstant.map
-										.get("server" + dataFrom + "data");
+										.get("server" + nettyClient.getDataFrom() + "data");
 								time = (long) NettyTcpConstant.map
-										.get("server" + dataFrom + "time");
+										.get("server" + nettyClient.getDataFrom() + "time");
 								ByteBuf byteBuf = Unpooled.wrappedBuffer(data);
-								ctx.channel().writeAndFlush(byteBuf);
+								channel.writeAndFlush(byteBuf);
 							} else {
 								try {
 									Thread.sleep(1000);

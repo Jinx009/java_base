@@ -38,7 +38,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	// 通知处理器最后的channelRead()是当前批处理中的最后一条消息时调用
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-		log.warn("服务端接收数据完毕..");
+//		log.warn("服务端接收数据完毕..");
 		ctx.flush();
 	}
 
