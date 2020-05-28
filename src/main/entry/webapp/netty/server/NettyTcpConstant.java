@@ -1,4 +1,4 @@
-package main.entry.webapp.nettyTcp;
+package main.entry.webapp.netty.server;
 
 import java.util.HashMap;
 import java.util.Map;

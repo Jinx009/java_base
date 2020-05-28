@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
-import main.entry.webapp.nettyTcp.NettyServer;
+import main.entry.webapp.netty.server.NettyServer;
 import main.entry.webapp.socket.Server;
 import main.entry.webapp.socket.ServerA;
 //import main.entry.webapp.qxwz.NettyClient;
