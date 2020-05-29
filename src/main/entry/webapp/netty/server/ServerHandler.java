@@ -74,12 +74,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 						}
 						if (nettyServer.getDataFrom() != 0) {
 							if (NettyTcpConstant.map.get("server" + nettyServer.getDataFrom() + "time") != null) {
-								if (time == 0 || time != (long) NettyTcpConstant.map
-										.get("server" + nettyServer.getDataFrom() + "time")) {
-									data = (byte[]) NettyTcpConstant.map
-											.get("server" + nettyServer.getDataFrom() + "data");
-									time = (long) NettyTcpConstant.map
-											.get("server" + nettyServer.getDataFrom() + "time");
+								long time1 = (long) NettyTcpConstant.map.get("server" + nettyServer.getDataFrom() + "time");
+								if (time == 0 || time != time1) {
+									data = (byte[]) NettyTcpConstant.map.get("server" + nettyServer.getDataFrom() + "data");
+									time = time1;
 									ByteBuf pingMessage = ctx.alloc().buffer(data.length);
 									pingMessage.writeBytes(data);
 									ctx.writeAndFlush(pingMessage);

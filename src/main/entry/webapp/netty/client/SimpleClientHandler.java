@@ -116,7 +116,7 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
 	 */
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
-		log.warn("回写数据:{}", msg);
+//		log.warn("回写数据:{}", msg);
 		ByteBuf buf = (ByteBuf) msg;
 		byte[] req = new byte[buf.readableBytes()];
 		buf.readBytes(req);
@@ -152,12 +152,10 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
 					} 
     				if(nettyClient.getDataFrom()!=0){
     					if (NettyTcpConstant.map.get("server" + nettyClient.getDataFrom()+ "time") != null) {
-							if (time == 0 || time != (long) NettyTcpConstant.map
-									.get("server" + nettyClient.getDataFrom() + "time")) {
-								byte[] data = (byte[]) NettyTcpConstant.map
-										.get("server" + nettyClient.getDataFrom() + "data");
-								time = (long) NettyTcpConstant.map
-										.get("server" + nettyClient.getDataFrom() + "time");
+    						long time1 = (long) NettyTcpConstant.map.get("server" + nettyClient.getDataFrom() + "time");
+							if (time == 0 || time !=time1 ) {
+								byte[] data = (byte[]) NettyTcpConstant.map.get("server" + nettyClient.getDataFrom() + "data");
+								time = time1;
 								log.warn("client send ip:{},port:{},from:{}",nettyClient.getIp(),nettyClient.getPort(),nettyClient.getDataFrom());
 								ByteBuf byteBuf = Unpooled.wrappedBuffer(data);
 								channel.writeAndFlush(byteBuf);
