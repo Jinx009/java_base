@@ -26,7 +26,7 @@
 <body class="hold-transition skin-blue fixed sidebar-mini">
 	<!-- Site wrapper -->
 	<div class="wrapper">
-		<#include"home_nav.html"> <!-- 路径导航 -->
+		<#include "home_nav.html"> <!-- 路径导航 -->
 		<div class="content-wrapper" style="background-color: white;">
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
@@ -57,9 +57,9 @@
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>FixType</label> <select class="form-control"
-										id="autoSned">
+										id="autoSend">
 										<option value="true">主动发心跳</option>
-										<option value="fasle">不主动发心跳</option>
+										<option value="false">不主动发心跳</option>
 									</select>
 								</div>
 							</div>
@@ -133,7 +133,7 @@
 				</div>
 			</section>
 		</div>
-		<#include"home_footer.html">
+		<#include "home_footer.html">
 	</div>
 	<script type="text/javascript">
 		$(function() {
@@ -150,12 +150,12 @@
 								htmlStr += '<tr><td>server</td><td>'
 										+ server.dataFrom + '</td><td>'
 										+ server.autoSend
-										+ '</td><td></td><td>' + server.port
+										+ '</td><td></td><td></td><td>' + server.port
 										+ '</td><td><a class="btn btn-info" onclick="_closeServer("'+server.port+'")">删除</a></tr>';
 							}
 						}
 						if (res.data.client != null) {
-							for ( var i in res.data.clent) {
+							for ( var i in res.data.client) {
 								var client = res.data.client[i];
 								htmlStr += '<tr><td>client</td><td>'
 										+ client.dataFrom
@@ -170,8 +170,8 @@
 			})
 		})
 		function _newClient() {
-			var port = $('#port').val(), clientPort = $('#clientPort').val(), clientIp = $(
-					'#clientIp').val();
+			var port = $('#port').val(), clientPort = $('#clinetPort').val(), clientIp = $(
+					'#clinetIp').val();
 			$.ajax({
 				url : '/netty/client?port=' + clientPort + '&ip=' + clientIp
 						+ '&dataFrom=' + port,
