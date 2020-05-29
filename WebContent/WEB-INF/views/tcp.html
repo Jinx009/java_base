@@ -151,7 +151,7 @@
 										+ server.dataFrom + '</td><td>'
 										+ server.autoSend
 										+ '</td><td></td><td></td><td>' + server.port
-										+ '</td><td><a class="btn btn-info" onclick="_closeServer("'+server.port+'")">删除</a></tr>';
+										+ '</td><td><a class="btn btn-info" onclick="_closeServer('+server.port+')">删除</a></tr>';
 							}
 						}
 						if (res.data.client != null) {
@@ -161,7 +161,7 @@
 										+ client.dataFrom
 										+ '</td><td></td><td>' + client.port
 										+ '</td><td>' + client.ip
-										+ '</td><td></td><td><a class="btn btn-info" onclick="_closeClient("'+client.dataFrom+'")">删除</a></td></tr>';
+										+ '</td><td></td><td><a class="btn btn-info" onclick="_closeClient('+client.dataFrom+')">删除</a></td></tr>';
 							}
 						}
 						$('#data').html(htmlStr);
