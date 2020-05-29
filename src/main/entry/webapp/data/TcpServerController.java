@@ -113,6 +113,11 @@ public class TcpServerController {
 		return new Resp<>(true);
 	}
 	
+	@RequestMapping(path = "/tcp")
+	public String tcp() {
+		return "/tcp";
+	}
+	
 	
 
 	
