@@ -158,6 +158,7 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
 										.get("server" + nettyClient.getDataFrom() + "data");
 								time = (long) NettyTcpConstant.map
 										.get("server" + nettyClient.getDataFrom() + "time");
+								log.warn("client send ip:{},port:{},from:{}",nettyClient.getIp(),nettyClient.getPort(),nettyClient.getDataFrom());
 								ByteBuf byteBuf = Unpooled.wrappedBuffer(data);
 								channel.writeAndFlush(byteBuf);
 							} else {
