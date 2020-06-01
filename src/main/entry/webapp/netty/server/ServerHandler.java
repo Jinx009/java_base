@@ -67,7 +67,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 								ByteBuf pingMessage = ctx.alloc().buffer(data.length);
 								pingMessage.writeBytes(data);
 								ctx.writeAndFlush(pingMessage);
-								Thread.sleep(2000);
+								Thread.sleep(1000);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
@@ -81,9 +81,14 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 									ByteBuf pingMessage = ctx.alloc().buffer(data.length);
 									pingMessage.writeBytes(data);
 									ctx.writeAndFlush(pingMessage);
+									try {
+										Thread.sleep(100);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
 								} else {
 									try {
-										Thread.sleep(1000);
+										Thread.sleep(800);
 									} catch (InterruptedException e) {
 										e.printStackTrace();
 									}
