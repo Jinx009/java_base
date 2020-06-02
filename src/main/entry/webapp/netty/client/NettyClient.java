@@ -85,5 +85,10 @@ public class NettyClient {
 			}
 		}.start();
 	}
+	
+	
+	public static void main(String[] args) {
+		new NettyClient("139.196.205.157", 3333, 0);
+	}
 
 }
