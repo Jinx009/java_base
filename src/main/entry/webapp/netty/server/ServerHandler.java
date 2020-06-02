@@ -85,7 +85,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 						if (nettyServer.getDataFrom() != 0) {
 							if (NettyTcpConstant.map.get(nettyServer.getTimeFromStr()) != null) {
 								long time1 = (long) NettyTcpConstant.map.get(nettyServer.getTimeFromStr());
-								log.warn("time:{}",time1);
 								if (time == 0 || time != time1) {
 									data = (byte[]) NettyTcpConstant.map.get(nettyServer.getDataFromStr());
 									log.warn("data:{}",data.length);
