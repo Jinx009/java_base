@@ -9,7 +9,7 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSONObject;
+
 
 public class ServerHandler extends ChannelInboundHandlerAdapter {
 
@@ -17,15 +17,13 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
 	private NettyServer nettyServer;
 	private long time = 0;
-	private volatile String timeStr;
-	private volatile String dataStr;
 
 	public ServerHandler(NettyServer nettyServer) {
-		int port = nettyServer.getPort();
+		int port = nettyServer.getDataFrom();
 		StringBuilder sb = new StringBuilder(); 
-		this.dataStr = sb.append("server").append(port).append("data").toString();
+		nettyServer.setDataStr(sb.append("server").append(port).append("data").toString());
 		sb = new StringBuilder(); 
-		this.timeStr = sb.append("server").append(port).append("time").toString();
+		nettyServer.setTimeStr(sb.append("server").append(port).append("time").toString());
 		this.nettyServer = nettyServer;
 	}
 
@@ -36,8 +34,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 		ByteBuf buf = (ByteBuf) msg;
 		byte[] req = new byte[buf.readableBytes()];
 		buf.readBytes(req);
-		NettyTcpConstant.map.put(dataStr, req);
-		NettyTcpConstant.map.put(timeStr, new Date().getTime());
+		NettyTcpConstant.map.put(nettyServer.getDataStr(), req);
+		NettyTcpConstant.map.put(nettyServer.getTimeStr(), new Date().getTime());
 	}
 
 	// 通知处理器最后的channelRead()是当前批处理中的最后一条消息时调用
@@ -78,10 +76,12 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 							}
 						}
 						if (nettyServer.getDataFrom() != 0) {
-							if (NettyTcpConstant.map.get(timeStr) != null) {
-								long time1 = (long) NettyTcpConstant.map.get(timeStr);
+							if (NettyTcpConstant.map.get(nettyServer.getTimeStr()) != null) {
+								long time1 = (long) NettyTcpConstant.map.get(nettyServer.getTimeStr());
+								log.warn("time:{}",time1);
 								if (time == 0 || time != time1) {
-									data = (byte[]) NettyTcpConstant.map.get(dataStr);
+									data = (byte[]) NettyTcpConstant.map.get(nettyServer.getDataStr());
+									log.warn("data:{}",data.length);
 									time = time1;
 									ByteBuf pingMessage = ctx.alloc().buffer(data.length);
 									pingMessage.writeBytes(data);

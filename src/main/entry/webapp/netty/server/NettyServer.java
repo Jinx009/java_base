@@ -26,6 +26,8 @@ public class NettyServer {
 	private int dataFrom;
 	private boolean autoSend = false;
 	public static Channel serverChannel;
+	private volatile String dataStr;
+	private volatile String timeStr;
 
 	public NettyServer(int port,  int dataFrom, boolean autoSend) {
 		this.autoSend = autoSend;
@@ -92,5 +94,11 @@ public class NettyServer {
 			}
 		});
 		thread.start();
+	}
+	
+	
+	public static void main(String[] args) {
+		NettyServer nettyServer = new NettyServer(3333,0,true);
+		NettyServer nettyServer2 = new NettyServer(4444,3333,false);
 	}
 }
