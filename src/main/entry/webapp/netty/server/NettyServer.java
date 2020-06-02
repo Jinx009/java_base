@@ -28,6 +28,8 @@ public class NettyServer {
 	public static Channel serverChannel;
 	private volatile String dataStr;
 	private volatile String timeStr;
+	private volatile String dataFromStr;
+	private volatile String timeFromStr;
 
 	public NettyServer(int port,  int dataFrom, boolean autoSend) {
 		this.autoSend = autoSend;

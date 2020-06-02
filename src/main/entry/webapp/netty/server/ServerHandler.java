@@ -9,6 +9,8 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSONObject;
+
 
 
 public class ServerHandler extends ChannelInboundHandlerAdapter {
@@ -19,11 +21,16 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	private long time = 0;
 
 	public ServerHandler(NettyServer nettyServer) {
-		int port = nettyServer.getDataFrom();
+		int port = nettyServer.getPort();
+		int datafrom = nettyServer.getDataFrom();
 		StringBuilder sb = new StringBuilder(); 
 		nettyServer.setDataStr(sb.append("server").append(port).append("data").toString());
 		sb = new StringBuilder(); 
 		nettyServer.setTimeStr(sb.append("server").append(port).append("time").toString());
+		sb = new StringBuilder(); 
+		nettyServer.setTimeFromStr(sb.append("server").append(datafrom).append("time").toString());
+		sb = new StringBuilder(); 
+		nettyServer.setDataFromStr(sb.append("server").append(datafrom).append("data").toString());
 		this.nettyServer = nettyServer;
 	}
 
@@ -76,11 +83,11 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 							}
 						}
 						if (nettyServer.getDataFrom() != 0) {
-							if (NettyTcpConstant.map.get(nettyServer.getTimeStr()) != null) {
-								long time1 = (long) NettyTcpConstant.map.get(nettyServer.getTimeStr());
+							if (NettyTcpConstant.map.get(nettyServer.getTimeFromStr()) != null) {
+								long time1 = (long) NettyTcpConstant.map.get(nettyServer.getTimeFromStr());
 								log.warn("time:{}",time1);
 								if (time == 0 || time != time1) {
-									data = (byte[]) NettyTcpConstant.map.get(nettyServer.getDataStr());
+									data = (byte[]) NettyTcpConstant.map.get(nettyServer.getDataFromStr());
 									log.warn("data:{}",data.length);
 									time = time1;
 									ByteBuf pingMessage = ctx.alloc().buffer(data.length);
