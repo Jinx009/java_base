@@ -57,6 +57,7 @@
 												<th>时间</th>
 												<th>场地</th>
 												<th>价格</th>
+												<th>openid</th>
 												<th>进度</th>
 												<th>创建时间</th>
 												<th>操作</th>
@@ -74,6 +75,7 @@
 												<td v-text="item.time"></td>
 												<td v-text="item.name"></td>
 												<td v-text="item.price"></td>
+												<td v-text="item.openid"></td>
 												<td>
 														<font v-if="2===item.status" v-text="'自动取消'" ></font> 
 													    <font v-if="0===item.status" v-text="'等待支付'" style="color: green"></font> 
