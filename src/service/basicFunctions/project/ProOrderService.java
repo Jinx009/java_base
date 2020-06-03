@@ -39,5 +39,13 @@ public class ProOrderService {
 	public PageDataList<ProOrder> findPage(Integer fromSite, String fromDate, String toDate,Integer p) {
 		return proOrderDao.findPageH(fromSite, fromDate,toDate,p);
 	}
+
+	public List<ProOrder> findByStatus(int status) {
+		return proOrderDao.findByStatus(status);
+	}
+	
+	public void del(int id){
+		proOrderDao.delete(id);
+	}
 	
 }

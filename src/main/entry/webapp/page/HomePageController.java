@@ -30,5 +30,14 @@ public class HomePageController extends BaseController{
 		return "/home/pro_order_new";
 	}
 	
+	@RequestMapping(path = "/pro_order_add")
+	public String task_add(){
+		return "/home/pro_order_add";
+	}
+	
+	@RequestMapping(path = "/pro_order_add_list")
+	public String task_add_list(){
+		return "/home/pro_order_add_list";
+	}
 	
 }

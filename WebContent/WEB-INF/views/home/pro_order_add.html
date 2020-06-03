@@ -27,7 +27,7 @@
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> 新增线下订单 </a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> 新增批量占用 </a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
@@ -46,17 +46,12 @@
 			                  <label>手机号</label>
 			                  <input type="text" style="margin-top: 20px;" class="form-control" id="mobilePhone" placeholder="请输入手机号">
 			                </div>
-			                   <div class="form-group">
-			                  <label>openid</label>
-			                  <input type="text" style="margin-top: 20px;" class="form-control" id="openid" placeholder="openid可为空">
-			                </div>
 			                  <div class="form-group">
 			                  <label>日期</label>
 			                  <input type="text" class="form-control" id="date" placeholder="请选择日期">
 			                </div>
 			                <div class="form-group">
 			                    <select class="form-control" id="time" onchange="check()" >
-			                     <option value="0" >选择时间段</option>
 			                    	<option value="8:30~10:30" >8:30~10:30</option>
 			                    	<option value="10:30~12:30" >10:30~12:30</option>
 			                    	<option value="12:30~14:30" >12:30~14:30</option>
@@ -68,7 +63,10 @@
 			                </div>
 			                <div class="form-group">
 			                    <select class="form-control" id="address" >
-			                    		<option value="" >选择场地</option>
+			                    		<option value="8人制1号场">8人制1号场</option>
+			                    		<option value="8人制2号场">8人制2号场</option>
+			                    		<option value="5人制1号场">5人制1号场</option>
+			                    		<option value="5人制2号场">5人制2号场</option>
 			                    </select>
 			                </div>
 			              </div>
@@ -84,7 +82,7 @@
 		<#include "home_footer.html">
 	</div>
 	<script src="/themes/laydate/laydate.js?version=1.16"></script>
-	<script src="/themes/js/home/pro_order_new.js?version=1.44"></script>
+	<script src="/themes/js/home/pro_order_add.js?version=1.54"></script>
 
 </body>
 </html>

@@ -26,6 +26,10 @@ public class FrontProGoodsDataController extends BaseController {
 	public Resp<?> list(String date){
 		Resp<?> resp = new Resp<>(false);
 		try {
+			String[] dates = date.split("-");
+			if(dates[1].length()<2){
+				date = dates[0]+"-0"+dates[1]+"-"+dates[2];
+			}
 			return new Resp<>(proGoodsService.findByDate(date));
 		} catch (Exception e) {
 			log.error("error:{}",e);

@@ -34,7 +34,7 @@ public class HomeProOrderDataController extends BaseController {
 
 	@RequestMapping(path = "/save")
 	@ResponseBody
-	public Resp<?> list(Integer id, String date, String mobilePhone,String userName) {
+	public Resp<?> list(Integer id, String date, String mobilePhone,String userName,String openid) {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			ProPrice proPrice = proPriceService.findById(id);
@@ -61,7 +61,7 @@ public class HomeProOrderDataController extends BaseController {
 				proOrder.setMobilePhone(mobilePhone);
 				proOrder.setName(proPrice.getName());
 				proOrder.setPrice(proPrice.getPrice());
-				proOrder.setOpenid("");
+				proOrder.setOpenid(openid);
 				proOrder.setPrice(proOrder.getPrice());
 				proOrder.setStatus(1);
 				proOrder.setType(proPrice.getType());
@@ -86,6 +86,24 @@ public class HomeProOrderDataController extends BaseController {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			return new Resp<>(proOrderService.findPage(fromSite, fromDate, toDate, p));
+		} catch (Exception e) {
+			log.error("e:{}", e);
+		}
+		return resp;
+	}
+	
+	
+	@RequestMapping(path = "/del")
+	@ResponseBody
+	public Resp<?> del( Integer id) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			ProOrder o = proOrderService.findById(id);
+			ProGoods proGoods = proGoodsService.findByTimeDateAbc(o.getTime(), o.getType(), o.getDate());
+			proGoods.setType(0);
+			proGoodsService.update(proGoods);
+			proOrderService.del(id);
+			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("e:{}", e);
 		}

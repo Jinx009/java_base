@@ -30,7 +30,7 @@
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> 订单管理 </a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> 批量线下管理 </a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
@@ -39,7 +39,7 @@
 					<div class="col-xs-12">
 						<div class="box">
 							<div class="box-header">
-								<h3 class="box-title">订单列表</h3>
+								<h3 class="box-title">批量线下列表</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box box-primary">
@@ -52,37 +52,24 @@
 											<tr>
 												<th>Id</th>
 												<th>手机号</th>
-												<th>渠道</th>
-												<th>日期</th>
+												<th>联系人</th>
+												<th>日期段</th>
 												<th>时间</th>
 												<th>场地</th>
-												<th>价格</th>
-												<th>进度</th>
+												<th>备注</th>
 												<th>创建时间</th>
-												<th>操作</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr v-for="item in datas.list">
 												<td v-text="item.id"></td>
 												<td v-html="item.mobilePhone"></td>
-												<td>
-														<font v-if="1===item.fromSite" v-text="'线上'" ></font> 
-													    <font v-if="2===item.fromSite" v-text="'线下'" style="color: green"></font> 
-												</td>
+												<td v-text="item.userName"></td>
 												<td v-text="item.date"></td>
 												<td v-text="item.time"></td>
-												<td v-text="item.name"></td>
-												<td v-text="item.price"></td>
-												<td>
-														<font v-if="2===item.status" v-text="自动取消'" ></font> 
-													    <font v-if="0===item.status" v-text="'等待支付'" style="color: green"></font> 
-													     <font v-if="1===item.status" v-text="'完成'" style="color: green"></font> 
-												</td>
+												<td v-text="item.address"></td>
+												<td v-html="item.remark"></td>
 												<td v-text="item.createTime"></td>
-												<td>
-													 <a class="btn btn-info" onclick="del(this)" v-bind:id="item.id"  >删除</a>
-												</td>
 											</tr>
 										</tbody>
 									</table>
@@ -108,6 +95,6 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_order.js?version=1.89"></script>
+	<script src="/themes/js/home/pro_order_add_list.js?version=1.79"></script>
 </body>
 </html>

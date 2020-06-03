@@ -40,6 +40,13 @@ public class ProOrderDao extends BaseDao<ProOrder>{
 		return findPageList(queryParam);
 	}
 
+	public List<ProOrder> findByStatus(int status) {
+		QueryParam qpParam = QueryParam.getInstance();
+		qpParam.addParam("fromSite", 1);
+		qpParam.addParam("status", status);
+		return findByCriteria(qpParam);
+	}
+
 	
 	
 }

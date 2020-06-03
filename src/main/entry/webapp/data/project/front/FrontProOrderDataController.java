@@ -79,7 +79,7 @@ public class FrontProOrderDataController extends BaseController {
 					+ proOrder.getName() + "&mch_id=1595301021&" + "nonce_str=" + random
 					+ "&notify_url=https://football.amize.cn/f/weapp/notice&openid=" + proOrder.getOpenid()
 					+ "&out_trade_no=" + proOrder.getCreateTime().getTime()
-					+ "&spbill_create_ip=111.231.107.149&total_fee="+proOrder.getPrice()*1000+"&trade_type=JSAPI";
+					+ "&spbill_create_ip=111.231.107.149&total_fee=1&trade_type=JSAPI";
 			String stringSign = params + "&key=fX5FEHQjFAmSUe01kke3xogAPKl5GaD8";
 			String sign = MD5Util.MD5(stringSign);
 
@@ -89,7 +89,7 @@ public class FrontProOrderDataController extends BaseController {
 					+ "<notify_url>https://football.amize.cn/f/weapp/notice</notify_url>" + "<openid>"
 					+ proOrder.getOpenid() + "</openid>" + "<out_trade_no>" + proOrder.getCreateTime().getTime()
 					+ "</out_trade_no>" + "<spbill_create_ip>111.231.107.149</spbill_create_ip>"
-					+ "<total_fee>"+proOrder.getPrice()*1000+"</total_fee>" + "<trade_type>JSAPI</trade_type>" + "<sign>" + sign + "</sign>"
+					+ "<total_fee>1</total_fee>" + "<trade_type>JSAPI</trade_type>" + "<sign>" + sign + "</sign>"
 					+ "</xml>";
 			String res = HttpUtils.postXml("https://api.mch.weixin.qq.com/pay/unifiedorder", xml);
 			String prepay_id = doXMLParse(res).get("prepay_id");
@@ -106,7 +106,7 @@ public class FrontProOrderDataController extends BaseController {
 			map.put("nonceStr", randomStr);
 			map.put("signType", "MD5");
 			map.put("package", "prepay_id="+prepay_id);
-			map.put("timeStamp", date.getTime());
+			map.put("timeStamp", String.valueOf( date.getTime()/1000));
 			map.put("paySign", paySign);
 			map.put("orderId", proOrder.getId());
 			return new Resp<>(map);
@@ -143,7 +143,7 @@ public class FrontProOrderDataController extends BaseController {
 					+ proOrder.getName() + "&mch_id=1595301021&" + "nonce_str=" + random
 					+ "&notify_url=https://football.amize.cn/f/weapp/notice&openid=" + proOrder.getOpenid()
 					+ "&out_trade_no=" + proOrder.getCreateTime().getTime()
-					+ "&spbill_create_ip=111.231.107.149&total_fee="+proOrder.getPrice()*1000+"&trade_type=JSAPI";
+					+ "&spbill_create_ip=111.231.107.149&total_fee=1&trade_type=JSAPI";
 			String stringSign = params + "&key=fX5FEHQjFAmSUe01kke3xogAPKl5GaD8";
 			String sign = MD5Util.MD5(stringSign);
 
@@ -153,7 +153,7 @@ public class FrontProOrderDataController extends BaseController {
 					+ "<notify_url>https://football.amize.cn/f/weapp/notice</notify_url>" + "<openid>"
 					+ proOrder.getOpenid() + "</openid>" + "<out_trade_no>" + proOrder.getCreateTime().getTime()
 					+ "</out_trade_no>" + "<spbill_create_ip>111.231.107.149</spbill_create_ip>"
-					+ "<total_fee>"+proOrder.getPrice()*1000+"</total_fee>" + "<trade_type>JSAPI</trade_type>" + "<sign>" + sign + "</sign>"
+					+ "<total_fee>1</total_fee>" + "<trade_type>JSAPI</trade_type>" + "<sign>" + sign + "</sign>"
 					+ "</xml>";
 			String res = HttpUtils.postXml("https://api.mch.weixin.qq.com/pay/unifiedorder", xml);
 			String prepay_id = doXMLParse(res).get("prepay_id");
@@ -168,7 +168,7 @@ public class FrontProOrderDataController extends BaseController {
 			map.put("nonceStr", randomStr);
 			map.put("signType", "MD5");
 			map.put("package", "prepay_id="+prepay_id);
-			map.put("timeStamp", date.getTime()/1000);
+			map.put("timeStamp",String.valueOf( date.getTime()/1000));
 			map.put("paySign", paySign);
 			map.put("orderId", proOrder.getId());
 			return new Resp<>(map);
