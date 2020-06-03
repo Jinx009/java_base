@@ -47,6 +47,7 @@ function del(_e){
 		success : function(res) {
 			if(res.code=='200'){
 				layer.alert('解除成功',function(){
+					layer.closeAll(); 
 					_getData(_);
 				});
 			}else{
