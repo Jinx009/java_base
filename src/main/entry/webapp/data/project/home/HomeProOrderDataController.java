@@ -39,6 +39,7 @@ public class HomeProOrderDataController extends BaseController {
 		try {
 			ProPrice proPrice = proPriceService.findById(id);
 			List<ProOrder> proOrders = proOrderService.findByDateTimeType(date, proPrice.getTime(), proPrice.getType());
+			ProGoods proGoods = proGoodsService.findByTimeDateAbc(proPrice.getTime(), proPrice.getType(), date);
 			boolean b = true;
 			if (proOrders != null && !proOrders.isEmpty()) {
 				for (ProOrder proOrder : proOrders) {
@@ -47,6 +48,9 @@ public class HomeProOrderDataController extends BaseController {
 						break;
 					}
 				}
+			}
+			if(proGoods!=null&&proGoods.getType()!=0) {
+				b = false;
 			}
 			if (!b) {
 				resp.setMsg("该场次已被占用！");
@@ -67,10 +71,19 @@ public class HomeProOrderDataController extends BaseController {
 				proOrder.setType(proPrice.getType());
 				proOrder.setTime(proPrice.getTime());
 				proOrderService.saveOrder(proOrder);
-				ProGoods proGoods = proGoodsService.findByTimeDateAbc(proPrice.getTime(), proPrice.getType(), date);
 				if (proGoods != null) {
 					proGoods.setType(2);
 					proGoodsService.update(proGoods);
+				}else {
+					proGoods = new ProGoods();
+					proGoods.setAbc(proPrice.getType());
+					proGoods.setCreateTime(new Date());
+					proGoods.setPrice(proPrice.getPrice());
+					proGoods.setName(proPrice.getName());
+					proGoods.setDate(date);
+					proGoods.setTime(proPrice.getTime());
+					proGoods.setType(2);
+					proGoodsService.save(proGoods);
 				}
 				return new Resp<>(true);
 			}

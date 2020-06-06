@@ -75,18 +75,15 @@
 									<table class="table table-hover table-bordered">
 										<thead>
 											<tr>
-												<th>id</th>
 												<th>日期</th>
 												<th>时间段</th>
 												<th>场地名称</th>
 												<th>占用情况</th>
-												<th>添加时间</th>
 												<th>操作</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr v-for="item in datas">
-												<td v-text="item.id"></td>
 												<td v-html="item.date"></td>
 												<td v-text="item.time"></td>
 												<td v-text="item.name"></td>
@@ -95,7 +92,6 @@
 												    <font v-if="1===item.type" v-text="'线上预约'" style="color: green"></font> 
 												    <font v-if="2===item.type" v-text="'线下占用'" style="color: red;"></font>
 												</td>
-												<td v-text="item.createTime"></td>
 												<td>
 													<a class="btn btn-info" v-if="1===item.type||2===item.type" v-text="'解除占用'" v-bind:id="item.id" onclick="del(this)" ></a>
 												</td>
@@ -111,7 +107,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_goods.js?version=1.31"></script>
+	<script src="/themes/js/home/pro_goods.js?version=1.41"></script>
 	<script src="/themes/laydate/laydate.js?version=1.76"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@ $(function() {
 	});
 })
 var _d = '';
-function _getData(_) {
+function _getData() {
 	var date = $('#date').val();
 	if (date == '') {
 		layer.alert('请先选择日期！');
@@ -48,7 +48,7 @@ function del(_e){
 			if(res.code=='200'){
 				layer.alert('解除成功',function(){
 					layer.closeAll(); 
-					_getData(_);
+					_getData('');
 				});
 			}else{
 				layer.alert(res.msg);

@@ -26,7 +26,7 @@ function _save(){
 	var _mobilePhone = $('#mobilePhone').val();
 	var _userName = $('#userName').val();
 	var openid = $('#openid').val();
-	var _params = 'id='+id+'&date='+date+'&mobilePhone='+_mobilePhone+'&userName='+userName+'&openid='+openid;
+	var _params = 'id='+id+'&date='+date+'&mobilePhone='+_mobilePhone+'&userName='+_userName+'&openid='+openid;
 	if(date==''||id==''){
 		layer.alert('请选择日期或场地！');
 	}else{

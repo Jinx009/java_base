@@ -60,6 +60,8 @@ public class HomeProGoodsDataController extends BaseController{
 				resp.setMsg("请先删除相关订单！");
 				return resp;
 			}else{
+				proGoods.setType(0);
+				proGoodsService.update(proGoods);
 				return new Resp<>(true);
 			}
 		} catch (Exception e) {

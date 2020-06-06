@@ -1,5 +1,7 @@
 package database.basicFunctions.dao.project;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -42,6 +44,19 @@ public class ProGoodsDao extends BaseDao<ProGoods>{
 		qpParam.addParam("time", time);
 		qpParam.addParam("abc", string);
 		return findByCriteriaForUnique(qpParam);
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<ProGoods> findByDateUpdate(String time, String name) {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String hql = " from ProGoods where date>='"+sdf.format(date)+"' and time='"+time+"' and name='"+name+"' ";
+		List<ProGoods> list  = em.createQuery(hql).getResultList();
+		if(list!=null&&!list.isEmpty()) {
+			return list;
+		}
+		return null;
 	}
 	
 	

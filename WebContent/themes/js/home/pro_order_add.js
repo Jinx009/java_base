@@ -11,8 +11,9 @@ function _save() {
 	var _mobilePhone = $('#mobilePhone').val();
 	var _userName = $('#userName').val();
 	var time = $('#time').val();
+	var remark = $('#remark').val();
 	var _params = 'address=' + address + '&date=' + date + '&mobilePhone='
-			+ _mobilePhone + '&userName=' + _userName + '&time=' + time;
+			+ _mobilePhone + '&userName=' + _userName + '&time=' + time+'&remark='+remark;
 	if (date == '') {
 		layer.alert('请选择日期！');
 	} else {

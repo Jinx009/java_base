@@ -127,7 +127,7 @@ function loginOut(){
 		success:function(res){
 			if('200'==res.code){
 				layer.alert('账号退出成功！',function(){
-					location.href = '/book/home/index';
+					location.href = '/home/index';
 				})
 			}
 		}

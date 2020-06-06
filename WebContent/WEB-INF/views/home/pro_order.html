@@ -52,6 +52,7 @@
 											<tr>
 												<th>Id</th>
 												<th>手机号</th>
+												<th>姓名</th>
 												<th>渠道</th>
 												<th>日期</th>
 												<th>时间</th>
@@ -67,6 +68,7 @@
 											<tr v-for="item in datas.list">
 												<td v-text="item.id"></td>
 												<td v-html="item.mobilePhone"></td>
+												<td v-html="item.userName"></td>
 												<td>
 														<font v-if="1===item.fromSite" v-text="'线上'" ></font> 
 													    <font v-if="2===item.fromSite" v-text="'线下'" style="color: green"></font> 

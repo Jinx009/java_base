@@ -113,5 +113,13 @@ public class ProGoodsService {
 		return proGoodsDao.findByDateTimeAbc(date,time,type);
 	}
 
+	public List<ProGoods> findByDateUpdate(String time, String name) {
+		return proGoodsDao.findByDateUpdate(time,name);
+	}
+
+	public void save(ProGoods proGoods) {
+		proGoodsDao.save(proGoods);
+	}
+
 
 }
