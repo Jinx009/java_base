@@ -89,7 +89,7 @@ public class FrontProOrderDataController extends BaseController {
 					+ "<notify_url>https://football.amize.cn/f/weapp/notice</notify_url>" + "<openid>"
 					+ proOrder.getOpenid() + "</openid>" + "<out_trade_no>" + proOrder.getCreateTime().getTime()
 					+ "</out_trade_no>" + "<spbill_create_ip>111.231.107.149</spbill_create_ip>"
-					+ "<total_fee>1</total_fee>" + "<trade_type>JSAPI</trade_type>" + "<sign>" + sign + "</sign>"
+					+ "<total_fee>1</total_fee><trade_type>JSAPI</trade_type><sign>" + sign + "</sign>"
 					+ "</xml>";
 			String res = HttpUtils.postXml("https://api.mch.weixin.qq.com/pay/unifiedorder", xml);
 			String prepay_id = doXMLParse(res).get("prepay_id");
@@ -97,7 +97,7 @@ public class FrontProOrderDataController extends BaseController {
 			proOrderService.update(proOrder);
 			String randomStr = RandomUtils.getRandomNumbersAndString(32);
 			Date date = new Date();
-			String paySign = MD5Util.MD5("appId=wxbc5ec9a82883abb6&nonceStr="+randomStr+"&package=prepay_id="+prepay_id+"&signType=MD5&timeStamp="+date.getTime()+"&key=fX5FEHQjFAmSUe01kke3xogAPKl5GaD8");
+			String paySign = MD5Util.MD5("appId=wxbc5ec9a82883abb6&nonceStr="+randomStr+"&package=prepay_id="+prepay_id+"&signType=MD5&timeStamp="+date.getTime()/1000+"&key=fX5FEHQjFAmSUe01kke3xogAPKl5GaD8");
 			proOrder.setPrepayId(prepay_id);
 			proOrderService.update(proOrder);
 			Map<String, Object> map = new HashMap<>();
@@ -153,7 +153,7 @@ public class FrontProOrderDataController extends BaseController {
 					+ "<notify_url>https://football.amize.cn/f/weapp/notice</notify_url>" + "<openid>"
 					+ proOrder.getOpenid() + "</openid>" + "<out_trade_no>" + proOrder.getCreateTime().getTime()
 					+ "</out_trade_no>" + "<spbill_create_ip>111.231.107.149</spbill_create_ip>"
-					+ "<total_fee>1</total_fee>" + "<trade_type>JSAPI</trade_type>" + "<sign>" + sign + "</sign>"
+					+ "<total_fee>1</total_fee><trade_type>JSAPI</trade_type><sign>" + sign + "</sign>"
 					+ "</xml>";
 			String res = HttpUtils.postXml("https://api.mch.weixin.qq.com/pay/unifiedorder", xml);
 			String prepay_id = doXMLParse(res).get("prepay_id");
