@@ -24,7 +24,7 @@ public class ProOrderAddService {
 
 	public static String remark;
 
-	public void add(String date, String time, String address, String mobilePhone, String userName) {
+	public void add(String date, String time, String address, String mobilePhone, String userName, Integer week) {
 		ProOrderAdd o = new ProOrderAdd();
 		o.setAddress(address);
 		o.setCreateTime(new Date());
@@ -32,6 +32,7 @@ public class ProOrderAddService {
 		o.setTime(time);
 		o.setMobilePhone(mobilePhone);
 		o.setUserName(userName);
+		o.setWeek(week);
 		o = proOrderAddDao.save(o);
 		String f = date.split(" - ")[0];
 		String e = date.split(" - ")[1];

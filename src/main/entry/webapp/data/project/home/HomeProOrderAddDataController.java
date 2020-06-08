@@ -35,10 +35,10 @@ public class HomeProOrderAddDataController extends BaseController{
 	
 	@RequestMapping(path = "/save")
 	@ResponseBody
-	public Resp<?> save( String date,String time,String address,String mobilePhone,String userName) {
+	public Resp<?> save( String date,String time,String address,String mobilePhone,String userName,Integer week) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			proOrderAddService.add(date, time, address, mobilePhone, userName);
+			proOrderAddService.add(date, time, address, mobilePhone, userName,week);
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("e:{}", e);

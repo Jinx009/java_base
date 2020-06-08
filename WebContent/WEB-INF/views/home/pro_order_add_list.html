@@ -53,6 +53,7 @@
 												<th>手机号</th>
 												<th>联系人</th>
 												<th>日期段</th>
+												<th>星期</th>
 												<th>时间</th>
 												<th>场地</th>
 												<th>备注</th>
@@ -64,6 +65,15 @@
 												<td v-html="item.mobilePhone"></td>
 												<td v-text="item.userName"></td>
 												<td v-text="item.date"></td>
+												<td>
+													<font v-if="0===item.week" v-text="'星期日'" ></font>
+													<font v-if="1===item.week" v-text="'星期一'" ></font>
+													<font v-if="2===item.week" v-text="'星期二'" ></font>
+													<font v-if="3===item.week" v-text="'星期三'" ></font>
+													<font v-if="4===item.week" v-text="'星期四'" ></font>
+													<font v-if="5===item.week" v-text="'星期五'" ></font>
+													<font v-if="6===item.week" v-text="'星期六'" ></font>
+												</td>
 												<td v-text="item.time"></td>
 												<td v-text="item.address"></td>
 												<td v-html="item.remark"></td>
@@ -93,6 +103,6 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_order_add_list.js?version=1.79"></script>
+	<script src="/themes/js/home/pro_order_add_list.js?version=1.99"></script>
 </body>
 </html>

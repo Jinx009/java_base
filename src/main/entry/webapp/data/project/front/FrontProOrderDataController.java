@@ -51,6 +51,18 @@ public class FrontProOrderDataController extends BaseController {
 		return resp;
 	}
 	
+	@RequestMapping(path = "/m")
+	@ResponseBody
+	public Resp<?> m(String date) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(proOrderService.getByM(date));
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/update")
 	@ResponseBody
 	public Resp<?> list(Integer orderId,Integer status,String msg ) {

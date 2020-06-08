@@ -2,6 +2,7 @@ package service.basicFunctions.project;
 
 
 import database.basicFunctions.dao.project.ProPriceDao;
+import database.common.PageDataList;
 import database.models.project.ProPrice;
 
 import java.util.List;
@@ -29,6 +30,10 @@ public class ProPriceService {
 
 	public Object findByTime(String time) {
 		return proPriceDao.findByTime(time);
+	}
+
+	public PageDataList<ProPrice> findByPage(int p) {
+		return proPriceDao.findByPage(p);
 	}
 	
 }

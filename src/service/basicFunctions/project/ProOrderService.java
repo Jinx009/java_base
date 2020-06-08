@@ -1,7 +1,9 @@
 package service.basicFunctions.project;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,27 @@ public class ProOrderService {
 	
 	public void del(int id){
 		proOrderDao.delete(id);
+	}
+
+	public Map<String, Double> getByM(String date) {
+		String f = date.split(" - ")[0];
+		String e = date.split(" - ")[1];
+		List<ProOrder> list = proOrderDao.findByM(f,e);
+		Map<String, Double> map = new HashMap<String, Double>();
+		Double payed = 0.00;
+		Double payfail = 0.00;
+		if(list!=null){
+			for(ProOrder o : list){
+				if(o.getStatus()==1){
+					payed+= o.getPrice();
+				}else{
+					payfail += o.getPrice();
+				}
+			}
+		}
+		map.put("payed",payed );
+		map.put("payfail", payfail);
+		return map;
 	}
 	
 }

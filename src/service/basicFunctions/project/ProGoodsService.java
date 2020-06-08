@@ -1,5 +1,7 @@
 package service.basicFunctions.project;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -15,6 +17,7 @@ import database.basicFunctions.dao.project.ProPriceDao;
 import database.models.project.ProGoods;
 import database.models.project.ProGoodsModel;
 import database.models.project.ProPrice;
+import utils.WeekUtils;
 
 @Service
 public class ProGoodsService {
@@ -24,9 +27,15 @@ public class ProGoodsService {
 	@Autowired
 	private ProPriceDao proPriceDao;
 
-	public List<ProGoodsModel> findByDate(String date) {
+	public List<ProGoodsModel> findByDate(String date) throws ParseException {
 		List<ProGoodsModel> models = new ArrayList<ProGoodsModel>();
-		List<ProPrice> prices = proPriceDao.findOrderLevel();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		int week = WeekUtils.getWeek(sdf.parse(date));
+		int weekStatus = 0;
+		if(week==0||week==6){
+			weekStatus = 1;
+		}
+		List<ProPrice> prices = proPriceDao.findOrderLevelWeek(weekStatus);
 		Set<String> set = new LinkedHashSet<String>();
 		for (ProPrice p : prices) {
 			set.add(p.getTime());

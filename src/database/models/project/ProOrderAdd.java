@@ -39,5 +39,7 @@ public class ProOrderAdd {
 	private String userName;
 	@Column(name = "remark")
 	private String remark;
+	@Column(name = "week")
+	private Integer week;
 	
 }

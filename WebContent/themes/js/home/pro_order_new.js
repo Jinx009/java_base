@@ -1,10 +1,29 @@
 $(function(){
 		laydate.render({
-		elem : '#date'
+		elem : '#date',
+		done:function(value,date){
+			var date = $('#date').val();
+			week = new Date(date).getDay();
+			if(week==0||week==6){
+				$('#time').hide();
+				$('#time1').show();
+				time = $('#time1').val();
+			}else{
+				$('#time1').hide();
+				$('#time').show();
+				time = $('#time').val();
+			}
+	    }
 	});
 })
+var week = 0;
+var time = '';
 function check(){
-	var time = $('#time').val();
+	if(week==0||week==6){
+		time = $('#time1').val();
+	}else{
+		time = $('#time').val();
+	}
 	if(time!=0){
 		$.ajax({
 			url:'/h/pro_price/findByTime?time='+time,

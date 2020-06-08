@@ -47,6 +47,16 @@ public class ProOrderDao extends BaseDao<ProOrder>{
 		return findByCriteria(qpParam);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<ProOrder> findByM(String f, String e) {
+		String hql = " FROM ProOrder where createTime>='"+f+" 00:00:00' and createTime<='"+e+" 00:00:00' and fromSite =1";
+		List<ProOrder> list = em.createQuery(hql).getResultList();
+		if(list!=null&&!list.isEmpty()){
+			return list;
+		}
+		return null;
+	}
+
 	
 	
 }

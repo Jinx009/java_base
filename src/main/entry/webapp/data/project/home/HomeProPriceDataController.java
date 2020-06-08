@@ -40,6 +40,18 @@ public class HomeProPriceDataController extends BaseController {
 		return resp;
 	}
 	
+	@RequestMapping(path = "/all")
+	@ResponseBody
+	public Resp<?> pageList(int p ){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(proPriceService.findByPage(p));
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/findByTime")
 	@ResponseBody
 	public Resp<?> findByTime(String time){

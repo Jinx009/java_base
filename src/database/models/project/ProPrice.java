@@ -37,4 +37,6 @@ public class ProPrice {
 	private Integer level;
 	@Column(name = "type")
 	private String type;
+	@Column(name = "week")
+	private Integer week;
 }

@@ -3,17 +3,31 @@ $(function() {
 		elem : '#date',
 		range : true
 	});
+	checkWeek();
 })
-
+function checkWeek(){
+	var week = $('#week').val();
+	if(week==0||week==6){
+		$('#time1').show();
+		$('#time').hide();
+	}else{
+		$('#time').show();
+		$('#time1').hide();
+	}
+}
 function _save() {
 	var date = $('#date').val();
 	var address = $('#address').val();
 	var _mobilePhone = $('#mobilePhone').val();
 	var _userName = $('#userName').val();
+	var week = $('#week').val();
 	var time = $('#time').val();
+	if(week==0||week==6){
+		time = $('#time1').val();
+	}
 	var remark = $('#remark').val();
 	var _params = 'address=' + address + '&date=' + date + '&mobilePhone='
-			+ _mobilePhone + '&userName=' + _userName + '&time=' + time+'&remark='+remark;
+			+ _mobilePhone + '&userName=' + _userName + '&time=' + time+'&week='+week;
 	if (date == '') {
 		layer.alert('请选择日期！');
 	} else {

@@ -34,7 +34,7 @@
 				</ol>
 			</section>
 			<!-- 主内容 -->
-			<section class="content" >
+			<section class="content"  id="data">
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="box">
@@ -49,11 +49,12 @@
 											<th>时间段</th>
 											<th>场地名称</th>
 											<th>场地价格</th>
+											<th>类型</th>
 											<th>操作</th>
 										</tr>
 									</thead>
-									<tbody id="data">
-										<tr v-for="item in datas">
+									<tbody>
+										<tr v-for="item in datas.list">
 											<td v-text="item.time"></td>
 											<td>
 												 <input class="form-control" readonly="readonly" v-bind:value="item.name" style="width: 100px;" v-bind:id="'name_'+item.id" >
@@ -62,11 +63,28 @@
 												 <input class="form-control" v-bind:value="item.price" style="width: 60px;" v-bind:id="'price_'+item.id" >
 											</td>
 											<td>
+												<font v-if="0===item.week" v-text="'工作日'" ></font>
+												<font v-if="1===item.week" v-text="'周末'" ></font>
+											</td>
+											<td>
 												<a class='btn btn-info btn-xs' v-bind:id="item.id"  onclick="_edit(this)">保存</a>
 											</td>
 										</tr>
 									</tbody>
 								</table>
+									<div class="box-footer clearfix"
+										style="width: 320px; float: right;">
+										<div class="input-group">
+											<span class="input-group-addon" onclick="_getData(0,1);">«</span>
+											<span class="input-group-addon" onclick="_getData(1,0);">‹</span>
+											<input type="text" style="text-align: center;"
+												onfocus="_getNowPage(this)" onblur="_getAllPage(this)"
+												v-bind:value="'当前第'+datas.page.currentPage+'页，共'+datas.page.pages+'页'"
+												class="form-control"> <span
+												class="input-group-addon" onclick="_getData(1,1);">›</span>
+											<span class="input-group-addon" id="_end">»</span>
+										</div>
+									</div>
 							</div>
 							</div>
 						</div>
@@ -75,7 +93,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/pro_price.js?version=1.41"></script>
+	<script src="/themes/js/home/pro_price.js?version=1.51"></script>
 
 </body>
 </html>
