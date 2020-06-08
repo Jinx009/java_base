@@ -27,7 +27,7 @@
 			<section class="content-header" style="height: 50px;">
 				<h1></h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> 新增批量占用 </a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> 财务分析 </a></li>
 				</ol>
 			</section>
 			<!-- 主内容 -->
@@ -46,7 +46,7 @@
 							<div class="col-md-3">
 								<div class="input-group" style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top: 25px; float: left;">
 									<input type="text" class="form-control" readonly="readonly" id="datepicker" lay-key="1"> <span class="input-group-btn">
-										<button class="btn btn-default" onclick="_getData();" type="button">&nbsp;查&nbsp;看&nbsp;</button>
+										<button class="btn btn-default" onclick="_getData()" type="button">&nbsp;查&nbsp;看&nbsp;</button>
 									</span>
 								</div>
 							</div>
@@ -55,7 +55,7 @@
 				 <div class="row">
 			      <div class="col-md-3"></div>
 			      <div class="col-md-6">
-							<div id="draw" ></div>
+							<div id="draw" style="float: left; position: relative; min-height: 1px; width: 380px; height: 380px; padding: 0" ></div>
 			            </div>
 		            </div>
 		          </div>
@@ -77,7 +77,7 @@
 	function _getData(){
 		$.ajax({
 			url:'/h/pro_order/m',
-			data:'date='+$('#"datepicker"').val(),
+			data:'date='+$('#datepicker').val(),
 			dataType:'json',
 			success:function(res){
 				if(res.code=='200'){

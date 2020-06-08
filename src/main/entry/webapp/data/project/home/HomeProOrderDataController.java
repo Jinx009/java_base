@@ -106,6 +106,20 @@ public class HomeProOrderDataController extends BaseController {
 	}
 	
 	
+	@RequestMapping(path = "/m")
+	@ResponseBody
+	public Resp<?> m(String date) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(proOrderService.getByM(date));
+		} catch (Exception e) {
+			log.error("e:{}", e);
+		}
+		return resp;
+	}
+	
+	
+	
 	@RequestMapping(path = "/del")
 	@ResponseBody
 	public Resp<?> del( Integer id) {
