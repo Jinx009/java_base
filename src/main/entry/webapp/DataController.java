@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import database.models.home.HomeUser;
+import service.basicFunctions.business.InvoiceService;
+import service.basicFunctions.business.NoticeService;
 import service.basicFunctions.home.HomeUserService;
 import utils.StringUtil;
 import utils.model.BaseConstant;
@@ -34,6 +35,10 @@ public class DataController extends BaseController {
 
 	@Autowired
 	private HomeUserService homeUserService;
+	@Autowired
+	private InvoiceService invoiceService;
+	@Autowired
+	private NoticeService noticeService;
 	
 
 	@RequestMapping(path = "/login")
@@ -48,6 +53,30 @@ public class DataController extends BaseController {
 			} else {
 				return new Resp<>(BaseConstant.NOT_VALIDATE_COE, BaseConstant.NOT_VALIDATE_MSG, null);
 			}
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/notice")
+	@ResponseBody
+	public Resp<?> notcie() {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(noticeService.findAll());
+		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/invoice")
+	@ResponseBody
+	public Resp<?> invoice() {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(invoiceService.findOne());
 		} catch (Exception e) {
 			log.error("error:{}", e);
 		}
