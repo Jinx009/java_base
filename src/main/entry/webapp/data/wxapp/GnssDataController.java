@@ -22,7 +22,7 @@ public class GnssDataController extends BaseController{
 	public Resp<?> device() {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(utils.HttpUtils.get("http://139.196.205.157:8080/d/openDeviceData"));
+			return new Resp<>(utils.HttpUtils.get("http://139.196.205.157:8086/d/openDeviceData"));
 		} catch (Exception e) {
 			log.error("error:{}", e);
 		}
