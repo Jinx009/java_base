@@ -51,7 +51,6 @@ public class ProOrderAddService {
 			Date ed = sdf.parse(e);
 			if (fd.before(ed)) {
 				if (week == weekD) {
-					HttpUtils.get("https://football.amize.cn/f/pro_goods/list?date=" + f);
 					ProGoods proGoods = proGoodsDao.findByDateTimeName(f, time, address);
 					if (proGoods.getType() == 1 || proGoods.getType() == 2) {
 						remark += f + " " + time + " " + address + " 已经占用<br>";
@@ -67,6 +66,7 @@ public class ProOrderAddService {
 				changeGoods(sdf.format(fd), e, time, address, week);
 			} else {
 				if (week == weekD) {
+					HttpUtils.get("https://football.amize.cn/f/pro_goods/list?date=" + f);
 					ProGoods proGoods = proGoodsDao.findByDateTimeName(f, time, address);
 					if (proGoods.getType() == 1 || proGoods.getType() == 2) {
 						remark += f + " " + time + " " + address + " 已经占用<br>";
