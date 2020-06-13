@@ -94,6 +94,6 @@ public class MD5Util {
     public static void main(String[] args){  
          System.out.println(toMD5("admin"));  
          System.out.println(MD5("jinx007"));  
-         System.out.println(md5("admin"));  
+         System.out.println(md5("pass2020"));  
     }  
 }
