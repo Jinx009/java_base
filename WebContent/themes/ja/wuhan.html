@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>设备管理</title>
+    <link href="/themes/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/themes/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"  target="_blank"  href="http://www.zhanway.com"><img height="50px;" style="margin-top: -15px;" src="img/logo.png"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="device.html">设备信息</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a  target="_blank"  href="http://www.zhanway.com">走进展为</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="row" style="width: 98%;margin-left: 1%;" >
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">基本信息</div>
+            <div class="panel-body">
+         		<form class="form-inline">
+				  <div class="form-group">
+				    <label for="exampleInputEmail2">选择街道</label>
+				    <select class="form-control" id="address" >
+				    
+				    	<option value="百灵路">百灵路</option>
+				    	<option value="京汉大道">京汉大道</option>
+				    	<option value="中山大道">中山大道</option>
+				    </select>
+				  </div>
+				  <a class="btn btn-default" onclick="_getData()" >查询</a>
+				</form>
+          </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mac地址</th>
+                        <th>车位号</th>
+                        <th>是否有车</th>
+                        <th>电压</th>
+                        <th>上次车检时间</th>
+                        <th>最后一次心跳时间</th>
+                        <th>信号</th>
+                    </tr>
+                </thead>
+                <tbody id="data" >
+                    <tr v-for="item in datas" >
+                        <td v-text="item.mac" ></td>
+                        <td v-text="item.baseEnergy" ></td>
+                        <td>
+                        	<span v-if="1===item.available" class="label label-success">是</span>
+                        	<span v-if="0===item.available" class="label label-danger">否</span>
+                        </td>
+                        <td v-text="item.batteryVoltage" ></td>
+                        <td v-text="item.lastSeenTime" ></td>
+                     	<td v-text="item.createTime" ></td>
+                     	<td v-text="item.desc" ></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="control-sidebar-bg"></div>
+<script src="js/jquery.min.js"></script>
+<script src="/themes/dist/js/bootstrap.min.js"></script>
+<script src="/themes/js/vue.min.js"></script>
+<script>
+$(function(){
+	_getData();
+})
+var _d = '';
+function _getData(){
+	$.ajax({
+		url:'/common/log/wuhan',
+		type:'post',
+		dataType:'json',
+		data:'mac='+$('#address').val(),
+		success:function(res){
+			for(var i in res){
+				res[i].createTime = toDateTime(res[i].createTime);
+				res[i].lastSeenTime = toDateTime(res[i].lastSeenTime);
+			}
+			if(_d == ''){
+				_d = new Vue({
+					el:'body',
+					data:{
+						datas:res
+					}
+				})
+			}else{
+				_d.datas = res;
+			}
+			
+		}
+	})
+}
+Date.prototype.Format = function (fmt) { //author: meizz
+    var o = {
+        "M+": this.getMonth() + 1,                 //月份
+        "d+": this.getDate(),                    //日
+        "h+": this.getHours(),                   //小时
+        "m+": this.getMinutes(),                 //分
+        "s+": this.getSeconds(),                 //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds()             //毫秒
+    };
+    if (/(y+)/.test(fmt))
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+};
+/**
+ * 时间戳转换标准时间
+ * @param unixtime
+ * @returns
+ */
+function toDateTime(unixtime)  {  
+	 var date = new Date(unixtime);
+	 return  date.Format("yyyy-MM-dd hh:mm:ss"); 
+}  
+</script>
+</body>
+</html>

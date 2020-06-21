@@ -54,6 +54,13 @@ public class LogsController extends BaseController{
 		return null;
 	}
 	
+	
+	@RequestMapping(path = "wuhan")
+	@ResponseBody
+	public List<DeviceSensor> devices(String mac){
+		return deviceSensorService.findByParentMac(mac);
+	}
+	
 	/**
 	 * 查询心跳最新时间
 	 * @return
