@@ -1,8 +1,8 @@
 package main.entry.webapp;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+//import java.io.File;
+//import java.io.FileWriter;
+//import java.io.PrintWriter;
 import java.net.DatagramSocket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -174,7 +174,7 @@ public class TelcomController extends BaseController{
      * @param bytes
      * @return
      */
-    @RequestMapping(value = "/iot/na/iocm/devNotify/v1.1.0/updateDeviceDatas", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/na/iocm/devNotify/v1.1.0/updateDeviceDatas", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public String pushs(@RequestBody byte[] bytes){
         try {
@@ -228,6 +228,26 @@ public class TelcomController extends BaseController{
 //                                    String zdif = data.substring(34, 38);
                                     Date date = new Date();
                                     if((date.getTime()-sensor.getLastSeenTime().getTime())/1000>300||avalable!=sensor.getAvailable()){
+                                    	if(avalable==sensor.getAvailable()){
+                                            sensor.setAvailable(Math.abs(avalable-1));
+                                            sensor.setLastSeenTime(date);
+                                            sensor.setSensorStatus(Math.abs(avalable-1));
+                                            sensor.setMode("");
+                                            sensor.setHappenTime(date);
+                                            sensor.setSensorTime(sdf1.format(date));
+                                            sensor.setVedioStatus("");
+                                            sensor.setCph("");
+                                            sensor.setCpColor("");
+                                            sensor.setCameraId("");
+                                            sensor.setPicLink("");
+                                            sensor.setVedioTime("");
+                                            sensor.setSensorTime(sdf1.format(sensor.getHappenTime()));
+                                            sensor.setBluetooth("");
+                                            sensor.setBluetoothArray("");
+                                            deviceSensorService.update(sensor);
+                                            logSensorLogService.saveOperationLog(sensor);
+                                    	}
+                                    	date = new Date();
                                         sensor.setAvailable(avalable);
                                         sensor.setLastSeenTime(date);
                                         sensor.setSensorStatus(avalable);
@@ -240,29 +260,27 @@ public class TelcomController extends BaseController{
                                         sensor.setCameraId("");
                                         sensor.setPicLink("");
                                         sensor.setVedioTime("");
-                                        sensor.setSensorStatus(sensor.getAvailable());
                                         sensor.setSensorTime(sdf1.format(sensor.getHappenTime()));
                                         sensor.setBluetooth("");
                                         sensor.setBluetoothArray("");
-//                                        sensor.setCameraName("");
                                         deviceSensorService.update(sensor);
                                         logSensorLogService.saveOperationLog(sensor);
                                     }
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 //                                    File f = new File("/data/logs/sensor_status/"+sdf.format(date)+"/"+mac+".txt");
-                                    File f = new File("/apps/logs/sensor_status/"+sdf.format(date)+"/"+mac+".txt");
-                                    File fileParent = f.getParentFile();
-                                    if (!fileParent.exists()) {
-                                        fileParent.mkdirs();
-                                        f.createNewFile();
-                                    }
-                                    FileWriter fw = new FileWriter(f, true);
-                                    PrintWriter pw = new PrintWriter(fw);
-                                    pw.println(mac+"    "+data+"    "+sdf1.format(date));
-                                    pw.flush();
-                                    fw.flush();
-                                    pw.close();
-                                    fw.close();
+//                                    File f = new File("/apps/logs/sensor_status/"+sdf.format(date)+"/"+mac+".txt");
+//                                    File fileParent = f.getParentFile();
+//                                    if (!fileParent.exists()) {
+//                                        fileParent.mkdirs();
+//                                        f.createNewFile();
+//                                    }
+//                                    FileWriter fw = new FileWriter(f, true);
+//                                    PrintWriter pw = new PrintWriter(fw);
+//                                    pw.println(mac+"    "+data+"    "+sdf1.format(date));
+//                                    pw.flush();
+//                                    fw.flush();
+//                                    pw.close();
+//                                    fw.close();
                                 }
                                 if(cmd.equals("3E")){//心跳
                                     String dif1 = data.substring(26, 28);
@@ -347,7 +365,7 @@ public class TelcomController extends BaseController{
      * @param bytes
      * @return
      */
-    @RequestMapping(value = "/iot/na/iocm/devNotify/v1.1.0/updateDeviceData", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/na/iocm/devNotify/v1.1.0/updateDeviceData", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public String push(@RequestBody byte[] bytes){
         try {
