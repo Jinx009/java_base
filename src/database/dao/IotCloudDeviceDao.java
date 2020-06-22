@@ -50,7 +50,7 @@ public class IotCloudDeviceDao extends BaseDao<IoTCloudDevice>{
 
 	@SuppressWarnings("unchecked")
 	public List<IoTCloudDevice> getWuhan() {
-		String sql = " select *  from pro_device  where local_ip ='QJ_ZHANWAY_V_3.0_WUHAN'  order by data_time desc ";
+		String sql = " select *  from pro_device  where local_ip ='QJ_ZHANWAY_V_3.0_WUHAN'  order by park_name desc ";
 		Query query = em.createNativeQuery(sql, IoTCloudDevice.class);
 		List<IoTCloudDevice> list = query.getResultList();
 		return list;
