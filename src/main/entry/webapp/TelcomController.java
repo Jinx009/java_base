@@ -353,7 +353,6 @@ public class TelcomController extends BaseController{
                     }
                 }
             }
-            log.warn("");
         }catch (Exception e){
             log.error("e:{}",e);
         }

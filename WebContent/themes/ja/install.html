@@ -35,41 +35,30 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">基本信息</div>
-            <div class="panel-body">
-         		<form class="form-inline">
-				  <div class="form-group">
-				    <label for="exampleInputEmail2">选择街道</label>
-				    <select class="form-control" id="address" >
-				        <option value="罗家庄">罗家庄</option>
-				        <option value="花园道">花园道</option> 
-				    	<option value="百灵路">百灵路</option>
-				    	<option value="京汉大道">京汉大道</option>
-				    	<option value="中山大道">中山大道</option>
-				    </select>
-				  </div>
-				  <a class="btn btn-default" onclick="_getData()" >查询</a>
-				</form>
-          </div>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Mac地址</th>
+                        <th>Mac</th>
                         <th>车位号</th>
-                        <th>是否有车</th>
-                        <th>电压</th>
-                        <th>上次车检时间</th>
+                        <th>路段</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody id="data" >
                     <tr v-for="item in datas" >
-                        <td v-text="item.mac" ></td>
-                        <td v-text="item.desc" ></td>
+                        <td v-text="item.addr"  v-bind:id="'mac'+item.mac" ></td>
                         <td>
-                        	<span v-if="1===item.available" class="label label-success">是</span>
-                        	<span v-if="0===item.available" class="label label-danger">否</span>
+                        	 <input class="form-control" v-bind:id="'desc'+item.mac" >
                         </td>
-                        <td v-text="item.batteryVoltage" ></td>
-                         <td v-text="item.sensorTime" ></td>
+                        <td>
+                        		<select  class="form-control"  v-bind:id="'parentMac'+item.mac" >
+                        			<option value="罗家庄">罗家庄</option>
+				        		    <option value="花园道">花园道</option>
+                        		</select>
+                        </td>
+                        <td>
+                        	<a class="btn btn-info" v-bind:id="item.mac" onclick="update(this)" >填报</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -80,21 +69,40 @@
 <script src="js/jquery.min.js"></script>
 <script src="/themes/dist/js/bootstrap.min.js"></script>
 <script src="/themes/js/vue.min.js"></script>
+<script src="/themes/layer/layer.js"></script>
 <script>
+function update(_e){
+	var mac = $(_e).attr('id');
+	var desc = $('#desc'+mac).val();
+	var parentMac = $('#parentMac'+mac).val();
+	var _param = 'mac='+mac+'&desc='+desc+'&parentMac='+parentMac;
+	$.ajax({
+		url:'/common/log/updateInstall',
+		type:'post',
+		dataType:'json',
+		data:_param,
+		success:function(res){
+			if(res!=null){
+				layer.alert('操作成功！',function(){
+					location.reload();
+				})
+			}
+		}
+	})
+}
+
 $(function(){
 	_getData();
 })
 var _d = '';
 function _getData(){
 	$.ajax({
-		url:'/common/log/wuhan',
+		url:'/common/log/install',
 		type:'post',
 		dataType:'json',
-		data:'mac='+$('#address').val(),
 		success:function(res){
 			for(var i in res){
-				res[i].createTime = toDateTime(res[i].createTime);
-				res[i].lastSeenTime = toDateTime(res[i].lastSeenTime);
+				res[i].addr = res[i].mac.split('000119110700')[1];
 			}
 			if(_d == ''){
 				_d = new Vue({

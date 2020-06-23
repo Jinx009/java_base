@@ -21,6 +21,7 @@ import service.basicFunctions.device.DeviceSensorInfoService;
 import service.basicFunctions.device.DeviceSensorService;
 import service.basicFunctions.log.LogSensorLogService;
 import utils.StringUtil;
+import utils.model.Resp;
 
 @Controller
 @RequestMapping(value = "/common/log")
@@ -60,6 +61,27 @@ public class LogsController extends BaseController{
 	public List<DeviceSensor> devices(String mac){
 		return deviceSensorService.findByParentMac(mac);
 	}
+	
+	@RequestMapping(path = "install")
+	@ResponseBody
+	public List<DeviceSensor> install(){
+		return deviceSensorService.install();
+	}
+	
+	@RequestMapping(path = "updateInstall")
+	@ResponseBody
+	public Resp<?> updateInstall(String mac,String parentMac,String desc){
+		DeviceSensor sensor = deviceSensorService.findByMac(mac);
+		if(sensor!=null){
+			sensor.setCameraName("001001");
+			sensor.setAreaId(64);
+			sensor.setParentMac(parentMac);
+			sensor.setDesc(desc);
+			deviceSensorService.update(sensor);
+		}
+		return new Resp<>(true);
+	}
+	
 	
 	/**
 	 * 查询心跳最新时间

@@ -227,5 +227,9 @@ public class DeviceSensorService extends BaseService{
 	public List<DeviceSensor> findByParentMac(String parentMac) {
 		return deviceSensorDao.findByParentMacList(parentMac);
 	}
+
+	public List<DeviceSensor> install() {
+		return deviceSensorDao.install();
+	}
 	
 }

@@ -91,7 +91,6 @@ public class DeviceSensorDao extends BaseDao<DeviceSensor>{
 			sql += " and t.area_id is null  ";
 		}
 		sql += " order by t.area_id ";
-		System.out.println(sql);
 		Query query = em.createNativeQuery(sql, DeviceSensor.class);
 		List<DeviceSensor> list = query.getResultList();
 		return list;
@@ -105,6 +104,14 @@ public class DeviceSensorDao extends BaseDao<DeviceSensor>{
 			return list;
 		}
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<DeviceSensor> install() {
+		String sql = " select * from tbl_sensor t where t.area_id!=64 and mac like '%0001191107%' order by mac ";
+		Query query = em.createNativeQuery(sql, DeviceSensor.class);
+		List<DeviceSensor> list = query.getResultList();
+		return list;
 	}
 	
 }
