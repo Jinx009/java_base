@@ -68,6 +68,34 @@ public class LogsController extends BaseController{
 		return deviceSensorService.install();
 	}
 	
+	@RequestMapping(path = "updateDesc")
+	@ResponseBody
+	public Resp<?> updateDesc(String mac,String baseMac,String desc,String sec,String parentMac){
+		if("Zhanway2020".equals(sec)){
+			if(mac.equals(baseMac)){
+				DeviceSensor sensor = deviceSensorService.findByMac(mac);
+				sensor.setDesc(desc);
+				sensor.setParentMac(parentMac);
+				deviceSensorService.update(sensor);
+			}else{
+				DeviceSensor sensor = deviceSensorService.findByMac(mac);
+				sensor.setDesc(desc);
+				sensor.setCameraName("001001");
+				sensor.setAreaId(64);
+				sensor.setParentMac(parentMac);
+				deviceSensorService.update(sensor);
+				DeviceSensor sensor2 = deviceSensorService.findByMac(baseMac);
+				sensor2.setAreaId(1001);
+				sensor2.setParentMac("");
+				deviceSensorService.update(sensor2);
+			}
+		}else{
+			return new Resp<>(false);
+		}
+		return new Resp<>(true);
+	}
+	
+	
 	@RequestMapping(path = "updateInstall")
 	@ResponseBody
 	public Resp<?> updateInstall(String mac,String parentMac,String desc){

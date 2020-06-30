@@ -56,20 +56,26 @@
                         <th>Mac地址</th>
                         <th>车位号</th>
                         <th>是否有车</th>
-                        <th>电压</th>
                         <th>上次车检时间</th>
+                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody id="data" >
                     <tr v-for="item in datas" >
-                        <td v-text="item.mac" ></td>
-                        <td v-text="item.desc" ></td>
+                        <td>
+                        	<input class="form-control" v-bind:id="item.mac+'_mac'"  v-bind:value="item.mac" >
+                        </td>
+                        <td>
+                        	<input class="form-control"  v-bind:id="item.mac+'_desc'"  v-bind:value="item.desc" >
+                        </td>
                         <td>
                         	<span v-if="1===item.available" class="label label-success">是</span>
                         	<span v-if="0===item.available" class="label label-danger">否</span>
                         </td>
-                        <td v-text="item.batteryVoltage" ></td>
                          <td v-text="item.sensorTime" ></td>
+                         <td>
+                         		<a class="btn btn-info" v-bind:id="item.mac" onclick="_update(this)" >更新</a>
+                         </td>
                     </tr>
                 </tbody>
             </table>
@@ -80,6 +86,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="/themes/dist/js/bootstrap.min.js"></script>
 <script src="/themes/js/vue.min.js"></script>
+<script src="/themes/layer/layer.js"></script>
 <script>
 $(function(){
 	_getData();
@@ -127,6 +134,40 @@ Date.prototype.Format = function (fmt) { //author: meizz
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 };
+function _update(_e){
+	layer.prompt({
+	    formType: 1,
+	    title: '请填写秘钥',
+	    area: ['220px', '32px'],
+	    btnAlign: 'c',
+	    yes: function(index, layero){
+	        // 获取文本框输入的值
+	        var sec = layero.find(".layui-layer-input").val();
+	        var parentMac = $('#address').val();
+	        var baseMac = $(_e).attr('id');
+	        var mac = $('#'+baseMac+'_mac').val();
+	        var desc = $('#'+baseMac+'_desc').val();
+	        var params = 'mac='+mac+'&baseMac='+baseMac+'&parentMac='+parentMac+'&desc='+desc+'&sec='+sec;
+	        $.ajax({
+	        	url:'/common/log/updateDesc',
+	        	data:params,
+	        	type:'post',
+	        	dataType:'json',
+	        	success:function(res){
+	        		if('200'==res.code){
+	        			layer.close(index);
+	        			layer.alert('操作成功！',function(){
+	        				location.reload();
+	        			})
+	        		}else{
+	        			layer.close(index);
+	        			layer.alert('秘钥错误！');
+	        		}
+	        	}
+	        })
+	    }
+	});
+}
 /**
  * 时间戳转换标准时间
  * @param unixtime
