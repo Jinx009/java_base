@@ -63,16 +63,16 @@
                 <tbody id="data" >
                     <tr v-for="item in datas" >
                         <td>
-                        	<input class="form-control" v-bind:id="item.mac+'_mac'"  v-bind:value="item.mac" >
+                        	<input class="form-control" v-bind:id="item.mac+'_mac'" style="width: 160px;"  v-bind:value="item.mac" >
                         </td>
                         <td>
-                        	<input class="form-control"  v-bind:id="item.mac+'_desc'"  v-bind:value="item.desc" >
+                        	<input class="form-control"  v-bind:id="item.mac+'_desc'" style="width: 80px;" v-bind:value="item.desc" >
                         </td>
                         <td>
                         	<span v-if="1===item.available" class="label label-success">是</span>
                         	<span v-if="0===item.available" class="label label-danger">否</span>
                         </td>
-                         <td v-text="item.sensorTime" ></td>
+                         <td v-text="item.sensorTime"  ></td>
                          <td>
                          		<a class="btn btn-info" v-bind:id="item.mac" onclick="_update(this)" >更新</a>
                          </td>
