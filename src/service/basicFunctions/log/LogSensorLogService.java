@@ -127,8 +127,19 @@ public class LogSensorLogService extends BaseService {
 				logSensorStatusDao.update(sensorOperationLog);
 			}
 		}
+		//周浦界浜村
 		if (sensorOperationLog.getAreaId() != null && 65 == sensorOperationLog.getAreaId()) {
 			String status = BearHuntingDataUtils.sendStatus(KeyUtils.STATUS_FIRE_URL,sensorOperationLog);
+			Integer code = JSON.parseObject(status).getInteger("status");
+			if(1==code){
+				sensorOperationLog.setSendStatus(1);
+				sensorOperationLog.setSendTime(new Date());
+				logSensorStatusDao.update(sensorOperationLog);
+			}
+		}
+		//周浦菱翔苑
+		if (sensorOperationLog.getAreaId() != null && 34 == sensorOperationLog.getAreaId()) {
+			String status = BearHuntingDataUtils.sendStatusFire(KeyUtils.STATUS_FIRE_URL2,sensorOperationLog,"zhanway");
 			Integer code = JSON.parseObject(status).getInteger("status");
 			if(1==code){
 				sensorOperationLog.setSendStatus(1);
