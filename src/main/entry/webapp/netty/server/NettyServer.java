@@ -100,7 +100,7 @@ public class NettyServer {
 	
 	
 	public static void main(String[] args) {
-		NettyServer nettyServer = new NettyServer(3333,0,true);
-		NettyServer nettyServer2 = new NettyServer(4444,3333,false);
+//		NettyServer nettyServer = new NettyServer(3333,0,true);
+//		NettyServer nettyServer2 = new NettyServer(4444,3333,false);
 	}
 }
