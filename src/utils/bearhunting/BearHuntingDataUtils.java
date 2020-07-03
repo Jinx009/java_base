@@ -34,8 +34,8 @@ public class BearHuntingDataUtils {
 	public static void main(String[] args) {
 		LogSensorStatus log = new LogSensorStatus();
 		log.setAvailable(0);
-		log.setMac("0001180316000001");
-		System.out.print(sendStatusFire(KeyUtils.STATUS_FIRE_URL2, log,"zhanway"));
+		log.setMac("0001180316000004");
+		sendStatusFire(KeyUtils.STATUS_FIRE_URL2, log,"zhanway");
 	}
 
 	public static String sendStatusFire(String url, LogSensorStatus s, String routerMac) {
