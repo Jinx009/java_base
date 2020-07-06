@@ -34,7 +34,7 @@ public class BearHuntingDataUtils {
 	public static void main(String[] args) {
 		LogSensorStatus log = new LogSensorStatus();
 		log.setAvailable(0);
-		log.setMac("00011803160000001");
+		log.setMac("0001180316000009");
 		sendStatusFire(KeyUtils.STATUS_FIRE_URL2, log,"zhanway");
 	}
 
@@ -42,6 +42,7 @@ public class BearHuntingDataUtils {
 		String res = "{\"status\":0}";
 		try {
 			Date date = new Date();
+			
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String params = "Id3=" + routerMac + "&devid=" + s.getMac().toUpperCase() + "&tick=" + date.getTime() + "&event="
 					+ s.getAvailable() + "&eventtime=" + simpleDateFormat.format(date.getTime());
