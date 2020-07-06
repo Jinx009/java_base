@@ -13,9 +13,9 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class MqttServer {
 
 	 //tcp://MQTT安装的服务器地址:MQTT定义的端口号
-    public static final String HOST = "tcp://127.0.0.1:1883";
+    public static final String HOST = "tcp://139.196.13.251:1883";
     //定义一个主题
-    public static final String TOPIC = "pos_message_all";
+    public static final String TOPIC = "test";
     public static final String TOPIC2 = "pos_message_sned";
     //定义MQTT的ID，可以在MQTT服务配置中指定
     private static final String clientid = "server11";
@@ -79,6 +79,7 @@ public class MqttServer {
  
  
     public static void sendMessage(String clieId,String msg)throws Exception{
+    	MqttServer server = new MqttServer();
     	MqttMessage message = new MqttMessage();
         message.setQos(1);  //保证消息能到达一次
         message.setRetained(true);

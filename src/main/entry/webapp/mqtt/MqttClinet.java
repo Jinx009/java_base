@@ -11,8 +11,8 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MqttClinet {
 
-	public static final String HOST = "tcp://127.0.0.1:1883";
-	public static final String TOPIC1 = "pos_message_all";
+	public static final String HOST = "tcp://139.196.13.251:1883";
+	public static final String TOPIC1 = "test";
 	public static final String TOPIC2 = "pos_message_sned";
 	private static final String clientid = "12345678";
 	private MqttClient client;
