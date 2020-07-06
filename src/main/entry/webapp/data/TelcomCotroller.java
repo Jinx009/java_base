@@ -1319,7 +1319,7 @@ public class TelcomCotroller extends BaseController {
 		map.put("jczb",d);
 		map.put("jcsj", sdf.format(new Date()));
 		map.put("cgq", "1");
-		HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid=01010400068&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
+		HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid=01010400046&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
