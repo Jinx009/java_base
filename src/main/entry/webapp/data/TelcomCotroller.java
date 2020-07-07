@@ -935,7 +935,7 @@ public class TelcomCotroller extends BaseController {
 				map.put("jczb",d);
 				map.put("jcsj", sdf.format(iotCloudLog.getCreateTime()));
 				map.put("cgq", "1");
-				HttpUtils.sendPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
+				HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 //
 //				map.put("JCDB19A130", bat);
 //				map.put("JCDB19A010", cmd);

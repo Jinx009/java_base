@@ -273,7 +273,7 @@ public class HttpUtils {
      * @return
      */
     public static String sendWuhanPost(String url, String param) {
-        logger.warn("HttpUtils.sendPost url:{},param:{}",url,param);
+        logger.warn("HttpUtils.sendPost wuhan url:{},param:{}",url,param);
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
