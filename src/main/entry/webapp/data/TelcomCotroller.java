@@ -833,9 +833,9 @@ public class TelcomCotroller extends BaseController {
 				String x = getData100(data.substring(50, 51), data.substring(50, 54));
 				String y = getData100(data.substring(54, 55), data.substring(54, 58));
 				if(device.getMac().indexOf("0508")>-1){
-					Double acc_x_d = Double.valueOf(acc_x);
-					Double acc_y_d = Double.valueOf(acc_y);
-					Double acc_z_d = Double.valueOf(acc_z);
+//					Double acc_x_d = Double.valueOf(acc_x);
+//					Double acc_y_d = Double.valueOf(acc_y);
+//					Double acc_z_d = Double.valueOf(acc_z);
 					Double x_d = Double.valueOf(x);
 					Double y_d = Double.valueOf(y);
 					if(Math.abs(x_d)>=2.5||Math.abs(y_d)>=2.5){
@@ -1227,9 +1227,9 @@ public class TelcomCotroller extends BaseController {
 ////		}
 		IoTCloudDevice device = new IoTCloudDevice();
 		IotCloudLog iotCloudLog = new IotCloudLog();
-		iotCloudLog.setData("000920050800001D4854692A003A0000003A4000003A2000001D3BFFB400000CA81B04FB81002900D1312E312E3100322E32303300");
-		device.setSimCard("X_01010400494");
-		device.setMac("000920050800001D");
+		iotCloudLog.setData("000920050800000C4827682A003A5000003A2000003A0000000008000900000A871F19FD04FFDE0016312E312E3100322E32303300");
+		device.setSimCard("X_01010400252");
+		device.setMac("000920050800000C");
 		iotCloudLog.setCreateTime(new Date());
 		new TelcomCotroller().sendWuhanQj3_0_1(device, iotCloudLog);
 	}

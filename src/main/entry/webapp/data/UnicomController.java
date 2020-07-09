@@ -133,35 +133,35 @@ public class UnicomController extends BaseController {
 	}
 	
 	public static void main(String[] args) {
-//		String sn = "0009200050800003";
-//		String acc_x = "-8";
-//		String acc_y ="33";
-//		String acc_z = "23";
-//		String x = "44";
-//		String y = "16";
-//		System.out.println(sn.indexOf("0508"));
-//		if(sn.indexOf("0508")>-1){
-//			Double acc_x_d = Double.valueOf(acc_x);
-//			Double acc_y_d = Double.valueOf(acc_y);
-//			Double acc_z_d = Double.valueOf(acc_z);
-//			Double x_d = Double.valueOf(x);
-//			Double y_d = Double.valueOf(y);
-//			if(Math.abs(acc_x_d)>=2.5||Math.abs(acc_y_d)>=2.5){
-//				int ran = new Random().nextInt(200)-100;
-//				double random = 0.00;
-//				System.out.println(ran);
-//				random =Double.valueOf(ran)/100-1.40;
-//				if(ran>0){
-//					random = Double.valueOf(ran)/100+1.40;
-//				}
-//				System.out.println(random);
-//				acc_x = String.valueOf(random);
-//				acc_y = String.valueOf(acc_y_d/(acc_x_d/random));
-//				acc_z = String.valueOf(acc_z_d/(acc_x_d/random));
-//				x = String.valueOf(x_d/(acc_x_d/random));
-//				y = String.valueOf(y_d/(acc_x_d/random));
-//			}
-//		}
+		String sn = "0009200050800003";
+		String acc_x = "-8";
+		String acc_y ="33";
+		String acc_z = "23";
+		String x = "44";
+		String y = "16";
+		System.out.println(sn.indexOf("0508"));
+		if(sn.indexOf("0508")>-1){
+			Double acc_x_d = Double.valueOf(acc_x);
+			Double acc_y_d = Double.valueOf(acc_y);
+			Double acc_z_d = Double.valueOf(acc_z);
+			Double x_d = Double.valueOf(x);
+			Double y_d = Double.valueOf(y);
+			if(Math.abs(acc_x_d)>=2.5||Math.abs(acc_y_d)>=2.5){
+				int ran = new Random().nextInt(200)-100;
+				double random = 0.00;
+				System.out.println(ran);
+				random =Double.valueOf(ran)/100-1.40;
+				if(ran>0){
+					random = Double.valueOf(ran)/100+1.40;
+				}
+				System.out.println(random);
+				acc_x = String.valueOf(random);
+				acc_y = String.valueOf(acc_y_d/(acc_x_d/random));
+				acc_z = String.valueOf(acc_z_d/(acc_x_d/random));
+				x = String.valueOf(x_d/(acc_x_d/random));
+				y = String.valueOf(y_d/(acc_x_d/random));
+			}
+		}
 		System.out.println(Math.abs(Double.valueOf("6.61")));
 	}
 }
