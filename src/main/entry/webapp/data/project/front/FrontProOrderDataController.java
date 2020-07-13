@@ -68,11 +68,17 @@ public class FrontProOrderDataController extends BaseController {
 	public Resp<?> list(Integer orderId,Integer status,String msg ) {
 		Resp<?> resp = new Resp<>(false);
 		try {
+			log.warn("orderId:{},status:{}",orderId,status);
 			ProOrder proOrder = proOrderService.findById(orderId);
 			proOrder.setStatus(status);
 			proOrder.setMsg(msg);
 			proOrder.setStatus(status);
 			proOrderService.update(proOrder);
+			ProGoods good = ProGoodsService.findByTimeDateAbc(proOrder.getTime(), proOrder.getType(), proOrder.getDate());
+			if(status==1) {
+				good.setType(1);
+				ProGoodsService.update(good);
+			}
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("error:{}", e);
@@ -85,6 +91,7 @@ public class FrontProOrderDataController extends BaseController {
 	public Resp<?> goPay(Integer orderId) {
 		Resp<?> resp = new Resp<>(false);
 		try {
+			log.warn("orderId:{}",orderId);
 			ProOrder proOrder = proOrderService.findById(orderId);
 			String random = RandomUtils.getRandomNumbersAndString(32);
 			String params = "appid=wxbc5ec9a82883abb6&body=" + proOrder.getDate() + " " + proOrder.getTime() + " "
@@ -134,6 +141,7 @@ public class FrontProOrderDataController extends BaseController {
 	public Resp<?> list(Integer id, String openid, String mobilePhone, String userName) {
 		Resp<?> resp = new Resp<>(false);
 		try {
+			log.warn("goodsId:{},openId:{},mobilePhone:{}",id,openid,mobilePhone);
 			ProGoods proGoods = ProGoodsService.findById(id);
 			ProOrder proOrder = new ProOrder();
 			proOrder.setCreateTime(new Date());
