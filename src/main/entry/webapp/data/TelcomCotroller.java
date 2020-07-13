@@ -743,7 +743,7 @@ public class TelcomCotroller extends BaseController {
 							random = Double.valueOf(ran)/100+1.40;
 						}
 						double r = 0.00;
-						BigDecimal f = new BigDecimal(y_d/r);
+						BigDecimal f = new BigDecimal(0.00);
 						DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
 						if(Math.abs(x_d)>Math.abs(y_d)){
 							r = x_d/random;
@@ -1225,13 +1225,18 @@ public class TelcomCotroller extends BaseController {
 ////		} catch (Exception e) {
 ////			e.printStackTrace();
 ////		}
-		IoTCloudDevice device = new IoTCloudDevice();
-		IotCloudLog iotCloudLog = new IotCloudLog();
-		iotCloudLog.setData("000920050800000C4827682A003A5000003A2000003A0000000008000900000A871F19FD04FFDE0016312E312E3100322E32303300");
-		device.setSimCard("X_01010400252");
-		device.setMac("000920050800000C");
-		iotCloudLog.setCreateTime(new Date());
-		new TelcomCotroller().sendWuhanQj3_0_1(device, iotCloudLog);
+//		IoTCloudDevice device = new IoTCloudDevice();
+//		IotCloudLog iotCloudLog = new IotCloudLog();
+//		iotCloudLog.setData("000920050800000C4827682A003A5000003A2000003A0000000008000900000A871F19FD04FFDE0016312E312E3100322E32303300");
+//		device.setSimCard("X_01010400252");
+//		device.setMac("000920050800000C");
+//		iotCloudLog.setCreateTime(new Date());
+//		new TelcomCotroller().sendWuhanQj3_0_1(device, iotCloudLog);
+//		double r = 0.00;
+//		BigDecimal f = new BigDecimal(0.1/r);
+//		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+//		r =  1/2.4022;
+//		System.out.println(decimalFormat.format(r));
 	}
 
 	private String getDataBase(String index, String _d) throws Exception {
