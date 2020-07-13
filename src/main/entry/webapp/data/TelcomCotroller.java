@@ -745,7 +745,7 @@ public class TelcomCotroller extends BaseController {
 						double r = 0.00;
 						BigDecimal f = new BigDecimal(y_d/r);
 						DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-						if(Math.abs(x_d)>=2.5){
+						if(Math.abs(x_d)>Math.abs(y_d)){
 							r = x_d/random;
 							x = String.valueOf(random);
 							f = new BigDecimal(y_d/r);
@@ -849,7 +849,7 @@ public class TelcomCotroller extends BaseController {
 						double r = 0.00;
 						BigDecimal f = new BigDecimal(0.00);
 						DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-						if(Math.abs(x_d)>=2.5){
+						if(Math.abs(x_d)>Math.abs(y_d)){
 							r = x_d/random;
 							x = String.valueOf(random);
 							f = new BigDecimal(y_d/r);
