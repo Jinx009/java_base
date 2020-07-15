@@ -60,4 +60,16 @@ public class IoTCloudDevice {
 	private String sendB;
 	@Column(name = "send_c")
 	private String sendC;
+	@Column(name = "send_d")
+	private String sendD;
+	@Column(name = "update_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updateTime;
+	@Column(name = "data_num")
+	private Integer dataNum;
+	@Column(name = "max_x")
+	private Double maxX;
+	@Column(name = "max_y")
+	private Double maxY;
+	
 }
