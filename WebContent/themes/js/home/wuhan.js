@@ -10,6 +10,8 @@ function _getData(){
 				for(var i in res.data){
 					if(res.data[i].dataTime!=null){
 						res.data[i].dataTime = toDateTime(res.data[i].dataTime);
+					}
+					if(res.data[i].updateTime!=null){
 						res.data[i].updateTime = toDateTime(res.data[i].updateTime);
 					}
 				}
