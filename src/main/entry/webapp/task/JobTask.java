@@ -154,6 +154,7 @@ public class JobTask {
 	public void init() {
 		Date parkingArea2 = parkingAreaService.find(10).getCreateTime();// vedio
 		Date parkingArea3 = parkingAreaService.find(11).getCreateTime();// vedio
+		Date parkingArea4 = parkingAreaService.find(12).getCreateTime();// vedio
 		Date date = new Date();
 		if (parkingArea2 == null) {
 			AlimsgUtils.sendCheck("1.1", "SMS_171565355", "展为","18217700275");
@@ -167,6 +168,13 @@ public class JobTask {
 		} else {
 			if((date.getTime()-parkingArea3.getTime())>(1000*1200)){
 				AlimsgUtils.sendCheck("1.4", "SMS_171565355", "展为","18217700275");
+			}
+		}
+		if (parkingArea4 == null) {
+			AlimsgUtils.sendCheck("iot_cloud", "SMS_171565355", "展为","18217700275");
+		} else {
+			if((date.getTime()-parkingArea4.getTime())>(1000*1200)){
+				AlimsgUtils.sendCheck("iot_cloud", "SMS_171565355", "展为","18217700275");
 			}
 		}
 	}

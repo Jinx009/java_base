@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 
 import common.helper.StringUtil;
+import database.models.parking.ParkingArea;
 import database.models.qj.QjDevice;
 import database.models.qj.QjDeviceLog;
 import main.entry.webapp.BaseController;
+import service.basicFunctions.parking.ParkingAreaService;
 import service.basicFunctions.qj.QjDeviceLogService;
 import service.basicFunctions.qj.QjDeviceService;
 import utils.BaseConstant;
@@ -38,6 +40,8 @@ public class QingjiaoDataController extends BaseController {
 	private QjDeviceService qjDeviceService;
 	@Autowired
 	private QjDeviceLogService qjDeviceLogService;
+	@Autowired
+	private ParkingAreaService parkingAreaService;
 
 	@RequestMapping(path = "/list")
 	@ResponseBody
@@ -415,6 +419,9 @@ public class QingjiaoDataController extends BaseController {
 	@ResponseBody
 	public Resp<?> pushZhanwayV3_0(String data) {
 		try {
+			ParkingArea area = parkingAreaService.find(12);
+			area.setCreateTime(new Date());
+			parkingAreaService.update(area);
 			String sn = data.substring(0, 16);
 			if(sn.equals("0009190906000062")){
 				sn = "0009190906000063";
