@@ -413,6 +413,7 @@ public class TelcomCotroller extends BaseController {
 					IoTCloudDevice ioTCloudDevice = iotCloudDeviceService
 							.findByDeviceId(telcomPushDataModel.getDeviceId());
 					ioTCloudDevice.setDataTime(new Date());
+					ioTCloudDevice.setUpdateTime(new Date());
 					iotCloudDeviceService.update(ioTCloudDevice);
 					IotCloudLog iotCloudLog = new IotCloudLog();
 					iotCloudLog.setData(tModel.getData());
@@ -745,10 +746,10 @@ public class TelcomCotroller extends BaseController {
 				if(maxY==null){
 					maxY = 0.00;
 				}
-				if(Math.abs(maxX)<x_d){
+				if(Math.abs(maxX)<Math.abs(x_d)){
 					device.setMaxX(x_d);
 				}
-				if(Math.abs(maxY)<y_d){
+				if(Math.abs(maxY)<Math.abs(y_d)){
 					device.setMaxY(y_d);
 				}
 				device.setSendBase(mac);
@@ -830,10 +831,10 @@ public class TelcomCotroller extends BaseController {
 				if(maxY==null){
 					maxY = 0.00;
 				}
-				if(Math.abs(maxX)<x_d){
+				if(Math.abs(maxX)<Math.abs(x_d)){
 					device.setMaxX(x_d);
 				}
-				if(Math.abs(maxY)<y_d){
+				if(Math.abs(maxY)<Math.abs(y_d)){
 					device.setMaxY(y_d);
 				}
 				device.setSendBase(mac);
@@ -898,10 +899,10 @@ public class TelcomCotroller extends BaseController {
 				if(maxY==null){
 					maxY = 0.00;
 				}
-				if(Math.abs(maxX)<x_d){
+				if(Math.abs(maxX)<Math.abs(x_d)){
 					device.setMaxX(x_d);
 				}
-				if(Math.abs(maxY)<y_d){
+				if(Math.abs(maxY)<Math.abs(y_d)){
 					device.setMaxY(y_d);
 				}
 				device.setSendBase("");
@@ -983,10 +984,10 @@ public class TelcomCotroller extends BaseController {
 				if(maxY==null){
 					maxY = 0.00;
 				}
-				if(Math.abs(maxX)<x_d){
+				if(Math.abs(maxX)<Math.abs(x_d)){
 					device.setMaxX(x_d);
 				}
-				if(Math.abs(maxY)<y_d){
+				if(Math.abs(maxY)<Math.abs(y_d)){
 					device.setMaxY(y_d);
 				}
 				device.setSendBase("");
@@ -1150,10 +1151,10 @@ public class TelcomCotroller extends BaseController {
 			if(maxY==null){
 				maxY = 0.00;
 			}
-			if(Math.abs(maxX)<x_d){
+			if(Math.abs(maxX)<Math.abs(x_d)){
 				ioTCloudDevice.setMaxX(x_d);
 			}
-			if(Math.abs(maxY)<y_d){
+			if(Math.abs(maxY)<Math.abs(y_d)){
 				ioTCloudDevice.setMaxY(y_d);
 			}
 			ioTCloudDevice.setUpdateTime(new Date());
