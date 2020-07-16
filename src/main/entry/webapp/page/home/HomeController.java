@@ -62,6 +62,11 @@ public class HomeController {
 		return "/home/wuhan";
 	}
 	
+	@RequestMapping(path = "/qj/lost")
+	public String lost(HttpServletRequest request){
+		return "/home/lost";
+	}
+	
 	
 	@RequestMapping(path = "/add/telcom")
 	public String add_telcom(HttpServletRequest request){

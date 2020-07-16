@@ -62,6 +62,18 @@ public class IoTCloudDeviceController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/broken")
+	@ResponseBody
+	public Resp<?> broken(){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(iotCloudDeviceService.getBroken());
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/localIp")
 	@ResponseBody
 	public Resp<?> type(String localIp){

@@ -33,6 +33,29 @@ public class StatusCheckTask {
 	private PuzhiJobService puzhiJobService;
 	@Autowired
 	private IotCloudDeviceService iotCloudDeviceService;
+	
+	@Scheduled(cron = "0 1 0 * * ?") // 每天晚上0点01分创建新文件夹
+	public void chmod() {
+		try {
+			List<IoTCloudDevice> list = iotCloudDeviceService.findByLocalIp("QJ_ZHANWAY_V_3.0_WUHAN");
+			List<IoTCloudDevice> list2 = iotCloudDeviceService.findByLocalIp("QJ_ZHANWAY_V_3.0_GUANGDONG");
+			List<IoTCloudDevice> list3 = iotCloudDeviceService.findByLocalIp("QJ_ZHANWAY_V_3.0_YIBIN");
+			for(IoTCloudDevice d : list){
+				d.setDataNum(0);
+				iotCloudDeviceService.update(d);
+			}
+			for(IoTCloudDevice d : list2){
+				d.setDataNum(0);
+				iotCloudDeviceService.update(d);
+			}
+			for(IoTCloudDevice d : list3){
+				d.setDataNum(0);
+				iotCloudDeviceService.update(d);
+			}
+ 		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+	}
 
 	/**
 	 * 搜索任务

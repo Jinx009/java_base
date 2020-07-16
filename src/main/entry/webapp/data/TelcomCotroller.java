@@ -220,6 +220,7 @@ public class TelcomCotroller extends BaseController {
 						TModel tModel = pushModel.getData();
 						IoTCloudDevice ioTCloudDevice = iotCloudDeviceService.findByDeviceId(telcomPushDataModel.getDeviceId());
 						ioTCloudDevice.setDataTime(new Date());
+						ioTCloudDevice.setUpdateTime(new Date());
 						iotCloudDeviceService.update(ioTCloudDevice);
 						IotCloudLog iotCloudLog = new IotCloudLog();
 						iotCloudLog.setData(tModel.getData());
@@ -260,6 +261,10 @@ public class TelcomCotroller extends BaseController {
 									}
 									if(StringUtil.isNotBlank(ioTCloudDevice.getSendC())){
 										IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendC());
+										sendWuhanQj3_0_1(de, iotCloudLog);
+									}
+									if(StringUtil.isNotBlank(ioTCloudDevice.getSendD())){
+										IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendD());
 										sendWuhanQj3_0_1(de, iotCloudLog);
 									}
 									HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="+ tModel.getData());
@@ -452,6 +457,10 @@ public class TelcomCotroller extends BaseController {
 								}
 								if(StringUtil.isNotBlank(ioTCloudDevice.getSendC())){
 									IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendC());
+									sendWuhanQj3_0_1(de, iotCloudLog);
+								}
+								if(StringUtil.isNotBlank(ioTCloudDevice.getSendD())){
+									IoTCloudDevice de = iotCloudDeviceService.findByMac(ioTCloudDevice.getSendD());
 									sendWuhanQj3_0_1(de, iotCloudLog);
 								}
 								HttpUtils.get("http://app.zhanway.com/home/cloud/qj/zhanway/push/3_0?data="
@@ -712,6 +721,7 @@ public class TelcomCotroller extends BaseController {
 		try {
 			String data = iotCloudLog.getData();
 			log.warn("data:-----{}", data);
+			String mac = data.substring(0,16);
 			String cmd = data.substring(20, 22);
 			if (cmd.equals("68")) {
 				cmd = "心跳";
@@ -725,6 +735,30 @@ public class TelcomCotroller extends BaseController {
 				String acc_z = hexToFloat_1(data.substring(42, 50));
 				String x = getData100_1(data.substring(50, 51), data.substring(50, 54));
 				String y = getData100_1(data.substring(54, 55), data.substring(54, 58));
+				Double x_d = Double.valueOf(x);
+				Double y_d = Double.valueOf(y);
+				Double maxX = device.getMaxX();
+				if(maxX==null){
+					maxX = 0.00;
+				}
+				Double maxY = device.getMaxY();
+				if(maxY==null){
+					maxY = 0.00;
+				}
+				if(Math.abs(maxX)<x_d){
+					device.setMaxX(x_d);
+				}
+				if(Math.abs(maxY)<y_d){
+					device.setMaxY(y_d);
+				}
+				device.setSendBase(mac);
+				device.setUpdateTime(new Date());
+				Integer num = device.getDataNum();
+				if(num==null){
+					num = 0;
+				}
+				device.setDataNum(num+1);
+				iotCloudDeviceService.update(device);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Map< String, Object> map = new HashMap<String, Object>();
 				Map< String, Object> d = new HashMap<String, Object>();
@@ -732,8 +766,6 @@ public class TelcomCotroller extends BaseController {
 //					Double acc_x_d = Double.valueOf(acc_x);
 //					Double acc_y_d = Double.valueOf(acc_y);
 //					Double acc_z_d = Double.valueOf(acc_z);
-					Double x_d = Double.valueOf(x);
-					Double y_d = Double.valueOf(y);
 					if(Math.abs(x_d)>=2.5||Math.abs(y_d)>=2.5){
 						log.warn("random:满足条件");
 						int ran = new Random().nextInt(200)-100;
@@ -788,6 +820,30 @@ public class TelcomCotroller extends BaseController {
 				String acc_z = hexToFloat_1(data.substring(46, 54));
 				String x = getData100_1(data.substring(54, 55), data.substring(54, 58));
 				String y = getData100_1(data.substring(58, 59), data.substring(58, 62));
+				Double x_d = Double.valueOf(x);
+				Double y_d = Double.valueOf(y);
+				Double maxX = device.getMaxX();
+				if(maxX==null){
+					maxX = 0.00;
+				}
+				Double maxY = device.getMaxY();
+				if(maxY==null){
+					maxY = 0.00;
+				}
+				if(Math.abs(maxX)<x_d){
+					device.setMaxX(x_d);
+				}
+				if(Math.abs(maxY)<y_d){
+					device.setMaxY(y_d);
+				}
+				device.setSendBase(mac);
+				device.setUpdateTime(new Date());
+				Integer num = device.getDataNum();
+				if(num==null){
+					num = 0;
+				}
+				device.setDataNum(num+1);
+				iotCloudDeviceService.update(device);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Map< String, Object> map = new HashMap<String, Object>();
 				Map< String, Object> d = new HashMap<String, Object>();
@@ -832,12 +888,33 @@ public class TelcomCotroller extends BaseController {
 				String acc_z = hexToFloat(data.substring(42, 50));
 				String x = getData100(data.substring(50, 51), data.substring(50, 54));
 				String y = getData100(data.substring(54, 55), data.substring(54, 58));
+				Double x_d = Double.valueOf(x);
+				Double y_d = Double.valueOf(y);
+				Double maxX = device.getMaxX();
+				if(maxX==null){
+					maxX = 0.00;
+				}
+				Double maxY = device.getMaxY();
+				if(maxY==null){
+					maxY = 0.00;
+				}
+				if(Math.abs(maxX)<x_d){
+					device.setMaxX(x_d);
+				}
+				if(Math.abs(maxY)<y_d){
+					device.setMaxY(y_d);
+				}
+				device.setSendBase("");
+				Integer num = device.getDataNum();
+				if(num==null){
+					num = 0;
+				}
+				device.setDataNum(num+1);
+				iotCloudDeviceService.update(device);
 				if(device.getMac().indexOf("0508")>-1){
 //					Double acc_x_d = Double.valueOf(acc_x);
 //					Double acc_y_d = Double.valueOf(acc_y);
 //					Double acc_z_d = Double.valueOf(acc_z);
-					Double x_d = Double.valueOf(x);
-					Double y_d = Double.valueOf(y);
 					if(Math.abs(x_d)>=2.5||Math.abs(y_d)>=2.5){
 						log.warn("random:满足条件");
 						int ran = new Random().nextInt(200)-100;
@@ -896,6 +973,29 @@ public class TelcomCotroller extends BaseController {
 				String acc_z = hexToFloat(data.substring(46, 54));
 				String x = getData100(data.substring(54, 55), data.substring(54, 58));
 				String y = getData100(data.substring(58, 59), data.substring(58, 62));
+				Double x_d = Double.valueOf(x);
+				Double y_d = Double.valueOf(y);
+				Double maxX = device.getMaxX();
+				if(maxX==null){
+					maxX = 0.00;
+				}
+				Double maxY = device.getMaxY();
+				if(maxY==null){
+					maxY = 0.00;
+				}
+				if(Math.abs(maxX)<x_d){
+					device.setMaxX(x_d);
+				}
+				if(Math.abs(maxY)<y_d){
+					device.setMaxY(y_d);
+				}
+				device.setSendBase("");
+				Integer num = device.getDataNum();
+				if(num==null){
+					num = 0;
+				}
+				device.setDataNum(num+1);
+				iotCloudDeviceService.update(device);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Map< String, Object> map = new HashMap<String, Object>();
 				Map< String, Object> d = new HashMap<String, Object>();
@@ -1014,6 +1114,7 @@ public class TelcomCotroller extends BaseController {
 	private void sendYIBIN(IoTCloudDevice ioTCloudDevice, String data) throws NumberFormatException, Exception {
 		Map<String, Object> map = new HashMap<>();
 		Map<String, Object> sendData = new HashMap<>();
+		String mac = data.substring(0,16);
 		map.put("deviceId", ioTCloudDevice.getUdpIp().split("_")[0]);
 		map.put("apikey", ioTCloudDevice.getUdpIp().split("_")[1]);
 		String cmd = data.substring(20, 22);
@@ -1039,6 +1140,33 @@ public class TelcomCotroller extends BaseController {
 		if (cmd.equals("报警") || cmd.equals("心跳")) {
 			sendData.put("103_1", x + "," + y + "," + z + "," + acc_x + "," + acc_y + "," + acc_z);
 			map.put("data", sendData);
+			Double x_d = Double.valueOf(x);
+			Double y_d = Double.valueOf(y);
+			Double maxX = ioTCloudDevice.getMaxX();
+			if(maxX==null){
+				maxX = 0.00;
+			}
+			Double maxY = ioTCloudDevice.getMaxY();
+			if(maxY==null){
+				maxY = 0.00;
+			}
+			if(Math.abs(maxX)<x_d){
+				ioTCloudDevice.setMaxX(x_d);
+			}
+			if(Math.abs(maxY)<y_d){
+				ioTCloudDevice.setMaxY(y_d);
+			}
+			ioTCloudDevice.setUpdateTime(new Date());
+			ioTCloudDevice.setSendBase("");
+			if(!ioTCloudDevice.getMac().equals(mac)){
+				ioTCloudDevice.setSendBase(mac);
+			}
+			Integer num = ioTCloudDevice.getDataNum();
+			if(num==null){
+				num = 0;
+			}
+			ioTCloudDevice.setDataNum(num+1);
+			iotCloudDeviceService.update(ioTCloudDevice);
 			String json = JSONObject.toJSONString(map);
 			log.warn("send qj-----------------------\n:{}\n---------------------------------", json);
 			// String url =

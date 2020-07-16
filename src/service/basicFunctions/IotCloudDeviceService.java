@@ -1,5 +1,6 @@
 package service.basicFunctions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,29 @@ public class IotCloudDeviceService {
 
 	public List<IoTCloudDevice> getWuhan() {
 		return iotCloudDeviceDao.getWuhan();
+	}
+
+	public List<IoTCloudDevice> getBroken() {
+		List<IoTCloudDevice> list = iotCloudDeviceDao.findByLocalIp("QJ_ZHANWAY_V_3.0_WUHAN");
+		List<IoTCloudDevice> list2 = iotCloudDeviceDao.findByLocalIp("QJ_ZHANWAY_V_3.0_GUANGDONG");
+		List<IoTCloudDevice> list3 = iotCloudDeviceDao.findByLocalIp("QJ_ZHANWAY_V_3.0_YIBIN");
+		List<IoTCloudDevice> l = new ArrayList<IoTCloudDevice>();
+		for(IoTCloudDevice d : list){
+			if(d.getDataNum()==0){
+				l.add(d);
+			}
+		}
+		for(IoTCloudDevice d : list2){
+			if(d.getDataNum()==0){
+				l.add(d);
+			}
+		}
+		for(IoTCloudDevice d : list3){
+			if(d.getDataNum()==0){
+				l.add(d);
+			}
+		}
+		return l;
 	}
 
 	

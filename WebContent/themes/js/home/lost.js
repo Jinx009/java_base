@@ -3,14 +3,13 @@ $(function(){
 })
 function _getData(){
 		$.ajax({
-			url:'/iot/device/wuhan',
+			url:'/iot/device/broken',
 			dataType:'json',
 			type:'post',
 			success:function(res){
 				for(var i in res.data){
 					if(res.data[i].dataTime!=null){
 						res.data[i].dataTime = toDateTime(res.data[i].dataTime);
-						res.data[i].updateTime = toDateTime(res.data[i].updateTime);
 					}
 				}
 					_d = new Vue({

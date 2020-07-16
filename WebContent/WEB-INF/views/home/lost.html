@@ -51,10 +51,9 @@
 											<th>MAC</th>
 											<th>地址</th>
 											<th>转发源</th>
-											<th>当日数据量</th>
 											<th>最大x</th>
 											<th>最大y</th>
-											<th>更新时间</th>
+											<th>数据时间</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -63,12 +62,11 @@
 											<td v-text="item.mac" class="mac" ></td>
 											<td v-text="item.parkName"></td>
 											<td v-text="item.sendBase"></td>
-											<td v-text="item.dataNum"></td>
 											<td v-text="item.maxX"></td>
 											<td v-text="item.maxY"></td>
 								<!-- 			<td v-text="item.udpIp"></td>
 											<td v-text="item.udpPort"></td> -->
-											<td v-text="item.updateTime"></td>
+											<td v-text="item.dataTime"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -80,7 +78,7 @@
 		</div>
 		<#include "home_footer.html">
 	</div>
-	<script src="/themes/js/home/wuhan.js?_v=1.48"></script>
+	<script src="/themes/js/home/lost.js?_v=1.38"></script>
 	<script src="/themes/js/home/base.js?version=1.26"></script>
 
 </body>

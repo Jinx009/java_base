@@ -71,5 +71,7 @@ public class IoTCloudDevice {
 	private Double maxX;
 	@Column(name = "max_y")
 	private Double maxY;
+	@Column(name = "send_base")
+	private String sendBase;
 	
 }
