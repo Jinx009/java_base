@@ -49,5 +49,15 @@ public class HomeController {
 		return "/page/result";
 	}
 	
+	@RequestMapping(path = "/tcp")
+	public String tcp(HttpServletRequest request){
+		return "/page/tcp";
+	}
+	
+	@RequestMapping(path = "/list")
+	public String list(HttpServletRequest request){
+		return "/page/list";
+	}
+	
 	
 }

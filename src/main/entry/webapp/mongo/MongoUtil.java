@@ -26,7 +26,7 @@ public class MongoUtil {
 	public static List<GnssRtkLog> select() {
 		MongoClient mongoClient = new MongoClient("localhost", 27017);
 		MongoDatabase mongoDatabase = mongoClient.getDatabase("result");
-		MongoCollection<Document> collection = mongoDatabase.getCollection("dailyresult");
+		MongoCollection<Document> collection = mongoDatabase.getCollection("hourlyresult");
 		List<GnssRtkLog> logs = new ArrayList<GnssRtkLog>();
 		// 查找集合中的所有文档
 		FindIterable findIterable = collection.find();
@@ -45,7 +45,7 @@ public class MongoUtil {
 	public static List<GnssRtkLog> select(String time) {
 		MongoClient mongoClient = new MongoClient("localhost", 27017);
 		MongoDatabase mongoDatabase = mongoClient.getDatabase("result");
-		MongoCollection<Document> collection = mongoDatabase.getCollection("dailyresult");
+		MongoCollection<Document> collection = mongoDatabase.getCollection("hourlyresult");
 		List<GnssRtkLog> logs = new ArrayList<GnssRtkLog>();
 		// 指定查询过滤器
 		Bson filter = Filters.gt("updatetime", time);
