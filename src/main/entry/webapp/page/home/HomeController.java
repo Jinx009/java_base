@@ -12,15 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/home")
 public class HomeController {
 	
-	/**
-	 * 登录页
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(path = "/index")
-	public String index(HttpServletRequest request){
-		return "/home/index";
-	}
+
 	
 	/**
 	 * 错误页
@@ -31,4 +23,31 @@ public class HomeController {
 	public String error(HttpServletRequest request){
 		return "/home/error";
 	}
+	
+	@RequestMapping(path = "/index")
+	public String index(HttpServletRequest request){
+		return "/page/index";
+	}
+	
+	@RequestMapping(path = "/device")
+	public String device(HttpServletRequest request){
+		return "/page/device";
+	}
+	
+	@RequestMapping(path = "/log")
+	public String log(HttpServletRequest request){
+		return "/page/log";
+	}
+	
+	@RequestMapping(path = "/map")
+	public String map(HttpServletRequest request){
+		return "/page/map";
+	}
+	
+	@RequestMapping(path = "/result")
+	public String result(HttpServletRequest request){
+		return "/page/result";
+	}
+	
+	
 }

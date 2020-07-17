@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,10 @@ public class GnssRtkDeviceService {
 
 	public void update(GnssRtkDevice device) {
 		gnssRtkDeviceDao.update(device);
+	}
+
+	public List<GnssRtkDevice> findAll() {
+		return gnssRtkDeviceDao.findAll();
 	}
 	
 }
