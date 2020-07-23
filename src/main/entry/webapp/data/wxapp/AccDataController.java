@@ -1,6 +1,5 @@
 package main.entry.webapp.data.wxapp;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -30,10 +29,6 @@ public class AccDataController extends BaseController {
 			String jsonStr = HttpUtils.get("http://106.14.94.245:8091/weapp/d/lost");
 			JSONObject obj = JSONObject.parseObject(jsonStr);
 			List<WxAccModel> list = JSONObject.parseArray(obj.getString("data"), WxAccModel.class);
-			for (WxAccModel model : list) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				model.setUdpIp(sdf.format(model.getUpdateTime()));
-			}
 			return new Resp<>(list);
 		} catch (Exception e) {
 			log.error("e:{}", e);
@@ -46,7 +41,7 @@ public class AccDataController extends BaseController {
 	public Resp<?> getList(String secret) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String jsonStr = HttpUtils.get("http://106.14.94.245:8091/weapp/d/devices");
+			String jsonStr = HttpUtils.get("http://106.14.94.245:8091/weapp/d/devices?secret="+secret);
 			JSONObject obj = JSONObject.parseObject(jsonStr);
 			List<WxAccModel> list = JSONObject.parseArray(obj.getString("data"), WxAccModel.class);
 			for (WxAccModel model : list) {
