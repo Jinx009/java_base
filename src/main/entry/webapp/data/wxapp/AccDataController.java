@@ -50,8 +50,11 @@ public class AccDataController extends BaseController {
 			JSONObject obj = JSONObject.parseObject(jsonStr);
 			List<WxAccModel> list = JSONObject.parseArray(obj.getString("data"), WxAccModel.class);
 			for (WxAccModel model : list) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				model.setUdpIp(sdf.format(model.getUpdateTime()));
+				if(model.getUpdateTime()!=null){
+					model.setUdpIp(model.getUpdateTime());
+				}else{
+					model.setUdpIp("");
+				}
 			}
 			return new Resp<>(list);
 		} catch (Exception e) {

@@ -43,12 +43,20 @@ public class WxAccModel {
 	private String parkNumber;
 	private String area;
 	private String location;
-	private Date dataTime;
-	private Date updateTime;
+	private String dataTime;
+	private String updateTime;
 	private String sendA;
 	private String sendB;
 	private String sendC;
 	private String sendD;
+	private Integer dataNum;
+	private Double maxX;
+	private Double maxY;
+	private String sendBase;
+	private Double lng;
+	private Double lat;
+	private Integer isCorrect;
+	private String secret;
 	
 	
 	
