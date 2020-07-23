@@ -101,6 +101,9 @@ public class WeappDataController extends BaseController{
 	public Resp<?> getDevices(String secret){
 		Resp<?> resp = new Resp<>(false);
 		try {
+			if(StringUtil.isBlank(secret)){
+				return resp;
+			}
 			List<IoTCloudDevice> list = iotCloudDeviceService.findBySecret(secret);
 			return new Resp<>(list);
 		} catch (Exception e) {
