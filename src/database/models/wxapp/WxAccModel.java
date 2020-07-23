@@ -44,9 +44,11 @@ public class WxAccModel {
 	private String area;
 	private String location;
 	private Date dataTime;
+	private Date updateTime;
 	private String sendA;
 	private String sendB;
 	private String sendC;
+	private String sendD;
 	
 	
 	

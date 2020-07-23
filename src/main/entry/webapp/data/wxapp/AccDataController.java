@@ -1,11 +1,7 @@
 package main.entry.webapp.data.wxapp;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
-import common.helper.StringUtil;
 import database.models.wxapp.WxAccModel;
 import main.entry.webapp.BaseController;
 import utils.HttpUtils;
@@ -27,90 +22,55 @@ public class AccDataController extends BaseController {
 
 	private static final Logger log = LoggerFactory.getLogger(AccDataController.class);
 
-	@RequestMapping(path = "/list")
+	@RequestMapping(path = "/lost")
 	@ResponseBody
-	public Resp<?> getBroken() {
+	public Resp<?> getLost() {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			String jsonStr = HttpUtils.get("http://106.14.94.245:8091/iot/device/wuhan");
+			String jsonStr = HttpUtils.get("http://106.14.94.245:8091/weapp/d/lost");
 			JSONObject obj = JSONObject.parseObject(jsonStr);
 			List<WxAccModel> list = JSONObject.parseArray(obj.getString("data"), WxAccModel.class);
-			List<WxAccModel> list2 = new ArrayList<WxAccModel>();
-			Map<String, Date> map = new HashMap<String, Date>();
-			if (list != null && !list.isEmpty()) {
-				for (WxAccModel model : list) {
-					map.put(model.getMac(), model.getDataTime());
-				}
-				for (WxAccModel model : list) {
-					if (StringUtil.isNotBlank(model.getSendA())) {
-						map.put(model.getSendA(), model.getDataTime());
-					}
-					if (StringUtil.isNotBlank(model.getSendB())) {
-						map.put(model.getSendB(), model.getDataTime());
-					}
-					if (StringUtil.isNotBlank(model.getSendC())) {
-						map.put(model.getSendC(), model.getDataTime());
-					}
-				}
-				for (WxAccModel model : list) {
-					model.setDataTime(map.get(model.getMac()));
-					Date date = new Date();
-					if (model.getDataTime() != null) {
-						if ((date.getTime() - model.getDataTime().getTime()) / (3600 * 1000) > 24) {
-							WxAccModel wx = new WxAccModel();
-							wx.setMac(model.getMac());
-							wx.setParkName(model.getParkName());
-							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-							wx.setUdpIp(sdf.format(model.getDataTime()));
-							list2.add(wx);
-						}
-					}
-				}
-				return new Resp<>(list2);
+			for (WxAccModel model : list) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				model.setUdpIp(sdf.format(model.getUpdateTime()));
 			}
+			return new Resp<>(list);
 		} catch (Exception e) {
 			log.error("e:{}", e);
 		}
 		return resp;
 	}
-
-	public static void main(String[] args) {
-		String jsonStr = HttpUtils.get("http://106.14.94.245:8091/iot/device/wuhan");
-		JSONObject obj = JSONObject.parseObject(jsonStr);
-		List<WxAccModel> list = JSONObject.parseArray(obj.getString("data"), WxAccModel.class);
-		List<WxAccModel> list2 = new ArrayList<WxAccModel>();
-		Map<String, Date> map = new HashMap<String, Date>();
-		if (list != null && !list.isEmpty()) {
+	
+	@RequestMapping(path = "/list")
+	@ResponseBody
+	public Resp<?> getList(String secret) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String jsonStr = HttpUtils.get("http://106.14.94.245:8091/weapp/d/devices");
+			JSONObject obj = JSONObject.parseObject(jsonStr);
+			List<WxAccModel> list = JSONObject.parseArray(obj.getString("data"), WxAccModel.class);
 			for (WxAccModel model : list) {
-				map.put(model.getMac(), model.getDataTime());
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				model.setUdpIp(sdf.format(model.getUpdateTime()));
 			}
-			for (WxAccModel model : list) {
-				if (StringUtil.isNotBlank(model.getSendA())) {
-					map.put(model.getSendA(), model.getDataTime());
-				}
-				if (StringUtil.isNotBlank(model.getSendB())) {
-					map.put(model.getSendB(), model.getDataTime());
-				}
-				if (StringUtil.isNotBlank(model.getSendC())) {
-					map.put(model.getSendC(), model.getDataTime());
-				}
-			}
-			for (WxAccModel model : list) {
-				model.setDataTime(map.get(model.getMac()));
-				Date date = new Date();
-				if (model.getDataTime() != null) {
-					if ((date.getTime() - model.getDataTime().getTime()) / (3600 * 1000) > 24) {
-						WxAccModel wx = new WxAccModel();
-						wx.setMac(model.getMac());
-						wx.setParkName(model.getParkName());
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						wx.setUdpIp(sdf.format(model.getDataTime()));
-						list2.add(wx);
-					}
-				}
-			}
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("e:{}", e);
 		}
-		System.out.println(JSONObject.toJSONString(list2));
+		return resp;
+	}
+	
+	@RequestMapping(path = "new")
+	@ResponseBody
+	public Resp<?> getList(String mac,double lng,double lat,String parkName,String secret) {
+		Resp<?> resp = new Resp<>(false);
+		try {
+			String jsonStr = HttpUtils.get("http://106.14.94.245:8091/weapp/d/new?mac="+mac+"&lng="+lng+"&lat="+lat+"&parkName="+parkName+"&secret="+secret);
+			return new Resp<>(JSONObject.parseObject(jsonStr));
+		} catch (Exception e) {
+			log.error("e:{}", e);
+		}
+		return resp;
 	}
 
 }
