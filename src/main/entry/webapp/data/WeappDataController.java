@@ -2,6 +2,7 @@ package main.entry.webapp.data;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
@@ -23,65 +24,53 @@ import utils.Constant;
 import utils.HttpsUtil;
 import utils.JsonUtil;
 import utils.Resp;
+import utils.StringUtil;
 
 @Controller
-@RequestMapping(value = "/iot/log")
-public class IoTCloudLogController extends BaseController{
+@RequestMapping(value = "/weapp/d")
+public class WeappDataController extends BaseController{
 
-	private static final Logger log = LoggerFactory.getLogger(IoTCloudLogController.class);
+	private static final Logger log = LoggerFactory.getLogger(WeappDataController.class);
 	
-	@Autowired
-	private IotCloudLogService iotCloudLogService;
 	@Autowired
 	private IotCloudDeviceService iotCloudDeviceService;
+	@Autowired
+	private IotCloudLogService iotCloudLogService;
 	
-	@RequestMapping(path = "/list")
+	/**
+	 * 微信小程序给倾角传感器校准
+	 * @param mac
+	 * @param lng
+	 * @param lat
+	 * @param parkName
+	 * @param secret
+	 * @return
+	 */
+	@RequestMapping(path = "/new")
 	@ResponseBody
-	public Resp<?> list(Integer p,Integer type,String mac){
+	public  Resp<?> saveNew(String mac,double lng,double lat,String parkName,String secret){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(iotCloudLogService.pageList(p,type,mac));
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return resp;
-	}
-	
-	@RequestMapping(path = "/typeList")
-	@ResponseBody
-	public Resp<?> typeList(Integer p,Integer type,String mac,String fromSite){
-		Resp<?> resp = new Resp<>(false);
-		try {
-			return new Resp<>(iotCloudLogService.pageList(p,type,mac,fromSite));
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return resp;
-	}
-	
-	@RequestMapping(path = "/cmdList")
-	@ResponseBody
-	public Resp<?> cmdList(Integer p){
-		Resp<?> resp = new Resp<>(false);
-		try {
-			return new Resp<>(iotCloudLogService.cmdList(p));
-		} catch (Exception e) {
-			log.error("error:{}",e);
-		}
-		return resp;
-	}
-	
-	
-	
-	@RequestMapping(path = "/save")
-	@ResponseBody
-	public Resp<?> save(String mac,String value1,String value2,Integer cmdName){
-		Resp<?> resp = new Resp<>(false);
-		try {
+			if(StringUtil.isBlank(mac)){
+				resp.setMsg("mac号不能为空！");
+				return resp;
+			}
 			IoTCloudDevice device = iotCloudDeviceService.findByMac(mac);
-			String name = getName(cmdName);
+			if(device==null){
+				resp.setMsg("设备尚未注册！");
+				return resp;
+			}
+			if(!secret.equals(device.getSecret())){
+				resp.setMsg("秘钥不匹配！");
+				return resp;
+			}
+			device.setParkName(parkName);
+			device.setIsCorrect(-1);
+			device.setLng(lng);
+			device.setLat(lat);
+			iotCloudDeviceService.update(device);
 			IotCloudLog iotCloudLog = new IotCloudLog();
-			iotCloudLog.setCmdName(name);
+			iotCloudLog.setCmdName("校准");
 			iotCloudLog.setCmdType(1);
 			iotCloudLog.setCreateTime(new Date());
 			iotCloudLog.setFromSite("telcom");
@@ -91,48 +80,51 @@ public class IoTCloudLogController extends BaseController{
 			iotCloudLog.setType(1);
 			iotCloudLog = iotCloudLogService.saveA(iotCloudLog);
 			String sn =  getMore(Integer.toHexString(iotCloudLog.getId()));
-			String data = "";
-			if(1==cmdName){
-				data = "48003600"+sn;
-			}
-			if(2==cmdName){
-				data = "48003200"+sn;
-			}
-			if(3==cmdName){
-				String ax = FloatToHexString(Float.valueOf(value1.split(",")[0]));
-				String ay = FloatToHexString(Float.valueOf(value1.split(",")[1]));
-				String az = FloatToHexString(Float.valueOf(value1.split(",")[2]));
-				String x = FloatToHexString(Float.valueOf(value2.split(",")[0]));
-				String y = FloatToHexString(Float.valueOf(value2.split(",")[1]));
-				String z = FloatToHexString(Float.valueOf(value2.split(",")[2]));
-				data = "48007B1901"+ax+ay+az+x+y+z+sn;
-			}
-			if(4==cmdName){
-				data = "48007A0201"+value1+  sn;
-			}
-			if(5==cmdName){
-				data = "48003901"+value1+ sn;
-			}
+			String data =  "48003600"+sn;
 			iotCloudLog.setData(data);
 			sendCmd(iotCloudLog, device);
 			iotCloudLogService.update(iotCloudLog);
 			return new Resp<>(true);
 		} catch (Exception e) {
-			log.error("error:{}",e);
+			log.error("e:{}",e);
 		}
 		return resp;
 	}
 	
 	/**
-	 * 浮点数按IEEE754标准转16进制字符串
-	 * @param f
+	 * 获取同一秘钥下所有设备列表
+	 * @param secret
 	 * @return
 	 */
-	public  String FloatToHexString(float f){
-		int i  = Float.floatToIntBits(f);
-        String str = Integer.toHexString(i).toUpperCase();
-        return str;
+	@RequestMapping(path = "devices")
+	@ResponseBody
+	public Resp<?> getDevices(String secret){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<IoTCloudDevice> list = iotCloudDeviceService.findBySecret(secret);
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
 	}
+	
+	/**
+	 * 获取失联的设备列表
+	 * @return
+	 */
+	@RequestMapping(path = "lost")
+	@ResponseBody
+	public Resp<?> getLost(){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(iotCloudDeviceService.getBroken());
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
 	
 	private  void sendCmd(IotCloudLog iotCloudLog,IoTCloudDevice ioTCloudDevice){
 		try {
@@ -192,23 +184,6 @@ public class IoTCloudLogController extends BaseController{
 		return hexString;
 	}
 
-	private String getName(Integer cmdName) {
-		if(1==cmdName){
-			return "重启";
-		}
-		if(2==cmdName){
-			return "校准";
-		}
-		if(3==cmdName){
-			return "设置阈值";
-		}
-		if(4==cmdName){
-			return "设置采样频率";
-		}
-		if(5==cmdName){
-			return "开启关闭温度上报";
-		}
-		return null;
-	}
+
 	
 }

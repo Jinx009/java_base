@@ -73,5 +73,12 @@ public class IoTCloudDevice {
 	private Double maxY;
 	@Column(name = "send_base")
 	private String sendBase;
-	
+	@Column(name = "lng")
+	private Double lng;
+	@Column(name = "lat")
+	private Double lat;
+	@Column(name ="is_correct")
+	private Integer isCorrect;
+	@Column(name = "secret")
+	private String secret;
 }

@@ -64,6 +64,7 @@ public class IotCloudDeviceService {
 		List<IoTCloudDevice> list = iotCloudDeviceDao.findByLocalIp("QJ_ZHANWAY_V_3.0_WUHAN");
 		List<IoTCloudDevice> list2 = iotCloudDeviceDao.findByLocalIp("QJ_ZHANWAY_V_3.0_GUANGDONG");
 		List<IoTCloudDevice> list3 = iotCloudDeviceDao.findByLocalIp("QJ_ZHANWAY_V_3.0_YIBIN");
+		List<IoTCloudDevice> list4 = iotCloudDeviceDao.findByLocalIp("QJ_ZHANWAY_V_3.1_WUHAN");
 		List<IoTCloudDevice> l = new ArrayList<IoTCloudDevice>();
 		for(IoTCloudDevice d : list){
 			if(d.getDataNum()==0){
@@ -80,7 +81,16 @@ public class IotCloudDeviceService {
 				l.add(d);
 			}
 		}
+		for(IoTCloudDevice d : list4){
+			if(d.getDataNum()==0){
+				l.add(d);
+			}
+		}
 		return l;
+	}
+
+	public List<IoTCloudDevice> findBySecret(String secret) {
+		return iotCloudDeviceDao.findBySecret(secret);
 	}
 
 	
