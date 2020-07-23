@@ -59,7 +59,7 @@ public class IotCloudDeviceDao extends BaseDao<IoTCloudDevice>{
 	public List<IoTCloudDevice> findBySecret(String secret) {
 		QueryParam param = QueryParam.getInstance();
 		param.addParam("secret", secret);
-		param.addOrder(OrderType.DESC, "updateTime");
+		param.addOrder(OrderType.DESC, "parkName");
 		return findByCriteria(param);
 	}
 
