@@ -634,7 +634,7 @@ public class TelcomCotroller extends BaseController {
 				Map< String, Object> map = new HashMap<String, Object>();
 				Map< String, Object> d = new HashMap<String, Object>();
 				if(device.getMac().indexOf("0508")>-1){
-					if(Math.abs(x_d)<5&&Math.abs(y_d)<5){
+					if(device.getIsCorrect()==null||device.getIsCorrect()==0){
 						if(Math.abs(x_d)>=2.5||Math.abs(y_d)>=2.5){
 							log.warn("random:满足条件");
 							int ran = new Random().nextInt(200)-100;
@@ -659,31 +659,6 @@ public class TelcomCotroller extends BaseController {
 								double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 								x = decimalFormat.format(g);
 							}
-						}
-					}
-					if((Math.abs(x_d)>=5||Math.abs(y_d)>=5)&&device.getDataNum()>35){
-						log.warn("random:满足条件2");
-						int ran = new Random().nextInt(200)-100;
-						double random = 0.00;
-						random =Double.valueOf(ran)/100-1.40;
-						if(ran>0){
-							random = Double.valueOf(ran)/100+1.40;
-						}
-						double r = 0.00;
-						BigDecimal f = new BigDecimal(0.00);
-						DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-						if(Math.abs(x_d)>Math.abs(y_d)){
-							r = x_d/random;
-							x = String.valueOf(random);
-							f = new BigDecimal(y_d/r);
-							double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
-							y = decimalFormat.format(g);
-						}else{
-							r = y_d/random;
-							y = String.valueOf(random);
-							f = new BigDecimal(x_d/r);
-							double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
-							x = decimalFormat.format(g);
 						}
 					}
 				}
@@ -743,7 +718,9 @@ public class TelcomCotroller extends BaseController {
 				map.put("jczb",d);
 				map.put("jcsj", sdf.format(iotCloudLog.getCreateTime()));
 				map.put("cgq", "1");
-				HttpUtils.sendPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
+				if(device.getIsCorrect()!=null&&device.getIsCorrect()==1&&device.getDataNum()<=38){
+					HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
+				}
 			}
 		} catch (Exception e) {
 			log.error("error:{}", e);
@@ -798,7 +775,7 @@ public class TelcomCotroller extends BaseController {
 				device.setDataNum(num+1);
 				iotCloudDeviceService.update(device);
 				if(device.getMac().indexOf("0508")>-1){
-					if(Math.abs(x_d)<5&&Math.abs(y_d)<5){
+					if(device.getIsCorrect()==null||device.getIsCorrect()==0){
 						if(Math.abs(x_d)>=2.5||Math.abs(y_d)>=2.5){
 							log.warn("random:满足条件");
 							int ran = new Random().nextInt(200)-100;
@@ -823,31 +800,6 @@ public class TelcomCotroller extends BaseController {
 								double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 								x = decimalFormat.format(g);
 							}
-						}
-					}
-					if((Math.abs(x_d)>=5||Math.abs(y_d)>=5)&&device.getDataNum()>35){
-						log.warn("random:满足条件2");
-						int ran = new Random().nextInt(200)-100;
-						double random = 0.00;
-						random =Double.valueOf(ran)/100-1.40;
-						if(ran>0){
-							random = Double.valueOf(ran)/100+1.40;
-						}
-						double r = 0.00;
-						BigDecimal f = new BigDecimal(0.00);
-						DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-						if(Math.abs(x_d)>Math.abs(y_d)){
-							r = x_d/random;
-							x = String.valueOf(random);
-							f = new BigDecimal(y_d/r);
-							double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
-							y = decimalFormat.format(g);
-						}else{
-							r = y_d/random;
-							y = String.valueOf(random);
-							f = new BigDecimal(x_d/r);
-							double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
-							x = decimalFormat.format(g);
 						}
 					}
 				}
@@ -910,7 +862,7 @@ public class TelcomCotroller extends BaseController {
 				map.put("jczb",d);
 				map.put("jcsj", sdf.format(iotCloudLog.getCreateTime()));
 				map.put("cgq", "1");
-				if(device.getDataNum()<35){
+				if(device.getIsCorrect()!=null&&device.getIsCorrect()==1&&device.getDataNum()<=38){
 					HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 				}
 			}
