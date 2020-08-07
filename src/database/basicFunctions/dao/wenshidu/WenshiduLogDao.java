@@ -19,7 +19,7 @@ public class WenshiduLogDao extends BaseDao<WenshiduLog>{
 	public WenshiduLog findByDateAndNum(String deviceNumber) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String date = sdf.format(new Date());
-		String hql = " from WenshiduLog where  deviceNumber='"+deviceNumber+"' and  time >'"+date+" 00:00:00'  order by id ";
+		String hql = " from WenshiduLog where  deviceNumber='"+deviceNumber+"' and  time >'"+date+" 00:00:00'  order by id desc";
 		Query query = em.createQuery(hql);
 		List<WenshiduLog> list = query.getResultList();
 		if(!list.isEmpty()&&list!=null){

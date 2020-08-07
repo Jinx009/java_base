@@ -71,7 +71,7 @@ public class JobTask {
 		}
 	}
 	
-	@Scheduled(fixedRate = 1000 * 1200, initialDelay = 1000)
+	@Scheduled(cron = "0 0 0/1 * * ?")
 	public void wenshidu() {
 		List<WenshiduDevice> list = wenshiduDeviceService.findAll();
 		if(list!=null&&!list.isEmpty()){
