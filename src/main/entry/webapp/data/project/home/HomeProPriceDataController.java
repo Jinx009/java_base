@@ -1,6 +1,9 @@
 package main.entry.webapp.data.project.home;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -78,7 +81,14 @@ public class HomeProPriceDataController extends BaseController {
 			List<ProGoods> list = proGoodsService.findByDateUpdate(proPrice.getTime(),proPrice.getName());
 			if(list!=null) {
 				for(ProGoods proGoods:list) {
-					if(proGoods.getType()==0) {
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					Date now = new Date();
+					Calendar c = Calendar.getInstance();
+					c.setTime(now);
+					c.set(Calendar.DATE, c.get(Calendar.DATE)-1);
+					now = c.getTime();
+					Date db = sdf.parse(proGoods.getDate());
+					if(now.before(db)){
 						proGoods.setPrice(price);
 						proGoodsService.update(proGoods);
 					}
