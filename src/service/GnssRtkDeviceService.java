@@ -33,5 +33,6 @@ public class GnssRtkDeviceService {
 	public List<GnssRtkDevice> findAll() {
 		return gnssRtkDeviceDao.findAll();
 	}
+
 	
 }

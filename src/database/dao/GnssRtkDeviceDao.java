@@ -28,4 +28,5 @@ public class GnssRtkDeviceDao extends BaseDao<GnssRtkDevice>{
 		return null;
 	}
 
+
 }

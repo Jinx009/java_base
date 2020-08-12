@@ -29,28 +29,30 @@ public class RtkTask {
 	@Autowired
 	private GnssRtkLogService gnssRtkLogService;
 	
-	@Scheduled(cron = "0 */20 * * * ?")//20分钟处理一次
+	@Scheduled(cron = "0 */2 * * * ?")//20分钟处理一次
 	public void init(){
 		GnssRtkDevice rtk = gnssRtkDeviceService.findByNewTime();
 		if(rtk==null){
 			List<GnssRtkLog> list = MongoUtil.select();
 			logger.warn("select:{}",JSONObject.toJSONString(list));
 			if(list!=null&&!list.isEmpty()){
-				save(list);
+				save(list,"");
 			}
 		}else{
 			List<GnssRtkLog> list = MongoUtil.select(rtk.getUpdatetime());
-			logger.warn("select updatetime:{}",JSONObject.toJSONString(list));
+//			logger.warn("select updatetime:{}",JSONObject.toJSONString(list));
 			if(list!=null&&!list.isEmpty()){
-				save(list);
+				save(list,rtk.getUpdatetime());
 			}
 		}
 	}
 	
-	private void save(List<GnssRtkLog> list){
+	private void save(List<GnssRtkLog> list,String updatetime){
 		for(GnssRtkLog log : list){
-			log.setCreateTime(new Date());
-			gnssRtkLogService.save(log);
+			if(!updatetime.equals(log.getUpdatetime())){
+				log.setCreateTime(new Date());
+				gnssRtkLogService.save(log);
+			}
 			GnssRtkDevice device = gnssRtkDeviceService.findByRoverTag(log.getRovertag());
 			if(device==null){
 				device = new GnssRtkDevice();

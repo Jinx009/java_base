@@ -122,9 +122,9 @@
 				<div class="row" style="margin-top: 15px;">
 					<div class="col-md-3">
 						<div class="input-group">
-							<input type="text" class="form-control"> <span
+							<input type="text" class="form-control" id="rovertag" value="041020511126"> <span
 								class="input-group-btn">
-								<button class="btn blue" type="button">查询</button>
+								<button class="btn blue" type="button" onclick="_getData()">查询</button>
 							</span>
 						</div>
 					</div>
@@ -157,7 +157,7 @@
 												</tr>
 											</thead>
 											<tbody id="data">
-												<tr v-for="item in datas">
+												<tr>
 													<td v-text="item.rovertag"></td>
 													<td v-text="item.lng"></td>
 													<td v-text="item.lat"></td>
@@ -198,7 +198,7 @@
 										<input type="text" id="date" class="form-control"
 											placeholder="选择日期">
 									</div>
-									<button type="button" class="btn blue">查询</button>
+									<button type="button" class="btn blue" onclick="_getLog()" >查询</button>
 								</form>
 							</div>
 							<!-- /.navbar-collapse -->
@@ -333,22 +333,46 @@
 <script src="/themes/js/vue.min.js"></script>
 <script>
 function _getData() {
+	var rovertag = $('#rovertag').val();
 	$.ajax({
-			url : '/d/gnssrtkdevice/list',
+			url : '/d/gnssrtkdevice/find?rovertag='+rovertag,
 			type : 'get',
 			dataType : 'json',
 			success : function(res) {
-				for ( var i in res.data) {
-					res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
-				}
 				new Vue({
 					el : '#data',
 					data : {
-						datas : res.data
+						item : res.data
 					}
 				})
 			}
 		})
+}
+var e = [],n = [],u =[],dateArr = [];
+function _getLog(){
+	var date = $('#date').val();
+	if(date==''){
+		layer.alert('请选择日期区间！');
+	}else{
+		var rovertag = $('#rovertag').val();
+		var start = date.split(' - ')[0];
+		var end = date.split(' - ')[1];
+		$.ajax({
+			url:'/d/gnssrtklog/find?rovertag='+rovertag+'&start='+start+'&end='+end,
+			dataType:'json',
+			type:'post',
+			success:function(res){
+				for(var i in res.data){
+					res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
+					e.push(res.data[i].east);
+					n.push(res.data[i].north);
+					u.push(res.data[i].up);
+					dateArr.push(res.data[i].updatetime);
+				}
+				_draw();
+			}
+		})
+	}
 }
 function _draw(){
 	var option = {
@@ -375,10 +399,7 @@ function _draw(){
 			xAxis : {
 				type : 'category',
 				boundaryGap : false,
-				data : [ '2020-05-12', '2020-05-13',
-						'2020-05-14', '2020-05-15',
-						'2020-05-16', '2020-05-17',
-						'2020-05-18' ]
+				data :dateArr
 			},
 			yAxis : {
 				type : 'value'
@@ -388,22 +409,19 @@ function _draw(){
 						name : 'E',
 						type : 'line',
 						stack : '总量',
-						data : [ 120, 132, 101, 134, 90,
-								230, 210 ]
+						data :e
 					},
 					{
 						name : 'N',
 						type : 'line',
 						stack : '总量',
-						data : [ 220, 182, 191, 234, 290,
-								330, 310 ]
+						data :n
 					},
 					{
 						name : 'U',
 						type : 'line',
 						stack : '总量',
-						data : [ 150, 232, 201, 154, 190,
-								330, 410 ]
+						data : u
 					}, {
 						name : '解算失败',
 						type : 'line',
@@ -450,7 +468,6 @@ jQuery(document).ready(
 		QuickSidebar.init(); // init quick sidebar
 		Demo.init(); // init demo features
 		_getData();
-		_draw();
 		laydate.render({
 			elem : '#date',
 			type : 'datetime',

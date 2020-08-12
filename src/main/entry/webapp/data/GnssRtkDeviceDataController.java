@@ -36,4 +36,17 @@ public class GnssRtkDeviceDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/find")
+	@ResponseBody
+	public Resp<?> find(String rovertag){
+		Resp<?> resp = new Resp<>();
+		try {
+			GnssRtkDevice device = gnssRtkDeviceService.findByRoverTag(rovertag);
+			return new Resp<>(device);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
 }

@@ -1,5 +1,7 @@
 package main.entry.webapp.data;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,19 @@ public class GnssRtkLogDataController extends BaseController{
 		try {
 			PageDataList<GnssRtkLog> pages = gnssRtkLogService.findByPage(p);
 			return new Resp<>(pages);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/find")
+	@ResponseBody
+	public Resp<?> find(String rovertag,String start,String end){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<GnssRtkLog> list = gnssRtkLogService.find(rovertag,start,end);
+			return new Resp<>(list);
 		} catch (Exception e) {
 			log.error("e:{}",e);
 		}
