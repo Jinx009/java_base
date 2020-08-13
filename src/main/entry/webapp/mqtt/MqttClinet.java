@@ -1,5 +1,7 @@
 package main.entry.webapp.mqtt;
 
+import java.util.Date;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttDeliveryToken;
@@ -12,8 +14,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class MqttClinet {
 
 	public static final String HOST = "tcp://139.196.13.251:1883";
-	public static final String TOPIC1 = "test";
-	public static final String TOPIC2 = "pos_message_sned";
+	public static final String TOPIC1 = "test1";
 	private static final String clientid = "12345678";
 	private MqttClient client;
 	private MqttConnectOptions options;
@@ -45,22 +46,27 @@ public class MqttClinet {
 			options.setWill(topic, "close".getBytes(), 1, true);
 			client.connect(options);
 			// 订阅消息
-			int[] Qos = { 1 };// 0：最多一次 、1：最少一次 、2：只有一次
-			String[] topic1 = { TOPIC1 };
-			client.subscribe(topic1, Qos);
-			new Thread() {
-				public void run() {
-					while (true) {
-							try {
-								sendMessage(null, client);
-								Thread.sleep(2000);
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-					}
-				}
-			}.start();
+			int[] Qos = { 0 };// 0：最多一次 、1：最少一次 、2：只有一次
+//			String[] topic1 = { TOPIC1 };
+//			client.subscribe(topic1, Qos);
+			for(int i = 0 ;i<30;i++){
+				sendMessage(null, client);
+			}
+			client.disconnect();
+//			new Thread() {
+//				public void run() {
+//					while (true) {
+//							try {
+//								sendMessage(null, client);
+//								System.out.println(""+new Date().getTime());
+//								Thread.sleep(1);
+//							} catch (Exception e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//					}
+//				}
+//			}.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -70,19 +76,19 @@ public class MqttClinet {
 		MqttDeliveryToken token = topic.publish(message);
 
 		token.waitForCompletion();
-		System.out.println("message is published completely! " + token.isComplete());
+//		System.out.println("message is published completely! " + token.isComplete());
 	}
 
 	public static void sendMessage(byte[] b, MqttClient client) throws Exception {
 		MqttMessage message = new MqttMessage();
-		message.setQos(1); // 保证消息能到达一次
+		message.setQos(0); // 保证消息能到达一次
 		message.setRetained(true);
-		String str = "11111";
+		String str = String.valueOf(new Date().getTime());
 		message.setPayload(str.getBytes());
 		try {
-			publish(client.getTopic(TOPIC2), message);
+			publish(client.getTopic(TOPIC1), message);
 			// 断开连接
-			// server.client.disconnect();
+			// 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

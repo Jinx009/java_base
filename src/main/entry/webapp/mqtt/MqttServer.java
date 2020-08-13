@@ -15,8 +15,7 @@ public class MqttServer {
 	 //tcp://MQTT安装的服务器地址:MQTT定义的端口号
     public static final String HOST = "tcp://139.196.13.251:1883";
     //定义一个主题
-    public static final String TOPIC = "test";
-    public static final String TOPIC2 = "pos_message_sned";
+    public static final String TOPIC = "test1";
     //定义MQTT的ID，可以在MQTT服务配置中指定
     private static final String clientid = "server11";
  
@@ -52,9 +51,9 @@ public class MqttServer {
         try {
             client.setCallback(new PushCallback());
             client.connect(options);
-            topic11 = client.getTopic(TOPIC);
-            int[] Qos = { 1 };// 0：最多一次 、1：最少一次 、2：只有一次
-			String[] topic1 = { TOPIC2 };
+//            topic11 = client.getTopic(TOPIC);
+            int[] Qos = { 0 };// 0：最多一次 、1：最少一次 、2：只有一次
+			String[] topic1 = { TOPIC };
 			client.subscribe(topic1, Qos);
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,18 +79,18 @@ public class MqttServer {
  
     public static void sendMessage(String clieId,String msg)throws Exception{
     	MqttServer server = new MqttServer();
-    	MqttMessage message = new MqttMessage();
-        message.setQos(1);  //保证消息能到达一次
-        message.setRetained(true);
-        String str ="{\"clieId\":\""+clieId+"\",\"mag\":\""+msg+"\"}";
-        message.setPayload(str.getBytes());
-        try{
-            publish(topic11 , message);
-            //断开连接
-//            server.client.disconnect();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//    	MqttMessage message = new MqttMessage();
+//        message.setQos(1);  //保证消息能到达一次
+//        message.setRetained(true);
+//        String str ="{\"clieId\":\""+clieId+"\",\"msg\":\""+msg+"\"}";
+//        message.setPayload(str.getBytes());
+//        try{
+//            publish(topic11 , message);
+//            //断开连接
+////            server.client.disconnect();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
  
     }
     /**
