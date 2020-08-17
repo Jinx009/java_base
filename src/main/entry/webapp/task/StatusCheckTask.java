@@ -42,14 +42,17 @@ public class StatusCheckTask {
 			List<IoTCloudDevice> list3 = iotCloudDeviceService.findByLocalIp("QJ_ZHANWAY_V_3.0_YIBIN");
 			for(IoTCloudDevice d : list){
 				d.setDataNum(0);
+				d.setSensorSendStatus(0);
 				iotCloudDeviceService.update(d);
 			}
 			for(IoTCloudDevice d : list2){
 				d.setDataNum(0);
+				d.setSensorSendStatus(0);
 				iotCloudDeviceService.update(d);
 			}
 			for(IoTCloudDevice d : list3){
 				d.setDataNum(0);
+				d.setSensorSendStatus(0);
 				iotCloudDeviceService.update(d);
 			}
  		} catch (Exception e) {

@@ -871,6 +871,59 @@ public class TelcomCotroller extends BaseController {
 		}
 	}
 
+	/**
+	 * 北京平台发送设备信息 每天一次
+	 * @param url
+	 * @param deviceId
+	 * @param apiKey
+	 * @param volt
+	 * @param g
+	 * @param version
+	 * @param lon
+	 * @param lat
+	 * @param temp
+	 */
+	private void sendSensorStatus(String url,String deviceId,String apiKey,Double volt,String g,String version,Double lon,Double lat,Integer temp){
+		String str = "{" +
+                "\"deviceId\": \""+deviceId+"\"," +
+                "\"apikey\": \""+apiKey+"\"," +
+                "\"data\": {" +
+                "\"000_1\":{" +
+                "\"ext_power_volt\": "+volt+"," +
+                "\"temp\": "+temp+"," +
+                "\"humidity\": \"\"," +
+                "\"bd_signal\": \"\"," +
+                "\"4g_signal\": "+g+"," +
+                "\"sw_version\": \""+version+"\"," +
+//                "\"lon\": \""+lon+"\",\n" +
+//                "\"lat \": \""+lat+"\",\n" +
+                "\"sensor_state \": {\n" +
+                "\"000_1 \": {" +
+                "\"temp \": "+temp+"," +
+                "\"errno \": 0" +
+                "}" +
+                "}" +
+                "}" +
+                "}" +
+                "}";
+		HttpUtils.postJson(url, str);
+	}
+	
+	public String convertHexToString(String hex) {
+		StringBuilder sb = new StringBuilder();
+		StringBuilder temp = new StringBuilder();
+		// 49204c6f7665204a617661 split into two characters 49, 20, 4c...
+		for (int i = 0; i < hex.length() - 1; i += 2) {
+			// grab the hex in pairs
+			String output = hex.substring(i, (i + 2));
+			// convert hex to decimal
+			int decimal = Integer.parseInt(output, 16);
+			// convert the decimal to character
+			sb.append((char) decimal);
+			temp.append(decimal);
+		}
+		return sb.toString();
+	}
 	
 	/**
 	 * 普世广东
@@ -885,11 +938,24 @@ public class TelcomCotroller extends BaseController {
 		Map<String, Object> sendData = new HashMap<>();
 		map.put("deviceId", ioTCloudDevice.getUdpIp().split("_")[0]);
 		map.put("apikey", ioTCloudDevice.getUdpIp().split("_")[1]);
+		ioTCloudDevice.setDataNum(ioTCloudDevice.getDataNum()+1);
+		ioTCloudDevice.setUpdateTime(new Date());
+		ioTCloudDevice.setDataTime(new Date());
+		iotCloudDeviceService.update(ioTCloudDevice);
 		String cmd = data.substring(20, 22);
 		if (cmd.equals("68")) {
 			cmd = "报警";
 		} else {
 			cmd = "心跳";
+			if(ioTCloudDevice.getSensorSendStatus()==0){
+				String g = String.valueOf(Integer.parseInt(data.substring(68, 70), 16));
+				String version = convertHexToString(data.substring(94, 106));
+				String volt = getData(data.substring(62, 63), data.substring(62, 66));
+				Integer temp = Integer.parseInt(data.substring(66, 68), 16);
+				sendSensorStatus("", ioTCloudDevice.getUdpIp().split("_")[0],  ioTCloudDevice.getUdpIp().split("_")[1], Double.valueOf(volt), g, version, 0.00, 0.00, temp);
+				ioTCloudDevice.setSensorSendStatus(1);
+				iotCloudDeviceService.update(ioTCloudDevice);
+			}
 		}
 		if (cmd.equals("报警") || cmd.equals("心跳")) {
 			String acc_x = hexToFloat(data.substring(26, 34));
@@ -977,6 +1043,15 @@ public class TelcomCotroller extends BaseController {
 			cmd = "报警";
 		} else if (cmd.equals("68")) {
 			cmd = "心跳";
+			if(ioTCloudDevice.getSensorSendStatus()==0){
+				String g = String.valueOf(Integer.parseInt(data.substring(68, 70), 16));
+				String version = convertHexToString(data.substring(94, 106));
+				String volt = getData(data.substring(62, 63), data.substring(62, 66));
+				Integer temp = Integer.parseInt(data.substring(66, 68), 16);
+				sendSensorStatus("", ioTCloudDevice.getUdpIp().split("_")[0],  ioTCloudDevice.getUdpIp().split("_")[1], Double.valueOf(volt), g, version, 0.00, 0.00, temp);
+				ioTCloudDevice.setSensorSendStatus(1);
+				iotCloudDeviceService.update(ioTCloudDevice);
+			}
 		}
 		String acc_x = "0";
 		String acc_y = "0";
@@ -1220,20 +1295,20 @@ public class TelcomCotroller extends BaseController {
 //		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
 //		r =  1/2.4022;
 //		System.out.println(decimalFormat.format(r));
-		Map< String, Object> map = new HashMap<String, Object>();
-		Map< String, Object> d = new HashMap<String, Object>();
-		d.put("gX","0.0003" );
-		d.put("gY", "0.0009");
-		d.put("gZ", "0.0008");
-		d.put("X", "81.98");
-		d.put("Y", "-54.42");
-		d.put("Z", 0);
-		map.put("sblxbm", "103");
-		map.put("jczb",d);
-		map.put("jcsj", "2020-07-23 11:29:15");
-		map.put("cgq", "1");
-		HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid=01010400509&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
-
+//		Map< String, Object> map = new HashMap<String, Object>();
+//		Map< String, Object> d = new HashMap<String, Object>();
+//		d.put("gX","0.0003" );
+//		d.put("gY", "0.0009");
+//		d.put("gZ", "0.0008");
+//		d.put("X", "81.98");
+//		d.put("Y", "-54.42");
+//		d.put("Z", 0);
+//		map.put("sblxbm", "103");
+//		map.put("jczb",d);
+//		map.put("jcsj", "2020-07-23 11:29:15");
+//		map.put("cgq", "1");
+//		HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid=01010400509&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
+		new TelcomCotroller().sendSensorStatus("http://121.8.170.150:8201/api/devices/datapoints?type=3", "711653", "fc4dbec5ad53115cd9bf", 3.266,"16", "2.102", 0.00, 0.00, 46);
 	}
 
 	private String getDataBase(String index, String _d) throws Exception {

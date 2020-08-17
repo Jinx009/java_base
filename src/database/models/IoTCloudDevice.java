@@ -79,6 +79,8 @@ public class IoTCloudDevice {
 	private Double lat;
 	@Column(name ="is_correct")
 	private Integer isCorrect;
+	@Column(name ="sensor_send_status")
+	private Integer sensorSendStatus;
 	@Column(name = "secret")
 	private String secret;
 }
