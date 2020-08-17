@@ -952,7 +952,7 @@ public class TelcomCotroller extends BaseController {
 				String version = convertHexToString(data.substring(94, 106));
 				String volt = getData(data.substring(62, 63), data.substring(62, 66));
 				Integer temp = Integer.parseInt(data.substring(66, 68), 16);
-				sendSensorStatus("", ioTCloudDevice.getUdpIp().split("_")[0],  ioTCloudDevice.getUdpIp().split("_")[1], Double.valueOf(volt), g, version, 0.00, 0.00, temp);
+				sendSensorStatus("http://121.8.170.150:8201/api/devices/datapoints?type=3", ioTCloudDevice.getUdpIp().split("_")[0],  ioTCloudDevice.getUdpIp().split("_")[1], Double.valueOf(volt), g, version, 0.00, 0.00, temp);
 				ioTCloudDevice.setSensorSendStatus(1);
 				iotCloudDeviceService.update(ioTCloudDevice);
 			}
@@ -1048,7 +1048,7 @@ public class TelcomCotroller extends BaseController {
 				String version = convertHexToString(data.substring(94, 106));
 				String volt = getData(data.substring(62, 63), data.substring(62, 66));
 				Integer temp = Integer.parseInt(data.substring(66, 68), 16);
-				sendSensorStatus("", ioTCloudDevice.getUdpIp().split("_")[0],  ioTCloudDevice.getUdpIp().split("_")[1], Double.valueOf(volt), g, version, 0.00, 0.00, temp);
+				sendSensorStatus("http://218.6.244.186:44445/api/devices/datapoints?type=3", ioTCloudDevice.getUdpIp().split("_")[0],  ioTCloudDevice.getUdpIp().split("_")[1], Double.valueOf(volt), g, version, 0.00, 0.00, temp);
 				ioTCloudDevice.setSensorSendStatus(1);
 				iotCloudDeviceService.update(ioTCloudDevice);
 			}
