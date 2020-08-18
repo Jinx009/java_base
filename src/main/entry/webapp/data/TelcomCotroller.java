@@ -894,10 +894,10 @@ public class TelcomCotroller extends BaseController {
                 "\"humidity\": \"\"," +
                 "\"bd_signal\": \"\"," +
                 "\"4g_signal\": "+g+"," +
-                "\"sw_version\": \""+version+"\"," +
+                "\"sw_version\": \"2.104\"," +
 //                "\"lon\": \""+lon+"\",\n" +
 //                "\"lat \": \""+lat+"\",\n" +
-                "\"sensor_state \": {\n" +
+                "\"sensor_state\": {\n" +
                 "\"000_1 \": {" +
                 "\"temp \": "+temp+"," +
                 "\"errno \": 0" +
@@ -1265,7 +1265,7 @@ public class TelcomCotroller extends BaseController {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //		Map< String, Object> map = new HashMap<String, Object>();
 //		Map< String, Object> d = new HashMap<String, Object>();
@@ -1308,7 +1308,16 @@ public class TelcomCotroller extends BaseController {
 //		map.put("jcsj", "2020-07-23 11:29:15");
 //		map.put("cgq", "1");
 //		HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid=01010400509&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
-		new TelcomCotroller().sendSensorStatus("http://121.8.170.150:8201/api/devices/datapoints?type=3", "711653", "fc4dbec5ad53115cd9bf", 3.266,"16", "2.102", 0.00, 0.00, 46);
+		String data = "00091906000000034821682A00BF378800BEAA5800BF70E4001C5A078E00000C8B1B16FD0E008C00E7312E312E3000322E31303400";
+		String g = String.valueOf(Integer.parseInt(data.substring(68, 70), 16));
+		String version = new TelcomCotroller().convertHexToString(data.substring(94, 106));
+		String volt = new TelcomCotroller().getData(data.substring(62, 63), data.substring(62, 66));
+		Integer temp = Integer.parseInt(data.substring(66, 68), 16);
+		IoTCloudDevice ioTCloudDevice = new IoTCloudDevice();
+		ioTCloudDevice.setUdpIp("215657_230bb85ba905e85bcc39");
+		new TelcomCotroller().sendSensorStatus("http://121.8.170.150:8201/api/devices/datapoints?type=3", ioTCloudDevice.getUdpIp().split("_")[0],  ioTCloudDevice.getUdpIp().split("_")[1], Double.valueOf(volt), g, version, 0.00, 0.00, temp);
+	
+//		new TelcomCotroller().sendSensorStatus("http://218.6.244.186:44445/api/devices/datapoints?type=3", "215657", "230bb85ba905e85bcc39", 3.266,"16", "2.102", 0.00, 0.00, 46);
 	}
 
 	private String getDataBase(String index, String _d) throws Exception {
