@@ -31,9 +31,9 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="show.html">地理位置</a></li>
-					<li ><a href="logs.html">倾角数据</a></li>
-					<li   class="active"><a href="data.html">数据曲线</a></li>
-					<li ><a href="notice.html">通知管理</a></li>
+					<li><a href="logs.html">倾角数据</a></li>
+					<li class="active"><a href="data.html">数据曲线</a></li>
+					<li><a href="notice.html">通知管理</a></li>
 					<li><a href="lfj.html">裂缝计</a></li>
 					<li><a href="ylj.html">雨量计</a></li>
 				</ul>
@@ -43,45 +43,52 @@
 			</div>
 		</div>
 	</nav>
-	<div class="row" style="width: 98%;margin-left: 1%;" >
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">基本信息</div>
-            <div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
-              <input type="text" class="form-control"  id="mac" placeholder="请输入mac号码" value="0009190600000001" >
-		    </div>
-		    <div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
-              <input type="text" class="form-control"  id="tem" placeholder="请输入温度区间格式：8-21" value="" >
-		    </div>
-		    <div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
-              <select class="form-control" id="type" >
-              		<option value="0">全部数据</option>
-              		<option value="1">只看心跳</option>
-              		<option value="2">只看报警</option>
-              </select>
-		    </div>
-           	<div class="input-group" style="padding-left: 15px;width: 220px;padding-bottom: 15px;margin-top: 10px;float: left;">
-		      <input type="text" class="form-control" readonly="readonly" id="datepicker" >
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" onclick="_getData();" type="button">&nbsp;查&nbsp;看&nbsp;</button>
-		      </span>
-		    </div>
-        </div>
-        <div id="logs" >
-        
-        </div>
-    </div>
-</div>
+	<div class="row" style="width: 98%; margin-left: 1%;">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">基本信息</div>
+				<div class="input-group"
+					style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top: 10px; float: left;">
+					<input type="text" class="form-control" id="mac"
+						placeholder="请输入mac号码" value="0009190600000001">
+				</div>
+				<div class="input-group"
+					style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top: 10px; float: left;">
+					<input type="text" class="form-control" id="tem"
+						placeholder="请输入温度区间格式：8-21" value="">
+				</div>
+				<div class="input-group"
+					style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top: 10px; float: left;">
+					<select class="form-control" id="type">
+						<option value="0">全部数据</option>
+						<option value="1">只看心跳</option>
+						<option value="2">只看报警</option>
+					</select>
+				</div>
+				<div class="input-group"
+					style="padding-left: 15px; width: 220px; padding-bottom: 15px; margin-top: 10px; float: left;">
+					<input type="text" class="form-control" readonly="readonly"
+						id="datepicker"> <span class="input-group-btn">
+						<button class="btn btn-default" onclick="_getData();"
+							type="button">&nbsp;查&nbsp;看&nbsp;</button>
+					</span>
+				</div>
+			</div>
+			<div id="logs"></div>
+		</div>
+	</div>
 	<div class="row" style="width: 98%; margin-left: 1%;">
 		<div class="col-md-12" id="data">
 			<div class="panel panel-default" style="border-color: white;">
 				<div class="panel-body">
-					<div style="float: left;position: relative;min-height: 1px;width: 1280px;height:500px;padding: 0 "  id="draw_1"></div>
+					<div
+						style="float: left; position: relative; min-height: 1px; width: 1280px; height: 500px; padding: 0"
+						id="draw_1"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-<!-- 	<footer class="main-footer"
+	<!-- 	<footer class="main-footer"
 		style="text-align: center; width: 100%; position: absolute; bottom: 15px;">
 		<strong>Copyright &copy; <a href="http://www.zhanway.com"
 			target="_blank">上海展为智能技术股份有限公司</a>.
@@ -90,7 +97,8 @@
 	<div class="control-sidebar-bg"></div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
 <script src="/themes/layer/layer.js"></script>
 <script src="/themes/laydate/laydate.js"></script>
@@ -123,12 +131,33 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 				data:'mac='+mac+'&date='+date+'&tem='+tem_,
 				type : 'post',
 				success : function(res) {
-					if(res!=''&&res.data.length!='')
-					for(var i = res.data.length-1;i>=0;i--){
-						res.data[i].createTime = jsDateTime(res.data[i].createTime);
-						if(res.data[i].baseX!=''&&res.data[i].baseAcceX!=''&&res.data[i].baseX!=null){
-							if(type==1){
-								if(res.data[i].rssi!=null&&res.data[i].rssi!=''){
+					if(res!=null&&res!=''&&res.data!=null){
+						for(var i = res.data.length-1;i>=0;i--){
+							res.data[i].createTime = jsDateTime(res.data[i].createTime);
+							if(res.data[i].baseX!=''&&res.data[i].baseAcceX!=''&&res.data[i].baseX!=null){
+								if(type==1){
+									if(res.data[i].rssi!=null&&res.data[i].rssi!=''){
+										acc_x.push(parseFloat(res.data[i].baseAcceX).toFixed(4));
+										acc_y.push(parseFloat(res.data[i].baseAcceY).toFixed(4));
+										acc_z.push(parseFloat(res.data[i].baseAcceZ).toFixed(4));
+										x.push(parseFloat(res.data[i].baseX).toFixed(4));
+										y.push(parseFloat(res.data[i].baseY).toFixed(4));
+										z.push(parseFloat(res.data[i].baseZ).toFixed(4));
+										tem.push(parseInt(res.data[i].tem)/1000);
+										ddate.push(res.data[i].createTime)
+									}
+								}else if(type==2){
+									if(res.data[i].xtype!=null&&''!=res.data[i].xtype){
+										acc_x.push(parseFloat(res.data[i].baseAcceX).toFixed(4));
+										acc_y.push(parseFloat(res.data[i].baseAcceY).toFixed(4));
+										acc_z.push(parseFloat(res.data[i].baseAcceZ).toFixed(4));
+										x.push(parseFloat(res.data[i].baseX).toFixed(4));
+										y.push(parseFloat(res.data[i].baseY).toFixed(4));
+										z.push(parseFloat(res.data[i].baseZ).toFixed(4));
+										tem.push(parseInt(res.data[i].tem)/1000);
+										ddate.push(res.data[i].createTime)
+									}
+								}else{
 									acc_x.push(parseFloat(res.data[i].baseAcceX).toFixed(4));
 									acc_y.push(parseFloat(res.data[i].baseAcceY).toFixed(4));
 									acc_z.push(parseFloat(res.data[i].baseAcceZ).toFixed(4));
@@ -138,30 +167,12 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 									tem.push(parseInt(res.data[i].tem)/1000);
 									ddate.push(res.data[i].createTime)
 								}
-							}else if(type==2){
-								if(res.data[i].xtype!=null&&''!=res.data[i].xtype){
-									acc_x.push(parseFloat(res.data[i].baseAcceX).toFixed(4));
-									acc_y.push(parseFloat(res.data[i].baseAcceY).toFixed(4));
-									acc_z.push(parseFloat(res.data[i].baseAcceZ).toFixed(4));
-									x.push(parseFloat(res.data[i].baseX).toFixed(4));
-									y.push(parseFloat(res.data[i].baseY).toFixed(4));
-									z.push(parseFloat(res.data[i].baseZ).toFixed(4));
-									tem.push(parseInt(res.data[i].tem)/1000);
-									ddate.push(res.data[i].createTime)
-								}
-							}else{
-								acc_x.push(parseFloat(res.data[i].baseAcceX).toFixed(4));
-								acc_y.push(parseFloat(res.data[i].baseAcceY).toFixed(4));
-								acc_z.push(parseFloat(res.data[i].baseAcceZ).toFixed(4));
-								x.push(parseFloat(res.data[i].baseX).toFixed(4));
-								y.push(parseFloat(res.data[i].baseY).toFixed(4));
-								z.push(parseFloat(res.data[i].baseZ).toFixed(4));
-								tem.push(parseInt(res.data[i].tem)/1000);
-								ddate.push(res.data[i].createTime)
 							}
 						}
+						_draw();
+					}else{
+						layer.alert('无相关数据！');
 					}
-					_draw();
 				}
 			})
 		}

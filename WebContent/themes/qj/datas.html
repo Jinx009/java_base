@@ -114,23 +114,25 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 				data:'mac='+mac+'&date='+date+'&tem='+tem_,
 				type : 'post',
 				success : function(res) {
-					if(res!=''&&res.data.length!='')
-					for(var i = res.data.length-1;i>=0;i--){
-						res.data[i].createTime = jsDateTime(res.data[i].createTime);
-						if(res.data[i].baseX!=''&&res.data[i].baseAcceX!=''&&res.data[i].baseX!=null){
-							acc_x.push(parseFloat(res.data[i].baseAcceX*1000));
-							acc_y.push(parseFloat(res.data[i].baseAcceY*1000));
-							acc_z.push(parseFloat(res.data[i].baseAcceZ*1000));
-							x.push(parseFloat(res.data[i].baseX*1000));
-							y.push(parseFloat(res.data[i].baseY*1000));
-							z.push(parseFloat(res.data[i].baseZ*1000));
-							tem.push(parseFloat(res.data[i].tem));
-							ddate.push(res.data[i].createTime)
+					if(res!=null&&res!=''&&res.data!=''){
+						for(var i = res.data.length-1;i>=0;i--){
+							res.data[i].createTime = jsDateTime(res.data[i].createTime);
+							if(res.data[i].baseX!=''&&res.data[i].baseAcceX!=''&&res.data[i].baseX!=null){
+								acc_x.push(parseFloat(res.data[i].baseAcceX*1000));
+								acc_y.push(parseFloat(res.data[i].baseAcceY*1000));
+								acc_z.push(parseFloat(res.data[i].baseAcceZ*1000));
+								x.push(parseFloat(res.data[i].baseX*1000));
+								y.push(parseFloat(res.data[i].baseY*1000));
+								z.push(parseFloat(res.data[i].baseZ*1000));
+								tem.push(parseFloat(res.data[i].tem));
+								ddate.push(res.data[i].createTime)
+							}
 						}
+						_draw();
 					}
-					console.log(y)
-					_draw();
-				}
+					}else{
+						layer.alert('无相关数据！');
+					}
 			})
 		}
 	}
