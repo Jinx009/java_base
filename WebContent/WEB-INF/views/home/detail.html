@@ -96,6 +96,7 @@
 										<tr>
 											<th>序号</th>
 											<th>mac</th>
+											<th>数据源</th>
 											<th>位置</th>
 											<th>x</th>
 											<th>y</th>
@@ -109,13 +110,16 @@
 											<tr v-for="item in datas">
 												<td v-text="item.num"></td>
 												<td v-text="item.mac"></td>
+												<td v-text="item.sendBase"></td>
 												<td v-text="item.parkName"></td>
 												<td v-text="item.maxX"></td>
 												<td v-text="item.maxY"></td>
 												<td v-text="item.dataNum"></td>
 												<td v-text="item.dataTime"></td>
 												<td v-text="item.updateTime"></td>
-												<td></td>
+												<td>
+													<a  v-bind:href="'/home/device/more?m='+item.mac" >详情</a>
+												</td>
 											</tr>
 										</tbody>
 								</table>

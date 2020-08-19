@@ -84,6 +84,22 @@ public class HomeController {
 		return "/home/detail";
 	}
 	
+	@RequestMapping(path = "/device/lost_list")
+	public String device_lost(HttpServletRequest request){
+		return "/home/lost_list";
+	}
+	
+	@RequestMapping(path = "/device/angle")
+	public String device_angle(HttpServletRequest request){
+		return "/home/angle";
+	}
+	
+	@RequestMapping(path = "/device/more")
+	public String device_more(HttpServletRequest request){
+		return "/home/more";
+	}
+	
+	
 	/**
 	 * 错误页
 	 * @param request

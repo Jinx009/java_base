@@ -49,3 +49,9 @@ function show(_a, _b) {
 		}
 	})
 }
+function goLost(){
+	location.href = '/home/device/lost_list';
+}
+function goAngle(){
+	location.href = '/home/device/angle';
+}
