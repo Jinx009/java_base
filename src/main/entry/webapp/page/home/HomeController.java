@@ -73,6 +73,17 @@ public class HomeController {
 		return "/home/add_telcom";
 	}
 	
+	
+	@RequestMapping(path = "/device/map")
+	public String device_map(HttpServletRequest request){
+		return "/home/map";
+	}
+	
+	@RequestMapping(path = "/device/detail")
+	public String device_detail(HttpServletRequest request){
+		return "/home/detail";
+	}
+	
 	/**
 	 * 错误页
 	 * @param request

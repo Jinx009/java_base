@@ -93,5 +93,9 @@ public class IotCloudDeviceService {
 		return iotCloudDeviceDao.findBySecret(secret);
 	}
 
+	public List<IoTCloudDevice> getMap() {
+		return iotCloudDeviceDao.getMap();
+	}
+
 	
 }

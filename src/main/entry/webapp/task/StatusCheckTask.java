@@ -43,16 +43,22 @@ public class StatusCheckTask {
 			for(IoTCloudDevice d : list){
 				d.setDataNum(0);
 				d.setSensorSendStatus(0);
+				d.setMaxX(0.00);
+				d.setMaxY(0.00);
 				iotCloudDeviceService.update(d);
 			}
 			for(IoTCloudDevice d : list2){
 				d.setDataNum(0);
 				d.setSensorSendStatus(0);
+				d.setMaxX(0.00);
+				d.setMaxY(0.00);
 				iotCloudDeviceService.update(d);
 			}
 			for(IoTCloudDevice d : list3){
 				d.setDataNum(0);
 				d.setSensorSendStatus(0);
+				d.setMaxX(0.00);
+				d.setMaxY(0.00);
 				iotCloudDeviceService.update(d);
 			}
  		} catch (Exception e) {
