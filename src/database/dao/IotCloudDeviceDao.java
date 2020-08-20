@@ -12,6 +12,7 @@ import database.common.PageDataList;
 import database.common.QueryParam;
 import database.models.IoTCloudDevice;
 import utils.BaseConstant;
+import utils.StringUtil;
 
 @Repository
 public class IotCloudDeviceDao extends BaseDao<IoTCloudDevice>{
@@ -66,6 +67,17 @@ public class IotCloudDeviceDao extends BaseDao<IoTCloudDevice>{
 	@SuppressWarnings("unchecked")
 	public List<IoTCloudDevice> getMap() {
 		String sql = " select *  from pro_device  where (local_ip ='QJ_ZHANWAY_V_3.0_WUHAN'  or local_ip ='QJ_ZHANWAY_V_3.1_WUHAN' or local_ip='QJ_ZHANWAY_V_3.0_YIBIN'  or local_ip='QJ_ZHANWAY_V_3.0_GUANGDONG' )  order by park_name desc ";
+		Query query = em.createNativeQuery(sql, IoTCloudDevice.class);
+		List<IoTCloudDevice> list = query.getResultList();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<IoTCloudDevice> getByParkNameOrMac(String parkName) {
+		String sql = " select *  from pro_device  where  park_name like '%"+parkName+"%' order by data_time ";
+		if(StringUtil.isLetterDigit(parkName)){
+			sql = " select *  from pro_device  where  mac like '%"+parkName+"%' order by data_time ";
+		}
 		Query query = em.createNativeQuery(sql, IoTCloudDevice.class);
 		List<IoTCloudDevice> list = query.getResultList();
 		return list;

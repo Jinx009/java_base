@@ -97,5 +97,13 @@ public class IotCloudDeviceService {
 		return iotCloudDeviceDao.getMap();
 	}
 
+	public List<IoTCloudDevice> getByParkNameOrMac(String parkName) {
+		return iotCloudDeviceDao.getByParkNameOrMac(parkName);
+	}
+
+	public IoTCloudDevice findBy(Integer id) {
+		return iotCloudDeviceDao.find(id);
+	}
+
 	
 }

@@ -12,8 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import common.helper.FreemarkerUtil;
 
-
-
 /**
  * 工具类-字符串处理
  * 
@@ -22,12 +20,16 @@ import common.helper.FreemarkerUtil;
  * @since 2014年1月28日
  */
 public class StringUtil extends StringUtils {
-	
-	
-	 public static boolean strIsNullOrEmpty(String s) {
-	        return (null == s || s.trim().length() < 1);
-	    }
-	
+
+	public static boolean strIsNullOrEmpty(String s) {
+		return (null == s || s.trim().length() < 1);
+	}
+
+	public static boolean isLetterDigit(String str) {
+		String regex = "^[a-z0-9A-Z]+$";
+		return str.matches(regex);
+	}
+
 	/**
 	 * 字符串空处理，去除首尾空格 如果str为null，返回"",否则返回str
 	 * 
@@ -92,8 +94,7 @@ public class StringUtil extends StringUtils {
 	 */
 	public static boolean isPhone(String phone) {
 		phone = isNull(phone);
-		Pattern regex = Pattern
-				.compile("^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$");
+		Pattern regex = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$");
 		Matcher matcher = regex.matcher(phone);
 		boolean isMatched = matcher.matches();
 		return isMatched;
@@ -121,8 +122,7 @@ public class StringUtil extends StringUtils {
 	 */
 	public static boolean isEmail(String email) {
 		email = isNull(email);
-		Pattern regex = Pattern
-				.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
+		Pattern regex = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
 		Matcher matcher = regex.matcher(email);
 		boolean isMatched = matcher.matches();
 		return isMatched;
@@ -137,8 +137,7 @@ public class StringUtil extends StringUtils {
 	public static boolean isCard(String cardId) {
 		cardId = isNull(cardId);
 		// 身份证正则表达式(15位)
-		Pattern isIDCard1 = Pattern
-				.compile("^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$");
+		Pattern isIDCard1 = Pattern.compile("^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$");
 		// 身份证正则表达式(18位)
 		Pattern isIDCard2 = Pattern
 				.compile("^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|X)$");
@@ -308,8 +307,7 @@ public class StringUtil extends StringUtils {
 		return result;
 	}
 
-	public static String fillTemplet(String template,
-			Map<String, Object> sendData) {
+	public static String fillTemplet(String template, Map<String, Object> sendData) {
 		// 模板中的'是非法字符，会导致无法提交，所以页面上用`代替
 		template = template.replace('`', '\'');
 		try {
@@ -456,36 +454,38 @@ public class StringUtil extends StringUtils {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * 生成指定长度的随机字符串，字母加数字组合
+	 * 
 	 * @param length
 	 * @return
 	 */
-    public static String getRandomString(int length) { 
-        String val = "";  
-        Random random = new Random();  
-        //参数length，表示生成几位随机数  
-        for(int i = 0; i < length; i++) { 
-            String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";  
-            //输出字母还是数字  
-            if( "char".equalsIgnoreCase(charOrNum) ) {  
-                //输出是大写字母还是小写字母  
-                int temp = random.nextInt(2) % 2 == 0 ? 65 : 97;  
-                val += (char)(random.nextInt(26) + temp);  
-            } else if( "num".equalsIgnoreCase(charOrNum) ) {  
-                val += String.valueOf(random.nextInt(10));  
-            }  
-        }  
-        return val;  
-    }  
- 
-    /**
-     * 根据身份证号码计算性别
-     * @param cardId
-     * @return
-     */
-    public static int getSexByCardid(String cardId) {
+	public static String getRandomString(int length) {
+		String val = "";
+		Random random = new Random();
+		// 参数length，表示生成几位随机数
+		for (int i = 0; i < length; i++) {
+			String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
+			// 输出字母还是数字
+			if ("char".equalsIgnoreCase(charOrNum)) {
+				// 输出是大写字母还是小写字母
+				int temp = random.nextInt(2) % 2 == 0 ? 65 : 97;
+				val += (char) (random.nextInt(26) + temp);
+			} else if ("num".equalsIgnoreCase(charOrNum)) {
+				val += String.valueOf(random.nextInt(10));
+			}
+		}
+		return val;
+	}
+
+	/**
+	 * 根据身份证号码计算性别
+	 * 
+	 * @param cardId
+	 * @return
+	 */
+	public static int getSexByCardid(String cardId) {
 		int sexNum = 0;
 		if (cardId.length() == 15) {
 			sexNum = cardId.charAt(13);
@@ -499,8 +499,9 @@ public class StringUtil extends StringUtils {
 		}
 	}
 
-    /**
+	/**
 	 * 根据身份证计算生日
+	 * 
 	 * @param cardId
 	 * @return
 	 */
@@ -512,9 +513,9 @@ public class StringUtil extends StringUtils {
 			birth = cardId.substring(6, 14);
 		}
 		SimpleDateFormat sf1 = new SimpleDateFormat("yyyyMMdd");
-	    SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd");
-	    Date birthday = null;
-	    String str = null;
+		SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd");
+		Date birthday = null;
+		String str = null;
 		try {
 			str = sf2.format(sf1.parse(birth));
 			birthday = sf2.parse(str);
@@ -524,4 +525,6 @@ public class StringUtil extends StringUtils {
 		return birthday;
 	}
 
+
+	
 }

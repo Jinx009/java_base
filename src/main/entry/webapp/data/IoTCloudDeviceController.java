@@ -42,6 +42,21 @@ public class IoTCloudDeviceController extends BaseController{
 	@Autowired
 	private IotCloudDeviceService iotCloudDeviceService;
 	
+	@RequestMapping(path = "/updateParkName")
+	@ResponseBody
+	public Resp<?> updateParkName(String parkName,Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			IoTCloudDevice iot = iotCloudDeviceService.findBy(id);
+			iot.setParkName(parkName);
+			iotCloudDeviceService.update(iot);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("error:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/list")
 	@ResponseBody
 	public Resp<?> list(Integer p,Integer type){
@@ -99,6 +114,44 @@ public class IoTCloudDeviceController extends BaseController{
 	}
 	
 	/**
+	 * 根据位置查设备
+	 * @return
+	 */
+	@RequestMapping(path = "/lostList")
+	@ResponseBody
+	public Resp<?> lostList(String parkName,int type){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<IoTCloudDevice> l = new ArrayList<IoTCloudDevice>();
+			List<IoTCloudDevice> list= iotCloudDeviceService.getByParkNameOrMac(parkName);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			String dateNow = sdf.format(date)+" 00:00:00";
+			date = sdf2.parse(dateNow);
+			if(type==0){
+				return new Resp<>(list);
+			}else if(type==2){
+				for(IoTCloudDevice device:list){
+					if(device.getDataTime()!=null&&device.getDataTime().after(date)){
+						l.add(device);
+					}
+				}
+			}else if(type==1){
+				for(IoTCloudDevice device:list){
+					if(device.getDataTime()==null||device.getDataTime().before(date)){
+						l.add(device);
+					}
+				}
+			}
+			return new Resp<>(l);
+		}catch(Exception e){
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	/**
 	 * 转发后失联
 	 * @return
 	 */
@@ -116,9 +169,7 @@ public class IoTCloudDeviceController extends BaseController{
 			date = sdf2.parse(dateNow);
 			for(IoTCloudDevice device:list){
 				if(device.getUpdateTime()==null||device.getUpdateTime().before(date)){
-					if(device.getLocalIp().indexOf("WUHAN")>-1){
-						l.add(device);
-					}
+					l.add(device);
 				}
 			}
 			return new Resp<>(l);
