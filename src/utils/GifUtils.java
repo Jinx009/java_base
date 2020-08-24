@@ -81,6 +81,27 @@ public class GifUtils {
 	        }
 	    }.start();
 	}
+	
+	public static void rtmp() throws Exception {
+		String[] cmd = { "sh", "-c", "/Users/jinx/Documents/tools/ffmpeg/ && ./ffmpeg -re -i /Users/jinx/Downloads/1.mp4 -c copy -f flv rtmp://10.0.0.48 " };
+		List<String> command = new ArrayList<String>();
+		command.add(ffmpegEXE);
+		command.add("-re");
+		command.add("-i");
+		command.add("/data/ftp_pic/1.mp4");
+		command.add("-c");
+		command.add("copy");
+		command.add("-f");
+		command.add("flv");
+		command.add("rtmp://10.0.0.48");
+		try {
+			Process p = Runtime.getRuntime().exec(cmd);//创建实例进程执行命令行代码
+            p.waitFor();
+            p.destroy();
+		} catch (Exception e) {
+			log.error("e:{}", e);
+		}
+	}
 
 	
 	/**

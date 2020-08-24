@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import service.basicFunctions.StreetService;
+import utils.GifUtils;
 import utils.model.Resp;
 
 /**
@@ -29,6 +30,26 @@ public class StreetController extends BaseController{
 	 */
 	@RequestMapping(value ="/p/street/list")
 	public String list(){
+		return "/page/street_list";
+	}
+	
+	/**
+	 * 街道页面
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value ="/p/test")
+	@ResponseBody
+	public String test() throws Exception{
+		new Thread(){
+			public void run(){
+				try {
+					GifUtils.rtmp();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
 		return "/page/street_list";
 	}
 	

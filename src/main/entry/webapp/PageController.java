@@ -36,6 +36,8 @@ public class PageController {
 	public String DevMgmt(){
 		return "/DevMgmt/DiscoveryTree";
 	}
+	
+	
 
 
 }
