@@ -218,7 +218,7 @@ public class SocketDataController {
 					String s = "4800" + mac + arrs[i];
 					try {
 						String cmd = s.substring(20, 22);
-						if ("67".equals(cmd)) {// PVB
+						if ("67".equals(cmd)) {// PVT
 							if (s.length() >= 220) {
 								String fixTypeStr = s.substring(78, 80);
 								String fixStatusStr = s.substring(80, 82);
