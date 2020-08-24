@@ -43,7 +43,7 @@ public class HomeProOrderDataController extends BaseController {
 			boolean b = true;
 			if (proOrders != null && !proOrders.isEmpty()) {
 				for (ProOrder proOrder : proOrders) {
-					if (-1 != proOrder.getStatus()) {
+					if (2 != proOrder.getStatus()) {
 						b = false;
 						break;
 					}
