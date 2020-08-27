@@ -59,5 +59,25 @@ public class HomeController {
 		return "/page/list";
 	}
 	
+	@RequestMapping(path = "/cmd")
+	public String cmd(HttpServletRequest request){
+		return "/page/cmd";
+	}
+	
+	@RequestMapping(path = "/cmd_add")
+	public String cmdAdd(HttpServletRequest request){
+		return "/page/cmd_add";
+	}
+	
+	@RequestMapping(path = "/topic")
+	public String topic(HttpServletRequest request){
+		return "/page/topic";
+	}
+	
+	@RequestMapping(path = "/firware")
+	public String firware(HttpServletRequest request){
+		return "/page/firware";
+	}
+	
 	
 }

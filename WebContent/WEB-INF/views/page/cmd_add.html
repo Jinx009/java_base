@@ -1,0 +1,181 @@
+    <#include "gnss_header.html">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="index.html">新建控制</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="row" style="margin-top: 15px;">
+                <div class="col-md-12 col-sm-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-body">
+                            <div class="portlet box  ">
+						<div class="portlet-body form">
+						<div class="row">
+							<form class="form-horizontal" role="form">
+								<div class="form-body" >
+									<div class="form-group" style="margin-top: 15px;">
+										<label class="col-md-3 control-label">重启</label>
+										<div class="col-md-6">
+											<input type="text" class="form-control" placeholder="cmd:30" readonly="readonly">
+										</div>
+										<div class="col-md-3">
+											<button type="button" class="btn btn-success" onclick="_send(1)">下发</button>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-3 control-label">定位工作模式</label>
+										<div class="col-md-2">
+											<select class="form-control" id="21">
+												<option value="1">设置</option>
+												<option value="0">查询</option>
+											</select>
+										</div>
+										<div class="col-md-2">
+											<select class="form-control" id="22">
+												<option value="00">RTK模式</option>
+												<option value="01">高精度模式</option>
+											</select>
+										</div>
+										<div class="col-md-2">
+											<select class="form-control" id="23">
+												<option value="00">测量站</option>
+												<option value="01">基准站</option>
+											</select>
+										</div>
+										<div class="col-md-3">
+											<button type="button" class="btn btn-success" onclick="_send(2)">下发</button>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-3 control-label">设置debug模式</label>
+										<div class="col-md-6">
+											<select class="form-control" id="31">
+												<option value="1">进入</option>
+												<option value="0">退出</option>
+											</select>
+										</div>
+										<div class="col-md-3">
+											<button type="button" class="btn btn-success" onclick="_send(3)">下发</button>
+										</div>
+									</div>
+										<div class="form-group" >
+										<label class="col-md-3 control-label">设置订阅主题</label>
+										<div class="col-md-6">
+											<input type="text" class="form-control" placeholder="cmd:34" readonly="readonly">
+										</div>
+										<div class="col-md-3">
+											<button type="button" class="btn btn-success" onclick="_send(4)">点击去设置</button>
+										</div>
+									</div>
+											<div class="form-group" >
+										<label class="col-md-3 control-label">输出速率模式命令</label>
+										<div class="col-md-6">
+											<input type="text" class="form-control" placeholder="单位为ms" id="51">
+										</div>
+										<div class="col-md-3">
+											<button type="button" class="btn btn-success" onclick="_send(5)">下发</button>
+										</div>
+									</div>
+										<div class="form-group" >
+										<label class="col-md-3 control-label">校准加速度传感器</label>
+										<div class="col-md-6">
+											<input type="text" class="form-control" placeholder="cmd:36" readonly="readonly">
+										</div>
+										<div class="col-md-3">
+											<button type="button" class="btn btn-success" onclick="_send(6)">下发</button>
+										</div>
+									</div>
+										<div class="form-group" >
+										<label class="col-md-3 control-label">加速度传感器时间</label>
+										<div class="col-md-3">
+											<select class="form-control" id="71">
+												<option value="1">修改</option>
+												<option value="0">查询</option>
+											</select>
+										</div>
+										<div class="col-md-3">
+											<input type="text" class="form-control" placeholder="请以_分割：正常上报间隔_加报间隔_加报次数"  id="72">
+										</div>
+										<div class="col-md-3">
+											<button type="button" class="btn btn-success" onclick="_send(7)">下发</button>
+										</div>
+									</div>
+										<div class="form-group" >
+										<label class="col-md-3 control-label">加速度传感器采样间隔</label>
+										<div class="col-md-3">
+											<select class="form-control" id="81">
+												<option value="1">修改</option>
+												<option value="0">查询</option>
+											</select>
+										</div>
+										<div class="col-md-3">
+											<input type="text" class="form-control" placeholder="请输入：00、01格式"  id="82">
+										</div>
+										<div class="col-md-3">
+											<button type="button" class="btn btn-success" onclick="_send(8)">下发</button>
+										</div>
+									</div>
+												<div class="form-group" >
+										<label class="col-md-3 control-label">传感器阈值</label>
+										<div class="col-md-2">
+											<select class="form-control" id="91">
+												<option value="1">修改</option>
+												<option value="0">查询</option>
+											</select>
+										</div>
+										<div class="col-md-2">
+											<input type="text" class="form-control" placeholder="加速度门限"  id="92">
+										</div>
+										<div class="col-md-2">
+											<input type="text" class="form-control" placeholder="角度门限"  id="93">
+										</div>
+										<div class="col-md-3">
+											<button type="button" class="btn btn-success" onclick="_send(9)">下发</button>
+										</div>
+									</div>
+								</div>
+							</form>
+							</div>
+						</div>
+					</div>
+                            </div>
+                             </div>
+                    </div>
+                </div>
+    </div>
+</div>
+  <#include "gnss_footer.html">
+  <script>
+$(function(){
+	_setClass();
+})
+function _send(_n){
+	var p1 = $('#'+n+'1').val();
+	var p2 = $('#'+n+'2').val();
+	var p3 = $('#'+n+'3').val();
+	var param = 'cmd='+_n+'&p1='+p1+'&p2='+p2+'&p3='+p3;
+	$.ajax({
+		url:'/d/gnssrtkcmd/save',
+		type:'post',
+		data:param,
+		dataType:'json',
+		success:function(res){
+			if(res.code='200'){
+				layer.alert('下发成功！',function(){
+					location.href = '/home/cmd?c=6';
+				})
+			}else{
+				layer.alert(res.msg);
+			}
+		}
+	})
+}
+</script>
+  </body>
+</html>

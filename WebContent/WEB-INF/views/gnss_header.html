@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="zh" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="zh" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh" class="no-js">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <title>展为技术</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <link href="/themes/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/themes/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/themes/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/themes/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/themes/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/themes/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="/themes/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/themes/assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
+    <link href="/themes/assets/admin/pages/css/tasks.css" rel="stylesheet" type="text/css"/>
+    <link href="/themes/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/themes/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/themes/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link href="/themes/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color"/>
+    <link href="/themes/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="/themes/assets/admin/pages/css/timeline-old.css" rel="stylesheet" type="text/css"/>
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
+
+<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
+<div class="page-header -i navbar navbar-fixed-top">
+    <div class="page-header-inner">
+        <div class="page-logo">
+            <a href="/home/index.html" style="color: white;font-size: 18px;padding-top: 7px;padding-left: 15px;">
+                Zhanway
+            </a>
+            <div class="menu-toggler sidebar-toggler hide">
+            </div>
+        </div>
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse"
+           data-target=".navbar-collapse">
+        </a>
+        <div class="top-menu">
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown dropdown-user">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                       data-close-others="true">
+                        <img alt="" class="img-circle" src="/themes/assets/admin/layout/img/avatar3_small.jpg"/>
+					<span class="username username-hide-on-mobile">
+					</span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-default">
+                        <li>
+                            <a onclick="loginOut()">
+                                <i class="icon-logout"></i> 退出账号 </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="page-container">
+    <div class="page-sidebar-wrapper">
+        <div class="page-sidebar navbar-collapse collapse">
+            <ul class="page-sidebar-menu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                <li class="sidebar-toggler-wrapper">
+                    <div class="sidebar-toggler">
+                    </div>
+                </li>
+                <li class="sidebar-search-wrapper">
+                    <form class="sidebar-search " action="extra_search.html" method="POST">
+                        <a href="javascript:;" class="remove">
+                            <i class="icon-close"></i>
+                        </a>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search...">
+							<span class="input-group-btn">
+							<a href="javascript:;" class="btn submit"><i class="icon-magnifier"></i></a>
+							</span>
+                        </div>
+                    </form>
+                </li>
+                <li class=""  id="c1" >
+                    <a href="/home/index.html?c=1">
+                        <i class="icon-docs"></i>
+                        <span class="title">使用指南</span>
+                    </a>
+                </li>
+                <li class=" " id="c2">
+                    <a href="/home/map.html?c=2">
+                        <i class="icon-paper-plane"></i>
+                        <span class="title">站点地图</span>
+                    </a>
+                </li>
+                <li class=""  id="c11" >
+                    <a href="javascript:;">
+                        <i class="icon-home"></i>
+                        <span class="title">站点管理</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li class=""  id="c3" >
+                            <a href="/home/device.html?c=3">
+                                <i class="icon-bar-chart"></i>
+                                监测站点</a>
+                        </li>
+                        <li  id="c4">
+                            <a href="/home/log.html?c=4" >
+                                <i class="icon-bulb"></i>
+                                站点详情</a>
+                        </li>
+                        <li id="c5">
+                            <a href="/home/result.html?c=5"  >
+                                <i class="icon-bulb"></i>
+                                解算日志</a>
+                        </li>
+                           <li id="c6">
+                            <a href="/home/cmd.html?c=6"  >
+                                <i class="icon-bulb"></i>
+                                控制管理</a>
+                        </li>
+                           <li id="c7">
+                            <a href="/home/topic.html?c=7"  >
+                                <i class="icon-bulb"></i>
+                                主题管理</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="start open"  id="c22" >
+                    <a href="javascript:;">
+                        <i class="icon-settings"></i>
+                        <span class="title">辅助管理</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li class=""  id="c8">
+                            <a href="/home/tcp.html?c=8" >
+                                <i class="icon-pencil"></i>
+                                固件管理</a>
+                        </li>
+                        <li id="c9">
+                            <a href="/home/list.html?c=9">
+                                <i class="icon-handbag"></i>
+                                连接记录</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>

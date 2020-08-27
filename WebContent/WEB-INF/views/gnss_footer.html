@@ -1,0 +1,105 @@
+<div class="page-footer">
+    <div class="page-footer-inner">
+        2020 &copy; Create by zhanway.
+    </div>
+    <div class="scroll-to-top">
+        <i class="icon-arrow-up"></i>
+    </div>
+</div>
+</div>
+<!--[if lt IE 9]>
+<script src="/themes/assets/global/plugins/respond.min.js"></script>
+<script src="/themes/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+<script src="/themes/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="/themes/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/themes/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/themes/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/themes/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+        type="text/javascript"></script>
+<script src="/themes/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/themes/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/themes/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/themes/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/themes/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<script src="/themes/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/themes/assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
+<script src="/themes/assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
+<script src="/themes/assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
+<script src="/themes/js/vue.min.js"></script>
+<script>
+function _setClass(){
+	var id = getUrlParam('c');
+	if(id==null){
+		id=1;
+	}
+	$('#c11').removeClass('start');
+	$('#c11').removeClass('active');
+	$('#c11').removeClass('open');
+	$('#c22').removeClass('start');
+	$('#c22').removeClass('active');
+	$('#c22').removeClass('open');
+	for(var i = 0;i<10;i++){
+		$('#c'+i).removeClass('start');
+		$('#c'+i).removeClass('active');
+		$('#c'+i).removeClass('open');
+	}
+	if(id==3||id==4||id==5||id==6){
+		$('#c11').addClass('start');
+		$('#c11').addClass('active');
+		$('#c11').addClass('open');
+	}
+	
+	$('#c'+id).addClass('start');
+	$('#c'+id).addClass('active');
+	$('#c'+id).addClass('open');
+}
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    if (r != null) return unescape(r[2]); return null; //返回参数值
+}
+    jQuery(document).ready(function () {
+        Metronic.init(); // init metronic core componets
+        Layout.init(); // init layout
+        QuickSidebar.init(); // init quick sidebar
+        Demo.init(); // init demo features
+    });
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1,                 //月份
+            "d+": this.getDate(),                    //日
+            "h+": this.getHours(),                   //小时
+            "m+": this.getMinutes(),                 //分
+            "s+": this.getSeconds(),                 //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds()             //毫秒
+        };
+        if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
+    /**
+     * 时间戳转换标准时间
+     * @param unixtime
+     * @returns
+     */
+    function toDateTime(unixtime)  {  
+    	 var date = new Date(unixtime);
+    	 return  date.Format("yyyy-MM-dd hh:mm:ss"); 
+    }  
+    /**
+     * 时间戳转换标准时间
+     * @param unixtime
+     * @returns
+     */
+    function toDate(unixtime)  {  
+    	 var date = new Date(unixtime);
+    	 return  date.Format("yyyy-MM-dd"); 
+    } 
+</script>

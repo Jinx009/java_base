@@ -59,46 +59,24 @@ public class PushCallback implements MqttCallback {
 
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		// subscribe后得到的消息会执行到这里面
-		String pay = new String(message.getPayload());
-		log.warn("msg:{},topic:{}", pay, topic);
+		String payload = new String(message.getPayload());
+		log.warn("payload:{},topic:{}", payload, topic);
 		try {
 			if (topic.equals("/server/register")) {
-				GnssRtkDevice gnssDevice = pu.gnssRtkDeviceService.findByRoverTag(pay);
+				GnssRtkDevice gnssDevice = pu.gnssRtkDeviceService.findByRoverTag(payload);
 				if (gnssDevice == null) {
 					gnssDevice = new GnssRtkDevice();
-					gnssDevice.setMac(pay);
+					gnssDevice.setMac(payload);
 					gnssDevice.setCreateTime(new Date());
 					pu.gnssRtkDeviceService.save(gnssDevice);
 				}
-				client.subscribe("/gnss/"+pay+"/#", 1);
+				client.subscribe("/device/"+payload+"/#", 1);
 			}
-			if(topic.indexOf("gnss")>-1){
+			if(topic.indexOf("device")>-1){
 				String[] strs = topic.split("/");
 				String mac = strs[1];
 				String t = strs[2];
-				if(t.equals("PVT")){
-					String s = pay;
-					String fixTypeStr = s.substring(54, 56);
-					String fixStatusStr = s.substring(56, 58);
-					String numStr = s.substring(60, 62);
-					String lngStr = s.substring(62, 70);
-					String latStr = s.substring(70, 78);
-					String height = s.substring(78, 86);
-					String hmsl = s.substring(86, 94);
-					String horAccStr = s.substring(94,102);
-					String verAccStr = s.substring(102, 110);
-					String yearStr = s.substring(22,26);
-					String monthStr = s.substring(26, 28);
-					String dayStr = s.substring(28, 30);
-					String hourStr = s.substring(30, 32);
-					String minStr = s.substring(32,34);
-					String secStr = s.substring(34, 36);
-					String dataTime = getHex4(yearStr) + "-" + Integer.valueOf(monthStr, 16) + "-"
-							+ Integer.valueOf(dayStr, 16) + " " + (Integer.valueOf(hourStr, 16) + 8) + ":"
-							+ Integer.valueOf(minStr, 16) + ":" + Integer.valueOf(secStr, 16);
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			
-				}
 			}
 		} catch (Exception e) {
 			log.error("e:{}", e);
