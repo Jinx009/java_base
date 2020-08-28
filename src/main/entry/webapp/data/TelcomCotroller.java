@@ -445,7 +445,7 @@ public class TelcomCotroller extends BaseController {
 			long dec_num = Long.parseLong(id, 16);
 			IotCloudLog log = iotCloudLogService.findById((int) dec_num);
 			if (log != null && log.getCmdType() == 1) {
-				log.setCmdType(1);
+				log.setStatus(1);
 				iotCloudLogService.update(log);
 			} else {
 				sendWuhanQj3_0(ioTCloudDevice, iotCloudLog);
