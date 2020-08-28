@@ -30,6 +30,7 @@ public class DataManager {
 
 	private static DataManager dm;
 	
+	//
 	public  void init(){
 		dm = this;
 		dm.gnssRtkDeviceService = this.gnssRtkDeviceService;
