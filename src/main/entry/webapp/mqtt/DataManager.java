@@ -1,6 +1,9 @@
 package main.entry.webapp.mqtt;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -14,22 +17,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import database.model.GnssRtkDevice;
+import service.GnssRtkDeviceService;
+
 @Component
 public class DataManager {
 
 	private static final Logger log = LoggerFactory.getLogger(DataManager.class);
-
-	public static final String TOPIC = "/server/register";
-
 	
+	@Resource
+	private GnssRtkDeviceService gnssRtkDeviceService;
+
 	private static DataManager dm;
-	public static MqttClient client;
-	public static MqttConnectOptions options;
 	
-	@PostConstruct
 	public  void init(){
 		dm = this;
+		dm.gnssRtkDeviceService = this.gnssRtkDeviceService;
 	}
+	
+	public static final String TOPIC = "/server/register";
+	public static MqttClient client;
+	public static MqttConnectOptions options;
+	private static int Qos = 1;// 0：最多一次 、1：最少一次 、2：只有一次
 
 	/**
 	 * 用来连接服务器
@@ -37,6 +46,7 @@ public class DataManager {
 	@PostConstruct
 	public void start() {
 		try {
+			init();
 			client = new MqttClient(MqttUtils.HOST, MqttUtils.SERVER_CLINETID, new MemoryPersistence());
 			options = new MqttConnectOptions();
 			options.setCleanSession(false);
@@ -44,25 +54,40 @@ public class DataManager {
 			options.setPassword(MqttUtils.PASSWORD.toCharArray());
 			options.setConnectionTimeout(10);
 			options.setKeepAliveInterval(20);
-//         options.setWill(topic3, "This is ".getBytes(), 2, true);
 			client.setCallback(new PushCallback());
 			client.connect(options);
-			int[] Qos = { 1 };// 0：最多一次 、1：最少一次 、2：只有一次
-			String[] topic = { TOPIC };
-			client.subscribe(topic, Qos);
+			client.subscribe(TOPIC, Qos);
+			List<GnssRtkDevice> list = dm.gnssRtkDeviceService.findAll();
+			if(list!=null&&!list.isEmpty()) {
+				for(GnssRtkDevice d : list) {
+					StringBuilder sb = new StringBuilder();
+					sb.append("/device/");
+					sb.append(d.getMac());
+					sb.append("/");
+					log.warn("sub mac:{}", d.getMac());
+					client.subscribe(sb.toString()+"control", Qos);
+					client.subscribe(sb.toString()+"RTCM", 0);
+					client.subscribe(sb.toString()+"UBX", 0);
+					client.subscribe(sb.toString()+"NMEA", 0);
+					client.subscribe(sb.toString()+"slope&acc", 0);
+					client.subscribe(sb.toString()+"debug", 0);
+					client.subscribe(sb.toString()+"heartbeat", 0);
+					client.subscribe(sb.toString()+"errlog", 0);
+				}
+			}
 		} catch (Exception e) {
 			log.error("e:{}", e);
 		}
 	}
 	
-	public static void sendMessage(int qos,byte[] b, MqttClient client, MqttTopic topic) throws Exception {
+	public static void sendMessage(int qos,byte[] b,String topicStr) throws Exception {
+		MqttTopic topic = client.getTopic(topicStr);
 		MqttMessage message = new MqttMessage();
 		message.setQos(qos); 
 		message.setRetained(true);
 		message.setPayload(b);
 		try {
 			publish(topic, message);
-			client.disconnect();
 		} catch (Exception e) {
 			client.disconnect();
 			e.printStackTrace();

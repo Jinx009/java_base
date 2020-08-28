@@ -29,6 +29,63 @@ public class StringUtil extends StringUtils {
 		return stringBuilder.toString();
 	}
 	
+	public static String getMore(String hexString) {
+		hexString = hexString.toUpperCase();
+		if (hexString.length() == 1) {
+			return "0000000" + hexString;
+		}
+		if (hexString.length() == 2) {
+			return "000000" + hexString;
+		}
+		if (hexString.length() == 3) {
+			return "00000" + hexString;
+		}
+		if (hexString.length() == 4) {
+			return "0000" + hexString;
+		}
+		if (hexString.length() == 5) {
+			return "000" + hexString;
+		}
+		if (hexString.length() == 6) {
+			return "00" + hexString;
+		}
+		if (hexString.length() == 7) {
+			return "0" + hexString;
+		}
+		return hexString;
+	}
+	
+	public static String getLess(String hexString) {
+		hexString = hexString.toUpperCase();
+		if(hexString.length()==1){
+			return "000"+hexString;
+		}
+		if(hexString.length()==2){
+			return "00"+hexString;
+		}
+		if(hexString.length()==3){
+			return "0"+hexString;
+		}
+		return hexString;
+	}
+	
+	public static  String FloatToHexString(float f){
+		int i  = Float.floatToIntBits(f);
+        String str = Integer.toHexString(i).toUpperCase();
+        return str;
+	}
+	
+	public static String stringToA(String content) {
+		String result = "";
+		int max = content.length();
+		for (int i = 0; i < max; i++) {
+			char c = content.charAt(i);
+			int b = (int) c;
+			result = result + Integer.toHexString(b);
+		}
+		return result;
+	}
+	
 	/**
 	 * 字符串空处理，去除首尾空格 如果str为null，返回"",否则返回str
 	 * 
@@ -525,4 +582,10 @@ public class StringUtil extends StringUtils {
 		return birthday;
 	}
 
+	public static void main(String[] args) {
+		String s = "/device/01010101010101010/RTK";
+		String ac = stringToA(s);
+		System.out.println(ac.length()+"--"+ac+"--"+s.length());
+	}
+	
 }

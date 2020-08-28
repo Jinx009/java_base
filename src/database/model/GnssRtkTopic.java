@@ -17,28 +17,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tbl_gnss_base_log")
-public class GnssBaseLog {
+@Table(name = "tbl_gnss_rtk_topic")
+public class GnssRtkTopic {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	private Integer id;
 	@Column(name = "mac")
 	private String mac;
+	@Column(name = "topic")
+	private String topic;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name = "base_x")
-	private Double baseX;
-	@Column(name = "base_y")
-	private Double baseY;
-	@Column(name = "base_z")
-	private Double baseZ;
-	@Column(name = "base_lat")
-	private Double baseLat;
-	@Column(name = "base_lng")
-	private Double baseLng;
-	@Column(name = "base_height")
-	private Double baseHeight;
 	
 }

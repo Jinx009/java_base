@@ -1,7 +1,7 @@
 package main.entry.webapp.mqtt;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -16,9 +16,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import common.helper.StringUtil;
+import database.model.GnssRtkControl;
 import database.model.GnssRtkDevice;
-import database.model.GnssRtkLog;
+import database.model.GnssRtkTopic;
+import service.GnssRtkControlService;
 import service.GnssRtkDeviceService;
+import service.GnssRtkTopicService;
 
 @Component
 public class PushCallback implements MqttCallback {
@@ -27,6 +31,10 @@ public class PushCallback implements MqttCallback {
 
 	@Resource
 	private GnssRtkDeviceService gnssRtkDeviceService;
+	@Resource
+	private GnssRtkTopicService gnssRtkTopicService;
+	@Resource
+	private GnssRtkControlService gnssRtkControlService;
 
 	private static PushCallback pu;
 	private MqttClient client = DataManager.client;
@@ -43,7 +51,6 @@ public class PushCallback implements MqttCallback {
 			try {
 				log.info("连接失败重连");
 				client.connect(options);
-				// client.subscribe(topic, qos);
 				log.info("连接失败重连成功");
 				break;
 			} catch (MqttException e) {
@@ -69,25 +76,52 @@ public class PushCallback implements MqttCallback {
 					gnssDevice.setMac(payload);
 					gnssDevice.setCreateTime(new Date());
 					pu.gnssRtkDeviceService.save(gnssDevice);
+				}else {
+					List<GnssRtkTopic> list = pu.gnssRtkTopicService.list(payload);
+					if(list!=null&&!list.isEmpty()) {
+						StringBuilder sb = new StringBuilder();
+						GnssRtkControl grc = new GnssRtkControl();
+						grc.setCmd("33");
+						grc.setCreateTime(new Date());
+						grc.setMac(payload);
+						grc.setResultStr("");
+						grc.setStatus(0);
+						grc = pu.gnssRtkControlService.save(grc);
+						String sn = StringUtil.getMore(Integer.toHexString(grc.getId()));
+						grc.setCmdName("设置gnss订阅/退订主题设定");
+						sb.append("4800");
+						sb.append(sn);
+						sb.append("33");
+						String ac = StringUtil.stringToA(topic);
+						sb.append(topic.length()+1);
+						sb.append("01");
+						sb.append(ac);
+						String content = sb.toString();
+						grc.setContent(content);
+						pu.gnssRtkControlService.update(grc);
+						MqttUtils.sendCmd(1,content,payload);
+					}
 				}
-				client.subscribe("/device/"+payload+"/#", 1);
 			}
 			if(topic.indexOf("device")>-1){
 				String[] strs = topic.split("/");
-				String mac = strs[1];
-				String t = strs[2];
-			
+//				String mac = strs[2];
+				String t = strs[3];
+				if(t.equals("control")) {
+					String id = payload.substring(4,12);
+					long dec_num = Long.parseLong(id, 16);
+					GnssRtkControl grc = pu.gnssRtkControlService.find((int)dec_num);
+					if(grc!=null) {
+						grc.setResultStr(payload);
+						grc.setStatus(1);
+						pu.gnssRtkControlService.update(grc);
+					}
+				}
 			}
 		} catch (Exception e) {
 			log.error("e:{}", e);
 		}
 	}
 	
-	private String getHex4(String str) {// 0DE0FE43-A7C52512
-		String s1 = str.substring(2, 4);
-		String s2 = str.substring(0, 2);
-		String str2 = s1 + s2;
-		return Integer.valueOf(str2, 16).toString();
-	}
 
 }

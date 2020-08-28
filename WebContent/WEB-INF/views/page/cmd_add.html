@@ -5,7 +5,7 @@
                 <ul class="page-breadcrumb">
                     <li>
                         <i class="fa fa-home"></i>
-                        <a href="index.html">新建控制</a>
+                        <a href="#">新建控制</a>
                         <i class="fa fa-angle-right"></i>
                     </li>
                 </ul>
@@ -19,6 +19,14 @@
 						<div class="row">
 							<form class="form-horizontal" role="form">
 								<div class="form-body" >
+									<div class="form-group" style="margin-top: 15px;">
+										<label class="col-md-3 control-label">当前MAC：</label>
+										<div class="col-md-6">
+											<input type="text" class="form-control" id="mac" readonly="readonly">
+										</div>
+										<div class="col-md-3">
+										</div>
+									</div>
 									<div class="form-group" style="margin-top: 15px;">
 										<label class="col-md-3 control-label">重启</label>
 										<div class="col-md-6">
@@ -55,7 +63,7 @@
 									<div class="form-group">
 										<label class="col-md-3 control-label">设置debug模式</label>
 										<div class="col-md-6">
-											<select class="form-control" id="31">
+											<select class="form-control" id="34">
 												<option value="1">进入</option>
 												<option value="0">退出</option>
 											</select>
@@ -67,7 +75,7 @@
 										<div class="form-group" >
 										<label class="col-md-3 control-label">设置订阅主题</label>
 										<div class="col-md-6">
-											<input type="text" class="form-control" placeholder="cmd:34" readonly="readonly">
+											<input type="text" class="form-control" placeholder="cmd:33" readonly="readonly">
 										</div>
 										<div class="col-md-3">
 											<button type="button" class="btn btn-success" onclick="_send(4)">点击去设置</button>
@@ -154,21 +162,51 @@
   <script>
 $(function(){
 	_setClass();
+	var mac = getUrlParam('mac');
+	$('#mac').val(mac);
 })
-function _send(_n){
+function _send(n){
+	var _n = 0;
+	if(n==4){
+		location.href = '/home/topic.html?c=7&mac='+$('#mac').val();
+	}
+	if(n==1){
+		_n = 30;
+	}
+	if(n==2){
+		_n = 32;
+	}
+	if(n==3){
+		_n = 34;
+	}
+	if(n==5){
+		_n = 35;
+	}
+	if(n==6){
+		_n = 36;
+	}
+	if(n==7){
+		_n = 37;
+	}
+	if(n==8){
+		_n = 38;
+	}
+	if(n==9){
+		_n = 39;
+	}
 	var p1 = $('#'+n+'1').val();
 	var p2 = $('#'+n+'2').val();
 	var p3 = $('#'+n+'3').val();
-	var param = 'cmd='+_n+'&p1='+p1+'&p2='+p2+'&p3='+p3;
+	var param = 'cmd='+_n+'&p1='+p1+'&p2='+p2+'&p3='+p3+'&mac='+$('#mac').val();
 	$.ajax({
-		url:'/d/gnssrtkcmd/save',
+		url:'/d/gnssrtkcontrol/save',
 		type:'post',
 		data:param,
 		dataType:'json',
 		success:function(res){
-			if(res.code='200'){
+			if(res.code=='200'){
 				layer.alert('下发成功！',function(){
-					location.href = '/home/cmd?c=6';
+					location.href = '/home/cmd?c=6&mac='+$('#mac').val();
 				})
 			}else{
 				layer.alert(res.msg);
