@@ -441,7 +441,7 @@ public class TelcomCotroller extends BaseController {
 	 */
 	private void sendWuhan(TModel tModel, IoTCloudDevice ioTCloudDevice, IotCloudLog iotCloudLog) {
 		try {
-			String id = tModel.getData().substring(0, 8);
+			String id = tModel.getData().substring(16, 24);
 			long dec_num = Long.parseLong(id, 16);
 			IotCloudLog log = iotCloudLogService.findById((int) dec_num);
 			if (log != null && log.getCmdType() == 1) {
