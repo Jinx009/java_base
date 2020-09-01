@@ -23,6 +23,7 @@ public class MongoUtils {
 	private static MongoDatabase mongoDatabase;
 	private static MongoCollection<Document> collection;
 
+	
 	@PostConstruct
 	public void init() {
 		 mongoClient = new MongoClient("106.14.94.245", 27017);
