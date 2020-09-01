@@ -46,7 +46,7 @@ public class GifUtils {
 	            String line = null;
 	            try {
 	                while ((line = in.readLine()) != null) {
-	                    log.warn("output: " + line);
+	                    log.warn("input: " + line);
 	                }
 	            } catch (IOException e) {
 	                e.printStackTrace();
@@ -63,17 +63,17 @@ public class GifUtils {
 	    new Thread() {
 	        @Override
 	        public void run() {
-	            BufferedReader err = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+	            BufferedReader out = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 	            String line = null;
 	            try {
-	                while ((line = err.readLine()) != null) {
-	                    log.error("err: " + line);
+	                while ((line = out.readLine()) != null) {
+	                    log.warn("out: " + line);
 	                }
 	            } catch (IOException e) {
 	                e.printStackTrace();
 	            } finally {
 	                try {
-	                    err.close();
+	                	out.close();
 	                } catch (IOException e) {
 	                    e.printStackTrace();
 	                }
