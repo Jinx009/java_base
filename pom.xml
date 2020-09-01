@@ -305,6 +305,11 @@
 			<artifactId>poi-scratchpad</artifactId>
 			<version>3.13</version>
 		</dependency>
+		<dependency>  
+	        <groupId>org.mongodb</groupId>  
+	        <artifactId>mongodb-driver</artifactId>  
+	        <version>3.2.2</version>  
+	    </dependency>
 
 			<!-- <dependency> <groupId>com.google.guava</groupId> <artifactId>guava</artifactId> 
 				<version>17.0</version> </dependency> -->
