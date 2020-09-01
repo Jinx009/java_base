@@ -46,7 +46,7 @@ public class GifUtils {
 	            String line = null;
 	            try {
 	                while ((line = in.readLine()) != null) {
-	                    log.info("output: " + line);
+	                    log.warn("output: " + line);
 	                }
 	            } catch (IOException e) {
 	                e.printStackTrace();
@@ -67,7 +67,7 @@ public class GifUtils {
 	            String line = null;
 	            try {
 	                while ((line = err.readLine()) != null) {
-	                    log.info("err: " + line);
+	                    log.error("err: " + line);
 	                }
 	            } catch (IOException e) {
 	                e.printStackTrace();
@@ -82,25 +82,30 @@ public class GifUtils {
 	    }.start();
 	}
 	
-	public static void rtmp() throws Exception {
-		String[] cmd = { "sh", "-c", "/Users/jinx/Documents/tools/ffmpeg/ && ./ffmpeg -re -i /Users/jinx/Downloads/1.mp4 -c copy -f flv rtmp://10.0.0.48 " };
+	public static boolean rtsp(String name) throws Exception {
 		List<String> command = new ArrayList<String>();
 		command.add(ffmpegEXE);
 		command.add("-re");
 		command.add("-i");
-		command.add("/data/ftp_pic/1.mp4");
-		command.add("-c");
+		command.add("/data/ftp_pic/0817/"+name+".mp4");
+		command.add("-vcodec");
+		command.add("copy");
+		command.add("-codec");
 		command.add("copy");
 		command.add("-f");
-		command.add("flv");
-		command.add("rtmp://10.0.0.48");
+		command.add("rtsp");
+		command.add("rtsp://localhost/test");
+		log.warn("command rtsp {}", command);
 		try {
-			Process p = Runtime.getRuntime().exec(cmd);//创建实例进程执行命令行代码
-            p.waitFor();
-            p.destroy();
+			Process videoProcess = new ProcessBuilder(command).start();
+			dealStream(videoProcess);
+			videoProcess.waitFor();
+			log.warn("msg:cov MP4：to rtsp {}", name);
+			return true;
 		} catch (Exception e) {
 			log.error("e:{}", e);
 		}
+		return false;
 	}
 
 	

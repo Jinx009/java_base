@@ -51,6 +51,9 @@ public class StatusCheckTask {
 	private ParkingSpaceService parkingSpaceService;
 	@Autowired
 	private ParkingVedioService parkingVedioService;
+	
+	
+	private static int vedioNum = 1;
 
 	/**
 	 * 文件夹权限问题
@@ -80,6 +83,23 @@ public class StatusCheckTask {
 			log.error("error:{}", e);
 		}
 	}
+	
+	/**
+	 * 转成RTSP流
+	 */
+	@Scheduled(cron = "0 0/40 * * * ? ") // 每41分钟
+	public void rtsp() {
+		try {
+			if(vedioNum==7) {
+				vedioNum = 1;
+			}
+			GifUtils.rtsp("0"+vedioNum);
+			vedioNum++;
+		} catch (Exception e) {
+			log.error("e:{}", e);
+		}
+	}
+
 
 	/**
 	 * 录制视频
@@ -496,6 +516,16 @@ public class StatusCheckTask {
 		log.warn("id:{}", id);
 		return parkInfoService.save(parkInfo);
 	}
+	
+	public static void saveAliPic(String picPathUrl, String path) {
+		byte[] btImg = getImageFromNetByUrl(picPathUrl);
+		if (null != btImg && btImg.length > 0) {
+			writeImageToDisk(btImg, path);
+		} else {
+			log.warn("ali no things");
+		}
+	}
+
 
 	/**
 	 * 保存图片
