@@ -109,7 +109,7 @@ private static final Logger logger = LoggerFactory.getLogger(WebSocketApi.class)
 				URI uri = new URI(url);
 				c = new WebSocketApi(uri, new Draft_17());
 				c.connect();
-			} catch (URISyntaxException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} catch (Exception e) {
