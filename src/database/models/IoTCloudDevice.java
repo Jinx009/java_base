@@ -83,4 +83,6 @@ public class IoTCloudDevice {
 	private Integer sensorSendStatus;
 	@Column(name = "secret")
 	private String secret;
+	@Column(name = "work_status")
+	private Integer workStatus;
 }

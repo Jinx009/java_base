@@ -113,6 +113,9 @@ public class IoTCloudLogController extends BaseController{
 			if(5==cmdName){
 				data = "48003901"+value1+ sn;
 			}
+			if(6==cmdName){
+				data = "48003A00"+sn;
+			}
 			iotCloudLog.setData(data);
 			sendCmd(iotCloudLog, device);
 			iotCloudLogService.update(iotCloudLog);

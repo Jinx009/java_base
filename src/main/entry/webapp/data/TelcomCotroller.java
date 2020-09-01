@@ -601,6 +601,12 @@ public class TelcomCotroller extends BaseController {
 			}
 			if (cmd.equals("心跳")) {
 				String sn = device.getSimCard().split("_")[1];
+				if(data.length()>106) {
+					Integer workStatus = Integer.valueOf(data.substring(106,108));
+					device.setWorkStatus(workStatus);
+				}else {
+					device.setWorkStatus(0);
+				}
 				String acc_x = hexToFloat_1(data.substring(26, 34));
 				String acc_y = hexToFloat_1(data.substring(34, 42));
 				String acc_z = hexToFloat_1(data.substring(42, 50));
@@ -746,6 +752,12 @@ public class TelcomCotroller extends BaseController {
 			}
 			if (cmd.equals("心跳")) {
 				String sn = device.getSimCard().split("_")[1];
+				if(data.length()>106) {
+					Integer workStatus = Integer.valueOf(data.substring(106,108));
+					device.setWorkStatus(workStatus);
+				}else {
+					device.setWorkStatus(0);
+				}
 				String acc_x = hexToFloat(data.substring(26, 34));
 				String acc_y = hexToFloat(data.substring(34, 42));
 				String acc_z = hexToFloat(data.substring(42, 50));
