@@ -22,7 +22,6 @@ public class MongoUtils {
 	private static MongoClient mongoClient;
 	private static MongoDatabase mongoDatabase;
 	private static MongoCollection<Document> collection;
-
 	
 	@PostConstruct
 	public void init() {
