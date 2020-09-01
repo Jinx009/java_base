@@ -87,7 +87,7 @@ public class StatusCheckTask {
 	/**
 	 * 转成RTSP流
 	 */
-	@Scheduled(cron = "0 0/40 * * * ? ") // 每41分钟
+	@Scheduled(cron = "0 0/42 * * * ? ") // 每41分钟
 	public void rtsp() {
 		try {
 			if(vedioNum==7) {
