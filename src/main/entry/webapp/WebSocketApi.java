@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import database.models.AliParking;
 import main.entry.webapp.task.StatusCheckTask;
+import utils.HttpUtil;
 
 import org.java_websocket.client.WebSocketClient;
 
@@ -71,14 +72,20 @@ private static final Logger logger = LoggerFactory.getLogger(WebSocketApi.class)
 		String data = JSONObject.parseObject(payload).getString("Data");
 		JSONObject jdata = JSONObject.parseObject(data);
 		String type = jdata.getString("type");
-		String plateNumber = jdata.getString("platenumber");
+		String plateNumber = jdata.getString("plateNumber");
 		String status = jdata.getString("status");
-		StatusCheckTask.saveAliPic(picUrl,"ali/"+new Date().getTime()+".jpeg");
+		String eventTime = jdata.getString("eventTime");
+		String trackId = jdata.getString("trackId");
+		StatusCheckTask.saveAliPic(picUrl,"ali/"+eventTime+"_"+trackId+".jpeg");
+		String pu = "http://58.246.184.99:801/ali"+eventTime+"_"+trackId+".jpeg";
 		AliParking ali = new AliParking();
 		ali.setCreateTime(new Date());
 		ali.setPlateNumber(plateNumber);
 		ali.setStatus(status);
 		ali.setType(type);
+		ali.setEventTime(eventTime);
+		ali.setPicUrl(pu);
+		HttpUtil.postJson("http://localhost:8089/d/aibox/save", JSONObject.toJSONString(ali));
 		String d = message;
 		try {
 			File file = new File("/data/ftp_pic/ali/ali.txt"); // 本地目录

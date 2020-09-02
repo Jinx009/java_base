@@ -46,6 +46,8 @@ public class AliParking {
 	private Date createTime;
 	@Column(name = "pic_url")
 	private String picUrl;
+	@Column(name = "eventTime")
+	private String eventTime;
 	
 	
 }
