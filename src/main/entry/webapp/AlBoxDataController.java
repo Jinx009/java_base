@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,10 +32,28 @@ public class AlBoxDataController extends BaseController{
 	
 	@RequestMapping(path = "save")
 	@ResponseBody
-	public Resp<?> save(AliParking ali){
+	public Resp<?> save(@RequestBody AliParking ali){
 		Resp<?> resp = new Resp<>(false);
 		try {
 			aliParkingService.save(ali);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path ="/page")
+	public String page(){
+		return "/page/aibox";
+	}
+	
+	@RequestMapping(path = "list")
+	@ResponseBody
+	public Resp<?> list(){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			return new Resp<>(aliParkingService.list());
 		} catch (Exception e) {
 			log.error("e:{}",e);
 		}
@@ -51,7 +70,6 @@ public class AlBoxDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			String s = readFileContent("/Users/jinx/Downloads/ali.txt");
-			System.out.println(s);
 			JSONArray arr = JSONObject.parseArray(s);
 			for(int i = 0;i<arr.size();i++) {
 				JSONObject jobj = arr.getJSONObject(i);
