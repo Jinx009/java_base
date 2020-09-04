@@ -585,7 +585,7 @@ public class TelcomCotroller extends BaseController {
 	/**
 	 * 新固件武汉对接2019-08-14 转发
 	 * 
-	 * @param device
+	 * @param device 把所有原数据进行缩小化随机处理
 	 * @param iotCloudLog
 	 */
 	private void sendWuhanQj3_0_1(IoTCloudDevice device, IotCloudLog iotCloudLog) {
