@@ -51,6 +51,7 @@
 											<th>车牌号</th>
 											<th>status</th>
 											<th>抓拍图</th>
+											<th>车位号</th>
 											<th>创建时间</th>
 											<th>事件时间</th>
 										</tr>
@@ -63,6 +64,7 @@
 											<td >
 												<a v-bind:href="item.picUrl" target="_blank" v-text="'点击查看'"></a>
 											</td>
+											<td v-text="item.plateIndex"></td>
 											<td v-text="item.createTime"></td>
 											<td v-text="item.eventTime" ></td>
 										</tr>
