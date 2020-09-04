@@ -83,4 +83,6 @@ public class QjDeviceLog {
     private String accyMin;
     @Column(name = "acc_z_min")
     private String acczMin;
+    @Column(name = "work_status")
+    private String workStatus;
 }

@@ -447,6 +447,10 @@ public class QingjiaoDataController extends BaseController {
 						.valueOf(Double.valueOf(getDataBase(data.substring(78, 79), data.substring(78, 82))));
 				String hard = convertHexToString(data.substring(82, 94));
 				String soft = convertHexToString(data.substring(94, 106));
+				String workStatus = "";
+				if(data.length()>106) {
+					workStatus = data.substring(106,108);
+				}
 				QjDeviceLog log = new QjDeviceLog();
 				log.setBaseAcceX(acc_x);
 				log.setBaseAcceY(acc_y);
@@ -464,6 +468,7 @@ public class QingjiaoDataController extends BaseController {
 				log.setRssi(rssi);
 				log.setSnr(snr);
 				log.setTem(tem);
+				log.setWorkStatus(workStatus);
 				log.setVoltage(bat);
 				log.setType(cmd);
 				qjDeviceLogService.save(log);

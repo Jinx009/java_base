@@ -16,4 +16,7 @@ public class DateUtils {
 		return weeks[week_index];
 	}
 	
+	public static void main(String[] args) {
+	}
+	
 }
