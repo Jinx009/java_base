@@ -757,7 +757,6 @@ public class TelcomCotroller extends BaseController {
 			}
 			log.warn("data:-wuhanqj3_0----{}", data);
 			String cmd = data.substring(20, 22);
-			System.out.println(cmd);
 			if (cmd.equals("68")) {
 				cmd = "心跳";
 			} else if (cmd.equals("69")) {
