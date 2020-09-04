@@ -111,9 +111,9 @@ private static final Logger logger = LoggerFactory.getLogger(WebSocketApi.class)
 
 	@Override
 	public void onClose(int code, String reason, boolean remote) {
-		logger.warn("Connection closed by :{} ", (remote ? "remote peer" : "us"));
+		logger.warn("Connection closed by :{} ，code :{} ,reason :{}",remote, code,reason);
 		try {
-			String url = "ws://10.0.1.46/vision/edge/console/algorithm/noticeAlgoResult/29";
+			String url = "ws://10.0.1.46/vision/edge/console/algorithm/noticeAlgoResult/35";
 			System.out.println("web socket start ...");
 			WebSocketApi c;
 			try {
