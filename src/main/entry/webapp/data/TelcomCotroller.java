@@ -591,6 +591,12 @@ public class TelcomCotroller extends BaseController {
 	private void sendWuhanQj3_0_1(IoTCloudDevice device, IotCloudLog iotCloudLog) {
 		try {
 			String data = iotCloudLog.getData();
+			String sn = "";
+			if(device.getSimCard().indexOf("_")>-1) {
+				if(device.getSimCard().split("_")[1].indexOf("CANCEL")<=0) {
+					sn = device.getSimCard().split("_")[1];
+				}
+			}
 			log.warn("data:-----{}", data);
 			String mac = data.substring(0,16);
 			String cmd = data.substring(20, 22);
@@ -600,7 +606,6 @@ public class TelcomCotroller extends BaseController {
 				cmd = "报警";
 			}
 			if (cmd.equals("心跳")) {
-				String sn = device.getSimCard().split("_")[1];
 				if(data.length()>106) {
 					Integer workStatus = Integer.valueOf(data.substring(106,108));
 					device.setWorkStatus(workStatus);
@@ -678,10 +683,11 @@ public class TelcomCotroller extends BaseController {
 				map.put("jczb",d);
 				map.put("jcsj", sdf.format(iotCloudLog.getCreateTime()));
 				map.put("cgq", "1");
-				HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
+				if(StringUtil.isNotBlank(sn)) {
+					HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
+				}
 			}
 			if ("报警".equals(cmd)) {
-				String sn = device.getSimCard().split("_")[1];
 				String acc_x = hexToFloat_1(data.substring(30, 38));
 				String acc_y = hexToFloat_1(data.substring(38, 46));
 				String acc_z = hexToFloat_1(data.substring(46, 54));
@@ -724,7 +730,7 @@ public class TelcomCotroller extends BaseController {
 				map.put("jczb",d);
 				map.put("jcsj", sdf.format(iotCloudLog.getCreateTime()));
 				map.put("cgq", "1");
-				if(device.getIsCorrect()!=null&&device.getIsCorrect()==1&&device.getDataNum()<=38){
+				if(StringUtil.isNotBlank(sn)&&device.getIsCorrect()!=null&&device.getIsCorrect()==1&&device.getDataNum()<=38){
 					HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 				}
 			}
@@ -743,15 +749,21 @@ public class TelcomCotroller extends BaseController {
 	private void sendWuhanQj3_0(IoTCloudDevice device, IotCloudLog iotCloudLog) {
 		try {
 			String data = iotCloudLog.getData();
+			String sn = "";
+			if(device.getSimCard().indexOf("_")>-1) {
+				if(device.getSimCard().split("_")[1].indexOf("CANCEL")<=0) {
+					sn = device.getSimCard().split("_")[1];
+				}
+			}
 			log.warn("data:-wuhanqj3_0----{}", data);
 			String cmd = data.substring(20, 22);
+			System.out.println(cmd);
 			if (cmd.equals("68")) {
 				cmd = "心跳";
 			} else if (cmd.equals("69")) {
 				cmd = "报警";
 			}
 			if (cmd.equals("心跳")) {
-				String sn = device.getSimCard().split("_")[1];
 				if(data.length()>106) {
 					Integer workStatus = Integer.valueOf(data.substring(106,108));
 					device.setWorkStatus(workStatus);
@@ -829,10 +841,11 @@ public class TelcomCotroller extends BaseController {
 				map.put("jczb",d);
 				map.put("jcsj", sdf.format(iotCloudLog.getCreateTime()));
 				map.put("cgq", "1");
-				HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
+				if(StringUtil.isNotBlank(sn)) {
+					HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
+				}
 			}
 			if ("报警".equals(cmd)) {
-				String sn = device.getSimCard().split("_")[1];
 				String acc_x = hexToFloat(data.substring(30, 38));
 				String acc_y = hexToFloat(data.substring(38, 46));
 				String acc_z = hexToFloat(data.substring(46, 54));
@@ -874,7 +887,7 @@ public class TelcomCotroller extends BaseController {
 				map.put("jczb",d);
 				map.put("jcsj", sdf.format(iotCloudLog.getCreateTime()));
 				map.put("cgq", "1");
-				if(device.getIsCorrect()!=null&&device.getIsCorrect()==1&&device.getDataNum()<=38){
+				if(StringUtil.isNotBlank(sn)&&device.getIsCorrect()!=null&&device.getIsCorrect()==1&&device.getDataNum()<=38){
 					HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 				}
 			}
@@ -924,13 +937,9 @@ public class TelcomCotroller extends BaseController {
 	public String convertHexToString(String hex) {
 		StringBuilder sb = new StringBuilder();
 		StringBuilder temp = new StringBuilder();
-		// 49204c6f7665204a617661 split into two characters 49, 20, 4c...
 		for (int i = 0; i < hex.length() - 1; i += 2) {
-			// grab the hex in pairs
 			String output = hex.substring(i, (i + 2));
-			// convert hex to decimal
 			int decimal = Integer.parseInt(output, 16);
-			// convert the decimal to character
 			sb.append((char) decimal);
 			temp.append(decimal);
 		}
@@ -1278,62 +1287,9 @@ public class TelcomCotroller extends BaseController {
 	}
 
 	public static void main(String[] args) throws Exception {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//		Map< String, Object> map = new HashMap<String, Object>();
-//		Map< String, Object> d = new HashMap<String, Object>();
-//		d.put("gX", 0);
-//		d.put("gY", 0);
-//		d.put("gZ", 0);
-//		d.put("X", 0);
-//		d.put("Y", 0);
-//		d.put("Z", 0);
-//		map.put("sblxbm", "103");
-//		map.put("jczb",d);
-//		map.put("jcsj", sdf.format(new Date()));
-//		map.put("cgq", "1");
-//		HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid=01010400046&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
-////		} catch (Exception e) {
-////			e.printStackTrace();
-////		}
-//		IoTCloudDevice device = new IoTCloudDevice();
-//		IotCloudLog iotCloudLog = new IotCloudLog();
-//		iotCloudLog.setData("000920050800000C4827682A003A5000003A2000003A0000000008000900000A871F19FD04FFDE0016312E312E3100322E32303300");
-//		device.setSimCard("X_01010400252");
-//		device.setMac("000920050800000C");
-//		iotCloudLog.setCreateTime(new Date());
-//		new TelcomCotroller().sendWuhanQj3_0_1(device, iotCloudLog);
-//		double r = 0.00;
-//		BigDecimal f = new BigDecimal(0.1/r);
-//		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-//		r =  1/2.4022;
-//		System.out.println(decimalFormat.format(r));
-//		Map< String, Object> map = new HashMap<String, Object>();
-//		Map< String, Object> d = new HashMap<String, Object>();
-//		d.put("gX","0.0003" );
-//		d.put("gY", "0.0009");
-//		d.put("gZ", "0.0008");
-//		d.put("X", "81.98");
-//		d.put("Y", "-54.42");
-//		d.put("Z", 0);
-//		map.put("sblxbm", "103");
-//		map.put("jczb",d);
-//		map.put("jcsj", "2020-07-23 11:29:15");
-//		map.put("cgq", "1");
-//		HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid=01010400509&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
-		String data = "00091906000000034821682A00BF378800BEAA5800BF70E4001C5A078E00000C8B1B16FD0E008C00E7312E312E3000322E31303400";
-		String g = String.valueOf(Integer.parseInt(data.substring(68, 70), 16));
-		String version = new TelcomCotroller().convertHexToString(data.substring(94, 106));
-		String volt = new TelcomCotroller().getData(data.substring(62, 63), data.substring(62, 66));
-		Integer temp = Integer.parseInt(data.substring(66, 68), 16);
-		IoTCloudDevice ioTCloudDevice = new IoTCloudDevice();
-		ioTCloudDevice.setUdpIp("215657_230bb85ba905e85bcc39");
-		new TelcomCotroller().sendSensorStatus("http://121.8.170.150:8201/api/devices/datapoints?type=3", ioTCloudDevice.getUdpIp().split("_")[0],  ioTCloudDevice.getUdpIp().split("_")[1], Double.valueOf(volt), g, version, 0.00, 0.00, temp);
-	
-//		new TelcomCotroller().sendSensorStatus("http://218.6.244.186:44445/api/devices/datapoints?type=3", "215657", "230bb85ba905e85bcc39", 3.266,"16", "2.102", 0.00, 0.00, 46);
 	}
 
 	private String getDataBase(String index, String _d) throws Exception {
-//		log.warn("index:{},data:{}", index, _d);
 		int _index = Integer.parseInt(index, 16);
 		Integer a = Integer.valueOf(_d, 16);
 		String b = Integer.toBinaryString(a);
