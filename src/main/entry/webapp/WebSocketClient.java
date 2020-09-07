@@ -18,7 +18,7 @@ public class WebSocketClient {
 	@PostConstruct
 	public void conn() {
 		try {
-			String url = "ws://10.0.1.46/vision/edge/console/algorithm/noticeAlgoResult/35";
+			String url = "ws://10.0.1.46/vision/edge/console/algorithm/noticeAlgoResult/0";
 			log.warn("web socket start ...");
 			WebSocketApi c;
 			try {
