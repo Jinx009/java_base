@@ -1,5 +1,7 @@
 package common.helper;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,8 +12,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-
-
 /**
  * 工具类-字符串处理
  * 
@@ -20,15 +20,82 @@ import org.apache.commons.lang3.StringUtils;
  * @since 2014年1月28日
  */
 public class StringUtil extends StringUtils {
-	
-	public static String add(String...strings ){
+
+	public static String add(String... strings) {
 		StringBuilder stringBuilder = new StringBuilder();
-		for(String s : strings){
+		for (String s : strings) {
 			stringBuilder.append(s);
 		}
 		return stringBuilder.toString();
 	}
-	
+
+	public static String getB(String data) {
+		Integer num = Integer.parseInt(data, 16);
+		String a = Integer.toBinaryString(num);
+		int[] s = new int[] { 0, 0, 0, 0, 0, 0 };
+		if (a.length() == 1) {
+			s[5] = Integer.valueOf(a);
+		}
+		if (a.length() == 2) {
+			s[4] = Integer.valueOf(a.substring(0, 1));
+			s[5] = Integer.valueOf(a.substring(1, 2));
+		}
+		if (a.length() == 3) {
+			s[3] = Integer.valueOf(a.substring(0, 1));
+			s[4] = Integer.valueOf(a.substring(1, 2));
+			s[5] = Integer.valueOf(a.substring(2, 3));
+		}
+		if (a.length() == 4) {
+			s[2] = Integer.valueOf(a.substring(0, 1));
+			s[3] = Integer.valueOf(a.substring(1, 2));
+			s[4] = Integer.valueOf(a.substring(2, 3));
+			s[5] = Integer.valueOf(a.substring(3, 4));
+		}
+		if (a.length() == 5) {
+			s[1] = Integer.valueOf(a.substring(0, 1));
+			s[2] = Integer.valueOf(a.substring(1, 2));
+			s[3] = Integer.valueOf(a.substring(2, 3));
+			s[4] = Integer.valueOf(a.substring(3, 4));
+			s[5] = Integer.valueOf(a.substring(4, 5));
+		}
+		if (a.length() == 6) {
+			s[0] = Integer.valueOf(a.substring(0, 1));
+			s[1] = Integer.valueOf(a.substring(1, 2));
+			s[2] = Integer.valueOf(a.substring(2, 3));
+			s[3] = Integer.valueOf(a.substring(3, 4));
+			s[4] = Integer.valueOf(a.substring(4, 5));
+			s[5] = Integer.valueOf(a.substring(5, 6));
+		}
+		return s[5] + "_" + s[4] + "_" + s[3] + "_" + s[2] + "_" + s[1] + "_" + s[0];
+	}
+
+	/**
+	 * 16进制字符串IEEE754标准转小数
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public static double hexToFloat(String s) {
+		BigInteger big = new BigInteger(s, 16);
+		Float z = Float.intBitsToFloat(big.intValue());
+		Double r = Double.valueOf(z);
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		return g;
+	}
+
+	public static String convertHexToString(String hex) {
+		StringBuilder sb = new StringBuilder();
+		StringBuilder temp = new StringBuilder();
+		for (int i = 0; i < hex.length() - 1; i += 2) {
+			String output = hex.substring(i, (i + 2));
+			int decimal = Integer.parseInt(output, 16);
+			sb.append((char) decimal);
+			temp.append(decimal);
+		}
+		return sb.toString();
+	}
+
 	public static String getMore(String hexString) {
 		hexString = hexString.toUpperCase();
 		if (hexString.length() == 1) {
@@ -54,27 +121,27 @@ public class StringUtil extends StringUtils {
 		}
 		return hexString;
 	}
-	
+
 	public static String getLess(String hexString) {
 		hexString = hexString.toUpperCase();
-		if(hexString.length()==1){
-			return "000"+hexString;
+		if (hexString.length() == 1) {
+			return "000" + hexString;
 		}
-		if(hexString.length()==2){
-			return "00"+hexString;
+		if (hexString.length() == 2) {
+			return "00" + hexString;
 		}
-		if(hexString.length()==3){
-			return "0"+hexString;
+		if (hexString.length() == 3) {
+			return "0" + hexString;
 		}
 		return hexString;
 	}
-	
-	public static  String FloatToHexString(float f){
-		int i  = Float.floatToIntBits(f);
-        String str = Integer.toHexString(i).toUpperCase();
-        return str;
+
+	public static String FloatToHexString(float f) {
+		int i = Float.floatToIntBits(f);
+		String str = Integer.toHexString(i).toUpperCase();
+		return str;
 	}
-	
+
 	public static String stringToA(String content) {
 		String result = "";
 		int max = content.length();
@@ -85,7 +152,7 @@ public class StringUtil extends StringUtils {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 字符串空处理，去除首尾空格 如果str为null，返回"",否则返回str
 	 * 
@@ -150,8 +217,7 @@ public class StringUtil extends StringUtils {
 	 */
 	public static boolean isPhone(String phone) {
 		phone = isNull(phone);
-		Pattern regex = Pattern
-				.compile("^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$");
+		Pattern regex = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$");
 		Matcher matcher = regex.matcher(phone);
 		boolean isMatched = matcher.matches();
 		return isMatched;
@@ -179,8 +245,7 @@ public class StringUtil extends StringUtils {
 	 */
 	public static boolean isEmail(String email) {
 		email = isNull(email);
-		Pattern regex = Pattern
-				.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
+		Pattern regex = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
 		Matcher matcher = regex.matcher(email);
 		boolean isMatched = matcher.matches();
 		return isMatched;
@@ -195,8 +260,7 @@ public class StringUtil extends StringUtils {
 	public static boolean isCard(String cardId) {
 		cardId = isNull(cardId);
 		// 身份证正则表达式(15位)
-		Pattern isIDCard1 = Pattern
-				.compile("^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$");
+		Pattern isIDCard1 = Pattern.compile("^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$");
 		// 身份证正则表达式(18位)
 		Pattern isIDCard2 = Pattern
 				.compile("^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|X)$");
@@ -366,8 +430,7 @@ public class StringUtil extends StringUtils {
 		return result;
 	}
 
-	public static String fillTemplet(String template,
-			Map<String, Object> sendData) {
+	public static String fillTemplet(String template, Map<String, Object> sendData) {
 		// 模板中的'是非法字符，会导致无法提交，所以页面上用`代替
 		template = template.replace('`', '\'');
 		try {
@@ -514,36 +577,38 @@ public class StringUtil extends StringUtils {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * 生成指定长度的随机字符串，字母加数字组合
+	 * 
 	 * @param length
 	 * @return
 	 */
-    public static String getRandomString(int length) { 
-        String val = "";  
-        Random random = new Random();  
-        //参数length，表示生成几位随机数  
-        for(int i = 0; i < length; i++) { 
-            String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";  
-            //输出字母还是数字  
-            if( "char".equalsIgnoreCase(charOrNum) ) {  
-                //输出是大写字母还是小写字母  
-                int temp = random.nextInt(2) % 2 == 0 ? 65 : 97;  
-                val += (char)(random.nextInt(26) + temp);  
-            } else if( "num".equalsIgnoreCase(charOrNum) ) {  
-                val += String.valueOf(random.nextInt(10));  
-            }  
-        }  
-        return val;  
-    }  
- 
-    /**
-     * 根据身份证号码计算性别
-     * @param cardId
-     * @return
-     */
-    public static int getSexByCardid(String cardId) {
+	public static String getRandomString(int length) {
+		String val = "";
+		Random random = new Random();
+		// 参数length，表示生成几位随机数
+		for (int i = 0; i < length; i++) {
+			String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
+			// 输出字母还是数字
+			if ("char".equalsIgnoreCase(charOrNum)) {
+				// 输出是大写字母还是小写字母
+				int temp = random.nextInt(2) % 2 == 0 ? 65 : 97;
+				val += (char) (random.nextInt(26) + temp);
+			} else if ("num".equalsIgnoreCase(charOrNum)) {
+				val += String.valueOf(random.nextInt(10));
+			}
+		}
+		return val;
+	}
+
+	/**
+	 * 根据身份证号码计算性别
+	 * 
+	 * @param cardId
+	 * @return
+	 */
+	public static int getSexByCardid(String cardId) {
 		int sexNum = 0;
 		if (cardId.length() == 15) {
 			sexNum = cardId.charAt(13);
@@ -557,8 +622,9 @@ public class StringUtil extends StringUtils {
 		}
 	}
 
-    /**
+	/**
 	 * 根据身份证计算生日
+	 * 
 	 * @param cardId
 	 * @return
 	 */
@@ -570,9 +636,9 @@ public class StringUtil extends StringUtils {
 			birth = cardId.substring(6, 14);
 		}
 		SimpleDateFormat sf1 = new SimpleDateFormat("yyyyMMdd");
-	    SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd");
-	    Date birthday = null;
-	    String str = null;
+		SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd");
+		Date birthday = null;
+		String str = null;
 		try {
 			str = sf2.format(sf1.parse(birth));
 			birthday = sf2.parse(str);
@@ -583,9 +649,6 @@ public class StringUtil extends StringUtils {
 	}
 
 	public static void main(String[] args) {
-		String s = "/device/01010101010101010/RTK";
-		String ac = stringToA(s);
-		System.out.println(ac.length()+"--"+ac+"--"+s.length());
 	}
-	
+
 }
