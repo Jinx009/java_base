@@ -3,6 +3,7 @@ package main.entry.webapp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 
 import database.models.device.DeviceSensor;
+import database.models.log.LogOperation;
 import database.models.log.LogSensorStatus;
 import service.basicFunctions.device.DeviceSensorService;
+import service.basicFunctions.log.LogOperationService;
 import service.basicFunctions.log.LogSensorLogService;
 import utils.HttpUtil;
 import utils.MD5Util;
@@ -35,6 +38,54 @@ public class IoTDataController extends BaseController{
 	private DeviceSensorService deviceSensorService;
 	@Autowired
 	private LogSensorLogService logSensorLogService;
+	@Autowired
+	private LogOperationService logOperationService;
+	
+	/**
+	 * 维修、安装、操作等记录新增
+	 * @param mac
+	 * @param lng
+	 * @param lat
+	 * @return
+	 */
+	@RequestMapping(value = "/iot/iot/sensor/operation/save")
+	@ResponseBody
+	public Resp<?> save(String mac,String lng,String lat,String picUrl,String ver,String type){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			LogOperation log = new LogOperation();
+			log.setCreateTime(new Date());
+			log.setLat(lat);
+			log.setLng(lng);
+			log.setType(type);
+			log.setVer(ver);
+			log.setPicUrl(picUrl);
+			logOperationService.save(log);
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 查找列表
+	 * @param mac
+	 * @return
+	 */
+	@RequestMapping(value = "/iot/iot/sendor/operation/list")
+	@ResponseBody
+	public Resp<?> list(String mac){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<LogOperation> list = logOperationService.findByMac(mac);
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
 	
 	/**
 	 * 2020-01-08
