@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tbl_sensor_operationlog")
+@Table(name = "tbl_sensor_operalog")
 public class LogOperation {
 
 	@Id
@@ -51,5 +51,7 @@ public class LogOperation {
 	private String lat;
 	@Column(name = "pic_url")
 	private String picUrl;
+	@Column(name = "mac")
+	private String mac;
 	
 }

@@ -120,6 +120,7 @@ public class IoTDataController extends BaseController{
 			log.setLng(lng);
 			log.setType(type);
 			log.setVer(ver);
+			log.setMac(mac);
 			log.setPicUrl(picUrl);
 			logOperationService.save(log);
 			return new Resp<>(true);
