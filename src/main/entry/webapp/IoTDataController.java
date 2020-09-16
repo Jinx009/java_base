@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 import database.models.device.DeviceSensor;
 import database.models.log.LogOperation;
 import database.models.log.LogSensorStatus;
+import service.basicFunctions.device.DeviceSensorInfoService;
 import service.basicFunctions.device.DeviceSensorService;
 import service.basicFunctions.log.LogOperationService;
 import service.basicFunctions.log.LogSensorLogService;
@@ -40,6 +41,52 @@ public class IoTDataController extends BaseController{
 	private LogSensorLogService logSensorLogService;
 	@Autowired
 	private LogOperationService logOperationService;
+	@Autowired
+	private DeviceSensorInfoService deviceSensorInfoService;
+	
+	
+	/**
+	 * 模糊查询地址
+	 * @param location
+	 * @param address
+	 * @return
+	 */
+	@RequestMapping(value = "/iot/iot/sensor/address")
+	@ResponseBody
+	public Resp<?> getAddress(String location,String address){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			if("wuhan".equals(location)) {
+				List<String> list = deviceSensorService.findParentMacByLike(address);
+				return new Resp<>(list);
+			}else if("shanghai".equals(location)) {
+				List<String> list = deviceSensorInfoService.findByAddressLike(address);
+				return new Resp<>(list);
+			}
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	/**
+	 * 模糊查询mac
+	 * @param mac
+	 * @return
+	 */
+	@RequestMapping(value = "/iot/iot/sensor/mac")
+	@ResponseBody
+	public Resp<?> getMac(String mac){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<DeviceSensor> list = deviceSensorService.findByMacLike(mac);
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
 	
 	/**
 	 * 维修、安装、操作等记录新增
@@ -50,10 +97,24 @@ public class IoTDataController extends BaseController{
 	 */
 	@RequestMapping(value = "/iot/iot/sensor/operation/save")
 	@ResponseBody
-	public Resp<?> save(String mac,String lng,String lat,String picUrl,String ver,String type){
+	public Resp<?> save(String mac,String lng,String lat,String picUrl,String ver,String type,String address,String description,String location){
 		Resp<?> resp = new Resp<>(false);
 		try {
 			LogOperation log = new LogOperation();
+			if(type.equals("安装和校准")) {
+				DeviceSensor sensor = deviceSensorService.findByMac(mac);
+				if(sensor!=null) {
+					sensor.setParentMac(address);
+					sensor.setDesc(description);
+					if(location.equals("wuhan")) {
+						sensor.setAreaId(64);
+					}
+					deviceSensorService.update(sensor);
+				}else {
+					resp.setMsg("设备不存在！");
+					return resp;
+				}
+			}
 			log.setCreateTime(new Date());
 			log.setLat(lat);
 			log.setLng(lng);

@@ -113,5 +113,20 @@ public class DeviceSensorDao extends BaseDao<DeviceSensor>{
 		List<DeviceSensor> list = query.getResultList();
 		return list;
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<String> findParentMacByLike(String address) {
+		String sql = "select distinct(parent_mac) from tbl_sensor  where parent_mac like '%"+address+"%'";
+		List<String> list = em.createNativeQuery(sql,String.class).getResultList();
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<DeviceSensor> findByMacLike(String mac) {
+		String sql = " select * from tbl_sensor where mac like '%"+mac+"%' order by create_time desc ";
+		Query query = em.createNativeQuery(sql, DeviceSensor.class);
+		List<DeviceSensor> list = query.getResultList();
+		return list;
+	}
 	
 }

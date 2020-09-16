@@ -16,7 +16,6 @@ import database.models.device.DeviceSensor;
 import database.models.device.DeviceSensorInfo;
 import database.models.device.vo.DeviceSensorInfoModel;
 import database.models.log.LogSensorHeart;
-import main.entry.webapp.BaseController;
 import service.basicFunctions.device.DeviceSensorInfoService;
 import service.basicFunctions.device.DeviceSensorService;
 import service.basicFunctions.log.LogSensorLogService;

@@ -30,5 +30,9 @@ public class DeviceSensorInfoService {
 	public List<DeviceSensorInfo> findByMacAndAddress(String mac, String address) {
 		return deviceSensorInfoDao.findByMacAndAddress(mac,address);
 	}
+
+	public List<String> findByAddressLike(String address) {
+		return deviceSensorInfoDao.findByAddressLike(address);
+	}
 	
 }

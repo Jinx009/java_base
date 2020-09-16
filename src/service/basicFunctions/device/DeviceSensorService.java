@@ -231,5 +231,13 @@ public class DeviceSensorService extends BaseService{
 	public List<DeviceSensor> install() {
 		return deviceSensorDao.install();
 	}
+
+	public List<String> findParentMacByLike(String address) {
+		return deviceSensorDao.findParentMacByLike(address);
+	}
+
+	public List<DeviceSensor> findByMacLike(String mac) {
+		return deviceSensorDao.findByMacLike(mac);
+	}
 	
 }

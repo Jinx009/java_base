@@ -30,6 +30,13 @@ public class DeviceSensorInfoDao extends BaseDao<DeviceSensorInfo>{
 		return findByCriteria(queryParam);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<String> findByAddressLike(String address) {
+		String sql = "select distinct(address) from tbl_sensor_info  where address like '%"+address+"%'";
+		List<String> list = em.createNativeQuery(sql,String.class).getResultList();
+		return list;
+	}
+
 	
 	
 }
