@@ -232,7 +232,7 @@ public class DeviceSensorService extends BaseService{
 		return deviceSensorDao.install();
 	}
 
-	public List<String> findParentMacByLike(String address) {
+	public List<Object> findParentMacByLike(String address) {
 		return deviceSensorDao.findParentMacByLike(address);
 	}
 

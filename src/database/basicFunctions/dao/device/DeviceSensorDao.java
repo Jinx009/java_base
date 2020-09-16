@@ -6,6 +6,7 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
+
 import database.common.BaseDao;
 import database.common.OrderFilter.OrderType;
 import database.common.SearchFilter.Operators;
@@ -115,9 +116,10 @@ public class DeviceSensorDao extends BaseDao<DeviceSensor>{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<String> findParentMacByLike(String address) {
-		String sql = "select distinct(parent_mac) from tbl_sensor  where parent_mac like '%"+address+"%'";
-		List<String> list = em.createNativeQuery(sql,String.class).getResultList();
+	public List<Object> findParentMacByLike(String address) {
+		String sql = "select distinct(parent_mac) as parentMac from tbl_sensor  where parent_mac like '%"+address+"%'";
+		System.out.println(sql);
+		List<Object> list = em.createNativeQuery(sql).getResultList();
 		return list;
 	}
 

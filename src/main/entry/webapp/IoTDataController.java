@@ -57,10 +57,10 @@ public class IoTDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			if("wuhan".equals(location)) {
-				List<String> list = deviceSensorService.findParentMacByLike(address);
+				List<Object> list = deviceSensorService.findParentMacByLike(address);
 				return new Resp<>(list);
 			}else if("shanghai".equals(location)) {
-				List<String> list = deviceSensorInfoService.findByAddressLike(address);
+				List<Object> list = deviceSensorInfoService.findByAddressLike(address);
 				return new Resp<>(list);
 			}
 		} catch (Exception e) {
