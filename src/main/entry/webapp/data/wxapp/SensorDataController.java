@@ -10,7 +10,7 @@ import main.entry.webapp.BaseController;
 import utils.Resp;
 
 @Controller
-@RequestMapping(value = "/home/cloud/sendor")
+@RequestMapping(value = "/home/cloud/sensor")
 public class SensorDataController extends BaseController{
 
 	private Logger log = LoggerFactory.getLogger(SensorDataController.class);
