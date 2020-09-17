@@ -19,7 +19,6 @@ import org.apache.http.util.EntityUtils;
 @SuppressWarnings("deprecation")
 public class NtripClient {
 
-	@SuppressWarnings({ "resource" })
 	public static void main(String[] args) {
 		// String result = "500";
 		// DefaultHttpClient httpClient = new DefaultHttpClient();
