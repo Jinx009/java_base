@@ -106,13 +106,18 @@ public class IoTDataController extends BaseController{
 				if(sensor!=null) {
 					sensor.setParentMac(address);
 					sensor.setDesc(description);
-					if(location.equals("wuhan")) {
-						sensor.setAreaId(64);
-					}
 					deviceSensorService.update(sensor);
 				}else {
-					resp.setMsg("设备不存在！");
-					return resp;
+					sensor = new DeviceSensor();
+					sensor.setCreateTime(new Date());
+					sensor.setParentMac(address);
+					sensor.setDesc(description);
+					sensor.setMac(mac);
+				}
+				if(location.equals("wuhan")) {
+					sensor.setAreaId(64);
+					sensor.setCameraName("001001");
+					deviceSensorService.update(sensor);
 				}
 			}
 			log.setCreateTime(new Date());
