@@ -2,97 +2,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>设备管理</title>
-    <link href="/themes/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/themes/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>设备管理</title>
+<link href="/themes/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/themes/dist/css/bootstrap-theme.min.css" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand"  target="_blank"  href="http://www.zhanway.com"><img height="50px;" style="margin-top: -15px;" src="img/logo.png"></a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="device.html">设备信息</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a  target="_blank"  href="http://www.zhanway.com">走进展为</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="row" style="width: 98%;margin-left: 1%;" >
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">基本信息</div>
-            <div class="panel-body">
-         		<form class="form-inline">
-				  <div class="form-group">
-				    <label for="exampleInputEmail2">选择街道</label>
-				    <select class="form-control" id="address" >
-				    <option value="三眼桥北路（三眼桥路——香港路）">三眼桥北路（三眼桥路——香港路）</option>
-                        		<option value="唐蔡路">唐蔡路</option>
-				    <option value="龙江路（高龙路——二环线）">龙江路（高龙路——二环线）</option>
-				    <option value="五龙路（动物园路——龙江路）">五龙路（动物园路——龙江路）</option>
-				        <option value="罗家庄">罗家庄</option>
-				        <option value="振兴三路">振兴三路</option> 
-				        <option value="韦桑路（二环线---建设大道）">韦桑路（二环线---建设大道）</option>
-				    	<option value="百灵路">百灵路</option>
-				    	<option value="京汉大道">京汉大道</option>
-				    	<option value="中山大道">中山大道</option>
-				    </select>
-				  </div>
-				  <a class="btn btn-default" onclick="_getData()" >查询</a>
-				</form>
-          </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Mac地址</th>
-                        <th>车位号</th>
-                        <th>是否有车</th>
-                        <th>上次车检时间</th>
-                         <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody id="data" >
-                    <tr v-for="item in datas" >
-                        <td>
-                        	<input class="form-control" v-bind:id="item.mac+'_mac'" style="width: 160px;"  v-bind:value="item.mac" >
-                        </td>
-                        <td>
-                        	<input class="form-control"  v-bind:id="item.mac+'_desc'" style="width: 80px;" v-bind:value="item.desc" >
-                        </td>
-                        <td>
-                        	<span v-if="1===item.available" class="label label-success">是</span>
-                        	<span v-if="0===item.available" class="label label-danger">否</span>
-                        </td>
-                         <td v-text="item.sensorTime"  ></td>
-                         <td>
-                         		<a class="btn btn-info" v-bind:id="item.mac" onclick="_update(this)" >更新</a>
-                         </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<div class="control-sidebar-bg"></div>
-<script src="js/jquery.min.js"></script>
-<script src="/themes/dist/js/bootstrap.min.js"></script>
-<script src="/themes/js/vue.min.js"></script>
-<script src="/themes/layer/layer.js"></script>
-<script>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" target="_blank"
+					href="http://www.zhanway.com"><img height="50px;"
+					style="margin-top: -15px;" src="img/logo.png"></a>
+			</div>
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="device.html">设备信息</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a target="_blank" href="http://www.zhanway.com">走进展为</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="row" style="width: 98%; margin-left: 1%;">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">基本信息</div>
+				<div class="panel-body">
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="exampleInputEmail2">选择街道</label> <select
+								class="form-control" id="address">
+								<option value="马场二路">马场二路</option>
+								<option value="玫瑰街（金龙路—燎原路">玫瑰街（金龙路—燎原路</option>
+								<option value="后襄何一路">后襄何一路</option>
+								<option value="后襄河二路">后襄河二路</option>
+								<option value="三眼桥北路（三眼桥路——香港路）">三眼桥北路（三眼桥路——香港路）</option>
+								<option value="唐蔡路">唐蔡路</option>
+								<option value="龙江路（高龙路——二环线）">龙江路（高龙路——二环线）</option>
+								<option value="五龙路">五龙路</option>
+								<option value="罗家庄">罗家庄</option>
+								<option value="振兴三路">振兴三路</option>
+								<option value="韦桑路（二环线---建设大道）">韦桑路（二环线---建设大道）</option>
+								<option value="百灵路">百灵路</option>
+								<option value="京汉大道">京汉大道</option>
+								<option value="中山大道">中山大道</option>
+							</select>
+						</div>
+						<a class="btn btn-default" onclick="_getData()">查询</a>
+					</form>
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Mac地址</th>
+							<th>车位号</th>
+							<th>是否有车</th>
+							<th>上次车检时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody id="data">
+						<tr v-for="item in datas">
+							<td><input class="form-control" v-bind:id="item.mac+'_mac'"
+								style="width: 160px;" v-bind:value="item.mac"></td>
+							<td><input class="form-control" v-bind:id="item.mac+'_desc'"
+								style="width: 80px;" v-bind:value="item.desc"></td>
+							<td><span v-if="1===item.available"
+								class="label label-success">是</span> <span
+								v-if="0===item.available" class="label label-danger">否</span></td>
+							<td v-text="item.sensorTime"></td>
+							<td><a class="btn btn-info" v-bind:id="item.mac"
+								onclick="_update(this)">更新</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="control-sidebar-bg"></div>
+	<script src="js/jquery.min.js"></script>
+	<script src="/themes/dist/js/bootstrap.min.js"></script>
+	<script src="/themes/js/vue.min.js"></script>
+	<script src="/themes/layer/layer.js"></script>
+	<script>
 $(function(){
 	_getData();
 })
