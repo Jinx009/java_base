@@ -35,6 +35,7 @@ public class ProOrderDao extends BaseDao<ProOrder>{
 //		if(0!=fromSite){
 //			queryParam.addParam("fromSite", fromSite);
 //		}
+		queryParam.addParam("showStatus", 1);
 		queryParam.addPage(p, BaseConstant.PAGE_SIZE);
 		queryParam.addOrder(OrderType.DESC, "id");
 		return findPageList(queryParam);
@@ -55,6 +56,12 @@ public class ProOrderDao extends BaseDao<ProOrder>{
 			return list;
 		}
 		return null;
+	}
+
+	public ProOrder findByMsg(String out_trade_no) {
+		QueryParam qpParam = QueryParam.getInstance();
+		qpParam.addParam("msg", out_trade_no);
+		return findByCriteriaForUnique(qpParam);
 	}
 
 	

@@ -71,7 +71,7 @@ public class FrontProOrderDataController extends BaseController {
 			log.warn("orderId:{},status:{}",orderId,status);
 			ProOrder proOrder = proOrderService.findById(orderId);
 			proOrder.setStatus(status);
-			proOrder.setMsg(msg);
+//			proOrder.setMsg(msg);
 			proOrder.setStatus(status);
 			proOrderService.update(proOrder);
 			ProGoods good = ProGoodsService.findByTimeDateAbc(proOrder.getTime(), proOrder.getType(), proOrder.getDate());
@@ -113,6 +113,7 @@ public class FrontProOrderDataController extends BaseController {
 			String res = HttpUtils.postXml("https://api.mch.weixin.qq.com/pay/unifiedorder", xml);
 			String prepay_id = doXMLParse(res).get("prepay_id");
 			proOrder.setPrepayId(prepay_id);
+			proOrder.setMsg(String.valueOf(proOrder.getCreateTime().getTime()));
 			proOrderService.update(proOrder);
 			String randomStr = RandomUtils.getRandomNumbersAndString(32);
 			Date date = new Date();
@@ -155,6 +156,7 @@ public class FrontProOrderDataController extends BaseController {
 			proOrder.setType(proGoods.getAbc());
 			proOrder.setTime(proGoods.getTime());
 			proOrder.setFromSite(1);
+			proOrder.setShowStatus(1);
 			proOrder = proOrderService.saveOrder(proOrder);
 			proGoods.setType(1);
 			ProGoodsService.update(proGoods);
@@ -181,6 +183,7 @@ public class FrontProOrderDataController extends BaseController {
 			Date date = new Date();
 			String paySign = MD5Util.MD5("appId=wxbc5ec9a82883abb6&nonceStr="+randomStr+"&package=prepay_id="+prepay_id+"&signType=MD5&timeStamp="+date.getTime()/1000+"&key=fX5FEHQjFAmSUe01kke3xogAPKl5GaD8");
 			proOrder.setPrepayId(prepay_id);
+			proOrder.setMsg(String.valueOf(proOrder.getCreateTime().getTime()));
 			proOrderService.update(proOrder);
 			Map<String, Object> map = new HashMap<>();
 			map.put("prepay_id",prepay_id );
