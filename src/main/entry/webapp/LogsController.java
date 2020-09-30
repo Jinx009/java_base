@@ -102,7 +102,7 @@ public class LogsController extends BaseController {
 			sensor.setHappenTime(date);
 			sensor.setSensorTime(sdf1.format(date));
 			sensor.setVedioStatus("");
-			sensor.setCph("");
+			sensor.setCph("wjb");
 			sensor.setCpColor("");
 			sensor.setCameraId("");
 			sensor.setPicLink("");

@@ -340,6 +340,25 @@ public class TelcomController extends BaseController{
                                     sensor.setRssi(rssi);
                                     sensor.setAddr(rssi);
                                     sensor.setLastSeenTime(new Date());
+                                    if(sensor.getAvailable()!=avalable) {
+                                    	Date date = new Date();
+                                    	sensor.setAvailable(avalable);
+                                        sensor.setLastSeenTime(date);
+                                        sensor.setSensorStatus(avalable);
+                                        sensor.setMode("");
+                                        sensor.setHappenTime(date);
+                                        sensor.setSensorTime(sdf1.format(date));
+                                        sensor.setVedioStatus("");
+                                        sensor.setCph("heart");
+                                        sensor.setCpColor("");
+                                        sensor.setCameraId("");
+                                        sensor.setPicLink("");
+                                        sensor.setVedioTime("");
+                                        sensor.setSensorTime(sdf1.format(sensor.getHappenTime()));
+                                        sensor.setBluetooth("");
+                                        sensor.setBluetoothArray("");
+                                        logSensorLogService.saveOperationLog(sensor);
+                                    }
 //                                    if (sensor.getAreaId() != null && 1 == sensor.getAreaId()) {
 //                            			WuhanSendUtils.sendHeart(deviceLog, sensor);
 //                            		}

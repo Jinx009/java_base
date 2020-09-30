@@ -116,6 +116,7 @@ public class LogSensorLogService extends BaseService {
 		sensorOperationLog.setFailTimes(0);
 		sensorOperationLog.setSendStatus(0);
 		sensorOperationLog.setSendTime(new Date());
+		sensorOperationLog.setCph(sensor.getCph());
 		logSensorStatusDao.save(sensorOperationLog);
 		sensorOperationLog = logSensorStatusDao.find(sensorOperationLog.getId());
 		// 武汉
