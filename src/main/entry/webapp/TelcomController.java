@@ -266,21 +266,6 @@ public class TelcomController extends BaseController{
                                         deviceSensorService.update(sensor);
                                         logSensorLogService.saveOperationLog(sensor);
                                     }
-//                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-//                                    File f = new File("/data/logs/sensor_status/"+sdf.format(date)+"/"+mac+".txt");
-//                                    File f = new File("/apps/logs/sensor_status/"+sdf.format(date)+"/"+mac+".txt");
-//                                    File fileParent = f.getParentFile();
-//                                    if (!fileParent.exists()) {
-//                                        fileParent.mkdirs();
-//                                        f.createNewFile();
-//                                    }
-//                                    FileWriter fw = new FileWriter(f, true);
-//                                    PrintWriter pw = new PrintWriter(fw);
-//                                    pw.println(mac+"    "+data+"    "+sdf1.format(date));
-//                                    pw.flush();
-//                                    fw.flush();
-//                                    pw.close();
-//                                    fw.close();
                                 }
                                 if(cmd.equals("3E")){//心跳
                                     String dif1 = data.substring(26, 28);
