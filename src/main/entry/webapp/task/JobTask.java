@@ -137,7 +137,7 @@ public class JobTask {
 		}
 	}
 	
-	@Scheduled(fixedRate = 1000 * 3600, initialDelay = 1000)
+//	@Scheduled(fixedRate = 1000 * 3600, initialDelay = 1000)
 	public void initVedio() {
 		Date parkingArea = parkingAreaService.find(9).getCreateTime();// vedio
 		Date date = new Date();
