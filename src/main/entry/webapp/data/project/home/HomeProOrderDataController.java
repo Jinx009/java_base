@@ -1,7 +1,7 @@
 package main.entry.webapp.data.project.home;
 
 import java.util.Date;
-import java.util.List;
+//import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,17 +38,17 @@ public class HomeProOrderDataController extends BaseController {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			ProPrice proPrice = proPriceService.findById(id);
-			List<ProOrder> proOrders = proOrderService.findByDateTimeType(date, proPrice.getTime(), proPrice.getType());
+//			List<ProOrder> proOrders = proOrderService.findByDateTimeType(date, proPrice.getTime(), proPrice.getType());
 			ProGoods proGoods = proGoodsService.findByTimeDateAbc(proPrice.getTime(), proPrice.getType(), date);
 			boolean b = true;
-			if (proOrders != null && !proOrders.isEmpty()) {
-				for (ProOrder proOrder : proOrders) {
-					if (2 != proOrder.getStatus()) {
-						b = false;
-						break;
-					}
-				}
-			}
+//			if (proOrders != null && !proOrders.isEmpty()) {
+//				for (ProOrder proOrder : proOrders) {
+//					if (2 != proOrder.getStatus()) {
+//						b = false;
+//						break;
+//					}
+//				}
+//			}
 			if(proGoods!=null&&proGoods.getType()!=0) {
 				b = false;
 			}
