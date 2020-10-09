@@ -68,6 +68,7 @@ public class HomeProOrderDataController extends BaseController {
 				proOrder.setOpenid(openid);
 				proOrder.setPrice(proOrder.getPrice());
 				proOrder.setStatus(1);
+				proOrder.setShowStatus(1);
 				proOrder.setType(proPrice.getType());
 				proOrder.setTime(proPrice.getTime());
 				proOrderService.saveOrder(proOrder);
@@ -126,10 +127,13 @@ public class HomeProOrderDataController extends BaseController {
 		Resp<?> resp = new Resp<>(false);
 		try {
 			ProOrder o = proOrderService.findById(id);
-			ProGoods proGoods = proGoodsService.findByTimeDateAbc(o.getTime(), o.getType(), o.getDate());
-			proGoods.setType(0);
-			proGoodsService.update(proGoods);
-			proOrderService.del(id);
+			if(o.getStatus()==1) {
+				ProGoods proGoods = proGoodsService.findByTimeDateAbc(o.getTime(), o.getType(), o.getDate());
+				proGoods.setType(0);
+				proGoodsService.update(proGoods);
+			}
+			o.setShowStatus(0);
+			proOrderService.update(o);
 			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("e:{}", e);

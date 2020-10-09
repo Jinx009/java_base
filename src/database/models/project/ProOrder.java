@@ -51,5 +51,7 @@ public class ProOrder {
 	private String msg;
 	@Column(name = "prepay_id")
 	private String prepayId;
+	@Column(name = "show_status")
+	private Integer showStatus;
 	
 }

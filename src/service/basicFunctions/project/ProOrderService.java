@@ -70,5 +70,9 @@ public class ProOrderService {
 		map.put("payfail", payfail);
 		return map;
 	}
+
+	public ProOrder getByMsg(String out_trade_no) {
+		return proOrderDao.findByMsg(out_trade_no);
+	}
 	
 }
