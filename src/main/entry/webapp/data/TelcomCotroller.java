@@ -37,6 +37,7 @@ import utils.MD5Util;
 import utils.StreamClosedHttpResponse;
 import utils.StringUtil;
 import main.entry.webapp.BaseController;
+import service.basicFunctions.IoTCloudEventLogService;
 import service.basicFunctions.IotCloudDeviceService;
 import service.basicFunctions.IotCloudLogService;
 import service.basicFunctions.PuzhiJobService;
@@ -55,6 +56,8 @@ public class TelcomCotroller extends BaseController {
 	private IotCloudLogService iotCloudLogService;
 	@Autowired
 	private PuzhiJobService puzhiJobService;
+	@Autowired
+	private IoTCloudEventLogService ioTCloudEventLogService;
 
 	/**
 	 * 电信平台新增设备会通知这个接口
@@ -191,6 +194,7 @@ public class TelcomCotroller extends BaseController {
 							sendQjYiChang(tModel,ioTCloudDevice,iotCloudLog);
 						} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.0_WUHAN")) {//武汉的100来个新版本倾角
 							sendWuhan(tModel,ioTCloudDevice,iotCloudLog);
+							ioTCloudEventLogService.save(tModel,3);
 						}else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_V_3.1_WUHAN")&&ioTCloudDevice.getIsCorrect()==1) {//武汉的100来个新版本倾角
 							sendWuhan(tModel,ioTCloudDevice,iotCloudLog);
 						} else if (ioTCloudDevice.getLocalIp() != null&& ioTCloudDevice.getLocalIp().equals("QJ_ZHANWAY_BJ")) {//北京普世平台倾角
@@ -683,6 +687,7 @@ public class TelcomCotroller extends BaseController {
 				map.put("jczb",d);
 				map.put("jcsj", sdf.format(iotCloudLog.getCreateTime()));
 				map.put("cgq", "1");
+				ioTCloudEventLogService.saveChange(device.getMac(),"心跳",x,y,"0",acc_x,acc_y,acc_z);
 				if(StringUtil.isNotBlank(sn)) {
 					HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 				}
@@ -730,6 +735,7 @@ public class TelcomCotroller extends BaseController {
 				map.put("jczb",d);
 				map.put("jcsj", sdf.format(iotCloudLog.getCreateTime()));
 				map.put("cgq", "1");
+				ioTCloudEventLogService.saveChange(device.getMac(),"报警",x,y,"0",acc_x,acc_y,acc_z);
 				if(StringUtil.isNotBlank(sn)&&device.getIsCorrect()!=null&&device.getIsCorrect()==1&&device.getDataNum()<=38){
 					HttpUtils.sendWuhanPost("http://119.97.193.69:97/DzhZXJC/http/addSblxcs","datatype=6&deviceid="+sn+"&data="+JSONObject.toJSONString(map).replaceAll("\\\\",""));
 				}

@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 
 import database.models.IoTCloudDevice;
+import database.models.IoTCloudEventLog;
 import database.models.PuzhiJob;
+import service.basicFunctions.IoTCloudEventLogService;
 import service.basicFunctions.IotCloudDeviceService;
 import service.basicFunctions.PuzhiJobService;
 import utils.HttpUtils;
@@ -33,6 +35,43 @@ public class StatusCheckTask {
 	private PuzhiJobService puzhiJobService;
 	@Autowired
 	private IotCloudDeviceService iotCloudDeviceService;
+	@Autowired
+	private IoTCloudEventLogService ioTCloudEventLogService;
+	
+	
+	@Scheduled(cron = "0 0 3 * * ?") // 每天晚上0点01分创建新文件夹
+	public void getAccLost() {
+		try {
+			List<IoTCloudDevice> list = iotCloudDeviceService.findLost();
+			int total = 0;
+			Date date = new Date();
+			if(list!=null&&!list.isEmpty()) {
+				for(IoTCloudDevice device : list) {
+					if(StringUtil.isNotBlank(device.getParkName())) {
+						total++;
+					}
+					Date dataTime = device.getDataTime();
+					int day =  (int) ((date.getTime() - dataTime.getTime()) / (1000*3600*24));
+					IoTCloudEventLog log = new IoTCloudEventLog();
+					log.setCreateTime(new Date());
+					log.setFatherType("ERROR");
+					log.setMac(device.getMac());
+					log.setType("LOST");
+					log.setDescription("设备："+device.getMac()+" 已经失联 "+day+" 天了");
+					ioTCloudEventLogService.save(log);
+				}
+				IoTCloudEventLog log2 = new IoTCloudEventLog();
+				log2.setCreateTime(new Date());
+				log2.setFatherType("ERROR");
+				log2.setMac("统计");
+				log2.setType("LOST");
+				log2.setDescription("截止当天，总计失联："+total+" 个");
+				ioTCloudEventLogService.save(log2);
+			}
+ 		} catch (Exception e) {
+			log.error("error:{}", e);
+		}
+	}
 	
 	@Scheduled(cron = "0 1 0 * * ?") // 每天晚上0点01分创建新文件夹
 	public void chmod() {

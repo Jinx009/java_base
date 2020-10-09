@@ -83,5 +83,7 @@ public class AccDataLog {
     private String accyMin;
     @Column(name = "acc_z_min")
     private String acczMin;
+    @Column(name = "data_type")
+    private Integer dataType;//0表示自身，1表示转发蜕变
 	
 }

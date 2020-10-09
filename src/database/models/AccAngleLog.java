@@ -41,4 +41,9 @@ public class AccAngleLog {
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
+	@Column(name = "update_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updateTime;
+	@Column(name = "date_str")
+	private String dateStr;
 }

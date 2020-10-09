@@ -26,13 +26,13 @@ public class AccVersionLog {
 	private Integer id;
 	@Column(name = "mac")
 	private String mac;
-	@Column(name = "date")
-	private String date;
+	@Column(name = "hard")
+	private String hard;
+	@Column(name = "soft")
+	private String soft;
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
-	@Column(name = "data_num")
-	private Integer dataNum;
 	
 	
 	

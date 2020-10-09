@@ -105,5 +105,9 @@ public class IotCloudDeviceService {
 		return iotCloudDeviceDao.find(id);
 	}
 
+	public List<IoTCloudDevice> findLost() {
+		return iotCloudDeviceDao.getLost();
+	}
+
 	
 }
