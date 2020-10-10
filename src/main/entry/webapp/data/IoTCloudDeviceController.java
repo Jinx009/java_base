@@ -476,7 +476,7 @@ public class IoTCloudDeviceController extends BaseController{
 	 * @param ipLocal
 	 * @return
 	 */
-	@SuppressWarnings({ "resource", "deprecation" })
+	@SuppressWarnings({ "deprecation" })
 	@RequestMapping(path = "/register_local")
 	@ResponseBody
 	public Resp<?> register_local() {
@@ -564,7 +564,7 @@ public class IoTCloudDeviceController extends BaseController{
 	}
 	
 	
-	@SuppressWarnings({ "deprecation", "resource" })
+	@SuppressWarnings({ "deprecation" })
 	public static void main(String[] args) {
 		try {
 			HSSFWorkbook work = new HSSFWorkbook(new FileInputStream("/Users/jinx/Downloads/test.xls"));// 得到这个excel表格对象
