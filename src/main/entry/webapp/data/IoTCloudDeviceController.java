@@ -476,7 +476,6 @@ public class IoTCloudDeviceController extends BaseController{
 	 * @param ipLocal
 	 * @return
 	 */
-	@SuppressWarnings({ "deprecation" })
 	@RequestMapping(path = "/register_local")
 	@ResponseBody
 	public Resp<?> register_local() {
@@ -487,11 +486,11 @@ public class IoTCloudDeviceController extends BaseController{
 			int rowNo = sheet.getLastRowNum(); //得到行数
 			for (int i = 1; i <= rowNo; i++) {
 				HSSFRow row = sheet.getRow(i);
-				HSSFCell cell1 = row.getCell((short) 0);
-				HSSFCell cell2 = row.getCell((short) 1);
-				HSSFCell cell3 = row.getCell((short) 2);
-				HSSFCell cell4 = row.getCell((short) 3);
-				HSSFCell cell5 = row.getCell((short) 4);
+				HSSFCell cell1 = row.getCell(0);
+				HSSFCell cell2 = row.getCell(1);
+				HSSFCell cell3 = row.getCell(2);
+				HSSFCell cell4 = row.getCell(3);
+				HSSFCell cell5 = row.getCell(4);
 				cell1.setCellType(Cell.CELL_TYPE_STRING);
 				cell2.setCellType(Cell.CELL_TYPE_STRING);
 				cell3.setCellType(Cell.CELL_TYPE_STRING);
@@ -564,7 +563,6 @@ public class IoTCloudDeviceController extends BaseController{
 	}
 	
 	
-	@SuppressWarnings({ "deprecation" })
 	public static void main(String[] args) {
 		try {
 			HSSFWorkbook work = new HSSFWorkbook(new FileInputStream("/Users/jinx/Downloads/test.xls"));// 得到这个excel表格对象
@@ -573,11 +571,11 @@ public class IoTCloudDeviceController extends BaseController{
 			System.out.println(rowNo);
 			for (int i = 1; i <=rowNo; i++) {
 				HSSFRow row = sheet.getRow(i);
-				HSSFCell cell1 = row.getCell((short) 0);
-				HSSFCell cell2 = row.getCell((short) 1);
-				HSSFCell cell3 = row.getCell((short) 2);
-				HSSFCell cell4 = row.getCell((short) 3);
-				HSSFCell cell5 = row.getCell((short) 4);
+				HSSFCell cell1 = row.getCell(0);
+				HSSFCell cell2 = row.getCell(1);
+				HSSFCell cell3 = row.getCell(2);
+				HSSFCell cell4 = row.getCell(3);
+				HSSFCell cell5 = row.getCell(4);
 				cell1.setCellType(Cell.CELL_TYPE_STRING);
 				cell2.setCellType(Cell.CELL_TYPE_STRING);
 				cell3.setCellType(Cell.CELL_TYPE_STRING);
