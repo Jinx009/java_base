@@ -64,7 +64,7 @@ public class AccVersionLogService {
 						event.setMac(mac);
 						event.setFatherType("EVENT");
 						event.setType("VERSION");
-						String s = "版本升级，硬件版本："+hard+",软件版本："+soft;
+						String s = "版本升级，硬件版本："+hard+",软件版本："+soft;//
 						event.setDescription(s);
 						ioTCloudEventLogDao.save(event);
 					}
