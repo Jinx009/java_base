@@ -37,7 +37,7 @@ public class AccAngleLogService {
 				AccAngleLog log = accAngleLogDao.findByMac(mac);
 				if(x!=null) {
 					double dx = Double.valueOf(x);
-					if(Math.abs(dx)>log.getX()) {
+					if(Math.abs(dx)>Math.abs(log.getX())) {
 						log.setUpdateTime(new Date());
 						log.setX(dx);
 						accAngleLogDao.update(log);
@@ -54,7 +54,7 @@ public class AccAngleLogService {
 				}
 				if(y!=null) {
 					double dy = Double.valueOf(y);
-					if(Math.abs(dy)>log.getY()) {
+					if(Math.abs(dy)>Math.abs(log.getY())) {
 						log.setUpdateTime(new Date());
 						log.setX(dy);
 						accAngleLogDao.update(log);

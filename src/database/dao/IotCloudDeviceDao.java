@@ -56,7 +56,7 @@ public class IotCloudDeviceDao extends BaseDao<IoTCloudDevice>{
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String dateStr = sdf.format(date);
-		String sql = " select *  from pro_device  where (local_ip ='QJ_ZHANWAY_V_3.0_WUHAN'  or local_ip ='QJ_ZHANWAY_V_3.1_WUHAN'  or local_ip ='QJ_ZHANWAY_YIBIN' )  and dataTime<'"+dateStr+" 00:00:00' ";
+		String sql = " select *  from pro_device  where (local_ip ='QJ_ZHANWAY_V_3.0_WUHAN'  or local_ip ='QJ_ZHANWAY_V_3.1_WUHAN'  or local_ip ='QJ_ZHANWAY_YIBIN' )  and data_time<'"+dateStr+" 00:00:00' ";
 		Query query = em.createNativeQuery(sql, IoTCloudDevice.class);
 		List<IoTCloudDevice> list = query.getResultList();
 		return list;

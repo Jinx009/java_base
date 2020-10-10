@@ -31,6 +31,7 @@ public class AccAngleLogDao extends BaseDao<AccAngleLog>{
 			log.setX(0.00);
 			log.setY(0.00);
 			log.setZ(0.00);
+			log.setMac(mac);
 			log = save(log);
 		}
 		return log;

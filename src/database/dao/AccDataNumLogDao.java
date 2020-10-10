@@ -22,7 +22,7 @@ public class AccDataNumLogDao extends BaseDao<AccDataNumLog>{
 		String hourStr = String.valueOf(calendar.get(calendar.HOUR_OF_DAY));
 		QueryParam param = QueryParam.getInstance();
 		param.addParam("mac", mac);
-		param.addParam("cmd", cmd);
+		param.addParam("type", cmd);
 		param.addParam("dateStr",dateStr);
 		param.addParam("hourStr",hourStr);
 		AccDataNumLog log = findByCriteriaForUnique(param);
@@ -45,7 +45,7 @@ public class AccDataNumLogDao extends BaseDao<AccDataNumLog>{
 		String dateStr = sdf.format(date);
 		QueryParam param = QueryParam.getInstance();
 		param.addParam("mac", mac);
-		param.addParam("cmd", cmd);
+		param.addParam("type", cmd);
 		param.addParam("dateStr", dateStr);
 		param.addParam("hourStr","-1");
 		AccDataNumLog log = findByCriteriaForUnique(param);
