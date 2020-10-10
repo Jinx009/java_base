@@ -56,7 +56,7 @@ public class AccAngleLogService {
 					double dy = Double.valueOf(y);
 					if(Math.abs(dy)>Math.abs(log.getY())) {
 						log.setUpdateTime(new Date());
-						log.setX(dy);
+						log.setY(dy);
 						accAngleLogDao.update(log);
 					}
 					if(Math.abs(dy)>3.5) {
