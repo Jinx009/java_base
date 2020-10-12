@@ -20,6 +20,8 @@ public class AccDataLogService {
 	private static final String HEART = "心跳";
 	private static final String WARN = "报警";
 	
+
+	
 	public void save(String data,Integer type) {
 		try {
 			int dataType = 0;
@@ -310,6 +312,7 @@ public class AccDataLogService {
 		}
 		return s;
 	}
+
 
 
 

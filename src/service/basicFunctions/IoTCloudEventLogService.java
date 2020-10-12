@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import database.common.PageDataList;
 import database.dao.IoTCloudEventLogDao;
 import database.models.IoTCloudEventLog;
 import database.models.vo.TModel;
@@ -48,6 +49,10 @@ public class IoTCloudEventLogService {
 
 	public void saveChange(String mac, String cmd,String x, String y, String z, String acc_x, String acc_y,String acc_z) {
 		accDataLogService.saveChange(mac,cmd,x,y,z,acc_x,acc_y,acc_z);
+	}
+
+	public PageDataList<IoTCloudEventLog> findByPage(String mac, String fatherType, String type, int p) {
+		return ioTCloudEventLogDao.findByPage(mac,fatherType,type,p);
 	}
 	
 }

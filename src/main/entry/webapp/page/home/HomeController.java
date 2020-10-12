@@ -99,6 +99,12 @@ public class HomeController {
 		return "/home/more";
 	}
 	
+	@RequestMapping(path = "/event/log")
+	public String event_log(HttpServletRequest request,String mac){
+		request.setAttribute("mac", mac); 
+		return "/home/event";
+	}
+	
 	
 	/**
 	 * 错误页
