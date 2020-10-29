@@ -166,7 +166,7 @@ function _update(_e){
 	        		if('200'==res.code){
 	        			layer.close(index);
 	        			layer.alert('操作成功！',function(){
-	        				location.reload();
+	        				_getData();
 	        			})
 	        		}else{
 	        			layer.close(index);
