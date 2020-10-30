@@ -10,7 +10,7 @@
 				<div class="row" style="margin-top: 15px;">
 					<div class="col-md-3">
 						<div class="input-group">
-							<input type="text" class="form-control" id="rovertag" value="041020511126"> <span
+							<input type="text" class="form-control" id="rovertag" value="2020082720200827"> <span
 								class="input-group-btn">
 								<button class="btn blue" type="button" onclick="_getData()">查询</button>
 							</span>
@@ -201,6 +201,7 @@
 			range : true
 		});
 	})
+	var _d = '';
 function _getData() {
 	var rovertag = $('#rovertag').val();
 	$.ajax({
@@ -208,12 +209,16 @@ function _getData() {
 			type : 'get',
 			dataType : 'json',
 			success : function(res) {
-				new Vue({
-					el : '#data',
-					data : {
-						item : res.data
-					}
-				})
+				if(''==_d){
+					_d = new Vue({
+						el : '#data',
+						data : {
+							item : res.data
+						}
+					})
+				}else{
+					_d.item = res.data;
+				}
 			}
 		})
 }
