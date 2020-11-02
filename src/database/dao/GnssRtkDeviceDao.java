@@ -28,5 +28,11 @@ public class GnssRtkDeviceDao extends BaseDao<GnssRtkDevice>{
 		return null;
 	}
 
+	public GnssRtkDevice findByMac(String mac) {
+		QueryParam param = QueryParam.getInstance();
+		param.addParam("mac", mac);
+		return findByCriteriaForUnique(param);
+	}
+
 
 }

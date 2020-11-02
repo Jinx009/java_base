@@ -92,12 +92,26 @@ public class PushCallback implements MqttCallback {
 		log.warn("payload:{},topic:{}", payload, topic);
 		try {
 			if (topic.equals("/server/register")) {//设备注册报文
-				GnssRtkDevice gnssDevice = pu.gnssRtkDeviceService.findByRoverTag(payload);
+				GnssRtkDevice gnssDevice = pu.gnssRtkDeviceService.findByMac(payload);
 				if (gnssDevice == null) {
 					gnssDevice = new GnssRtkDevice();
 					gnssDevice.setMac(payload);
+					gnssDevice.setUpdatetime("");
 					gnssDevice.setCreateTime(new Date());
 					pu.gnssRtkDeviceService.save(gnssDevice);
+					StringBuilder sb = new StringBuilder();
+					sb.append("/device/");
+					sb.append(payload);
+					sb.append("/");
+					log.warn("sub mac:{}",payload);
+					client.subscribe(sb.toString()+"control", 1);
+					client.subscribe(sb.toString()+"RTCM", 0);
+					client.subscribe(sb.toString()+"UBX", 0);
+					client.subscribe(sb.toString()+"NMEA", 0);
+					client.subscribe(sb.toString()+"slope&acc", 0);
+					client.subscribe(sb.toString()+"debug", 0);
+					client.subscribe(sb.toString()+"heartbeat", 0);
+					client.subscribe(sb.toString()+"errlog", 0);
 				}else {
 					List<GnssRtkTopic> list = pu.gnssRtkTopicService.list(payload);
 					if(list!=null&&!list.isEmpty()) {

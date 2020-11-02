@@ -26,6 +26,10 @@ public class GnssRtkDeviceService {
 		return gnssRtkDeviceDao.findByNewTime();
 	}
 
+	public GnssRtkDevice findByMac(String mac) {
+		return gnssRtkDeviceDao.findByMac(mac);
+	}
+	
 	public void update(GnssRtkDevice device) {
 		gnssRtkDeviceDao.update(device);
 	}
