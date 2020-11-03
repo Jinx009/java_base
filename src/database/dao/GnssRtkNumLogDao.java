@@ -1,5 +1,7 @@
 package database.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import database.common.BaseDao;
@@ -15,6 +17,16 @@ public class GnssRtkNumLogDao extends BaseDao<GnssRtkNumLog>{
 		param.addParam("mac", mac);
 		param.addParam("startHour", startHour);
 		return findByCriteriaForUnique(param);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<GnssRtkNumLog> findByMac(String mac, String start, String end) {
+		String hql = " from GnssRtkNumLog where createTime>='"+start+"' and createTime<='"+end+"' and mac='"+mac+"' order by id ";
+		List<GnssRtkNumLog> list = em.createQuery(hql).getResultList();
+		if(list!=null&&!list.isEmpty()) {
+			return list;
+		}
+		return null;
 	}
 
 }

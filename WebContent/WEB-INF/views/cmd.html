@@ -1,0 +1,141 @@
+    <#include "gnss_header.html">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="#">控制管理</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="row" style="margin-top: 15px;">
+                <div class="col-md-12 col-sm-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-share font-blue-steel"></i>
+                                <span class="caption-subject font-blue-steel ">设备管理</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="slimScrollDiv"
+                                 style="position: relative; overflow: hidden; width: auto; height: 400px;">
+                            <div class="table-scrollable">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">id</th>
+                                        <th scope="col">命令</th>
+                                        <th scope="col">全文</th>
+                                        <th scope="col">状态</th>
+                                        <th scope="col">回复状态</th>
+                                        <th scope="col">回复全文</th>
+                                        <th scope="col">创建时间</th>
+                                        <th scope="col">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="data">
+											<tr v-for="item in datas" >
+												<td v-text="item.id" ></td>
+												<td v-text="item.cmdName" ></td>
+												<td v-text="item.content" ></td>
+												<td>
+													<font v-if="0===item.status" v-text="'新建'" ></font>
+													<font v-if="1===item.status" v-text="'已回复'" ></font>
+													<font v-if="item.status===2" v-text="'强制完成'" ></font>
+												</td>
+												<td v-text="item.result" ></td>
+												<td v-text="item.resultStr" ></td>
+												<td v-text="item.createTime" ></td>
+												<td>
+													<a class="edit" v-bind:id="item.id" onclick="_edit(this)"  >强制完成 </a>
+												</td>
+											</tr>
+								 	</tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10 col-sm-12"></div>
+                                <div class="col-md-2 col-sm-12">
+                                    <div class="dataTables_paginate paging_simple_numbers"
+                                         id="sample_editable_1_paginate">
+                                        <ul class="pagination">
+                                            <li class="paginate_button previous "
+                                                aria-controls="sample_editable_1" tabindex="0"
+                                                id="sample_editable_1_previous">
+                                                <a href="#">
+                                                    <i class="fa fa-angle-left"></i>
+                                                </a>
+                                            </li>
+                                            <li class="paginate_button active" aria-controls="sample_editable_1"
+                                                tabindex="0">
+                                                <a href="#">1</a>
+                                            </li>
+                                            <li class="paginate_button next "
+                                                aria-controls="sample_editable_1" tabindex="0"
+                                                id="sample_editable_1_next">
+                                                <a href="#">
+                                                    <i class="fa fa-angle-right"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <#include "gnss_footer.html">
+  <script>
+$(function(){
+	_setClass();
+	_getData();
+})
+function _edit(_e){
+	var id = $(_e).attr('id');
+	$.ajax({
+		url:'/d/gnssrtkcontrol/update?id='+id,
+		type:'post',
+		dataType:'json',
+		success:function(res){
+			if(res.code=='200'){
+				layer.alert('操作成功！',function(){
+					location.reload();
+				})
+			}else{
+				layer.alert(res.msg);
+			}
+		}
+	})
+}
+function _getData(){
+	var mac = getUrlParam('mac');
+	if(mac==''||mac==null){
+		mac = '';
+	}
+	$.ajax({
+		url:'/d/gnssrtkcontrol/list?mac='+mac,
+		type:'get',
+		dataType:'json',
+		success:function(res){
+			for(var i in res.data){
+				res.data[i].createTime = toDateTime(parseInt(res.data[i].createTime));
+			}
+			new Vue({
+				el : '#data',
+				data : {
+					datas : res.data
+				}
+			})
+		}
+	})
+}
+</script>
+  </body>
+</html>

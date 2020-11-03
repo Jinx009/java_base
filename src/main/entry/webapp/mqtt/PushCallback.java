@@ -89,7 +89,7 @@ public class PushCallback implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		// subscribe后得到的消息会执行到这里面
 		String payload = new String(message.getPayload());
-		log.warn("payload:{},topic:{}", payload, topic);
+		log.warn("topic:{}",  topic);
 		try {
 			if (topic.equals("/server/register")) {//设备注册报文
 				GnssRtkDevice gnssDevice = pu.gnssRtkDeviceService.findByMac(payload);
@@ -168,6 +168,11 @@ public class PushCallback implements MqttCallback {
 						String date = sdf.format(d);
 						int startHour = Integer.parseInt(sdf2.format(d));
 						GnssRtkNumLog log = pu.gnssRtkNumLogService.find(date,mac, startHour);
+						GnssRtkDevice gnssDevice = pu.gnssRtkDeviceService.findByMac(mac);
+						if(gnssDevice!=null) {
+							gnssDevice.setUpdatetime(String.valueOf(new Date().getTime()));
+							pu.gnssRtkDeviceService.update(gnssDevice);
+						}
 						if(log!=null) {
 							log.setNum(log.getNum()+1);
 							pu.gnssRtkNumLogService.update(log);

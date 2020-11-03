@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,10 @@ public class GnssRtkNumLogService {
 	
 	public GnssRtkNumLog  find(String date,String mac, int startHour) {
 		return gnssRtkNumLogDao.find(date,mac,startHour);
+	}
+	
+	public List<GnssRtkNumLog> findByMac(String mac,String start,String end){
+		return gnssRtkNumLogDao.findByMac(mac,start,end);
 	}
 
 	public void update(GnssRtkNumLog log) {
