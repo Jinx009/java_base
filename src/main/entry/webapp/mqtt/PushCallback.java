@@ -18,15 +18,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import common.helper.StringUtil;
-import database.model.GnssRtkAccLog;
 import database.model.GnssRtkControl;
-import database.model.GnssRtkDebugLog;
 import database.model.GnssRtkDevice;
-import database.model.GnssRtkErrLog;
-import database.model.GnssRtkHeartLog;
 import database.model.GnssRtkNumLog;
 import database.model.GnssRtkTopic;
 import service.GnssRtkAccLogService;
+import service.GnssRtkConnLogService;
 import service.GnssRtkControlService;
 import service.GnssRtkDebugLogService;
 import service.GnssRtkDeviceService;
@@ -56,6 +53,8 @@ public class PushCallback implements MqttCallback {
 	private GnssRtkDebugLogService gnssRtkDebugLogService;
 	@Resource
 	private GnssRtkAccLogService gnssRtkAccLogService;
+	@Resource
+	private GnssRtkConnLogService gnssRtkConnLogService;
 	
 
 	private static PushCallback pu;
@@ -89,16 +88,23 @@ public class PushCallback implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		// subscribe后得到的消息会执行到这里面
 		String payload = new String(message.getPayload());
-		log.warn("topic:{}",  topic);
+		byte[] bytes = message.getPayload();
+		StringBuilder str = new StringBuilder();
+		for(byte b:bytes) {
+			String s1 = Integer.toHexString(b);
+			if(s1.length()==1) {
+				str.append("0");
+				str.append(s1);
+			}else {
+				str.append(s1);
+			}
+		}
+		log.warn("topic:{},message:{}",  topic,str.toString().replace(" ", "").replace("ffffff", "").toUpperCase());
 		try {
 			if (topic.equals("/server/register")) {//设备注册报文
 				GnssRtkDevice gnssDevice = pu.gnssRtkDeviceService.findByMac(payload);
 				if (gnssDevice == null) {
-					gnssDevice = new GnssRtkDevice();
-					gnssDevice.setMac(payload);
-					gnssDevice.setUpdatetime("");
-					gnssDevice.setCreateTime(new Date());
-					pu.gnssRtkDeviceService.save(gnssDevice);
+					pu.gnssRtkDeviceService.saveDevice(payload);
 					StringBuilder sb = new StringBuilder();
 					sb.append("/device/");
 					sb.append(payload);
@@ -112,17 +118,13 @@ public class PushCallback implements MqttCallback {
 					client.subscribe(sb.toString()+"debug", 0);
 					client.subscribe(sb.toString()+"heartbeat", 0);
 					client.subscribe(sb.toString()+"errlog", 0);
+					pu.gnssRtkConnLogService.saveConnLog(payload,0);
 				}else {
+					pu.gnssRtkConnLogService.saveConnLog(payload,1);
 					List<GnssRtkTopic> list = pu.gnssRtkTopicService.list(payload);
 					if(list!=null&&!list.isEmpty()) {
 						StringBuilder sb = new StringBuilder();
-						GnssRtkControl grc = new GnssRtkControl();
-						grc.setCmd("33");
-						grc.setCreateTime(new Date());
-						grc.setMac(payload);
-						grc.setResultStr("");
-						grc.setStatus(0);
-						grc = pu.gnssRtkControlService.save(grc);
+						GnssRtkControl grc = pu.gnssRtkControlService.saveCmd("33",payload,0);
 						String sn = StringUtil.getMore(Integer.toHexString(grc.getId()));
 						grc.setCmdName("设置gnss订阅/退订主题设定");
 						sb.append("4800");
@@ -144,21 +146,10 @@ public class PushCallback implements MqttCallback {
 				String mac = strs[2];
 				String t = strs[3];
 				if(t.equals("control")) {//下行命令回复
-					String id = payload.substring(4,12);
-					long dec_num = Long.parseLong(id, 16);
-					GnssRtkControl grc = pu.gnssRtkControlService.find((int)dec_num);
-					if(grc!=null) {
-						grc.setResultStr(payload);
-						grc.setStatus(1);
-						pu.gnssRtkControlService.update(grc);
-					}
+					pu.gnssRtkControlService.updateGrc(payload,mac);
 				}
 				if(t.equals("heartbeat")) {//心跳报文
-					GnssRtkHeartLog log = new GnssRtkHeartLog();
-					log.setBaseData(payload);
-					log.setMac(mac);
-					log.setCreateTime(new Date());
-					pu.gnssRtkHeartLogService.save(log);
+					pu.gnssRtkHeartLogService.saveHeartbeat(payload,mac);
 				}
 				if(t.equals("RTCM")||t.equals("UBX")||t.equals("NMEA")) {//转发报文
 					try {
@@ -193,59 +184,21 @@ public class PushCallback implements MqttCallback {
 				}
 				if(t.equals("errlog")) {//错误日志报文
 					try {
-						GnssRtkErrLog log = new GnssRtkErrLog();
-						log.setBaseData(payload);
-						log.setCreateTime(new Date());
-						log.setMac(mac);
-						log.setErrorContent(StringUtil.convertHexToString(payload));
-						pu.gnssRtkErrLogService.save(log);
+						pu.gnssRtkErrLogService.saveErrlog(payload,mac);
 					} catch (Exception e) {
 						log.error("e:{},topic:{},mac:{}",e,t,mac);
 					}
 				}
 				if(t.equals("slope&acc")) {//错误日志报文
 					try {
-						GnssRtkAccLog log = new GnssRtkAccLog();
-						double accX = StringUtil.hexToFloat(payload.substring(24,32));
-						double accY = StringUtil.hexToFloat(payload.substring(32,40));
-						double accZ = StringUtil.hexToFloat(payload.substring(40,48));
-						double angleX = StringUtil.hexToFloat(payload.substring(48,56));
-						double angleY = StringUtil.hexToFloat(payload.substring(56,64));
-						double angleZ = StringUtil.hexToFloat(payload.substring(64,72));
-						int flag = Integer.valueOf(payload.substring(18,20));
-						int alarmtype = Integer.valueOf(payload.substring(20,22));
-						String alarmvalue = StringUtil.getB(payload.substring(22, 24));
-						double accXP2p = StringUtil.hexToFloat(payload.substring(72,80));
-						double accYP2p = StringUtil.hexToFloat(payload.substring(80,88));
-						double accZP2p = StringUtil.hexToFloat(payload.substring(88,96));
-						double shockStrength = StringUtil.hexToFloat(payload.substring(96,104));
-						log.setAccX(accX);
-						log.setAccXP2p(accXP2p);
-						log.setAccY(accY);
-						log.setAccYP2p(accYP2p);
-						log.setAccZ(accZ);
-						log.setAccZP2p(accZP2p);
-						log.setAlarmtype(alarmtype);
-						log.setAlarmvalue(alarmvalue);
-						log.setAngleX(angleX);
-						log.setAngleY(angleY);
-						log.setAngleZ(angleZ);
-						log.setCreateTime(new Date());
-						log.setFlag(flag);
-						log.setShockStrength(shockStrength);
-						pu.gnssRtkAccLogService.save(log);
+						pu.gnssRtkAccLogService.saveAccLog(payload,mac);
 					} catch (Exception e) {
 						log.error("e:{},topic:{},mac:{}",e,t,mac);
 					}
 				}
 				if(t.equals("debug")) {//错误日志报文
 					try {
-						GnssRtkDebugLog log = new GnssRtkDebugLog();
-						log.setBaseData(payload);
-						log.setCreateTime(new Date());
-						log.setDebugContent(StringUtil.convertHexToString(payload));
-						log.setMac(mac);
-						pu.gnssRtkDebugLogService.save(log);
+						pu.gnssRtkDebugLogService.saveDebuglog(payload,mac);
 					} catch (Exception e) {
 						log.error("e:{},topic:{},mac:{}",e,t,mac);
 					}

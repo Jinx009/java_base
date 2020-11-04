@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import database.model.GnssMongoDeviceModel;
 import database.model.GnssRtkDevice;
 import main.entry.webapp.BaseController;
+import main.entry.webapp.mongo.MongoUtil;
 import service.GnssRtkDeviceService;
 import utils.Resp;
 
@@ -43,6 +45,31 @@ public class GnssRtkDeviceDataController extends BaseController{
 		try {
 			GnssRtkDevice device = gnssRtkDeviceService.findByRoverTag(rovertag);
 			return new Resp<>(device);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	
+	@RequestMapping(path = "/setTag")
+	@ResponseBody
+	public Resp<?> find(String mac,String basetag,Integer subStatus,String t){
+		Resp<?> resp = new Resp<>();
+		try {
+			GnssMongoDeviceModel model = MongoUtil.selectTag(mac);
+			Integer tagType = 0;
+			if(basetag.equals(mac)) {
+				tagType = 1;
+				basetag = "";
+			}
+			String topic = "/device/"+mac+"/"+t;
+			if(model==null) {
+				MongoUtil.save(basetag, mac, subStatus, topic, tagType);
+			}else {
+				MongoUtil.updateTag(mac, subStatus, tagType);
+			}
+			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("e:{}",e);
 		}

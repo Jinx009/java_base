@@ -29,7 +29,7 @@ public class RtkTask {
 	@Autowired
 	private GnssRtkLogService gnssRtkLogService;
 	
-//	@Scheduled(cron = "0 */20 * * * ?")//20分钟处理一次
+	@Scheduled(cron = "0 */20 * * * ?")//20分钟处理一次
 	public void init(){
 		GnssRtkDevice rtk = gnssRtkDeviceService.findByNewTime();
 		if(rtk==null){

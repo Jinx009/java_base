@@ -21,11 +21,58 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
+import database.model.GnssMongoDeviceModel;
 import database.model.GnssRtkLog;
 
 public class MongoUtil {
 
 	private static Logger log = LoggerFactory.getLogger(MongoUtil.class);
+	
+	/**
+	 * 保存一个站点
+	 * @param basetag
+	 * @param tag
+	 * @param substatus
+	 * @param topic
+	 * @param tagtype
+	 */
+	public static void save(String basetag,String tag,Integer substatus,String topic,Integer tagtype) {
+		MongoClient mongoClient = new MongoClient("localhost", 27017);
+		MongoDatabase mongoDatabase = mongoClient.getDatabase("result");
+		MongoCollection<Document> collection = mongoDatabase.getCollection("tags");
+		collection.insertOne(new Document("basetag",basetag)
+				.append("tag",tag)
+				.append("topic",topic)
+				.append("subStatus", substatus)
+				.append("tagtype", tagtype)
+				.append("time", new Date().getTime()));
+		mongoClient.close();
+	}
+	
+	public static void updateTag(String tag,Integer substatus,Integer tagtype) {
+		MongoClient mongoClient = new MongoClient("localhost", 27017);
+		MongoDatabase mongoDatabase = mongoClient.getDatabase("result");
+		MongoCollection<Document> collection = mongoDatabase.getCollection("tags");
+		collection.updateOne(Filters.eq("tag", tag), new Document("$set",new Document("substatus",substatus).append("tagtype", tagtype)));
+		mongoClient.close();
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static GnssMongoDeviceModel selectTag(String tag) {
+		MongoClient mongoClient = new MongoClient("localhost", 27017);
+		MongoDatabase mongoDatabase = mongoClient.getDatabase("result");
+		MongoCollection<Document> collection = mongoDatabase.getCollection("tags");
+		Bson filter = Filters.eq("tag",tag);
+		FindIterable findIterable = collection.find(filter);
+		MongoCursor cursor = findIterable.iterator();
+		GnssMongoDeviceModel model = new GnssMongoDeviceModel();
+		while (cursor.hasNext()) {
+			String str = JSONObject.toJSONString(cursor.next());
+			model = JSONObject.parseObject(str, GnssMongoDeviceModel.class);
+		}
+		mongoClient.close();
+		return model;
+	}
 
 	@SuppressWarnings("rawtypes")
 	public static List<GnssRtkLog> select() {

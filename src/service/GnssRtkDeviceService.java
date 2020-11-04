@@ -1,5 +1,6 @@
 package service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,14 @@ public class GnssRtkDeviceService {
 
 	public List<GnssRtkDevice> findAll() {
 		return gnssRtkDeviceDao.findAll();
+	}
+
+	public void saveDevice(String payload) {
+		GnssRtkDevice gnssDevice = new GnssRtkDevice();
+		gnssDevice.setMac(payload);
+		gnssDevice.setUpdatetime("");
+		gnssDevice.setCreateTime(new Date());
+		gnssRtkDeviceDao.save(gnssDevice);
 	}
 
 	

@@ -28,7 +28,6 @@ public class GnssRtkLogDao extends BaseDao<GnssRtkLog>{
 		long endtime = sdf.parse(end).getTime();
 		
 		String hql = " from GnssRtkLog where rovertag = '"+rovertag+"' and updatetime>='"+starttime+"'  and updatetime <='"+endtime+"' ";
-		System.out.println(hql);
 		List<GnssRtkLog> list = em.createQuery(hql).getResultList();
 		if(list!=null&&!list.isEmpty()){
 			return list;
