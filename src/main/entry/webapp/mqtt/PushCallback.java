@@ -159,11 +159,6 @@ public class PushCallback implements MqttCallback {
 						String date = sdf.format(d);
 						int startHour = Integer.parseInt(sdf2.format(d));
 						GnssRtkNumLog log = pu.gnssRtkNumLogService.find(date,mac, startHour);
-						GnssRtkDevice gnssDevice = pu.gnssRtkDeviceService.findByMac(mac);
-						if(gnssDevice!=null) {
-							gnssDevice.setUpdatetime(String.valueOf(new Date().getTime()));
-							pu.gnssRtkDeviceService.update(gnssDevice);
-						}
 						if(log!=null) {
 							log.setNum(log.getNum()+1);
 							pu.gnssRtkNumLogService.update(log);

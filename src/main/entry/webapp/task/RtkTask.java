@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 
+import common.helper.StringUtil;
 import database.model.GnssRtkDevice;
 import database.model.GnssRtkLog;
 import main.entry.webapp.mongo.MongoUtil;
@@ -32,7 +33,7 @@ public class RtkTask {
 	@Scheduled(cron = "0 */20 * * * ?")//20分钟处理一次
 	public void init(){
 		GnssRtkDevice rtk = gnssRtkDeviceService.findByNewTime();
-		if(rtk==null){
+		if(rtk!=null&&StringUtil.isBlank(rtk.getUpdatetime())){
 			List<GnssRtkLog> list = MongoUtil.select();
 			logger.warn("select:{}",JSONObject.toJSONString(list));
 			if(list!=null&&!list.isEmpty()){
@@ -40,7 +41,7 @@ public class RtkTask {
 			}
 		}else{
 			List<GnssRtkLog> list = MongoUtil.select(rtk.getUpdatetime());
-//			logger.warn("select updatetime:{}",JSONObject.toJSONString(list));
+			logger.warn("select updatetime:{}",JSONObject.toJSONString(list));
 			if(list!=null&&!list.isEmpty()){
 				save(list,rtk.getUpdatetime());
 			}
@@ -74,8 +75,21 @@ public class RtkTask {
 				device.setWindow(log.getWindow());
 				gnssRtkDeviceService.save(device);
 			}else{
+				device.setBasetag(log.getBasetag());
+				device.setCoverrate(log.getCoverrate());
 				device.setDatetime(log.getDatetime());
+				device.setEast(log.getEast());
+				device.setFixrate(log.getFixrate());
+				device.setHeight(log.getHeight());
+				device.setLat(log.getLat());
+				device.setLng(log.getLng());
+				device.setNorth(log.getNorth());
+				device.setQuality(log.getQuality());
+				device.setRovertag(log.getRovertag());
+				device.setSatellites(log.getSatellites());
+				device.setUp(log.getUp());
 				device.setUpdatetime(log.getUpdatetime());
+				device.setWindow(log.getWindow());
 				gnssRtkDeviceService.update(device);
 			}
 		}

@@ -20,7 +20,7 @@ public class GnssRtkDeviceDao extends BaseDao<GnssRtkDevice>{
 	
 	public GnssRtkDevice findByNewTime() {
 		QueryParam param = QueryParam.getInstance();
-		param.addOrder(OrderType.DESC,"createTime");
+		param.addOrder(OrderType.DESC,"updatetime");
 		List<GnssRtkDevice> list = findByCriteria(param);
 		if(list!=null&&!list.isEmpty()){
 			return list.get(0);
