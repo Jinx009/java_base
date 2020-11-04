@@ -41,34 +41,43 @@
 			dataType : 'json',
 			success : function(res) {
 				for(var i in res.data){
-					if(res.data[i].lat!=null&&res.data[i].lat!=''&&res.data[i].rovertag!=null){
+					if(res.data[i].lat!=null&&res.data[i].lat!=''&&res.data[i].basetag!=null){
 						list.push(res.data[i]);
 					}
 				}
-				console.log(list)
 				init();
 			}
 		})
 	}
+	var map = new BMapGL.Map("allmap"); // 创建Map实例
+	map.enableScrollWheelZoom(true); 
+	map.setMapType(BMAP_EARTH_MAP);
 	function init() {
-		var map = new BMapGL.Map("allmap"); // 创建Map实例
+		var opts = [];
 		for ( var i in list) {
 			var point = new BMapGL.Point(list[i].lng, list[i].lat);
-			map.centerAndZoom(point, 5);
 			var marker = new BMapGL.Marker(point); // 创建标注
 			map.addOverlay(marker); // 将标注添加到地图中
-			map.enableScrollWheelZoom(true); 
-			map.setMapType(BMAP_EARTH_MAP);
+			map.centerAndZoom(point, 5);
+			map.addOverlay(marker); // 将标注添加到地图中
 			var opts = {
-				width : 150, // 信息窗口宽度
-				height : 50, // 信息窗口高度
-				title : "站点：" + list[i].rovertag, // 信息窗口标题
-				message : "基准站：" + list[i].basetag
-			}
-			var infoWindow = new BMapGL.InfoWindow("基准站：" + list[i].basetag,opts); // 创建信息窗口对象 
-			marker.addEventListener("click", function() {
-				map.openInfoWindow(infoWindow, point); //开启信息窗口
-			});
+				    position: point, // 指定文本标注所在的地理位置
+				  /*   offset: new BMapGL.Size(20, -20) // 设置文本偏移量 */
+				};
+				// 创建文本标注对象
+				var label = new BMapGL.Label('站名：'+list[i].basetag, opts);
+				// 自定义文本标注样式
+				label.setStyle({
+				    color: 'white',
+				    borderRadius: '5px',
+				    borderColor: '#ccc',
+				    padding: '2px',
+				    fontSize: '12px',
+				    height: '12px',
+				    lineHeight: '12px',
+				    fontFamily: '微软雅黑'
+				});
+				map.addOverlay(label);
 		}
 		$('.anchorBL').css('display','none');
 		$('.BMap_cpyCtrl').css('display','none');

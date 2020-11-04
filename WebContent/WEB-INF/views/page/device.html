@@ -33,7 +33,7 @@
                                         <th scope="col">north</th>
                                         <th scope="col">up</th>
                                         <th scope="col">基准站</th>
-                                        <th scope="col">更新时间</th>
+                                        <th scope="col">创建时间</th>
                                         <th scope="col">操作</th>
                                     </tr>
                                     </thead>
@@ -46,7 +46,7 @@
 												<td v-text="item.north" ></td>
 												<td v-text="item.up" ></td>
 												<td v-text="item.basetag" ></td>
-												<td v-text="item.updatetime" ></td>
+												<td v-text="item.createTime" ></td>
 												<td>
 													<a class="edit" v-bind:href="'/home/cmd_add?mac='+item.mac+'&c=6'">控制 </a>
 												</td>
@@ -102,7 +102,7 @@ function _getData(){
 		dataType:'json',
 		success:function(res){
 			for(var i in res.data){
-				res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
+				res.data[i].createTime = toDateTime(parseInt(res.data[i].createTime));
 			}
 			new Vue({
 				el : '#data',
