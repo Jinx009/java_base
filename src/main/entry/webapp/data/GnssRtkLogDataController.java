@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import database.common.PageDataList;
+import database.model.GnssRtkConnLog;
 import database.model.GnssRtkLog;
 import database.model.GnssRtkNumLog;
 import main.entry.webapp.BaseController;
+import service.GnssRtkConnLogService;
 import service.GnssRtkLogService;
 import service.GnssRtkNumLogService;
 import utils.Resp;
@@ -27,6 +29,8 @@ public class GnssRtkLogDataController extends BaseController{
 	private GnssRtkLogService gnssRtkLogService;
 	@Autowired
 	private GnssRtkNumLogService gnssRtkNumLogService;
+	@Autowired
+	private GnssRtkConnLogService gnssRtkConnLogService;
 	
 	@RequestMapping(path = "/page")
 	@ResponseBody
@@ -49,6 +53,19 @@ public class GnssRtkLogDataController extends BaseController{
 			//2020-11-03 00:00:00 - 2020-11-03 00:00:00
 			List<GnssRtkNumLog> list = gnssRtkNumLogService.findByMac(mac, start, end);
 			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/findConn")
+	@ResponseBody
+	public Resp<?> findConn(String mac,int p){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			PageDataList<GnssRtkConnLog> pages = gnssRtkConnLogService.findByMacAndP(p, mac);
+			return new Resp<>(pages);
 		} catch (Exception e) {
 			log.error("e:{}",e);
 		}
