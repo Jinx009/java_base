@@ -10,7 +10,7 @@
 				<div class="row" style="margin-top: 15px;">
 					<div class="col-md-3">
 						<div class="input-group">
-							<input type="text" class="form-control" id="rovertag" value="001918000012AB02"> <span
+							<input type="text" class="form-control" id="rovertag" value="0010202009000003"> <span
 								class="input-group-btn">
 								<button class="btn blue" type="button" onclick="_getData()">查询</button>
 							</span>
@@ -271,11 +271,14 @@ function _getLog(){
 				dateArr = [];
 				for(var i in res.data){
 					res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
-					e.push(res.data[i].east);
-					n.push(res.data[i].north);
-					u.push(res.data[i].up);
+					e.push(parseFloat(res.data[i].east).toFixed(4));
+					n.push(parseFloat(res.data[i].north).toFixed(4));
+					u.push(parseFloat(res.data[i].up).toFixed(4));
 					dateArr.push(res.data[i].updatetime);
 				}
+				console.log(n);
+				console.log(e)
+				console.log(u)
 				_draw();
 			}
 		})
@@ -331,25 +334,21 @@ function _draw(){
 					{
 						name : 'E',
 						type : 'line',
-						stack : '总量',
 						data :e
 					},
 					{
 						name : 'N',
 						type : 'line',
-						stack : '总量',
 						data :n
 					},
 					{
 						name : 'U',
 						type : 'line',
-						stack : '总量',
 						data : u
 					}, {
 						name : '解算失败',
 						type : 'line',
-						stack : '总量',
-						data : [ '', 0, 0, 0, 0, 0, '' ]
+						data : []
 					} ]
 		};
 		var myChart = echarts.init(document
