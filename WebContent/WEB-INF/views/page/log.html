@@ -265,6 +265,10 @@ function _getLog(){
 			dataType:'json',
 			type:'post',
 			success:function(res){
+				e = [];
+				n =[];
+				u =[];
+				dateArr = [];
 				for(var i in res.data){
 					res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
 					e.push(res.data[i].east);
