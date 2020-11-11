@@ -71,7 +71,7 @@ public class LogsController extends BaseController {
 
 	@RequestMapping(path = "updateDesc")
 	@ResponseBody
-	public Resp<?> updateDesc(String mac, String baseMac, String desc, String sec, String parentMac) {
+	public Resp<?> updateDesc(String mac, String baseMac, String desc, String sec, String parentMac,int a) {
 		if ("Zhanway2020".equals(sec)) {
 			if (mac.equals(baseMac)) {
 				DeviceSensor sensor = deviceSensorService.findByMac(mac);
@@ -113,7 +113,31 @@ public class LogsController extends BaseController {
 			deviceSensorService.update(sensor);
 			logSensorLogService.saveOperationLog(sensor);
 		} else {
-			return new Resp<>(false);
+			if(1==a) {
+				DeviceSensor sensor = deviceSensorService.findByMac(mac);
+				Date date = new Date();
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				int avalable = Math.abs(sensor.getAvailable() - 1);
+				sensor.setAvailable(avalable);
+				sensor.setLastSeenTime(date);
+				sensor.setSensorStatus(avalable);
+				sensor.setMode("");
+				sensor.setHappenTime(date);
+				sensor.setSensorTime(sdf1.format(date));
+				sensor.setVedioStatus("");
+				sensor.setCph("wjb");
+				sensor.setCpColor("");
+				sensor.setCameraId("");
+				sensor.setPicLink("");
+				sensor.setVedioTime("");
+				sensor.setSensorTime(sdf1.format(sensor.getHappenTime()));
+				sensor.setBluetooth("");
+				sensor.setBluetoothArray("");
+				deviceSensorService.update(sensor);
+				logSensorLogService.saveOperationLog(sensor);
+			}else {
+				return new Resp<>(false);
+			}
 		}
 		return new Resp<>(true);
 	}
