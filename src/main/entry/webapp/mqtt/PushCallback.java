@@ -113,7 +113,7 @@ public class PushCallback implements MqttCallback {
 			}
 		}
 		try {
-			pu.gnssMsgLogService.save(topic, str.toString().replace(" ", "").replace("ffffff", "").toUpperCase());
+//			pu.gnssMsgLogService.save(topic, str.toString().replace(" ", "").replace("ffffff", "").toUpperCase());
 			if (topic.equals("/server/register")) {//设备注册报文
 				GnssRtkDevice gnssDevice = pu.gnssRtkDeviceService.findByMac(payload);
 				if (gnssDevice == null) {
