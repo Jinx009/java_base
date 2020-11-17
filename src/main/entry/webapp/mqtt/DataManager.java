@@ -66,7 +66,7 @@ public class DataManager {
 					sb.append(d.getMac());
 					sb.append("/");
 					log.warn("sub mac:{}", d.getMac());
-					client.subscribe(sb.toString()+"control", Qos);
+					client.subscribe(sb.toString()+"control", 0);
 					client.subscribe(sb.toString()+"RTCM", 0);
 					client.subscribe(sb.toString()+"UBX", 0);
 					client.subscribe(sb.toString()+"NMEA", 0);

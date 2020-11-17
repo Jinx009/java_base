@@ -22,6 +22,7 @@ import database.model.GnssRtkControl;
 import database.model.GnssRtkDevice;
 import database.model.GnssRtkNumLog;
 import database.model.GnssRtkTopic;
+import service.GnssMsgLogService;
 import service.GnssRtkAccLogService;
 import service.GnssRtkConnLogService;
 import service.GnssRtkControlService;
@@ -55,6 +56,8 @@ public class PushCallback implements MqttCallback {
 	private GnssRtkAccLogService gnssRtkAccLogService;
 	@Resource
 	private GnssRtkConnLogService gnssRtkConnLogService;
+	@Resource
+	private GnssMsgLogService gnssMsgLogService;
 	
 
 	private static PushCallback pu;
@@ -64,6 +67,16 @@ public class PushCallback implements MqttCallback {
 	@PostConstruct
 	public void init() {
 		pu = this;
+		pu.gnssRtkDeviceService = this.gnssRtkDeviceService;
+		pu.gnssRtkTopicService = this.gnssRtkTopicService;
+		pu.gnssRtkControlService = this.gnssRtkControlService;
+		pu.gnssRtkHeartLogService = this.gnssRtkHeartLogService;
+		pu.gnssRtkNumLogService = this.gnssRtkNumLogService;
+		pu.gnssRtkErrLogService = this.gnssRtkErrLogService;
+		pu.gnssRtkDebugLogService = this.gnssRtkDebugLogService;
+		pu.gnssRtkAccLogService = this.gnssRtkAccLogService;
+		pu.gnssRtkConnLogService = this.gnssRtkConnLogService;
+		pu.gnssMsgLogService = this.gnssMsgLogService;
 	}
 
 	public void connectionLost(Throwable cause) {
@@ -99,8 +112,8 @@ public class PushCallback implements MqttCallback {
 				str.append(s1);
 			}
 		}
-		log.warn("topic:{},message:{}",  topic,str.toString().replace(" ", "").replace("ffffff", "").toUpperCase());
 		try {
+			pu.gnssMsgLogService.save(topic, str.toString().replace(" ", "").replace("ffffff", "").toUpperCase());
 			if (topic.equals("/server/register")) {//设备注册报文
 				GnssRtkDevice gnssDevice = pu.gnssRtkDeviceService.findByMac(payload);
 				if (gnssDevice == null) {

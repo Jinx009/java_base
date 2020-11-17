@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>展为地质灾害监测</title>
+<meta name="viewport"
+	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<script src="/themes/awe/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="/themes/layer/layer.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+<!--[if lt IE 9]>
+  <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+<![endif]-->
+<style type="text/css">
+body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+.bg{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	background-image: url(/themes/img/d2.png);
+	background-size:100% 100%;
+	background-repeat:repeat-y; 
+}
+.layui-layer-title{
+	background: rgb(24,65,107);
+	color: white;
+}
+.layui-layer-close1{
+	color: white;
+}
+.layui-layer-setwin .layui-layer-close1 {
+	background-position: 10px 0px;
+	cursor: pointer;
+	background-image: url(/themes/img/x.png);
+}
+.layui-layer-setwin a {
+	position: absolute;
+    width: 52px;
+    height: 40px;
+    _overflow: hidden;
+    top: -14px;
+    left: -65px;
+}
+.s2{
+	color:gray;
+	margin-top:5px;
+	margin-left:15px;
+	line-height:24px;
+	font-size: 14px;
+}
+.s3{
+	width: 100%;
+	height: 1px;
+	background: gray;
+	margin-top: 5px;
+	opacity: 0.3;
+}
+</style>
+</head>
+<body>
+	<div class="bg" >
+		<b style="position: absolute;top:140px;left: 845px;width: 20px;color: rgb(45,45,45);text-shadow:-1px 0 white,0 1px white,1px 0 white,0 -1px white;" >01(GNSS)</b>
+		<img alt="" src="/themes/img/gnss.png" style="position: absolute;top:170px;left: 860px;width: 20px;" >
+		<b style="position: absolute;top:255px;left: 715px;width: 20px;color: rgb(45,45,45);text-shadow:-1px 0 white,0 1px white,1px 0 white,0 -1px white;" >11(GNSS)</b>
+		<img alt="" src="/themes/img/gnss.png" style="position: absolute;top:280px;left: 740px;width: 20px;" onclick="show()">
+	</div>	
+
+	<script type="text/javascript">
+		var cont1 = '<div>'+
+		'<div class="s2">监测类型：GNSS</div>'+
+		'<div class="s2">设备名称：0010202009000006</div>'+
+		'<div class="s2">设备编号：11</div>'+
+		'<div class="s2">设备厂商：上海展为智能技术股份有限公司</div>'+
+		'<div class="s2">安装时间：</div>'+
+		'<div class="s2">设备状态：在线</div>'+
+		'<div class="s3"></div>'+
+		'<div class="s4">'+
+		'<img src="/themes/img/33.png" style="float:right;width:35px;margin-top:4px;" onclick="show1()" />'+
+		'<img src="/themes/img/22.png" style="float:right;width:35px;margin-top:4px;" onclick="show2()"   />'+
+		'<img src="/themes/img/11.png" style="float:right;width:35px;margin-top:2px;" onclick="show3()"   />'+
+		'</div>'+
+		'</div>';
+		var cont2 = '<div>'+
+		'<img src="/themes/img/55.jpeg" style="width:90%;margin-top:0px;margin-left:5%;"   />'+
+		'<img src="/themes/img/66.jpeg" style="width:90%;margin-top:0px;margin-left:5%;"  />'+
+		'<img src="/themes/img/77.jpeg" style="width:90%;margin-top:0px;margin-left:5%;"  />'+
+		'</div>';
+		var cont3 = '<div>'+
+		'<img src="/themes/img/s1.png" style="width:90%;margin-top:35px;margin-left:5%;"   />'+
+		'<img src="/themes/img/s2.png" style="width:90%;margin-top:35px;margin-left:5%;"   />'+
+		'</div>';
+		var cont4 = '<div>'+
+		'<table style="width:96%;margin-left:2%;">'+
+		'<tr>'+
+		'<td  style="padding-top:10px;"><b>最近4天图像</b></td>'+
+		'<td></td>'+
+		'<td></td>'+
+		'<td></td>'+
+		'</tr>'+
+		'<tr >'+
+		'<td style="padding-top:10px;" ><img src="/themes/img/ss1.jpeg" style="width:100%;margin-top:0px;"   /></td>'+
+		'<td style="padding-top:10px;" ><img src="/themes/img/ss2.jpeg" style="width:100%;margin-top:0px;"   /></td>'+
+		'<td style="padding-top:10px;" ><img src="/themes/img/ss3.jpeg" style="width:100%;margin-top:0px;"   /></td>'+
+		'<td style="padding-top:10px;" ><img src="/themes/img/110.jpeg" style="width:100%;margin-top:0px;"   /></td>'+
+		'</tr>'+
+		'<tr>'+
+		'<td  style="padding-top:10px;"><b>偏移量曲线</b></td>'+
+		'<td></td>'+
+		'<td></td>'+
+		'<td></td>'+
+		'</tr>'+
+		'<tr>'+
+		'<td colspan="4"><img src="/themes/img/p1.png" style="width:98%;margin-top:0px;margin-right:2%;"   /></td>'+
+		'</tr>'+
+		'</table>'+
+		'</div>';
+		function show3(){
+			layer.open({
+				 type:1,
+				  area: ['440px', '660px'],
+				  skin: 'layui-layer-rim', //样式类名
+				  closeBtn: 1, //不显示关闭按钮
+				  anim: 2,
+				  title:'电池使用情况',
+				  shadeClose: false, //开启遮罩关闭
+				  content: cont2,
+				  shade:0
+				});
+		}
+		function show2(){
+			layer.open({
+				 type:1,
+				  area: ['940px', '720px'],
+				  skin: 'layui-layer-rim', //样式类名
+				  closeBtn: 1, //不显示关闭按钮
+				  anim: 2,
+				  title:'GNSS解算结果',
+				  shadeClose: false, //开启遮罩关闭
+				  content: cont3,
+				  shade:0
+				});
+		}
+		function show1(){
+			layer.open({
+				 type:1,
+				  area: ['1024px', '700px'],
+				  skin: 'layui-layer-rim', //样式类名
+				  closeBtn: 1, //不显示关闭按钮
+				  anim: 2,
+				  title:'摄像头数据',
+				  shadeClose: false, //开启遮罩关闭
+				  content: cont4,
+				  shade:0
+				});
+		}
+		function show(){
+			layer.open({
+				 type:1,
+				  area: ['340px', '260px'],
+				  skin: 'layui-layer-rim', //样式类名
+				  closeBtn: 1, //不显示关闭按钮
+				  anim: 2,
+				  title:'11&nbsp;(GNSS)',
+				  shadeClose: false, //开启遮罩关闭
+				  content: cont1,
+				  shade:0
+				});
+		}
+	</script>
+</body>
+</html>

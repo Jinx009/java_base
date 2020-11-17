@@ -10,7 +10,7 @@
 				<div class="row" style="margin-top: 15px;">
 					<div class="col-md-3">
 						<div class="input-group">
-							<input type="text" class="form-control" id="rovertag" value="0010202009000003"> <span
+							<input type="text" class="form-control" id="rovertag" value="0010202009000006"> <span
 								class="input-group-btn">
 								<button class="btn blue" type="button" onclick="_getData()">查询</button>
 							</span>
@@ -93,7 +93,7 @@
 						</div>
 						<div data-spy="scroll" data-target="#navbar-example2"
 							style="height: 1400px;" data-offset="0" class="scrollspy-example">
-							<div class="alert alert-info col-md-12 col-sm-12">
+							<div class="alert alert-info col-md-12 col-sm-12" style="display: none;">
 								<strong></strong> 登录：1081次登出：1081次应解算：96次实际解算：57次解算成功率：59.38%
 							</div>
 							<div class="col-md-12 col-sm-12">
@@ -271,9 +271,15 @@ function _getLog(){
 				dateArr = [];
 				for(var i in res.data){
 					res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
-					e.push(parseFloat(res.data[i].east).toFixed(4));
-					n.push(parseFloat(res.data[i].north).toFixed(4));
-					u.push(parseFloat(res.data[i].up).toFixed(4));
+					var e2 = parseFloat(res.data[i].east).toFixed(4);
+					var n2 = parseFloat(res.data[i].north).toFixed(4);
+					var u2 = parseFloat(res.data[i].up).toFixed(4);
+					var e3 = parseFloat(parseFloat(e2)-20.2);
+					var n3 = parseFloat(parseFloat(n2)+82.1);
+					var u3 = parseFloat(parseFloat(u2)+18.3);
+					e.push(e3*100);
+					n.push(n3*100);
+					u.push(u3*100);
 					dateArr.push(res.data[i].updatetime);
 				}
 				console.log(n);

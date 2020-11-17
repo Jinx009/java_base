@@ -79,5 +79,10 @@ public class HomeController {
 		return "/page/firware";
 	}
 	
+	@RequestMapping(path = "/view")
+	public String view(HttpServletRequest request){
+		return "/page//view";
+	}
+	
 	
 }
