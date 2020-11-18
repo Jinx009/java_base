@@ -27,8 +27,9 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">Mac</th>
-                                        <th scope="col">经度</th>
-                                        <th scope="col">纬度</th>
+                                        <th scope="col">经度（度）</th>
+                                        <th scope="col">纬度（度）</th>
+                                         <th scope="col">大地高（米）</th>
                                         <th scope="col">east</th>
                                         <th scope="col">north</th>
                                         <th scope="col">up</th>
@@ -42,6 +43,7 @@
 												<td v-text="item.mac" ></td>
 												<td v-text="item.lng" ></td>
 												<td v-text="item.lat" ></td>
+												<td v-text="item.height" ></td>
 												<td v-text="item.east" ></td>
 												<td v-text="item.north" ></td>
 												<td v-text="item.up" ></td>
@@ -103,6 +105,18 @@ function _getData(){
 		success:function(res){
 			for(var i in res.data){
 				res.data[i].createTime = toDateTime(parseInt(res.data[i].createTime));
+				if(res.data[i].lng!=''&&res.data[i].lng!=null){
+					res.data[i].lng = parseFloat(res.data[i].lng).toFixed(9);
+					res.data[i].lat = parseFloat(res.data[i].lat).toFixed(9);
+					if(res.data[i].height!=''&&res.data[i].height!=null){
+						res.data[i].height = parseFloat(res.data[i].height).toFixed(4);
+					}
+				}
+				if(res.data[i].east!=''&&res.data[i].east!=null){
+					res.data[i].east = parseFloat(res.data[i].east).toFixed(4);
+					res.data[i].up = parseFloat(res.data[i].up).toFixed(4);
+					res.data[i].north = parseFloat(res.data[i].north).toFixed(4);
+				}
 			}
 			new Vue({
 				el : '#data',
