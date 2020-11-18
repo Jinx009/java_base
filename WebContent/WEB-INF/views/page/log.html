@@ -291,9 +291,9 @@ function _getLog(){
 					var e3 = parseFloat(parseFloat(e2)-20.2);
 					var n3 = parseFloat(parseFloat(n2)+82.1);
 					var u3 = parseFloat(parseFloat(u2)+18.3);
-					e.push(e3*100);
-					n.push(n3*100);
-					u.push(u3*100);
+					e.push(parseFloat(e3*100).toFixed(2));
+					n.push(parseFloat(n3*100).toFixed(2));
+					u.push(parseFloat(u3*100).toFixed(2));
 					dateArr.push(res.data[i].updatetime);
 				}
 				console.log(n);
