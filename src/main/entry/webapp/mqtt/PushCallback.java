@@ -85,6 +85,25 @@ public class PushCallback implements MqttCallback {
 			try {
 				log.info("连接失败重连");
 				client.connect(options);
+				client.subscribe(DataManager.TOPIC, DataManager.Qos);
+				List<GnssRtkDevice> list = pu.gnssRtkDeviceService.findAll();
+				if(list!=null&&!list.isEmpty()) {
+					for(GnssRtkDevice d : list) {
+						StringBuilder sb = new StringBuilder();
+						sb.append("/device/");
+						sb.append(d.getMac());
+						sb.append("/");
+						log.warn("subscribe mac:{}", d.getMac());
+						client.subscribe(sb.toString()+"control", 0);
+						client.subscribe(sb.toString()+"RTCM", 0);
+						client.subscribe(sb.toString()+"UBX", 0);
+						client.subscribe(sb.toString()+"NMEA", 0);
+						client.subscribe(sb.toString()+"slope&acc", 0);
+						client.subscribe(sb.toString()+"debug", 0);
+						client.subscribe(sb.toString()+"heartbeat", 0);
+						client.subscribe(sb.toString()+"errlog", 0);
+					}
+				}
 				log.info("连接失败重连成功");
 				break;
 			} catch (MqttException e) {

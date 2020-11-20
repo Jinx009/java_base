@@ -39,7 +39,7 @@ public class DataManager {
 	public static final String TOPIC = "/server/register";
 	public static MqttClient client;
 	public static MqttConnectOptions options;
-	private static int Qos = 1;// 0：最多一次 、1：最少一次 、2：只有一次
+	public static int Qos = 1;// 0：最多一次 、1：最少一次 、2：只有一次
 
 	/**
 	 * 用来连接服务器
