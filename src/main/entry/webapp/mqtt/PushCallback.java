@@ -108,7 +108,7 @@ public class PushCallback implements MqttCallback {
 				break;
 			} catch (MqttException e) {
 				log.info("连接失败重连失败");
-				log.info("e:{}", e);
+				log.info("connectionLost e:{}", e);
 			}
 		}
 	}
@@ -206,33 +206,33 @@ public class PushCallback implements MqttCallback {
 							pu.gnssRtkNumLogService.save(log);
 						}
 					} catch (Exception e) {
-						log.error("e:{},topic:{},mac:{}",e,t,mac);
+						log.error("RTCM e:{},topic:{},mac:{}",e,t,mac);
 					}
 				}
 				if(t.equals("errlog")) {//错误日志报文
 					try {
 						pu.gnssRtkErrLogService.saveErrlog(payload,mac);
 					} catch (Exception e) {
-						log.error("e:{},topic:{},mac:{}",e,t,mac);
+						log.error("errlog e:{},topic:{},mac:{}",e,t,mac);
 					}
 				}
 				if(t.equals("slope&acc")) {//错误日志报文
 					try {
 						pu.gnssRtkAccLogService.saveAccLog(payload,mac);
 					} catch (Exception e) {
-						log.error("e:{},topic:{},mac:{}",e,t,mac);
+						log.error("slop&acc e:{},topic:{},mac:{}",e,t,mac);
 					}
 				}
 				if(t.equals("debug")) {//错误日志报文
 					try {
 						pu.gnssRtkDebugLogService.saveDebuglog(payload,mac);
 					} catch (Exception e) {
-						log.error("e:{},topic:{},mac:{}",e,t,mac);
+						log.error("debug e:{},topic:{},mac:{}",e,t,mac);
 					}
 				}
 			}
 		} catch (Exception e) {
-			log.error("e:{}", e);
+			log.error("messageArrived e:{}", e);
 		}
 	}
 	
