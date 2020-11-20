@@ -283,26 +283,28 @@ function _getLog(){
 				n =[];
 				u =[];
 				dateArr = [];
-				var e0 = res.data[0].east;
-				var n0 = res.data[0].north;
-				var u0 = res.data[0].up;
-				for(var i in res.data){
-					res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
-					var e2 = parseFloat(res.data[i].east).toFixed(4);
-					var n2 = parseFloat(res.data[i].north).toFixed(4);
-					var u2 = parseFloat(res.data[i].up).toFixed(4);
-					var e3 = parseFloat(parseFloat(e2)-parseFloat(e0));
-					var n3 = parseFloat(parseFloat(n2)-parseFloat(n0));
-					var u3 = parseFloat(parseFloat(u2)-parseFloat(u0));
-					e.push(parseFloat(e3*100).toFixed(2));
-					n.push(parseFloat(n3*100).toFixed(2));
-					u.push(parseFloat(u3*100).toFixed(2));
-					dateArr.push(res.data[i].updatetime);
+				if(myChart!=null){
+					myChart.clear();
 				}
-				console.log(n);
-				console.log(e)
-				console.log(u)
-				_draw();
+				if(res.data!=null){
+					var e0 = res.data[0].east;
+					var n0 = res.data[0].north;
+					var u0 = res.data[0].up;
+					for(var i in res.data){
+						res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
+						var e2 = parseFloat(res.data[i].east).toFixed(4);
+						var n2 = parseFloat(res.data[i].north).toFixed(4);
+						var u2 = parseFloat(res.data[i].up).toFixed(4);
+						var e3 = parseFloat(parseFloat(e2)-parseFloat(e0));
+						var n3 = parseFloat(parseFloat(n2)-parseFloat(n0));
+						var u3 = parseFloat(parseFloat(u2)-parseFloat(u0));
+						e.push(parseFloat(e3*100).toFixed(2));
+						n.push(parseFloat(n3*100).toFixed(2));
+						u.push(parseFloat(u3*100).toFixed(2));
+						dateArr.push(res.data[i].updatetime);
+					}
+					_draw();
+				}
 			}
 		})
 		$.ajax({
@@ -310,6 +312,9 @@ function _getLog(){
 			dataType:'json',
 			type:'post',
 			success:function(res){
+				if(myChart2!=null){
+					myChart2.clear();
+				}
 				numDate = [];
 				numData = [];
 				for(var i in res.data){
@@ -321,6 +326,7 @@ function _getLog(){
 		})
 	}
 }
+var myChart,myChart2;
 var numDate = [];
 var numData = [];
 function _draw(){
@@ -374,7 +380,7 @@ function _draw(){
 						data : []
 					} ]
 		};
-		var myChart = echarts.init(document
+		myChart = echarts.init(document
 				.getElementById('draw'));
 		myChart.setOption(option, true);
 }
@@ -399,7 +405,7 @@ function _draw2(){
 				type : 'line'
 			} ]
 		};
-		var myChart2 = echarts.init(document
+		myChart2 = echarts.init(document
 				.getElementById('draw2'));
 		myChart2.setOption(option2, true);
 }
