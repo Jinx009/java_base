@@ -283,14 +283,17 @@ function _getLog(){
 				n =[];
 				u =[];
 				dateArr = [];
+				var e0 = res.data[0].east;
+				var n0 = res.data[0].north;
+				var u0 = res.data[0].up;
 				for(var i in res.data){
 					res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
 					var e2 = parseFloat(res.data[i].east).toFixed(4);
 					var n2 = parseFloat(res.data[i].north).toFixed(4);
 					var u2 = parseFloat(res.data[i].up).toFixed(4);
-					var e3 = parseFloat(parseFloat(e2)-20.2);
-					var n3 = parseFloat(parseFloat(n2)+82.1);
-					var u3 = parseFloat(parseFloat(u2)+18.3);
+					var e3 = parseFloat(parseFloat(e2)-parseFloat(e0));
+					var n3 = parseFloat(parseFloat(n2)-parseFloat(n0));
+					var u3 = parseFloat(parseFloat(u2)-parseFloat(u0));
 					e.push(parseFloat(e3*100).toFixed(2));
 					n.push(parseFloat(n3*100).toFixed(2));
 					u.push(parseFloat(u3*100).toFixed(2));
