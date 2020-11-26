@@ -27,17 +27,15 @@ public class SendUtils {
 			String data2 = readFileContent("/Users/jinx/Downloads/new.txt");
 			JSONArray base = JSONObject.parseArray(data);
 			JSONArray new2 = JSONObject.parseArray(data2);
-			for(int i = 0;i<new2.size();i++) {
-				JSONObject obj = new2.getJSONObject(i);
-				String mac = obj.getString("mac");
-				String CAR = "暂无";
-				for(int j=0;j<base.size();j++) {
-					JSONObject obj2 = base.getJSONObject(j);
-					if(mac.equals(obj2.getString("MAC"))) {
-						CAR = obj2.getString("CAR");
+			for(int i = 0;i<base.size();i++) {
+				JSONObject obj = base.getJSONObject(i);
+				String sim = obj.getString("C");
+				for(int j=0;j<new2.size();j++) {
+					JSONObject obj2 = new2.getJSONObject(j);
+					if(sim.equals(obj2.getString("sim"))) {
+						System.out.println(obj2.getString("mo"));
 					}
 				}
-				System.out.println(CAR);
 			}
 //			String[] sn_arr = new String[] {"01010400056","01010400069","01010400065","01010400059"};
 //			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
