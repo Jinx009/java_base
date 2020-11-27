@@ -1,5 +1,6 @@
 package main.entry.webapp.task;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -15,9 +16,11 @@ import com.alibaba.fastjson.JSONObject;
 import common.helper.StringUtil;
 import database.model.GnssRtkDevice;
 import database.model.GnssRtkLog;
+import database.model.GnssRtkNumLog;
 import main.entry.webapp.mongo.MongoUtil;
 import service.GnssRtkDeviceService;
 import service.GnssRtkLogService;
+import service.GnssRtkNumLogService;
 
 @Component
 @Lazy(value=false)
@@ -29,6 +32,38 @@ public class RtkTask {
 	private GnssRtkDeviceService gnssRtkDeviceService;
 	@Autowired
 	private GnssRtkLogService gnssRtkLogService;
+	@Autowired
+	private GnssRtkNumLogService gnssRtkNumLogService;
+	
+	
+	
+	@Scheduled(cron = "0 1 0 * * ?") // 每天晚上0点01分创建新文件夹
+	public void chmod() {
+		try {
+			List<GnssRtkDevice> list = gnssRtkDeviceService.findAll();
+			Date d = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String date = sdf.format(d);
+			for(GnssRtkDevice device: list) {
+				for(int i = 0;i<24;i++) {
+					GnssRtkNumLog numLog = gnssRtkNumLogService.find(date, device.getMac(), i);
+					if(numLog==null) {
+						numLog = new GnssRtkNumLog();
+						numLog.setCreateTime(new Date());
+						numLog.setDate(date);
+						numLog.setStartHour(i);
+						numLog.setEndHour((i+1));
+						numLog.setNum(0);
+						numLog.setMac(device.getMac());
+						numLog.setType("RTCM");
+						gnssRtkNumLogService.save(numLog);
+					}
+				}
+			}
+		} catch (Exception e) {
+			logger.error("error:{}", e);
+		}
+	}
 	
 	@Scheduled(cron = "0 */20 * * * ?")//20分钟处理一次
 	public void init(){

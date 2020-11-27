@@ -1,5 +1,6 @@
 package main.entry.webapp.data;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -39,6 +40,33 @@ public class GnssRtkLogDataController extends BaseController{
 		try {
 			PageDataList<GnssRtkLog> pages = gnssRtkLogService.findByPage(p);
 			return new Resp<>(pages);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	
+	@RequestMapping(path = "createNum")
+	@ResponseBody
+	public Resp<?> pageList(String date,String mac){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			for(int i = 0;i<24;i++) {
+				GnssRtkNumLog numLog = gnssRtkNumLogService.find(date,mac, i);
+				if(numLog==null) {
+					numLog = new GnssRtkNumLog();
+					numLog.setCreateTime(new Date());
+					numLog.setDate(date);
+					numLog.setStartHour(i);
+					numLog.setEndHour((i+1));
+					numLog.setNum(0);
+					numLog.setMac(mac);
+					numLog.setType("RTCM");
+					gnssRtkNumLogService.save(numLog);
+				}
+			}
+			return new Resp<>(true);
 		} catch (Exception e) {
 			log.error("e:{}",e);
 		}

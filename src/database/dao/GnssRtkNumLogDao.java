@@ -21,7 +21,7 @@ public class GnssRtkNumLogDao extends BaseDao<GnssRtkNumLog>{
 
 	@SuppressWarnings("unchecked")
 	public List<GnssRtkNumLog> findByMac(String mac, String start, String end) {
-		String hql = " from GnssRtkNumLog where createTime>='"+start+"' and createTime<='"+end+"' and mac='"+mac+"' order by id ";
+		String hql = " from GnssRtkNumLog where date>='"+start+"' and date<='"+end+"' and mac='"+mac+"' order by date,startHour ";
 		List<GnssRtkNumLog> list = em.createQuery(hql).getResultList();
 		if(list!=null&&!list.isEmpty()) {
 			return list;
