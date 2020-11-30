@@ -132,12 +132,12 @@
 									<div class="form-group" >
 										<label class="col-md-3 control-label">固件升级</label>
 										<div class="col-md-6" id="dd">
-											<select class="form-control" id="73" v-for="item in datas" >
+											<select class="form-control" id="101" v-for="item in datas" >
 												<option v-text="item.name" v-bind:value="item.id" ></option>
 											</select>
 										</div>
 										<div class="col-md-3">
-											<button type="button" class="btn btn-success" onclick="_send(8)">下发</button>
+											<button type="button" class="btn btn-success" onclick="_send(10)">下发</button>
 										</div>
 									</div>
 									<div class="form-group" >
@@ -219,6 +219,9 @@ function _send(n){
 	}
 	if(n==9){
 		_n = 39;
+	}
+	if(n==10){
+		_n = 73;
 	}
 	var p1 = $('#'+n+'1').val();
 	var p2 = $('#'+n+'2').val();

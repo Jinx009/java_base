@@ -1,5 +1,7 @@
 package main.entry.webapp.data;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -12,9 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import common.helper.StringUtil;
 import database.model.GnssRtkControl;
+import database.model.GnssRtkFirmware;
 import main.entry.webapp.BaseController;
 import main.entry.webapp.mqtt.MqttUtils;
 import service.GnssRtkControlService;
+import service.GnssRtkFirmwareService;
+import utils.BaseConstant;
 import utils.Resp;
 
 @Controller
@@ -25,6 +30,8 @@ public class GnssRtkControlDataController extends BaseController{
 	
 	@Autowired
 	private GnssRtkControlService gnssRtkControlService;
+	@Autowired
+	private GnssRtkFirmwareService gnssRtkFirmwareService;
 	
 	@RequestMapping(path = "list")
 	@ResponseBody
@@ -128,6 +135,19 @@ public class GnssRtkControlDataController extends BaseController{
 					sb.append(p1);
 					sb.append(p2);
 				}
+				if(cmd.equals("73")) {
+					Integer fileId = Integer.valueOf(p1);
+					grc.setCmdName("固件升级");
+					sb.append("4800");
+					sb.append(sn);
+					sb.append("08");
+					sb.append(getString(Integer.toHexString(fileId),8));
+					GnssRtkFirmware gnssRtkFirmware = gnssRtkFirmwareService.findById(fileId);
+					File file = new File(BaseConstant.BASE_DERICTORY_NAME+"/"+gnssRtkFirmware.getUrl());
+					FileInputStream fis =  new FileInputStream(file);
+					int length = fis.available();
+					sb.append(getString(Integer.toHexString(length),8));
+				}
 				if(cmd.equals("39")) {
 					grc.setCmdName("设置/查询加速度传感器采样间隔");
 					sb.append("4800");
@@ -157,6 +177,50 @@ public class GnssRtkControlDataController extends BaseController{
 	
 	
 
-	
+	private String getString(String hexString, int i) {
+		if(i==4) {
+			if(hexString.length()==1) {
+				return "000"+hexString;
+			}
+			if(hexString.length()==2) {
+				return "00"+hexString;
+			}
+			if(hexString.length()==3) {
+				return "0"+hexString;
+			}
+			if(hexString.length()==4) {
+				return hexString;
+			}
+		}
+		if(i==8) {
+			if(hexString.length()==1) {
+				return "0000000"+hexString;
+			}
+			if(hexString.length()==2) {
+				return "000000"+hexString;
+			}
+			if(hexString.length()==3) {
+				return "00000"+hexString;
+			}
+			if(hexString.length()==4) {
+				return "0000"+hexString;
+			}
+			if(hexString.length()==5) {
+				return "000"+hexString;
+			}
+			if(hexString.length()==6) {
+				return "00"+hexString;
+			}
+			if(hexString.length()==7) {
+				return "0"+hexString;
+			}
+			if(hexString.length()==8) {
+				return hexString;
+			}
+		}
+		return null;
+	}
+
+
 	
 }

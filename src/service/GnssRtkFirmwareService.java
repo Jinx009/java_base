@@ -37,5 +37,9 @@ public class GnssRtkFirmwareService {
 	public List<GnssRtkFirmware> findAll() {
 		return gnssRtkFirmwareDao.findAll();
 	}
+
+	public GnssRtkFirmware findById(Integer fileId) {
+		return gnssRtkFirmwareDao.find(fileId);
+	}
 	
 }
