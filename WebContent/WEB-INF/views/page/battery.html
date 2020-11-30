@@ -113,7 +113,7 @@ $(function(){
     		dataType:'json',
     		success:function(res){
     			for ( var i in res.data.list) {
-					res.data.list[i].createTime = toDateTime(res.data.list[i].createTime);
+					res.data.list[i].create_time = toDateTime(res.data.list[i].create_time);
 				}
     			new Vue({
 					el : '#data',
