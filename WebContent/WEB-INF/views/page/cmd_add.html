@@ -131,7 +131,7 @@
 									</div>
 									<div class="form-group" >
 										<label class="col-md-3 control-label">固件升级</label>
-										<div class="col-md-6">
+										<div class="col-md-6" id="dd">
 											<select class="form-control" id="73" v-for="item in datas" >
 												<option v-text="item.name" v-bind:value="item.id" ></option>
 											</select>
@@ -179,11 +179,11 @@ $(function(){
 })
 function _getData(){
 	$.ajax({
-		url:'/d/gnssrtkfirmware/all',
+		url:'/d/gnssrtkfirmware/all?p=1',
 		dataType:'json',
 		success:function(res){
 			new Vue({
-				el : '#73',
+				el : '#dd',
 				data : {
 					datas : res.data
 				}
