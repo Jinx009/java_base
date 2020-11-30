@@ -28,5 +28,7 @@ public class BaseConstant {
 	
 	public static final String BASE_COMPANY_ID = "10001";
 	public static final String BASE_STORE_ID = "10002";
+	public static final String BASE_DERICTORY_NAME = "/zhanway/server-gnss/webapps/ROOT/themes/firmware/";
+//	public static final String BASE_DERICTORY_NAME = "/Users/jinx/Documents/jobs/git_mine/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/java_base/themes/firmware/";
 	
 }
