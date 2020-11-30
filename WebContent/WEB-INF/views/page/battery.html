@@ -40,6 +40,7 @@
                                         <th scope="col">电池功率</th>
                                         <th scope="col">电池电压</th>
                                         <th scope="col">电池电流</th>
+                                        <th scope="col">创建时间</th>
                                     </tr>
                                     </thead>
                                     <tbody id="data">
@@ -57,6 +58,7 @@
                                         <td v-text="item.battery_power"></td>
                                         <td v-text="item.battery_voltage"></td>
                                         <td v-text="item.battery_circuit"></td>
+                                        <td v-text="item.create_time"></td>
 									</tr>
                                     </tbody>
                                 </table>
@@ -110,6 +112,9 @@ $(function(){
     		type:'get',
     		dataType:'json',
     		success:function(res){
+    			for ( var i in res.data.list) {
+					res.data.list[i].createTime = toDateTime(res.data.list[i].createTime);
+				}
     			new Vue({
 					el : '#data',
 					data : {
