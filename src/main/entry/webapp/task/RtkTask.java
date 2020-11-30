@@ -14,13 +14,16 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 
 import common.helper.StringUtil;
+import database.model.GnssRtkBatteryLog;
 import database.model.GnssRtkDevice;
 import database.model.GnssRtkLog;
 import database.model.GnssRtkNumLog;
 import main.entry.webapp.mongo.MongoUtil;
+import service.GnssRtkBatteryLogService;
 import service.GnssRtkDeviceService;
 import service.GnssRtkLogService;
 import service.GnssRtkNumLogService;
+import utils.HttpUtils;
 
 @Component
 @Lazy(value=false)
@@ -34,6 +37,9 @@ public class RtkTask {
 	private GnssRtkLogService gnssRtkLogService;
 	@Autowired
 	private GnssRtkNumLogService gnssRtkNumLogService;
+	@Autowired
+	private GnssRtkBatteryLogService gnssRtkBatteryLogService;
+	
 	
 	
 	
@@ -62,6 +68,25 @@ public class RtkTask {
 			}
 		} catch (Exception e) {
 			logger.error("error:{}", e);
+		}
+	}
+	
+	@Scheduled(cron = "0 */59 * * * ?")//20分钟处理一次
+	public void sun(){
+		List<GnssRtkDevice> rtk = gnssRtkDeviceService.findAll();
+		String json = HttpUtils.get("http://Xmnengjia.com/solarLamp/api/external/successToken?username=上海展为&password=112233");
+		JSONObject obj = JSONObject.parseObject(json);
+		String token = obj.getString("data");
+		for(GnssRtkDevice device:rtk) {
+			if(StringUtil.isNotBlank(device.getImei())) {
+				String objJson = HttpUtils.postSun("http://Xmnengjia.com/solarLamp/api/external/moduleStatus?imei="+device.getImei(), token);
+				JSONObject jsonObject = JSONObject.parseObject(objJson);
+				String battrey = jsonObject.getString("data");
+				GnssRtkBatteryLog log = JSONObject.parseObject(battrey,GnssRtkBatteryLog.class);
+				log.setCreate_time(new Date());
+				log.setImei(device.getImei());
+				gnssRtkBatteryLogService.save(log);
+			}
 		}
 	}
 	

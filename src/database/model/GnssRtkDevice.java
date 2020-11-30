@@ -83,7 +83,8 @@ public class GnssRtkDevice {
 	private Date createTime;
 	@Column(name = "mac")
 	private String mac;
-	
+	@Column(name = "imei")
+	private String imei;
 	
 	
 }

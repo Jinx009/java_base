@@ -114,7 +114,7 @@
 											<button type="button" class="btn btn-success" onclick="_send(7)">下发</button>
 										</div>
 									</div>
-										<div class="form-group" >
+									<div class="form-group" >
 										<label class="col-md-3 control-label">加速度传感器采样间隔</label>
 										<div class="col-md-3">
 											<select class="form-control" id="81">
@@ -129,7 +129,18 @@
 											<button type="button" class="btn btn-success" onclick="_send(8)">下发</button>
 										</div>
 									</div>
-												<div class="form-group" >
+									<div class="form-group" >
+										<label class="col-md-3 control-label">固件升级</label>
+										<div class="col-md-6">
+											<select class="form-control" id="73" v-for="item in datas" >
+												<option v-text="item.name" v-bind:value="item.id" ></option>
+											</select>
+										</div>
+										<div class="col-md-3">
+											<button type="button" class="btn btn-success" onclick="_send(8)">下发</button>
+										</div>
+									</div>
+									<div class="form-group" >
 										<label class="col-md-3 control-label">传感器阈值</label>
 										<div class="col-md-2">
 											<select class="form-control" id="91">
@@ -162,9 +173,24 @@
   <script>
 $(function(){
 	_setClass();
+	_getData();
 	var mac = getUrlParam('mac');
 	$('#mac').val(mac);
 })
+function _getData(){
+	$.ajax({
+		url:'/d/gnssrtkfirmware/all',
+		dataType:'json',
+		success:function(res){
+			new Vue({
+				el : '#73',
+				data : {
+					datas : res.data
+				}
+			})
+		}
+	})
+}
 function _send(n){
 	var _n = 0;
 	if(n==4){

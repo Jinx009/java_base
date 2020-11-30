@@ -1,6 +1,7 @@
 package service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,10 @@ public class GnssRtkFirmwareService {
 	
 	public void del(int id) {
 		gnssRtkFirmwareDao.delete(id);
+	}
+
+	public List<GnssRtkFirmware> findAll() {
+		return gnssRtkFirmwareDao.findAll();
 	}
 	
 }

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +74,20 @@ public class GnssRtkFirmwareDataController extends BaseController{
 		}
 		return resp;
 	}
+	
+	@RequestMapping(path = "/all")
+	@ResponseBody
+	public Resp<?> all(int p){
+		Resp<?> resp = new Resp<>();
+		try {
+			List<GnssRtkFirmware> list = gnssRtkFirmwareService.findAll();
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("e:",e);
+		}
+		return resp;
+	}
+	
 	
 	@RequestMapping(path = "/uploadFile")
 	@ResponseBody

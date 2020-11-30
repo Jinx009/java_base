@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -37,5 +38,31 @@ public class HttpUtils {
 		}
 		return result;
     }
+    
+    
+	/**
+	 * post发送http请求
+	 * @param url
+	 * @return
+	 */
+    @SuppressWarnings("resource")
+	public static String postSun(String url,String token){
+    	logger.warn("HttpUtils.postParams[info:{}]",url);
+        String result = "500";
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpPost post = new HttpPost(url);
+        post.addHeader("token",token);
+		try {
+			HttpResponse response = httpClient.execute(post);
+			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			logger.warn("HttpUtils.postParams[res:{}]",result);
+		} catch (ParseException e) {
+			logger.error("HttpUtils.postParams[ParseException.error:{}]",e);
+		} catch (IOException e) {
+			logger.error("HttpUtils.postParams[IOException.error:{}]",e);
+		}
+		return result;
+    }
+    
 	
 }

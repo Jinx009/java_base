@@ -85,4 +85,10 @@ public class HomeController {
 	}
 	
 	
+	@RequestMapping(path = "/battery")
+	public String battery(HttpServletRequest request){
+		return "/page//battery";
+	}
+	
+	
 }

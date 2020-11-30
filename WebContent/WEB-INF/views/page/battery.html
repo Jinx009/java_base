@@ -5,7 +5,7 @@
                 <ul class="page-breadcrumb">
                     <li>
                         <i class="fa fa-home"></i>
-                        <a href="index.html">监测站点</a>
+                        <a href="">监测站点</a>
                         <i class="fa fa-angle-right"></i>
                     </li>
                 </ul>
@@ -16,45 +16,49 @@
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="icon-share font-blue-steel"></i>
-                                <span class="caption-subject font-blue-steel ">设备管理</span>
+                                <span class="caption-subject font-blue-steel ">电池电量</span>
                             </div>
                         </div>
                         <div class="portlet-body">
                             <div class="slimScrollDiv"
-                                 style="position: relative; overflow: hidden; width: auto; height: 600px;">
+                                 style="position: relative; width: auto; height: 480px;overflow-y:scroll; ">
+                                 	<input type="hidden" class="form-control" id="imei" readonly="readonly">
                             <div class="table-scrollable">
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th scope="col">Mac</th>
-                                        <th scope="col">经度（度）</th>
-                                        <th scope="col">纬度（度）</th>
-                                         <th scope="col">大地高（米）</th>
-                                        <th scope="col">east</th>
-                                        <th scope="col">north</th>
-                                        <th scope="col">up</th>
-                                        <th scope="col">基准站</th>
-                                  <!--       <th scope="col">创建时间</th> -->
-                                        <th scope="col">操作</th>
+                                        <th scope="col">电池预期寿命</th>
+										<th scope="col">循环次数</th>
+										<th scope="col">太阳能板功率</th>
+										<th scope="col">太阳能板电压</th>
+										<th scope="col">太阳能板电流</th>
+										<th scope="col">充电量</th>
+								        <th scope="col">放电量</th>
+                                        <th scope="col">充电状态</th>
+                                        <th scope="col">电池电量百分比</th>
+                                        <th scope="col">电池容量</th>
+                                        <th scope="col">电池功率</th>
+                                        <th scope="col">电池电压</th>
+                                        <th scope="col">电池电流</th>
                                     </tr>
                                     </thead>
                                     <tbody id="data">
-											<tr v-for="item in datas" >
-												<td v-text="item.mac" ></td>
-												<td v-text="item.lng" ></td>
-												<td v-text="item.lat" ></td>
-												<td v-text="item.height" ></td>
-												<td v-text="item.east" ></td>
-												<td v-text="item.north" ></td>
-												<td v-text="item.up" ></td>
-												<td v-text="item.basetag" ></td>
-											<!-- 	<td v-text="item.createTime" ></td> -->
-												<td>
-													<a class="edit" v-bind:href="'/home/cmd_add?mac='+item.mac+'&c=6'">控制 </a>
-													<a v-if="item.imei!=null" v-text="'电量'" v-bind:href="'/home/battery?imei='+item.imei+'&c=4'" ></a>
-												</td>
-											</tr>
-								 	</tbody>
+                                    <tr v-for="item in datas">
+										<td v-text="item.life_expectancy"></td>
+										<td v-text="item.cycle_index"></td>
+										<td v-text="item.solar_panel_power"></td>
+										<td v-text="item.solar_panel_voltage"></td>
+										<td v-text="item.solar_panel_circuit"></td>
+										<td v-text="item.charge_capacity"></td>
+								        <td v-text="item.discharge_capacity"></td>
+                                        <td v-text="item.charge_status"></td>
+                                        <td v-text="item.battery_percent"></td>
+                                        <td v-text="item.battery_capacity"></td>
+                                        <td v-text="item.battery_power"></td>
+                                        <td v-text="item.battery_voltage"></td>
+                                        <td v-text="item.battery_circuit"></td>
+									</tr>
+                                    </tbody>
                                 </table>
                             </div>
                             <div class="row">
@@ -92,42 +96,30 @@
         </div>
     </div>
 </div>
-  <#include "gnss_footer.html">
-  <script>
+    <#include "gnss_footer.html">
+<script>
 $(function(){
 	_setClass();
 	_getData();
+	var mac = getUrlParam('imei');
+	$('#imei').val(imei);
 })
-function _getData(){
-	$.ajax({
-		url:'/d/gnssrtkdevice/list',
-		type:'get',
-		dataType:'json',
-		success:function(res){
-			for(var i in res.data){
-				res.data[i].createTime = toDateTime(parseInt(res.data[i].createTime));
-				if(res.data[i].lng!=''&&res.data[i].lng!=null){
-					res.data[i].lng = parseFloat(res.data[i].lng).toFixed(9);
-					res.data[i].lat = parseFloat(res.data[i].lat).toFixed(9);
-					if(res.data[i].height!=''&&res.data[i].height!=null){
-						res.data[i].height = parseFloat(res.data[i].height).toFixed(4);
+    function _getData(){
+    	$.ajax({
+    		url:'/d/gnssrtkbatterylog/list?p=1&imei='+$('#imei').val(),
+    		type:'get',
+    		dataType:'json',
+    		success:function(res){
+    			new Vue({
+					el : '#data',
+					data : {
+						datas : res.data.list
 					}
-				}
-				if(res.data[i].east!=''&&res.data[i].east!=null){
-					res.data[i].east = parseFloat(res.data[i].east).toFixed(4);
-					res.data[i].up = parseFloat(res.data[i].up).toFixed(4);
-					res.data[i].north = parseFloat(res.data[i].north).toFixed(4);
-				}
-			}
-			new Vue({
-				el : '#data',
-				data : {
-					datas : res.data
-				}
-			})
-		}
-	})
-}
+				})
+    		}
+    	})
+    }
+   
 </script>
-  </body>
+</body>
 </html>
