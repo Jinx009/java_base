@@ -116,4 +116,6 @@ public class GnssRtkBatteryLog {
 	private Date create_time;
 	@Column(name = "imei")
 	private String imei;
+	@Column(name = "timestamp")
+	private long timestamp;
 }

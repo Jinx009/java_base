@@ -58,7 +58,7 @@
                                         <td v-text="item.battery_power"></td>
                                         <td v-text="item.battery_voltage"></td>
                                         <td v-text="item.battery_circuit"></td>
-                                        <td v-text="item.create_time"></td>
+                                        <td v-text="item.timestamp"></td>
 									</tr>
                                     </tbody>
                                 </table>
@@ -113,7 +113,7 @@ $(function(){
     		dataType:'json',
     		success:function(res){
     			for ( var i in res.data.list) {
-					res.data.list[i].create_time = toDateTime(res.data.list[i].create_time);
+					res.data.list[i].timestamp = toDateTime(res.data.list[i].timestamp);
 				}
     			new Vue({
 					el : '#data',
