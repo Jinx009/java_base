@@ -306,6 +306,8 @@ function _getLog(){
 				}
 			}
 		})
+		start = start.split(' ')[0];
+		end = end.split(' ')[0];
 		$.ajax({
 			url:'/d/gnssrtklog/findNum?mac='+rovertag+'&start='+start+'&end='+end,
 			dataType:'json',
