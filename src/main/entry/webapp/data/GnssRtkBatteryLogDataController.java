@@ -1,5 +1,7 @@
 package main.entry.webapp.data;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,20 @@ public class GnssRtkBatteryLogDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			PageDataList<GnssRtkBatteryLog> list = gnssRtkBatteryLogService.findByPage(p, imei);
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return  resp;
+	}
+	
+	
+	@RequestMapping(path = "/all")
+	@ResponseBody
+	public Resp<?> all(String imei,String start,String end) throws Exception{
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<GnssRtkBatteryLog> list = gnssRtkBatteryLogService.all(imei,start,end);
 			return new Resp<>(list);
 		} catch (Exception e) {
 			log.error("e:{}",e);

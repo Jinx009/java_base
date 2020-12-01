@@ -1,5 +1,8 @@
 package database.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import common.helper.StringUtil;
@@ -20,6 +23,19 @@ public class GnssRtkBatteryLogDao extends BaseDao<GnssRtkBatteryLog>{
 		}
 		param.addPage(p, 25);
 		return findPageList(param);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<GnssRtkBatteryLog> all(String imei, String start, String end) throws Exception{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		long starttime = sdf.parse(start).getTime();
+		long endtime = sdf.parse(end).getTime();
+		String hql = " from GnssRtkBatteryLog where imei = '"+imei+"' and timestamp>='"+starttime+"'  and timestamp <='"+endtime+"' ";
+		List<GnssRtkBatteryLog> list = em.createQuery(hql).getResultList();
+		if(list!=null&&!list.isEmpty()){
+			return list;
+		}
+		return null;
 	}
 
 }

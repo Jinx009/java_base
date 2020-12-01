@@ -61,6 +61,7 @@ public class GnssRtkControlDataController extends BaseController{
 		return resp;
 	}
 	
+	@SuppressWarnings("resource")
 	@RequestMapping(path = "/save")
 	@ResponseBody
 	public Resp<?> save(String mac,String p1,String p2,String p3,String cmd){

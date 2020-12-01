@@ -48,34 +48,34 @@ public class DataManager {
 	public void start() {
 		try {
 			init();
-			client = new MqttClient(MqttUtils.HOST, MqttUtils.SERVER_CLINETID, new MemoryPersistence());
-			options = new MqttConnectOptions();
-			options.setCleanSession(false);
-			options.setUserName(MqttUtils.USERNAME);
-			options.setPassword(MqttUtils.PASSWORD.toCharArray());
-			options.setConnectionTimeout(10);
-			options.setKeepAliveInterval(20);
-			client.setCallback(new PushCallback());
-			client.connect(options);
-			client.subscribe(TOPIC, Qos);
-			List<GnssRtkDevice> list = dm.gnssRtkDeviceService.findAll();
-			if(list!=null&&!list.isEmpty()) {
-				for(GnssRtkDevice d : list) {
-					StringBuilder sb = new StringBuilder();
-					sb.append("/device/");
-					sb.append(d.getMac());
-					sb.append("/");
-					log.warn("sub mac:{}", d.getMac());
-					client.subscribe(sb.toString()+"control", 0);
-					client.subscribe(sb.toString()+"RTCM", 0);
-					client.subscribe(sb.toString()+"UBX", 0);
-					client.subscribe(sb.toString()+"NMEA", 0);
-					client.subscribe(sb.toString()+"slope&acc", 0);
-					client.subscribe(sb.toString()+"debug", 0);
-					client.subscribe(sb.toString()+"heartbeat", 0);
-					client.subscribe(sb.toString()+"errlog", 0);
-				}
-			}
+//			client = new MqttClient(MqttUtils.HOST, MqttUtils.SERVER_CLINETID, new MemoryPersistence());
+//			options = new MqttConnectOptions();
+//			options.setCleanSession(false);
+//			options.setUserName(MqttUtils.USERNAME);
+//			options.setPassword(MqttUtils.PASSWORD.toCharArray());
+//			options.setConnectionTimeout(10);
+//			options.setKeepAliveInterval(20);
+//			client.setCallback(new PushCallback());
+//			client.connect(options);
+//			client.subscribe(TOPIC, Qos);
+//			List<GnssRtkDevice> list = dm.gnssRtkDeviceService.findAll();
+//			if(list!=null&&!list.isEmpty()) {
+//				for(GnssRtkDevice d : list) {
+//					StringBuilder sb = new StringBuilder();
+//					sb.append("/device/");
+//					sb.append(d.getMac());
+//					sb.append("/");
+//					log.warn("sub mac:{}", d.getMac());
+//					client.subscribe(sb.toString()+"control", 0);
+//					client.subscribe(sb.toString()+"RTCM", 0);
+//					client.subscribe(sb.toString()+"UBX", 0);
+//					client.subscribe(sb.toString()+"NMEA", 0);
+//					client.subscribe(sb.toString()+"slope&acc", 0);
+//					client.subscribe(sb.toString()+"debug", 0);
+//					client.subscribe(sb.toString()+"heartbeat", 0);
+//					client.subscribe(sb.toString()+"errlog", 0);
+//				}
+//			}
 		} catch (Exception e) {
 			log.error("e:{}", e);
 		}

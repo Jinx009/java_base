@@ -1,130 +1,384 @@
-    <#include "gnss_header.html">
-    <div class="page-content-wrapper">
-        <div class="page-content">
-            <div class="page-bar">
-                <ul class="page-breadcrumb">
-                    <li>
-                        <i class="fa fa-home"></i>
-                        <a href="">监测站点</a>
-                        <i class="fa fa-angle-right"></i>
-                    </li>
-                </ul>
-            </div>
-            <div class="row" style="margin-top: 15px;">
-                <div class="col-md-12 col-sm-12">
-                    <div class="portlet light bordered">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                <i class="icon-share font-blue-steel"></i>
-                                <span class="caption-subject font-blue-steel ">电池电量</span>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <div class="slimScrollDiv"
-                                 style="position: relative; width: auto; height: 480px;overflow-y:scroll; ">
-                                 	<input type="hidden" class="form-control" id="imei" readonly="readonly">
-                            <div class="table-scrollable">
-                                <table class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">电池预期寿命</th>
-										<th scope="col">循环次数</th>
-										<th scope="col">太阳能板功率</th>
-										<th scope="col">太阳能板电压</th>
-										<th scope="col">太阳能板电流</th>
-										<th scope="col">充电量</th>
-								        <th scope="col">放电量</th>
-                                        <th scope="col">充电状态</th>
-                                        <th scope="col">电池电量百分比</th>
-                                        <th scope="col">电池容量</th>
-                                        <th scope="col">电池功率</th>
-                                        <th scope="col">电池电压</th>
-                                        <th scope="col">电池电流</th>
-                                        <th scope="col">创建时间</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="data">
-                                    <tr v-for="item in datas">
-										<td v-text="item.life_expectancy"></td>
-										<td v-text="item.cycle_index"></td>
-										<td v-text="item.solar_panel_power"></td>
-										<td v-text="item.solar_panel_voltage"></td>
-										<td v-text="item.solar_panel_circuit"></td>
-										<td v-text="item.charge_capacity"></td>
-								        <td v-text="item.discharge_capacity"></td>
-                                        <td v-text="item.charge_status"></td>
-                                        <td v-text="item.battery_percent"></td>
-                                        <td v-text="item.battery_capacity"></td>
-                                        <td v-text="item.battery_power"></td>
-                                        <td v-text="item.battery_voltage"></td>
-                                        <td v-text="item.battery_circuit"></td>
-                                        <td v-text="item.timestamp"></td>
-									</tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-10 col-sm-12"></div>
-                                <div class="col-md-2 col-sm-12">
-                                    <div class="dataTables_paginate paging_simple_numbers"
-                                         id="sample_editable_1_paginate">
-                                        <ul class="pagination">
-                                            <li class="paginate_button previous "
-                                                aria-controls="sample_editable_1" tabindex="0"
-                                                id="sample_editable_1_previous">
-                                                <a href="#">
-                                                    <i class="fa fa-angle-left"></i>
-                                                </a>
-                                            </li>
-                                            <li class="paginate_button active" aria-controls="sample_editable_1"
-                                                tabindex="0">
-                                                <a href="#">1</a>
-                                            </li>
-                                            <li class="paginate_button next "
-                                                aria-controls="sample_editable_1" tabindex="0"
-                                                id="sample_editable_1_next">
-                                                <a href="#">
-                                                    <i class="fa fa-angle-right"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<#include "gnss_header.html">
+<div class="page-content-wrapper">
+	<div class="page-content">
+		<div class="page-bar">
+			<ul class="page-breadcrumb">
+				<li><i class="fa fa-home"></i> <a href="">电池电量</a> <i
+					class="fa fa-angle-right"></i></li>
+			</ul>
+		</div>
+		<div class="portlet box " style="margin-top: 15px;">
+			<div class="portlet-body">
+				<div id="navbar-example2"
+					class="navbar navbar-default navbar-static" role="navigation">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+							data-target=".bs-js-navbar-scrollspy">
+							<span class="sr-only"> Toggle navigation </span> <span
+								class="icon-bar"> </span> <span class="icon-bar"> </span> <span
+								class="icon-bar"> </span>
+						</button>
+						<a class="navbar-brand" href="javascript:;"> 整体统计 </a>
+					</div>
+					<div class="collapse navbar-collapse bs-js-navbar-scrollspy">
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="#home"> 基础信息 </a></li>
+						</ul>
+						<form class="navbar-form navbar-left" role="search">
+							<div class="form-group">
+								<input type="text" id="date" class="form-control"
+									placeholder="选择日期">
+							</div>
+							<button type="button" class="btn blue" onclick="_getData()">查询</button>
+						</form>
+					</div>
+					<!-- /.navbar-collapse -->
+				</div>
+				<div data-spy="scroll" data-target="#navbar-example2"
+					style="height: 1400px;" data-offset="0" class="scrollspy-example">
+					<div class="alert alert-info col-md-12 col-sm-12">
+						<strong></strong> 过充次数：<font id="hehe1"></font>；过放次数：<font id="hehe2"></font>
+							<input type="hidden" class="form-control" id="imei" readonly="readonly">
+					</div>
+					<div class="col-md-12 col-sm-12">
+						<div class="portlet light bordered">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-share font-blue-steel"></i> <span
+										class="caption-subject font-blue-steel ">太阳能板</span>
+								</div>
+							</div>
+							<div class="portlet-body">
+								<div class="slimScrollDiv"
+									style="position: relative; overflow: hidden; width: auto; height: 300px;">
+									<div id="draw" style="width: 100%; height: 100%;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12">
+						<div class="portlet light bordered">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-share font-blue-steel"></i> <span
+										class="caption-subject font-blue-steel ">负载</span>
+								</div>
+							</div>
+							<div class="portlet-body">
+								<div class="slimScrollDiv"
+									style="position: relative; overflow: hidden; width: auto; height: 300px;">
+									<div id="draw2" style="width: 100%; height: 100%;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+						<div class="col-md-12 col-sm-12">
+						<div class="portlet light bordered">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-share font-blue-steel"></i> <span
+										class="caption-subject font-blue-steel ">蓄电池</span>
+								</div>
+							</div>
+							<div class="portlet-body">
+								<div class="slimScrollDiv"
+									style="position: relative; overflow: hidden; width: auto; height: 300px;">
+									<div id="draw3" style="width: 100%; height: 100%;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+	<!-- 				<div class="col-md-12 col-sm-12">
+						<div class="portlet light bordered">
+							<div class="portlet-title">
+								<div class="caption">
+									<span class="caption-subject font-blue-steel ">数据记录</span>
+								</div>
+							</div>
+							<div class="portlet-body">
+								<div class="slimScrollDiv"
+									style="position: relative; overflow: hidden; width: auto; height: 300px;">
+									<input type="hidden" class="form-control" id="imei"
+										readonly="readonly">
+									<div class="table-scrollable">
+										<table class="table table-striped table-bordered table-hover">
+											<thead>
+												<tr>
+													<th scope="col">电池预期寿命</th>
+													<th scope="col">循环次数</th>
+													<th scope="col">太阳能板功率</th>
+													<th scope="col">太阳能板电压</th>
+													<th scope="col">太阳能板电流</th>
+													<th scope="col">充电量</th>
+													<th scope="col">放电量</th>
+													<th scope="col">充电状态</th>
+													<th scope="col">电池电量百分比</th>
+													<th scope="col">电池容量</th>
+													<th scope="col">电池功率</th>
+													<th scope="col">电池电压</th>
+													<th scope="col">电池电流</th>
+													<th scope="col">创建时间</th>
+												</tr>
+											</thead>
+											<tbody id="data">
+												<tr v-for="item in datas">
+													<td v-text="item.life_expectancy"></td>
+													<td v-text="item.cycle_index"></td>
+													<td v-text="item.solar_panel_power"></td>
+													<td v-text="item.solar_panel_voltage"></td>
+													<td v-text="item.solar_panel_circuit"></td>
+													<td v-text="item.charge_capacity"></td>
+													<td v-text="item.discharge_capacity"></td>
+													<td v-text="item.charge_status"></td>
+													<td v-text="item.battery_percent"></td>
+													<td v-text="item.battery_capacity"></td>
+													<td v-text="item.battery_power"></td>
+													<td v-text="item.battery_voltage"></td>
+													<td v-text="item.battery_circuit"></td>
+													<td v-text="item.timestamp"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="row">
+										<div class="col-md-9 col-sm-12"></div>
+										<div class="col-md-3 col-sm-12">
+											<div class="dataTables_paginate paging_simple_numbers"
+												id="sample_editable_1_paginate">
+												<ul class="pagination">
+													<li class="paginate_button previous "
+														aria-controls="sample_editable_1" tabindex="0"
+														id="sample_editable_1_previous"><a href="#"> <i
+															class="fa fa-angle-left"></i>
+													</a></li>
+													<li class="paginate_button active"
+														aria-controls="sample_editable_1" tabindex="0"><a
+														href="#">1</a></li>
+													<li class="paginate_button next "
+														aria-controls="sample_editable_1" tabindex="0"
+														id="sample_editable_1_next"><a href="#"> <i
+															class="fa fa-angle-right"></i>
+													</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-    <#include "gnss_footer.html">
-<script>
-$(function(){
-	_setClass();
-	_getData();
-	var mac = getUrlParam('imei');
-	$('#imei').val(imei);
-})
-    function _getData(){
-    	$.ajax({
-    		url:'/d/gnssrtkbatterylog/list?p=1&imei='+$('#imei').val(),
-    		type:'get',
-    		dataType:'json',
-    		success:function(res){
-    			for ( var i in res.data.list) {
-					res.data.list[i].timestamp = toDateTime(res.data.list[i].timestamp);
-				}
-    			new Vue({
-					el : '#data',
-					data : {
-						datas : res.data.list
+ <script src="https://cdn.bootcss.com/echarts/3.8.0/echarts.min.js"></script>
+<#include "gnss_footer.html"> <script>
+	$(function() {
+		_setClass();
+		var imei = getUrlParam('imei');
+		$('#imei').val(imei);
+		laydate.render({
+			elem : '#date',
+			type : 'datetime',
+			range : true
+		});
+	})
+	var myChart,myChart2,myChart3,v1=[],a1=[],w1=[],date1=[],v2=[],v3=[],a2=[],a3=[],w2=[],w3=[];
+	function _getData() {
+		var date = $('#date').val();
+		if(date==''){
+			layer.alert('请选择日期区间！');
+		}else{
+			var start = date.split(' - ')[0];
+			var end = date.split(' - ')[1];
+			$.ajax({
+				url : '/d/gnssrtkbatterylog/all?p=1&imei='+ $('#imei').val()+'&start='+start+'&end='+end,
+				type : 'get',
+				dataType : 'json',
+				success : function(res) {
+					$('#hehe1').html(res.data[0].count_discharge);
+					$('#hehe2').html(res.data[0].count_overcharge); 
+					v1=[],a1=[],w1=[],date1=[],v2=[],v3=[],a2=[],a3=[],w2=[],w3=[];
+					for ( var i in res.data) {
+						res.data[i].timestamp = toDateTime(res.data[i].timestamp);
+						date1.push(res.data[i].timestamp);
+						v1.push(res.data[i].solar_panel_voltage);
+						a1.push(res.data[i].solar_panel_circuit);
+						w1.push(res.data[i].solar_panel_power);
+						v2.push(res.data[i].led_voltage);
+						a2.push(res.data[i].led_circuit);
+						w2.push(res.data[i].led_power);
+						v3.push(res.data[i].battery_voltage);
+						a3.push(res.data[i].battery_circuit);
+						w3.push(res.data[i].battery_power);
 					}
-				})
-    		}
-    	})
-    }
-   
+					_draw(); 
+					 _draw1();
+					_draw2();
+					new Vue({
+						el : '#data',
+						data : {
+							datas : res.data.list
+						}
+					})
+				}
+			})
+		}
+	}
+	function _draw(){
+		var option = {
+				title : {
+					text : ''
+				},
+				tooltip : {
+					trigger : 'axis'
+				},
+				legend : {
+					data : [ '电压', '电流', '功率' ]
+				},
+				grid : {
+					left : '3%',
+					right : '4%',
+					bottom : '3%',
+					containLabel : true
+				},
+				toolbox : {
+					feature : {
+						saveAsImage : {}
+					}
+				},
+				xAxis : {
+					type : 'category',
+					boundaryGap : false,
+					data :date1
+				},
+				yAxis : {
+					type : 'value'
+				},
+				series : [
+						{
+							name : '电压',
+							type : 'line',
+							data :v1
+						},
+						{
+							name : '电流',
+							type : 'line',
+							data :a1
+						},
+						{
+							name : '功率',
+							type : 'line',
+							data :w1
+						} ]
+			};
+			myChart = echarts.init(document
+					.getElementById('draw'));
+			myChart.setOption(option, true);
+	}
+	function _draw1(){
+		var option = {
+				title : {
+					text : ''
+				},
+				tooltip : {
+					trigger : 'axis'
+				},
+				legend : {
+					data : [ '电压', '电流', '功率' ]
+				},
+				grid : {
+					left : '3%',
+					right : '4%',
+					bottom : '3%',
+					containLabel : true
+				},
+				toolbox : {
+					feature : {
+						saveAsImage : {}
+					}
+				},
+				xAxis : {
+					type : 'category',
+					boundaryGap : false,
+					data :date1
+				},
+				yAxis : {
+					type : 'value'
+				},
+				series : [
+						{
+							name : '电压',
+							type : 'line',
+							data :v2
+						},
+						{
+							name : '电流',
+							type : 'line',
+							data :a2
+						},
+						{
+							name : '功率',
+							type : 'line',
+							data :w2
+						} ]
+			};
+			myChart2 = echarts.init(document
+					.getElementById('draw2'));
+			myChart2.setOption(option, true);
+	} 
+	function _draw2(){
+		var option = {
+				title : {
+					text : ''
+				},
+				tooltip : {
+					trigger : 'axis'
+				},
+				legend : {
+					data : [ '电压', '电流', '功率' ]
+				},
+				grid : {
+					left : '3%',
+					right : '4%',
+					bottom : '3%',
+					containLabel : true
+				},
+				toolbox : {
+					feature : {
+						saveAsImage : {}
+					}
+				},
+				xAxis : {
+					type : 'category',
+					boundaryGap : false,
+					data :date1
+				},
+				yAxis : {
+					type : 'value'
+				},
+				series : [
+						{
+							name : '电压',
+							type : 'line',
+							data :v3
+						},
+						{
+							name : '电流',
+							type : 'line',
+							data :a3
+						},
+						{
+							name : '功率',
+							type : 'line',
+							data :w3
+						} ]
+			};
+			myChart3 = echarts.init(document
+					.getElementById('draw3'));
+			myChart3.setOption(option, true);
+	} 
 </script>
 </body>
 </html>
