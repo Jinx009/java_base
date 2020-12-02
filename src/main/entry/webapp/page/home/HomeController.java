@@ -91,4 +91,10 @@ public class HomeController {
 	}
 	
 	
+	@RequestMapping(path = "/edit")
+	public String edit(HttpServletRequest request){
+		return "/page//edit";
+	}
+	
+	
 }

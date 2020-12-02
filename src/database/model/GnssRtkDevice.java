@@ -85,6 +85,9 @@ public class GnssRtkDevice {
 	private String mac;
 	@Column(name = "imei")
 	private String imei;
-	
+	@Column(name = "data_type")//报文类型
+	private String dataType;
+	@Column(name = "switch_type")//是都开启解算
+	private Integer switchType;
 	
 }

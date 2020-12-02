@@ -28,6 +28,8 @@ public class MongoUtil {
 
 	private static Logger log = LoggerFactory.getLogger(MongoUtil.class);
 	
+
+	
 	/**
 	 * 保存一个站点
 	 * @param basetag
@@ -118,7 +120,11 @@ public class MongoUtil {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(Long.parseLong("1594623319210"));
+		try {
+			System.out.println(selectTag("2"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -149,7 +155,6 @@ public class MongoUtil {
 	        try {
 	            ret = simpleDateFormat.parse(dateStr) ;
 	        } catch (ParseException e) {
-	            //
 	        }
 	        return ret;
 	}

@@ -30,9 +30,8 @@
                                         <th scope="col">经度（度）</th>
                                         <th scope="col">纬度（度）</th>
                                          <th scope="col">大地高（米）</th>
-                                        <th scope="col">east</th>
-                                        <th scope="col">north</th>
-                                        <th scope="col">up</th>
+                                        <th scope="col">数据类型</th>
+                                        <th scope="col">结算开关</th>
                                         <th scope="col">基准站</th>
                                   <!--       <th scope="col">创建时间</th> -->
                                         <th scope="col">操作</th>
@@ -44,9 +43,11 @@
 												<td v-text="item.lng" ></td>
 												<td v-text="item.lat" ></td>
 												<td v-text="item.height" ></td>
-												<td v-text="item.east" ></td>
-												<td v-text="item.north" ></td>
-												<td v-text="item.up" ></td>
+												<td v-text="item.dataType" ></td>
+												<td>
+													<font v-if="1===item.switchType" style="color: red;" v-text="'开'"></font>
+													<font v-if="0===item.switchType" v-text="'关'"></font>
+												</td>
 												<td v-text="item.basetag" ></td>
 											<!-- 	<td v-text="item.createTime" ></td> -->
 												<td>
