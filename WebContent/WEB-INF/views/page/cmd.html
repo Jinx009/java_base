@@ -50,7 +50,7 @@
 												<td v-text="item.resultStr" ></td>
 												<td v-text="item.createTime" ></td>
 												<td>
-													<a class="edit" v-bind:id="item.id" onclick="_edit(this)"  >强制完成 </a>
+													<a  v-if="0===item.status" class="edit" v-bind:id="item.id" onclick="_edit(this)" v-text="'强制完成'" > </a>
 												</td>
 											</tr>
 								 	</tbody>
