@@ -40,7 +40,7 @@ public class MongoUtil {
 	 */
 	public static void save(String basetag,String tag,Integer substatus,String topic,Integer tagtype) {
 		MongoClient mongoClient = new MongoClient("localhost", 27017);
-		MongoDatabase mongoDatabase = mongoClient.getDatabase("result");
+		MongoDatabase mongoDatabase = mongoClient.getDatabase("setting");
 		MongoCollection<Document> collection = mongoDatabase.getCollection("tags");
 		collection.insertOne(new Document("basetag",basetag)
 				.append("tag",tag)
@@ -51,18 +51,19 @@ public class MongoUtil {
 		mongoClient.close();
 	}
 	
-	public static void updateTag(String tag,Integer substatus,Integer tagtype) {
+	public static void updateTag(String tag,Integer substatus,Integer tagtype, String basetag, String dataType) {
 		MongoClient mongoClient = new MongoClient("localhost", 27017);
-		MongoDatabase mongoDatabase = mongoClient.getDatabase("result");
+		MongoDatabase mongoDatabase = mongoClient.getDatabase("setting");
 		MongoCollection<Document> collection = mongoDatabase.getCollection("tags");
-		collection.updateOne(Filters.eq("tag", tag), new Document("$set",new Document("substatus",substatus).append("tagtype", tagtype)));
+		collection.updateOne(Filters.eq("tag", tag), new Document("$set",new Document("substatus",substatus).append("tagtype", tagtype)
+				.append("basetag", basetag).append("topic", dataType)));
 		mongoClient.close();
 	}
 	
 	@SuppressWarnings("rawtypes")
 	public static GnssMongoDeviceModel selectTag(String tag) {
 		MongoClient mongoClient = new MongoClient("localhost", 27017);
-		MongoDatabase mongoDatabase = mongoClient.getDatabase("result");
+		MongoDatabase mongoDatabase = mongoClient.getDatabase("setting");
 		MongoCollection<Document> collection = mongoDatabase.getCollection("tags");
 		Bson filter = Filters.eq("tag",tag);
 		FindIterable findIterable = collection.find(filter);
@@ -121,7 +122,7 @@ public class MongoUtil {
 
 	public static void main(String[] args) {
 		try {
-			System.out.println(selectTag("2"));
+			System.out.println(JSONObject.toJSONString(selectTag("0010202009000005")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

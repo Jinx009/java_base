@@ -40,7 +40,7 @@
 												<div class="col-md-6">
 											<!-- 		<input type="text" placeholder="设备为参考站类型时此处可为空" class="form-control" id="basetag"> -->
 													<select class="form-control" id="basetag" >
-														<option value="0" >设备为参考站类型时此处可不选</option>
+														<option value="" >设备为参考站类型时此处可不选</option>
 														<option v-text="item.mac" v-bind:value="item.mac" v-for="item in datas"></option>
 													</select>
 												</div>
@@ -57,7 +57,7 @@
 												<div class="form-group" style="margin-top: 15px;">
 												<label class="col-md-3 control-label">解算开关</label>
 												<div class="col-md-6">
-													<select class="form-control" id="type">
+													<select class="form-control" id="switchType">
 														<option value="1">开启</option>
 														<option value="0">关闭</option>
 													</select>
@@ -105,6 +105,27 @@
 						datas : res.data
 					}
 				})
+			}
+		})
+	}
+	function _save(){
+		var mac = $('#mac').val();
+		var basetag = $('#basetag').val();
+		var switchType = $('#switchType').val();
+		var type = $('#type').val();
+		var dataType = $('#dataType').val();
+		var params = 'mac='+mac+'&dataType='+dataType+'&basetag='+basetag+'&switchType='+switchType+'&type='+type;
+		$.ajax({
+			url:'/d/gnssrtkdevice/changeTag',
+			data:params,
+			dataType:'json',
+			type:'post',
+			success:function(res){
+				if('200'==res.code){
+					layer.alert('操作成功！',function(){
+						location.href = '/home/device.html?c=3';
+					})
+				}
 			}
 		})
 	}

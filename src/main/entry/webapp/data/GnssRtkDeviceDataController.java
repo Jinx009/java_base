@@ -38,6 +38,32 @@ public class GnssRtkDeviceDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "/changeTag")
+	@ResponseBody
+	public Resp<?> changeTag(String mac,Integer type,String dataType,String basetag,Integer switchType){
+		Resp<?> resp = new Resp<>();
+		try {
+			GnssMongoDeviceModel model = MongoUtil.selectTag(mac);
+			String  topic = "/device/"+mac+"/"+dataType;
+			if(model!=null&&model.getTag()!=null) {
+				MongoUtil.updateTag(mac, switchType, type,basetag,topic);
+			}else {
+				MongoUtil.save(basetag, mac, switchType, topic, type);
+			}
+			GnssRtkDevice device = gnssRtkDeviceService.findByMac(mac);
+			if(device!=null) {
+				device.setSwitchType(switchType);
+				device.setDataType(dataType);
+				device.setBasetag(basetag);
+				gnssRtkDeviceService.update(device);
+			}
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
 	@RequestMapping(path = "/find")
 	@ResponseBody
 	public Resp<?> find(String rovertag){
@@ -52,28 +78,5 @@ public class GnssRtkDeviceDataController extends BaseController{
 	}
 	
 	
-	@RequestMapping(path = "/setTag")
-	@ResponseBody
-	public Resp<?> find(String mac,String basetag,Integer subStatus,String t){
-		Resp<?> resp = new Resp<>();
-		try {
-			GnssMongoDeviceModel model = MongoUtil.selectTag(mac);
-			Integer tagType = 0;
-			if(basetag.equals(mac)) {
-				tagType = 1;
-				basetag = "";
-			}
-			String topic = "/device/"+mac+"/"+t;
-			if(model==null) {
-				MongoUtil.save(basetag, mac, subStatus, topic, tagType);
-			}else {
-				MongoUtil.updateTag(mac, subStatus, tagType);
-			}
-			return new Resp<>(true);
-		} catch (Exception e) {
-			log.error("e:{}",e);
-		}
-		return resp;
-	}
 	
 }
