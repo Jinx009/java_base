@@ -45,7 +45,7 @@ public class MongoUtil {
 		collection.insertOne(new Document("basetag",basetag)
 				.append("tag",tag)
 				.append("topic",topic)
-				.append("subStatus", substatus)
+				.append("substatus", substatus)
 				.append("tagtype", tagtype)
 				.append("time", new Date().getTime()));
 		mongoClient.close();
