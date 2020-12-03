@@ -297,9 +297,9 @@ function _getLog(){
 						var e3 = parseFloat(parseFloat(e2)-parseFloat(e0));
 						var n3 = parseFloat(parseFloat(n2)-parseFloat(n0));
 						var u3 = parseFloat(parseFloat(u2)-parseFloat(u0));
-						e.push(parseFloat(e3*100).toFixed(2));
-						n.push(parseFloat(n3*100).toFixed(2));
-						u.push(parseFloat(u3*100).toFixed(2));
+						e.push(parseFloat(e3*1000).toFixed(2));
+						n.push(parseFloat(n3*1000).toFixed(2));
+						u.push(parseFloat(u3*1000).toFixed(2));
 						dateArr.push(res.data[i].updatetime);
 					}
 					_draw();
@@ -333,7 +333,11 @@ var numData = [];
 function _draw(){
 	var option = {
 			title : {
-				text : ''
+				text : '单位：毫米(mm)',
+				textStyle:{
+                    fontSize: 14
+				}
+				
 			},
 			tooltip : {
 				trigger : 'axis'
@@ -387,6 +391,13 @@ function _draw(){
 }
 function _draw2(){
 	var option2 = {
+			title : {
+				text : '每小时数据量',
+				textStyle:{
+                    fontSize: 14
+				}
+				
+			},
 			xAxis : {
 				type : 'category',
 				data : numDate
