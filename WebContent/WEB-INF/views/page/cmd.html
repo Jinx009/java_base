@@ -30,6 +30,7 @@
                                         <th scope="col">命令</th>
                                         <th scope="col">全文</th>
                                         <th scope="col">状态</th>
+                                        <th scope="col">mac</th>
                                         <th scope="col">回复状态</th>
                                         <th scope="col">回复全文</th>
                                         <th scope="col">创建时间</th>
@@ -46,6 +47,7 @@
 													<font v-if="1===item.status" v-text="'已回复'" ></font>
 													<font v-if="item.status===2" v-text="'强制完成'" ></font>
 												</td>
+												<td v-text="item.mac" ></td>
 												<td v-text="item.result" ></td>
 												<td v-text="item.resultStr" ></td>
 												<td v-text="item.createTime" ></td>
