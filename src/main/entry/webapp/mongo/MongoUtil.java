@@ -125,7 +125,7 @@ public class MongoUtil {
 		Date date = new Date(Long.parseLong(time));
 		// 指定查询过滤器
 		log.warn("date:{},date:{}",sdf.format(date), dateToISODate( sdf.format(date)));
-		Bson filter = Filters.gt("datatime",dateToISODate( sdf.format(date)));
+		Bson filter = Filters.gt("datetime",dateToISODate( sdf.format(date)));
 		// 指定查询过滤器查询
 		FindIterable findIterable = collection.find(filter);
 		MongoCursor cursor = findIterable.iterator();
@@ -149,7 +149,7 @@ public class MongoUtil {
 		Date date = new Date(Long.parseLong(time));
 		// 指定查询过滤器
 		log.warn("date:{},date:{}",sdf.format(date), dateToISODate( sdf.format(date)));
-		Bson filter = Filters.gt("datatime",dateToISODate( sdf.format(date)));
+		Bson filter = Filters.gt("datetime",dateToISODate( sdf.format(date)));
 		// 指定查询过滤器查询
 		FindIterable findIterable = collection.find(filter);
 		MongoCursor cursor = findIterable.iterator();

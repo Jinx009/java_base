@@ -97,7 +97,7 @@ public class GnssRtkLogDataController extends BaseController{
 				if(log==null) {
 					log = new GnssRtkLog();
 					log.setRovertag(mac);
-					log.setUpdatetime(String.valueOf(sdf2.parse(date+" "+getHour(i)+":55:00").getTime()));
+					log.setDatetime(String.valueOf(sdf2.parse(date+" "+getHour(i)+":00:00").getTime()));
 					log.setCreateTime(new Date());
 					log.setType(0);
 					gnssRtkLogService.saveStatus(log, 0);
@@ -106,7 +106,7 @@ public class GnssRtkLogDataController extends BaseController{
 				if(log==null) {
 					log = new GnssRtkLog();
 					log.setRovertag(mac);
-					log.setUpdatetime(String.valueOf(sdf2.parse(date+" "+getHour(i)+":55:00").getTime()));
+					log.setDatetime(String.valueOf(sdf2.parse(date+" "+getHour(i)+":00:00").getTime()));
 					log.setCreateTime(new Date());
 					log.setType(1);
 					gnssRtkLogService.saveStatus(log, 0);
