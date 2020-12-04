@@ -13,7 +13,7 @@ public class GnssRtkConnLogDao extends BaseDao<GnssRtkConnLog>{
 
 	public PageDataList<GnssRtkConnLog> findByMacAndP(int p, String mac) {
 		QueryParam param = QueryParam.getInstance();
-		param.addPage(1, 10);
+		param.addPage(p, 10);
 		param.addOrder(OrderType.DESC, "id");
 		param.addParam("mac", mac);
 		return findPageList(param);

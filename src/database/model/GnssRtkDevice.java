@@ -89,5 +89,7 @@ public class GnssRtkDevice {
 	private String dataType;
 	@Column(name = "switch_type")//是都开启解算
 	private Integer switchType;
+	@Column(name = "update_time2")
+	private String updatetime2;
 	
 }

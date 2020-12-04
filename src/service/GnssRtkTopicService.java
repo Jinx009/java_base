@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import database.common.PageDataList;
 import database.dao.GnssRtkTopicDao;
 import database.model.GnssRtkTopic;
 
@@ -30,6 +31,10 @@ public class GnssRtkTopicService {
 		return gnssRtkTopicDao.find(id);
 	}
 
+	public PageDataList<GnssRtkTopic> list(String mac, int p) {
+		return gnssRtkTopicDao.list(mac,p);
+	}
+	
 	public List<GnssRtkTopic> list(String mac) {
 		return gnssRtkTopicDao.list(mac);
 	}

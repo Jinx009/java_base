@@ -35,10 +35,10 @@ public class GnssRtkControlDataController extends BaseController{
 	
 	@RequestMapping(path = "list")
 	@ResponseBody
-	public Resp<?> list(String mac){
+	public Resp<?> list(String mac,int p ){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(gnssRtkControlService.findByMac(mac));
+			return new Resp<>(gnssRtkControlService.findByMac(mac,p));
 		} catch (Exception e) {
 			log.error("e:{}",e);
 		}

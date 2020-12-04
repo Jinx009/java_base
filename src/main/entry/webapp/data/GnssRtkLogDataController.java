@@ -1,5 +1,8 @@
 package main.entry.webapp.data;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import database.common.PageDataList;
 import database.model.GnssRtkConnLog;
@@ -35,10 +39,10 @@ public class GnssRtkLogDataController extends BaseController{
 	
 	@RequestMapping(path = "/page")
 	@ResponseBody
-	public Resp<?> pageList(Integer p){
+	public Resp<?> pageList(Integer p,String mac,int type,int status){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			PageDataList<GnssRtkLog> pages = gnssRtkLogService.findByPage(p);
+			PageDataList<GnssRtkLog> pages = gnssRtkLogService.findByPage(p,mac,type,status);
 			return new Resp<>(pages);
 		} catch (Exception e) {
 			log.error("e:{}",e);
@@ -73,6 +77,56 @@ public class GnssRtkLogDataController extends BaseController{
 		return resp;
 	}
 	
+	@RequestMapping(path = "createLog")
+	@ResponseBody
+	public Resp<?> createLog(String date,String mac){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date dateS = new Date();
+			int k = 24;
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(dateS);
+			int nowHour = calendar.get(Calendar.HOUR_OF_DAY);
+			if(sdf.format(dateS).equals(date)) {
+				k = nowHour;
+			}
+			for(int i = 0;i<k;i++) {
+				GnssRtkLog log = gnssRtkLogService.findByMacAndDate(mac, date, i, (i+1), 0);
+				if(log==null) {
+					log = new GnssRtkLog();
+					log.setRovertag(mac);
+					log.setUpdatetime(String.valueOf(sdf2.parse(date+" "+getHour(i)+":55:00").getTime()));
+					log.setCreateTime(new Date());
+					log.setType(0);
+					gnssRtkLogService.saveStatus(log, 0);
+				}
+				log = gnssRtkLogService.findByMacAndDate(mac, date, i, (i+1), 1);
+				if(log==null) {
+					log = new GnssRtkLog();
+					log.setRovertag(mac);
+					log.setUpdatetime(String.valueOf(sdf2.parse(date+" "+getHour(i)+":55:00").getTime()));
+					log.setCreateTime(new Date());
+					log.setType(1);
+					gnssRtkLogService.saveStatus(log, 0);
+				}
+			}
+			return new Resp<>(true);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	private String getHour(int nowHour) {
+		if(nowHour<10) {
+			return "0"+nowHour;
+		}
+		return String.valueOf(nowHour);
+	}
+
+	
 	@RequestMapping(path = "/findNum")
 	@ResponseBody
 	public Resp<?> findNum(String mac,String start,String end){
@@ -80,7 +134,24 @@ public class GnssRtkLogDataController extends BaseController{
 		try {
 			//2020-11-03 00:00:00 - 2020-11-03 00:00:00
 			List<GnssRtkNumLog> list = gnssRtkNumLogService.findByMac(mac, start, end);
-			return new Resp<>(list);
+			List<GnssRtkNumLog> returnList = new ArrayList<GnssRtkNumLog>();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+			String dateStr = sdf.format(date);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			int nowHour = calendar.get(Calendar.HOUR_OF_DAY);	
+			date = sdf.parse(dateStr+" 00:00:00");
+			for(GnssRtkNumLog log : list) {
+				Date logDate = sdf.parse(log.getDate());
+				if(date.after(logDate)) {
+					returnList.add(log);
+				}
+				if(dateStr.equals(log.getDate())&&nowHour>=log.getStartHour()) {
+					returnList.add(log);
+				}
+			}
+			return new Resp<>(returnList);
 		} catch (Exception e) {
 			log.error("e:{}",e);
 		}

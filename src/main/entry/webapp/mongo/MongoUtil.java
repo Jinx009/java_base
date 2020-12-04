@@ -95,6 +95,49 @@ public class MongoUtil {
 		mongoClient.close();
 		return logs;
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static List<GnssRtkLog> selectdailyresult() {
+		MongoClient mongoClient = new MongoClient("localhost", 27017);
+		MongoDatabase mongoDatabase = mongoClient.getDatabase("result");
+		MongoCollection<Document> collection = mongoDatabase.getCollection("dailyresult");
+		List<GnssRtkLog> logs = new ArrayList<GnssRtkLog>();
+		// 查找集合中的所有文档
+		FindIterable findIterable = collection.find();
+		MongoCursor cursor = findIterable.iterator();
+		while (cursor.hasNext()) {
+			String str = JSONObject.toJSONString(cursor.next());
+			GnssRtkLog log = JSONObject.parseObject(str, GnssRtkLog.class);
+			logs.add(log);
+		}
+		log.warn(JSONObject.toJSONString(logs));
+		mongoClient.close();
+		return logs;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static List<GnssRtkLog> selectdailyresult(String time) {
+		MongoClient mongoClient = new MongoClient("localhost", 27017);
+		MongoDatabase mongoDatabase = mongoClient.getDatabase("result");
+		MongoCollection<Document> collection = mongoDatabase.getCollection("dailyresult");
+		List<GnssRtkLog> logs = new ArrayList<GnssRtkLog>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date(Long.parseLong(time));
+		// 指定查询过滤器
+		log.warn("date:{},date:{}",sdf.format(date), dateToISODate( sdf.format(date)));
+		Bson filter = Filters.gt("updatetime",dateToISODate( sdf.format(date)));
+		// 指定查询过滤器查询
+		FindIterable findIterable = collection.find(filter);
+		MongoCursor cursor = findIterable.iterator();
+		while (cursor.hasNext()) {
+			String str = JSONObject.toJSONString(cursor.next());
+			GnssRtkLog log = JSONObject.parseObject(str, GnssRtkLog.class);
+			logs.add(log);
+		}
+		log.warn(JSONObject.toJSONString(logs));
+		mongoClient.close();
+		return logs;
+	}
 
 	@SuppressWarnings("rawtypes")
 	public static List<GnssRtkLog> select(String time) {
@@ -120,13 +163,6 @@ public class MongoUtil {
 		return logs;
 	}
 
-	public static void main(String[] args) {
-		try {
-			System.out.println(JSONObject.toJSONString(selectTag("0010202009000005")));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	
 	public static Date dateToISODate(String dateStr){

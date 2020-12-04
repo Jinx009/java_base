@@ -59,5 +59,9 @@ public class GnssRtkLog {
 	@Column(name = "create_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
+	@Column(name = "type")
+	private Integer type;
+	@Column(name = "status")
+	private Integer status;
 	
 }

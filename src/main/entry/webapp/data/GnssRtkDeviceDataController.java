@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import database.common.PageDataList;
 import database.model.GnssMongoDeviceModel;
 import database.model.GnssRtkDevice;
 import main.entry.webapp.BaseController;
@@ -31,6 +32,19 @@ public class GnssRtkDeviceDataController extends BaseController{
 		Resp<?> resp = new Resp<>();
 		try {
 			List<GnssRtkDevice> list = gnssRtkDeviceService.findAll();
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/page")
+	@ResponseBody
+	public Resp<?> page(int p){
+		Resp<?> resp = new Resp<>();
+		try {
+			PageDataList<GnssRtkDevice> list = gnssRtkDeviceService.page(p);
 			return new Resp<>(list);
 		} catch (Exception e) {
 			log.error("e:{}",e);

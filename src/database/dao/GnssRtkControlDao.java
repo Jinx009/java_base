@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import common.helper.StringUtil;
 import database.common.BaseDao;
 import database.common.OrderFilter.OrderType;
+import database.common.PageDataList;
 import database.common.QueryParam;
 import database.model.GnssRtkControl;
 
@@ -20,13 +21,14 @@ public class GnssRtkControlDao extends BaseDao<GnssRtkControl>{
 		return findByCriteria(queryParam);
 	}
 
-	public Object findByMac(String mac) {
+	public PageDataList<GnssRtkControl> findByMac(String mac, int p) {
 		QueryParam queryParam = QueryParam.getInstance();
 		if(StringUtil.isNotBlank(mac)) {
 			queryParam.addParam("mac", mac);
 		}
+		queryParam.addPage(p, 10);
 		queryParam.addOrder(OrderType.DESC, "id");
-		return findByCriteria(queryParam);
+		return findPageList(queryParam);
 	}
 
 	

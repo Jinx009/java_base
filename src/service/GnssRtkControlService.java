@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import database.common.PageDataList;
 import database.dao.GnssRtkControlDao;
 import database.model.GnssRtkControl;
 
@@ -31,8 +32,8 @@ public class GnssRtkControlService {
 		return gnssRtkControlDao.find(id);
 	}
 
-	public Object findByMac(String mac) {
-		return gnssRtkControlDao.findByMac(mac);
+	public PageDataList<GnssRtkControl> findByMac(String mac, int p) {
+		return gnssRtkControlDao.findByMac(mac,p);
 	}
 
 	public void updateGrc(String payload, String mac) {

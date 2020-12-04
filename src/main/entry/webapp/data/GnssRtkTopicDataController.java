@@ -110,10 +110,10 @@ public class GnssRtkTopicDataController extends BaseController {
 
 	@RequestMapping(path = "/list")
 	@ResponseBody
-	public Resp<?> list(String mac) {
+	public Resp<?> list(String mac,int p) {
 		Resp<?> resp = new Resp<>(false);
 		try {
-			return new Resp<>(gnssRtkTopicService.list(mac));
+			return new Resp<>(gnssRtkTopicService.list(mac,p));
 		} catch (Exception e) {
 			log.error("e:{}", e);
 		}
