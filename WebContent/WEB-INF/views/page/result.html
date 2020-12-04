@@ -76,7 +76,7 @@
 								        	<font v-if="1===item.type" v-text="'静态'" ></font>
 								        	<font v-if="0===item.type" v-text="'快速'" ></font>
 								        </td>
-										<td v-text="item.updatetime"></td>
+										<td v-text="item.datatime"></td>
 									</tr>
                                     </tbody>
                                 </table>
@@ -140,7 +140,7 @@ var _d = '';
   		success:function(res){
   			max = res.data.page.pages;
   			for ( var i in res.data.list) {
-				res.data.list[i].updatetime = toDateTime(parseInt(res.data.list[i].updatetime));
+				res.data.list[i].datatime = toDateTime(parseInt(res.data.list[i].datatime));
 				if(res.data.list[i].lng!=''&&res.data.list[i].lng!=null){
 					res.data.list[i].lng = parseFloat(res.data.list[i].lng).toFixed(9);
 					res.data.list[i].lat = parseFloat(res.data.list[i].lat).toFixed(9);

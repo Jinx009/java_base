@@ -36,8 +36,8 @@ public class GnssRtkLog {
 	private Integer satellites;
 	@Column(name = "rovertag")
 	private String rovertag;
-	@Column(name = "datetime")
-	private String datetime;
+	@Column(name = "datatime")
+	private String datatime;
 	@Column(name = "east")
 	private Double east;
 	@Column(name = "north")

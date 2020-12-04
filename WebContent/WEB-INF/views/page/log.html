@@ -307,7 +307,7 @@ function _getLog(){
 						}
 					}
 					for(var i in res.data){
-						res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
+						res.data[i].datatime = toDateTime(parseInt(res.data[i].datatime));
 						if(res.data[i].status==0){
 							e.push('解算失败');
 							n.push('解算失败');
@@ -323,7 +323,7 @@ function _getLog(){
 							n.push(parseFloat(n3*1000).toFixed(2));
 							u.push(parseFloat(u3*1000).toFixed(2));
 						}
-						dateArr.push(res.data[i].updatetime);
+						dateArr.push(res.data[i].datatime);
 					}
 					_draw();
 				}
@@ -356,7 +356,7 @@ function _getLog(){
 						}
 					}
 					for(var i in res.data){
-						res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
+						res.data[i].datatime = toDateTime(parseInt(res.data[i].datatime));
 						if(res.data[i].status==0){
 							e1.push('解算失败');
 							n1.push('解算失败');
@@ -372,7 +372,7 @@ function _getLog(){
 							n1.push(parseFloat(n3*1000).toFixed(2));
 							u1.push(parseFloat(u3*1000).toFixed(2));
 						}
-						dateArr1.push(res.data[i].updatetime);
+						dateArr1.push(res.data[i].datatime);
 					}
 					_draw3();
 				}

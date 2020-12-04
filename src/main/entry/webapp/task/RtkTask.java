@@ -168,7 +168,7 @@ public class RtkTask {
 	
 	private void save(List<GnssRtkLog> list, String updatetime2, int i) {
 		for(GnssRtkLog log : list){
-			if(!updatetime2.equals(log.getUpdatetime())){
+			if(!updatetime2.equals(log.getDatatime())){
 				log.setCreateTime(new Date());
 				gnssRtkLogService.save(log,i);
 			}
@@ -178,7 +178,7 @@ public class RtkTask {
 				device.setBasetag(log.getBasetag());
 				device.setCoverrate(log.getCoverrate());
 				device.setCreateTime(new Date());
-				device.setDatetime(log.getDatetime());
+				device.setDatetime(log.getDatatime());
 				device.setEast(log.getEast());
 				device.setFixrate(log.getFixrate());
 				device.setHeight(log.getHeight());
@@ -195,7 +195,7 @@ public class RtkTask {
 			}else{
 				device.setBasetag(log.getBasetag());
 				device.setCoverrate(log.getCoverrate());
-				device.setDatetime(log.getDatetime());
+				device.setDatetime(log.getDatatime());
 				device.setEast(log.getEast());
 				device.setFixrate(log.getFixrate());
 				device.setHeight(log.getHeight());
@@ -225,7 +225,7 @@ public class RtkTask {
 				device.setBasetag(log.getBasetag());
 				device.setCoverrate(log.getCoverrate());
 				device.setCreateTime(new Date());
-				device.setDatetime(log.getDatetime());
+				device.setDatetime(log.getDatatime());
 				device.setEast(log.getEast());
 				device.setFixrate(log.getFixrate());
 				device.setHeight(log.getHeight());
@@ -242,7 +242,7 @@ public class RtkTask {
 			}else{
 				device.setBasetag(log.getBasetag());
 				device.setCoverrate(log.getCoverrate());
-				device.setDatetime(log.getDatetime());
+				device.setDatetime(log.getDatatime());
 				device.setEast(log.getEast());
 				device.setFixrate(log.getFixrate());
 				device.setHeight(log.getHeight());

@@ -29,7 +29,7 @@ public class GnssRtkLogDao extends BaseDao<GnssRtkLog>{
 		if(-1!=status) {
 			queryParam.addParam("status", status);
 		}
-		queryParam.addOrder(OrderType.DESC, "updatetime");
+		queryParam.addOrder(OrderType.DESC, "datatime");
 		return findPageList(queryParam);
 	}
 
@@ -39,14 +39,14 @@ public class GnssRtkLogDao extends BaseDao<GnssRtkLog>{
 		long starttime = sdf.parse(start).getTime();
 		long endtime = sdf.parse(end).getTime();
 		
-		String hql = " from GnssRtkLog where rovertag = '"+rovertag+"' and updatetime>='"+starttime+"'  and updatetime <='"+endtime+"' ";
+		String hql = " from GnssRtkLog where rovertag = '"+rovertag+"' and datatime>='"+starttime+"'  and datatime <='"+endtime+"' ";
 		if(-1!=type) {
 			hql+= " and type="+type;
 		}
 		if(-1!=status) {
 			hql+= " and status="+status;
 		}
-		hql += " order by updatetime ";
+		hql += " order by datatime ";
 		List<GnssRtkLog> list = em.createQuery(hql).getResultList();
 		if(list!=null&&!list.isEmpty()){
 			return list;
@@ -60,7 +60,7 @@ public class GnssRtkLogDao extends BaseDao<GnssRtkLog>{
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		long starttime = sdf2.parse(sdf.format(date)+" "+getHour(start)+":00:00").getTime();
 		long endtime = sdf2.parse(sdf.format(date)+" "+getHour(end)+":00:00").getTime();
-		String hql = " from GnssRtkLog where rovertag = '"+mac+"' and updatetime>'"+starttime+"' and type="+i+" and updatetime <'"+endtime+"' ";
+		String hql = " from GnssRtkLog where rovertag = '"+mac+"' and datatime>'"+starttime+"' and type="+i+" and datatime <'"+endtime+"'  order by datatime ";
 		List<GnssRtkLog> list = em.createQuery(hql).getResultList();
 		if(list!=null&&!list.isEmpty()){
 			return list;
@@ -73,7 +73,7 @@ public class GnssRtkLogDao extends BaseDao<GnssRtkLog>{
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		long starttime = sdf2.parse(date+" "+getHour(start)+":00:00").getTime();
 		long endtime = sdf2.parse(date+" "+getHour(end)+":00:00").getTime();
-		String hql = " from GnssRtkLog where rovertag = '"+mac+"' and updatetime>'"+starttime+"' and type="+i+" and updatetime <'"+endtime+"' ";
+		String hql = " from GnssRtkLog where rovertag = '"+mac+"' and datatime>'"+starttime+"' and type="+i+" and datatime <'"+endtime+"' order by datatime ";
 		List<GnssRtkLog> list = em.createQuery(hql).getResultList();
 		if(list!=null&&!list.isEmpty()){
 			return list.get(0);
