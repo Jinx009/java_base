@@ -190,7 +190,7 @@ public class RtkTask {
 				device.setSatellites(log.getSatellites());
 				device.setUp(log.getUp());
 				device.setWindow(log.getWindow());
-				device.setUpdatetime2(updatetime2);
+				device.setUpdatetime2(log.getDatatime());
 				gnssRtkDeviceService.save(device);
 			}else{
 				device.setBasetag(log.getBasetag());
@@ -206,7 +206,7 @@ public class RtkTask {
 				device.setRovertag(log.getRovertag());
 				device.setSatellites(log.getSatellites());
 				device.setUp(log.getUp());
-				device.setUpdatetime2(updatetime2);
+				device.setUpdatetime2(log.getDatatime());
 				device.setWindow(log.getWindow());
 				gnssRtkDeviceService.update(device);
 			}
@@ -236,7 +236,7 @@ public class RtkTask {
 				device.setRovertag(log.getRovertag());
 				device.setSatellites(log.getSatellites());
 				device.setUp(log.getUp());
-				device.setUpdatetime(log.getUpdatetime());
+				device.setUpdatetime(log.getDatatime());
 				device.setWindow(log.getWindow());
 				gnssRtkDeviceService.save(device);
 			}else{
@@ -253,7 +253,7 @@ public class RtkTask {
 				device.setRovertag(log.getRovertag());
 				device.setSatellites(log.getSatellites());
 				device.setUp(log.getUp());
-				device.setUpdatetime(log.getUpdatetime());
+				device.setUpdatetime(log.getDatatime());
 				device.setWindow(log.getWindow());
 				gnssRtkDeviceService.update(device);
 			}
