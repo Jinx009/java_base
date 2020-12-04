@@ -109,6 +109,12 @@
 									<div class="portlet-body">
 										<div class="slimScrollDiv"
 											style="position: relative; overflow: hidden; width: auto; height: 300px;">
+											<div id="draw3" style="width: 100%; height: 100%;"></div>
+										</div>
+									</div>
+									<div class="portlet-body">
+										<div class="slimScrollDiv"
+											style="position: relative; overflow: hidden; width: auto; height: 300px;">
 											<div id="draw" style="width: 100%; height: 100%;"></div>
 										</div>
 									</div>
@@ -267,8 +273,8 @@ function _getData() {
 			}
 		})
 }
-var e = [],n = [],u =[],dateArr = [];
-var _d2 = '';
+var e = [],n = [],u =[],dateArr = [],e1=[],n1=[],u1=[],dateArr1=[];
+var _d2 = '',_d3 = '';
 function _getLog(){
 	var date = $('#date').val();
 	if(date==''){
@@ -278,7 +284,7 @@ function _getLog(){
 		var start = date.split(' - ')[0];
 		var end = date.split(' - ')[1];
 		$.ajax({
-			url:'/d/gnssrtklog/find?rovertag='+rovertag+'&start='+start+'&end='+end,
+			url:'/d/gnssrtklog/find?rovertag='+rovertag+'&start='+start+'&end='+end+'&type=0&status=-1',
 			dataType:'json',
 			type:'post',
 			success:function(res){
@@ -290,23 +296,85 @@ function _getLog(){
 					myChart.clear();
 				}
 				if(res.data!=null){
-					var e0 = res.data[0].east;
-					var n0 = res.data[0].north;
-					var u0 = res.data[0].up;
+					var e0 = 0;
+					var n0 = 0;
+					var u0 = 0;
+					for(var i in res.data){
+						if(e0==0&&res.data[i].status==1){
+							e0 = res.data[i].east;
+							n0 = res.data[i].north;
+							u0 = res.data[i].up;
+						}
+					}
 					for(var i in res.data){
 						res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
-						var e2 = parseFloat(res.data[i].east).toFixed(4);
-						var n2 = parseFloat(res.data[i].north).toFixed(4);
-						var u2 = parseFloat(res.data[i].up).toFixed(4);
-						var e3 = parseFloat(parseFloat(e2)-parseFloat(e0));
-						var n3 = parseFloat(parseFloat(n2)-parseFloat(n0));
-						var u3 = parseFloat(parseFloat(u2)-parseFloat(u0));
-						e.push(parseFloat(e3*1000).toFixed(2));
-						n.push(parseFloat(n3*1000).toFixed(2));
-						u.push(parseFloat(u3*1000).toFixed(2));
+						if(res.data[i].status==0){
+							e.push('解算失败');
+							n.push('解算失败');
+							u.push('解算失败');
+						}else{
+							var e2 = parseFloat(res.data[i].east).toFixed(4);
+							var n2 = parseFloat(res.data[i].north).toFixed(4);
+							var u2 = parseFloat(res.data[i].up).toFixed(4);
+							var e3 = parseFloat(parseFloat(e2)-parseFloat(e0));
+							var n3 = parseFloat(parseFloat(n2)-parseFloat(n0));
+							var u3 = parseFloat(parseFloat(u2)-parseFloat(u0));
+							e.push(parseFloat(e3*1000).toFixed(2));
+							n.push(parseFloat(n3*1000).toFixed(2));
+							u.push(parseFloat(u3*1000).toFixed(2));
+						}
 						dateArr.push(res.data[i].updatetime);
 					}
 					_draw();
+				}
+			}
+		})
+		var rovertag = $('#rovertag').val();
+		var start = date.split(' - ')[0];
+		var end = date.split(' - ')[1];
+		$.ajax({
+			url:'/d/gnssrtklog/find?rovertag='+rovertag+'&start='+start+'&end='+end+'&type=1&status=-1',
+			dataType:'json',
+			type:'post',
+			success:function(res){
+				e1 = [];
+				n1 =[];
+				u1 =[];
+				dateArr1 = [];
+				if(myChart3!=null){
+					myChart3.clear();
+				}
+				if(res.data!=null){
+					var e0 = 0;
+					var n0 = 0;
+					var u0 = 0;
+					for(var i in res.data){
+						if(e0==0&&res.data[i].status==1){
+							e0 = res.data[i].east;
+							n0 = res.data[i].north;
+							u0 = res.data[i].up;
+						}
+					}
+					for(var i in res.data){
+						res.data[i].updatetime = toDateTime(parseInt(res.data[i].updatetime));
+						if(res.data[i].status==0){
+							e1.push('解算失败');
+							n1.push('解算失败');
+							u1.push('解算失败');
+						}else{
+							var e2 = parseFloat(res.data[i].east).toFixed(4);
+							var n2 = parseFloat(res.data[i].north).toFixed(4);
+							var u2 = parseFloat(res.data[i].up).toFixed(4);
+							var e3 = parseFloat(parseFloat(e2)-parseFloat(e0));
+							var n3 = parseFloat(parseFloat(n2)-parseFloat(n0));
+							var u3 = parseFloat(parseFloat(u2)-parseFloat(u0));
+							e1.push(parseFloat(e3*1000).toFixed(2));
+							n1.push(parseFloat(n3*1000).toFixed(2));
+							u1.push(parseFloat(u3*1000).toFixed(2));
+						}
+						dateArr1.push(res.data[i].updatetime);
+					}
+					_draw3();
 				}
 			}
 		})
@@ -331,13 +399,13 @@ function _getLog(){
 		})
 	}
 }
-var myChart,myChart2;
+var myChart,myChart2,myChart3;;
 var numDate = [];
 var numData = [];
 function _draw(){
 	var option = {
 			title : {
-				text : '单位：毫米(mm)',
+				text : '快速解算：毫米(mm)',
 				textStyle:{
                     fontSize: 14
 				}
@@ -392,6 +460,65 @@ function _draw(){
 		myChart = echarts.init(document
 				.getElementById('draw'));
 		myChart.setOption(option, true);
+}
+function _draw3(){
+	var option = {
+			title : {
+				text : '静态解：毫米(mm)',
+				textStyle:{
+                    fontSize: 14
+				}
+				
+			},
+			tooltip : {
+				trigger : 'axis'
+			},
+			legend : {
+				data : [ 'E', 'N', 'U', '解算失败' ]
+			},
+			grid : {
+				left : '3%',
+				right : '4%',
+				bottom : '3%',
+				containLabel : true
+			},
+			toolbox : {
+				feature : {
+					saveAsImage : {}
+				}
+			},
+			xAxis : {
+				type : 'category',
+				boundaryGap : false,
+				data :dateArr1
+			},
+			yAxis : {
+				type : 'value'
+			},
+			series : [
+					{
+						name : 'E',
+						type : 'line',
+						data :e1
+					},
+					{
+						name : 'N',
+						type : 'line',
+						data :n1
+					},
+					{
+						name : 'U',
+						type : 'line',
+						data : u1
+					}, {
+						name : '解算失败',
+						type : 'line',
+						data : []
+					} ]
+		};
+		myChart3 = echarts.init(document
+				.getElementById('draw3'));
+		myChart3.setOption(option, true);
 }
 function _draw2(){
 	var option2 = {

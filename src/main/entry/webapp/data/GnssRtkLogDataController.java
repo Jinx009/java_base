@@ -173,10 +173,10 @@ public class GnssRtkLogDataController extends BaseController{
 	
 	@RequestMapping(path = "/find")
 	@ResponseBody
-	public Resp<?> find(String rovertag,String start,String end){
+	public Resp<?> find(String rovertag,String start,String end,int type,int status){
 		Resp<?> resp = new Resp<>(false);
 		try {
-			List<GnssRtkLog> list = gnssRtkLogService.find(rovertag,start,end);
+			List<GnssRtkLog> list = gnssRtkLogService.find(rovertag,start,end,type,status);
 			return new Resp<>(list);
 		} catch (Exception e) {
 			log.error("e:{}",e);

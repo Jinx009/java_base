@@ -25,7 +25,6 @@ public class GnssRtkLogService {
 	
 	public void saveStatus(GnssRtkLog gnssRtkLog, int i){
 		gnssRtkLog.setStatus(0);
-		gnssRtkLog.setType(i);
 		gnssRtkLogDao.save(gnssRtkLog);
 	}
 
@@ -33,8 +32,8 @@ public class GnssRtkLogService {
 		return gnssRtkLogDao.pages(p,mac,type,status);
 	}
 
-	public List<GnssRtkLog> find(String rovertag, String start, String end) throws Exception {
-		return gnssRtkLogDao.findByRoverTagAndDate(rovertag,start,end);
+	public List<GnssRtkLog> find(String rovertag, String start, String end, int type, int status) throws Exception {
+		return gnssRtkLogDao.findByRoverTagAndDate(rovertag,start,end,type,status);
 	}
 
 	public List<GnssRtkLog> findByMacAndDate(String mac, Date date, int start, int nowHour, int i) throws ParseException {

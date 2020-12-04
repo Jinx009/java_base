@@ -27,6 +27,20 @@
 											<div class="col-md-3" style="padding-left: 30px;">
 												<input type="text" class="form-control" placeholder="输入MAC号码" id="mac" />
 											</div>
+											<div class="col-md-3" style="padding-left: 0px;">
+												<select id="type"  class="form-control" >
+													<option value="-1" >全部解算</option>
+													<option value="0" >快速</option>
+													<option value="1" >静态</option>
+												</select>
+											</div>
+											<div class="col-md-3" style="padding-left: 0px;">
+												<select id="status"  class="form-control" >
+													<option value="-1" >全部结算结果</option>
+													<option value="0" >失败</option>
+													<option value="1" >成功</option>
+												</select>
+											</div>
 											<div class="col-md-2">
 												<button type="button" class="btn btn-success" onclick="_getData()">查询</button>
 											</div>
@@ -46,7 +60,7 @@
 										<th scope="col">east</th>
 										<th scope="col">north</th>
 										<th scope="col">up</th>
-									<!-- 	<th scope="col">基准站</th> -->
+									    <th scope="col">类型</th>
 										<th scope="col">更新时间</th>
                                     </tr>
                                     </thead>
@@ -58,7 +72,10 @@
 										<td v-text="item.east"></td>
 										<td v-text="item.north"></td>
 										<td v-text="item.up"></td>
-								<!-- 		<td v-text="item.basetag"></td> -->
+								        <td>
+								        	<font v-if="1===item.type" v-text="'静态'" ></font>
+								        	<font v-if="0===item.type" v-text="'快速'" ></font>
+								        </td>
 										<td v-text="item.updatetime"></td>
 									</tr>
                                     </tbody>
@@ -105,23 +122,37 @@ $(function(){
 	_setClass();
 	_getData();
 })
-var mac = '';
+var mac = '',status = -1,type = -1;
 var p = 1;
 var max = 1;
 var _d = '';
   function _getData(){
-	if(mac!=$('#mac').val()){
+	if(mac!=$('#mac').val()||status!=$('#status').val()||type!=$('#type').val()){
 		p = 1;max = 1;
 		mac = $('#mac').val();
+		status = $('#status').val();
+		type = $('#type').val();
 	}
   	$.ajax({
-  		url:'/d/gnssrtklog/page?p='+p+'&mac='+$('#mac').val(),
+  		url:'/d/gnssrtklog/page?p='+p+'&mac='+$('#mac').val()+'&type='+type+'&status='+status,
   		type:'get',
   		dataType:'json',
   		success:function(res){
   			max = res.data.page.pages;
   			for ( var i in res.data.list) {
 				res.data.list[i].updatetime = toDateTime(parseInt(res.data.list[i].updatetime));
+				if(res.data.list[i].lng!=''&&res.data.list[i].lng!=null){
+					res.data.list[i].lng = parseFloat(res.data.list[i].lng).toFixed(9);
+					res.data.list[i].lat = parseFloat(res.data.list[i].lat).toFixed(9);
+					if(res.data.list[i].height!=''&&res.data.list[i].height!=null){
+						res.data.list[i].height = parseFloat(res.data.list[i].height).toFixed(4);
+					}
+				}
+				if(res.data.list[i].east!=''&&res.data.list[i].east!=null){
+					res.data.list[i].east = parseFloat(res.data.list[i].east).toFixed(4);
+					res.data.list[i].up = parseFloat(res.data.list[i].up).toFixed(4);
+					res.data.list[i].north = parseFloat(res.data.list[i].north).toFixed(4);
+				}
 			}
   			if(_d==''){
   				_d = new Vue({

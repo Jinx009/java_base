@@ -29,17 +29,24 @@ public class GnssRtkLogDao extends BaseDao<GnssRtkLog>{
 		if(-1!=status) {
 			queryParam.addParam("status", status);
 		}
-		queryParam.addOrder(OrderType.DESC, "id");
+		queryParam.addOrder(OrderType.DESC, "updatetime");
 		return findPageList(queryParam);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GnssRtkLog> findByRoverTagAndDate(String rovertag, String start, String end) throws Exception{
+	public List<GnssRtkLog> findByRoverTagAndDate(String rovertag, String start, String end, int type, int status) throws Exception{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		long starttime = sdf.parse(start).getTime();
 		long endtime = sdf.parse(end).getTime();
 		
 		String hql = " from GnssRtkLog where rovertag = '"+rovertag+"' and updatetime>='"+starttime+"'  and updatetime <='"+endtime+"' ";
+		if(-1!=type) {
+			hql+= " and type="+type;
+		}
+		if(-1!=status) {
+			hql+= " and status="+status;
+		}
+		hql += " order by updatetime ";
 		List<GnssRtkLog> list = em.createQuery(hql).getResultList();
 		if(list!=null&&!list.isEmpty()){
 			return list;
