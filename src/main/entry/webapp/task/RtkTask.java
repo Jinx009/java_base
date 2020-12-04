@@ -110,6 +110,7 @@ public class RtkTask {
 					log.setRovertag(device.getMac());
 					log.setUpdatetime(String.valueOf(sdf2.parse(sdf.format(date)+" "+getHour(nowHour)+":55:00").getTime()));
 					log.setCreateTime(new Date());
+					log.setDatatime(String.valueOf(sdf2.parse(sdf.format(date)+" "+getHour(nowHour)+":55:00").getTime()));
 					log.setType(0);
 					gnssRtkLogService.saveStatus(log, 0);
 				}
@@ -119,6 +120,7 @@ public class RtkTask {
 					log.setRovertag(device.getMac());
 					log.setUpdatetime(String.valueOf(sdf2.parse(sdf.format(date)+" "+getHour(nowHour)+":55:00").getTime()));
 					log.setCreateTime(new Date());
+					log.setDatatime(String.valueOf(sdf2.parse(sdf.format(date)+" "+getHour(nowHour)+":55:00").getTime()));
 					log.setType(1);
 					gnssRtkLogService.saveStatus(log, 0);
 				}
