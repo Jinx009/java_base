@@ -101,10 +101,11 @@ public class RtkTask {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		int nowHour = calendar.get(Calendar.HOUR_OF_DAY);
-		int start = nowHour-1;
+		int start = nowHour-2;
+		int end = nowHour-1;
 		for(GnssRtkDevice device:rtk) {
 			if(1==device.getSwitchType()) {
-				List<GnssRtkLog> list = gnssRtkLogService.findByMacAndDate(device.getMac(),date,start,nowHour,0);
+				List<GnssRtkLog> list = gnssRtkLogService.findByMacAndDate(device.getMac(),date,start,end,0);
 				if(list==null) {
 					GnssRtkLog log = new GnssRtkLog();
 					log.setRovertag(device.getMac());
@@ -113,7 +114,7 @@ public class RtkTask {
 					log.setType(0);
 					gnssRtkLogService.saveStatus(log, 0);
 				}
-				List<GnssRtkLog> list2 = gnssRtkLogService.findByMacAndDate(device.getMac(),date,start,nowHour,1);
+				List<GnssRtkLog> list2 = gnssRtkLogService.findByMacAndDate(device.getMac(),date,start,end,1);
 				if(list2==null) {
 					GnssRtkLog log = new GnssRtkLog();
 					log.setRovertag(device.getMac());
@@ -139,13 +140,13 @@ public class RtkTask {
 		GnssRtkDevice rtk = gnssRtkDeviceService.findByNewTime();
 		if(rtk!=null&&StringUtil.isBlank(rtk.getUpdatetime())){
 			List<GnssRtkLog> list = MongoUtil.select();
-			logger.warn("select:{}",JSONObject.toJSONString(list));
+//			logger.warn("select:{}",JSONObject.toJSONString(list));
 			if(list!=null&&!list.isEmpty()){
 				save(list,"");
 			}
 		}else{
 			List<GnssRtkLog> list = MongoUtil.select(rtk.getUpdatetime());
-			logger.warn("select updatetime:{}",JSONObject.toJSONString(list));
+//			logger.warn("select updatetime:{}",JSONObject.toJSONString(list));
 			if(list!=null&&!list.isEmpty()){
 				save(list,rtk.getUpdatetime());
 			}
@@ -153,13 +154,13 @@ public class RtkTask {
 		GnssRtkDevice rtk2 = gnssRtkDeviceService.findByNew2Time();
 		if(rtk2!=null&&StringUtil.isBlank(rtk2.getUpdatetime2())){
 			List<GnssRtkLog> list = MongoUtil.selectdailyresult();
-			logger.warn("select2:{}",JSONObject.toJSONString(list));
+//			logger.warn("select2:{}",JSONObject.toJSONString(list));
 			if(list!=null&&!list.isEmpty()){
 				save(list,"",1);
 			}
 		}else{
-			List<GnssRtkLog> list = MongoUtil.select(rtk2.getUpdatetime2());
-			logger.warn("select updatetime2:{}",JSONObject.toJSONString(list));
+			List<GnssRtkLog> list = MongoUtil.selectdailyresult(rtk2.getUpdatetime2());
+//			logger.warn("select updatetime2:{}",JSONObject.toJSONString(list));
 			if(list!=null&&!list.isEmpty()){
 				save(list,rtk2.getUpdatetime2(),1);
 			}
