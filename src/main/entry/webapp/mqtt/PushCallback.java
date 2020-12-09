@@ -120,17 +120,6 @@ public class PushCallback implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		// subscribe后得到的消息会执行到这里面
 		String payload = new String(message.getPayload());
-		byte[] bytes = message.getPayload();
-		String str = "";
-		for(byte b:bytes) {
-			String s1 = Integer.toHexString(b);
-			if(s1.length()==1) {
-				str+=  "0"+s1;
-			}else {
-				str+=s1;
-			}
-		}
-		payload = str.replace(" ", "").replace("ffffff", "");
 		try {
 			if (topic.equals("/server/register")) {//设备注册报文
 				GnssRtkDevice gnssDevice = pu.gnssRtkDeviceService.findByMac(payload);
@@ -177,11 +166,13 @@ public class PushCallback implements MqttCallback {
 				String mac = strs[2];
 				String t = strs[3];
 				if(t.equals("control")) {//下行命令回复
-					log.warn("control:{}", payload);
+					payload = getPayload(message);
+					log.warn("control:{},mac:{}", payload,mac);
 					pu.gnssRtkControlService.updateGrc(payload,mac);
 				}
 				if(t.equals("heartbeat")) {//心跳报文
-					log.warn("heart:{}", payload);
+					payload = getPayload(message);
+					log.warn("heartbeat:{},mac:{}", payload,mac);
 					pu.gnssRtkHeartLogService.saveHeartbeat(payload,mac);
 				}
 				if(t.equals("RTCM")||t.equals("UBX")||t.equals("NMEA")) {//转发报文
@@ -212,6 +203,7 @@ public class PushCallback implements MqttCallback {
 				}
 				if(t.equals("errlog")) {//错误日志报文
 					try {
+						payload = getPayload(message);
 						pu.gnssRtkErrLogService.saveErrlog(payload,mac);
 					} catch (Exception e) {
 						log.error("errlog e:{},topic:{},mac:{}",e,t,mac);
@@ -219,6 +211,7 @@ public class PushCallback implements MqttCallback {
 				}
 				if(t.equals("slope&acc")) {//错误日志报文
 					try {
+						payload = getPayload(message);
 						log.warn("slope&acc:{},mac:{}",payload,mac);
 						pu.gnssRtkAccLogService.saveAccLog(payload,mac);
 					} catch (Exception e) {
@@ -227,6 +220,7 @@ public class PushCallback implements MqttCallback {
 				}
 				if(t.equals("debug")) {//错误日志报文
 					try {
+						payload = getPayload(message);
 						pu.gnssRtkDebugLogService.saveDebuglog(payload,mac);
 					} catch (Exception e) {
 						log.error("debug e:{},topic:{},mac:{}",e,t,mac);
@@ -239,4 +233,19 @@ public class PushCallback implements MqttCallback {
 	}
 	
 
+	private String getPayload(MqttMessage message) {
+		byte[] bytes = message.getPayload();
+		String str = "";
+		for(byte b:bytes) {
+			String s1 = Integer.toHexString(b);
+			if(s1.length()==1) {
+				str+=  "0"+s1;
+			}else {
+				str+=s1;
+			}
+		}
+		String payload = str.replace(" ", "").replace("ffffff", "");
+		return payload;
+	}
+	
 }

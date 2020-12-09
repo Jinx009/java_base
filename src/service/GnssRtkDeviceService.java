@@ -51,6 +51,7 @@ public class GnssRtkDeviceService {
 		gnssDevice.setCreateTime(new Date());
 		gnssDevice.setSwitchType(0);
 		gnssDevice.setDataType("");
+		gnssDevice.setRovertag(payload);
 		gnssRtkDeviceDao.save(gnssDevice);
 	}
 
