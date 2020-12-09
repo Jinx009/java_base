@@ -51,7 +51,13 @@ public class GnssRtkAccLog {
 	private Double accYP2p;
 	@Column(name = "acc_z_p2p")
 	private Double accZP2p;
-	@Column(name = "shock_strength")
-	private Double shockStrength;
+	@Column(name = "shock_strength_x")
+	private Double shockStrengthX;
+	@Column(name = "shock_strength_y")
+	private Double shockStrengthY;
+	@Column(name = "shock_strength_z")
+	private Double shockStrengthZ;
+	@Column(name = "mac")
+	private String mac;
 	
 }

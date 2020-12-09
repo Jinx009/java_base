@@ -46,7 +46,7 @@
                                         <th scope="col">状态</th>
                                         <th scope="col">mac</th>
                                         <th scope="col">回复状态</th>
-                                        <!-- <th scope="col">回复全文</th> -->
+                                         <th scope="col">回复全文</th>
                                         <th scope="col">创建时间</th>
                                         <th scope="col">操作</th>
                                     </tr>
@@ -55,7 +55,7 @@
 											<tr v-for="item in datas.list" >
 												<td v-text="item.id" ></td>
 												<td v-text="item.cmdName" ></td>
-												<td v-text="item.content" style="wi"></td>
+												<td v-text="item.content" style="max-width: 200px;overflow: hidden;padding-right: 10px;text-overflow: ellipsis;white-space: nowrap;"></td>
 												<td>
 													<font v-if="0===item.status" v-text="'新建'" ></font>
 													<font v-if="1===item.status" v-text="'已回复'" ></font>
@@ -63,7 +63,7 @@
 												</td>
 												<td v-text="item.mac" ></td>
 												<td v-text="item.result" ></td>
-												<!-- <td v-text="item.resultStr" ></td> -->
+												<td v-text="item.resultStr" style="max-width: 200px;overflow: hidden;padding-right: 10px;text-overflow: ellipsis;white-space: nowrap;"></td>
 												<td v-text="item.createTime" ></td>
 												<td>
 													<a  v-if="0===item.status" class="edit" v-bind:id="item.id" onclick="_edit(this)" v-text="'强制完成'" > </a>

@@ -130,6 +130,38 @@
 									</div>
 								</div>
 							</div>
+								<div class="col-md-12 col-sm-12">
+								<div class="portlet light bordered">
+									<div class="portlet-title">
+										<div class="caption">
+											<i class="icon-share font-blue-steel"></i> <span
+												class="caption-subject font-blue-steel ">加速度、倾角</span>
+										</div>
+									</div>
+									<div class="portlet-body">
+										<div class="slimScrollDiv"
+											style="position: relative; overflow: hidden; width: auto; height: 400px;">
+											<div id="draw4" style="width: 100%; height: 100%;"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 col-sm-12">
+								<div class="portlet light bordered">
+									<div class="portlet-title">
+										<div class="caption">
+											<i class="icon-share font-blue-steel"></i> <span
+												class="caption-subject font-blue-steel ">RTK</span>
+										</div>
+									</div>
+									<div class="portlet-body">
+										<div class="slimScrollDiv"
+											style="position: relative; overflow: hidden; width: auto; height: 300px;">
+											<div id="draw5" style="width: 100%; height: 100%;"></div>
+										</div>
+									</div>
+								</div>
+							</div>
 							<div class="col-md-12 col-sm-12">
 								<div class="portlet light bordered">
 									<div class="portlet-title">
@@ -226,6 +258,8 @@
 	var _d = '';
 	var p = 1;
 	var max = 1;
+	var maxDate = '';
+	var minDate = '';
 function _getData() {
 	var rovertag = $('#rovertag').val();
 	$.ajax({
@@ -283,7 +317,7 @@ function _getData() {
 			}
 		})
 }
-var e = [],n = [],u =[],dateArr = [],e1=[],n1=[],u1=[],dateArr1=[],f=[],f1=[];
+var e = [],n = [],u =[],dateArr = [],e1=[],n1=[],u1=[],dateArr1=[],f=[],f1=[],acc_x1=[],acc_y1=[],acc_z1=[],x1=[],y1=[],z1=[];
 var _d2 = '',_d3 = '';
 function _getLog(){
 	var date = $('#date').val();
@@ -292,6 +326,8 @@ function _getLog(){
 	}else{
 		var rovertag = $('#rovertag').val();
 		var start = date.split(' - ')[0];
+		maxDate = end;
+		minDate = start;
 		var end = date.split(' - ')[1];
 		$.ajax({
 			url:'/d/gnssrtklog/find?rovertag='+rovertag+'&start='+start+'&end='+end+'&type=0&status=-1',
@@ -315,28 +351,28 @@ function _getLog(){
 							e0 = res.data[i].east;
 							n0 = res.data[i].north;
 							u0 = res.data[i].up;
+							break;
 						}
 					}
 					for(var i in res.data){
 						res.data[i].datetime = toDateTime(parseInt(res.data[i].datetime));
 						if(res.data[i].status==0){
-							e.push('');
-							n.push('');
-							u.push('');
-							f.push('true');
+							f.push([res.data[i].datetime,0]);
+							e.push([res.data[i].datetime,'']);
+							n.push([res.data[i].datetime,'']);
+							u.push([res.data[i].datetime,'']);
 						}else{
-							f.push('0');
 							var e2 = parseFloat(res.data[i].east).toFixed(4);
 							var n2 = parseFloat(res.data[i].north).toFixed(4);
 							var u2 = parseFloat(res.data[i].up).toFixed(4);
 							var e3 = parseFloat(parseFloat(e2)-parseFloat(e0));
 							var n3 = parseFloat(parseFloat(n2)-parseFloat(n0));
 							var u3 = parseFloat(parseFloat(u2)-parseFloat(u0));
-							e.push(parseFloat(e3*1000).toFixed(2));
-							n.push(parseFloat(n3*1000).toFixed(2));
-							u.push(parseFloat(u3*1000).toFixed(2));
+							e.push([res.data[i].datetime,parseFloat(e3*1000).toFixed(2)]);
+							n.push([res.data[i].datetime,parseFloat(n3*1000).toFixed(2)]);
+							u.push([res.data[i].datetime,parseFloat(u3*1000).toFixed(2)]);
 						}
-						dateArr.push(res.data[i].datetime);
+						/* dateArr.push(res.data[i].datetime); */
 					}
 					_draw();
 				}
@@ -345,6 +381,37 @@ function _getLog(){
 		var rovertag = $('#rovertag').val();
 		var start = date.split(' - ')[0];
 		var end = date.split(' - ')[1];
+		$.ajax({
+			url:'/d/gnssrtklog/listAcc?mac='+rovertag+'&start='+start+'&end='+end,
+			dataType:'json',
+			type:'post',
+			success:function(res){
+				acc_x1=[],acc_y1=[],acc_z1=[],x1=[],y1=[],z1=[]
+				if(myChart4!=null){
+					myChart4.clear();
+				}
+				if(res.data!=null){
+					for(var i in res.data){
+						res.data[i].createTime = toDateTime(parseInt(res.data[i].createTime));
+						var acc_x = parseFloat(res.data[i].accX).toFixed(4);
+						var acc_y = parseFloat(res.data[i].accY).toFixed(4);
+						var acc_z = parseFloat(res.data[i].accZ).toFixed(4);
+						var x = parseFloat(res.data[i].angleX).toFixed(4);
+						var y = parseFloat(res.data[i].angleY).toFixed(4);
+						var z = parseFloat(res.data[i].angleZ).toFixed(4);
+						acc_x1.push([res.data[i].createTime,acc_x]);
+						acc_y1.push([res.data[i].createTime,acc_y]);
+						acc_z1.push([res.data[i].createTime,acc_z]);
+						x1.push([res.data[i].createTime,x]);
+						y1.push([res.data[i].createTime,y]);
+						z1.push([res.data[i].createTime,z]);
+						
+					}
+					_draw4();
+					_draw5();
+				}
+			}
+		})
 		$.ajax({
 			url:'/d/gnssrtklog/find?rovertag='+rovertag+'&start='+start+'&end='+end+'&type=1&status=-1',
 			dataType:'json',
@@ -367,28 +434,27 @@ function _getLog(){
 							e0 = res.data[i].east;
 							n0 = res.data[i].north;
 							u0 = res.data[i].up;
+							break;
 						}
 					}
 					for(var i in res.data){
 						res.data[i].datetime = toDateTime(parseInt(res.data[i].datetime));
 						if(res.data[i].status==0){
-							e1.push('');
-							n1.push('');
-							u1.push('');
-							f1.push('true');
+							f1.push([res.data[i].datetime,0]);
+							e1.push([res.data[i].datetime,'']);
+							n1.push([res.data[i].datetime,'']);
+							u1.push([res.data[i].datetime,'']);
 						}else{
-							f1.push('0');
 							var e2 = parseFloat(res.data[i].east).toFixed(4);
 							var n2 = parseFloat(res.data[i].north).toFixed(4);
 							var u2 = parseFloat(res.data[i].up).toFixed(4);
 							var e3 = parseFloat(parseFloat(e2)-parseFloat(e0));
 							var n3 = parseFloat(parseFloat(n2)-parseFloat(n0));
 							var u3 = parseFloat(parseFloat(u2)-parseFloat(u0));
-							e1.push(parseFloat(e3*1000).toFixed(2));
-							n1.push(parseFloat(n3*1000).toFixed(2));
-							u1.push(parseFloat(u3*1000).toFixed(2));
+							e1.push([res.data[i].datetime,parseFloat(e3*1000).toFixed(2)]);
+							n1.push([res.data[i].datetime,parseFloat(n3*1000).toFixed(2)]);
+							u1.push([res.data[i].datetime,parseFloat(u3*1000).toFixed(2)]);
 						}
-						dateArr1.push(res.data[i].datetime);
 					}
 					_draw3();
 				}
@@ -404,18 +470,17 @@ function _getLog(){
 				if(myChart2!=null){
 					myChart2.clear();
 				}
-				numDate = [];
 				numData = [];
 				for(var i in res.data){
-					numDate.push(res.data[i].date+' '+res.data[i].startHour+'~'+res.data[i].endHour);
-					numData.push(res.data[i].num);
+			/* 		numDate.push((res.data[i].date+' '+res.data[i].startHour+':00:00').replace(/\-/g, '/')); */
+					numData.push([(res.data[i].date+' '+res.data[i].startHour+':00:00'),res.data[i].num]);
 				}
 				_draw2();
 			}
 		})
 	}
 }
-var myChart,myChart2,myChart3;;
+var myChart,myChart2,myChart3,myChart4,myChart5;
 var numDate = [];
 var numData = [];
 function _draw(){
@@ -431,7 +496,7 @@ function _draw(){
 				trigger : 'axis'
 			},
 			legend : {
-				data : [ 'E', 'N', 'U', '解算失败' ]
+				data : [ 'E', 'N', 'U','解算失败']
 			},
 			grid : {
 				left : '3%',
@@ -445,9 +510,10 @@ function _draw(){
 				}
 			},
 			xAxis : {
-				type : 'category',
+				type : 'time',
 				boundaryGap : false,
-				data :dateArr
+				max:maxDate,
+				min:minDate
 			},
 			yAxis : {
 				type : 'value'
@@ -467,8 +533,9 @@ function _draw(){
 						name : 'U',
 						type : 'line',
 						data : u
-					}, {
-						name : '解算失败',
+					},
+					{
+						name : '结算失败',
 						type : 'line',
 						data : f
 					} ]
@@ -490,7 +557,7 @@ function _draw3(){
 				trigger : 'axis'
 			},
 			legend : {
-				data : [ 'E', 'N', 'U', '解算失败' ]
+				data : [ 'E', 'N', 'U','结算失败' ]
 			},
 			grid : {
 				left : '3%',
@@ -504,12 +571,16 @@ function _draw3(){
 				}
 			},
 			xAxis : {
-				type : 'category',
+				type : 'time',
 				boundaryGap : false,
-				data :dateArr1
+				max:maxDate,
+				min:minDate
 			},
 			yAxis : {
-				type : 'value'
+				type : 'value',
+		        splitLine: {
+		            show: false
+		        }
 			},
 			series : [
 					{
@@ -526,20 +597,242 @@ function _draw3(){
 						name : 'U',
 						type : 'line',
 						data : u1
-					}, {
-						name : '解算失败',
+					},
+					{
+						name : '结算失败',
 						type : 'line',
-						data : f1,
-					    lineStyle:{
-					    	width:20,
-					    	type:'dashed',
-					    	height:20
-					    }
+						data : f1
 					} ]
 		};
 		myChart3 = echarts.init(document
 				.getElementById('draw3'));
 		myChart3.setOption(option, true);
+}
+/*
+ * RTK
+ */
+function _draw5(){
+	var option = {
+			title : {
+				text : 'RTK：厘米(cm)',
+				textStyle:{
+                    fontSize: 14
+				}
+				
+			},
+			tooltip : {
+				trigger : 'axis'
+			},
+			legend : {
+				data : [ 'E', 'N', 'U']
+			},
+			grid : {
+				left : '3%',
+				right : '4%',
+				bottom : '3%',
+				containLabel : true
+			},
+			toolbox : {
+				feature : {
+					saveAsImage : {}
+				}
+			},
+			xAxis : {
+				type : 'time',
+				boundaryGap : false,
+				max:maxDate,
+				min:minDate
+			},
+			yAxis : {
+				type : 'value',
+		        splitLine: {
+		            show: false
+		        }
+			},
+			series : [
+					{
+						name : 'E',
+						type : 'line',
+						data :[
+							["2020-12-07 10:42:0", "0.0531"],
+							["2020-12-07 10:42:5", "0.0551"],
+							["2020-12-07 10:42:9", "0.0586"],
+							["2020-12-07 10:43:3", "0.0581"],
+							["2020-12-07 10:43:4", "0.0568"],
+							["2020-12-07 10:43:5", "0.0549"],
+							["2020-12-07 10:44:6", "0.0562"],
+							["2020-12-07 10:44:7", "0.0474"],
+							["2020-12-07 10:44:8", "0.0534"],
+							["2020-12-07 10:45:9", "0.0567"],
+							["2020-12-07 10:45:10", "0.0573"],
+							["2020-12-07 10:45:11", "0.0618"],
+							["2020-12-07 10:46:12", "0.0617"],
+							["2020-12-07 10:46:13", "0.0598"],
+							["2020-12-07 10:46:14", "0.0626"],
+							["2020-12-07 10:47:15", "0.0582"],
+							["2020-12-07 10:47:16", "0.0593"],
+							["2020-12-07 10:47:17", "0.0602"],
+							["2020-12-07 10:48:18", "0.0427"],
+							["2020-12-07 10:48:19", "0.0387"],
+							["2020-12-07 10:48:20", "0.0453"],
+							["2020-12-07 10:49:21", "0.0437"],
+							["2020-12-07 10:49:22", "0.0469"],
+							["2020-12-07 10:49:23", "0.0541"],
+							["2020-12-07 10:50:24", "0.0494"],
+							["2020-12-07 10:50:25", "0.0488"],
+							["2020-12-07 10:50:26", "0.0462"],
+							["2020-12-07 13:59:35", ""]
+						]
+							
+					},
+					{
+						name : 'N',
+						type : 'line',
+						data0:[
+							["2020-12-07 10:42:0", "0.0531"],
+							["2020-12-07 10:42:5", "0.0551"],
+							["2020-12-07 10:42:9", "0.0586"],
+							["2020-12-07 10:43:3", "0.0581"],
+							["2020-12-07 10:43:4", "0.0568"],
+							["2020-12-07 10:43:5", "0.0549"],
+							["2020-12-07 10:44:6", "0.0562"],
+							["2020-12-07 10:44:7", "0.0374"],
+							["2020-12-07 10:44:8", "0.0534"],
+							["2020-12-07 10:45:9", "0.0567"],
+							["2020-12-07 10:45:10", "0.0573"],
+							["2020-12-07 10:45:11", "0.0718"],
+							["2020-12-07 10:46:12", "0.0617"],
+							["2020-12-07 10:46:13", "0.0598"],
+							["2020-12-07 10:46:14", "0.0926"],
+							["2020-12-07 10:47:15", "0.0582"],
+							["2020-12-07 10:47:16", "0.0593"],
+							["2020-12-07 10:47:17", "0.0602"],
+							["2020-12-07 10:48:18", "0.0427"],
+							["2020-12-07 10:48:19", "0.0387"],
+							["2020-12-07 10:48:20", "0.0453"],
+							["2020-12-07 10:49:21", "0.0437"],
+							["2020-12-07 10:49:22", "0.0169"],
+							["2020-12-07 10:49:23", "0.0541"],
+							["2020-12-07 10:50:24", "0.0494"],
+							["2020-12-07 10:50:25", "0.0488"],
+							["2020-12-07 10:50:26", "0.0462"],
+							["2020-12-07 13:59:35", ""]
+						]
+								
+					},
+					{
+						name : 'U',
+						type : 'line',
+						data :[
+							["2020-12-07 10:42:0", "0.0531"],
+							["2020-12-07 10:42:5", "0.0551"],
+							["2020-12-07 10:42:9", "0.0586"],
+							["2020-12-07 10:43:3", "0.0581"],
+							["2020-12-07 10:43:4", "0.0568"],
+							["2020-12-07 10:43:5", "0.0519"],
+							["2020-12-07 10:44:6", "0.0562"],
+							["2020-12-07 10:44:7", "0.0454"],
+							["2020-12-07 10:44:8", "0.0534"],
+							["2020-12-07 10:45:9", "0.0567"],
+							["2020-12-07 10:45:10", "0.0563"],
+							["2020-12-07 10:45:11", "0.0618"],
+							["2020-12-07 10:46:12", "0.0617"],
+							["2020-12-07 10:46:13", "0.0598"],
+							["2020-12-07 10:46:14", "0.0926"],
+							["2020-12-07 10:47:15", "0.0582"],
+							["2020-12-07 10:47:16", "0.0293"],
+							["2020-12-07 10:47:17", "0.0602"],
+							["2020-12-07 10:48:18", "0.0427"],
+							["2020-12-07 10:48:19", "0.0387"],
+							["2020-12-07 10:48:20", "0.0453"],
+							["2020-12-07 10:49:21", "0.0437"],
+							["2020-12-07 10:49:22", "0.0469"],
+							["2020-12-07 10:49:23", "0.0541"],
+							["2020-12-07 10:50:24", "0.0494"],
+							["2020-12-07 10:50:25", "0.0488"],
+							["2020-12-07 10:50:26", "0.0462"],
+							["2020-12-07 13:59:35", ""]
+						]
+				    }
+			]};
+		myChart5 = echarts.init(document
+				.getElementById('draw5'));
+		myChart5.setOption(option, true);
+}
+
+function _draw4(){
+	var option = {
+			title : {
+				text : '加速度、倾角',
+				textStyle:{
+                    fontSize: 14
+				}
+				
+			},
+			tooltip : {
+				trigger : 'axis'
+			},
+			legend : {
+				data : [ 'acc_x', 'acc_y', 'acc_z','x','y','z' ]
+			},
+			grid : {
+				left : '3%',
+				right : '4%',
+				bottom : '3%',
+				containLabel : true
+			},
+			toolbox : {
+				feature : {
+					saveAsImage : {}
+				}
+			},
+			xAxis : {
+				type : 'time',
+				boundaryGap : false,
+				max:maxDate,
+				min:minDate
+			},
+			yAxis : {
+				type : 'value',
+		        splitLine: {
+		            show: false
+		        }
+			},
+			series : [
+					{
+						name : 'acc_x',
+						type : 'line',
+						data :acc_x1
+					},
+					{
+						name : 'acc_y',
+						type : 'line',
+						data :acc_y1
+					},
+					{
+						name : 'acc_z',
+						type : 'line',
+						data : acc_z1
+					},
+					{
+						name : 'x',
+						type : 'line',
+						data : x1
+					},
+					{
+						name : 'y',
+						type : 'line',
+						data : y1
+					} ,
+					{
+						name : 'z',
+						type : 'line',
+						data : z1
+					}  ]
+		};
+		myChart4 = echarts.init(document
+				.getElementById('draw4'));
+		myChart4.setOption(option, true);
 }
 function _draw2(){
 	var option2 = {
@@ -551,8 +844,9 @@ function _draw2(){
 				
 			},
 			xAxis : {
-				type : 'category',
-				data : numDate
+				type : 'time',
+				max:maxDate,
+				min:minDate,
 			},
 			yAxis : {
 				type : 'value'
@@ -589,6 +883,7 @@ function _sub(){
 		_getData();
 	}
 }
+var jsonStr = '';
 </script>
 </body>
 </html>

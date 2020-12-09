@@ -73,7 +73,7 @@ public class RtkTask {
 		}
 	}
 	
-	@Scheduled(cron = "0 0 0/1 * * ?")//1小时
+//	@Scheduled(cron = "0 0 0/1 * * ?")//1小时
 	public void sun(){
 		List<GnssRtkDevice> rtk = gnssRtkDeviceService.findAll();
 		String json = HttpUtils.get("http://Xmnengjia.com/solarLamp/api/external/successToken?username=上海展为&password=112233");

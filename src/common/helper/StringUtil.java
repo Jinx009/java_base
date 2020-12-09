@@ -2,6 +2,7 @@ package common.helper;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -81,7 +82,21 @@ public class StringUtil extends StringUtils {
 		Double r = Double.valueOf(z);
 		BigDecimal f = new BigDecimal(r);
 		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
-		return g;
+		DecimalFormat decimalFormat = new DecimalFormat("###################.#####");
+		String result = decimalFormat.format(g);
+		return Double.valueOf(result);
+	}
+	
+	
+	public static String hexToFloatS(String s) {
+		BigInteger big = new BigInteger(s, 16);
+		Float z = Float.intBitsToFloat(big.intValue());
+		Double r = Double.valueOf(z);
+		BigDecimal f = new BigDecimal(r);
+		double g = f.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+		DecimalFormat decimalFormat = new DecimalFormat("###################.#####");
+		String result = decimalFormat.format(g);
+		return result;
 	}
 
 	public static String convertHexToString(String hex) {

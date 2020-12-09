@@ -16,7 +16,7 @@
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="icon-share font-blue-steel"></i>
-                                <span class="caption-subject font-blue-steel ">心跳管理</span>
+                                <span class="caption-subject font-blue-steel ">加速度管理</span>
                             </div>
                         </div>
                         <div class="portlet-body">
@@ -75,7 +75,7 @@
 												<td v-text="item.accXP2p" ></td>
 												<td v-text="item.accYP2p" ></td>
 												<td v-text="item.accZP2p" ></td>
-												<td v-text="item.shockStrength" ></td>
+												<td v-text="item.shockStrengthX+'_'+item.shockStrengthY+'_'+item.shockStrengthZ" ></td>
 												<td v-text="item.createTime" ></td>
 											</tr>
 								 	</tbody>
@@ -139,6 +139,42 @@ function _getData(){
 			max = res.data.page.pages;
 			for(var i in res.data.list){
 				res.data.list[i].createTime = toDateTime(parseInt(res.data.list[i].createTime));
+				res.data.list[i].acc_x = parseFloat(res.data.list[i].acc_x).toFixed(5);
+				res.data.list[i].acc_y = parseFloat(res.data.list[i].acc_y).toFixed(5);
+				res.data.list[i].acc_z = parseFloat(res.data.list[i].acc_z).toFixed(5);
+				res.data.list[i].x = parseFloat(res.data.list[i].x).toFixed(5);
+				res.data.list[i].y = parseFloat(res.data.list[i].y).toFixed(5);
+				res.data.list[i].z = parseFloat(res.data.list[i].z).toFixed(5);
+				res.data.list[i].accXP2p = parseFloat(res.data.list[i].accXP2p).toFixed(5);
+				res.data.list[i].accYP2p = parseFloat(res.data.list[i].accYP2p).toFixed(5);
+				res.data.list[i].accZP2p = parseFloat(res.data.list[i].accZP2p).toFixed(5);
+				res.data.list[i].shockStrengthX = parseFloat(res.data.list[i].shockStrengthX).toFixed(5);
+				res.data.list[i].shockStrengthY = parseFloat(res.data.list[i].shockStrengthY).toFixed(5);
+				res.data.list[i].shockStrengthZ = parseFloat(res.data.list[i].shockStrengthZ).toFixed(5);
+				var ls = res.data.list[i].alarmvalue;
+				
+				var val = [];
+				val = ls.split('_');
+				var res2 = '';
+				if(val[0]==1){
+					res2+='acc_x;'
+				}
+				if(val[1]==1){
+					res2+='acc_y;'
+				}
+				if(val[2]==1){
+					res2+='acc_z;'
+				}
+				if(val[3]==1){
+					res2+='x;'
+				}
+				if(val[4]==1){
+					res2+='y;'
+				}
+				if(val[5]==1){
+					res2+='z;'
+				}
+				res.data.list[i].alarmvalue = res2; 
 			}
 			if(_d==''){
   				_d = new Vue({

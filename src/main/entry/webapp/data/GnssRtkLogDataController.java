@@ -161,6 +161,18 @@ public class GnssRtkLogDataController extends BaseController{
 		return String.valueOf(nowHour);
 	}
 
+	@RequestMapping(path = "/listAcc")
+	@ResponseBody
+	public Resp<?> listAcc(String mac,String start,String end){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<GnssRtkAccLog> list = gnssRtkAccLogService.list(mac,start,end);
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
 	
 	@RequestMapping(path = "/findNum")
 	@ResponseBody
