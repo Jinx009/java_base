@@ -4,6 +4,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -16,98 +19,63 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
 	private static final Logger log = LoggerFactory.getLogger(ServerHandler.class);
 
-	private NettyServer nettyServer;
-//	private long time = 0;
-
-	public ServerHandler(NettyServer nettyServer) {
-//		int port = nettyServer.getPort();
-//		int datafrom = nettyServer.getDataFrom();
-//		StringBuilder sb = new StringBuilder(); 
-//		nettyServer.setDataStr(sb.append("server").append(port).append("data").toString());
-//		sb = new StringBuilder(); 
-//		nettyServer.setTimeStr(sb.append("server").append(port).append("time").toString());
-//		sb = new StringBuilder(); 
-//		nettyServer.setTimeFromStr(sb.append("server").append(datafrom).append("time").toString());
-//		sb = new StringBuilder(); 
-//		nettyServer.setDataFromStr(sb.append("server").append(datafrom).append("data").toString());
-//		this.nettyServer = nettyServer;
-	}
-
-	// 接受client发送的消息
 	@Override
-	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		log.warn("--netty--server---{}接收到了：{}", nettyServer.getPort(), msg);
-//		ByteBuf buf = (ByteBuf) msg;
-//		byte[] req = new byte[buf.readableBytes()];
-//		buf.readBytes(req);
-//		NettyTcpConstant.map.put(nettyServer.getDataStr(), req);
-//		NettyTcpConstant.map.put(nettyServer.getTimeStr(), new Date().getTime());
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		NettyConfig.group.add(ctx.channel());
 	}
 
-	// 通知处理器最后的channelRead()是当前批处理中的最后一条消息时调用
+	/**
+	 * 客户端与服务端断开连接时调用
+	 */
+	@Override
+	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+		NettyConfig.group.remove(ctx.channel());
+	}
+
+	/**
+	 * 服务端接收客户端发送过来的数据结束之后调用
+	 */
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-//		log.warn("服务端接收数据完毕..");
 		ctx.flush();
 	}
 
-	// 读操作时捕获到异常时调用
+	/**
+	 * 工程出现异常的时候调用
+	 */
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		cause.printStackTrace();
 		ctx.close();
 	}
 
-	// 客户端去和服务端连接成功时触发
-	@SuppressWarnings("static-access")
+	/**
+	 * 服务端处理客户端websocket请求的核心方法，这里接收了客户端发来的信息
+	 */
 	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-//		new Thread() {
-//			public void run() {
-//				String str = "heartbeat";
-//				byte[] data = new byte[] {};
-//				while (true) {
-//					if (nettyServer.serverChannel == null) {
-//						ctx.close();
-//						break;
-//					} else {
-//						if (nettyServer.isAutoSend()) {
-//							try {
-//								data = str.getBytes();
-//								ByteBuf pingMessage = ctx.alloc().buffer(data.length);
-//								pingMessage.writeBytes(data);
-//								ctx.writeAndFlush(pingMessage);
-//								Thread.sleep(1000);
-//							} catch (InterruptedException e) {
-//								e.printStackTrace();
-//							}
-//						}
-//						if (nettyServer.getDataFrom() != 0) {
-//							if (NettyTcpConstant.map.get(nettyServer.getTimeFromStr()) != null) {
-//								long time1 = (long) NettyTcpConstant.map.get(nettyServer.getTimeFromStr());
-//								if (time == 0 || time != time1) {
-//									data = (byte[]) NettyTcpConstant.map.get(nettyServer.getDataFromStr());
-//									time = time1;
-//									ByteBuf pingMessage = ctx.alloc().buffer(data.length);
-//									pingMessage.writeBytes(data);
-//									ctx.writeAndFlush(pingMessage);
-//								} else {
-//									try {
-//										Thread.sleep(300);
-//									} catch (InterruptedException e) {
-//										e.printStackTrace();
-//									}
-//								}
-//							}else {
-//								try {
-//									Thread.sleep(1000);
-//								} catch (InterruptedException e) {
-//									e.printStackTrace();
-//								}
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}.start();
+	public void channelRead(ChannelHandlerContext channelHandlerContext, Object info) throws Exception {
+		try {
+			ByteBuf bufs = (ByteBuf) info;
+			byte[] req = new byte[bufs.readableBytes()];
+			bufs.readBytes(req);
+			String buf = new String(req);
+			log.warn("--netty server接收到了：{}", buf);
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			File file = new File("/zhanway/server-gnss/webapps/ROOT/themes/img/" + sdf.format(date) +".txt"); // 本地目录
+//			File file = new File("/Users/jinx/Downloads/" + sdf.format(date) +".txt"); // 本地目录
+			File fileParent = file.getParentFile();
+			if (!fileParent.exists()) {
+				fileParent.mkdirs();
+				file.createNewFile();
+			}
+			FileOutputStream fops = new FileOutputStream(file,true);
+			fops.write((buf+"\r\n").getBytes());
+			fops.flush();
+			fops.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+
 }

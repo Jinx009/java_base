@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import database.common.PageDataList;
+import database.model.GnssRtkAccLog;
 import database.model.GnssRtkConnLog;
 import database.model.GnssRtkHeartLog;
 import database.model.GnssRtkLog;
 import database.model.GnssRtkNumLog;
 import main.entry.webapp.BaseController;
+import service.GnssRtkAccLogService;
 import service.GnssRtkConnLogService;
 import service.GnssRtkHeartLogService;
 import service.GnssRtkLogService;
@@ -40,6 +42,8 @@ public class GnssRtkLogDataController extends BaseController{
 	private GnssRtkConnLogService gnssRtkConnLogService;
 	@Autowired
 	private GnssRtkHeartLogService gnssRtkHeartLogService;
+	@Autowired
+	private GnssRtkAccLogService gnssRtkAccLogService;
 	
 	@RequestMapping(path = "/page")
 	@ResponseBody
@@ -61,6 +65,19 @@ public class GnssRtkLogDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			PageDataList<GnssRtkHeartLog> pages = gnssRtkHeartLogService.findByPage(p,mac);
+			return new Resp<>(pages);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	@RequestMapping(path = "/findAcc")
+	@ResponseBody
+	public Resp<?> findAcc(Integer p,String mac){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			PageDataList<GnssRtkAccLog> pages = gnssRtkAccLogService.findByPage(p,mac);
 			return new Resp<>(pages);
 		} catch (Exception e) {
 			log.error("e:{}",e);

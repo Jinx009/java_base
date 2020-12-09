@@ -120,8 +120,18 @@ public class PushCallback implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		// subscribe后得到的消息会执行到这里面
 		String payload = new String(message.getPayload());
+		byte[] bytes = message.getPayload();
+		String str = "";
+		for(byte b:bytes) {
+			String s1 = Integer.toHexString(b);
+			if(s1.length()==1) {
+				str+=  "0"+s1;
+			}else {
+				str+=s1;
+			}
+		}
+		payload = str.replace(" ", "").replace("ffffff", "");
 		try {
-//			pu.gnssMsgLogService.save(topic, str.toString().replace(" ", "").replace("ffffff", "").toUpperCase());
 			if (topic.equals("/server/register")) {//设备注册报文
 				GnssRtkDevice gnssDevice = pu.gnssRtkDeviceService.findByMac(payload);
 				if (gnssDevice == null) {
@@ -167,32 +177,10 @@ public class PushCallback implements MqttCallback {
 				String mac = strs[2];
 				String t = strs[3];
 				if(t.equals("control")) {//下行命令回复
-					byte[] bytes = message.getPayload();
-					String str = "";
-					for(byte b:bytes) {
-						String s1 = Integer.toHexString(b);
-						if(s1.length()==1) {
-							str+=  "0"+s1;
-						}else {
-							str+=s1;
-						}
-					}
-					payload = str.replace(" ", "").replace("ffffff", "");
 					log.warn("control:{}", payload);
 					pu.gnssRtkControlService.updateGrc(payload,mac);
 				}
 				if(t.equals("heartbeat")) {//心跳报文
-					byte[] bytes = message.getPayload();
-					String str = "";
-					for(byte b:bytes) {
-						String s1 = Integer.toHexString(b);
-						if(s1.length()==1) {
-							str+=  "0"+s1;
-						}else {
-							str+=s1;
-						}
-					}
-					payload = str.replace(" ", "").replace("ffffff", "");
 					log.warn("heart:{}", payload);
 					pu.gnssRtkHeartLogService.saveHeartbeat(payload,mac);
 				}
@@ -231,6 +219,7 @@ public class PushCallback implements MqttCallback {
 				}
 				if(t.equals("slope&acc")) {//错误日志报文
 					try {
+						log.warn("slope&acc:{},mac:{}",payload,mac);
 						pu.gnssRtkAccLogService.saveAccLog(payload,mac);
 					} catch (Exception e) {
 						log.error("slop&acc e:{},topic:{},mac:{}",e,t,mac);

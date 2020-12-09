@@ -21,4 +21,5 @@ public class GnssRtkAccLogDao extends BaseDao<GnssRtkAccLog>{
 		return findPageList(param);
 	}
 
+
 }
