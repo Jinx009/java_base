@@ -150,7 +150,7 @@ public class GnssRtkControlDataController extends BaseController{
 					sb.append(getString(Integer.toHexString(length),8));
 				}
 				if(cmd.equals("39")) {
-					grc.setCmdName("设置/查询加速度传感器采样间隔");
+					grc.setCmdName("设置/查询加速度传感器阈值");
 					sb.append("4800");
 					sb.append(sn);
 					sb.append("3919");

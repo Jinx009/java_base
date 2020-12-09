@@ -120,17 +120,6 @@ public class PushCallback implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		// subscribe后得到的消息会执行到这里面
 		String payload = new String(message.getPayload());
-		byte[] bytes = message.getPayload();
-		StringBuilder str = new StringBuilder();
-		for(byte b:bytes) {
-			String s1 = Integer.toHexString(b);
-			if(s1.length()==1) {
-				str.append("0");
-				str.append(s1);
-			}else {
-				str.append(s1);
-			}
-		}
 		try {
 //			pu.gnssMsgLogService.save(topic, str.toString().replace(" ", "").replace("ffffff", "").toUpperCase());
 			if (topic.equals("/server/register")) {//设备注册报文
@@ -178,9 +167,33 @@ public class PushCallback implements MqttCallback {
 				String mac = strs[2];
 				String t = strs[3];
 				if(t.equals("control")) {//下行命令回复
+					byte[] bytes = message.getPayload();
+					String str = "";
+					for(byte b:bytes) {
+						String s1 = Integer.toHexString(b);
+						if(s1.length()==1) {
+							str+=  "0"+s1;
+						}else {
+							str+=s1;
+						}
+					}
+					payload = str.replace(" ", "").replace("ffffff", "");
+					log.warn("control:{}", payload);
 					pu.gnssRtkControlService.updateGrc(payload,mac);
 				}
 				if(t.equals("heartbeat")) {//心跳报文
+					byte[] bytes = message.getPayload();
+					String str = "";
+					for(byte b:bytes) {
+						String s1 = Integer.toHexString(b);
+						if(s1.length()==1) {
+							str+=  "0"+s1;
+						}else {
+							str+=s1;
+						}
+					}
+					payload = str.replace(" ", "").replace("ffffff", "");
+					log.warn("heart:{}", payload);
 					pu.gnssRtkHeartLogService.saveHeartbeat(payload,mac);
 				}
 				if(t.equals("RTCM")||t.equals("UBX")||t.equals("NMEA")) {//转发报文

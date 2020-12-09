@@ -44,6 +44,16 @@ public class HomeController {
 		return "/page/map";
 	}
 	
+	@RequestMapping(path = "/heart")
+	public String heart(HttpServletRequest request){
+		return "/page/heart";
+	}
+	
+	@RequestMapping(path = "/acc")
+	public String acc(HttpServletRequest request){
+		return "/page/acc";
+	}
+	
 	@RequestMapping(path = "/result")
 	public String result(HttpServletRequest request){
 		return "/page/result";
