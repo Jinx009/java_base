@@ -115,6 +115,7 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 		});
 	})
 	var _d = '';
+	var minDate,maxDate;
 	function _getData() {
 		acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 		var mac = $('#mac').val();
@@ -132,39 +133,41 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 				type : 'post',
 				success : function(res) {
 					if(res!=null&&res!=''&&res.data!=null){
+						maxDate =  res.data[0].createTime;
+						minDate = res.data[res.data.length-1].createTime;
 						for(var i = res.data.length-1;i>=0;i--){
 							res.data[i].createTime = jsDateTime(res.data[i].createTime);
 							if(res.data[i].baseX!=''&&res.data[i].baseAcceX!=''&&res.data[i].baseX!=null){
 								if(type==1){
 									if(res.data[i].rssi!=null&&res.data[i].rssi!=''){
-										acc_x.push(parseFloat(res.data[i].baseAcceX).toFixed(4));
-										acc_y.push(parseFloat(res.data[i].baseAcceY).toFixed(4));
-										acc_z.push(parseFloat(res.data[i].baseAcceZ).toFixed(4));
-										x.push(parseFloat(res.data[i].baseX).toFixed(4));
-										y.push(parseFloat(res.data[i].baseY).toFixed(4));
-										z.push(parseFloat(res.data[i].baseZ).toFixed(4));
-										tem.push(parseInt(res.data[i].tem)/1000);
-										ddate.push(res.data[i].createTime)
+										acc_x.push([res.data[i].createTime,parseFloat(res.data[i].baseAcceX).toFixed(4)]);
+										acc_y.push([res.data[i].createTime,parseFloat(res.data[i].baseAcceY).toFixed(4)]);
+										acc_z.push([res.data[i].createTime,parseFloat(res.data[i].baseAcceZ).toFixed(4)]);
+										x.push([res.data[i].createTime,parseFloat(res.data[i].baseX).toFixed(4)]);
+										y.push([res.data[i].createTime,parseFloat(res.data[i].baseY).toFixed(4)]);
+										z.push([res.data[i].createTime,parseFloat(res.data[i].baseZ).toFixed(4)]);
+										tem.push([res.data[i].createTime,parseInt(res.data[i].tem)/1000]);
+										ddate.push(res.data[i].createTime);
 									}
 								}else if(type==2){
 									if(res.data[i].xtype!=null&&''!=res.data[i].xtype){
-										acc_x.push(parseFloat(res.data[i].baseAcceX).toFixed(4));
-										acc_y.push(parseFloat(res.data[i].baseAcceY).toFixed(4));
-										acc_z.push(parseFloat(res.data[i].baseAcceZ).toFixed(4));
-										x.push(parseFloat(res.data[i].baseX).toFixed(4));
-										y.push(parseFloat(res.data[i].baseY).toFixed(4));
-										z.push(parseFloat(res.data[i].baseZ).toFixed(4));
-										tem.push(parseInt(res.data[i].tem)/1000);
+										acc_x.push([res.data[i].createTime,parseFloat(res.data[i].baseAcceX).toFixed(4)]);
+										acc_y.push([res.data[i].createTime,parseFloat(res.data[i].baseAcceY).toFixed(4)]);
+										acc_z.push([res.data[i].createTime,parseFloat(res.data[i].baseAcceZ).toFixed(4)]);
+										x.push([res.data[i].createTime,parseFloat(res.data[i].baseX).toFixed(4)]);
+										y.push([res.data[i].createTime,parseFloat(res.data[i].baseY).toFixed(4)]);
+										z.push([res.data[i].createTime,parseFloat(res.data[i].baseZ).toFixed(4)]);
+										tem.push([res.data[i].createTime,parseInt(res.data[i].tem)/1000]);
 										ddate.push(res.data[i].createTime)
 									}
 								}else{
-									acc_x.push(parseFloat(res.data[i].baseAcceX).toFixed(4));
-									acc_y.push(parseFloat(res.data[i].baseAcceY).toFixed(4));
-									acc_z.push(parseFloat(res.data[i].baseAcceZ).toFixed(4));
-									x.push(parseFloat(res.data[i].baseX).toFixed(4));
-									y.push(parseFloat(res.data[i].baseY).toFixed(4));
-									z.push(parseFloat(res.data[i].baseZ).toFixed(4));
-									tem.push(parseInt(res.data[i].tem)/1000);
+									acc_x.push([res.data[i].createTime,parseFloat(res.data[i].baseAcceX).toFixed(4)]);
+									acc_y.push([res.data[i].createTime,parseFloat(res.data[i].baseAcceY).toFixed(4)]);
+									acc_z.push([res.data[i].createTime,parseFloat(res.data[i].baseAcceZ).toFixed(4)]);
+									x.push([res.data[i].createTime,parseFloat(res.data[i].baseX).toFixed(4)]);
+									y.push([res.data[i].createTime,parseFloat(res.data[i].baseY).toFixed(4)]);
+									z.push([res.data[i].createTime,parseFloat(res.data[i].baseZ).toFixed(4)]);
+									tem.push([res.data[i].createTime,parseInt(res.data[i].tem)/1000]);
 									ddate.push(res.data[i].createTime)
 								}
 							}
@@ -185,7 +188,10 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 			        text: 'Step Line'
 			    },
 			    tooltip: {
-			        trigger: 'axis'
+			        trigger: 'axis',
+					formatter:function(a){
+						return jsDateTime(a[0].data[0])+'<br>acc_x：'+a[0].data[1]+'<br>acc_y：'+a[1].data[1]+'<br>acc_z：'+a[2].data[1]+'<br>x：'+a[3].data[1]+'<br>y：'+a[4].data[1]+'<br>z：'+a[5].data[1]
+					}
 			    },
 			    legend: {
 			        data:['x', 'y', 'z','加速度x','加速度y','加速度z','温度']
@@ -202,47 +208,67 @@ var acc_x = [],acc_y = [],acc_z =[],x=[],y=[],z=[],ddate =[],tem=[];
 			        }
 			    },
 			    xAxis: {
-			        type: 'category',
-			        data: ddate
+			        type: 'time',
+			        boundaryGap : false,
+					max:maxDate,
+					min:minDate,
+					axisLabel:{
+						formatter: function (value, index) {
+						    return jsDateTime(parseInt(value));
+						}
+					},
+			        splitLine: {
+			            show: false
+			        }
 			    },
 			    yAxis: {
-			        type: 'value'
+			        type: 'value',
+			        splitLine: {
+			            show: false
+			        }
 			    },
 			    series: [
 			        {
 			            name:'x',
 			            type:'line',
-			            data:x
+			            data:x,
+			            symbol: 'none'
 			        },
 			        {
 			            name:'y',
 			            type:'line',
-			            data:y
+			            data:y,
+			            symbol: 'none'
 			        },
 			        {
 			            name:'z',
 			            type:'line',
-			            data:z
+			            data:z,
+			            symbol: 'none'
 			        },
 			        {
 			            name:'加速度x',
 			            type:'line',
-			            data:acc_x
+			            data:acc_x,
+			            symbol: 'none'
 			        },
 			        {
 			            name:'加速度y',
 			            type:'line',
-			            data:acc_y
+			            data:acc_y,
+			            symbol: 'none'
 			        },
 			        {
 			            name:'加速度z',
 			            type:'line',
-			            data:acc_z
+			            data:acc_z,
+			            symbol: 'none'
 			        },
 			        {
 			            name:'温度',
 			            type:'line',
-			            data:tem
+			            data:tem,
+			            symbol: 'none'
 			        }
 			    ]
 			};
