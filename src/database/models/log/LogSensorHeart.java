@@ -123,5 +123,38 @@ public class LogSensorHeart {
     private String fdi;
     @Column(name = "rssi")
     private String rssi;
+    
+    
+    @Column(name = "angelDif")
+    private String angelDif;
+    @Column(name = "noDif")
+    private String noDif;
+    @Column(name = "yesDif")
+    private String yesDif;
+    @Column(name = "lm")
+    private String lm;
+    @Column(name = "lj")
+    private String lj;
+    @Column(name = "lc")
+    private String lc;
+    @Column(name = "lcm")
+    private String lcm;
+    @Column(name = "ljt")
+    private String ljt;
+    @Column(name = "ljj")
+    private String ljj;
+    @Column(name = "ljc")
+    private String ljc;
+    @Column(name = "ljg")
+    private String ljg;
+    @Column(name = "ljm")
+    private String ljm;
+    @Column(name = "nj")
+    private String nj;
+    @Column(name = "ljq")
+    private String ljq;
+    @Column(name = "err")
+    private String err;
+    
 	
 }

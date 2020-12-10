@@ -55,14 +55,14 @@ public enum DataCode {
 	 
 	 
 	 BUSINESS_LOCATION_LIST(	 "business_location_list_1_0",		   "businessLocationService",	"list",			"location page列表",		true),
-	 BUSINESS_LOCATION_ALL(		 "business_location_all_1_0",		   "businessLocationService",	"all",			"location all列表",		true),
+	 BUSINESS_LOCATION_ALL(		 "business_location_all_1_0",		   "businessLocationService",	"all",			"location all列表",		false),
 	 BUSINESS_LOCATION_EDIT(	 "business_location_edit_1_0",		   "businessLocationService",	"edit",			"location edit",		true),
 	 BUSINESS_LOCATION_CREATE(	 "business_location_create_1_0",	   "businessLocationService",	"create",		"location create",	    true),
 	 BUSINESS_LOCATION_DELETE(	 "business_location_delete_1_0",	   "businessLocationService",	"delete",		"location delete",	    true),
 	 BUSINESS_LOCATION_DETAIL(	 "business_location_detail_1_0",	   "businessLocationService",	"detail",		"location detail",	    true),
 	 
 	 BUSINESS_AREA_LIST(		 "business_area_list_1_0",			   "businessAreaService",		"list",			"area page列表",			true),
-	 BUSINESS_AREA_ALL(			 "business_area_all_1_0",			   "businessAreaService",		 "all",			"area all列表",			true),
+	 BUSINESS_AREA_ALL(			 "business_area_all_1_0",			   "businessAreaService",		 "all",			"area all列表",			false),
 	 BUSINESS_AREA_EDIT(		 "business_area_edit_1_0",			   "businessAreaService",		 "edit",		"area edit",			true),
 	 BUSINESS_AREA_CREATE(		 "business_area_create_1_0",		   "businessAreaService",		 "create",		"area create",			true),
 	 BUSINESS_AREA_DELETE(		 "business_area_delete_1_0",		   "businessAreaService",		 "delete",		"area delete",			true),

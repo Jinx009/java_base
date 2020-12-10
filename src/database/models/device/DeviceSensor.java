@@ -149,5 +149,12 @@ public class DeviceSensor {
     private Integer sensorStatus;
     @Column(name ="c_id")
     private String cId;
+    
+    @Column(name = "sim_card")
+    private String simCard;
+    @Column(name = "device_id")
+    private String deviceId;
+    @Column(name = "imei")
+    private String imei;
 	
 }
