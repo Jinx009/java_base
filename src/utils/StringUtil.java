@@ -20,6 +20,10 @@ import common.helper.FreemarkerUtil;
  */
 public class StringUtil extends StringUtils {
 	
+	public static boolean strIsNullOrEmpty(String s) {
+		return (null == s || s.trim().length() < 1);
+	}
+	
 	/**
 	 * 字符串拼接
 	 * @param args

@@ -1,5 +1,8 @@
 package main.entry.webapp;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,7 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
 import database.models.home.HomeUser;
+import utils.Constant;
+import utils.HttpsUtil;
 import utils.IPUtil;
+import utils.JsonUtil;
+import utils.StreamClosedHttpResponse;
 import utils.StringUtil;
 import utils.model.BaseConstant;
 
@@ -17,6 +24,24 @@ public class BaseController {
 
 	private static final Logger log = LoggerFactory.getLogger(BaseController.class);
 
+   @SuppressWarnings("unchecked")
+	public static String login(HttpsUtil httpsUtil) throws Exception {
+        String appId = Constant.APPID;
+        String secret = Constant.SECRET;
+        String urlLogin = Constant.APP_AUTH;
+
+        Map<String, String> paramLogin = new HashMap<>();
+        paramLogin.put("appId", appId);
+        paramLogin.put("secret", secret);
+        StreamClosedHttpResponse responseLogin = httpsUtil.doPostFormUrlEncodedGetStatusLine(urlLogin, paramLogin);
+        log.warn("------access-token:------{}",responseLogin.getContent());
+
+        Map<String, String> data = new HashMap<>();
+        data = JsonUtil.jsonString2SimpleObj(responseLogin.getContent(), data.getClass());
+        return data.get("accessToken");
+    }
+		
+	
 	/**
 	 * 获取客户端ip
 	 * 
