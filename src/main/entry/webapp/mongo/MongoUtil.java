@@ -10,8 +10,8 @@ import java.util.SimpleTimeZone;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.MongoClient;
@@ -26,7 +26,7 @@ import database.model.GnssRtkLog;
 
 public class MongoUtil {
 
-	private static Logger log = LoggerFactory.getLogger(MongoUtil.class);
+//	private static Logger log = LoggerFactory.getLogger(MongoUtil.class);
 	
 
 	

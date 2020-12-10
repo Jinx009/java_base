@@ -73,26 +73,26 @@
                                 </table>
                             </div>
                             <div class="row">
-                                <div class="col-md-10 col-sm-12"></div>
-                                <div class="col-md-2 col-sm-12">
-                                    <div class="dataTables_paginate paging_simple_numbers"
+                                <div class="col-md-9 col-sm-12"></div>
+                                <div class="col-md-3 col-sm-12">
+                                   <div class="dataTables_paginate paging_simple_numbers"
                                          id="sample_editable_1_paginate">
                                         <ul class="pagination">
                                             <li class="paginate_button previous "
                                                 aria-controls="sample_editable_1" tabindex="0"
                                                 id="sample_editable_1_previous">
-                                                <a href="#">
+                                               <a href="#" onclick="_sub()">
                                                     <i class="fa fa-angle-left"></i>
                                                 </a>
                                             </li>
                                             <li class="paginate_button active" aria-controls="sample_editable_1"
                                                 tabindex="0">
-                                                <a href="#">1</a>
+                                                 <a href="#" v-text="'当前第'+datas.page.currentPage+'页;共'+datas.page.pages+'页'" ></a>
                                             </li>
                                             <li class="paginate_button next "
                                                 aria-controls="sample_editable_1" tabindex="0"
                                                 id="sample_editable_1_next">
-                                                <a href="#">
+                                                 <a href="#" onclick="_add()">
                                                     <i class="fa fa-angle-right"></i>
                                                 </a>
                                             </li>
