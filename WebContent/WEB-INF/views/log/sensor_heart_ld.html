@@ -61,10 +61,10 @@
 									</form>
 									<div class="panel panel-default" style="margin-top: 20px;">
 										<table class="table">
-											<tbody id="data">
+											<tbody id="data" style="display: none;">
 											    <tr>
 											    	<td>
-											    		<table class="table"  v-for="item in datas"> 
+											    		<table class="table table-bordered table-striped"   v-for="item in datas"> 
 																<tr>
 																	<th>Mac地址</th>
 																	<th>dif</th>
@@ -149,7 +149,7 @@
 																	<th></th>
 																	<th></th>
 																</tr>
-																<tr>
+																<tr style="border-bottom: 3px solid rgb(80,96,105);">
 																	<td v-text="item.angelDif"></td>
 																	<td v-text="item.noDif"></td>
 																	<td v-text="item.yesDif"></td>
@@ -177,7 +177,7 @@
 		<#include "_footer.html">
 	</div>
 	<script src="/themes/awe/plugins/datepicker/bootstrap-datepicker.js"></script>
-	<script src="/themes/js/home/log/sensor_heart.js?version=1.29"></script>
+	<script src="/themes/js/home/log/sensor_heart.js?version=1.39"></script>
 
 </body>
 </html>
