@@ -134,7 +134,7 @@ public class MongoUtil {
 			GnssRtkLog log = JSONObject.parseObject(str, GnssRtkLog.class);
 			logs.add(log);
 		}
-		log.warn(JSONObject.toJSONString(logs));
+//		log.warn(JSONObject.toJSONString(logs));
 		mongoClient.close();
 		return logs;
 	}
@@ -158,7 +158,7 @@ public class MongoUtil {
 			GnssRtkLog log = JSONObject.parseObject(str, GnssRtkLog.class);
 			logs.add(log);
 		}
-		log.warn(JSONObject.toJSONString(logs));
+//		log.warn(JSONObject.toJSONString(logs));
 		mongoClient.close();
 		return logs;
 	}

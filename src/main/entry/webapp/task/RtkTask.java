@@ -101,8 +101,8 @@ public class RtkTask {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		int nowHour = calendar.get(Calendar.HOUR_OF_DAY);
-		int start = nowHour-2;
-		int end = nowHour-1;
+		int start = nowHour-3;
+		int end = nowHour-2;
 		for(GnssRtkDevice device:rtk) {
 			if(1==device.getSwitchType()) {
 				List<GnssRtkLog> list = gnssRtkLogService.findByMacAndDate(device.getMac(),date,start,end,0);
