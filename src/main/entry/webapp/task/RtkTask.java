@@ -2,7 +2,6 @@ package main.entry.webapp.task;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -94,46 +93,16 @@ public class RtkTask {
 	
 	@Scheduled(cron = "0 0 0/1 * * ?")//1小时
 	public void job() throws ParseException{
-		List<GnssRtkDevice> rtk = gnssRtkDeviceService.findAll();
-		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		int nowHour = calendar.get(Calendar.HOUR_OF_DAY);
-		int start = nowHour-3;
-		int end = nowHour-2;
+		Date date = new Date();
+		List<GnssRtkDevice> rtk = gnssRtkDeviceService.findAll();
 		for(GnssRtkDevice device:rtk) {
 			if(1==device.getSwitchType()) {
-				List<GnssRtkLog> list = gnssRtkLogService.findByMacAndDate(device.getMac(),date,start,end,0);
-				if(list==null) {
-					GnssRtkLog log = new GnssRtkLog();
-					log.setRovertag(device.getMac());
-					log.setCreateTime(new Date());
-					log.setDatetime(String.valueOf(sdf2.parse(sdf.format(date)+" "+getHour(start)+":00:00").getTime()));
-					log.setType(0);
-					gnssRtkLogService.saveStatus(log, 0);
-				}
-				List<GnssRtkLog> list2 = gnssRtkLogService.findByMacAndDate(device.getMac(),date,start,end,1);
-				if(list2==null) {
-					GnssRtkLog log = new GnssRtkLog();
-					log.setRovertag(device.getMac());
-					log.setCreateTime(new Date());
-					log.setDatetime(String.valueOf(sdf2.parse(sdf.format(date)+" "+getHour(start)+":00:00").getTime()));
-					log.setType(1);
-					gnssRtkLogService.saveStatus(log, 0);
-				}
+				HttpUtils.get("http://gnss.zhanway.com/d/gnssrtklog/createLog?mac="+device.getMac()+"&date="+sdf.format(date));
 			}
 		}
 	}
 	
-	private String getHour(int nowHour) {
-       nowHour = nowHour -1;
-		if(nowHour<10) {
-			return "0"+nowHour;
-		}
-		return String.valueOf(nowHour);
-	}
 
 	@Scheduled(cron = "0 */5 * * * ?")//20分钟处理一次
 	public void init(){
