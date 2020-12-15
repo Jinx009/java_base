@@ -256,7 +256,9 @@
 		});
 	})
 	var _d = '';
+	var metype = '解算失败';
 	var p = 1;
+	var _ww = 35;
 	var max = 1;
 	var maxDate = '';
 	var minDate = '';
@@ -270,6 +272,13 @@ function _getData() {
 				/* $('#mintime').text(toDateTime(parseInt(res.data.updatetime)));
 				$('#minbasetag').text(res.data.basetag);
 				$('#minrovertag').text(res.data.rovertag); */
+				if(res.data.basetag==''||res.data.basetag==null){
+					_ww = 1;
+					metype = '基准站';
+				}else{
+					_ww = 35;
+					metype = '解算失败';
+				}
 				res.data.createTime = toDateTime(parseInt(res.data.createTime));
 				if(res.data.lng!=''&&res.data.lng!=null){
 					res.data.lng = parseFloat(res.data.lng).toFixed(9);
@@ -500,7 +509,7 @@ function _draw(){
 					if(a[3].data[1]!='0'){
 						return toDateTime(a[0].data[0])+'<br>E：'+a[0].data[1]+'<br>N：'+a[1].data[1]+'<br>U：'+a[2].data[1]+'<br>解算成功';
 					}else{
-						return toDateTime(a[0].data[0])+'<br>解算失败';
+						return toDateTime(a[0].data[0])+'<br>'+metype;
 					}
 				}
 			},
@@ -561,7 +570,7 @@ function _draw(){
 						symbol: 'none',
 						lineStyle:{
 							normal:{
-								width:35
+								width:_ww
 							}
 						}
 					} ]
@@ -585,7 +594,7 @@ function _draw3(){
 					if(a[3].data[1]!='0'){
 						return toDateTime(a[0].data[0])+'<br>E：'+a[0].data[1]+'<br>N：'+a[1].data[1]+'<br>U：'+a[2].data[1]+'<br>解算成功';
 					}else{
-						return toDateTime(a[0].data[0])+'<br>解算失败';
+						return toDateTime(a[0].data[0])+'<br>'+metype;
 					}
 				}
 			},
@@ -649,7 +658,7 @@ function _draw3(){
 						symbol: 'none',
 						lineStyle:{
 							normal:{
-								width:35
+								width:_ww
 							}
 						}
 					} ]
