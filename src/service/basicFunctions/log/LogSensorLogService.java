@@ -185,4 +185,57 @@ public class LogSensorLogService extends BaseService {
 		return logSensorStatusDao.find(id);
 	}
 
+	public void saveOperationLog(DeviceSensor sensor, String mode, String ms, String dif, String adif,
+			String ny, String lq) {
+		LogSensorStatus sensorOperationLog = new LogSensorStatus();
+		sensorOperationLog.setAvailable(sensor.getAvailable());
+		sensorOperationLog.setCreateTime(new Date());
+		sensorOperationLog.setChangeTime(new Date());
+		sensorOperationLog.setAreaId(sensor.getAreaId());
+		sensorOperationLog.setMac(sensor.getMac());
+		sensorOperationLog.setDescription(sensor.getDesc());
+		sensorOperationLog.setFailTimes(0);
+		sensorOperationLog.setSendStatus(0);
+		sensorOperationLog.setSendTime(new Date());
+		sensorOperationLog.setCph(sensor.getCph());
+		sensorOperationLog.setDif(dif);
+		sensorOperationLog.setAdif(adif);
+		sensorOperationLog.setMode(mode);
+		sensorOperationLog.setMs(ms);
+		sensorOperationLog.setNy(ny);
+		sensorOperationLog.setLq(lq);
+		logSensorStatusDao.save(sensorOperationLog);
+		sensorOperationLog = logSensorStatusDao.find(sensorOperationLog.getId());
+		// 武汉
+		if (sensorOperationLog.getAreaId() != null && 64 == sensorOperationLog.getAreaId()) {
+			String status = WuhanSendUtils.sendStatus(sensorOperationLog, sensor);
+			if("1".equals(status)){
+				sensorOperationLog.setSendStatus(1);
+				sensorOperationLog.setSendTime(new Date());
+				logSensorStatusDao.update(sensorOperationLog);
+			}
+		}
+		//周浦界浜村
+		if (sensorOperationLog.getAreaId() != null && 65 == sensorOperationLog.getAreaId()) {
+			String status = BearHuntingDataUtils.sendStatus(KeyUtils.STATUS_FIRE_URL,sensorOperationLog);
+			Integer code = JSON.parseObject(status).getInteger("status");
+			if(1==code){
+				sensorOperationLog.setSendStatus(1);
+				sensorOperationLog.setSendTime(new Date());
+				logSensorStatusDao.update(sensorOperationLog);
+			}
+		}
+		//周浦菱翔苑
+		if (sensorOperationLog.getAreaId() != null && 34 == sensorOperationLog.getAreaId()) {
+			String status = BearHuntingDataUtils.sendStatusFire(KeyUtils.STATUS_FIRE_URL2,sensorOperationLog,"zhanway");
+			Integer code = JSON.parseObject(status).getInteger("status");
+			if(1==code){
+				sensorOperationLog.setSendStatus(1);
+				sensorOperationLog.setSendTime(new Date());
+				logSensorStatusDao.update(sensorOperationLog);
+			}
+		}
+		
+	}
+
 }

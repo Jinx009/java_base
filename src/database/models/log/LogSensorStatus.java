@@ -63,5 +63,18 @@ public class LogSensorStatus {
     private String cpColor;
     @Column(name = "pic_link")
     private String picLink;
+    
+    @Column(name = "mode")
+    private String mode;
+    @Column(name = "ms")
+    private String ms;
+    @Column(name = "dif")
+    private String dif;
+    @Column(name = "adif")
+    private String adif;
+    @Column(name = "ny")
+    private String ny;
+    @Column(name = "lq")
+    private String lq;
 
 }

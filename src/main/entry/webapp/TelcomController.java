@@ -21,8 +21,10 @@ import com.alibaba.fastjson.JSONObject;
 
 import database.models.device.DeviceSensor;
 import database.models.log.LogSensorHeart;
+import database.models.log.LogSensorSource;
 import service.basicFunctions.device.DeviceSensorService;
 import service.basicFunctions.log.LogSensorLogService;
+import service.basicFunctions.log.LogSensorSourceService;
 import utils.HttpUtil;
 import utils.StringUtil;
 import utils.model.Resp;
@@ -36,6 +38,8 @@ public class TelcomController extends BaseController{
 	private DeviceSensorService deviceSensorService;
 	@Autowired
 	private LogSensorLogService logSensorLogService;
+	@Autowired
+	private LogSensorSourceService logSensorSourceService;
 
 	/**
 	 * 启动原始联通版本的udp倾角传感器服务器
@@ -223,9 +227,10 @@ public class TelcomController extends BaseController{
                                 if(cmd.equals("3D")){
                                     String av = data.substring(24, 26);
                                     Integer avalable = Integer.valueOf(av);
-                                    String mode = data.substring(26, 28);
-//                                    String dif = data.substring(30, 34);
-//                                    String zdif = data.substring(34, 38);
+                                    String mode = String.valueOf(Integer.parseInt( data.substring(26,28),16));
+                                    String dif1 = data.substring(30, 32);
+                                    String dif2 = data.substring(32, 34);
+                                    String dif =  getDataBase(data.substring(32, 33), dif2+dif1);
                                     Date date = new Date();
                                     if((date.getTime()-sensor.getLastSeenTime().getTime())/1000>300||avalable!=sensor.getAvailable()){
                                     	if(avalable==sensor.getAvailable()){
@@ -264,13 +269,56 @@ public class TelcomController extends BaseController{
                                         sensor.setBluetooth("");
                                         sensor.setBluetoothArray("");
                                         deviceSensorService.update(sensor);
-                                        logSensorLogService.saveOperationLog(sensor);
+                                        logSensorLogService.saveOperationLog(sensor,mode,"",dif,"","","");
                                     }
+                                }
+                                if(cmd.equals("02")){
+                                    LogSensorSource log = new LogSensorSource();
+                                    Date date = new Date();
+                                    log.setMac(mac);
+                                    log.setCreateTime(date);
+                                    String nb1 = data.substring(24, 26);
+                                    String nb2 = data.substring(26, 28);
+                                    String nb3 = data.substring(28, 30);
+                                    String nb4 = data.substring(30, 32);
+                                    log.setNb(Long.parseLong(nb4+nb3+nb2+nb1, 16));
+                                    String ws1 = data.substring(32, 34);
+                                    String ws2 = data.substring(34, 36);
+                                    String ws3 = data.substring(36, 38);
+                                    String ws4 = data.substring(38, 40);
+                                    log.setWs(Long.parseLong(ws4+ws3+ws2+ws1, 16));
+                                    String rt1 = data.substring(40, 42);
+                                    String rt2 = data.substring(42, 44);
+                                    String rt3 = data.substring(44, 46);
+                                    String rt4 = data.substring(46, 48);
+                                    log.setRt(Long.parseLong(rt4+rt3+rt2+rt1, 16));
+                                    String wt1 = data.substring(48, 50);
+                                    String wt2 = data.substring(50, 52);
+                                    String wt3 = data.substring(52, 54);
+                                    String wt4 = data.substring(54, 56);
+                                    log.setWt(Long.parseLong(wt4+wt3+wt2+wt1, 16));
+                                    String ut1 = data.substring(56, 58);
+                                    String ut2 = data.substring(58, 60);
+                                    String ut3 = data.substring(60, 62);
+                                    String ut4 = data.substring(62, 64);
+                                    log.setUt(Long.parseLong(ut4+ut3+ut2+ut1, 16));
+                                    logSensorSourceService.save(log);
                                 }
                                 if(cmd.equals("09")){
                                     String av = data.substring(24, 26);
                                     Integer avalable = Integer.valueOf(av);
-                                    String mode = data.substring(26, 28);
+                                    String mode = String.valueOf(Integer.parseInt( data.substring(26,28),16));
+                                    String ms = data.substring(28,30);
+                                    String dif1 = data.substring(30, 32);
+                                    String dif2 = data.substring(32, 34);
+                                    String dif =  getDataBase(data.substring(32, 33), dif2+dif1);
+                                    String adif1 = data.substring(34, 36);
+                                    String adif2 = data.substring(36, 38);
+                                    String adif =  getDataBase(data.substring(36, 37), adif2+adif1);
+                                    String ny = String.valueOf(Integer.parseInt( data.substring(38,40),16));
+                                    String lq1 = data.substring(40, 42);
+                                    String lq2 = data.substring(42, 44);
+                                    String lq =  getDataBase(data.substring(42, 43), lq2+lq1);
                                     Date date = new Date();
                                     if((date.getTime()-sensor.getLastSeenTime().getTime())/1000>300||avalable!=sensor.getAvailable()){
                                     	if(avalable==sensor.getAvailable()){
@@ -309,7 +357,7 @@ public class TelcomController extends BaseController{
                                         sensor.setBluetooth("");
                                         sensor.setBluetoothArray("");
                                         deviceSensorService.update(sensor);
-                                        logSensorLogService.saveOperationLog(sensor);
+                                        logSensorLogService.saveOperationLog(sensor,mode,ms,dif,adif,ny,lq);
                                     }
                                 }
                                 if(cmd.equals("3E")){//心跳
@@ -426,49 +474,53 @@ public class TelcomController extends BaseController{
                                     deviceLog.setYesDif(yesDif);
                                     String lj = String.valueOf(Integer.parseInt( data.substring(66, 68),16));//雷达覆水检测起始距离
                                     deviceLog.setLj(lj);
-                                    String lc = String.valueOf(Integer.parseInt( data.substring(68, 70),16));//雷达覆水检测长度
+                                    String lc1 = data.substring(68, 70);
+                                    String lc2 = data.substring(70, 72);
+                                    String lc = getDataBase(data.substring(70, 71), lc2+lc1);//雷达覆水检测门限
                                     deviceLog.setLc(lc);
-                                    String lm1 = data.substring(70, 72);
-                                    String lm2 = data.substring(72, 74);
-                                    String lm = getDataBase(data.substring(72, 73), lm2+lm1);//雷达覆水检测门限
+                                    String lm1 = data.substring(72, 74);
+                                    String lm2 = data.substring(74, 76);
+                                    String lm = getDataBase(data.substring(74, 75), lm2+lm1);//雷达覆水检测门限
                                     deviceLog.setLm(lm);
-                                    String lcm1 = data.substring(74, 76);
-                                    String lcm2 = data.substring(76, 78);
-                                    String lcm = getDataBase(data.substring(76, 77), lcm2+lcm1);//雷达覆水检测窗口门限
+                                    String lcm1 = data.substring(76, 78);
+                                    String lcm2 = data.substring(78, 80);
+                                    String lcm = getDataBase(data.substring(78, 79), lcm2+lcm1);//雷达覆水检测窗口门限
                                     deviceLog.setLcm(lcm);
-                                    String ljt1 = data.substring(78, 80);
-                                    String ljt2 = data.substring(80, 82);
-                                    String ljt = getDataBase(data.substring(80, 81), ljt2+ljt1);//雷达覆水检测间隔
+                                    String ljt1 = data.substring(80, 82);
+                                    String ljt2 = data.substring(82, 84);
+                                    String ljt = getDataBase(data.substring(82, 83), ljt2+ljt1);//雷达覆水检测间隔
                                     deviceLog.setLjt(ljt);
-                                    String ljj = String.valueOf(Integer.parseInt( data.substring(82, 84),16));//雷达车检起始距离
-                                    deviceLog.setLjc(ljj);
-                                    String ljc = String.valueOf(Integer.parseInt( data.substring(84, 86),16));//雷达车检检测长度
+                                    String ljj = String.valueOf(Integer.parseInt( data.substring(84, 86),16));//雷达车检起始距离
+                                    deviceLog.setLjj(ljj);
+                                    String ljc1 = data.substring(86, 88);
+                                    String ljc2 = data.substring(88, 90);
+                                    String ljc = getDataBase(data.substring(88, 89), ljc2+ljc1);//雷达覆水检测间隔
                                     deviceLog.setLjc(ljc);
-                                    String ljg = String.valueOf(Integer.parseInt( data.substring(86, 88),16));//雷达车检检测距离个数 
+                                    String ljg = String.valueOf(Integer.parseInt( data.substring(90, 92),16));//雷达车检检测距离个数 
                                     deviceLog.setLjg(ljg);
-                                    String ljm1 = data.substring(88, 90);
-                                    String ljm2 = data.substring(90, 92);
-                                    String ljm = getDataBase(data.substring(90,91), ljm2+ljm1);//雷达车检门限值
+                                    String ljm1 = data.substring(92, 94);
+                                    String ljm2 = data.substring(94, 96);
+                                    String ljm = getDataBase(data.substring(94,95), ljm2+ljm1);//雷达车检门限值
                                     deviceLog.setLjm(ljm);
-                                    String nj = String.valueOf(Integer.parseInt( data.substring(92, 94),16));//哪一段距离触发的车检
+                                    String nj = String.valueOf(Integer.parseInt( data.substring(96, 98),16));//哪一段距离触发的车检
                                     deviceLog.setNj(nj);
-                                    String ljq1 = data.substring(94, 96);
-                                    String ljq2 = data.substring(96, 98);
-                                    String ljq = getDataBase(data.substring(96,97), ljq2+ljq1);//雷达车检门限值
+                                    String ljq1 = data.substring(98, 100);
+                                    String ljq2 = data.substring(100, 102);
+                                    String ljq = getDataBase(data.substring(100,101), ljq2+ljq1);//雷达车检门限值
                                     deviceLog.setLjq(ljq);
                                     
-                                    String rssi =  String.valueOf(Integer.parseInt( data.substring(98, 100),16));
-                                    String sdi =  String.valueOf(Integer.parseInt( data.substring(100, 102),16));
-                                    String pci1 = data.substring(110, 112);
-                                    String pci2 = data.substring(112, 114);
-                                    String pci = getDataBase(data.substring(112, 113), pci2+pci1);
-                                    String rsrp1 = data.substring(102, 104);
-                                    String rsrp2 = data.substring(104, 106);
-                                    String rsrp =  getDataBase(data.substring(104, 105), rsrp2+rsrp1);
-                                    String snr1 = data.substring(106,108);
-                                    String snr2 = data.substring(108, 110);
-                                    String snr =   getDataBase(data.substring(108, 109), snr2+snr1);
-                                    String err = data.substring(118, 126);//错误码
+                                    String rssi =  String.valueOf(Integer.parseInt( data.substring(102, 104),16));
+                                    String sdi =  String.valueOf(Integer.parseInt( data.substring(104, 106),16));
+                                    String rsrp1 = data.substring(106, 108);
+                                    String rsrp2 = data.substring(108, 110);
+                                    String rsrp =  getDataBase(data.substring(108, 109), rsrp2+rsrp1);
+                                    String snr1 = data.substring(110,112);
+                                    String snr2 = data.substring(112, 114);
+                                    String snr =   getDataBase(data.substring(112, 113), snr2+snr1);
+                                    String pci1 = data.substring(114, 116);
+                                    String pci2 = data.substring(116, 118);
+                                    String pci = getDataBase(data.substring(116, 117), pci2+pci1);
+                                    String err = data.substring(120, 130);//错误码
                                     deviceLog.setErr(err);
                                     deviceLog.setCreateTime(new Date());
                                     deviceLog.setVer(soft);

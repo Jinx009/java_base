@@ -20,11 +20,13 @@ import com.alibaba.fastjson.JSONObject;
 
 import database.models.device.DeviceSensor;
 import database.models.log.LogOperation;
+import database.models.log.LogSensorSource;
 import database.models.log.LogSensorStatus;
 import service.basicFunctions.device.DeviceSensorInfoService;
 import service.basicFunctions.device.DeviceSensorService;
 import service.basicFunctions.log.LogOperationService;
 import service.basicFunctions.log.LogSensorLogService;
+import service.basicFunctions.log.LogSensorSourceService;
 import utils.HttpUtil;
 import utils.MD5Util;
 import utils.baoxin.SendUtils;
@@ -43,6 +45,8 @@ public class IoTDataController extends BaseController{
 	private LogOperationService logOperationService;
 	@Autowired
 	private DeviceSensorInfoService deviceSensorInfoService;
+	@Autowired
+	private LogSensorSourceService logSensorSourceService;
 	
 	
 	/**
@@ -80,6 +84,25 @@ public class IoTDataController extends BaseController{
 		Resp<?> resp = new Resp<>(false);
 		try {
 			List<DeviceSensor> list = deviceSensorService.findByMacLike(mac);
+			return new Resp<>(list);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	
+	/**
+	 * 模糊查询mac
+	 * @param mac
+	 * @return
+	 */
+	@RequestMapping(value = "/iot/iot/sensor/source")
+	@ResponseBody
+	public Resp<?> source(String mac,String dateStr){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<LogSensorSource> list = logSensorSourceService.findByMacAndDate(dateStr, mac);
 			return new Resp<>(list);
 		} catch (Exception e) {
 			log.error("e:{}",e);
