@@ -27,6 +27,10 @@ public class DeviceJob {
 	private String target;
 	@Column(name = "job_detail")
 	private String jobDetail;
+	@Column(name = "job_result")
+	private String jobResult;
+	@Column(name = "cmd_content")
+	private String cmdContent;
 	@Column(name = "cmd")
 	private String cmd;
 	@Column(name = "create_time")

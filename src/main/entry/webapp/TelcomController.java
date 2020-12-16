@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
+import database.models.device.DeviceJob;
 import database.models.device.DeviceSensor;
 import database.models.log.LogSensorHeart;
 import database.models.log.LogSensorSource;
+import service.basicFunctions.device.DeviceJobService;
 import service.basicFunctions.device.DeviceSensorService;
 import service.basicFunctions.log.LogSensorLogService;
 import service.basicFunctions.log.LogSensorSourceService;
@@ -40,6 +42,8 @@ public class TelcomController extends BaseController{
 	private LogSensorLogService logSensorLogService;
 	@Autowired
 	private LogSensorSourceService logSensorSourceService;
+	@Autowired
+	private DeviceJobService deviceJobService;
 
 	/**
 	 * 启动原始联通版本的udp倾角传感器服务器
@@ -271,8 +275,7 @@ public class TelcomController extends BaseController{
                                         deviceSensorService.update(sensor);
                                         logSensorLogService.saveOperationLog(sensor,mode,"",dif,"","","");
                                     }
-                                }
-                                if(cmd.equals("02")){
+                                }else if(cmd.equals("02")){
                                     LogSensorSource log = new LogSensorSource();
                                     Date date = new Date();
                                     log.setMac(mac);
@@ -303,8 +306,7 @@ public class TelcomController extends BaseController{
                                     String ut4 = data.substring(62, 64);
                                     log.setUt(Long.parseLong(ut4+ut3+ut2+ut1, 16));
                                     logSensorSourceService.save(log);
-                                }
-                                if(cmd.equals("09")){
+                                }else if(cmd.equals("09")){
                                     String av = data.substring(24, 26);
                                     Integer avalable = Integer.valueOf(av);
                                     String mode = String.valueOf(Integer.parseInt( data.substring(26,28),16));
@@ -359,8 +361,7 @@ public class TelcomController extends BaseController{
                                         deviceSensorService.update(sensor);
                                         logSensorLogService.saveOperationLog(sensor,mode,ms,dif,adif,ny,lq);
                                     }
-                                }
-                                if(cmd.equals("3E")){//心跳
+                                }else if(cmd.equals("3E")){//心跳
                                     String dif1 = data.substring(26, 28);
                                     String dif2 = data.substring(24, 26);
                                     String dif = getDataBase(data.substring(26, 27), dif1+dif2);
@@ -444,8 +445,7 @@ public class TelcomController extends BaseController{
                                     if("LT".equals(telcomPushDataModel.getGatewayId())) {
                                     	HttpUtil.get("http://139.196.205.157:8090/home/cloud/server/check?id=10");
                                     }
-                                }
-                                if(cmd.equals("06")){//雷达地磁心跳
+                                }else if(cmd.equals("06")){//雷达地磁心跳
                                 	LogSensorHeart deviceLog = new LogSensorHeart();
                                     String dif1 = data.substring(26, 28);
                                     String dif2 = data.substring(24, 26);
@@ -563,6 +563,14 @@ public class TelcomController extends BaseController{
                                         sensor.setBluetoothArray("");
                                         logSensorLogService.saveOperationLog(sensor);
                                     }
+                                }else {
+                                	List<DeviceJob> jobs = deviceJobService.findByMacAndStatus(mac, 0);
+                                	if(jobs!=null&&!jobs.isEmpty()) {
+                                		DeviceJob job = jobs.get(0);
+                                		job.setStatus(1);
+                                		job.setJobResult(data);
+                                		deviceJobService.update(job);
+                                	}
                                 }
                             }
                         }

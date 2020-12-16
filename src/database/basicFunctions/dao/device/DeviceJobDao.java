@@ -64,5 +64,12 @@ public class DeviceJobDao extends BaseDao<DeviceJob>{
 		deviceJob.setTarget(mac);
 		save(deviceJob);
 	}
+
+	public List<DeviceJob> findByMacAndStatus(String mac, int i) {
+		QueryParam queryParam = QueryParam.getInstance();
+		queryParam.addParam("status", i);
+		queryParam.addParam("target", mac);
+		return findByCriteria(queryParam);
+	}
 	
 }

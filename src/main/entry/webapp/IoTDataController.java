@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +18,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import database.models.device.DeviceJob;
 import database.models.device.DeviceSensor;
 import database.models.log.LogOperation;
 import database.models.log.LogSensorSource;
 import database.models.log.LogSensorStatus;
+import service.basicFunctions.device.DeviceJobService;
 import service.basicFunctions.device.DeviceSensorInfoService;
 import service.basicFunctions.device.DeviceSensorService;
 import service.basicFunctions.log.LogOperationService;
 import service.basicFunctions.log.LogSensorLogService;
 import service.basicFunctions.log.LogSensorSourceService;
+import utils.Constant;
 import utils.HttpUtil;
+import utils.HttpsUtil;
+import utils.JsonUtil;
 import utils.MD5Util;
 import utils.baoxin.SendUtils;
 import utils.model.Resp;
@@ -47,6 +54,8 @@ public class IoTDataController extends BaseController{
 	private DeviceSensorInfoService deviceSensorInfoService;
 	@Autowired
 	private LogSensorSourceService logSensorSourceService;
+	@Autowired
+	private DeviceJobService deviceJobService;
 	
 	
 	/**
@@ -110,6 +119,255 @@ public class IoTDataController extends BaseController{
 		return resp;
 	}
 	
+	/**
+	 * 下发电信设备命令
+	 * @param deviceId
+	 * @param data
+	 */
+	private  void sendCmd(String deviceId,String data){
+		try {
+			HttpsUtil httpsUtil = new HttpsUtil();
+			httpsUtil.initSSLConfigForTwoWay();
+			String accessToken = login(httpsUtil);
+			String urlPostAsynCmd = Constant.POST_ASYN_CMD;
+			String appId = Constant.APPID;
+			String callbackUrl = Constant.REPORT_CMD_EXEC_RESULT_CALLBACK_URL;
+			String serviceId = "data";
+			String method = "command";
+			ObjectNode paras = JsonUtil.convertObject2ObjectNode("{\"CMD_DATA\":\"" + data + "\"}");
+			Map<String, Object> paramCommand = new HashMap<>();
+			paramCommand.put("serviceId", serviceId);
+			paramCommand.put("method", method);
+			paramCommand.put("paras", paras);
+			Map<String, Object> paramPostAsynCmd = new HashMap<>();
+			paramPostAsynCmd.put("deviceId", deviceId);
+			paramPostAsynCmd.put("command", paramCommand);
+			paramPostAsynCmd.put("callbackUrl", callbackUrl);
+			String jsonRequest = JsonUtil.jsonObj2Sting(paramPostAsynCmd);
+			Map<String, String> header = new HashMap<>();
+			header.put(Constant.HEADER_APP_KEY, appId);
+			header.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
+			HttpResponse responsePostAsynCmd = httpsUtil.doPostJson(urlPostAsynCmd, header, jsonRequest);
+			String responseBody = httpsUtil.getHttpResponseBody(responsePostAsynCmd);
+			log.warn("msg:{}", responseBody);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+	}
+	
+	@RequestMapping(value = "/iot/iot/sensor/job/update")
+	@ResponseBody
+	public Resp<?> jobUpdate(Integer id){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			DeviceJob job = deviceJobService.find(id);
+			job.setStatus(1);
+			deviceJobService.update(job);
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	/**
+	 * 新增任务
+	 * @param mac
+	 * @return
+	 */
+	@RequestMapping(value = "/iot/iot/sensor/job")
+	@ResponseBody
+	public Resp<?> job(String mac,String cmd,String data1,String data2,String data3){
+		Resp<?> resp = new Resp<>(false);
+		try {
+			List<DeviceJob> list = deviceJobService.findByMacAndStatus(mac,0);
+			DeviceSensor sensor = deviceSensorService.findByMac(mac);
+			String deviceId = sensor.getDeviceId();
+			if(list!=null&&!list.isEmpty()) {
+				resp.setMsg("还有未完成命令！");
+				return resp;
+			}else {
+				DeviceJob job = new DeviceJob();
+				job.setCreateTime(new Date());
+				job.setCmd(cmd);
+				String data = "4800"+cmd;
+				if("38".equals(cmd)) {
+					data+= "02"+data1+data2;
+					job.setCmd(data);
+					String cc = "";
+					if("00".equals(data1)) {
+						cc+="查询设备工作状态";
+					}
+					if("01".equals(data1)) {
+						cc+="设置";
+						if("01".equals(data2)) {
+							cc+="设备工作状态:正常模式";
+						}
+						if("02".equals(data2)) {
+							cc+="设备工作状态:睡眠模式";
+						}
+						if("03".equals(data2)) {
+							cc+="设备工作状态:待机模式";
+						}
+					}
+					job.setCmdContent(cc);
+				}
+				if("36".equals(cmd)) {
+					data+= "00";
+					job.setCmd(data);
+					job.setCmdContent("重启");
+				}
+				if("31".equals(cmd)) {
+					data+= "00";
+					job.setCmd(data);
+					job.setCmdContent("恢复出厂设置");
+				}
+				if("78".equals(cmd)) {
+					data+= "0C000000000000000000000000";
+					job.setCmd(data);
+					job.setCmdContent("查询软硬件版本");
+				}
+				if("0F".equals(cmd)) {
+					data+= "02"+data1+data2;
+					job.setCmd(data);
+					String cc = "";
+					if("00".equals(data1)) {
+						cc+="查询2530射频接收模式";
+					}
+					if("01".equals(data1)) {
+						cc+="设置";
+						if("01".equals(data2)) {
+							cc+="2530射频接收模式打开";
+						}
+						if("00".equals(data2)) {
+							cc+="2530射频接收模式关闭";
+						}
+					}
+					job.setCmdContent(cc);
+				}
+				if("79".equals(cmd)) {
+					data+= "02"+data1;
+					String cc = "";
+					if("00".equals(data1)) {
+						cc+="查询NB低信号阈值";
+					}
+					if("01".equals(data1)) {
+						data+=Integer.toHexString(Integer.valueOf(data2));
+						job.setCmd(data);
+						cc+="设置NB低信号阈值："+data2;
+					}
+					job.setCmdContent(cc);
+				}
+				if("62".equals(cmd)) {
+					data+= "02"+data1;
+					String cc = "";
+					if("00".equals(data1)) {
+						cc+="查询浮动基准开关";
+					}
+					if("01".equals(data1)) {
+						data+= Integer.toHexString(Integer.valueOf(data2));
+						job.setCmd(data);
+						if("01".equals(data2)) {
+							cc+="设置浮动基准开启";
+						}
+						if("00".equals(data2)) {
+							cc+="设置浮动基准关闭";
+						}
+					}
+					job.setCmdContent(cc);
+				}
+				if("34".equals(cmd)) {
+					data+= "04"+data1+data2+Integer.toHexString(Integer.valueOf(data3));
+					job.setCmd(data);
+					String cc = "";
+					if("00".equals(data1)) {
+						cc+="查询心跳间隔:";
+					}
+					if("01".equals(data1)) {
+						cc+="设置心跳间隔:";
+					}
+					if("01".equals(data2)) {
+						cc+="NB；";
+					}
+					if("00".equals(data2)) {
+						cc+="2530；";
+					}
+					cc+= data3;
+					job.setCmdContent(cc);
+				}
+				if("3A".equals(cmd)) {
+					data+= "02"+data1+data2;
+					job.setCmd(data);
+					String cc = "";
+					if("00".equals(data1)) {
+						cc+="查询NB锁定小区";
+					}
+					if("01".equals(data1)) {
+						cc+="设置NB锁定小区:";
+						if("01".equals(data2)) {
+							cc+="锁定；";
+						}
+						if("00".equals(data2)) {
+							cc+="不锁定；";
+						}
+					}
+					job.setCmdContent(cc);
+				}
+				if("3B".equals(cmd)) {
+					String d = toHexString(data1);
+					String dl = Integer.toHexString(d.length()/2);
+					data+= dl+d;
+					job.setCmd(data);
+					String cc = "AT命令";
+					job.setCmdContent(cc);
+				}
+				if("3C".equals(cmd)) {
+					String d = toHexString(data3);
+					String dl = Integer.toHexString(d.length()/2)+2;
+					data+= dl+data1+data2+d;
+					job.setCmd(data);
+					String cc = "";
+					if("00".equals(data1)) {
+						cc+="查询NB服务器地址";
+					}
+					if("01".equals(data1)) {
+						cc+="设置NB服务器地址:";
+						if("01".equals(data2)) {
+							cc+="备用；";
+						}
+						if("00".equals(data2)) {
+							cc+="主地址；";
+						}
+						cc+=d;
+					}
+					job.setCmdContent(cc);
+				}
+				job.setRecSt(1);
+				job.setTarget(mac);
+				job.setStatus(0);
+				deviceJobService.save(job);
+				try {
+					sendCmd(deviceId, data);
+					return new Resp<>(true);
+				} catch (Exception e) {
+					log.error("e:{}",e);
+				}
+			}
+		} catch (Exception e) {
+			log.error("e:{}",e);
+		}
+		return resp;
+	}
+	
+	
+	public static String toHexString(String s) {
+	   String str = "";
+	   for (int i = 0; i < s.length(); i++) {
+	    int ch = (int) s.charAt(i);
+	    String s4 = Integer.toHexString(ch);
+	    str = str + s4;
+	   }
+	   return str;
+	}
+
 	
 	/**
 	 * 维修、安装、操作等记录新增

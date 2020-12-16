@@ -63,40 +63,49 @@ public class HttpsUtil extends DefaultHttpClient {
 	 * */
 	public void initSSLConfigForTwoWay() throws Exception {
 		// 1 Import your own certificate
-		String demo_base_Path = System.getProperty("user.dir");
-		String selfcertpath = demo_base_Path + Constant.SELFCERTPATH;
-		String trustcapath = demo_base_Path + Constant.TRUSTCAPATH;
+//		String demo_base_Path = System.getProperty("user.dir");
+//		String selfcertpath = demo_base_Path + Constant.SELFCERTPATH;
+//		String trustcapath = demo_base_Path + Constant.TRUSTCAPATH;
+		try {
+//			String selfcertpath = "/Users/jinx/Documents/jobs/git_mine/java_base/target/classes/resource/cert/outgoing.CertwithKey.pkcs12";
+//			String trustcapath = "/Users/jinx/Documents/jobs/git_mine/java_base/target/classes/resource/cert/ca.jks";
+//			
+			String selfcertpath = "/root/servers/admin-server/webapps/ROOT/WEB-INF/classes/outgoing.CertwithKey.pkcs12";
+			String trustcapath = "/root/servers/admin-server/webapps/ROOT/WEB-INF/classes/ca.jks";
+			
+			KeyStore selfCert = KeyStore.getInstance("pkcs12");
+			selfCert.load(new FileInputStream(selfcertpath),
+					Constant.SELFCERTPWD.toCharArray());
+			KeyManagerFactory kmf = KeyManagerFactory.getInstance("sunx509");
+			kmf.init(selfCert, Constant.SELFCERTPWD.toCharArray());
 
-		KeyStore selfCert = KeyStore.getInstance("pkcs12");
-		selfCert.load(new FileInputStream(selfcertpath),
-				Constant.SELFCERTPWD.toCharArray());
-		KeyManagerFactory kmf = KeyManagerFactory.getInstance("sunx509");
-		kmf.init(selfCert, Constant.SELFCERTPWD.toCharArray());
+			// 2 Import the CA certificate of the server,
+			KeyStore caCert = KeyStore.getInstance("jks");
+			caCert.load(new FileInputStream(trustcapath), Constant.TRUSTCAPWD.toCharArray());
+			TrustManagerFactory tmf = TrustManagerFactory.getInstance("sunx509");
+			tmf.init(caCert);
 
-		// 2 Import the CA certificate of the server,
-		KeyStore caCert = KeyStore.getInstance("jks");
-		caCert.load(new FileInputStream(trustcapath), Constant.TRUSTCAPWD.toCharArray());
-		TrustManagerFactory tmf = TrustManagerFactory.getInstance("sunx509");
-		tmf.init(caCert);
+			SSLContext sc = SSLContext.getInstance("TLS");
+			sc.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 
-		SSLContext sc = SSLContext.getInstance("TLS");
-		sc.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+			// 3 Set the domain name to not verify
+			// (Non-commercial IoT platform, no use domain name access generally.)
+			SSLSocketFactory ssf = new SSLSocketFactory(sc,
+					SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 
-		// 3 Set the domain name to not verify
-		// (Non-commercial IoT platform, no use domain name access generally.)
-		SSLSocketFactory ssf = new SSLSocketFactory(sc,
-				SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+			// If the platform has already applied for a domain name which matches
+			// the domain name in the certificate information, the certificate
+			// domain name check can be enabled (open by default)
+			// SSLSocketFactory ssf = new SSLSocketFactory(sc);
 
-		// If the platform has already applied for a domain name which matches
-		// the domain name in the certificate information, the certificate
-		// domain name check can be enabled (open by default)
-		// SSLSocketFactory ssf = new SSLSocketFactory(sc);
+			ClientConnectionManager ccm = this.getConnectionManager();
+			SchemeRegistry sr = ccm.getSchemeRegistry();
+			sr.register(new Scheme("https", 8743, ssf));
 
-		ClientConnectionManager ccm = this.getConnectionManager();
-		SchemeRegistry sr = ccm.getSchemeRegistry();
-		sr.register(new Scheme("https", 8743, ssf));
-
-		httpClient = new DefaultHttpClient(ccm);
+			httpClient = new DefaultHttpClient(ccm);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

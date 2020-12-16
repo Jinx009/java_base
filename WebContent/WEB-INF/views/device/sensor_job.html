@@ -50,7 +50,7 @@
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body table-responsive no-padding">
-								<div class="col-md-9">
+								<div class="col-md-11">
 									<div class="box box-solid">
 										<div class="box-header with-border">
 											<h4 class="box-title">执行目标：${mac}</h4>
@@ -59,73 +59,187 @@
 											<table class="table table-hover table-bordered">
 												<thead>
 													<tr>
-														<th>必要参数</th>
+														<th>命令名称</th>
+														<th>操作选项</th>
+														<th>操作选项二</th>
+														<th>操作参数</th>
 														<th>操作</th>
 													</tr>
 												</thead>
 												<tbody>
 													<tr>
-														<td><b>cmd：reverseSensor</b></td>
+														<td><b>设置/查询车检参数</b></td>
 														<td>
-															<button style="width: 100%;" onclick="_createJob('reverseSensor')" class='btn btn-info'>翻转</button>
+															<select class="form-control"  >
+											                    <option value="01" >设置</option>
+											                    <option value="00" >查询</option>
+											                 </select>
+														</td>
+														<td>
+											                 <input type="text" id="version" class="form-control"  placeholder="输入设置参数" >
+														</td>
+														<td></td>
+														<td style="vertical-align: inherit;" >
+																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('updateSensor')"  class='btn btn-success'>下发</button>
 														</td>
 													</tr>
 													<tr>
+														<td><b>设置/查询设备工作状态</b></td>
 														<td>
-															<select class="form-control" id="files"  >
-											                    <option value="0" >选择一个文件</option>
-											                    <option v-for="item in datas" v-text="item" v-bind:value="item" ></option>
+															<select class="form-control" id="381" >
+											                    <option value="01" >设置</option>
+											                    <option value="00" >查询</option>
 											                 </select>
-											                 <br>
-											                 <input type="text" id="version" class="form-control"  placeholder="输入版本号" >
+														</td>
+														<td>
+															<select class="form-control" id="382"  >
+											                    <option value="00" >正常</option>
+											                    <option value="01" >睡眠</option>
+											                    <option value="02" >待机</option>
+											                 </select>
+														</td>
+														<td></td>
+														<td style="vertical-align: inherit;" >
+																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('38','2')"  class='btn btn-success'>下发</button>
+														</td>
+													</tr>
+													<tr>
+														<td><b>设置/查询NB锁定小区</b></td>
+														<td>
+															<select class="form-control" id="361" >
+											                    <option value="01" >设置</option>
+											                    <option value="00" >查询</option>
+											                 </select>
+														</td>
+														<td>
+															<select class="form-control" id="362"  >
+											                    <option value="00" >不锁定</option>
+											                    <option value="01" >锁定</option>
+											                 </select>
+														</td>
+														<td></td>
+														<td style="vertical-align: inherit;" >
+																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('36','2')"  class='btn btn-success'>下发</button>
+														</td>
+													</tr>
+														<tr>
+														<td><b>设置/查询2530射频接收模式</b></td>
+														<td>
+															<select class="form-control" id="0F1" >
+											                    <option value="01" >设置</option>
+											                    <option value="00" >查询</option>
+											                 </select>
+														</td>
+														<td>
+															<select class="form-control" id="0F2"  >
+											                    <option value="00" >关闭</option>
+											                    <option value="01" >打开</option>
+											                 </select>
+														</td>
+														<td></td>
+														<td style="vertical-align: inherit;" >
+																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('0F','2')"  class='btn btn-success'>下发</button>
+														</td>
+													</tr>
+														<tr>
+														<td><b>设置/查询NB低信号阈值</b></td>
+														<td>
+															<select class="form-control" id="791" >
+											                    <option value="01" >设置</option>
+											                    <option value="00" >查询</option>
+											                 </select>
+														</td>
+														<td>
+															<input class="form-control" id="792" placeholder="阈值" >
+														</td>
+														<td></td>
+														<td style="vertical-align: inherit;" >
+																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('79','2')"  class='btn btn-success'>下发</button>
+														</td>
+													</tr>
+														<tr>
+														<td><b>设置/查询浮动基准开关</b></td>
+														<td>
+															<select class="form-control" id="621" >
+											                    <option value="01" >设置</option>
+											                    <option value="00" >查询</option>
+											                 </select>
+														</td>
+														<td>
+															<select class="form-control" id="622" >
+											                    <option value="01" >打开</option>
+											                    <option value="00" >关闭</option>
+											                 </select>
+														</td>
+														<td></td>
+														<td style="vertical-align: inherit;" >
+																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('62','2')"  class='btn btn-success'>下发</button>
+														</td>
+													</tr>
+													<tr>
+														<td><b>设置/查询心跳间隔</b></td>
+														<td>
+															<select class="form-control" id="341" >
+											                    <option value="01" >设置</option>
+											                    <option value="00" >查询</option>
+											                 </select>
+														</td>
+														<td>
+															<select class="form-control"  id="342" >
+											                    <option value="00" >2530</option>
+											                    <option value="01" >NB</option>
+											                 </select>
+														</td>
+														<td>
+											                 <input type="text" id="343" class="form-control"  placeholder="输入设置参数" >
 														</td>
 														<td style="vertical-align: inherit;" >
-															<button style="width: 100%;" onclick="_createJob('updateSensor')"  class='btn btn-success'>更新</button>
+																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('34','3')"  class='btn btn-success'>下发</button>
 														</td>
 													</tr>
 													<tr>
-														<td><b>cmd：adjustSensor</b></td>
+														<td><b>快速操作</b></td>
 														<td>
-															<button style="width: 100%;" onclick="_createJob('adjustSensor')"  class='btn btn-warning'>校准</button>
+															<select class="form-control" id="fast_job" >
+											                    <option value="31" >恢复出厂</option>
+											                    <option value="36" >重启</option>
+											                    <option value="78" >查询软硬件版本</option>
+											                 </select>
+														</td>
+														<td></td>
+														<td></td>
+														<td style="vertical-align: inherit;" >
+																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('0','1')"  class='btn btn-success'>下发</button>
 														</td>
 													</tr>
-													<tr>
-														<td><b>cmd：restartSensor</b></td>
-														<td>
-															<button style="width: 100%;" onclick="_createJob('restartSensor')"   class='btn btn-danger'>重启</button>
+														<tr>
+														<td><b>透传AT指令</b></td>
+														<td colspan="3">
+															<input class="form-control" id="3B1" placeholder="AT命令" >
+														</td>
+														<td style="vertical-align: inherit;" >
+																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('3B','1')"  class='btn btn-success'>下发</button>
 														</td>
 													</tr>
-													<tr>
-														<td><b>cmd：resetSensor</b></td>
+														<tr>
+														<td><b>设置/查询NB服务器地址</b></td>
 														<td>
-															<button style="width: 100%;"  onclick="_createJob('resetSensor')"  class='btn btn-default'>重置</button>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															 <input type="text" id="heartTime" class="form-control"  placeholder="期望更改时间" >
-														</td>
-														<td>
-															<button style="width: 100%;" onclick="_createJob('heartUpdate')"   class='btn btn-info'>心跳修改</button>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<select class="form-control" id="lockType"  >
-											                    <option value="0" >下降</option>
-											                    <option value="1" >升起</option>
+															<select class="form-control" id="3C1" >
+											                    <option value="01" >设置</option>
+											                    <option value="00" >查询</option>
 											                 </select>
 														</td>
 														<td>
-															<button style="width: 100%;" onclick="_createJob('cfgLock')"   class='btn btn-danger'>升降锁</button>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<input type="text" id="lockTime" class="form-control"  placeholder="设置延迟时间" >
+															<select class="form-control"  id="3C2" >
+											                    <option value="00" >主地址</option>
+											                    <option value="01" >备用地址</option>
+											                 </select>
 														</td>
 														<td>
-															<button style="width: 100%;" onclick="_createJob('lockTime')"   class='btn btn-primary'>锁延时</button>
+											                 <input type="text" id="3C3" class="form-control"  placeholder="例：10.123.78.98:2345" >
+														</td>
+														<td style="vertical-align: inherit;" >
+																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('3C','3')"  class='btn btn-success'>下发</button>
 														</td>
 													</tr>
 												</tbody>
@@ -141,7 +255,7 @@
 		</div>
 		<#include "_footer.html">
 	</div>
-	<script src="/themes/js/home/device/sensor_job.js?version=1.26"></script>
+	<script src="/themes/js/home/device/sensor_job.js?version=1.25"></script>
 
 </body>
 </html>

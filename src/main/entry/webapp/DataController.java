@@ -13,7 +13,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import database.models.device.DeviceSensor;
 import database.models.home.HomeUser;
@@ -139,41 +137,7 @@ public class DataController extends BaseController {
 		return resp;
 	}
 	
-	/**
-	 * 下发电信设备命令
-	 * @param deviceId
-	 * @param data
-	 */
-	private  void sendCmd(String deviceId,String data){
-		try {
-			HttpsUtil httpsUtil = new HttpsUtil();
-			httpsUtil.initSSLConfigForTwoWay();
-			String accessToken = login(httpsUtil);
-			String urlPostAsynCmd = Constant.POST_ASYN_CMD;
-			String appId = Constant.APPID;
-			String callbackUrl = Constant.REPORT_CMD_EXEC_RESULT_CALLBACK_URL;
-			String serviceId = "data";
-			String method = "command";
-			ObjectNode paras = JsonUtil.convertObject2ObjectNode("{\"CMD_DATA\":\"" + data + "\"}");
-			Map<String, Object> paramCommand = new HashMap<>();
-			paramCommand.put("serviceId", serviceId);
-			paramCommand.put("method", method);
-			paramCommand.put("paras", paras);
-			Map<String, Object> paramPostAsynCmd = new HashMap<>();
-			paramPostAsynCmd.put("deviceId", deviceId);
-			paramPostAsynCmd.put("command", paramCommand);
-			paramPostAsynCmd.put("callbackUrl", callbackUrl);
-			String jsonRequest = JsonUtil.jsonObj2Sting(paramPostAsynCmd);
-			Map<String, String> header = new HashMap<>();
-			header.put(Constant.HEADER_APP_KEY, appId);
-			header.put(Constant.HEADER_APP_AUTH, "Bearer" + " " + accessToken);
-			HttpResponse responsePostAsynCmd = httpsUtil.doPostJson(urlPostAsynCmd, header, jsonRequest);
-			String responseBody = httpsUtil.getHttpResponseBody(responsePostAsynCmd);
-			log.warn("msg:{}", responseBody);
-		} catch (Exception e) {
-			log.error("e:{}",e);
-		}
-	}
+	
 	
 
 	@RequestMapping(path = "/login")

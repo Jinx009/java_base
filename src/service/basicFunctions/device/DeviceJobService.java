@@ -203,5 +203,21 @@ public class DeviceJobService extends BaseService{
 		}
 		return resp;
 	}
+
+	public List<DeviceJob> findByMacAndStatus(String mac, int i) {
+		return deviceJobDao.findByMacAndStatus(mac,i);
+	}
+
+	public void save(DeviceJob job) {
+		deviceJobDao.save(job);
+	}
+
+	public DeviceJob find(Integer id) {
+		return deviceJobDao.find(id);
+	}
+
+	public void update(DeviceJob job) {
+		deviceJobDao.update(job);
+	}
 	
 }

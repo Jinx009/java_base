@@ -52,10 +52,10 @@
 								<table class="table table-hover table-bordered">
 									<thead>
 										<tr>
-											<th>编号</th>
-											<th>target</th>
-											<th>参数详情</th>
-											<th>cmd</th>
+											<th>Mac</th>
+											<th>命令名称</th>
+											<th>命令内容</th>
+											<th>回复结果</th>
 											<th>创建时间</th>
 											<th>状态</th>
 											<th>操作</th>
@@ -63,10 +63,10 @@
 									</thead>
 									<tbody>
 										<tr v-for="item in datas.list">
-											<td v-text="item.id"></td>
 											<td v-text="item.target"></td>
-											<td v-text="item.jobDetail"></td>
+											<td v-text="item.cmdContent"></td>
 											<td v-text="item.cmd"></td>
+											<td v-text="item.jobResult"></td>
 											<td v-text="item.createTime"></td>
 											<td>
 												<button v-if="0===item.status"
