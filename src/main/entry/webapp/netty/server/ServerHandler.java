@@ -62,6 +62,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 			log.warn("--netty server接收到了：{}", buf);
 			Date date = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			File file = new File("/zhanway/server-gnss/webapps/ROOT/themes/img/" + sdf.format(date) +".txt"); // 本地目录
 //			File file = new File("/Users/jinx/Downloads/" + sdf.format(date) +".txt"); // 本地目录
 			File fileParent = file.getParentFile();
@@ -70,7 +71,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 				file.createNewFile();
 			}
 			FileOutputStream fops = new FileOutputStream(file,true);
-			fops.write((buf+"\r\n").getBytes());
+			fops.write((buf+"  "+sdf2.format(date)+"\r\n").getBytes());
 			fops.flush();
 			fops.close();
 		} catch (Exception e) {
