@@ -70,7 +70,7 @@ td {
 										<tr v-for="item in datas.list">
 											<td v-text="item.target"></td>
 											<td v-text="item.cmdContent"></td>
-											<td v-text="item.cmd" ></td>
+											<td v-text="item.cmd" style="max-width: 200px;overflow: hidden;padding-right: 10px;text-overflow: ellipsis;white-space: nowrap;"></td>
 											<td v-text="item.jobResult"style="max-width: 200px;overflow: hidden;padding-right: 10px;text-overflow: ellipsis;white-space: nowrap;" ></td>
 											<td v-text="item.createTime" ></td>
 											<td>
