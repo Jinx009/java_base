@@ -345,9 +345,9 @@ public class IoTDataController extends BaseController{
 					String cc ="设置参数";
 					job.setCmdContent(cc);
 					String d ="";
-					int i = 1;
+					int i = 0;
 					Map<String, Object> map = JSONObject.parseObject(data2);
-					if(!"0000".equals("s10")) {
+					if(!"0000".equals(String.valueOf(map.get("s10")))) {
 						d+="10";
 						d+="04";
 						d+= map.get("s10");
