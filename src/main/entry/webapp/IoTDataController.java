@@ -252,7 +252,11 @@ public class IoTDataController extends BaseController{
 						cc+="查询NB低信号阈值";
 					}
 					if("01".equals(data1)) {
-						data+=Integer.toHexString(Integer.valueOf(data2));
+						String d = Integer.toHexString(Integer.valueOf(data2));
+						if(d.length()==1) {
+							d = "0"+d;
+						}
+						data+=d;
 						cc+="设置NB低信号阈值："+data2;
 					}
 					job.setCmd(data);
@@ -265,8 +269,6 @@ public class IoTDataController extends BaseController{
 						cc+="查询浮动基准开关";
 					}
 					if("01".equals(data1)) {
-						data+= Integer.toHexString(Integer.valueOf(data2));
-						job.setCmd(data);
 						if("01".equals(data2)) {
 							cc+="设置浮动基准开启";
 						}
@@ -336,7 +338,7 @@ public class IoTDataController extends BaseController{
 					}
 					data+= dl+d;
 					job.setCmd(data);
-					String cc = "AT命令"+data1;
+					String cc = "AT命令："+data1;
 					job.setCmdContent(cc);
 				}
 				if("32".equals(cmd)) {
