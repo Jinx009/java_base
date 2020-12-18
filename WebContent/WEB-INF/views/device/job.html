@@ -20,6 +20,11 @@
     	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+<style type="text/css">
+td {
+      white-space:nowrap;overflow:hidden;text-overflow: ellipsis;
+}
+</style>
 </head>
 <body>
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -43,7 +48,7 @@
 								<h3 class="box-title">Job 列表</h3>
 								<div class="box-tools">
 					                <ul class="pagination pagination-sm no-margin pull-right">
-					                  <li><a onclick="_showNew();">自定义Job</a></li>
+					                  <li><a onclick="_back();">继续发送</a></li>
 					                </ul>
 					              </div>
 							</div>
@@ -65,21 +70,19 @@
 										<tr v-for="item in datas.list">
 											<td v-text="item.target"></td>
 											<td v-text="item.cmdContent"></td>
-											<td v-text="item.cmd"></td>
-											<td v-text="item.jobResult"></td>
-											<td v-text="item.createTime"></td>
+											<td v-text="item.cmd" ></td>
+											<td v-text="item.jobResult"style="max-width: 200px;overflow: hidden;padding-right: 10px;text-overflow: ellipsis;white-space: nowrap;" ></td>
+											<td v-text="item.createTime" ></td>
 											<td>
 												<button v-if="0===item.status"
 													class='btn btn-default btn-xs'>新建</button>
 												<button v-if="1===item.status"
-													class='btn btn-default btn-xs'>已接收</button>
-												<button v-if="2===item.status"
-													class='btn btn-default btn-xs'>已完成</button>
-												<button v-if="3===item.status"
-													class='btn btn-default btn-xs'>已失败</button>
+													class='btn btn-default btn-xs'>已回复</button>
+													<button v-if="3===item.status"
+													class='btn btn-default btn-xs'>已放弃</button>
 											</td>
 											<td>
-												<button v-if="1===item.status||0===item.status"
+												<button v-if="0===item.status"
 												 v-bind:id="item.id"  onclick="_delete(this)"	class='btn btn-danger btn-xs'>放弃</button>
 											</td>
 										</tr>
@@ -137,7 +140,7 @@
           </div>
 		<#include "_footer.html">
 	</div>
-	<script src="/themes/js/home/device/job.js?version=1.28"></script>
+	<script src="/themes/js/home/device/job.js?version=1.59"></script>
 
 </body>
 </html>

@@ -45,15 +45,15 @@
 									<button type="button" class="btn btn-info btn-xs"
 										onclick="_open('1','/p/device/sensor/list')"
 										data-widget="collapse">返回</button>
-									<b style="display: none;" id="mac">${mac}</b>
 								</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body table-responsive no-padding">
-								<div class="col-md-11">
+								<div class="col-md-12">
 									<div class="box box-solid">
 										<div class="box-header with-border">
-											<h4 class="box-title">执行目标：${mac}</h4>
+											<h4 class="box-title">执行目标：<br>	</h4>
+											<input style="width: 220px;margin-top: 15px;"  class="form-control" id="mac" value="${mac}" />
 										</div>
 										<div class="box-body">
 											<table class="table table-hover table-bordered">
@@ -68,22 +68,6 @@
 												</thead>
 												<tbody>
 													<tr>
-														<td><b>设置/查询车检参数</b></td>
-														<td>
-															<select class="form-control"  >
-											                    <option value="01" >设置</option>
-											                    <option value="00" >查询</option>
-											                 </select>
-														</td>
-														<td>
-											                 <input type="text" id="version" class="form-control"  placeholder="输入设置参数" >
-														</td>
-														<td></td>
-														<td style="vertical-align: inherit;" >
-																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('updateSensor')"  class='btn btn-success'>下发</button>
-														</td>
-													</tr>
-													<tr>
 														<td><b>设置/查询设备工作状态</b></td>
 														<td>
 															<select class="form-control" id="381" >
@@ -93,9 +77,9 @@
 														</td>
 														<td>
 															<select class="form-control" id="382"  >
-											                    <option value="00" >正常</option>
-											                    <option value="01" >睡眠</option>
-											                    <option value="02" >待机</option>
+											                    <option value="01" >正常</option>
+											                    <option value="02" >睡眠</option>
+											                    <option value="03" >待机</option>
 											                 </select>
 														</td>
 														<td></td>
@@ -106,20 +90,20 @@
 													<tr>
 														<td><b>设置/查询NB锁定小区</b></td>
 														<td>
-															<select class="form-control" id="361" >
+															<select class="form-control" id="3A1" >
 											                    <option value="01" >设置</option>
 											                    <option value="00" >查询</option>
 											                 </select>
 														</td>
 														<td>
-															<select class="form-control" id="362"  >
+															<select class="form-control" id="3A2"  >
 											                    <option value="00" >不锁定</option>
 											                    <option value="01" >锁定</option>
 											                 </select>
 														</td>
 														<td></td>
 														<td style="vertical-align: inherit;" >
-																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('36','2')"  class='btn btn-success'>下发</button>
+																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('3A','2')"  class='btn btn-success'>下发</button>
 														</td>
 													</tr>
 														<tr>
@@ -242,6 +226,129 @@
 																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('3C','3')"  class='btn btn-success'>下发</button>
 														</td>
 													</tr>
+													<tr style="height: 600px;">
+														<td><b>设置/查询车检参数</b></td>
+														<td colspan="3">
+											                <table class="table" >
+											                	<tr>
+											                			<th colspan="2">类型：</th>
+											                			<td colspan="2">
+																			<select class="form-control" id="321" >
+															                    <option value="01" >设置</option>
+															                 </select>
+																		</td>
+											                	</tr>
+											                	<tr>
+											                		<th>校准：</th>
+											                		<td>
+											                			<select class="form-control" id="s10"  >
+											                				<option value="0000" >不校准</option>
+														                    <option value="0100000000" >校准磁传感器</option>
+														                    <option value="0200000000" >校准雷达传感器</option>
+														                    <option value="0300000000" >两种传感器</option>
+														                 </select>
+											                		</td>
+											                		<th>磁场上门限：</th>
+											                		<td>
+											                			<input class="form-control" id="s11" placeholder="10~255" >
+											                		</td>
+											                	</tr>
+											                	<tr>
+											                		<th>磁场下门限：</th>
+											                		<td>
+											                			<input class="form-control" id="s12" placeholder="10~255" >
+											                		</td>
+											                		<th>波动上门限：</th>
+											                		<td>
+											                			<input class="form-control" id="s13" placeholder="10~255" >
+											                		</td>
+											                	</tr>
+											                	<tr>
+											                		<th>波动下门限：</th>
+											                		<td>
+											                			<input class="form-control" id="s14" placeholder="10~255" >
+											                		</td>
+											                		<th>角度门限：</th>
+											                		<td>
+											                			<input class="form-control" id="s15" placeholder="1~45" >
+											                		</td>
+											                	</tr>
+											                	<tr>
+											                		<th>窗口时间：</th>
+											                		<td>
+											                			<input class="form-control" id="s16" placeholder="10~120" >
+											                		</td>
+											                		<th>有车门限：</th>
+											                		<td>
+											                			<input class="form-control" id="s17" placeholder="10~255" >
+											                		</td>
+											                	</tr>
+											                	<tr>
+											                		<th>无车门限：</th>
+											                		<td>
+											                			<input class="form-control" id="s18" placeholder="10~255" >
+											                		</td>
+											                		<th>高采样率：</th>
+											                		<td>
+											                			<input class="form-control" id="s19" placeholder="1~20" >
+											                		</td>
+											                	</tr>
+											                	<tr>
+											                		<th>低采样率：</th>
+											                		<td>
+											                			<input class="form-control" id="s1A" placeholder="1~20" >
+											                		</td>
+											                		<th>覆水起始距离：</th>
+											                		<td>
+											                			<input class="form-control" id="s20" placeholder="80~500" >
+											                		</td>
+											                	</tr>
+											                	<tr>
+											                		<th>覆水检测长度：</th>
+											                		<td>
+											                			<input class="form-control" id="s21" placeholder="100~1000" >
+											                		</td>
+											                		<th>覆水检测门限：</th>
+											                		<td>
+											                			<input class="form-control" id="s22" placeholder="10~200" >
+											                		</td>
+											                	</tr>
+											                	<tr>
+											                		<th>覆水窗口门限：</th>
+											                		<td>
+											                			<input class="form-control" id="s23" placeholder="10~500" >
+											                		</td>
+											                		<th>覆水检测间隔：</th>
+											                		<td>
+											                			<input class="form-control" id="s24" placeholder="600~24*3600" >
+											                		</td>
+											                	</tr>
+											                	<tr>
+											                		<th>车检起始距离：</th>
+											                		<td>
+											                			<input class="form-control" id="s25" placeholder="80~500" >
+											                		</td>
+											                			<th>车检检测长度：</th>
+											                		<td>
+											                			<input class="form-control" id="s26" placeholder="100~2000" >
+											                		</td>
+											                	</tr>
+											                	<tr>
+											                		<th>测数据个数：</th>
+											                		<td>
+											                			<input class="form-control" id="s27" placeholder="5~100" >
+											                		</td>
+											                		<th>车检检测门限：</th>
+											                		<td>
+											                			<input class="form-control" id="s28" placeholder="100~20000" >
+											                		</td>
+											                	</tr>
+											                </table>
+														</td>
+														<td style="vertical-align: inherit;" >
+																<button style="width: 100%;height: 30px;line-height: 30px;padding-top: 0px" onclick="_createJob('32','2')"  class='btn btn-success'>下发</button>
+														</td>
+													</tr>
 												</tbody>
 											</table>
 										</div>
@@ -255,7 +362,7 @@
 		</div>
 		<#include "_footer.html">
 	</div>
-	<script src="/themes/js/home/device/sensor_job.js?version=1.25"></script>
+	<script src="/themes/js/home/device/sensor_job.js?version=1.46"></script>
 
 </body>
 </html>

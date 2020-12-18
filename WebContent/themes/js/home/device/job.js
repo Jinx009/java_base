@@ -4,6 +4,15 @@ $(function(){
 })
 var _d = '';
 var  _nowPage = 0,_max = 0;
+function _back(){
+	var mac = getUrlParam('mac');
+	_open_('1','/p/device/job/list','/p/device/sensor/job?mac='+mac);
+}
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    if (r != null) return unescape(r[2]); return null; //返回参数值
+}
 function _getData(_type,_index){
 	var _data = {};
 	_data.p = _getPage(_type,_index);
