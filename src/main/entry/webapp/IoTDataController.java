@@ -344,151 +344,132 @@ public class IoTDataController extends BaseController{
 				if("32".equals(cmd)) {
 					String cc ="设置参数";
 					job.setCmdContent(cc);
-					String d =data1;
+					String d ="";
 					int i = 1;
 					Map<String, Object> map = JSONObject.parseObject(data2);
 					if(!"0000".equals("s10")) {
-						d+= getHex(i);
 						d+="10";
 						d+="04";
 						d+= map.get("s10");
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s11")))) {
-						d+= getHex(i);
 						d+="11";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s11")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s12")))) {
-						d+= getHex(i);
 						d+="12";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s12")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s13")))) {
-						d+= getHex(i);
 						d+="13";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s13")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s14")))) {
-						d+= getHex(i);
 						d+="14";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s14")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s15")))) {
-						d+= getHex(i);
 						d+="15";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s15")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s16")))) {
-						d+= getHex(i);
 						d+="16";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s16")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s17")))) {
-						d+= getHex(i);
 						d+="17";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s17")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s18")))) {
-						d+= getHex(i);
 						d+="18";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s18")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s19")))) {
-						d+= getHex(i);
 						d+="19";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s19")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s1A")))) {
-						d+= getHex(i);
 						d+="1A";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s1A")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s20")))) {
-						d+= getHex(i);
 						d+="20";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s20")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s21")))) {
-						d+= getHex(i);
 						d+="21";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s21")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s22")))) {
-						d+= getHex(i);
 						d+="22";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s22")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s23")))) {
-						d+= getHex(i);
 						d+="23";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s23")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s24")))) {
-						d+= getHex(i);
 						d+="24";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s24")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s25")))) {
-						d+= getHex(i);
 						d+="25";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s25")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s26")))) {
-						d+= getHex(i);
 						d+="26";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s26")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s27")))) {
-						d+= getHex(i);
 						d+="27";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s27")));
 						i++;
 					}
 					if(StringUtil.isNotBlank(String.valueOf(map.get("s28")))) {
-						d+= getHex(i);
 						d+="28";
 						d+="04";
 						d+= getBigHex(String.valueOf(map.get("s28")));
 						i++;
 					}
-					int length = d.length()/2;
-					data+=getHex(length)+d;
+					String str = data1+getHex(i)+d;
+					int length = str.length()/2;
+					data+=getHex(length)+str;
 					job.setCmd(data);
 				}
 				if("3C".equals(cmd)) {
