@@ -568,7 +568,102 @@ public class TelcomController extends BaseController{
                                 	if(jobs!=null&&!jobs.isEmpty()) {
                                 		DeviceJob job = jobs.get(0);
                                 		job.setStatus(1);
-                                		job.setJobResult(data);
+                                		if(cmd.equals("31")) {
+                                			String res = data.substring(24, 26);
+                                			if("00".equals(res)) {
+                                				job.setJobResult("成功");
+                                			}else {
+                                				job.setJobResult("失败");
+                                			}
+                                		}else if(cmd.equals("36")) {
+                                			String res = data.substring(24, 26);
+                                			if("00".equals(res)) {
+                                				job.setJobResult("成功");
+                                			}else {
+                                				job.setJobResult("失败");
+                                			}
+                                		}else if(cmd.equals("34")) {
+                                			String res = data.substring(24, 26);
+                                			String result = "";
+                                			if("00".equals(res)) {
+                                				if("00".equals(data.substring(26,28))) {
+                                					result+= "2530心跳：";
+                                				}
+                                				if("01".equals(data.substring(26,28))) {
+                                					result+= "NB心跳：";
+                                				}
+	                            				String time1 = data.substring(28, 30);
+	                                            String time2 = data.substring(30, 32);
+	                                            String time = getDataBase(data.substring(30,31), time2+time1);
+                                				result+= time+"s;";
+                                				job.setJobResult(result);
+                                			}
+                                		}else if(cmd.equals("38")) {
+                                			String res = data.substring(24, 26);
+                                			String result = "";
+                                			if("00".equals(res)) {
+                                				if("01".equals(data.substring(26,28))) {
+                                					result+= "正常模式";
+                                				}
+                                				if("02".equals(data.substring(26,28))) {
+                                					result+= "睡眠模式";
+                                				}
+                                				if("03".equals(data.substring(26,28))) {
+                                					result+= "待机模式";
+                                				}
+                                				job.setJobResult(result);
+                                			}
+                                		}else if(cmd.equals("78")) {
+                                			String soft = convertHexToString(data.substring(24, 36));
+                                			String hard = convertHexToString(data.substring(36, 48));
+                                			job.setJobResult(soft+";"+hard);
+                                		}else if(cmd.equals("3A")) {
+                                			String res = data.substring(24, 26);
+                                			String result = "";
+                                			if("00".equals(res)) {
+                                				if("00".equals(data.substring(26,28))) {
+                                					result+= "不锁定";
+                                				}
+                                				if("01".equals(data.substring(26,28))) {
+                                					result+= "锁定";
+                                				}
+                                				job.setJobResult(result);
+                                			}
+                                		}else if(cmd.equals("3B")) {
+                                			job.setJobResult(convertHexToString(data.substring(24, data.length())));
+                                		}else if(cmd.equals("3C")) {
+                                			String res = data.substring(24, 26);
+                                			String result = "";
+                                			if("00".equals(res)) {
+                                				if("00".equals(data.substring(26,28))) {
+                                					result+= "主地址：";
+                                				}
+                                				if("01".equals(data.substring(26,28))) {
+                                					result+= "备用地址：";
+                                				}
+                                				result+= convertHexToString(data.substring(28, data.length()));
+                                			}
+                                			job.setJobResult(result);
+                                		}else if(cmd.equals("62")) {
+                                			String res = data.substring(24, 26);
+                                			String result = "";
+                                			if("00".equals(res)) {
+                                				if("00".equals(data.substring(26,28))) {
+                                					result+= "关闭";
+                                				}
+                                				if("01".equals(data.substring(26,28))) {
+                                					result+= "打开";
+                                				}
+                                				job.setJobResult(result);
+                                			}
+                                		}else if(cmd.equals("79")) {
+                                			String res = data.substring(24, 26);
+                                			if("00".equals(res)) {
+                                				job.setJobResult("阈值："+Integer.valueOf(data.substring(26, 28), 16));
+                                			}
+                                		}else {
+                                			job.setJobResult(data);
+                                		}
                                 		deviceJobService.update(job);
                                 	}
                                 }
