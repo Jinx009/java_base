@@ -127,7 +127,7 @@ public class DataController extends BaseController {
             sensor.setCameraName("");
             sensor.setPicLink("");
             sensor.setVedioTime("");
-            sensor.setAreaId(2);
+            sensor.setAreaId(66);
             sensor.setRecSt(1);
             deviceSensorService.save(sensor);
 			return new Resp<>(true);

@@ -543,6 +543,7 @@ public class TelcomController extends BaseController{
                                     logSensorLogService.saveHeart(deviceLog);
                                     sensor.setRssi(rssi);
                                     sensor.setAddr(rssi);
+                                    sensor.setBatteryVoltage(bat);
                                     sensor.setLastSeenTime(new Date());
                                     if(sensor.getAvailable()!=avalable) {
                                     	Date date = new Date();
