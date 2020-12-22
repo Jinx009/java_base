@@ -545,6 +545,7 @@ public class TelcomController extends BaseController{
                                     sensor.setAddr(rssi);
                                     sensor.setBatteryVoltage(bat);
                                     sensor.setLastSeenTime(new Date());
+                                    deviceSensorService.update(sensor);
                                     if(sensor.getAvailable()!=avalable) {
                                     	Date date = new Date();
                                     	sensor.setAvailable(avalable);
