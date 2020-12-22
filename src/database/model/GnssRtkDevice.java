@@ -91,5 +91,11 @@ public class GnssRtkDevice {
 	private Integer switchType;
 	@Column(name = "update_time2")
 	private String updatetime2;
+	@Column(name = "location")
+	private String location;
+	@Column(name = "device_id")
+	private String deviceId;
+	@Column(name = "apikey")
+	private String apikey;
 	
 }

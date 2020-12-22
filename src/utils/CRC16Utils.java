@@ -1,6 +1,5 @@
 package utils;
 
-import java.io.IOException;
 
 public class CRC16Utils {
 
